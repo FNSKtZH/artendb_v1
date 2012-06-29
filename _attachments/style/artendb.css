@@ -1,0 +1,150 @@
+/*Text umbrechen lassen*/
+#tree a {white-space:normal; height: auto; padding: 1px 2px;}
+#tree li > ins {vertical-align: top;}
+#tree .jstree-hovered, #tree .jstree-clicked {border: 0;}
+/*Abstände zwischen nodes vergrössern*/
+#tree li { min-height:22px; line-height:22px; }
+/*#tree a { line-height:20px; height:20px; font-size:10px; }*/
+#tree a ins { height:20px; width:20px; background-position:-56px -17px; }
+
+/*gesuchte Einträge formattieren*/
+.jstree-search {color: #CC012A !important;}
+
+body {
+	background-color: #FFFFF7;
+	height:100%;
+}
+
+fieldset {
+	background-color: #FFE;
+	border:1px solid;
+	border-color:#A5A59A;
+
+	font-family: Arial, Verdana, Helvetica, sans-serif !important;
+	font-size:16px !important;
+
+	margin:10px 10px 20px 10px;
+	padding: 15px 15px 15px 15px;
+	display:block;
+}
+
+#menu {
+	width:370px; 
+	float:left; 
+	margin-top:0px; 
+	position:fixed;
+}
+
+#tree {
+	overflow: auto;
+}
+
+/*damit bleibt form immer im Blickfeld - bloss kann man in form selbst nicht mehr runterscrollen!*/
+#forms {
+	/*overflow:auto; 
+	position:fixed;*/
+	margin-left:430px;
+	margin-top:0px;
+}
+
+#forms label {
+	float:left;
+	width:140px;
+	text-align:right;
+	vertical-align:top;
+	color:#6F6F66;
+	margin:0px 7px 0px 0px;
+}
+
+/*im tab soll der zusätzliche Rand klein sein*/
+.ui-tabs-panel {
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+
+fieldset legend {
+	color:#6F6F66;
+	font-weight:bold;
+}
+
+input {
+	background-color: #FFFFF7;
+}
+
+/*alle Datenfelder links ausrichten*/
+.Datenfelder {
+	float:left;
+	margin:0px 5px 10px 0px;
+}
+
+[readonly='readonly'] {
+	color:#6F6F66;
+}
+
+/*keine Ahnung, wieso es ohne das nicht geht*/
+.form {margin-left:auto; padding-top:1px;}
+
+[type=text], [type=url], textarea, select {
+	width:100px;
+}
+
+[type=number] {
+	width: 100px;
+}
+
+#forms input, #forms select, #forms textarea {
+	font-size:17px;
+	/*alle inputs genau links ausrichten*/
+	margin-left:2px;
+}
+
+/*komischerweise kommen textareas in anderer Schrift*/
+textarea {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:17px;
+}
+
+/*alle Datenfelder von den letzten absetzen*/
+.fieldcontain {
+	/*floaten von label und Datenfeld des letzten Feldes aufheben*/
+	clear:both;
+	display:block;
+}
+
+.clear {
+	clear:both;
+}
+
+.ui-button-text {padding:.1em .5em !important; font-size:.8em !important;}
+
+.ui-widget-content {
+	background:#FAF3D9!important;
+}
+
+option {
+	white-space:pre;
+}
+
+.ui-widget .fieldcontain {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:16px;
+}
+
+#vakata-contextmenu {
+	width:230px;
+}
+
+/*für Google Map*/
+.GmInfowindow {line-height: 0.3; margin-top: 0.3; margin-bottom: 0; white-space: nowrap}
+
+.PopupText {text-align:center; margin:6px 4px 4px 4px; font-weight:bold;}
+
+.MapLabel {
+	color:white;
+     font-family: "Lucida Grande", "Arial", sans-serif;
+     font-size: 12px;
+     font-weight: 900;
+     font-color: white;
+     text-align: center;
+     width: 150px;     
+   }
