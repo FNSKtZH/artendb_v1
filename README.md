@@ -45,6 +45,7 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 In vielen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
 Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Um das zu ermöglichen folgende Idee:
+
 - In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen
 - Ein View fasst alle Felder aller Artgruppen mit demselben zusammenfassenden Feldnamen zusammen
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
@@ -61,14 +62,13 @@ Viele Werte sind heute codiert. Die Felder enthalten unverständliche Codes. Die
 # Neue Datensammlungen einfach hinzufügen #
 - Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut
 - Dazu werden die Feldeigenschaften verwaltet. Unter anderen:
-	<ul>
-		<li>Datensammlung</li>
-		<li>Feldname</li>
-		<li>Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)</li>
-		<li>Optionen für Auswahllisten</li>
-	</ul>
+ - Datensammlung
+ - Feldname
+ - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
+ - Optionen für Auswahllisten
 
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
+
 - Art- oder Lebensraumeigenschaften vorbereiten
 - Informationen über die Felder vorbereiten
 - Informationen über die Datensammlung vorbereiten
