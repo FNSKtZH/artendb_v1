@@ -16,7 +16,7 @@
 	<li>Die Daten sind gut verfügbar:<br />- Von jedem Gerät im Internet<br />- Als Export im csv-Format (ev. weitere)<br />- Über Schnittstellen für GIS, <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content">Artenlistentool</a>, <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content">EvAB</a>, <a target="_blank" href="news/latest/evabmobile/">EvAB mobile</a>, beliebige Apps</li>
 	<li>Exporte, Auswertungen etc. können ohne zusätzlichen Aufwand über alle Artengruppen hinweg erfolgen</li>
 </ul>
-<p>&nbsp;</p>
+
 <p>Für Datenpfleger und Systemverantwortliche:</p>
 <ul>
 	<li>Die Komplexität der Datenstruktur ist minimiert</li>
@@ -31,17 +31,17 @@
 	<li>Definierte Auswahl erfasster Informationen</li>
 	<li>Definierte Methodik</li>
 </ul>
-<p>&nbsp;</p>
+
 <p>Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Ausser es wird ein Arten- und Lebensraum-Wiki angestrebt (dies könnte zusätzlich ermöglicht werden).</p>
-<p>&nbsp;</p>
+
 <p>Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:</p>
 <ul>
 	<li>Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:<br />- Quelle<br />- Link<br />- Allgemeine Beschreibung<br />- Nachführungsberechtigte User</li>
 	<li>In der Feldverwaltung wird für jedes Feld die zugehörige Datensammlung genannt</li>
 </ul>
-<p>&nbsp;</p>
+
 <p>In vielen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.</p>
-<p>&nbsp;</p>
+
 <p>Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Um das zu ermöglichen folgende Idee:</p>
 <ul>
 	<li>In der Feldverwaltung erhalten Felder mit zusammenzufassender Information&nbsp;zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen</li>
