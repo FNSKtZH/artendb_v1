@@ -1,17 +1,17 @@
 <p>Die Arten- und Lebensraumdatenbank existiert schon. Sie kann <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content">hier</a> kostenlos heruntergeladen werden.</p>
-<p>Als ich in der Fachstelle Naturschutz angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut und weiterentwickelt. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte. Ausgangspunkt sind ein paar Feststellungen:</p>
+<p>Als ich in der Fachstelle Naturschutz angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte. Ausgangspunkt sind ein paar Feststellungen:</p>
 <ul>
 	<li>Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank</li>
 	<li>Die aktuelle DB kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt</li>
 	<li>Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen</li>
 	<li>Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)</li>  
 </ul>
-<p>&nbsp;</p>
+
 <h1>Was ist wichtig?</h1>
 <p>Für die Benutzerin:</p>
 <ul>
 	<li>Die Anwendung ist einfach zu bedienen</li>
-	<li>Die Datenflut kann bewältigt werden:&nbsp;<br />- Die Benutzerin wählt, welche Daten sie sehen oder exportieren will<br />- Leere Felder werden im Lesemodus nicht angezeigt</li>
+	<li>Die Datenflut kann bewältigt werden:<br />- Die Benutzerin wählt, welche Daten sie sehen oder exportieren will<br />- Leere Felder werden im Lesemodus nicht angezeigt</li>
 	<li>Die Daten sind gut dokumentiert, neue Benutzer finden sich rasch zurecht</li>
 	<li>Die Daten sind gut verfügbar:<br />- Von jedem Gerät im Internet<br />- Als Export im csv-Format (ev. weitere)<br />- Über Schnittstellen für GIS, <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content">Artenlistentool</a>, <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content">EvAB</a>, <a target="_blank" href="news/latest/evabmobile/">EvAB mobile</a>, beliebige Apps</li>
 	<li>Exporte, Auswertungen etc. können ohne zusätzlichen Aufwand über alle Artengruppen hinweg erfolgen</li>
@@ -44,10 +44,10 @@
 
 <p>Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Um das zu ermöglichen folgende Idee:</p>
 <ul>
-	<li>In der Feldverwaltung erhalten Felder mit zusammenzufassender Information&nbsp;zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen</li>
+	<li>In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen</li>
 	<li>Ein View fasst alle Felder aller Artgruppen mit demselben zusammenfassenden Feldnamen zusammen</li>
 	<li>Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden</li>
-	<li>Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst<br />&nbsp;</li>
+	<li>Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst<br /></li>
 </ul>
 <h1>Artgruppen vereinen</h1>
 <p>Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes erreicht ist (32). Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).<br />
