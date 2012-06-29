@@ -1,5 +1,5 @@
 <p>Die Arten- und Lebensraumdatenbank existiert schon. Sie kann <a target="_blank" href="http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content">hier</a> kostenlos heruntergeladen werden.</p>
-<p>Als ich in der Fachstelle Naturschutz angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte. Ausgangspunkt sind ein paar Feststellungen:</p>
+<p>Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte. Ausgangspunkt sind ein paar Feststellungen:</p>
 <ul>
 	<li>Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank</li>
 	<li>Die aktuelle DB kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt</li>
