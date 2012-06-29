@@ -6,18 +6,23 @@ Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschu
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
-- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, diese aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, welche eigentlich nur der Datenherr fällen sollte
+- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, welche eigentlich nur der Datenherr fällen sollte
 - Die aktuelle DB kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
-- Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen
+- Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität scheint mir die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)
 
 # Was ist wichtig? #
 **Für die Benutzerin:**
 
 - Die Anwendung ist einfach zu bedienen
-- Die Datenflut kann bewältigt werden:<br />- Die Benutzerin wählt, welche Daten sie sehen oder exportieren will<br />- Leere Felder werden im Lesemodus nicht angezeigt
+- Die Datenflut kann bewältigt werden:
+ - Die Benutzerin wählt, welche Daten sie sehen oder exportieren will
+ - Leere Felder werden im Lesemodus nicht angezeigt
 - Die Daten sind gut dokumentiert, neue Benutzer finden sich rasch zurecht
-- Die Daten sind gut verfügbar:<br />- Von jedem Gerät im Internet<br />- Als Export im csv-Format (ev. weitere)<br />- Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
+- Die Daten sind gut verfügbar:
+ - Von jedem Gerät im Internet
+ - Als Export im csv-Format (ev. weitere)
+ - Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
 - Exporte, Auswertungen etc. können ohne zusätzlichen Aufwand über alle Artengruppen hinweg erfolgen
 
 
@@ -39,7 +44,11 @@ Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Auss
 
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:
 
-- Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:<br />- Quelle<br />- Link<br />- Allgemeine Beschreibung<br />- Nachführungsberechtigte User
+- Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
+ - Quelle
+ - Link
+ - Allgemeine Beschreibung
+ - Nachführungsberechtigte User
 - In der Feldverwaltung wird für jedes Feld die zugehörige Datensammlung genannt
 
 In vielen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
