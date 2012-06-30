@@ -131,57 +131,267 @@ Solche besonderen Features könnten sein:
 Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren Datensammlungen dargestellt werden kann:
 ```javascript
 {
-   "_id": "0020D955-6E2C-4763-B6AE-6E9102BB9942",
-   "_rev": "5-73f13ffde498c8ebf306f8a5f6c3d186",
+   "_id": "15544EBD-51D0-470B-9C34-B6F822EACABF",
+   "_rev": "18-8bfc0deddc787bbc247fddcad2b64a7f",
    "Index": {
        "Typ": "Datensammlung",
        "Felder": {
            "Gruppe": "Flora",
-           "NR": 414500,
-           "Status": "S",
-           "SynonymVon": 414600,
-           "Name": "Tetragonia expansa Murray",
-           "Familie": "Aizoaceae",
-           "Gattung": "Tetragonia",
-           "Art": "expansa",
-           "Autor": "Murray",
-           "GueltigeNamen": "414600",
-           "OffizielleArt": 414600,
-           "EXPORT_SOURCES": "HL/LZ",
-           "GUID": "0020D955-6E2C-4763-B6AE-6E9102BB9942"
+           "NR": 334200,
+           "Status": "A",
+           "Name": "Pulsatilla vulgaris Mill.",
+           "Familie": "Ranunculaceae",
+           "Gattung": "Pulsatilla",
+           "Art": "vulgaris",
+           "Autor": "Mill.",
+           "OffizielleArt": 334200,
+           "Deutsch": "Gewöhnliche Küchenschelle",
+           "Franzoesisch": "Coquelourde, Pulsatille vulgaire",
+           "Italienisch": "Pulsatilla comune",
+           "EXPORT_SOURCES": "AB/BH/FH/HL/WS/LZ/LR",
+           "NO_FH": "158",
+           "GUID": "15544EBD-51D0-470B-9C34-B6F822EACABF"
+       }
+   },
+   "CH Zeigerwerte 2010": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "Zw2010Sen": "4736",
+           "Zw2010Fan": "19.14.5.1",
+           "Zw2010Fhn": "158",
+           "Zw2010Zwn": "1146",
+           "Zw2010Wsn": "378",
+           "Zw2010KlimaT": "4",
+           "Zw2010KlimaTv": "I",
+           "Zw2010KlimaK": "5",
+           "Zw2010KlimaKv": "I",
+           "Zw2010KlimaL": "4",
+           "Zw2010KlimaLv": "I",
+           "Zw2010BodenF": "1.5",
+           "Zw2010BodenFv": "I",
+           "Zw2010BodenW": "1",
+           "Zw2010BodenR": "4",
+           "Zw2010BodenRv": "I",
+           "Zw2010BodenN": "2",
+           "Zw2010BodenNv": "I",
+           "Zw2010BodenH": "3",
+           "Zw2010BodenHv": "I",
+           "Zw2010BodenD": "3",
+           "Zw2010BodenDv": "I",
+           "Zw2010StrLf": "h",
+           "Zw2010StrBd": "s",
+           "Zw2010StrWt": "1.5",
+           "Zw2010StrRo": "Rh Wv",
+           "Zw2010StrKs": "crs",
+           "Zw2010BioDa": "Me",
+           "Zw2010BioVa": "Sr",
+           "Zw2010BioFs": "zw",
+           "Zw2010BioMa": "r6",
+           "Zw2010BioBz": "3-4",
+           "Zw2010BioMv": "2",
+           "Zw2010BioDg": 2,
+           "Zw2010BioGi": "tg h",
+           "Zw2010VorkAe": "I",
+           "Zw2010VorkEm": "2",
+           "NR": 334200,
+           "GUID": "15544EBD-51D0-470B-9C34-B6F822EACABF"
+       }
+   },
+   "CH Zeigerwerte 1977": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "ZwlFeuchtezahl": 1,
+           "ZwlFeuchteZ1": false,
+           "ZwlFeuchteZ2": false,
+           "ZwlFeuchteZ3": 0,
+           "ZwlReakzahl": 4,
+           "ZwlNaehrstzahl": 2,
+           "ZwlHumuszahl": 3,
+           "ZwlDisperszahl": 3,
+           "ZwlSalzzeichen": 2,
+           "ZwlLichtzahl": 4,
+           "ZwlTempzahl": 4,
+           "ZwlKontzahl": 4,
+           "ZwlWuchsform": 8,
+           "ZwlNeophyt": false
+       }
+   },
+   "Witt 1995": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "Witt_Alter": "mehrjährig",
+           "Witt_Höhe": "10-30",
+           "Witt_Blfarbe": "violett",
+           "Witt_Blmonat": "2-4",
+           "Witt_Wärmekeimer": false,
+           "Witt_Kaltkeimer": true,
+           "Witt_Lichtkeimer": true,
+           "Witt_Dunkelkeimer": false,
+           "Witt_KeimMonate": "8-12",
+           "Witt_ungeschlechtlicheFortpflanzung": "Wurzelschnittlinge 11",
+           "Witt_Schmetterlinge": true,
+           "Witt_Wildbienen": true,
+           "Witt_Hummeln": true,
+           "Witt_Fliegen": false,
+           "Witt_Käfer": false,
+           "Witt_Vögel": false,
+           "Witt_Säuger": false
        }
    },
    "CH Rote Liste 2002": {
        "Typ": "Datensammlung",
        "Felder": {
+           "RL02_NO_LR2002": 2307,
            "RL02_BERN_CONVENTION": false,
            "RL02_IUCN1997_REDLIST": false,
+           "RL02_PROTECTION": 1,
+           "RL02_NEOPHYTE": 0,
            "RL02_INVASIF": false,
+           "RL02_CH": 5,
            "RL02_ADV_JU": false,
+           "RL02_JU_TOT": 5,
+           "RL02_JU1": 5,
+           "RL02_JU2": 5,
            "RL02_ADV_MP": false,
+           "RL02_MP_TOT": 5,
+           "RL02_MP1": 5,
+           "RL02_MP2": 5,
            "RL02_ADV_NA": false,
+           "RL02_NA_TOT": 6,
+           "RL02_NA1": 9,
+           "RL02_NA2": 6,
            "RL02_ADV_WA": false,
+           "RL02_WA_TOT": 9,
            "RL02_ADV_EA": false,
-           "RL02_ADV_SA": false
+           "RL02_EA_TOT": 9,
+           "RL02_ADV_SA": false,
+           "RL02_SA_TOT": 9,
+           "RL02_SA1": 9,
+           "RL02_SA2": 9,
+           "RL02_SA3": 9,
+           "RL02_GRP_ECOL": 6,
+           "RL02_CRITERES_IUCN": "A4dB1B2cB2eC2a"
        }
    },
    "CH Rote Liste 1991": {
        "Typ": "Datensammlung",
        "Felder": {
            "RlSmaragd": false,
-           "RlEu": 0,
-           "RlCh": 0,
-           "RlWJu": 0,
-           "RlNJu": 0,
-           "RlNo": 0,
-           "RlWestML": 0,
-           "RlOstML": 0,
-           "RlWestN": 0,
-           "RlOstN": 0,
-           "RlWestZ": 0,
-           "RlOstZ": 0,
-           "RlSued": 0,
-           "RlLR": 0
+           "RlEu": 6,
+           "RlCh": 2,
+           "RlWJu": 2,
+           "RlNJu": 2,
+           "RlNo": 2,
+           "RlWestML": 10,
+           "RlOstML": 2,
+           "RlWestN": 10,
+           "RlOstN": 10,
+           "RlWestZ": 10,
+           "RlOstZ": 2,
+           "RlSued": 10,
+           "RlLR": 3
+       }
+   },
+   "Blaue Liste": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "BlBl": 3,
+           "BlNUT": 2,
+           "BlAnwhNUTErh": 3,
+           "BlAnwhNUTFoerd": 1,
+           "BlFoerdErfChance": 1,
+           "BlFoerdErfChanceW": 2,
+           "BlFoerdAufwand": 3,
+           "BlFoerdNUT": "Magere Wiesen in trockenen, warmen Lagen regenerieren; lichte Wälder und Waldränder fördern.",
+           "BlLrTyp": "Trocken- und Halbtrocken-rasen; Trockene, wärmeliebende Waldränder; Wärmeliebende Wälder"
+       }
+   },
+   "CH Prioritäten": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "PbPGefaehrdung": 3,
+           "PbPVerantwortung": 0,
+           "PbPKombiniert": "3_0",
+           "PbPrioritaetBafu": "4",
+           "PbDiffAtlas": false,
+           "PbAG": 1,
+           "PbBL": 3,
+           "PbGR": 3,
+           "PbLU": 4,
+           "PbNE": 2,
+           "PbSG": 4,
+           "PbSH": 1,
+           "PbSO": 3,
+           "PbTG": 1,
+           "PbVD": 1,
+           "PbZH": 1
+       }
+   },
+   "CH Umweltziele LW": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "UzlZielart": true,
+           "UzlLeitart": false,
+           "UzlEtappierungZielart": "2",
+           "UzlQualitaetsstufe": "3",
+           "UzlQualitaetRegion1": 3
+       }
+   },
+   "CH TWW": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "TwwBd_BLUEHBEGINN": "April",
+           "TwwBd_NUTZUNG": "Wiese oder Weide",
+           "TwwBd_POPKONTR": "alle 10 Jahre"
+       }
+   },
+   "ZH Artwert": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "AwArtwert": 11,
+           "AwNeophyt": false,
+           "AwArealWw": 2,
+           "AwAntCh": 2,
+           "AwGefZh2": "E"
+       }
+   },
+   "ZH AP Flora": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "ApStatus": 3,
+           "ApJahr": 2001,
+           "ApUmsetzung": 1,
+           "ApUrl": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fl/kuechenschelle.html"
+       }
+   },
+   "ZH AP FM": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "ApFmAwProvNeuber": false,
+           "ApFmRel": false,
+           "ApFmUnerw": false,
+           "ApFmBindungStru": false,
+           "ApFmFoerdReg": false,
+           "ApFmBem": "Art nicht beurteilt: Trockenheitszeiger, F=1"
+       }
+   },
+   "ZH AP LiWa": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "Gruppe_": "Flora",
+           "IdFloraArtenliste": 233,
+           "IdKategorie": 1,
+           "LiWaArtwert": 13
+       }
+   },
+   "ZH AP TWW": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "ApTwwRel": true,
+           "ApTwwUnerw": 0,
+           "ApTwwChZielart": true,
+           "ApTwwBb": 9,
+           "ApTwwAw": 20
        }
    },
    "ZH Artengruppen": {
@@ -191,17 +401,25 @@ Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren 
            "ArtengruppeIdEVAB": 18
        }
    },
+   "ZH KEF": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "KefArt": true,
+           "KefKontrolljahr": 2003
+       }
+   },
    "ZH Verbreitung 1995": {
        "Typ": "Datensammlung",
        "Felder": {
-           "DringAP": 0,
-           "SchutzZH": false,
-           "Vorkommen": 0,
-           "HaeufZH1967": -1,
-           "HaeufZH1890": -1,
-           "HaeufZH2010": -1,
-           "BestAendZH": 0,
-           "Gefaehrdung": 0
+           "BISNr": 1132,
+           "DringAP": 1,
+           "SchutzZH": true,
+           "Vorkommen": 4,
+           "HaeufZH1967": 3,
+           "HaeufZH1890": 4,
+           "HaeufZH2010": 2,
+           "BestAendZH": 2,
+           "Gefaehrdung": 2
        }
    }
 }
