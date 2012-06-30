@@ -85,7 +85,7 @@ Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Da
 
 <a name="ArtgruppenVereinen"></a>
 #Artgruppen vereinen
-Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes erreicht ist (32). Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
+Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
 
 <a href="#top">&#8593; top</a>
 
@@ -127,6 +127,85 @@ Solche besonderen Features könnten sein:
 - Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen...
 - ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
+
+Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren Datensammlungen dargestellt werden kann:
+```javascript
+{
+   "_id": "0020D955-6E2C-4763-B6AE-6E9102BB9942",
+   "_rev": "5-73f13ffde498c8ebf306f8a5f6c3d186",
+   "Index": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "Gruppe": "Flora",
+           "NR": 414500,
+           "Status": "S",
+           "SynonymVon": 414600,
+           "Name": "Tetragonia expansa Murray",
+           "Familie": "Aizoaceae",
+           "Gattung": "Tetragonia",
+           "Art": "expansa",
+           "Autor": "Murray",
+           "GueltigeNamen": "414600",
+           "OffizielleArt": 414600,
+           "EXPORT_SOURCES": "HL/LZ",
+           "GUID": "0020D955-6E2C-4763-B6AE-6E9102BB9942"
+       }
+   },
+   "CH Rote Liste 2002": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "RL02_BERN_CONVENTION": false,
+           "RL02_IUCN1997_REDLIST": false,
+           "RL02_INVASIF": false,
+           "RL02_ADV_JU": false,
+           "RL02_ADV_MP": false,
+           "RL02_ADV_NA": false,
+           "RL02_ADV_WA": false,
+           "RL02_ADV_EA": false,
+           "RL02_ADV_SA": false
+       }
+   },
+   "CH Rote Liste 1991": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "RlSmaragd": false,
+           "RlEu": 0,
+           "RlCh": 0,
+           "RlWJu": 0,
+           "RlNJu": 0,
+           "RlNo": 0,
+           "RlWestML": 0,
+           "RlOstML": 0,
+           "RlWestN": 0,
+           "RlOstN": 0,
+           "RlWestZ": 0,
+           "RlOstZ": 0,
+           "RlSued": 0,
+           "RlLR": 0
+       }
+   },
+   "ZH Artengruppen": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "GISLayer": "Flora",
+           "ArtengruppeIdEVAB": 18
+       }
+   },
+   "ZH Verbreitung 1995": {
+       "Typ": "Datensammlung",
+       "Felder": {
+           "DringAP": 0,
+           "SchutzZH": false,
+           "Vorkommen": 0,
+           "HaeufZH1967": -1,
+           "HaeufZH1890": -1,
+           "HaeufZH2010": -1,
+           "BestAendZH": 0,
+           "Gefaehrdung": 0
+       }
+   }
+}
+```
 
 <a href="#top">&#8593; top</a>
 
