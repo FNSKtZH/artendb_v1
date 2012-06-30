@@ -1,3 +1,4 @@
+<a name="top"></a>
 Die Arten- und Lebensraumdatenbank existiert schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
 
 
@@ -24,6 +25,8 @@ sind ein paar Feststellungen:
 - Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität scheint mir die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)
 
+<a href="#top">top</a>
+
 <a name="WasIstWichtig"></a>
 #Was ist wichtig
 **Für die Benutzerin:**
@@ -44,6 +47,8 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Neue Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden ergänzt werden
+
+<a href="#top">top</a>
 
 <a name="Datensammlungen"></a>
 #Datensammlungen
@@ -75,15 +80,21 @@ Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Da
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
 - Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
 
+<a href="#top">top</a>
+
 <a name="ArtgruppenVereinen"></a>
 #Artgruppen vereinen
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes erreicht ist (32). Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
+
+<a href="#top">top</a>
 
 <a name="CodierungVereinfachen"></a>
 #Codierung vereinfachen
 Viele Werte sind heute codiert. Die Felder enthalten unverständliche Codes. Diese werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
 - Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren (Arrays)
 - Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert.
+
+<a href="#top">top</a>
 
 <a name="NeueDatensammlungenEinfachHinzufügen"></a>
 #Neue Datensammlungen einfach hinzufügen
@@ -102,11 +113,15 @@ Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 - Alles importieren
 fertig!
 
+<a href="#top">top</a>
+
 <a name="DokumentorientierteDatenbankVerwenden"></a>
 #Dokumentorientierte Datenbank verwenden
 - Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
+
+<a href="#top">top</a>
 
 <a name="Roadmap"></a>
 #Roadmap
@@ -114,6 +129,10 @@ fertig!
 - Jetzt wird sie durch die AnwenderInnen getestet
 - Bewährt sie sich, wird sie die bisherige Access-Anwendung ersetzen
 
+<a href="#top">top</a>
+
 <a name="OpenSource"></a>
 #Open source
 Die für die Anwendung verwendete [Lizenz](https://github.com/barbalex/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten ist aber nur mit Einverständnis der Autoren zulässig.
+
+<a href="#top">top</a>
