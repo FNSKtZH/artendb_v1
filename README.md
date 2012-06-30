@@ -117,7 +117,7 @@ fertig!
 Ev. kann auf die Feldverwaltung verzichtet werden. Oder sie kann für besondere Featurs benutzt werden, muss aber nicht. Denn es sollte möglich sein, die Benutzeroberfläche auch ohne eine explizite Feldverwaltung aufzubauen. So sollte der Datentyp dynamisch eruierbar sein. Und auch die Länge des Feldinhalts kann dynamisch ermittelt werden und daraufhin für lange Textfelder ein "Textarea" gewählt werden.
 Solche besonderen Features könnten sein:
 - Felder mit einem gemeinsamen Titel gruppieren
-- Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="FelderZusammenfassen">oben</a>)
+- Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld
 
 <a href="#top">&#8593; top</a>
@@ -125,8 +125,8 @@ Solche besonderen Features könnten sein:
 <a name="DokumentorientierteDatenbankVerwenden"></a>
 #Dokumentorientierte Datenbank verwenden
 - Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
-- Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen
-- Eine dokumentbasierte Datenbank eignet sich hervorragend, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
+- Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen...
+- ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
 
 <a href="#top">&#8593; top</a>
 
