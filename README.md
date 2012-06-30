@@ -3,16 +3,16 @@ Die Arten- und Lebensraumdatenbank existiert schon. Man kann sie kostenlos [heru
 
 Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte.
 
-Inhalt
-<a href="#Ausgangspunkt">Ausgangspunkt</a>
-<a href="#WasIstWichtig">Was ist wichtig</a>
-<a href="#Datensammlungen">Datensammlungen</a>
-<a href="#ArtgruppenVereinen">Artgruppen vereinen</a>
-<a href="#CodierungVereinfachen">Codierung vereinfachen</a>
-<a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
-<a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
-<a href="#Roadmap">Roadmap</a>
-<a href="#OpenSource">Open source</a>
+## Inhalt ##
+* <a href="#Ausgangspunkt">Ausgangspunkt</a>
+* <a href="#WasIstWichtig">Was ist wichtig</a>
+* <a href="#Datensammlungen">Datensammlungen</a>
+* <a href="#ArtgruppenVereinen">Artgruppen vereinen</a>
+* <a href="#CodierungVereinfachen">Codierung vereinfachen</a>
+* <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
+* <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
+* <a href="#Roadmap">Roadmap</a>
+* <a href="#OpenSource">Open source</a>
 
 #<a id="Ausgangspunkt">Ausgangspunkt</a>
 sind ein paar Feststellungen:
@@ -107,4 +107,4 @@ fertig!
 - Bewährt sie sich, wird sie die bisherige Access-Anwendung ersetzen
 
 #<a id="OpenSource">Open source</a>
-Die verwendete [Lizenz](https://github.com/barbalex/apflora/blob/master/License.md) ist sehr freizügig. Neben dem Code steht auch die Datenstruktur als [Download](https://github.com/barbalex/apflora/downloads) zur Verfügung. Die eigentlichen Daten aber, mit denen gearbeitet wird, gehören der Fachstelle Naturschutz des Kantons Zürich und stehen nicht zur freien Verfügung.
+Die für die Anwendung verwendete [Lizenz](https://github.com/barbalex/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten ist aber nur mit Einverständnis der Autoren zulässig.
