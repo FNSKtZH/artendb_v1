@@ -128,7 +128,7 @@ Solche besonderen Features könnten sein:
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen...
 - ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
 
-Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren Datensammlungen dargestellt werden kann:
+Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
 ```javascript
 {
    "_id": "15544EBD-51D0-470B-9C34-B6F822EACABF",
@@ -425,9 +425,9 @@ Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren 
 }
 ```
 
-Das kann jeder Laie direkt lesen (muss er aber nicht). Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen!
+Das könnte jeder Laie direkt lesen. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon aufwändig, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind.
 
-Für eine gute Lesbarkeit fehlt in diesem Beispiel noch die Decodierung der Daten. Wenn sie erst mal decodiert sind, könnte man statt einer aufwändigen Benutzeroberfläche schon fast Original-JSON anzeigen...
+Für eine gute Lesbarkeit fehlt in diesem Beispiel noch die Decodierung der Daten. Die Feldnamen müssen ausformuliert und die Abkürzungen durch lesbare Bezeichnungen ersetzt werden.
 
 <a href="#top">&#8593; top</a>
 
