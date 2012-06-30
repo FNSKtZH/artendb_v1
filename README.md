@@ -46,6 +46,7 @@ sind ein paar Feststellungen:
 **Für Datenpfleger und Systemverantwortliche:**
 
 - Die Komplexität der Datenstruktur ist minimiert
+- Der Code ist gut dokumentiert
 - Neue Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden ergänzt werden
 
 <a href="#top">&#8593; top</a>
@@ -92,7 +93,7 @@ Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Le
 <a name="CodierungVereinfachen"></a>
 #Codierung vereinfachen
 Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
-- Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren (Arrays)
+- Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren
 - Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert
 
 <a href="#top">&#8593; top</a>
@@ -109,18 +110,15 @@ Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Mensche
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
 - Art- oder Lebensraumeigenschaften vorbereiten
-- Informationen über die Felder vorbereiten (ev. nicht nötig, siehe unten)
+- Informationen über die Felder vorbereiten (fakultativ, siehe unten)
 - Informationen über die Datensammlung vorbereiten
 - Alles importieren
 fertig!
 
-Wenn Daten nicht in der Anwendung selbst erfasst werden, sondern nur über Schnittstellen importiert, kann auf die Feldverwaltung sogar verzichtet werden. Oder sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren. Denn es sollte möglich sein, die Benutzeroberfläche auch ohne eine explizite Feldverwaltung aus einer guten JSON-Datenstruktur heraus aufzubauen. So sollte der Datentyp dynamisch eruierbar sein. Und auch die Länge des Feldinhalts kann dynamisch ermittelt werden und daraufhin für lange Textfelder ein "Textarea" gewählt werden.
-Solche besonderen Features könnten sein:
-- Felder mit einem gemeinsamen Titel gruppieren
+Nur Lebenstaumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
+- Felder mit einem gemeinsamen Titel gruppiert anzeigen
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld
-
-Die einzigen Daten, die in der Anwendung selbst erfasst werden können sollten, sind Lebensraumkartierungen.
 
 <a href="#top">&#8593; top</a>
 
