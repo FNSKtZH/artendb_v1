@@ -96,7 +96,8 @@ Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 - Alles importieren
 fertig!
 
-#<a id="DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
+<a name="DokumentorientierteDatenbankVerwenden"></a>
+#Dokumentorientierte Datenbank verwenden
 - Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
