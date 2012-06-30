@@ -115,10 +115,10 @@ Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 - Alles importieren
 fertig!
 
-Nur Lebenstaumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
+Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
-- Bemerkungen bzw. Interpretationshilfen zum Feld
+- Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
 
 <a href="#top">&#8593; top</a>
 
@@ -128,7 +128,7 @@ Nur Lebenstaumkartierungen müssen in der Anwendung selbst erfasst werden könne
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen...
 - ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
 
-Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
+Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Foramt. Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
 ```javascript
 {
    "_id": "15544EBD-51D0-470B-9C34-B6F822EACABF",
