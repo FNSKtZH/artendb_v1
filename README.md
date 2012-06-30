@@ -1,5 +1,5 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank existiert schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
+Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
 
 
 Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Dies hier ist der Versuch, sie weiter zu entwickeln.
@@ -114,11 +114,13 @@ Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 - Alles importieren
 fertig!
 
-Ev. kann auf die Feldverwaltung verzichtet werden. Oder sie kann für besondere Featurs benutzt werden, muss aber nicht. Denn es sollte möglich sein, die Benutzeroberfläche auch ohne eine explizite Feldverwaltung aufzubauen. So sollte der Datentyp dynamisch eruierbar sein. Und auch die Länge des Feldinhalts kann dynamisch ermittelt werden und daraufhin für lange Textfelder ein "Textarea" gewählt werden.
+Wenn Daten nicht in der Anwendung selbst erfasst werden, sondern nur über Schnittstellen importiert, kann auf die Feldverwaltung sogar verzichtet werden. Oder sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren. Denn es sollte möglich sein, die Benutzeroberfläche auch ohne eine explizite Feldverwaltung aus einer guten JSON-Datenstruktur heraus aufzubauen. So sollte der Datentyp dynamisch eruierbar sein. Und auch die Länge des Feldinhalts kann dynamisch ermittelt werden und daraufhin für lange Textfelder ein "Textarea" gewählt werden.
 Solche besonderen Features könnten sein:
 - Felder mit einem gemeinsamen Titel gruppieren
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld
+
+Die einzigen Daten, die in der Anwendung selbst erfasst werden können sollten, sind Lebensraumkartierungen.
 
 <a href="#top">&#8593; top</a>
 
