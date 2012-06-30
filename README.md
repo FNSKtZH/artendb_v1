@@ -207,6 +207,10 @@ Hier ein Beispiel, wie eine Art im JSON Format sammt Informationen aus mehreren 
 }
 ```
 
+Das kann jeder Laie direkt lesen (muss er aber nicht). Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen!
+
+Für eine gute Lesbarkeit fehlt in diesem Beispiel noch die Decodierung der Daten.
+
 <a href="#top">&#8593; top</a>
 
 <a name="Roadmap"></a>
