@@ -73,6 +73,7 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 
 In vielen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
+<a name="FelderZusammenfassen"></a>
 Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Um das zu ermöglichen folgende Idee:
 
 - In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen
@@ -90,9 +91,9 @@ Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Le
 
 <a name="CodierungVereinfachen"></a>
 #Codierung vereinfachen
-Viele Werte sind heute codiert. Die Felder enthalten unverständliche Codes. Diese werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
+Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
 - Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren (Arrays)
-- Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert.
+- Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert
 
 <a href="#top">&#8593; top</a>
 
@@ -108,10 +109,16 @@ Viele Werte sind heute codiert. Die Felder enthalten unverständliche Codes. Die
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
 - Art- oder Lebensraumeigenschaften vorbereiten
-- Informationen über die Felder vorbereiten
+- Informationen über die Felder vorbereiten (ev. nicht nötig, siehe unten)
 - Informationen über die Datensammlung vorbereiten
 - Alles importieren
 fertig!
+
+Ev. kann auf die Feldverwaltung verzichtet werden. Oder sie kann für besondere Featurs benutzt werden, muss aber nicht. Denn es sollte möglich sein, die Benutzeroberfläche auch ohne eine explizite Feldverwaltung aufzubauen. So sollte der Datentyp dynamisch eruierbar sein. Und auch die Länge des Feldinhalts kann dynamisch ermittelt werden und daraufhin für lange Textfelder ein "Textarea" gewählt werden.
+Solche besonderen Features könnten sein:
+- Felder mit einem gemeinsamen Titel gruppieren
+- Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="FelderZusammenfassen">oben</a>)
+- Bemerkungen bzw. Interpretationshilfen zum Feld
 
 <a href="#top">&#8593; top</a>
 
