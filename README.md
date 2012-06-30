@@ -1,8 +1,20 @@
 Die Arten- und Lebensraumdatenbank existiert schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
 
 
-Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte. 
-# Ausgangspunkt #
+Als ich in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) angefangen habe, existierte bereits eine Version. Sie wurde in den letzten vier Jahren stark ausgebaut. Mittlerweile überlege ich mir, wie sie weiterentwickelt werden könnte.
+
+Inhalt
+<a href="#Ausgangspunkt">Ausgangspunkt</a>
+<a href="#WasIstWichtig">Was ist wichtig</a>
+<a href="#Datensammlungen">Datensammlungen</a>
+<a href="#ArtgruppenVereinen">Artgruppen vereinen</a>
+<a href="#CodierungVereinfachen">Codierung vereinfachen</a>
+<a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
+<a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
+<a href="#Roadmap">Roadmap</a>
+<a href="#OpenSource">Open source</a>
+
+#<a id="Ausgangspunkt">Ausgangspunkt</a>
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
@@ -11,7 +23,7 @@ sind ein paar Feststellungen:
 - Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität scheint mir die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)
 
-# Was ist wichtig? #
+#<a id="WasIstWichtig">Was ist wichtig</a>
 **Für die Benutzerin:**
 
 - Die Anwendung ist einfach zu bedienen
@@ -31,7 +43,7 @@ sind ein paar Feststellungen:
 - Die Komplexität der Datenstruktur ist minimiert
 - Neue Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden ergänzt werden
 
-# Datensammlungen #
+#<a id="Datensammlungen">Datensammlungen</a>
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation)
@@ -60,15 +72,15 @@ Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Da
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
 - Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
 
-# Artgruppen vereinen #
+#<a id="ArtgruppenVereinen">Artgruppen vereinen</a>
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes erreicht ist (32). Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
 
-# Codierung vereinfachen #
+#<a id="CodierungVereinfachen">Codierung vereinfachen</a>
 Viele Werte sind heute codiert. Die Felder enthalten unverständliche Codes. Diese werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
 - Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren (Arrays)
 - Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert.
 
-# Neue Datensammlungen einfach hinzufügen #
+#<a id="NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 - Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut
 - Dazu werden die Feldeigenschaften verwaltet. Unter anderen:
  - Datensammlung
@@ -84,7 +96,15 @@ Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 - Alles importieren
 fertig!
 
-# Dokumentorientierte Datenbank verwenden #
+#<a id="DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
 - Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen
 - Eine dokumentbasierte Datenbank eignet sich hervorragend, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Lebensräumen sind entsprechend sehr einfach zu verwalten
+
+#<a id="Roadmap">Roadmap</a>
+- Die Anwendung enthält alle geplanten Funktionen
+- Jetzt wird sie durch die AnwenderInnen getestet
+- Bewährt sie sich, wird sie die bisherige Access-Anwendung ersetzen
+
+#<a id="OpenSource">Open source</a>
+Die verwendete [Lizenz](https://github.com/barbalex/apflora/blob/master/License.md) ist sehr freizügig. Neben dem Code steht auch die Datenstruktur als [Download](https://github.com/barbalex/apflora/downloads) zur Verfügung. Die eigentlichen Daten aber, mit denen gearbeitet wird, gehören der Fachstelle Naturschutz des Kantons Zürich und stehen nicht zur freien Verfügung.
