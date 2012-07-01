@@ -336,9 +336,7 @@ Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie ein
 
 <a name="Roadmap"></a>
 #Roadmap
-- Die Anwendung enthält alle geplanten Funktionen
-- Jetzt wird sie durch die AnwenderInnen getestet
-- Bewährt sie sich, wird sie die bisherige Access-Anwendung ersetzen
+Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
 <a href="#top">&#8593; top</a>
 
