@@ -128,303 +128,209 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Foramt. Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
 ```javascript
 {
-   "_id": "15544EBD-51D0-470B-9C34-B6F822EACABF",
-   "_rev": "18-8bfc0deddc787bbc247fddcad2b64a7f",
+   "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
+   "_rev": "13-07dd7f249d8cb45465efd43ae2f133ce",
+   "Gruppe": "Fauna",
    "Index": {
        "Typ": "Datensammlung",
        "Felder": {
-           "Gruppe": "Flora",
-           "NR": 334200,
-           "Status": "A",
-           "Name": "Pulsatilla vulgaris Mill.",
-           "Familie": "Ranunculaceae",
-           "Gattung": "Pulsatilla",
-           "Art": "vulgaris",
-           "Autor": "Mill.",
-           "OffizielleArt": 334200,
-           "Deutsch": "Gewöhnliche Küchenschelle",
-           "Franzoesisch": "Coquelourde, Pulsatille vulgaire",
-           "Italienisch": "Pulsatilla comune",
-           "EXPORT_SOURCES": "AB/BH/FH/HL/WS/LZ/LR",
-           "NO_FH": "158",
-           "GUID": "15544EBD-51D0-470B-9C34-B6F822EACABF"
+           "Nuesp": 70158,
+           "Klasse": "Reptilia",
+           "Ordnung": "Squamata",
+           "Familie": "Colubridae",
+           "Gattung": "Coronella",
+           "Art": "austriaca",
+           "Autor": "Laurenti, 1768",
+           "Name_Deutsch": "Schlingnatter",
+           "Name_Französisch": "Coronelle lisse",
+           "Name_Italienisch": "Colubro liscio",
+           "Name_Romanisch": "Natra glischa",
+           "Name_Englisch": "Smooth snake",
+           "Name_vollständig": "Coronella austriaca Laurenti, 1768",
+           "Schutz_CH": "Schutz gemäss NHG"
        }
    },
-   "CH Zeigerwerte 2010": {
+   "CH_Rote_Listen": {
        "Typ": "Datensammlung",
        "Felder": {
-           "Zw2010Sen": "4736",
-           "Zw2010Fan": "19.14.5.1",
-           "Zw2010Fhn": "158",
-           "Zw2010Zwn": "1146",
-           "Zw2010Wsn": "378",
-           "Zw2010KlimaT": "4",
-           "Zw2010KlimaTv": "I",
-           "Zw2010KlimaK": "5",
-           "Zw2010KlimaKv": "I",
-           "Zw2010KlimaL": "4",
-           "Zw2010KlimaLv": "I",
-           "Zw2010BodenF": "1.5",
-           "Zw2010BodenFv": "I",
-           "Zw2010BodenW": "1",
-           "Zw2010BodenR": "4",
-           "Zw2010BodenRv": "I",
-           "Zw2010BodenN": "2",
-           "Zw2010BodenNv": "I",
-           "Zw2010BodenH": "3",
-           "Zw2010BodenHv": "I",
-           "Zw2010BodenD": "3",
-           "Zw2010BodenDv": "I",
-           "Zw2010StrLf": "h",
-           "Zw2010StrBd": "s",
-           "Zw2010StrWt": "1.5",
-           "Zw2010StrRo": "Rh Wv",
-           "Zw2010StrKs": "crs",
-           "Zw2010BioDa": "Me",
-           "Zw2010BioVa": "Sr",
-           "Zw2010BioFs": "zw",
-           "Zw2010BioMa": "r6",
-           "Zw2010BioBz": "3-4",
-           "Zw2010BioMv": "2",
-           "Zw2010BioDg": 2,
-           "Zw2010BioGi": "tg h",
-           "Zw2010VorkAe": "I",
-           "Zw2010VorkEm": "2",
-           "NR": 334200,
-           "GUID": "15544EBD-51D0-470B-9C34-B6F822EACABF"
+           "Europa_Smaragd": false,
+           "Europa": "gefährdet",
+           "Deutschland": "keine Angabe",
+           "Schweiz_aktuell": "verletzlich (VU)",
+           "Schweiz_Kriterien": "B2a, B2b(iii, iv)",
+           "Nordschweiz": "stark gefährdet",
+           "Jura": "keine Angabe",
+           "Nordostschweiz": "keine Angabe",
+           "Östliches_Mittelland": "keine Angabe",
+           "Kt_Zürich": "vom Aussterben bedroht",
+           "Bemerkungen": "Im Mittelland vom Aussterben bedroht",
+           "Quelle": "BAFU 2005 (CH), älter (Regionen)",
+           "Prioritätsart_Vögel": false
        }
    },
-   "CH Zeigerwerte 1977": {
+   "Blaue_Liste": {
        "Typ": "Datensammlung",
        "Felder": {
-           "ZwlFeuchtezahl": 1,
-           "ZwlFeuchteZ1": false,
-           "ZwlFeuchteZ2": false,
-           "ZwlFeuchteZ3": 0,
-           "ZwlReakzahl": 4,
-           "ZwlNaehrstzahl": 2,
-           "ZwlHumuszahl": 3,
-           "ZwlDisperszahl": 3,
-           "ZwlSalzzeichen": 2,
-           "ZwlLichtzahl": 4,
-           "ZwlTempzahl": 4,
-           "ZwlKontzahl": 4,
-           "ZwlWuchsform": 8,
-           "ZwlNeophyt": false
+           "Lebensraum": "Geröllhalden, Schuttfluren, Waldränder, Steinbrüche, Böschungen",
+           "Bestandesentwicklung": "Bestandesabnahme gesamthaft im Untersuchungsgebiet ohne oder trotz Schutzmassnahmen",
+           "Schutzmassnahmen": "Teilweises Entbuschen/Auflichten verwachsener oder verwaldeter Lebensräume, Versteck- und Überwinterungsplätze erhalten.",
+           "Wirksamkeit_der_Schutzmassnahmen": "Einsatz oder Wirkung von Schutzmassnahmen nicht beurteilt oder unklar",
+           "Anwendungshäufigkeit_der_Schutzmassnahmen_zur_Erhaltung": "Einzelfälle",
+           "Anwendungshäufigkeit_der_Schutzmassnahmen_zur_Förderung": "noch nie",
+           "Erfolgsaussichten": "befriedigend",
+           "Aufwand": "mittel"
        }
    },
-   "Witt 1995": {
+   "CH_Prioritäten": {
        "Typ": "Datensammlung",
        "Felder": {
-           "Witt_Alter": "mehrjährig",
-           "Witt_Höhe": "10-30",
-           "Witt_Blfarbe": "violett",
-           "Witt_Blmonat": "2-4",
-           "Witt_Wärmekeimer": false,
-           "Witt_Kaltkeimer": true,
-           "Witt_Lichtkeimer": true,
-           "Witt_Dunkelkeimer": false,
-           "Witt_KeimMonate": "8-12",
-           "Witt_ungeschlechtlicheFortpflanzung": "Wurzelschnittlinge 11",
-           "Witt_Schmetterlinge": true,
-           "Witt_Wildbienen": true,
-           "Witt_Hummeln": true,
-           "Witt_Fliegen": false,
-           "Witt_Käfer": false,
-           "Witt_Vögel": false,
-           "Witt_Säuger": false
+           "Prioritätsindex": "4a",
+           "Lebensraum_Delarze_Nummer": "6.-3",
+           "Lebensraum_Delarze": "wärmliebende Laubwälder",
+           "Letzter_Nachweis_Kt_AG": "2000-2006",
+           "Letzter_Nachweis_Kt_AI": "2000-2006",
+           "Letzter_Nachweis_Kt_BE": "2000-2006",
+           "Letzter_Nachweis_Kt_BL": "1980-1999",
+           "Letzter_Nachweis_Kt_BS": "1980-1999",
+           "Letzter_Nachweis_Kt_FR": "2000-2006",
+           "Letzter_Nachweis_Kt_GE": "1980-1999",
+           "Letzter_Nachweis_Kt_GL": "2000-2006",
+           "Letzter_Nachweis_Kt_GR": "2000-2006",
+           "Letzter_Nachweis_Kt_JU": "2000-2006",
+           "Letzter_Nachweis_Kt_LU": "2000-2006",
+           "Letzter_Nachweis_Kt_NE": "2000-2006",
+           "Letzter_Nachweis_Kt_NW": "2000-2006",
+           "Letzter_Nachweis_Kt_OW": "2000-2006",
+           "Letzter_Nachweis_Kt_SG": "2000-2006",
+           "Letzter_Nachweis_Kt_SH": "2000-2006",
+           "Letzter_Nachweis_Kt_SO": "2000-2006",
+           "Letzter_Nachweis_Kt_SZ": "2000-2006",
+           "Letzter_Nachweis_Kt_TG": "1980-1999",
+           "Letzter_Nachweis_Kt_TI": "2000-2006",
+           "Letzter_Nachweis_Kt_UR": "2000-2006",
+           "Letzter_Nachweis_Kt_VD": "2000-2006",
+           "Letzter_Nachweis_Kt_VS": "2000-2006",
+           "Letzter_Nachweis_Kt_ZG": "< 1950",
+           "Letzter_Nachweis_Kt_ZH": "2000-2006"
        }
    },
-   "CH Rote Liste 2002": {
+   "CH_Umweltziele_LW": {
        "Typ": "Datensammlung",
        "Felder": {
-           "RL02_NO_LR2002": 2307,
-           "RL02_BERN_CONVENTION": false,
-           "RL02_IUCN1997_REDLIST": false,
-           "RL02_PROTECTION": 1,
-           "RL02_NEOPHYTE": 0,
-           "RL02_INVASIF": false,
-           "RL02_CH": 5,
-           "RL02_ADV_JU": false,
-           "RL02_JU_TOT": 5,
-           "RL02_JU1": 5,
-           "RL02_JU2": 5,
-           "RL02_ADV_MP": false,
-           "RL02_MP_TOT": 5,
-           "RL02_MP1": 5,
-           "RL02_MP2": 5,
-           "RL02_ADV_NA": false,
-           "RL02_NA_TOT": 6,
-           "RL02_NA1": 9,
-           "RL02_NA2": 6,
-           "RL02_ADV_WA": false,
-           "RL02_WA_TOT": 9,
-           "RL02_ADV_EA": false,
-           "RL02_EA_TOT": 9,
-           "RL02_ADV_SA": false,
-           "RL02_SA_TOT": 9,
-           "RL02_SA1": 9,
-           "RL02_SA2": 9,
-           "RL02_SA3": 9,
-           "RL02_GRP_ECOL": 6,
-           "RL02_CRITERES_IUCN": "A4dB1B2cB2eC2a"
+           "Zielart": true,
+           "Leitart": false,
+           "Priorität_Umsetzung": "hoch prioritär",
+           "Qualitätsstufe": "hohe Qualität, ist nur unter günstigen Rahmenbedingungen zu erreichen",
+           "Jura": true,
+           "Mittelland": true,
+           "Nordalpen": true,
+           "Westliche_Zentralalpen": true,
+           "Östliche_Zentralalpen": true,
+           "Südalpen": true
        }
    },
-   "CH Rote Liste 1991": {
+   "Agroscope_Zielart": {
        "Typ": "Datensammlung",
        "Felder": {
-           "RlSmaragd": false,
-           "RlEu": 6,
-           "RlCh": 2,
-           "RlWJu": 2,
-           "RlNJu": 2,
-           "RlNo": 2,
-           "RlWestML": 10,
-           "RlOstML": 2,
-           "RlWestN": 10,
-           "RlOstN": 10,
-           "RlWestZ": 10,
-           "RlOstZ": 2,
-           "RlSued": 10,
-           "RlLR": 3
+           "1_1_West-Jura": true,
+           "1_2_Nord-Jura": true,
+           "1_3_Nordostschweiz": true,
+           "2_1_West-Mittelland": true,
+           "2_2_Ost-Mittelland": true,
+           "3_1_West-Nordalpen": true,
+           "3_2_Ost-Nordalpen": true,
+           "4_1_West-Zentralalpen": true,
+           "4_2_Ost-Zentralalpen": true,
+           "4_3_Engadin": true,
+           "5_Südalpen": true,
+           "Collin": true,
+           "Montan": true,
+           "Subalpin": true,
+           "Alpin": false,
+           "Rote_Liste_CH": "gefährdet",
+           "Aufwand_für_Erfolg": "gross",
+           "Beobachtbarkeit": " Die Art ist schwieriger nachzuweisen",
+           "Verbreitung_Lebensraum_Massnahmen": "Im Mittelland ist sie nur noch inselartig verbreitet und regional bereits ausgestorben; bis knapp über 2000 m. Bevorzugt in sich schnell erwärmenden Lagen, v.a. in flachgründigen Lebensräumen, die mit Steinstrukturen unterschiedlichster Art durchzogen sind. Lebensraum: Felsfluren, Blockschutt- und Geröllhalden, steinige Böschungen aller Art, Magerweiden, Steppenrasen, aber auch Waldränder, Eisenbahnareale, Abbaugebiete, Rebberge. Massnahmen: V.a. Erhalt bestehender Populationen und Vergrösserung deren Lebensräume durch Schaffung von Kleinstrukturen (Steinhaufen, Trockensteinmauern, Holzhaufen, etc.), extensive Nutzung (Krautschicht nur einmal jährlich mähen, spät mähen, Teile stehen lassen, Schnitthöhe > 10 cm), Waldränder mit stufigem Gebüschmantel und breitem Krautsaum; Aufwertungsmassnahmen für Eidechsen und Blindschleichen (Hauptnahrung); Bahndämme reptiliengerecht pflegen, da sie wichtige Ausbreitungs- und Verbindungskorridore sein können. Flächenanspruch einer Population (Grössenordnung): geeignete und vernetzte Teilflächen von mind. 1-5 a, insgesamt 50 ha geeignetes Habitat."
        }
    },
-   "Blaue Liste": {
+   "ZH_Artwert": {
        "Typ": "Datensammlung",
        "Felder": {
-           "BlBl": 3,
-           "BlNUT": 2,
-           "BlAnwhNUTErh": 3,
-           "BlAnwhNUTFoerd": 1,
-           "BlFoerdErfChance": 1,
-           "BlFoerdErfChanceW": 2,
-           "BlFoerdAufwand": 3,
-           "BlFoerdNUT": "Magere Wiesen in trockenen, warmen Lagen regenerieren; lichte Wälder und Waldränder fördern.",
-           "BlLrTyp": "Trocken- und Halbtrocken-rasen; Trockene, wärmeliebende Waldränder; Wärmeliebende Wälder"
+           "Artwert": 8,
+           "Mangelnde_Datengrundlagen": false,
+           "Artwertberechnung_Areal_weltweit": "gross (0 Punkte)",
+           "Artwertberechnung_Anteil_am_CH-Bestand": "klein: <1/4 (0 Punkte)"
        }
    },
-   "CH Prioritäten": {
+   "ZH_AP": {
        "Typ": "Datensammlung",
        "Felder": {
-           "PbPGefaehrdung": 3,
-           "PbPVerantwortung": 0,
-           "PbPKombiniert": "3_0",
-           "PbPrioritaetBafu": "4",
-           "PbDiffAtlas": false,
-           "PbAG": 1,
-           "PbBL": 3,
-           "PbGR": 3,
-           "PbLU": 4,
-           "PbNE": 2,
-           "PbSG": 4,
-           "PbSH": 1,
-           "PbSO": 3,
-           "PbTG": 1,
-           "PbVD": 1,
-           "PbZH": 1
+           "Status": "erstellt",
+           "Beginn_im_Jahr": 2004,
+           "Stand_Umsetzung": "noch keine Umsetzung",
+           "Link_zum_AP-Bericht": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fa/schlingnatter.html"
        }
    },
-   "CH Umweltziele LW": {
+   "ZH_AP_Einstufung": {
        "Typ": "Datensammlung",
        "Felder": {
-           "UzlZielart": true,
-           "UzlLeitart": false,
-           "UzlEtappierungZielart": "2",
-           "UzlQualitaetsstufe": "3",
-           "UzlQualitaetRegion1": 3
+           "Dringlichkeit_AP": "gross",
+           "Priorität_nach_NSGK90": "gross",
+           "Bestandesentwicklung_1985_bis_2000": "Abnahme",
+           "Keine_Bestandesabnahme_aber_Population_bedroht": "nicht beurteilt",
+           "Fördermassnahmen_bekannt": "ja",
+           "Geeignete_Lebensräume_vohanden_herstellbar": "ja",
+           "Überlebensfähige_Populationen_vorhanden": "ja",
+           "Etablierungs-Potential_gut": "ja",
+           "Ausbreitungs-Potential_gut": "ja",
+           "Erfolgsaussichten_vorhanden": "ja",
+           "Nationales_Artenschutzprogramm": "nein",
+           "Höchste_Dringlichkeit": "ja",
+           "Verhältnis_Aufwand_Ertrag_günstig": "unbekannt",
+           "Umbrella_flagship_species": "ja",
+           "Bereits_irgendwo_Artenschutzprogramme": "ja",
+           "Dringlichkeit": "gross",
+           "Auswahl_vorgeschlagen": true,
+           "Bemerkungen": "Höchste Dringlichkeit? Ergänzungen zum bestehenden Konzept (übrige Standorte) ect.; ZH hat grosse Verantwortung: mehr Standorte als Nachbarkantone\r\nErfolgsaussichten (Bemerkung zu Punkt 4): grosse Pop. an Bahnlinien\r\nFörderungsmassnahmen: Massnahmen in einfacher Form vorgeschlagen: konkret Standort ermittelt, für ca. 1/2 klar, was machen, Feinumsetzung fehlt noch; Restliche Pop.: keine Massnahmen-Empfehlungen formuliert.\r\nRealisierbarkeit: Grundeigentümer z.T. nicht einverstanden\r\nProjekt: Naturnetz Pfannenstiel  für Fr. 300000.-- (Geld v.a. von Stiftungen): Schlingnatter im Zentrum, da Schwerpunktvorkommen; früheres Konzept von P. Müller war Grundlage.\r\nJetzt generelle Überlegungen im Kt. ZH machen. (SBB ev. kooperativer, wenn Programm da ist.)",
+           "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
        }
    },
-   "CH TWW": {
+   "ZH_AP_LiWa": {
        "Typ": "Datensammlung",
        "Felder": {
-           "TwwBd_BLUEHBEGINN": "April",
-           "TwwBd_NUTZUNG": "Wiese oder Weide",
-           "TwwBd_POPKONTR": "alle 10 Jahre"
+           "LiWa_Zielart": true,
+           "LiWa_Artwert": 11
        }
    },
-   "ZH Artwert": {
+   "ZH_AP_TWW": {
        "Typ": "Datensammlung",
        "Felder": {
-           "AwArtwert": 11,
-           "AwNeophyt": false,
-           "AwArealWw": 2,
-           "AwAntCh": 2,
-           "AwGefZh2": "E"
+           "Art_ist_relevant": true,
+           "Art_ist_Zielart": true,
+           "Bindung_an_TWW": 8,
+           "Artwert_AP_TWW": 16,
+           "Quelle": "2006: Diverse im Auftrag der FNS"
        }
    },
-   "ZH AP Flora": {
+   "ZH_Artengruppen": {
        "Typ": "Datensammlung",
        "Felder": {
-           "ApStatus": 3,
-           "ApJahr": 2001,
-           "ApUmsetzung": 1,
-           "ApUrl": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fl/kuechenschelle.html"
+           "GIS_Layer": "Reptilien",
+           "Artengruppen_ID_EvAB": 12
        }
    },
-   "ZH AP FM": {
+   "ZH_GIS": {
        "Typ": "Datensammlung",
        "Felder": {
-           "ApFmAwProvNeuber": false,
-           "ApFmRel": false,
-           "ApFmUnerw": false,
-           "ApFmBindungStru": false,
-           "ApFmFoerdReg": false,
-           "ApFmBem": "Art nicht beurteilt: Trockenheitszeiger, F=1"
-       }
-   },
-   "ZH AP LiWa": {
-       "Typ": "Datensammlung",
-       "Felder": {
-           "Gruppe_": "Flora",
-           "IdFloraArtenliste": 233,
-           "IdKategorie": 1,
-           "LiWaArtwert": 13
-       }
-   },
-   "ZH AP TWW": {
-       "Typ": "Datensammlung",
-       "Felder": {
-           "ApTwwRel": true,
-           "ApTwwUnerw": 0,
-           "ApTwwChZielart": true,
-           "ApTwwBb": 9,
-           "ApTwwAw": 20
-       }
-   },
-   "ZH Artengruppen": {
-       "Typ": "Datensammlung",
-       "Felder": {
-           "GISLayer": "Flora",
-           "ArtengruppeIdEVAB": 18
-       }
-   },
-   "ZH KEF": {
-       "Typ": "Datensammlung",
-       "Felder": {
-           "KefArt": true,
-           "KefKontrolljahr": 2003
-       }
-   },
-   "ZH Verbreitung 1995": {
-       "Typ": "Datensammlung",
-       "Felder": {
-           "BISNr": 1132,
-           "DringAP": 1,
-           "SchutzZH": true,
-           "Vorkommen": 4,
-           "HaeufZH1967": 3,
-           "HaeufZH1890": 4,
-           "HaeufZH2010": 2,
-           "BestAendZH": 2,
-           "Gefaehrdung": 2
+           "Betrachtungsdistanz_in_Meter": 3000,
+           "Berücksichtigen_wenn_in_BetrDist_nicht_ausgewiesen": false,
+           "Kriterien_für_Bestimmung_der_Betrachtungsdistanz": "9"
        }
    }
 }
 ```
 
 Das könnte jeder Laie direkt lesen. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon aufwändig, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind.
-
-Für eine gute Lesbarkeit fehlt in diesem Beispiel noch die Decodierung der Daten. Die Feldnamen müssen ausformuliert und die Abkürzungen durch lesbare Bezeichnungen ersetzt werden.
 
 <a href="#top">&#8593; top</a>
 
