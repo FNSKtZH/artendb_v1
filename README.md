@@ -330,7 +330,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 }
 ```
 
-Das könnte jeder Laie direkt lesen. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon aufwändig, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind.
+Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind.
 
 <a href="#top">&#8593; top</a>
 
