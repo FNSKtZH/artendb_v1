@@ -3,7 +3,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 
 ## Inhalt ##
 * <a href="#Ausgangspunkt">Ausgangspunkt</a>
-* <a href="#WasIstWichtig">Was ist wichtig</a>
+* <a href="#Ziele">Ziele</a>
 * <a href="#Datensammlungen">Datensammlungen</a>
 * <a href="#ArtgruppenVereinen">Artgruppen vereinen</a>
 * <a href="#CodierungVereinfachen">Codierung vereinfachen</a>
@@ -19,13 +19,13 @@ sind ein paar Feststellungen:
 - Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
 - Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, welche eigentlich nur der Datenherr fällen sollte
 - Die aktuelle DB kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
-- Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität scheint mir die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
+- Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität ist die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)
 
 <a href="#top">&#8593; top</a>
 
-<a name="WasIstWichtig"></a>
-#Was ist wichtig
+<a name="Ziele"></a>
+#Ziele
 **Für die Benutzerin:**
 
 - Die Anwendung ist einfach zu bedienen
