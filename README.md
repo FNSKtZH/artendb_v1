@@ -93,6 +93,8 @@ Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Mensche
 - Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren
 - Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert
 
+Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2K sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
+
 <a href="#top">&#8593; top</a>
 
 <a name="NeueDatensammlungenEinfachHinzufügen"></a>
