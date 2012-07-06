@@ -5,7 +5,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 * <a href="#Ausgangspunkt">Ausgangspunkt</a>
 * <a href="#Ziele">Ziele</a>
 * <a href="#Datensammlungen">Datensammlungen</a>
-* <a href="#ArtgruppenVereinen">Artgruppen vereinen</a>
+* <a href="#GruppenVereinen">Gruppen vereinen</a>
 * <a href="#CodierungVereinfachen">Codierung vereinfachen</a>
 * <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
@@ -17,10 +17,11 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
-- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, welche eigentlich nur der Datenherr fällen sollte
+- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
 - Die aktuelle DB kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
 - Microsoft Access hat als relationale, dateigebundene Datenbank und als die Anwendung, die sie ist, technische Rahmenbedingungen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität ist die Entwicklung und v.a. der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex als in Access
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden (siehe unten)
+- Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser.
 
 <a href="#top">&#8593; top</a>
 
@@ -44,7 +45,7 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
-- Neue Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden ergänzt werden
+- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden per Import ergänzt oder aktualisiert werden
 
 <a href="#top">&#8593; top</a>
 
@@ -81,17 +82,15 @@ Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Da
 
 <a href="#top">&#8593; top</a>
 
-<a name="ArtgruppenVereinen"></a>
-#Artgruppen vereinen
+<a name="GruppenVereinen"></a>
+#Gruppen vereinen
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
 
 <a href="#top">&#8593; top</a>
 
 <a name="CodierungVereinfachen"></a>
 #Codierung vereinfachen
-Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden.
-- Decodierung vermeiden: Wenn immer möglich uncodierte Werte ins Feld einfügen und Optionslisten in der Feldverwaltung definieren
-- Redundanz statt Komplexität: Wo Abkürzungen für Laien unverständlich sind aber allgemein benutzt werden (z.B. die IUCN-Stati in der Roten Liste) wird der decodierte Wert in einem zweiten Feld gespeichert
+Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden.
 
 Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2K sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
 
@@ -119,7 +118,7 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
 
-Neue Datensammlungen wind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko, was den Unterhalt anbetrifft.
+Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
 
 <a href="#top">&#8593; top</a>
 
@@ -133,10 +132,13 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-07dd7f249d8cb45465efd43ae2f133ce",
+   "_rev": "13-6618d5fd491d49b6faffda8f7a6ffe8f",
    "Gruppe": "Fauna",
    "Index": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Index der Info Fauna. Daten zu 21542 Arten",
+       "Datenstand": "2009",
+       "Link": "http://www.cscf.ch/",
        "Felder": {
            "Nuesp": 70158,
            "Klasse": "Reptilia",
@@ -156,6 +158,8 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "CH_Rote_Listen": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Daten zu 2284 Arten",
+       "Datenstand": "unterschiedlich",
        "Felder": {
            "Europa_Smaragd": false,
            "Europa": "gefährdet",
@@ -174,6 +178,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "Blaue_Liste": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Daten zu 207 Arten",
+       "Datenstand": "1998",
+       "Link": "http://www.bluelist.ethz.ch/",
        "Felder": {
            "Lebensraum": "Geröllhalden, Schuttfluren, Waldränder, Steinbrüche, Böschungen",
            "Bestandesentwicklung": "Bestandesabnahme gesamthaft im Untersuchungsgebiet ohne oder trotz Schutzmassnahmen",
@@ -187,6 +194,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "CH_Prioritäten": {
        "Typ": "Datensammlung",
+       "Beschreibung": "BAFU. Daten zu 607 Arten",
+       "Datenstand": "2012.01",
+       "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
        "Felder": {
            "Prioritätsindex": "4a",
            "Lebensraum_Delarze_Nummer": "6.-3",
@@ -220,6 +230,8 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "CH_Umweltziele_LW": {
        "Typ": "Datensammlung",
+       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Daten zu 374 Arten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
+       "Datenstand": "2008",
        "Felder": {
            "Zielart": true,
            "Leitart": false,
@@ -235,6 +247,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "Agroscope_Zielart": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Agroscope (2008).  Daten zu 207 Arten",
+       "Datenstand": "2008",
+       "Link": "http://www.agroscope.admin.ch",
        "Felder": {
            "1_1_West-Jura": true,
            "1_2_Nord-Jura": true,
@@ -259,6 +274,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_Artwert": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Artwerte für den Kanton Zürich. Daten zu 1530 Arten",
+       "Datenstand": "ca. 1995",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Artwert": 8,
            "Mangelnde_Datengrundlagen": false,
@@ -268,6 +286,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_AP": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Daten zu 36 Arten",
+       "Datenstand": "2007",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Status": "erstellt",
            "Beginn_im_Jahr": 2004,
@@ -277,6 +298,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_AP_Einstufung": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Daten zu 682 Arten",
+       "Datenstand": "ca. 1995",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Dringlichkeit_AP": "gross",
            "Priorität_nach_NSGK90": "gross",
@@ -301,6 +325,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_AP_LiWa": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Daten zu 51 Arten",
+       "Datenstand": "2009",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "LiWa_Zielart": true,
            "LiWa_Artwert": 11
@@ -308,6 +335,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_AP_TWW": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Daten zu 1113 Arten",
+       "Datenstand": "2011",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Art_ist_relevant": true,
            "Art_ist_Zielart": true,
@@ -318,6 +348,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_Artengruppen": {
        "Typ": "Datensammlung",
+       "Beschreibung": "Artengruppen Kt. Zürich. Daten zu allen Arten",
+       "Datenstand": "2012",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "GIS_Layer": "Reptilien",
            "Artengruppen_ID_EvAB": 12
@@ -325,6 +358,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "ZH_GIS": {
        "Typ": "Datensammlung",
+       "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Daten zu allen Arten",
+       "Datenstand": "2012",
+       "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Betrachtungsdistanz_in_Meter": 3000,
            "Berücksichtigen_wenn_in_BetrDist_nicht_ausgewiesen": false,
