@@ -6,7 +6,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 * <a href="#Ziele">Ziele</a>
 * <a href="#Datensammlungen">Datensammlungen</a>
 * <a href="#GruppenVereinen">Gruppen vereinen</a>
-* <a href="#CodierungVereinfachen">Codierung vereinfachen</a>
+* <a href="#DatenDecodieren">Daten decodieren</a>
 * <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
 * <a href="#Roadmap">Roadmap</a>
@@ -88,8 +88,8 @@ Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Le
 
 <a href="#top">&#8593; top</a>
 
-<a name="CodierungVereinfachen"></a>
-#Codierung vereinfachen
+<a name="DatenDecodieren"></a>
+#Daten decodieren
 Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden.
 
 Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2KB sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
