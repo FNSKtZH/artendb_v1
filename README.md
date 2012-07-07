@@ -98,22 +98,25 @@ Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine wei
 
 <a name="NeueDatensammlungenEinfachHinzufügen"></a>
 #Neue Datensammlungen einfach hinzufügen
-- Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut
+Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
 - Art- oder Lebensraumeigenschaften vorbereiten
 - Informationen über die Datensammlung vorbereiten
 - importieren
+
 fertig!
 
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Dazu würden die Feldeigenschaften verwaltet. Unter anderen:
+
 - Datensammlung
 - Feldname
 - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
 - Optionen für Auswahllisten
 
 Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
+
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
@@ -124,9 +127,11 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 <a name="DokumentorientierteDatenbankVerwenden"></a>
 #Dokumentorientierte Datenbank verwenden
-- Die Datenstruktur der Arteigenschaften (1:1, die meisten Felder bleiben leer) ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet, für eine dokumentenorientierte hingegen ideal
-- Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators neue Felder zu ergänzen...
-- ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Alle Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, sind die meisten Felder leer. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
+
+Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen.
+
+Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
 Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Format. Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
@@ -371,7 +376,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind.
+Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Ehrlich gesagt war das JSON-Format kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
 
 <a href="#top">&#8593; top</a>
 
