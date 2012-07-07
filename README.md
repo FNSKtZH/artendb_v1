@@ -65,9 +65,9 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 
 - Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
  - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
+ - Originalbericht
  - Datenstand
  - Link
- - Originalbericht
 - Alle Felder sind im JSON-Format hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
