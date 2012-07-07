@@ -65,14 +65,15 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 
 - Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
  - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
+ - Datenstand
  - Link
- - Allfällige Originaldokumente (z.B. Berichte in pdf-Form)
-- Alle Felder sind im JSON-Format hierarchisch unter ihrer Datensammlung gespeichert
+ - Originalbericht
+- Alle Felder sind im JSON-Format hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
 <a name="FelderZusammenfassen"></a>
-Für bestimmte Zwecke ist das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
+Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
 
 - In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen
 - Ein View fasst alle Felder aller Artgruppen mit demselben zusammenfassenden Feldnamen zusammen
@@ -98,26 +99,26 @@ Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine wei
 <a name="NeueDatensammlungenEinfachHinzufügen"></a>
 #Neue Datensammlungen einfach hinzufügen
 - Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut
-- Dazu werden die Feldeigenschaften verwaltet. Unter anderen:
- - Datensammlung
- - Feldname
- - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
- - Optionen für Auswahllisten
 
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
 - Art- oder Lebensraumeigenschaften vorbereiten
-- Informationen über die Felder vorbereiten (fakultativ, siehe unten)
 - Informationen über die Datensammlung vorbereiten
-- Alles importieren
+- importieren
 fertig!
+
+Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Dazu würden die Feldeigenschaften verwaltet. Unter anderen:
+- Datensammlung
+- Feldname
+- Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
+- Optionen für Auswahllisten
 
 Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
 - Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
 
-Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
+Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
 
 <a href="#top">&#8593; top</a>
 
@@ -128,6 +129,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 - ...und um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach
 
 Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Format. Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
+<a name="JsonBeispiel"></a>
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
