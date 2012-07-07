@@ -84,7 +84,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 <a name="GruppenVereinen"></a>
 #Gruppen vereinen
-Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255).
+Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 <a href="#top">&#8593; top</a>
 
@@ -92,13 +92,15 @@ Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Le
 #Codierung vereinfachen
 Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden.
 
-Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2K sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
+Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2KB sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
+
+Die Codierung wurde jetzt auch in der Access-DB weitgehend entfernt.
 
 <a href="#top">&#8593; top</a>
 
 <a name="NeueDatensammlungenEinfachHinzufügen"></a>
 #Neue Datensammlungen einfach hinzufügen
-Die clientseitigen Datenfelder werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
+Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
@@ -127,7 +129,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 <a name="DokumentorientierteDatenbankVerwenden"></a>
 #Dokumentorientierte Datenbank verwenden
-In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Alle Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, sind die meisten Felder leer. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Alle Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
 Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen.
 
@@ -253,7 +255,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
    },
    "Agroscope_Zielart": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Agroscope (2008).  Daten zu 207 Arten",
+       "Beschreibung": "Agroscope (2008). Daten zu 207 Arten",
        "Datenstand": "2008",
        "Link": "http://www.agroscope.admin.ch",
        "Felder": {
@@ -376,7 +378,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Ehrlich gesagt war das JSON-Format kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das JSON-Format kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
 
 <a href="#top">&#8593; top</a>
 
