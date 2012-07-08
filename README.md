@@ -385,18 +385,24 @@ Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie ein
 
 <a name="Benutzeroberfläche"></a>
 #Benutzeroberfläche
-## Hauptelemente ##
+**Hauptelemente**
+
 Oben ist ein Suchfeld. Links ein Strukturbaum. Rechts das Formular, in dem Daten angezeigt werden. Navigiert werden kann entweder mit dem Strukturbaum oder mit dem Suchfeld.
-## Suchfeld mit autocomplete ##
+
+**Suchfeld mit autocomplete**
+
 Ab zwei oder drei Zeichen wird eine Auswahlliste eingeblendet. Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Wenn es leistungsmässig gut funktioniert, soll nach allen Gruppen gesucht werden können. Die Resultate können nach Gruppen getrennt angezeigt werden.
-## Strukturbaum ##
+
+**Strukturbaum**
+
 Im Baum wird die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Art werden folgende Ordner angezeigt:
 
-- Für jede Datensammlung einen Ordner
+- jede Datensammlung mit Informationen zu dieser Art
 - Beziehungen zu Arten (für jede Gruppe einen Ordner)
 - Beziehungen zu Lebensräumen (für jeden Lebensraum-Schlüssel einen Ordner)
 
-## Formular ##
+**Formular**
+
 Das Formular kann einfach und übersichtlich gestaltet werden, da die bisherigen Register im Strukturbaum abgebildet werden. Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert.
 
 Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Die Suche in Google-Bildern und Wikipedia wird beibehalten.
