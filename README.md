@@ -407,6 +407,10 @@ Das Formular kann einfach und übersichtlich gestaltet werden, da die bisherigen
 
 Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Die Suche in Google-Bildern und Wikipedia wird beibehalten.
 
+**Menu**
+
+Da bin ich mir noch nicht so sicher. Vermutlich werden die Menus mit der rechten Maustaste im Strukturbaum erreichbar sein. Am wichtigsten ist ja der Export von Daten. Und so kann er bequem für die gewünschte Hierarchiestufe angeboten werden.
+
 <a href="#top">&#8593; top</a>
 
 <a name="Roadmap"></a>
