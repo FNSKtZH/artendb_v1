@@ -417,6 +417,11 @@ Da bin ich mir noch nicht so sicher. Vermutlich werden die Menus mit der rechten
 #Roadmap
 Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
+Aktueller Stand:
+
+- Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
+- Der Datenexport aus der heutigen ArtenDB ist zu einem grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import). Ich kann also beim nächsten Kreativitätsschub mit einem ersten Entwurf beginnen
+
 <a href="#top">&#8593; top</a>
 
 <a name="OpenSource"></a>
