@@ -9,6 +9,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 * <a href="#DatenDecodieren">Daten decodieren</a>
 * <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
+* <a href="#Benutzeroberfläche">Benutzeroberfläche</a>
 * <a href="#Roadmap">Roadmap</a>
 * <a href="#OpenSource">Open source</a>
 
@@ -379,6 +380,26 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 ```
 
 Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das JSON-Format kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+
+<a href="#top">&#8593; top</a>
+
+<a name="Benutzeroberfläche"></a>
+#Benutzeroberfläche
+## Hauptelemente ##
+Oben ist ein Suchfeld. Links ein Strukturbaum. Rechts das Formular, in dem Daten angezeigt werden. Navigiert werden kann entweder mit dem Strukturbaum oder mit dem Suchfeld.
+## Suchfeld mit autocomplete ##
+Ab zwei oder drei Zeichen wird eine Auswahlliste eingeblendet. Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Wenn es leistungsmässig gut funktioniert, soll nach allen Gruppen gesucht werden können. Die Resultate können nach Gruppen getrennt angezeigt werden.
+## Strukturbaum ##
+Im Baum wird die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Art werden folgende Ordner angezeigt:
+
+- Für jede Datensammlung einen Ordner
+- Beziehungen zu Arten (für jede Gruppe einen Ordner)
+- Beziehungen zu Lebensräumen (für jeden Lebensraum-Schlüssel einen Ordner)
+
+## Formular ##
+Das Formular kann einfach und übersichtlich gestaltet werden, da die bisherigen Register im Strukturbaum abgebildet werden. Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert.
+
+Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Die Suche in Google-Bildern und Wikipedia wird beibehalten.
 
 <a href="#top">&#8593; top</a>
 
