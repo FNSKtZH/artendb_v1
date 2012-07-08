@@ -395,9 +395,9 @@ Ab zwei oder drei Zeichen wird eine Auswahlliste eingeblendet. Gesucht werden ka
 
 **Strukturbaum**
 
-Im Baum wird die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Art werden folgende Ordner angezeigt:
+Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Arten werden folgende Ordner platziert:
 
-- jede Datensammlung mit Informationen zu dieser Art
+- Jede Datensammlung mit Informationen zu dieser Art
 - Beziehungen zu Arten (für jede Gruppe einen Ordner)
 - Beziehungen zu Lebensräumen (für jeden Lebensraum-Schlüssel einen Ordner)
 
