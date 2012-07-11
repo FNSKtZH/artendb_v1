@@ -3,110 +3,27 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="SHORTCUT ICON" href="style/images/aster.ico">
-		<script type="text/javascript" src="src/jquery.js"></script>
-		<script type="text/javascript" src="src/jquery-ui.js"></script>
-		<script type="text/javascript" src="src/jquery.jstree.js"></script>
-		<script type="text/javascript" src="src/jquery.cookie.js"></script>
-		<script type="text/javascript" src="src/jquery.hotkeys.js"></script>
-		<script type="text/javascript" src="src/artendb.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery-ui.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery.jstree.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery.hotkeys.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/jquery.couch.js"></script>
+		<script type="text/javascript" src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/jquery-ui.css" type="text/css"/>
 		<link rel="stylesheet" href="style/artendb.css" type="text/css"/>
 		<title>ArtenDb</title>
 	</head>
 	<body>
 		<fieldset id="menu">
-			<div class='fieldcontain'>
-				<label id="ap_waehlen_label" for='ap_waehlen' class='select' style="color:#6F6F66;">Gruppe wählen:</label>
-				<select id="ap_waehlen" style="width:367px; font-size:17px;">
-					<option id="fauna">Fauna</option>
-					<option id="flora">Flora</option>
-					<option id="moos">Moose</option>
-				</select>
-			</div>
-			<div class='fieldcontain' style="margin-top:3px; margin-bottom:3px;">
-				<label for="programm_wahl" style="color:#6F6F66; margin-right:5px;">Programme:</label>
-				<span id="programm_wahl">
-					<input type="radio" id="programm_alle" name="programm_wahl" checked="checked"/>
-					<label for="programm_alle">alle</label>
-					<input type="radio" id="programm_ap" name="programm_wahl" />
-					<label for="programm_ap">Aktionspläne</label>
-					<input type="radio" id="programm_neu" name="programm_wahl" />
-					<label for="programm_neu">neu</label>
-				</span>
-				<button id="ap_loeschen" style="margin-left:6px">löschen</button>
-			</div>
 			<input type="search" id="suchen" placeholder="suchen"/>
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
-			<div id="hilfe" style="font-size:80%; color:#6F6F66;">Für Menüs: mit rechter Maustaste im Strukturbaum klicken<a href="https://github.com/barbalex/apflora/wiki" class="ui-icon ui-icon-info" style="float:right;" target="_blank" title="Infos über AP Flora Web"></a></div>
 		</fieldset>
 
 		<fieldset id="forms">
-			<div id="undelete_div" style="text-align:center; margin:0px 30px 10px 148px; border-radius:0.5em; font-weight:bold; background-color:#FFCC33;"></div>
-			<form id="ap" class="form" action="#" method="get" autocomplete="off">
-				<div class='fieldcontain'>
-					<label id="ApArtId_label" for='ApArtId'>Art:</label>
-					<select id="ApArtId" name="ApArtId" class="speichern Datenfelder" formular="ap">
-						<option></option>
-					</select>
-				</div>
-				<div class='fieldcontain'>
-					<label id="ApStatus_label" for='ApStatus'>Aktionsplan:</label>
-					<div class="Datenfelder">
-						<input type="radio" name="ApStatus" id="ApStatus0" class="speichern" formular="ap" value="0" />(kein Eintrag)<br />
-						<input type="radio" name="ApStatus" id="ApStatus4" class="speichern" formular="ap" value="4" />keiner<br />
-						<input type="radio" name="ApStatus" id="ApStatus1" class="speichern" formular="ap" value="1" />vorgesehen<br />
-						<input type="radio" name="ApStatus" id="ApStatus2" class="speichern" formular="ap" value="2" />in Bearbeitung<br />
-						<input type="radio" name="ApStatus" id="ApStatus3" class="speichern" formular="ap" value="3" />erstellt
-					</div>
-				</div>
-				<div class='fieldcontain'>
-					<label id="ApJahr_label" for='ApJahr'>Start im Jahr:</label>
-					<input id="ApJahr" name="ApJahr" class="speichern Datenfelder" formular="ap" type="number"/>
-				</div>
-				<div class='fieldcontain'>
-					<label id="ApUmsetzung_label" for='ApUmsetzung'>Stand Umsetzung:</label>
-					<div class="Datenfelder">
-						<input type="radio" name="ApUmsetzung" class="speichern" formular="ap" id="ApUmsetzung0" value="0" />noch keine Umsetzung<br />
-						<input type="radio" name="ApUmsetzung" class="speichern" formular="ap" id="ApUmsetzung1" value="1" />in Umsetzung<br />
-						<input type="radio" name="ApUmsetzung" class="speichern" formular="ap" id="ApUmsetzung2" value="2" />umgesetzt
-					</div>
-				</div>
-				<div class='fieldcontain'>
-					<label id="ApArtwert_label" for='ApArtwert'>Artwert:</label>
-					<input id="ApArtwert" name="ApArtwert" class="speichern Datenfelder" formular="ap" type="number" readonly="readonly"/>
-				</div>
+			<form id="art" class="form" action="#" method="get" autocomplete="off">
+				
 			</form>
-
-			<form id="pop" class="form" action="#" method="get" autocomplete="off">
-				<div class='fieldcontain'>
-					<label id="PopName_label" for='PopName'>Name:</label>
-					<input id="PopName" name="PopName" class="speichern Datenfelder" formular="pop" type="text"/>
-				</div>
-				<div class='fieldcontain'>
-					<label id="PopNr_label" for='PopNr'>Nr.:</label>
-					<input id="PopNr" name="PopNr" class="speichern Datenfelder" formular="pop" type="number">
-				</div>
-				<div class='fieldcontain'>
-					<label id="PopHerkunft_label" for='PopHerkunft'>Status:</label>
-					<div class="Datenfelder">
-						<input type="radio" name="PopHerkunft" id="PopHerkunft1" class="speichern" formular="pop" value="1" />autochthon<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft6" class="speichern" formular="pop" value="6" />neu entdeckt, autochthon<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft9" class="speichern" formular="pop" value="9" />neu entdeckt, angesiedelt<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft8" class="speichern" formular="pop" value="8" />angesiedelt, vor Beginn Aktionsplan<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft2" class="speichern" formular="pop" value="2" />angesiedelt, nach Beginn Aktionsplan<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft1198167213" class="speichern" formular="pop" value="1198167213"/>nur angesät<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft4" class="speichern" formular="pop" value="4" />erloschen, zuvor autochthon<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft1200498803" class="speichern" formular="pop" value="1200498803" />erloschen, vor AP angesiedelt<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft7" class="speichern" formular="pop" value="7" />erloschen, nach Beginn Aktionsplan angesiedelt<br />
-						<input type="radio" name="PopHerkunft" id="PopHerkunft10" class="speichern" formular="pop" value="10" />überprüft, kein Vorkommen
-					</div>
-				</div>
-				<div class='fieldcontain'>
-					<label id="PopBekanntSeit_label" for='PopBekanntSeit'>Bekannt seit:</label>
-					<input id="PopBekanntSeit" name="PopBekanntSeit" class="speichern Datenfelder" formular="pop" type="number">
-				</div>
-			</form>
-
 		</fieldset>
 
 		<script>
@@ -127,66 +44,8 @@
 					return;
 				}
 
-				initiiere_index();
-
-				$(".form").on("keyup focus", "textarea", function () {
-					FitToContent(this, document.documentElement.clientHeight);
-				});
-
-				$("#menu").on("change", "#ap_waehlen", function () {
-					if (this.value) {
-						//einen AP gewählt
-						$("#ap_waehlen_label").hide();
-						localStorage.ap_id = this.value;
-						if ($("[name='programm_wahl']:checked").attr("id") === "programm_neu") {
-							//zuerst einen neuen Datensatz anlegen
-							$.ajax({
-								url: 'php/ap_insert.php',
-								dataType: 'json',
-								data: {
-									"id": localStorage.ap_id,
-									"user": sessionStorage.User
-								},
-								success: function () {
-									erstelle_ap_liste("programm_alle");
-									$("#programm_neu").attr("checked", false);
-									$("#programm_alle").attr("checked", true);
-									$("#programm_wahl").buttonset();
-									erstelle_tree(localStorage.ap_id);
-									setTimeout("$('#ap_waehlen').val(localStorage.ap_id)", 200);
-									setTimeout("$('#ap_waehlen option[value =' + localStorage.ap_id + ']').attr('selected', true)", 200);
-									$("#ApArtId").val(localStorage.ap_id);
-									initiiere_ap();
-								},
-								error: function (data) {
-									var Meldung;
-									Meldung = JSON.stringify(data);
-									$("#Meldung").html(data.responseText);
-									$( "#Meldung" ).dialog({
-										modal: true,
-										buttons: {
-											Ok: function() {
-												$( this ).dialog( "close" );
-											}
-										}
-									});
-								}
-							});
-						} else {
-							erstelle_tree(this.value);
-							$("#ap").show();
-							initiiere_ap();
-						}
-					} else {
-						//leeren Wert gewählt
-						$("#ap_waehlen_label").html("Artförderprogramm wählen:").show();
-						$("#tree").hide();
-						$("#suchen").hide();
-						$("#hilfe").hide();
-						$("#ap_loeschen").hide();
-						$("#ap").hide();
-					}
-				});
+				$("#suchen").hide();
+				erstelleBaum();
 
 				//Suche steuern
 				$("body").on("keyup click", "#suchen", function () {
@@ -199,8 +58,8 @@
 			});
 
 			$(window).resize(function () {
-				setzeFeldbreiten();
-				setzeTreehoehe();
+				//setzeFeldbreiten();
+				//setzeTreehoehe();
 			});
 
 		</script>
