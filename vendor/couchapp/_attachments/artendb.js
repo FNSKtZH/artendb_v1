@@ -160,3 +160,9 @@ function setzeTreehoehe() {
 		$("#tree").height($(window).height() - 157);
 	}
 }
+
+(function($) {
+    $.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+})(jQuery);

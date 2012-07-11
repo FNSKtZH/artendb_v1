@@ -421,6 +421,7 @@ Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist zu einem grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import). Ich kann also beim nächsten Kreativitätsschub mit einem ersten Entwurf beginnen
+- Habe mit ersten Versuchen begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 <a href="#top">&#8593; top</a>
 
