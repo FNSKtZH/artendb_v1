@@ -111,7 +111,67 @@ function erstelleBaum(Gruppe) {
 			}
 		});
 	} else if (Gruppe === "Moose") {
-		alert("Moose ist noch nicht implementiert");
+		$db.view('artendb/baum_moose_klasse?group=true', {
+			success: function (moose_klasse) {
+				$db.view('artendb/baum_moose_familie?group=true', {
+					success: function (moose_familie) {
+						$db.view('artendb/baum_moose_gattung?group=true', {
+							success: function (moose_gattung) {
+								$db.view('artendb/baum_moose_art', {
+									success: function (moose_art) {
+										var child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
+										children_klasse = [];
+										for (i in moose_klasse.rows) {
+											klasse = moose_klasse.rows[i].key;
+											children_familie = [];
+											for (k in moose_familie.rows) {
+												if (moose_familie.rows[k].key[0] === klasse) {
+													familie = moose_familie.rows[k].key[1];
+													children_gattung = [];
+													for (l in moose_gattung.rows) {
+														if (moose_gattung.rows[l].key[0] === klasse && moose_gattung.rows[l].key[1] === familie) {
+															gattung = moose_gattung.rows[l].key[2];
+															children_art = [];
+															for (n in moose_art.rows) {
+																if (moose_art.rows[n].key[0] === klasse && moose_art.rows[n].key[1] === familie && moose_art.rows[n].key[2] === gattung) {
+																	art = moose_art.rows[n].key[3];
+																	child_art = {
+																			"data": art,
+																			"attr": {"id": moose_art.rows[n].value}
+																		};
+																	children_art.push(child_art);
+																}
+															}
+															child_gattung = {
+																	"data": gattung,
+																	"children": children_art
+																};
+															children_gattung.push(child_gattung);
+														}
+													}
+													child_familie = {
+															"data": familie,
+															"children": children_gattung
+														};
+													children_familie.push(child_familie);
+												}
+											}
+											child_klasse = {
+													"data": klasse,
+													"children": children_familie
+												};
+											baum.push(child_klasse);
+										}
+										//alert(JSON.stringify(baum));
+										erstelleTree(baum);
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
 	}
 }
 

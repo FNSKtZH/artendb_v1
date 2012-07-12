@@ -17,14 +17,14 @@
 	<body>
 		<fieldset id="menu">
 			<div style="display:block; clear:both;">
-				<label id="Gruppe_label" for='Gruppe'>Gruppe:</label><br>
+				<label id="Gruppe_label" for='Gruppe'>Gruppe wählen:</label><br>
 				<div class="Datenfelder">
 					<input type="radio" name="Gruppe" id="GruppeFauna" value="Fauna" />Fauna
 					<input type="radio" name="Gruppe" id="GruppeFlora" value="Flora" />Flora
 					<input type="radio" name="Gruppe" id="GruppeMoose" value="Moose" />Moose
 				</div>
 			</div>
-			<input style="display:block; clear:both;" type="search" id="suchen" placeholder="filtern"/>
+			<input style="display:block; clear:both; width:300px;" type="search" id="suchen" placeholder="filtern"/>
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
 		</fieldset>
 
@@ -59,6 +59,7 @@
 					var Gruppe;
 					Gruppe = this.value;
 					erstelleBaum(Gruppe);
+					$("#Gruppe_label").html("Gruppe:");
 				});
 				
 
