@@ -16,7 +16,15 @@
 	</head>
 	<body>
 		<fieldset id="menu">
-			<input type="search" id="suchen" placeholder="suchen"/>
+			<div style="display:block; clear:both;">
+				<label id="Gruppe_label" for='Gruppe'>Gruppe:</label><br>
+				<div class="Datenfelder">
+					<input type="radio" name="Gruppe" id="GruppeFauna" value="Fauna" />Fauna
+					<input type="radio" name="Gruppe" id="GruppeFlora" value="Flora" />Flora
+					<input type="radio" name="Gruppe" id="GruppeMoose" value="Moose" />Moose
+				</div>
+			</div>
+			<input style="display:block; clear:both;" type="search" id="suchen" placeholder="filtern"/>
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
 		</fieldset>
 
@@ -45,7 +53,13 @@
 				}
 
 				$("#suchen").hide();
-				erstelleBaum();
+
+				//Baum aufbauen, wenn Gruppe gewählt wird
+				$("body").on("change", "#Gruppe", function () {
+					var Gruppe = $('input:checkbox[name="Gruppe"]:checked').val();
+					erstelleBaum(Gruppe);
+				});
+				
 
 				//Suche steuern
 				$("body").on("keyup click", "#suchen", function () {
