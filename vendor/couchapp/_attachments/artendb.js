@@ -119,7 +119,7 @@ function erstelleBaum(Gruppe) {
 							success: function (moose_gattung) {
 								$db.view('artendb/baum_moose_art', {
 									success: function (moose_art) {
-										var child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
+										var child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
 										children_klasse = [];
 										for (i in moose_klasse.rows) {
 											klasse = moose_klasse.rows[i].key;
@@ -209,7 +209,7 @@ function erstelleTree(baum) {
 			if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
 				localStorage.art_id = node.attr("id");
 				//Anzeige im Formular initiieren. ID und Datensammlung übergeben
-				initiiere_art(node.attr("id"), node.attr("typ"));
+				initiiere_art(node.attr("id"));
 			}
 		}
 		setTimeout("setzeTreehoehe()", 200);
@@ -219,11 +219,52 @@ function erstelleTree(baum) {
 	});
 }
 
-function initiiere_art(id, Datensammlung) {
+function initiiere_art(id) {
+	//alert(id);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
-			$("#art").html(JSON.stringify(art));
+			var htmlArt, htmlDatensammlung;
+			//accordion beginnen
+			htmlArt = '<div id="accordion">';
+			for (i in art) {
+				//nur Datensammlungen anzeigen
+				if (art[i].Typ === "Datensammlung") {
+					//im accordion Titel für Datensammlung einfügen
+					htmlDatensammlung = '<h3><a href="#">';
+					htmlDatensammlung += i;
+					htmlDatensammlung += '</a></h3>';
+					//Datensammlung beginnen
+					htmlDatensammlung += '<div>';
+					for (y in art[i]) {
+						//alle die Datensammlung beschreibenden Felder einfügen
+						//if (y.indexOf("Typ", "Felder") === -1) {
+						if (y !== "Typ" && y !== "Felder") {
+							htmlDatensammlung += generiereHtmlFuerTextinput(y, y, art[i][y], "text");
+						}
+						//alle Eigenschaften anzeigen
+						if (y === "Felder") {
+							for (z in art[i][y]) {
+								htmlDatensammlung += generiereHtmlFuerTextinput(z, z, art[i][y][z], "text");
+							}
+						}
+					}
+					//Datensammlung abschliessen
+					htmlDatensammlung += '</div>';
+					//Datensammlung hinzufügen
+					htmlArt += htmlDatensammlung;
+				}
+			}
+			//accordion beenden
+			htmlArt += '</div>';
+			//alert(JSON.stringify(htmlArt));
+			$("#art").html(htmlArt);
+			$("#accordion").accordion({
+				autoHeight: false,
+				navigation: true,
+				collapsible: true
+			});
+			//$("#art").html(JSON.stringify(art));
 		},
 		error: function () {
 			melde("Fehler: Art konnte nicht geöffnet werden");
@@ -244,3 +285,39 @@ function setzeTreehoehe() {
         return this.get(0).scrollHeight > this.height();
     }
 })(jQuery);
+
+//generiert den html-Inhalt für Textinputs
+function generiereHtmlFuerTextinput(FeldName, FeldBeschriftung, FeldWert, InputTyp) {
+	var HtmlContainer;
+	HtmlContainer = '<div data-role="fieldcontain">\n\t<label for="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '">';
+	HtmlContainer += FeldBeschriftung;
+	HtmlContainer += ':</label>\n\t<input id="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" name="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" type="';
+	HtmlContainer += InputTyp;
+	HtmlContainer += '" value="';
+	HtmlContainer += FeldWert;
+	HtmlContainer += '"/>\n</div>';
+	return HtmlContainer;	
+}
+
+//generiert den html-Inhalt für Textarea
+function generiereHtmlFuerTextarea(FeldName, FeldBeschriftung, FeldWert) {
+	var HtmlContainer;
+	HtmlContainer = '<div data-role="fieldcontain">\n\t<label for="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '">';
+	HtmlContainer += FeldBeschriftung;
+	HtmlContainer += ':</label>\n\t<textarea id="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" name="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '"';
+	HtmlContainer += FeldWert;
+	HtmlContainer += '</textarea>\n</div>';
+	return HtmlContainer;	
+}
