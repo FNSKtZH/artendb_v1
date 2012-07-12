@@ -236,18 +236,26 @@ function initiiere_art(id) {
 					htmlDatensammlung += '</a></h3>';
 					//Datensammlung beginnen
 					htmlDatensammlung += '<div>';
-					for (y in art[i]) {
-						//alle die Datensammlung beschreibenden Felder einfügen
-						//if (y.indexOf("Typ", "Felder") === -1) {
-						if (y !== "Typ" && y !== "Felder") {
-							htmlDatensammlung += generiereHtmlFuerTextinput(y, y, art[i][y], "text");
-						}
-						//alle Eigenschaften anzeigen
-						if (y === "Felder") {
-							for (z in art[i][y]) {
-								htmlDatensammlung += generiereHtmlFuerTextinput(z, z, art[i][y][z], "text");
-							}
-						}
+					//Datensammlung beschreiben
+					htmlDatensammlung += '<div class="BeschreibungDatensammlung">';
+					if (art[i].Beschreibung) {
+						htmlDatensammlung += art[i].Beschreibung;
+					}
+					if (art[i].Datenstand) {
+						htmlDatensammlung += '. Stand: ';
+						htmlDatensammlung += art[i].Datenstand;
+					}
+					if (art[i]["Link"]) {
+						htmlDatensammlung += '. <a href="';
+						htmlDatensammlung += art[i]["Link"];
+						htmlDatensammlung += '">';
+						htmlDatensammlung += art[i]["Link"];
+						htmlDatensammlung += '</a>';
+					}
+					htmlDatensammlung += '</div>';
+					//Felder anzeigen
+					for (y in art[i].Felder) {
+						htmlDatensammlung += generiereHtmlFuerTextinput(y, y, art[i].Felder[y], "text");
 					}
 					//Datensammlung abschliessen
 					htmlDatensammlung += '</div>';
@@ -261,7 +269,6 @@ function initiiere_art(id) {
 			$("#art").html(htmlArt);
 			$("#accordion").accordion({
 				autoHeight: false,
-				navigation: true,
 				collapsible: true
 			});
 			//$("#art").html(JSON.stringify(art));
@@ -289,7 +296,7 @@ function setzeTreehoehe() {
 //generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldBeschriftung, FeldWert, InputTyp) {
 	var HtmlContainer;
-	HtmlContainer = '<div data-role="fieldcontain">\n\t<label for="';
+	HtmlContainer = '<div class="fieldcontain">\n\t<label for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldBeschriftung;
