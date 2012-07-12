@@ -11,7 +11,7 @@ function erstelleBaum(Gruppe) {
 							success: function (fauna_familie) {
 								$db.view('artendb/baum_fauna_art', {
 									success: function (fauna_art) {
-										var child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art, child_doc, children_doc, doc;
+										var child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
 										for (i in fauna_klasse.rows) {
 											klasse = fauna_klasse.rows[i].key;
 											children_ordnung = [];
@@ -64,7 +64,52 @@ function erstelleBaum(Gruppe) {
 			}
 		});
 	} else if (Gruppe === "Flora") {
-		alert("Flora ist noch nicht implementiert");
+		$db.view('artendb/baum_flora_familie?group=true', {
+			success: function (flora_familie) {
+				$db.view('artendb/baum_flora_gattung?group=true', {
+					success: function (flora_gattung) {
+						$db.view('artendb/baum_flora_art', {
+							success: function (flora_art) {
+								var child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
+								children_familie = [];
+								for (i in flora_familie.rows) {
+									familie = flora_familie.rows[i].key;
+									children_gattung = [];
+									for (k in flora_gattung.rows) {
+										if (flora_gattung.rows[k].key[0] === familie) {
+											gattung = flora_gattung.rows[k].key[1];
+											children_art = [];
+											for (n in flora_art.rows) {
+												if (flora_art.rows[n].key[0] === familie && flora_art.rows[n].key[1] === gattung) {
+													art = flora_art.rows[n].key[2];
+													child_art = {
+															"data": art,
+															"attr": {"id": flora_art.rows[n].value}
+														};
+													children_art.push(child_art);
+												}
+											}
+											child_gattung = {
+													"data": gattung,
+													"children": children_art
+												};
+											children_gattung.push(child_gattung);
+										}
+									}
+									child_familie = {
+											"data": familie,
+											"children": children_gattung
+										};
+									baum.push(child_familie);
+								}
+								//alert(JSON.stringify(baum));
+								erstelleTree(baum);
+							}
+						});
+					}
+				});
+			}
+		});
 	} else if (Gruppe === "Moose") {
 		alert("Moose ist noch nicht implementiert");
 	}
