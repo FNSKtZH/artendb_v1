@@ -55,8 +55,9 @@
 				$("#suchen").hide();
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
-				$("body").on("change", "#Gruppe", function () {
-					var Gruppe = $('input:checkbox[name="Gruppe"]:checked').val();
+				$("body").on("change", "[name='Gruppe']", function () {
+					var Gruppe;
+					Gruppe = this.value;
 					erstelleBaum(Gruppe);
 				});
 				
