@@ -210,6 +210,7 @@ function erstelleTree(baum) {
 				localStorage.art_id = node.attr("id");
 				//Anzeige im Formular initiieren. ID und Datensammlung übergeben
 				initiiere_art(node.attr("id"));
+				$("#forms").show();
 			}
 		}
 		setTimeout("setzeTreehoehe()", 400);
@@ -306,14 +307,14 @@ function setzeTreehoehe() {
 
 function setzeFeldbreiten() {
 	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
-		$(this).width($(window).width() - 710);
+		$(this).width($(window).width() - 730);
 	});
 	//Zahlenfelder sollen nicht breiter als 200px sein
 	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
 		if (($(window).width() - 655) > 200) {
 			$(this).width(200);
 		} else {
-			$(this).width($(window).width() - 710);
+			$(this).width($(window).width() - 730);
 		}
 	});
 	$("#forms").width($(window).width() - 490);
@@ -334,7 +335,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	HtmlContainer += InputTyp;
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '"/>\n</div>';
+	HtmlContainer += '" readonly="readonly"/>\n</div>';
 	return HtmlContainer;	
 }
 
@@ -349,7 +350,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '">';
+	HtmlContainer += '" readonly="readonly">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</textarea></div>';
 	return HtmlContainer;	

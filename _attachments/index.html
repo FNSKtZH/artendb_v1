@@ -25,6 +25,7 @@
 				</div>
 			</div>
 			<input style="display:block; clear:both; width:300px;" type="search" id="suchen" placeholder="filtern"/>
+			<div id="treeMeldung"></div>
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
 		</fieldset>
 
@@ -36,7 +37,7 @@
 
 		<script>
 			$(document).ready(function () {
-
+				$("#forms").hide();
 				if (navigator.appName === "Microsoft Internet Explorer") {
 					$("#Meldung").html("Sie verwenden " + navigator.appName + ".<br><br>Leider unterstützt er nicht alle Funktionen, die ArtenDb benutzt.<br><br>Um mit ArtenDb zu arbeiten, müssen Sie <a href='http://www.google.de/chrome/'>Google Chrome</a> oder <a href='http://www.mozilla.org/de/firefox/new/'>Firefox</a> benutzen.");
 					$("#Meldung").dialog({
@@ -60,9 +61,9 @@
 					Gruppe = this.value;
 					erstelleBaum(Gruppe);
 					$("#Gruppe_label").html("Gruppe:");
+					$("#tree").html("der Baum wird aufgebaut...");
 				});
 				
-
 				//Suche steuern
 				$("body").on("keyup click", "#suchen", function () {
 					if (this.value.length > 2) {

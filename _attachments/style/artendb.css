@@ -49,7 +49,7 @@ fieldset {
 
 #forms label {
 	float:left;
-	width:160px;
+	width:180px;
 	text-align:right;
 	vertical-align:top;
 	color:#6F6F66;
@@ -88,10 +88,6 @@ input {
 .Datenfelder {
 	float:left;
 	margin:0px 5px 10px 0px;
-}
-
-[readonly='readonly'] {
-	color:#6F6F66;
 }
 
 /*keine Ahnung, wieso es ohne das nicht geht*/
