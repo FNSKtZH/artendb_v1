@@ -212,7 +212,7 @@ function erstelleTree(baum) {
 				initiiere_art(node.attr("id"));
 			}
 		}
-		setTimeout("setzeTreehoehe()", 200);
+		setTimeout("setzeTreehoehe()", 400);
 	})
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
@@ -255,7 +255,17 @@ function initiiere_art(id) {
 					htmlDatensammlung += '</div>';
 					//Felder anzeigen
 					for (y in art[i].Felder) {
-						htmlDatensammlung += generiereHtmlFuerTextinput(y, y, art[i].Felder[y], "text");
+						if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 136) {
+							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
+						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length >= 136) {
+							htmlDatensammlung += generiereHtmlFuerTextarea(y, art[i].Felder[y]);
+						} else if (typeof art[i].Felder[y] === "number") {
+							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "number");
+						} else if (typeof art[i].Felder[y] === "boolean") {
+							htmlDatensammlung += generiereHtmlFuerBoolean(y, art[i].Felder[y]);
+						} else {
+							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
+						}
 					}
 					//Datensammlung abschliessen
 					htmlDatensammlung += '</div>';
@@ -270,8 +280,9 @@ function initiiere_art(id) {
 			$("#accordion").accordion({
 				autoHeight: false,
 				collapsible: true
+				//fillSpace: true
 			});
-			//$("#art").html(JSON.stringify(art));
+			setzeFeldbreiten();
 		},
 		error: function () {
 			melde("Fehler: Art konnte nicht geöffnet werden");
@@ -280,26 +291,41 @@ function initiiere_art(id) {
 }
 
 function setzeTreehoehe() {
-	if (($("#tree").height() + 157) > $(window).height()) {
-		$("#tree").height($(window).height() - 157);
+	if (($("#tree").height() + 127) > $(window).height()) {
+		$("#tree").height($(window).height() - 127);
 	} else if ($('#tree').hasScrollBar()) {
-		$("#tree").height($(window).height() - 157);
+		$("#tree").height($(window).height() - 127);
 	}
 }
 
 (function($) {
-    $.fn.hasScrollBar = function() {
-        return this.get(0).scrollHeight > this.height();
-    }
+	$.fn.hasScrollBar = function() {
+		return this.get(0).scrollHeight > this.height();
+	}
 })(jQuery);
 
+function setzeFeldbreiten() {
+	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
+		$(this).width($(window).width() - 710);
+	});
+	//Zahlenfelder sollen nicht breiter als 200px sein
+	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
+		if (($(window).width() - 655) > 200) {
+			$(this).width(200);
+		} else {
+			$(this).width($(window).width() - 710);
+		}
+	});
+	$("#forms").width($(window).width() - 490);
+}
+
 //generiert den html-Inhalt für Textinputs
-function generiereHtmlFuerTextinput(FeldName, FeldBeschriftung, FeldWert, InputTyp) {
+function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="fieldcontain">\n\t<label for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
-	HtmlContainer += FeldBeschriftung;
+	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t<input id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
@@ -313,18 +339,62 @@ function generiereHtmlFuerTextinput(FeldName, FeldBeschriftung, FeldWert, InputT
 }
 
 //generiert den html-Inhalt für Textarea
-function generiereHtmlFuerTextarea(FeldName, FeldBeschriftung, FeldWert) {
+function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 	var HtmlContainer;
-	HtmlContainer = '<div data-role="fieldcontain">\n\t<label for="';
+	HtmlContainer = '<div class="fieldcontain"><label for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
-	HtmlContainer += FeldBeschriftung;
-	HtmlContainer += ':</label>\n\t<textarea id="';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label><textarea id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '"';
+	HtmlContainer += '">';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '</textarea>\n</div>';
+	HtmlContainer += '</textarea></div>';
 	return HtmlContainer;	
+}
+
+//generiert den html-Inhalt für ja/nein-Felder
+function generiereHtmlFuerBoolean(FeldName, FeldWert) {
+	var HtmlContainer;
+	HtmlContainer = '<div class="fieldcontain"><label for="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '">';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label><input type="checkbox" id="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" name="';
+	HtmlContainer += FeldName;
+	if (FeldWert === true) {
+		HtmlContainer += '" checked="true">';
+	} else {
+		HtmlContainer += '">';
+	}
+	HtmlContainer += '</div>';
+	return HtmlContainer;
+}
+
+//setzt die Höhe von textareas so, dass der Text genau rein passt
+function FitToContent(id, maxHeight) {
+	var text = id && id.style ? id : document.getElementById(id);
+	if (!text) {
+		return;
+	}
+
+	/* Accounts for rows being deleted, pixel value may need adjusting */
+	if (text.clientHeight == text.scrollHeight) {
+		text.style.height = "30px";
+	}
+
+	var adjustedHeight = text.clientHeight;
+	if (!maxHeight || maxHeight > adjustedHeight) {
+		adjustedHeight = Math.max(text.scrollHeight, adjustedHeight);
+	}
+	if (maxHeight) {
+		adjustedHeight = Math.min(maxHeight, adjustedHeight);
+	}
+	if (adjustedHeight > text.clientHeight) {
+		text.style.height = adjustedHeight + "px";
+	}
 }
