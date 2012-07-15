@@ -141,7 +141,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-6618d5fd491d49b6faffda8f7a6ffe8f",
+   "_rev": "13-d348c0b5ee1852015dceef081c829699",
    "Gruppe": "Fauna",
    "Index": {
        "Typ": "Datensammlung",
@@ -156,36 +156,36 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
            "Gattung": "Coronella",
            "Art": "austriaca",
            "Autor": "Laurenti, 1768",
-           "Name_Deutsch": "Schlingnatter",
-           "Name_Französisch": "Coronelle lisse",
-           "Name_Italienisch": "Colubro liscio",
-           "Name_Romanisch": "Natra glischa",
-           "Name_Englisch": "Smooth snake",
-           "Name_vollständig": "Coronella austriaca Laurenti, 1768",
-           "Schutz_CH": "Schutz gemäss NHG"
+           "Artname": "Coronella austriaca Laurenti, 1768",
+           "Artname vollständig": "Coronella austriaca Laurenti, 1768 (Schlingnatter)",
+           "Name Deutsch": "Schlingnatter",
+           "Name Französisch": "Coronelle lisse",
+           "Name Italienisch": "Colubro liscio",
+           "Name Romanisch": "Natra glischa",
+           "Name Englisch": "Smooth snake",
+           "Schutz CH": "Schutz gemäss NHG"
        }
    },
-   "CH_Rote_Listen": {
+   "CH Rote Listen": {
        "Typ": "Datensammlung",
        "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Daten zu 2284 Arten",
        "Datenstand": "unterschiedlich",
        "Felder": {
-           "Europa_Smaragd": false,
+           "Europa Smaragd": false,
            "Europa": "gefährdet",
            "Deutschland": "keine Angabe",
-           "Schweiz_aktuell": "verletzlich (VU)",
-           "Schweiz_Kriterien": "B2a, B2b(iii, iv)",
+           "Schweiz aktuell": "verletzlich (VU)",
+           "Schweiz Kriterien": "B2a, B2b(iii, iv)",
            "Nordschweiz": "stark gefährdet",
            "Jura": "keine Angabe",
            "Nordostschweiz": "keine Angabe",
-           "Östliches_Mittelland": "keine Angabe",
-           "Kt_Zürich": "vom Aussterben bedroht",
+           "Östliches Mittelland": "keine Angabe",
+           "Kt Zürich": "vom Aussterben bedroht",
            "Bemerkungen": "Im Mittelland vom Aussterben bedroht",
-           "Quelle": "BAFU 2005 (CH), älter (Regionen)",
-           "Prioritätsart_Vögel": false
+           "Quelle": "BAFU 2005 (CH), älter (Regionen)"
        }
    },
-   "Blaue_Liste": {
+   "Blaue Liste": {
        "Typ": "Datensammlung",
        "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Daten zu 207 Arten",
        "Datenstand": "1998",
@@ -194,186 +194,176 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Forma
            "Lebensraum": "Geröllhalden, Schuttfluren, Waldränder, Steinbrüche, Böschungen",
            "Bestandesentwicklung": "Bestandesabnahme gesamthaft im Untersuchungsgebiet ohne oder trotz Schutzmassnahmen",
            "Schutzmassnahmen": "Teilweises Entbuschen/Auflichten verwachsener oder verwaldeter Lebensräume, Versteck- und Überwinterungsplätze erhalten.",
-           "Wirksamkeit_der_Schutzmassnahmen": "Einsatz oder Wirkung von Schutzmassnahmen nicht beurteilt oder unklar",
-           "Anwendungshäufigkeit_der_Schutzmassnahmen_zur_Erhaltung": "Einzelfälle",
-           "Anwendungshäufigkeit_der_Schutzmassnahmen_zur_Förderung": "noch nie",
+           "Wirksamkeit": "Einsatz oder Wirkung von Schutzmassnahmen nicht beurteilt oder unklar",
+           "Anwendungshäufigkeit zur Erhaltung": "Einzelfälle",
+           "Anwendungshäufigkeit zur Förderung": "noch nie",
            "Erfolgsaussichten": "befriedigend",
            "Aufwand": "mittel"
        }
    },
-   "CH_Prioritäten": {
+   "CH Prioritäten": {
        "Typ": "Datensammlung",
        "Beschreibung": "BAFU. Daten zu 607 Arten",
        "Datenstand": "2012.01",
        "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
        "Felder": {
-           "Prioritätsindex": "4a",
-           "Lebensraum_Delarze_Nummer": "6.-3",
-           "Lebensraum_Delarze": "wärmliebende Laubwälder",
-           "Letzter_Nachweis_Kt_AG": "2000-2006",
-           "Letzter_Nachweis_Kt_AI": "2000-2006",
-           "Letzter_Nachweis_Kt_BE": "2000-2006",
-           "Letzter_Nachweis_Kt_BL": "1980-1999",
-           "Letzter_Nachweis_Kt_BS": "1980-1999",
-           "Letzter_Nachweis_Kt_FR": "2000-2006",
-           "Letzter_Nachweis_Kt_GE": "1980-1999",
-           "Letzter_Nachweis_Kt_GL": "2000-2006",
-           "Letzter_Nachweis_Kt_GR": "2000-2006",
-           "Letzter_Nachweis_Kt_JU": "2000-2006",
-           "Letzter_Nachweis_Kt_LU": "2000-2006",
-           "Letzter_Nachweis_Kt_NE": "2000-2006",
-           "Letzter_Nachweis_Kt_NW": "2000-2006",
-           "Letzter_Nachweis_Kt_OW": "2000-2006",
-           "Letzter_Nachweis_Kt_SG": "2000-2006",
-           "Letzter_Nachweis_Kt_SH": "2000-2006",
-           "Letzter_Nachweis_Kt_SO": "2000-2006",
-           "Letzter_Nachweis_Kt_SZ": "2000-2006",
-           "Letzter_Nachweis_Kt_TG": "1980-1999",
-           "Letzter_Nachweis_Kt_TI": "2000-2006",
-           "Letzter_Nachweis_Kt_UR": "2000-2006",
-           "Letzter_Nachweis_Kt_VD": "2000-2006",
-           "Letzter_Nachweis_Kt_VS": "2000-2006",
-           "Letzter_Nachweis_Kt_ZG": "< 1950",
-           "Letzter_Nachweis_Kt_ZH": "2000-2006"
+           "Priorität": "mässig",
+           "Gefährdung": "gefährdet bzw. verletzlich",
+           "Verantwortung": "geringe Verantwortung",
+           "Massnahmenbedarf": "klar",
+           "Bestände überwachen": "eventuell nötig",
+           "Kenntnisse vorhanden": "ausreichend",
+           "Techniken bekannt": "erfolgreiche Techniken sind bekannt",
+           "Verbreitung Jura": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung Mittelland": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung Nordalpen": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung westliche Zentralalpen": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung östliche Zentralalpen": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung Südalpen": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung kollin": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung montan": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung subalpin": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung alpin": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung Kt Zürich": "letzter Fund aus den Jahren 2000 bis 2010"
        }
    },
-   "CH_Umweltziele_LW": {
+   "CH Umweltziele LW": {
        "Typ": "Datensammlung",
        "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Daten zu 374 Arten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
        "Datenstand": "2008",
        "Felder": {
            "Zielart": true,
            "Leitart": false,
-           "Priorität_Umsetzung": "hoch prioritär",
+           "Priorität Umsetzung": "hoch prioritär",
            "Qualitätsstufe": "hohe Qualität, ist nur unter günstigen Rahmenbedingungen zu erreichen",
            "Jura": true,
            "Mittelland": true,
            "Nordalpen": true,
-           "Westliche_Zentralalpen": true,
-           "Östliche_Zentralalpen": true,
+           "Westliche Zentralalpen": true,
+           "Östliche Zentralalpen": true,
            "Südalpen": true
        }
    },
-   "Agroscope_Zielart": {
+   "Agroscope Zielart": {
        "Typ": "Datensammlung",
        "Beschreibung": "Agroscope (2008). Daten zu 207 Arten",
        "Datenstand": "2008",
        "Link": "http://www.agroscope.admin.ch",
        "Felder": {
-           "1_1_West-Jura": true,
-           "1_2_Nord-Jura": true,
-           "1_3_Nordostschweiz": true,
-           "2_1_West-Mittelland": true,
-           "2_2_Ost-Mittelland": true,
-           "3_1_West-Nordalpen": true,
-           "3_2_Ost-Nordalpen": true,
-           "4_1_West-Zentralalpen": true,
-           "4_2_Ost-Zentralalpen": true,
-           "4_3_Engadin": true,
-           "5_Südalpen": true,
+           "1_1 West-Jura": true,
+           "1_2 Nord-Jura": true,
+           "1_3 Nordostschweiz": true,
+           "2_1 West-Mittelland": true,
+           "2_2 Ost-Mittelland": true,
+           "3_1 West-Nordalpen": true,
+           "3_2 Ost-Nordalpen": true,
+           "4_1 West-Zentralalpen": true,
+           "4_2 Ost-Zentralalpen": true,
+           "4_3 Engadin": true,
+           "5 Südalpen": true,
            "Collin": true,
            "Montan": true,
            "Subalpin": true,
            "Alpin": false,
-           "Rote_Liste_CH": "gefährdet",
-           "Aufwand_für_Erfolg": "gross",
-           "Beobachtbarkeit": " Die Art ist schwieriger nachzuweisen",
-           "Verbreitung_Lebensraum_Massnahmen": "Im Mittelland ist sie nur noch inselartig verbreitet und regional bereits ausgestorben; bis knapp über 2000 m. Bevorzugt in sich schnell erwärmenden Lagen, v.a. in flachgründigen Lebensräumen, die mit Steinstrukturen unterschiedlichster Art durchzogen sind. Lebensraum: Felsfluren, Blockschutt- und Geröllhalden, steinige Böschungen aller Art, Magerweiden, Steppenrasen, aber auch Waldränder, Eisenbahnareale, Abbaugebiete, Rebberge. Massnahmen: V.a. Erhalt bestehender Populationen und Vergrösserung deren Lebensräume durch Schaffung von Kleinstrukturen (Steinhaufen, Trockensteinmauern, Holzhaufen, etc.), extensive Nutzung (Krautschicht nur einmal jährlich mähen, spät mähen, Teile stehen lassen, Schnitthöhe > 10 cm), Waldränder mit stufigem Gebüschmantel und breitem Krautsaum; Aufwertungsmassnahmen für Eidechsen und Blindschleichen (Hauptnahrung); Bahndämme reptiliengerecht pflegen, da sie wichtige Ausbreitungs- und Verbindungskorridore sein können. Flächenanspruch einer Population (Grössenordnung): geeignete und vernetzte Teilflächen von mind. 1-5 a, insgesamt 50 ha geeignetes Habitat."
+           "Rote Liste CH": "gefährdet",
+           "Aufwand für Erfolg": "gross",
+           "Beobachtbarkeit": "Die Art ist schwieriger nachzuweisen",
+           "Verbreitung Lebensraum Massnahmen": "Im Mittelland ist sie nur noch inselartig verbreitet und regional bereits ausgestorben; bis knapp über 2000 m. Bevorzugt in sich schnell erwärmenden Lagen, v.a. in flachgründigen Lebensräumen, die mit Steinstrukturen unterschiedlichster Art durchzogen sind. Lebensraum: Felsfluren, Blockschutt- und Geröllhalden, steinige Böschungen aller Art, Magerweiden, Steppenrasen, aber auch Waldränder, Eisenbahnareale, Abbaugebiete, Rebberge. Massnahmen: V.a. Erhalt bestehender Populationen und Vergrösserung deren Lebensräume durch Schaffung von Kleinstrukturen (Steinhaufen, Trockensteinmauern, Holzhaufen, etc.), extensive Nutzung (Krautschicht nur einmal jährlich mähen, spät mähen, Teile stehen lassen, Schnitthöhe > 10 cm), Waldränder mit stufigem Gebüschmantel und breitem Krautsaum; Aufwertungsmassnahmen für Eidechsen und Blindschleichen (Hauptnahrung); Bahndämme reptiliengerecht pflegen, da sie wichtige Ausbreitungs- und Verbindungskorridore sein können. Flächenanspruch einer Population (Grössenordnung): geeignete und vernetzte Teilflächen von mind. 1-5 a, insgesamt 50 ha geeignetes Habitat."
        }
    },
-   "ZH_Artwert": {
+   "ZH Artwert": {
        "Typ": "Datensammlung",
        "Beschreibung": "Artwerte für den Kanton Zürich. Daten zu 1530 Arten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Artwert": 8,
-           "Mangelnde_Datengrundlagen": false,
-           "Artwertberechnung_Areal_weltweit": "gross (0 Punkte)",
-           "Artwertberechnung_Anteil_am_CH-Bestand": "klein: <1/4 (0 Punkte)"
+           "Mangelnde Datengrundlagen": false,
+           "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
+           "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
        }
    },
-   "ZH_AP": {
+   "ZH AP": {
        "Typ": "Datensammlung",
        "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Daten zu 36 Arten",
        "Datenstand": "2007",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Status": "erstellt",
-           "Beginn_im_Jahr": 2004,
-           "Stand_Umsetzung": "noch keine Umsetzung",
-           "Link_zum_AP-Bericht": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fa/schlingnatter.html"
+           "Beginn im Jahr": 2004,
+           "Stand Umsetzung": "noch keine Umsetzung",
+           "Link zum AP-Bericht": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fa/schlingnatter.html"
        }
    },
-   "ZH_AP_Einstufung": {
+   "ZH AP Einstufung": {
        "Typ": "Datensammlung",
        "Beschreibung": "Einstufung von Arten im Kanton Zürich. Daten zu 682 Arten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Dringlichkeit_AP": "gross",
-           "Priorität_nach_NSGK90": "gross",
-           "Bestandesentwicklung_1985_bis_2000": "Abnahme",
-           "Keine_Bestandesabnahme_aber_Population_bedroht": "nicht beurteilt",
-           "Fördermassnahmen_bekannt": "ja",
-           "Geeignete_Lebensräume_vohanden_herstellbar": "ja",
-           "Überlebensfähige_Populationen_vorhanden": "ja",
-           "Etablierungs-Potential_gut": "ja",
-           "Ausbreitungs-Potential_gut": "ja",
-           "Erfolgsaussichten_vorhanden": "ja",
-           "Nationales_Artenschutzprogramm": "nein",
-           "Höchste_Dringlichkeit": "ja",
-           "Verhältnis_Aufwand_Ertrag_günstig": "unbekannt",
-           "Umbrella_flagship_species": "ja",
-           "Bereits_irgendwo_Artenschutzprogramme": "ja",
+           "Dringlichkeit Aktionsplan": "gross",
+           "Priorität nach Naturschutz-Gesamtkonzept 1990": "gross",
+           "Bestandesentwicklung 1985-2000": "Abnahme",
+           "Keine Bestandesabnahme aber Population bedroht": "nicht beurteilt",
+           "Fördermassnahmen bekannt": "ja",
+           "Geeignete Lebensräume vohanden oder herstellbar": "ja",
+           "Überlebensfähige Populationen vorhanden": "ja",
+           "Etablierungs-Potential gut": "ja",
+           "Ausbreitungs-Potential gut": "ja",
+           "Erfolgsaussichten vorhanden": "ja",
+           "Nationales Artenschutzprogramm": "nein",
+           "Höchste Dringlichkeit": "ja",
+           "Verhältnis Aufwand-Ertrag günstig": "unbekannt",
+           "Umbrella- oder flagship-species": "ja",
+           "Bereits irgendwo Artenschutzprogramme": "ja",
            "Dringlichkeit": "gross",
-           "Auswahl_vorgeschlagen": true,
+           "Auswahl vorgeschlagen": true,
            "Bemerkungen": "Höchste Dringlichkeit? Ergänzungen zum bestehenden Konzept (übrige Standorte) ect.; ZH hat grosse Verantwortung: mehr Standorte als Nachbarkantone\r\nErfolgsaussichten (Bemerkung zu Punkt 4): grosse Pop. an Bahnlinien\r\nFörderungsmassnahmen: Massnahmen in einfacher Form vorgeschlagen: konkret Standort ermittelt, für ca. 1/2 klar, was machen, Feinumsetzung fehlt noch; Restliche Pop.: keine Massnahmen-Empfehlungen formuliert.\r\nRealisierbarkeit: Grundeigentümer z.T. nicht einverstanden\r\nProjekt: Naturnetz Pfannenstiel  für Fr. 300000.-- (Geld v.a. von Stiftungen): Schlingnatter im Zentrum, da Schwerpunktvorkommen; früheres Konzept von P. Müller war Grundlage.\r\nJetzt generelle Überlegungen im Kt. ZH machen. (SBB ev. kooperativer, wenn Programm da ist.)",
            "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
        }
    },
-   "ZH_AP_LiWa": {
+   "ZH AP LiWa": {
        "Typ": "Datensammlung",
        "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Daten zu 51 Arten",
        "Datenstand": "2009",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "LiWa_Zielart": true,
-           "LiWa_Artwert": 11
+           "Zielart": true,
+           "AP LiWa Artwert": 11
        }
    },
-   "ZH_AP_TWW": {
+   "ZH AP TWW": {
        "Typ": "Datensammlung",
        "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Daten zu 1113 Arten",
        "Datenstand": "2011",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Art_ist_relevant": true,
-           "Art_ist_Zielart": true,
-           "Bindung_an_TWW": 8,
-           "Artwert_AP_TWW": 16,
+           "Art ist für AP TWW relevant": true,
+           "Art ist Zielart": true,
+           "Bindung an TWW": 8,
+           "Artwert AP TWW": 16,
            "Quelle": "2006: Diverse im Auftrag der FNS"
        }
    },
-   "ZH_Artengruppen": {
+   "ZH Artengruppen": {
        "Typ": "Datensammlung",
        "Beschreibung": "Artengruppen Kt. Zürich. Daten zu allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "GIS_Layer": "Reptilien",
-           "Artengruppen_ID_EvAB": 12
+           "GIS-Layer": "Reptilien",
+           "Artengruppen-ID in EvAB": 12
        }
    },
-   "ZH_GIS": {
+   "ZH GIS": {
        "Typ": "Datensammlung",
        "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Daten zu allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Betrachtungsdistanz_in_Meter": 3000,
-           "Berücksichtigen_wenn_in_BetrDist_nicht_ausgewiesen": false,
-           "Kriterien_für_Bestimmung_der_Betrachtungsdistanz": "9"
+           "Betrachtungsdistanz in Meter": 3000,
+           "Berücksichtigen wenn in Betrachtungsdistanz nicht ausgewiesen": false,
+           "Kriterien für Bestimmung der Betrachtungsdistanz": "9"
        }
    }
 }
@@ -420,7 +410,7 @@ Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist zu einem grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
+- Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
 - Habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 <a href="#top">&#8593; top</a>
