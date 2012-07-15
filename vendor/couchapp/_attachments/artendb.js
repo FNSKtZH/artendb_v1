@@ -280,10 +280,14 @@ function initiiere_art(id) {
 			$("#art").html(htmlArt);
 			$("#accordion").accordion({
 				autoHeight: false,
-				collapsible: true
+				collapsible: true,
+				change: function(event, ui) {
+					setzteHöheTextareas();
+				}
 				//fillSpace: true
 			});
 			setzeFeldbreiten();
+			setzteHöheTextareas();
 		},
 		error: function () {
 			melde("Fehler: Art konnte nicht geöffnet werden");
@@ -318,6 +322,7 @@ function setzeFeldbreiten() {
 		}
 	});
 	$("#forms").width($(window).width() - 490);
+	setzteHöheTextareas();
 }
 
 //generiert den html-Inhalt für Textinputs
@@ -398,4 +403,12 @@ function FitToContent(id, maxHeight) {
 	if (adjustedHeight > text.clientHeight) {
 		text.style.height = adjustedHeight + "px";
 	}
+}
+
+function setzteHöheTextareas() {
+	$('form').each(function() {
+		$('textarea').each(function () {
+			$(this).trigger('focus');
+		});
+	});
 }
