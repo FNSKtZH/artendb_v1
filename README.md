@@ -39,7 +39,7 @@ sind ein paar Feststellungen:
  - Von jedem Gerät im Internet
  - Als Export im csv-Format (ev. weitere)
  - Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
-- Exporte, Auswertungen etc. können ohne zusätzlichen Aufwand über alle Artengruppen hinweg erfolgen
+- Exporte und Auswertungen können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg erfolgen
 
 
 **Für Datenpfleger und Systemverantwortliche:**
@@ -377,17 +377,16 @@ Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie ein
 #Benutzeroberfläche
 **Hauptelemente**
 
-Oben ist ein Suchfeld. Links ein Strukturbaum. Rechts das Formular, in dem Daten angezeigt werden. Navigiert werden kann entweder mit dem Strukturbaum oder mit dem Suchfeld.
+Oben links ist ein Suchfeld. Darunter ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann entweder mit dem Strukturbaum oder mit dem Suchfeld.
 
 **Suchfeld mit autocomplete**
 
-Ab zwei oder drei Zeichen wird eine Auswahlliste eingeblendet. Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Wenn es leistungsmässig gut funktioniert, soll nach allen Gruppen gesucht werden können. Die Resultate können nach Gruppen getrennt angezeigt werden.
+Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei eingegebenen Zeichen wird eine Auswahlliste eingeblendet. Wenn es leistungsmässig gut funktioniert, soll nach allen Gruppen gesucht werden können. Die Resultate können nach Gruppen getrennt angezeigt werden.
 
 **Strukturbaum**
 
-Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Arten werden folgende Ordner platziert:
+Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Arten werden folgende Ordner platziert (eventuell, bin noch nicht sicher, ob das die ideale Lösung ist):
 
-- Jede Datensammlung mit Informationen zu dieser Art
 - Beziehungen zu Arten (für jede Gruppe einen Ordner)
 - Beziehungen zu Lebensräumen (für jeden Lebensraum-Schlüssel einen Ordner)
 
@@ -399,7 +398,7 @@ Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von 
 
 **Menu**
 
-Da bin ich mir noch nicht so sicher. Vermutlich werden die Menus mit der rechten Maustaste im Strukturbaum erreichbar sein. Am wichtigsten ist ja der Export von Daten. Und so kann er bequem für die gewünschte Hierarchiestufe angeboten werden.
+Da bin ich mir noch nicht so sicher. Vermutlich werden die Menus mit der rechten Maustaste im Strukturbaum erreichbar sein. Am wichtigsten ist ja der Export von Daten. Und so kann er bequem für die gewünschte Hierarchiestufe angeboten werden (aber wie für die ganze Gruppe?).
 
 <a href="#top">&#8593; top</a>
 
