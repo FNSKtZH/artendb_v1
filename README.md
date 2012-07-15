@@ -10,7 +10,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 * <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
 * <a href="#Benutzeroberfläche">Benutzeroberfläche</a>
-* <a href="#Roadmap">Roadmap</a>
+* <a href="#Zeitplan">Zeitplan</a>
 * <a href="#OpenSource">Open source</a>
 
 <a name="Ausgangspunkt"></a>
@@ -413,15 +413,15 @@ Da bin ich mir noch nicht so sicher. Vermutlich werden die Menus mit der rechten
 
 <a href="#top">&#8593; top</a>
 
-<a name="Roadmap"></a>
-#Roadmap
+<a name="Zeitplan"></a>
+#Zeitplan
 Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist zu einem grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import). Ich kann also beim nächsten Kreativitätsschub mit einem ersten Entwurf beginnen
-- Habe mit ersten Versuchen begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+- Der Datenexport aus der heutigen ArtenDB ist zu einem grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
+- Habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 <a href="#top">&#8593; top</a>
 
