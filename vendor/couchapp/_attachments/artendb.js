@@ -256,9 +256,9 @@ function initiiere_art(id) {
 					htmlDatensammlung += '</div>';
 					//Felder anzeigen
 					for (y in art[i].Felder) {
-						if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 136) {
+						if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 70) {
 							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
-						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length >= 136) {
+						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length >= 70) {
 							htmlDatensammlung += generiereHtmlFuerTextarea(y, art[i].Felder[y]);
 						} else if (typeof art[i].Felder[y] === "number") {
 							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "number");
