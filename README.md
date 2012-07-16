@@ -392,9 +392,11 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der bet
 
 **Formular**
 
-Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert.
+Die Datensammlungen werden in einem Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter ihre Datenfelder. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
-Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Die Suche in Google-Bildern und Wikipedia wird beibehalten.
+Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer Textarea. Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+
+Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Links ermöglichen wie bisher die Suche nach der Art in Google-Bildern und Wikipedia.
 
 **Menu**
 
