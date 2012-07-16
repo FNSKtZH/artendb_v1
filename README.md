@@ -392,7 +392,7 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der bet
 
 **Formular**
 
-Das Formular kann einfach und übersichtlich gestaltet werden, da die bisherigen Register im Strukturbaum abgebildet werden. Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert.
+Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert.
 
 Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Die Suche in Google-Bildern und Wikipedia wird beibehalten.
 
