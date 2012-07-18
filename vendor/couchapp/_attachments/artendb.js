@@ -256,7 +256,12 @@ function initiiere_art(id) {
 					htmlDatensammlung += '</div>';
 					//Felder anzeigen
 					for (y in art[i].Felder) {
-						if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 70) {
+						if ((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") {
+							//dann den Link aufbauen lassen
+							htmlDatensammlung += generiereHtmlFuerFloraLink(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
+						} else if (y === "Artname" && art.Gruppe === "Flora") {
+							//dieses Feld nicht anzeigen
+						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 70) {
 							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
 						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length >= 70) {
 							htmlDatensammlung += generiereHtmlFuerTextarea(y, art[i].Felder[y]);
@@ -323,6 +328,19 @@ function setzeFeldbreiten() {
 	});
 	$("#forms").width($(window).width() - 460);
 	setzteHöheTextareas();
+}
+
+//generiert den html-Inhalt für Links in Flora
+function generiereHtmlFuerFloraLink(FeldName, id, Artname) {
+	var HtmlContainer;
+	HtmlContainer = '<div class="fieldcontain"><label>';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label><span><a href="#" class="FloraLinkZuArt" ArtId="';
+	HtmlContainer += id;
+	HtmlContainer += '">';
+	HtmlContainer += Artname;
+	HtmlContainer += '</a></span></div>';
+	return HtmlContainer;
 }
 
 //generiert den html-Inhalt für Textinputs

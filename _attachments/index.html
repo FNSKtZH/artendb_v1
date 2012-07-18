@@ -78,6 +78,17 @@
 				$(".form").on("keyup focus", "textarea", function () {
 					FitToContent(this, document.documentElement.clientHeight);
 				});
+
+				//Klick auf Link zu Art steuern
+				$(".form").on("click", ".FloraLinkZuArt", function (event) {
+					var id;
+					event.preventDefault();
+					id = $(this).attr("artid");
+					$("#tree").jstree("clear_search");
+					jQuery("#tree").jstree("deselect_all");
+					jQuery("#tree").jstree("close_all", -1);
+					jQuery("#tree").jstree("select_node", "#" + id);
+				});
 			});
 
 			$(window).resize(function () {

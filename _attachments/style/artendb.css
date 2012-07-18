@@ -10,6 +10,10 @@
 /*gesuchte Einträge formattieren*/
 .jstree-search {color: #CC012A !important;}
 
+#tree {
+	overflow: auto;
+}
+
 body {
 	background-color: #FFFFF7;
 	height:100%;
@@ -35,10 +39,6 @@ fieldset {
 	position:fixed;
 	border-radius:6px;
 	border-color:#CDC3B7;
-}
-
-#tree {
-	overflow: auto;
 }
 
 /*damit bleibt form immer im Blickfeld - bloss kann man in form selbst nicht mehr runterscrollen!*/
@@ -80,6 +80,7 @@ fieldset {
 fieldset legend {
 	color:#6F6F66;
 	font-weight:bold;
+	margin:0px 0px 7px 0px;
 }
 
 input {
@@ -104,11 +105,6 @@ input {
 	width: 100px;
 }
 
-#form {
-	margin:10px 10px 20px 10px;
-	display:block;
-}
-
 #forms input, #forms select, #forms textarea {
 	font-size:17px;
 	/*alle inputs genau links ausrichten*/
@@ -126,6 +122,7 @@ textarea {
 	/*floaten von label und Datenfeld des letzten Feldes aufheben*/
 	clear:both;
 	display:block;
+	margin:0px 0px 7px 0px;
 }
 
 .clear {
