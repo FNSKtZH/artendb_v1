@@ -85,6 +85,7 @@
 					event.preventDefault();
 					id = $(this).attr("artid");
 					$("#tree").jstree("clear_search");
+					$("#suchen").val("");
 					jQuery("#tree").jstree("deselect_all");
 					jQuery("#tree").jstree("close_all", -1);
 					jQuery("#tree").jstree("select_node", "#" + id);

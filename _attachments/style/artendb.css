@@ -58,6 +58,11 @@ fieldset {
 	margin:0px 7px 0px 0px;
 }
 
+#forms .feldtext {
+	margin-left:192px;
+	display:block;
+}
+
 .BeschreibungDatensammlung, .BeschreibungDatensammlung a {
 	color:#B85700;
 }

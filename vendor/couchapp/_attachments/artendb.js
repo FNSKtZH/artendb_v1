@@ -259,6 +259,9 @@ function initiiere_art(id) {
 						if ((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") {
 							//dann den Link aufbauen lassen
 							htmlDatensammlung += generiereHtmlFuerFloraLink(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
+						} else if (y === "Gültige Namen" && art.Gruppe === "Flora") {
+							//das ist ein Array von Objekten
+							htmlDatensammlung += generiereHtmlFuerFloraLinks(y, art[i].Felder[y]);
 						} else if (y === "Artname" && art.Gruppe === "Flora") {
 							//dieses Feld nicht anzeigen
 						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 70) {
@@ -330,16 +333,36 @@ function setzeFeldbreiten() {
 	setzteHöheTextareas();
 }
 
-//generiert den html-Inhalt für Links in Flora
+//generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerFloraLink(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="fieldcontain"><label>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><span><a href="#" class="FloraLinkZuArt" ArtId="';
+	HtmlContainer += ':</label><a href="#" class="FloraLinkZuArt" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
-	HtmlContainer += '</a></span></div>';
+	HtmlContainer += '</a></div>';
+	return HtmlContainer;
+}
+
+//generiert den html-Inhalt für Serien von Links in Flora
+function generiereHtmlFuerFloraLinks(FeldName, Objektliste) {
+	var HtmlContainer;
+	HtmlContainer = '<div class="fieldcontain"><label>';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label><span class="feldtext">';
+	for (a in Objektliste) {
+		if (a > 0) {
+			HtmlContainer += ', ';
+		}
+		HtmlContainer += '<a href="#" class="FloraLinkZuArt" ArtId="';
+		HtmlContainer += Objektliste[a].GUID;
+		HtmlContainer += '">';
+		HtmlContainer += Objektliste[a].Name;
+		HtmlContainer += '</a>';
+	}
+	HtmlContainer += '</span></div>';
 	return HtmlContainer;
 }
 
