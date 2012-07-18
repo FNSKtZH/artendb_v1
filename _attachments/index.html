@@ -29,11 +29,11 @@
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
 		</fieldset>
 
-		<fieldset id="forms">
+		<div id="forms">
 			<form id="art" class="form" action="#" method="get" autocomplete="off">
 				
 			</form>
-		</fieldset>
+		</div>
 
 		<script>
 			$(document).ready(function () {
@@ -61,6 +61,7 @@
 					erstelleBaum(Gruppe);
 					$("#Gruppe_label").html("Gruppe:");
 					$("#suchen").hide();
+					$("#forms").hide();
 					$("#suchen").val("");
 					$("#tree").html("der Baum wird aufgebaut...");
 				});

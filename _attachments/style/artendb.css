@@ -33,6 +33,7 @@ fieldset {
 	float:left; 
 	margin-top:0px; 
 	position:fixed;
+	border-radius:6px;
 }
 
 #tree {
@@ -90,8 +91,9 @@ input {
 	margin:0px 5px 10px 0px;
 }
 
-/*keine Ahnung, wieso es ohne das nicht geht*/
-.form {margin-left:auto; padding-top:1px;}
+.form {
+	margin-left:auto;
+}
 
 [type=text], [type=url], textarea, select {
 	width:100px;
@@ -99,6 +101,11 @@ input {
 
 [type=number] {
 	width: 100px;
+}
+
+#form {
+	margin:10px 10px 20px 10px;
+	display:block;
 }
 
 #forms input, #forms select, #forms textarea {
@@ -127,7 +134,7 @@ textarea {
 .ui-button-text {padding:.1em .5em !important; font-size:.8em !important;}
 
 .ui-widget-content {
-	background:#FAF3D9!important;
+	background:#FFE !important;
 }
 
 option {

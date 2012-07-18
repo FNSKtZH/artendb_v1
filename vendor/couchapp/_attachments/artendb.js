@@ -311,17 +311,17 @@ function setzeTreehoehe() {
 
 function setzeFeldbreiten() {
 	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
-		$(this).width($(window).width() - 730);
+		$(this).width($(window).width() - 700);
 	});
 	//Zahlenfelder sollen nicht breiter als 200px sein
 	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
-		if (($(window).width() - 655) > 200) {
+		if (($(window).width() - 630) > 200) {
 			$(this).width(200);
 		} else {
-			$(this).width($(window).width() - 730);
+			$(this).width($(window).width() - 700);
 		}
 	});
-	$("#forms").width($(window).width() - 490);
+	$("#forms").width($(window).width() - 460);
 	setzteHöheTextareas();
 }
 
