@@ -259,7 +259,7 @@ function initiiere_art(id) {
 						if ((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") {
 							//dann den Link aufbauen lassen
 							htmlDatensammlung += generiereHtmlFuerFloraLink(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
-						} else if (y === "Gültige Namen" && art.Gruppe === "Flora") {
+						} else if ((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von" ||y === "Gültige Namen") && art.Gruppe === "Flora") {
 							//das ist ein Array von Objekten
 							htmlDatensammlung += generiereHtmlFuerFloraLinks(y, art[i].Felder[y]);
 						} else if (y === "Artname" && art.Gruppe === "Flora") {
