@@ -338,7 +338,7 @@ function generiereHtmlFuerFloraLink(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="fieldcontain"><label>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="#" class="FloraLinkZuArt" ArtId="';
+	HtmlContainer += ':</label><a href="#" class="FloraLinkZuArt feldtext" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
