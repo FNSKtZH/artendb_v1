@@ -11,6 +11,7 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
 * <a href="#Benutzeroberfläche">Benutzeroberfläche</a>
 * <a href="#Zeitplan">Zeitplan</a>
+* <a href="#AktuellerStand">Was kann man mit der aktuellen Version machen?</a>
 * <a href="#OpenSource">Open source</a>
 
 <a name="Ausgangspunkt"></a>
@@ -413,6 +414,25 @@ Aktueller Stand:
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
 - Habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+
+<a href="#top">&#8593; top</a>
+
+<a name="AktuellerStand"></a>
+#Was kann man mit der aktuellen Version machen?
+
+Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Die Version im Web kann einzelne Features noch nicht enthalten.
+
+Arten suchen:
+
+- im hierarchischen Verwandschaftsbaum
+- mit einem Filterfeld
+
+Eigenschaften anzeigen:
+
+- für alle in der Artendb.mdb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose
+- Beziehungen zwischen verwandten arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
+- Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
+- Die jeweilige Datemsammlung ist beschrieben
 
 <a href="#top">&#8593; top</a>
 
