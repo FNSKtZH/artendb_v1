@@ -247,6 +247,8 @@ function erstelleTree(baum) {
 	})
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
+		//setTimeout("setzeTreehoehe()", 100);
+		setzeTreehoehe();
 	});
 }
 
