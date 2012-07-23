@@ -286,12 +286,12 @@ function initiiere_art(id) {
 					htmlDatensammlung += '</div>';
 					//Felder anzeigen
 					for (y in art[i].Felder) {
-						if ((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") {
+						if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
 							//dann den Link aufbauen lassen
-							htmlDatensammlung += generiereHtmlFuerFloraLink(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
+							htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
 						} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
 							//das ist ein Array von Objekten
-							htmlDatensammlung += generiereHtmlFuerFloraLinks(y, art[i].Felder[y]);
+							htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art[i].Felder[y]);
 						} else if (y === "Artname" && art.Gruppe === "Flora") {
 							//dieses Feld nicht anzeigen
 						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].slice(0, 10) === "http://www") {
@@ -336,42 +336,12 @@ function initiiere_art(id) {
 	});
 }
 
-function setzeTreehoehe() {
-	if (($("#tree").height() + 127) > $(window).height()) {
-		$("#tree").height($(window).height() - 127);
-	} else if ($('#tree').hasScrollBar()) {
-		$("#tree").height($(window).height() - 127);
-	}
-}
-
-(function($) {
-	$.fn.hasScrollBar = function() {
-		return this.get(0).scrollHeight > this.height();
-	}
-})(jQuery);
-
-function setzeFeldbreiten() {
-	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
-		$(this).width($(window).width() - 700);
-	});
-	//Zahlenfelder sollen nicht breiter als 200px sein
-	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
-		if (($(window).width() - 630) > 200) {
-			$(this).width(200);
-		} else {
-			$(this).width($(window).width() - 700);
-		}
-	});
-	$("#forms").width($(window).width() - 460);
-	setzteHöheTextareas();
-}
-
 //generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerFloraLink(FeldName, id, Artname) {
+function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="fieldcontain"><label>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="#" class="FloraLinkZuArt feldtext" ArtId="';
+	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
@@ -380,7 +350,7 @@ function generiereHtmlFuerFloraLink(FeldName, id, Artname) {
 }
 
 //generiert den html-Inhalt für Serien von Links in Flora
-function generiereHtmlFuerFloraLinks(FeldName, Objektliste) {
+function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="fieldcontain"><label>';
 	HtmlContainer += FeldName;
@@ -389,7 +359,7 @@ function generiereHtmlFuerFloraLinks(FeldName, Objektliste) {
 		if (a > 0) {
 			HtmlContainer += ', ';
 		}
-		HtmlContainer += '<a href="#" class="FloraLinkZuArt" ArtId="';
+		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
 		HtmlContainer += Objektliste[a].GUID;
 		HtmlContainer += '">';
 		HtmlContainer += Objektliste[a].Name;
@@ -466,6 +436,36 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 	}
 	HtmlContainer += '</div>';
 	return HtmlContainer;
+}
+
+function setzeTreehoehe() {
+	if (($("#tree").height() + 127) > $(window).height()) {
+		$("#tree").height($(window).height() - 127);
+	} else if ($('#tree').hasScrollBar()) {
+		$("#tree").height($(window).height() - 127);
+	}
+}
+
+(function($) {
+	$.fn.hasScrollBar = function() {
+		return this.get(0).scrollHeight > this.height();
+	}
+})(jQuery);
+
+function setzeFeldbreiten() {
+	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
+		$(this).width($(window).width() - 700);
+	});
+	//Zahlenfelder sollen nicht breiter als 200px sein
+	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
+		if (($(window).width() - 630) > 200) {
+			$(this).width(200);
+		} else {
+			$(this).width($(window).width() - 700);
+		}
+	});
+	$("#forms").width($(window).width() - 460);
+	setzteHöheTextareas();
 }
 
 //setzt die Höhe von textareas so, dass der Text genau rein passt
