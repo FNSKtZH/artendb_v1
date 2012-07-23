@@ -247,13 +247,11 @@ function erstelleTree(baum) {
 	})
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
-		//setTimeout("setzeTreehoehe()", 100);
 		setzeTreehoehe();
 	});
 }
 
 function initiiere_art(id) {
-	//alert(id);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
