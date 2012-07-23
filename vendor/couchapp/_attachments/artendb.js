@@ -11,7 +11,8 @@ function erstelleBaum(Gruppe) {
 							success: function (fauna_familie) {
 								$db.view('artendb/baum_fauna_art', {
 									success: function (fauna_art) {
-										var child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
+										var baum, child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
+										baum = [];
 										for (i in fauna_klasse.rows) {
 											klasse = fauna_klasse.rows[i].key;
 											children_ordnung = [];
@@ -70,8 +71,8 @@ function erstelleBaum(Gruppe) {
 					success: function (flora_gattung) {
 						$db.view('artendb/baum_flora_art', {
 							success: function (flora_art) {
-								var child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
-								children_familie = [];
+								var baum, child_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
+								baum = [];
 								for (i in flora_familie.rows) {
 									familie = flora_familie.rows[i].key;
 									children_gattung = [];
@@ -102,7 +103,6 @@ function erstelleBaum(Gruppe) {
 										};
 									baum.push(child_familie);
 								}
-								//alert(JSON.stringify(baum));
 								erstelleTree(baum);
 							}
 						});
@@ -119,8 +119,8 @@ function erstelleBaum(Gruppe) {
 							success: function (moose_gattung) {
 								$db.view('artendb/baum_moose_art', {
 									success: function (moose_art) {
-										var child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
-										children_klasse = [];
+										var baum, child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
+										baum = [];
 										for (i in moose_klasse.rows) {
 											klasse = moose_klasse.rows[i].key;
 											children_familie = [];
@@ -162,12 +162,42 @@ function erstelleBaum(Gruppe) {
 												};
 											baum.push(child_klasse);
 										}
-										//alert(JSON.stringify(baum));
 										erstelleTree(baum);
 									}
 								});
 							}
 						});
+					}
+				});
+			}
+		});
+	} else if (Gruppe === "Macromycetes") {
+		$db.view('artendb/baum_macromycetes_gattung?group=true', {
+			success: function (macromycetes_gattung) {
+				$db.view('artendb/baum_macromycetes_art', {
+					success: function (macromycetes_art) {
+						var baum, child_gattung, gattung, child_art, children_art, art;
+						baum = [];
+						for (k in macromycetes_gattung.rows) {
+							gattung = macromycetes_gattung.rows[k].key;
+							children_art = [];
+							for (n in macromycetes_art.rows) {
+								if (macromycetes_art.rows[n].key[0] === gattung) {
+									art = macromycetes_art.rows[n].key[1];
+									child_art = {
+											"data": art,
+											"attr": {"id": macromycetes_art.rows[n].value}
+										};
+									children_art.push(child_art);
+								}
+							}
+							child_gattung = {
+									"data": gattung,
+									"children": children_art
+								};
+							baum.push(child_gattung);
+						}
+						erstelleTree(baum);
 					}
 				});
 			}
