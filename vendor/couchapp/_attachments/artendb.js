@@ -454,14 +454,14 @@ function setzeTreehoehe() {
 
 function setzeFeldbreiten() {
 	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
-		$(this).width($(window).width() - 700);
+		$(this).width($(window).width() - 705);
 	});
 	//Zahlenfelder sollen nicht breiter als 200px sein
 	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
 		if (($(window).width() - 630) > 200) {
 			$(this).width(200);
 		} else {
-			$(this).width($(window).width() - 700);
+			$(this).width($(window).width() - 705);
 		}
 	});
 	$("#forms").width($(window).width() - 460);
