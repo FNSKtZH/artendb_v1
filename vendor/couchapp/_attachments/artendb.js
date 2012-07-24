@@ -202,6 +202,70 @@ function erstelleBaum(Gruppe) {
 				});
 			}
 		});
+	} else if (Gruppe === "Lebensräume") {
+		$db.view('artendb/baum_lr?group_level=1', {
+			success: function (level1) {
+				$db.view('artendb/baum_lr?group_level=2', {
+					success: function (level2) {
+						$db.view('artendb/baum_lr?group_level=3', {
+							success: function (level3) {
+								$db.view('artendb/baum_lr?group_level=4', {
+									success: function (level4) {
+										var baum, child_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr;
+										baum = [];
+										for (i in level1.rows) {
+											level1_lr = level1.rows[i].key[0].Name;
+											children_level2 = [];
+											for (k in level2.rows) {
+												if (level2.rows[k].key[1] && level2.rows[k].key[0].Name === level1_lr) {
+													level2_lr = level2.rows[k].key[1].Name;
+													children_level3 = [];
+													for (l in level3.rows) {
+														if (level3.rows[l].key[2] && level3.rows[l].key[0].Name === level1_lr && level3.rows[l].key[1].Name === level2_lr) {
+															level3_lr = level3.rows[l].key[2].Name;
+															children_level4 = [];
+															for (n in level4.rows) {
+																if (level4.rows[n].key[3] && level4.rows[n].key[0].Name === level1_lr && level4.rows[n].key[1].Name === level2_lr && level4.rows[n].key[2].Name === level3_lr) {
+																	level4_lr = level4.rows[n].key[3].Name;
+																	child_level4 = {
+																			"data": level4_lr,
+																			"attr": {"id": level4.rows[n].key[3].GUID}
+																		};
+																	children_level4.push(child_level4);
+																}
+															}
+															child_level3 = {
+																	"data": level3_lr,
+																	"attr": {"id": level3.rows[l].key[2].GUID},
+																	"children": children_level4
+																};
+															children_level3.push(child_level3);
+														}
+													}
+													child_level2 = {
+															"data": level2_lr,
+															"attr": {"id": level2.rows[k].key[1].GUID},
+															"children": children_level3
+														};
+													children_level2.push(child_level2);
+												}
+											}
+											child_level1 = {
+													"data": level1_lr,
+													"attr": {"id": level1.rows[i].key[0].GUID},
+													"children": children_level2
+												};
+											baum.push(child_level1);
+										}
+										erstelleTree(baum);
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
 	}
 }
 
