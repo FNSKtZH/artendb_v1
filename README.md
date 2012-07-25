@@ -429,7 +429,7 @@ Arten suchen:
 
 Eigenschaften anzeigen:
 
-- Für alle in der Artendb.mdb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose und Pilze
+- Für alle in der Artendb.mdb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Alle für diese Gruppen in der Artendb.mdb enthaltenen Datensammlungen
 - Beziehungen zwischen verwandten arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
