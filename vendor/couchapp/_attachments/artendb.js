@@ -356,7 +356,7 @@ function initiiere_art(id) {
 						} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
 							//das ist ein Array von Objekten
 							htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art[i].Felder[y]);
-						} else if (y === "Artname" && art.Gruppe === "Flora") {
+						} else if ((y === "Artname" && art.Gruppe === "Flora") || ((y === "Parent" || y === "Hierarchie") && art.Gruppe === "Lebensräume")) {
 							//dieses Feld nicht anzeigen
 						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].slice(0, 10) === "http://www") {
 							//www-Links als Link darstellen
@@ -381,7 +381,6 @@ function initiiere_art(id) {
 			}
 			//accordion beenden
 			htmlArt += '</div>';
-			//alert(JSON.stringify(htmlArt));
 			$("#art").html(htmlArt);
 			$("#accordion").accordion({
 				autoHeight: false,
@@ -395,7 +394,7 @@ function initiiere_art(id) {
 			setzteHöheTextareas();
 		},
 		error: function () {
-			melde("Fehler: Art konnte nicht geöffnet werden");
+			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
 }
