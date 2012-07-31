@@ -432,6 +432,11 @@ Eigenschaften anzeigen:
 - Beziehungen zwischen verwandten arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
 
+**To do
+
+- Exporte
+- Beziehungen
+
 <a href="#top">&#8593; top</a>
 
 <a name="OpenSource"></a>
