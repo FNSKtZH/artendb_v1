@@ -18,12 +18,12 @@ Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunt
 #Ausgangspunkt
 sind ein paar Feststellungen:
 
-- Art- und Lebensraumeigenschaften müssten nicht nur die Fachstelle Naturschutz des Kantons Zürich interessieren. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
-- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
+- Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
+- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie fehlerfrei und aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
 - Die aktuelle Datenbank kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
 - Microsoft Access hat technische Grenzen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität ist die Entwicklung und vor allem der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden. Wer seine Daten aktualisiert, sollte nicht auch noch die Benutzeroberfläche gestalten müssen...
-- Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen von grosser Bedeutung
+- Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
 <a href="#top">&#8593; top</a>
 
@@ -86,7 +86,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 <a name="GruppenVereinen"></a>
 #Gruppen vereinen
-Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Flechten, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
+Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 <a href="#top">&#8593; top</a>
 
@@ -96,7 +96,7 @@ Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Mensche
 
 Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2KB sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
 
-Die Codierung wurde jetzt auch in der Access-DB weitgehend entfernt.
+Die Codierung wurde im Rahmen dieser Überarbeitung auch in der Access-DB weitgehend entfernt.
 
 <a href="#top">&#8593; top</a>
 
@@ -137,7 +137,7 @@ Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des S
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
-Moderne dokumentorientierte Datenbanken speichern ihre Daten meist im JSON-Format. Hier ein Beispiel, wie eine Art im JSON Format mit vielen Informationen aus Datensammlungen dargestellt werden kann:
+Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im JSON-Format. Hier ein Beispiel, wie eine Art mit vielen Informationen aus Datensammlungen im JSON Format dargestellt werden kann:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -378,26 +378,23 @@ Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie ein
 #Benutzeroberfläche
 **Hauptelemente**
 
-Oben links ist ein Suchfeld. Darunter ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann entweder mit dem Strukturbaum oder mit dem Suchfeld.
+Oben links wird die Gruppe gewählt (Flora, Fauna, Moose, Lebensräume). Nach deren Wahl erscheinen darunter ein Suchfeld und ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Strukturbaum und mit dem Suchfeld.
 
-**Suchfeld mit autocomplete**
+**Suchfeld**
 
-Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei eingegebenen Zeichen wird eine Auswahlliste eingeblendet. Wenn es leistungsmässig gut funktioniert, soll nach allen Gruppen gesucht werden können. Die Resultate können nach Gruppen getrennt angezeigt werden.
+Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei eingegebenen Zeichen wird der Strukturbaum gefiltert.
 
 **Strukturbaum**
 
-Im Baum wird dynamisch die Hierarchie der Arten aufgebaut, soweit sie in der betreffenden Artengruppe vorliegt. Unterhalb der Arten werden folgende Ordner platziert (eventuell, bin noch nicht sicher, ob das die ideale Lösung ist):
-
-- Beziehungen zu Arten (für jede Gruppe einen Ordner)
-- Beziehungen zu Lebensräumen (für jeden Lebensraum-Schlüssel einen Ordner)
+Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der betreffenden Artengruppe vorliegt - bzw. die Hierarchie des Lebensraumschlüssels.
 
 **Formular**
 
-Die Datensammlungen werden in einem Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter ihre Datenfelder. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
+Die Datensammlungen werden in einem sogenannten Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter die Eigenschaften der Art. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
 Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer Textarea. Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
-Im Index sollen Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt werden. Links ermöglichen wie bisher die Suche nach der Art in Google-Bildern und Wikipedia.
+Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen wie bisher die Suche nach der Art in Google-Bildern und Wikipedia.
 
 **Menu**
 
@@ -413,7 +410,7 @@ Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
-- Habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+- Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 <a href="#top">&#8593; top</a>
 
@@ -431,14 +428,14 @@ Eigenschaften anzeigen:
 
 - Für alle in der Artendb.mdb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Alle für diese Gruppen in der Artendb.mdb enthaltenen Datensammlungen
+- Die jeweilige Datemsammlung ist beschrieben
 - Beziehungen zwischen verwandten arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
-- Die jeweilige Datemsammlung ist beschrieben
 
 <a href="#top">&#8593; top</a>
 
 <a name="OpenSource"></a>
 #Open source
-Die für die Anwendung verwendete [Lizenz](https://github.com/barbalex/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten ist aber nur mit Einverständnis der Autoren zulässig.
+Die für die Anwendung verwendete [Lizenz](https://github.com/barbalex/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten(sammlungen) ist aber nur mit Einverständnis der Autoren zulässig.
 
 <a href="#top">&#8593; top</a>
