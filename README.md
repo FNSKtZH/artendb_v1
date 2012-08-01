@@ -435,7 +435,7 @@ Eigenschaften anzeigen:
 **To do**
 
 - Exporte
-- Beziehungen
+- Beziehungen zwischen Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen
 
 <a href="#top">&#8593; top</a>
 
