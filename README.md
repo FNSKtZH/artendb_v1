@@ -70,7 +70,7 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
  - Originalbericht
  - Datenstand
  - Link
-- Alle Felder sind im JSON-Format hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
+- Alle Felder sind im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -137,7 +137,7 @@ Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des S
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
-Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im JSON-Format. Hier ein Beispiel, wie eine Art mit vielen Informationen aus Datensammlungen im JSON Format dargestellt werden kann:
+Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -370,7 +370,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im JSON-Format.
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das JSON-Format kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
 
 <a href="#top">&#8593; top</a>
 
@@ -392,7 +392,7 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 Die Datensammlungen werden in einem sogenannten Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter die Eigenschaften der Art. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
-Aus der JSON-Struktur des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer Textarea. Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer Textarea. Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
 Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen wie bisher die Suche nach der Art in Google-Bildern und Wikipedia.
 
