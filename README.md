@@ -1,5 +1,5 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content). Das hier ist der Versuch, sie weiter zu entwickeln.
+Die Arten- und Lebensraumdatenbank gibt es schon. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content). [Das hier](https://github.com/barbalex/artendb) ist der Versuch, sie weiter zu entwickeln.
 
 ## Inhalt ##
 * <a href="#Ausgangspunkt">Ausgangspunkt</a>
