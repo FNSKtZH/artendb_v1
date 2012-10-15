@@ -54,7 +54,6 @@ function erstelleBaum(Gruppe) {
 												};
 											baum.push(child_klasse);
 										}
-										//alert(JSON.stringify(baum));
 										erstelleTree(baum);
 									}
 								});
@@ -326,9 +325,9 @@ function initiiere_art(id) {
 				//nur Datensammlungen anzeigen
 				if (art[i].Typ === "Datensammlung") {
 					//im accordion Titel für Datensammlung einfügen
-					htmlDatensammlung = '<h3><a href="#">';
+					htmlDatensammlung = '<h3>';
 					htmlDatensammlung += i;
-					htmlDatensammlung += '</a></h3>';
+					htmlDatensammlung += '</h3>';
 					//Datensammlung beginnen
 					htmlDatensammlung += '<div>';
 					//Datensammlung beschreiben
