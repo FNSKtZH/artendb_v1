@@ -382,12 +382,11 @@ function initiiere_art(id) {
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
 			$("#accordion").accordion({
-				autoHeight: false,
+				heightStyle: "content",
 				collapsible: true,
-				change: function(event, ui) {
+				activate: function(event, ui) {
 					setzteHöheTextareas();
 				}
-				//fillSpace: true
 			});
 			setzeFeldbreiten();
 			setzteHöheTextareas();
