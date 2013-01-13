@@ -378,7 +378,6 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind.
 <a name="Benutzeroberfläche"></a>
 #Benutzeroberfläche
 
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel">
 ![Beispiel Eisvogel](https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg)
 
 **Hauptelemente**
@@ -395,7 +394,7 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 **Formular**
 
-<img src="http://barbalex.github.com/repository/eisvogel_rl.PNG" alt="Beispiel Eisvogel, Datensammlung Rote Liste">
+![Beispiel Eisvogel, Datensammlung Rote Liste](https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg)
 
 Die Datensammlungen werden in einem sogenannten Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter die Eigenschaften der Art. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
