@@ -21,8 +21,9 @@ sind ein paar Feststellungen:
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
 - Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie fehlerfrei und aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
 - Die aktuelle Datenbank kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
-- Microsoft Access hat technische Grenzen, die einer Weiterentwicklung im obigen Sinn im Wege stehen. Ab einer gewissen Komplexität ist die Entwicklung und vor allem der Unterhalt einer Anwendung in freieren Umgebungen (z.B. Javascript und HTML) einfacher, übersichtlicher und weniger komplex
-- Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden. Wer seine Daten aktualisiert, sollte nicht auch noch die Benutzeroberfläche gestalten müssen...
+- Microsoft Access hat technische Grenzen, die einer Weiterentwicklung im obigen Sinn im Wege stehen
+- Die Entwicklung und vor allem der Unterhalt der Anwendung ist in Javascript und HTML einfacher, übersichtlicher und weniger komplex
+- Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden: Wer seine Daten aktualisiert, sollte nicht auch noch die Benutzeroberfläche gestalten müssen...
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
 <a href="#top">&#8593; top</a>
@@ -35,7 +36,7 @@ sind ein paar Feststellungen:
 - Die Datenflut kann bewältigt werden:
  - Die Benutzerin wählt, welche Daten sie sehen oder exportieren will
  - Leere Felder werden im Lesemodus nicht angezeigt
-- Die Daten sind gut dokumentiert, neue Benutzer finden sich rasch zurecht
+- Die Daten sind gut dokumentiert
 - Die Daten sind gut verfügbar:
  - Von jedem Gerät im Internet
  - Als Export im csv-Format (ev. weitere)
@@ -47,7 +48,7 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
-- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden per Import ergänzt oder aktualisiert werden
+- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden neu importiert oder aktualisiert werden
 
 <a href="#top">&#8593; top</a>
 
@@ -61,7 +62,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Definierte Auswahl erfasster Informationen
 - Definierte Methodik
 
-Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Ausser es wird ein Arten- und Lebensraum-Wiki angestrebt (dies könnte zusätzlich ermöglicht werden).
+Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Ausser es wird ein Arten- und Lebensraum-Wiki angestrebt - dies könnte zusätzlich ermöglicht werden.
 
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:
 
@@ -131,9 +132,9 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 <a name="DokumentorientierteDatenbankVerwenden"></a>
 #Dokumentorientierte Datenbank verwenden
-In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Alle Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
-Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen.
+Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
@@ -370,7 +371,7 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
 
 <a href="#top">&#8593; top</a>
 
@@ -390,9 +391,13 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 **Formular**
 
+![Beispiel Eisvogel](/_attachments/img/eisvogel.png)
+
+![Beispiel Eisvogel, Datensammlung Rote Liste](/_attachments/img/eisvogel_rl.png)
+
 Die Datensammlungen werden in einem sogenannten Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter die Eigenschaften der Art. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
-Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer Textarea. Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
 Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen wie bisher die Suche nach der Art in Google-Bildern und Wikipedia.
 
@@ -436,6 +441,8 @@ Eigenschaften anzeigen:
 
 - Exporte
 - Beziehungen zwischen Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen
+- Importe, Aktualisierungen
+- Lebensräume in der Anwendung bearbeiten
 
 <a href="#top">&#8593; top</a>
 
