@@ -379,6 +379,7 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind.
 #Benutzeroberfläche
 
 <img src="barbalex.github.com/repository/eisvogel.PNG" alt="Beispiel Eisvogel">
+![Beispiel Eisvogel](barbalex.github.com/repository/eisvogel.PNG)
 
 **Hauptelemente**
 
