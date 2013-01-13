@@ -380,7 +380,7 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind.
 
 <img src="http://barbalex.github.com/repository/eisvogel.PNG" alt="Beispiel Eisvogel">
 ![Beispiel Eisvogel](http://barbalex.github.com/repository/eisvogel.PNG)
-![Beispiel Eisvogel](https://raw.github.com/barbalex/artendb/tree/gh-pages/eisvogel.PNG)
+![Beispiel Eisvogel](https://raw.github.com/barbalex/artendb/blob/master/_attachments/img/eisvogel.PNG)
 
 **Hauptelemente**
 
