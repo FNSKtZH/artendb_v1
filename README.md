@@ -391,9 +391,9 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 **Formular**
 
-![Beispiel Eisvogel](/_attachments/img/eisvogel.PNG)
+<img src="/_attachments/img/eisvogel.PNG" alt="Beispiel Eisvogel">
 
-![Beispiel Eisvogel, Datensammlung Rote Liste](/_attachments/img/eisvogel_rl.PNG)
+<img src="/_attachments/img/eisvogel_rl.PNG" alt="Beispiel Eisvogel, Datensammlung Rote Liste">
 
 Die Datensammlungen werden in einem sogenannten Accordion dargestellt. Innerhalb jedes Accordion-Elements wird zunächst die Beschreibung der Datensammlung angezeigt. Darunter die Eigenschaften der Art. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen. Beim erstmaligen Anzeigen der Art ist der Index geöffnet.
 
