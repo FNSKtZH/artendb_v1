@@ -378,9 +378,8 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind.
 <a name="Benutzeroberfläche"></a>
 #Benutzeroberfläche
 
-<img src="http://barbalex.github.com/repository/eisvogel.PNG" alt="Beispiel Eisvogel">
-![Beispiel Eisvogel](http://barbalex.github.com/repository/eisvogel.PNG)
-![Beispiel Eisvogel](https://raw.github.com/barbalex/artendb/blob/master/_attachments/img/eisvogel.PNG)
+<img src="https://github.com/barbalex/artendb/blob/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel">
+![Beispiel Eisvogel](https://github.com/barbalex/artendb/blob/master/_attachments/img/eisvogel.jpg)
 
 **Hauptelemente**
 
