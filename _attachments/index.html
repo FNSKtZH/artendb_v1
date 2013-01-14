@@ -17,13 +17,13 @@
 	<body>
 		<fieldset id="menu">
 			<div style="display:block; clear:both;">
-				<label id="Gruppe_label" for='Gruppe'>Gruppe wählen:</label><br>
-				<div class="Datenfelder" style="margin-right:0px">
-					<input type="radio" name="Gruppe" id="GruppeFauna" value="Fauna" style="margin-left:1px; margin-right:1px;" />Fauna
-					<input type="radio" name="Gruppe" id="GruppeFlora" value="Flora" style="margin-left:3px; margin-right:1px;" />Flora
-					<input type="radio" name="Gruppe" id="GruppeMoose" value="Moose" style="margin-left:3px; margin-right:1px;" />Moose
-					<input type="radio" name="Gruppe" id="GruppeMacromycetes" value="Macromycetes" style="margin-left:3px; margin-right:1px;" />Pilze
-					<input type="radio" name="Gruppe" id="GruppeLebensräume" value="Lebensräume" style="margin-left:3px; margin-right:1px;" />Lebensräume
+				<div id="Gruppe_label">Gruppe wählen:</div>
+				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
+					<button class="btn" name="Gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
+					<button class="btn" name="Gruppe" id="GruppeFlora" value="Flora">Flora</button>
+					<button class="btn" name="Gruppe" id="GruppeMoose" value="Moose">Moose</button>
+					<button class="btn" name="Gruppe" id="GruppeMacromycetes" value="Macromycetes">Pilze</button>
+					<button class="btn" name="Gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
 				</div>
 			</div>
 			<input style="display:block; clear:both; width:367px;" type="search" id="suchen" placeholder="filtern"/>
@@ -32,7 +32,7 @@
 		</fieldset>
 
 		<div id="forms">
-			<form id="art" class="form" action="#" method="get" autocomplete="off">
+			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off">
 				
 			</form>
 		</div>
@@ -57,7 +57,7 @@
 				$("#suchen").hide();
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
-				$("body").on("change", "[name='Gruppe']", function () {
+				$("body").on("click", "[name='Gruppe']", function () {
 					var Gruppe;
 					Gruppe = this.value;
 					erstelleBaum(Gruppe);

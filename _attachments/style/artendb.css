@@ -1,17 +1,38 @@
 /*Text umbrechen lassen*/
-#tree a {white-space:normal; height: auto; padding: 1px 2px;}
-#tree li > ins {vertical-align: top;}
-#tree .jstree-hovered, #tree .jstree-clicked {border: 0;}
+#tree a {
+	white-space: normal;
+	height: auto;
+	padding: 1px 2px;
+}
+
+#tree li > ins {
+	vertical-align: top;
+}
+
+#tree .jstree-hovered, #tree .jstree-clicked {
+	border: 0;
+}
+
 /*Abstände zwischen nodes vergrössern*/
-#tree li { min-height:22px; line-height:22px; }
-/*#tree a { line-height:20px; height:20px; font-size:10px; }*/
-#tree a ins { height:20px; width:20px; background-position:-56px -17px; }
+#tree li {
+	min-height:22px;
+}
+
+#tree a ins {
+	height:20px;
+	width:20px;
+	background-position:-56px -17px;
+}
 
 /*gesuchte Einträge formattieren*/
 .jstree-search {color: #CC012A !important;}
 
 #tree {
 	overflow: auto;
+}
+
+.accordion-heading a {
+	font-size: 17px;
 }
 
 body {
@@ -21,65 +42,70 @@ body {
 
 fieldset {
 	background-color: #FFE;
-	border:1px solid;
-	border-color:#A5A59A;
+	border: 1px solid;
+	border-color: #A5A59A;
 
-	font-family: Arial, Verdana, Helvetica, sans-serif !important;
-	font-size:16px !important;
+	/*font-family: Arial, Verdana, Helvetica, sans-serif !important;*/
+	font-size: 16px !important;
 
-	margin:10px 10px 20px 10px;
+	margin: 10px 10px 20px 10px;
 	padding: 15px 15px 15px 15px;
-	display:block;
+	display: block;
+}
+
+input[readonly="readonly"], textarea[readonly="readonly"] {
+    background-color: transparent;
 }
 
 #menu {
-	width:370px; 
-	float:left; 
-	margin-top:0px; 
-	position:fixed;
-	border-radius:6px;
-	border-color:#CDC3B7;
+	width: 370px; 
+	float: left; 
+	margin-top: 0px; 
+	position: fixed;
+	border-radius: 6px;
+	border-color: #CDC3B7;
 }
 
 /*damit bleibt form immer im Blickfeld - bloss kann man in form selbst nicht mehr runterscrollen!*/
 #forms {
-	/*overflow:auto; 
-	position:fixed;*/
-	margin-left:430px;
-	margin-top:0px;
+	margin-left: 430px;
+	margin-top: 0px;
 }
 
 #forms label {
-	float:left;
-	width:180px;
-	text-align:right;
-	vertical-align:top;
-	color:#6F6F66;
-	margin:0px 7px 0px 0px;
+	width: 180px;
+	color: #6F6F66;
+	margin-right: 7px;
 }
 
 #forms .feldtext {
-	margin-left:192px;
-	display:block;
+	margin-left: 192px;
+	display: block;
+	padding-top: 5px;
 }
 
-.BeschreibungDatensammlung, .BeschreibungDatensammlung a {
-	color:#B85700;
+#Gruppe {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.Datensammlung {
+	color: #B85700;
 }
 
 .BeschreibungDatensammlung {
-	font-size:80%;
-	padding-bottom:0.5em;
+	/*font-size:80%;*/
+	padding-bottom: 0.5em;
 }
 
 .ui-accordion-content {
-	padding:0.5em 0.8em 0.5em 0.8em !important;
+	padding: 0.5em 0.8em 0.5em 0.8em !important;
 }
 
 fieldset legend {
-	color:#6F6F66;
-	font-weight:bold;
-	margin:0px 0px 7px 0px;
+	color: #6F6F66;
+	font-weight: bold;
+	margin: 0px 0px 7px 0px;
 }
 
 input {
@@ -88,16 +114,16 @@ input {
 
 /*alle Datenfelder links ausrichten*/
 .Datenfelder {
-	float:left;
-	margin:0px 5px 10px 0px;
+	float: left;
+	margin: 0px 5px 10px 0px;
 }
 
 .form {
-	margin-left:auto;
+	margin-left: auto;
 }
 
-[type=text], [type=url], textarea, select {
-	width:100px;
+#forms .form-horizontal .control-group {
+	margin-bottom: 16px;
 }
 
 [type=number] {
@@ -105,44 +131,32 @@ input {
 }
 
 #forms input, #forms select, #forms textarea {
-	font-size:17px;
+	font-size: 17px;
 	/*alle inputs genau links ausrichten*/
-	margin-left:2px;
+	margin-left: 2px;
 }
 
 /*komischerweise kommen textareas in anderer Schrift*/
 textarea {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size:17px;
+	font-size: 17px;
 }
 
 /*alle Datenfelder von den letzten absetzen*/
 .fieldcontain {
 	/*floaten von label und Datenfeld des letzten Feldes aufheben*/
-	clear:both;
-	display:block;
-	margin:0px 0px 7px 0px;
+	clear: both;
+	display: block;
+	margin: 0px 0px 7px 0px;
 }
 
 .clear {
-	clear:both;
-}
-
-.ui-button-text {padding:.1em .5em !important; font-size:.8em !important;}
-
-.ui-widget-content {
-	background:#FFE !important;
+	clear: both;
 }
 
 option {
-	white-space:pre;
-}
-
-.ui-widget .fieldcontain {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size:16px;
+	white-space: pre;
 }
 
 #vakata-contextmenu {
-	width:230px;
+	width: 230px;
 }

@@ -327,7 +327,7 @@ function initiiere_art(id) {
 					//Accordion-Gruppe und -heading anfügen
 					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading">';
 					//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-					htmlDatensammlung += '<a class="accordion-toggle text-error" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '"><strong>';
+					htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '"><strong>';
 					//Titel für die Datensammlung einfügen
 					htmlDatensammlung += i;
 					//header abschliessen
@@ -335,7 +335,7 @@ function initiiere_art(id) {
 					//body beginnen
 					htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 					//Datensammlung beschreiben
-					htmlDatensammlung += '<div class="BeschreibungDatensammlung text-error">';
+					htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 					if (art[i].Beschreibung) {
 						htmlDatensammlung += art[i].Beschreibung;
 					}
@@ -386,15 +386,6 @@ function initiiere_art(id) {
 			//accordion beenden
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
-			/*$("#accordion_ds").accordion({
-				heightStyle: "content",
-				collapsible: true,
-				activate: function(event, ui) {
-					setzteHöheTextareas();
-				},
-				//Index soll nicht geöffnet sein - kann so viele Felder haben, dass die übrigen Datensammlungen nicht sichtbar sind
-				active: false
-			});*/
 			setzeFeldbreiten();
 			setzteHöheTextareas();
 		},
@@ -407,9 +398,9 @@ function initiiere_art(id) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain"><label>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext" ArtId="';
+	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
@@ -420,14 +411,14 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 //generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain"><label>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><span class="feldtext">';
+	HtmlContainer += ':</label><span class="feldtext controls">';
 	for (a in Objektliste) {
 		if (a > 0) {
 			HtmlContainer += ', ';
 		}
-		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
+		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe controls" ArtId="';
 		HtmlContainer += Objektliste[a].GUID;
 		HtmlContainer += '">';
 		HtmlContainer += Objektliste[a].Name;
@@ -440,11 +431,11 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain"><label>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><a href="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" class="feldtext">';
+	HtmlContainer += '" class="feldtext controls">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
 	return HtmlContainer;
@@ -453,11 +444,11 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 //generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain">\n\t<label for="';
+	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label>\n\t<input id="';
+	HtmlContainer += ':</label>\n\t<input class="controls" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -472,11 +463,11 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 //generiert den html-Inhalt für Textarea
 function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain"><label for="';
+	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><textarea id="';
+	HtmlContainer += ':</label><textarea class="controls" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -489,11 +480,11 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 //generiert den html-Inhalt für ja/nein-Felder
 function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="fieldcontain"><label for="';
+	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><input type="checkbox" id="';
+	HtmlContainer += ':</label><input class="controls" type="checkbox" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
