@@ -320,16 +320,20 @@ function initiiere_art(id) {
 		success: function (art) {
 			var htmlArt, htmlDatensammlung;
 			//accordion beginnen
-			htmlArt = '<div id="accordion">';
+			htmlArt = '<div id="accordion_ds" class="accordion">';
 			for (i in art) {
 				//nur Datensammlungen anzeigen
 				if (art[i].Typ === "Datensammlung") {
-					//im accordion Titel für Datensammlung einfügen
-					htmlDatensammlung = '<h3>';
+					//Accordion-Gruppe und -heading anfügen
+					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading">';
+					//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+					htmlDatensammlung += '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '">';
+					//Titel für die Datensammlung einfügen
 					htmlDatensammlung += i;
-					htmlDatensammlung += '</h3>';
-					//Datensammlung beginnen
-					htmlDatensammlung += '<div>';
+					//header abschliessen
+					htmlDatensammlung += '</a></div>';
+					//body beginnen
+					htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 					//Datensammlung beschreiben
 					htmlDatensammlung += '<div class="BeschreibungDatensammlung">';
 					if (art[i].Beschreibung) {
@@ -346,6 +350,7 @@ function initiiere_art(id) {
 						htmlDatensammlung += art[i]["Link"];
 						htmlDatensammlung += '</a>';
 					}
+					//Beschreibung der Datensammlung abschliessen
 					htmlDatensammlung += '</div>';
 					//Felder anzeigen
 					for (y in art[i].Felder) {
@@ -372,16 +377,16 @@ function initiiere_art(id) {
 							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
 						}
 					}
-					//Datensammlung abschliessen
-					htmlDatensammlung += '</div>';
-					//Datensammlung hinzufügen
+					//body und Accordion-Gruppe abschliessen
+					htmlDatensammlung += '</div></div></div>';
+					//Datensammlung (=Accordion-Gruppe) hinzufügen
 					htmlArt += htmlDatensammlung;
 				}
 			}
 			//accordion beenden
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
-			$("#accordion").accordion({
+			/*$("#accordion_ds").accordion({
 				heightStyle: "content",
 				collapsible: true,
 				activate: function(event, ui) {
@@ -389,7 +394,7 @@ function initiiere_art(id) {
 				},
 				//Index soll nicht geöffnet sein - kann so viele Felder haben, dass die übrigen Datensammlungen nicht sichtbar sind
 				active: false
-			});
+			});*/
 			setzeFeldbreiten();
 			setzteHöheTextareas();
 		},
