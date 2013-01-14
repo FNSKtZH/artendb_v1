@@ -386,7 +386,9 @@ function initiiere_art(id) {
 				collapsible: true,
 				activate: function(event, ui) {
 					setzteHöheTextareas();
-				}
+				},
+				//Index soll nicht geöffnet sein - kann so viele Felder haben, dass die übrigen Datensammlungen nicht sichtbar sind
+				active: false
 			});
 			setzeFeldbreiten();
 			setzteHöheTextareas();
