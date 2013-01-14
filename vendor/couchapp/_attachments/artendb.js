@@ -327,15 +327,15 @@ function initiiere_art(id) {
 					//Accordion-Gruppe und -heading anfügen
 					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading">';
 					//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-					htmlDatensammlung += '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '">';
+					htmlDatensammlung += '<a class="accordion-toggle text-error" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '"><strong>';
 					//Titel für die Datensammlung einfügen
 					htmlDatensammlung += i;
 					//header abschliessen
-					htmlDatensammlung += '</a></div>';
+					htmlDatensammlung += '</strong></a></div>';
 					//body beginnen
 					htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 					//Datensammlung beschreiben
-					htmlDatensammlung += '<div class="BeschreibungDatensammlung">';
+					htmlDatensammlung += '<div class="BeschreibungDatensammlung text-error">';
 					if (art[i].Beschreibung) {
 						htmlDatensammlung += art[i].Beschreibung;
 					}
