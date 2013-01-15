@@ -26,7 +26,9 @@
 					<button class="btn btn-inverse" name="Gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
 				</div>
 			</div>
-			<input class="search-query" style="width:330px; margin-bottom:5px;" type="search" id="suchen" placeholder="filtern"/>
+			<div id="suchen" class="input-prepend">
+				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" style="width:317px; margin-bottom:5px;" type="search" placeholder="filtern"/>
+			</div>
 			<div id="treeMeldung"></div>
 			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
 		</fieldset>
@@ -69,7 +71,7 @@
 				});
 				
 				//Suche steuern
-				$("body").on("keyup click", "#suchen", function () {
+				$("body").on("keyup click", "#suchfeld", function () {
 					if (this.value.length > 2) {
 						$("#tree").jstree("search", this.value);
 					} else {
