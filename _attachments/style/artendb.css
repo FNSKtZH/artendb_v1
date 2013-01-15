@@ -41,20 +41,18 @@ body {
 }
 
 fieldset {
-	background-color: #FFE;
+	/*background-color: #FFE;*/
 	border: 1px solid;
 	border-color: #A5A59A;
-
-	/*font-family: Arial, Verdana, Helvetica, sans-serif !important;*/
 	font-size: 16px !important;
-
 	margin: 10px 10px 20px 10px;
 	padding: 15px 15px 15px 15px;
 	display: block;
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
-    background-color: transparent;
+    /*background-color: transparent;*/
+    background-color: #ffffff;
 }
 
 #menu {
@@ -63,7 +61,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-top: 0px; 
 	position: fixed;
 	border-radius: 6px;
-	border-color: #CDC3B7;
+	border-color: #e5e5e5;
 }
 
 /*damit bleibt form immer im Blickfeld - bloss kann man in form selbst nicht mehr runterscrollen!*/
@@ -106,10 +104,6 @@ fieldset legend {
 	color: #6F6F66;
 	font-weight: bold;
 	margin: 0px 0px 7px 0px;
-}
-
-input {
-	background-color: #FFFFF7;
 }
 
 /*alle Datenfelder links ausrichten*/
@@ -159,4 +153,14 @@ option {
 
 #vakata-contextmenu {
 	width: 230px;
+}
+
+/*Gradient, um die Accordions zu stylen*/
+.accordion-group_gradient {
+	background-color: #FFE; 
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFF7), to(#FFE));
+	background-image: -webkit-linear-gradient(top, #FFFFF7, #FFE); 
+	background-image: -moz-linear-gradient(top, #FFFFF7, #FFE);
+	background-image: -ms-linear-gradient(top, #FFFFF7, #FFE);
+	background-image: -o-linear-gradient(top, #FFFFF7, #FFE);
 }

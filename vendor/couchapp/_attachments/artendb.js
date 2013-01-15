@@ -325,7 +325,7 @@ function initiiere_art(id) {
 				//nur Datensammlungen anzeigen
 				if (art[i].Typ === "Datensammlung") {
 					//Accordion-Gruppe und -heading anfügen
-					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading">';
+					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 					//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 					htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '"><strong>';
 					//Titel für die Datensammlung einfügen
