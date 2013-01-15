@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="de">
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -16,7 +17,7 @@
 	</head>
 	<body>
 		<fieldset id="menu">
-			<div style="display:block; clear:both;">
+			<div>
 				<div id="Gruppe_label">Gruppe wählen:</div>
 				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
 					<button class="btn btn-inverse" name="Gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
@@ -27,17 +28,17 @@
 				</div>
 			</div>
 			<div id="suchen" class="input-prepend">
-				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" style="width:317px; margin-bottom:5px;" type="search" placeholder="filtern"/>
+				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern"/>
 			</div>
 			<div id="treeMeldung"></div>
-			<div id="tree" style="width:367px; margin-bottom:5px;"></div>
+			<div id="tree" style="margin-bottom:5px;"></div>
 		</fieldset>
 
-		<div id="forms">
+		<fieldset id="forms">
 			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off">
 				
 			</form>
-		</div>
+		</fieldset>
 
 		<script>
 			$(document).ready(function () {
@@ -97,8 +98,8 @@
 			});
 
 			$(window).resize(function () {
-				setzeFeldbreiten();
 				setzeTreehoehe();
+				setzteHöheTextareas();
 			});
 
 		</script>

@@ -1,3 +1,58 @@
+
+body {
+	/*background-color: #FFFFF7;*/
+	margin: 8px 8px 8px 8px;
+}
+
+#menu {
+	left: 7px;
+	padding: 10px 7px 10px 7px;
+}
+
+#forms {
+	/*display: block;*/
+	/*wenn forms unter menu kommt muss ein margin vorhanden sein*/
+	margin-bottom:7px;
+}
+
+/*
+* unter 1000px beide Spalten übereinander setzen
+* 855px ist auf PC's optimal. Mein Handy hat 1280px, reagiert aber auf handheld
+* iPhone ignoriert handheld leider
+*/
+@media handheld, only screen and (max-width: 1000px) {
+	#menu {
+		right: 0px;
+		float: left;
+		width: -webkit-calc(100% - 18px);
+		width: -o-calc(100% - 18px);
+		width: calc(100% - 18px);
+		margin-bottom: 10px;
+	}
+
+	#forms {
+		position: relative;
+		width: 100%;
+	}
+}
+
+/*über 1000px nebeneinander*/
+/*@media only screen and (min-width: 856px) {*/
+@media screen and (min-width: 1001px) {
+	#menu {
+		width:370px;
+		position:fixed;
+	}
+
+	#forms {
+		position: absolute;
+		left: 404px;
+		width: -webkit-calc(100% - 412px);
+		width: -o-calc(100% - 412px);
+		width: calc(100% - 412px);
+	}
+}
+
 /*Text umbrechen lassen*/
 #tree a {
 	white-space: normal;
@@ -35,19 +90,8 @@
 	font-size: 17px;
 }
 
-body {
+.accordion-inner {
 	background-color: #FFFFF7;
-	height:100%;
-}
-
-fieldset {
-	/*background-color: #FFE;*/
-	border: 1px solid;
-	border-color: #A5A59A;
-	font-size: 16px !important;
-	margin: 10px 10px 20px 10px;
-	padding: 15px 15px 15px 15px;
-	display: block;
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
@@ -56,18 +100,26 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #menu {
-	width: 370px; 
-	float: left; 
-	margin-top: 0px; 
-	position: fixed;
+	border: 1px solid #e5e5e5;
 	border-radius: 6px;
-	border-color: #e5e5e5;
+	padding: 8px 8px 8px 8px;
+	/*background-color: #FFFFF7;*/
+	background-color: #ffffee;
 }
 
-/*damit bleibt form immer im Blickfeld - bloss kann man in form selbst nicht mehr runterscrollen!*/
-#forms {
-	margin-left: 430px;
-	margin-top: 0px;
+#Gruppe {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	/*Buttongroup darf Breite der Spalte nicht beeinflussen*/
+	white-space: normal;
+}
+
+#suchfeld {
+	width: -webkit-calc(100% - 40px);
+	width: -o-calc(100% - 40px);
+	width: calc(100% - 40px);
+	max-width: 318px;
+	margin-bottom: 5px;
 }
 
 #forms label {
@@ -82,9 +134,10 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	padding-top: 5px;
 }
 
-#Gruppe {
-	margin-top: 5px;
-	margin-bottom: 5px;
+.controls {
+	width: -webkit-calc(100% - 210px);
+	width: -o-calc(100% - 210px);
+	width: calc(100% - 210px);
 }
 
 .Datensammlung {
@@ -100,7 +153,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	padding: 0.5em 0.8em 0.5em 0.8em !important;
 }
 
-fieldset legend {
+#forms legend {
 	color: #6F6F66;
 	font-weight: bold;
 	margin: 0px 0px 7px 0px;

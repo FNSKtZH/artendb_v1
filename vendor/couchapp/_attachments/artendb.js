@@ -306,10 +306,15 @@ function erstelleTree(baum) {
 				$("#forms").show();
 			}
 		}
-		setTimeout("setzeTreehoehe()", 400);
 	})
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
+		setzeTreehoehe();
+	})
+	.bind("after_open.jstree", function (e, data) {
+		setzeTreehoehe();
+	})
+	.bind("after_close.jstree", function (e, data) {
 		setzeTreehoehe();
 	});
 }
@@ -386,7 +391,6 @@ function initiiere_art(id) {
 			//accordion beenden
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
-			setzeFeldbreiten();
 			setzteHöheTextareas();
 		},
 		error: function () {
@@ -435,7 +439,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><a href="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" class="feldtext controls">';
+	HtmlContainer += '" class="feldtext controls ">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
 	return HtmlContainer;
@@ -497,11 +501,17 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 	return HtmlContainer;
 }
 
+//begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 function setzeTreehoehe() {
-	if (($("#tree").height() + 127) > $(window).height()) {
-		$("#tree").height($(window).height() - 127);
-	} else if ($('#tree').hasScrollBar()) {
-		$("#tree").height($(window).height() - 127);
+	if ($(window).width() > 1000) {
+		if (($(".jstree-no-icons").height() + 157) > $(window).height()) {
+			$("#tree").css("max-height", $(window).height() - 139);
+		}
+	} else {
+		//Spalten sind untereinander. Baum 50px weniger hoch, damit Formulare immer erreicht werden können
+		if (($(".jstree-no-icons").height() + 157) > $(window).height()-50) {
+			$("#tree").css("max-height", $(window).height() - 220);
+		}
 	}
 }
 
@@ -510,22 +520,6 @@ function setzeTreehoehe() {
 		return this.get(0).scrollHeight > this.height();
 	}
 })(jQuery);
-
-function setzeFeldbreiten() {
-	$('#forms input[type="text"], #forms input[type="url"], #forms select, #forms textarea').each(function() {
-		$(this).width($(window).width() - 705);
-	});
-	//Zahlenfelder sollen nicht breiter als 200px sein
-	$('#forms input[type="number"], #forms input[type="date"]').each(function() {
-		if (($(window).width() - 630) > 200) {
-			$(this).width(200);
-		} else {
-			$(this).width($(window).width() - 705);
-		}
-	});
-	$("#forms").width($(window).width() - 460);
-	setzteHöheTextareas();
-}
 
 //setzt die Höhe von textareas so, dass der Text genau rein passt
 function FitToContent(id, maxHeight) {
