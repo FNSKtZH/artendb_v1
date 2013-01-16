@@ -1,6 +1,6 @@
 
 body {
-	/*background-color: #FFFFF7;*/
+	/*background-color: #FFFFF0;*/
 	margin: 8px 8px 8px 8px;
 }
 
@@ -13,6 +13,23 @@ body {
 	/*display: block;*/
 	/*wenn forms unter menu kommt muss ein margin vorhanden sein*/
 	margin-bottom:7px;
+}
+
+/*über 1000px nebeneinander*/
+/*@media only screen and (min-width: 856px) {*/
+@media screen and (min-width: 1001px) {
+	#menu {
+		width:358px;
+		position:fixed;
+	}
+
+	#forms {
+		position: absolute;
+		left: 392px;
+		width: -webkit-calc(100% - 400px);
+		width: -o-calc(100% - 400px);
+		width: calc(100% - 400px);
+	}
 }
 
 /*
@@ -33,23 +50,6 @@ body {
 	#forms {
 		position: relative;
 		width: 100%;
-	}
-}
-
-/*über 1000px nebeneinander*/
-/*@media only screen and (min-width: 856px) {*/
-@media screen and (min-width: 1001px) {
-	#menu {
-		width:358px;
-		position:fixed;
-	}
-
-	#forms {
-		position: absolute;
-		left: 392px;
-		width: -webkit-calc(100% - 400px);
-		width: -o-calc(100% - 400px);
-		width: calc(100% - 400px);
 	}
 }
 
@@ -91,7 +91,7 @@ body {
 }
 
 .accordion-inner {
-	background-color: #FFFFF7;
+	background-color: #FFFFF0;
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
@@ -103,8 +103,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	border: 1px solid #e5e5e5;
 	border-radius: 6px;
 	padding: 8px 8px 8px 8px;
-	/*background-color: #FFFFF7;*/
-	background-color: #ffffee;
+	background-color: #FFFFF0;
+	/*background-color: #ffffee;*/
 }
 
 #Gruppe {
@@ -149,14 +149,15 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	padding-bottom: 0.5em;
 }
 
-.ui-accordion-content {
-	padding: 0.5em 0.8em 0.5em 0.8em !important;
-}
-
 #forms legend {
 	color: #6F6F66;
 	font-weight: bold;
 	margin: 0px 0px 7px 0px;
+}
+
+/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
+#forms label {
+	margin-bottom: 0px;
 }
 
 /*alle Datenfelder links ausrichten*/
@@ -169,8 +170,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-left: auto;
 }
 
+/*vertikalen Abstand zwischen Feldern verkleinern*/
 #forms .form-horizontal .control-group {
-	margin-bottom: 16px;
+	margin-bottom: 5px;
 }
 
 [type=number] {
@@ -178,14 +180,19 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #forms input, #forms select, #forms textarea {
-	font-size: 17px;
+	/*font-size: 17px;*/
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }
 
+/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
+.form-horizontal .control-label {
+	padding-top: 0px;
+}
+
 /*komischerweise kommen textareas in anderer Schrift*/
 textarea {
-	font-size: 17px;
+	/*font-size: 17px;*/
 }
 
 /*alle Datenfelder von den letzten absetzen*/
@@ -210,10 +217,10 @@ option {
 
 /*Gradient, um die Accordions zu stylen*/
 .accordion-group_gradient {
-	background-color: #FFE; 
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFF7), to(#FFE));
-	background-image: -webkit-linear-gradient(top, #FFFFF7, #FFE); 
-	background-image: -moz-linear-gradient(top, #FFFFF7, #FFE);
-	background-image: -ms-linear-gradient(top, #FFFFF7, #FFE);
-	background-image: -o-linear-gradient(top, #FFFFF7, #FFE);
+	background-color: #FFFFD8; 
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
+	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
+	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
 }

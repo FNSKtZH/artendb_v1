@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/bootstrap.css" type="text/css"/>
 		<link rel="stylesheet" href="style/artendb.css" type="text/css"/>
+		<script type="text/javascript" src="vendor/couchapp/modernizr.js"></script>
 		<title>ArtenDb</title>
 	</head>
 	<body>
@@ -43,17 +44,10 @@
 		<script>
 			$(document).ready(function () {
 				$("#forms").hide();
-				if (navigator.appName === "Microsoft Internet Explorer") {
-					$("#Meldung").html("Sie verwenden " + navigator.appName + ".<br><br>Leider unterstützt er nicht alle Funktionen, die ArtenDb benutzt.<br><br>Um mit ArtenDb zu arbeiten, müssen Sie <a href='http://www.google.de/chrome/'>Google Chrome</a> oder <a href='http://www.mozilla.org/de/firefox/new/'>Firefox</a> benutzen.");
-					$("#Meldung").dialog({
-						modal: true,
-						title: "inkompatibler Browser",
-						buttons: {
-							Ok: function() {
-								$(this).dialog("close");
-							}
-						}
-					});
+				//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
+				console.log(Modernizr.mq('(min-width: 10px)'));
+				if (!Modernizr.mq('(min-width: 10px)')) {
+					$('#meldung_kompatibilität').modal();
 					return;
 				}
 
@@ -105,4 +99,14 @@
 		</script>
 	</body>
 	<div id="Meldung"></div>
+	
+	<div id="meldung_kompatibilität" class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>inkompatibler Browser</h3>
+		</div>
+		<div class="modal-body">
+			<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb benutzt.<br><br>Um mit ArtenDb zu arbeiten, verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.</p>
+		</div>
+	</div>
 </html>
