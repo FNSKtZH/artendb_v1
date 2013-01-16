@@ -134,6 +134,10 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	padding-top: 5px;
 }
 
+#forms .feldtext a {
+	margin-left: none;
+}
+
 .controls {
 	width: -webkit-calc(100% - 210px);
 	width: -o-calc(100% - 210px);
