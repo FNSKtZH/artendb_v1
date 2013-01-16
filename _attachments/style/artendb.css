@@ -180,19 +180,13 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #forms input, #forms select, #forms textarea {
-	/*font-size: 17px;*/
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }
 
-/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
+/*erste Zeile des Labels vertikal ausrichten*/
 .form-horizontal .control-label {
-	padding-top: 0px;
-}
-
-/*komischerweise kommen textareas in anderer Schrift*/
-textarea {
-	/*font-size: 17px;*/
+	padding-top: 3px;
 }
 
 /*alle Datenfelder von den letzten absetzen*/
@@ -203,9 +197,9 @@ textarea {
 	margin: 0px 0px 7px 0px;
 }
 
-.clear {
+/*.clear {
 	clear: both;
-}
+}*/
 
 option {
 	white-space: pre;

@@ -48,7 +48,7 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
-- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Stunden neu importiert oder aktualisiert werden
+- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Minuten neu importiert oder aktualisiert werden (nachdem die zu importierende csv-Datei vorbereitet wurde)
 
 <a href="#top">&#8593; top</a>
 
@@ -93,11 +93,7 @@ Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume
 
 <a name="DatenDecodieren"></a>
 #Daten decodieren
-Viele Werte sind heute codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten benutzergerecht dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und bringt Access in Formularen und Abfragen an seine Leistungsgrenze. Deshalb werden die Daten momentan codiert exportiert. Auch leistungsfähigere Systeme dürften gebremst werden. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden.
-
-Leider stösst man bei der Decodierung umfangreicher Datensammlungen an eine weitere Leistungsgrenze von Microsoft Access: Ein einzelner Datensatz darf offenbar nicht grösser als 2KB sein! Somit müssen Datensammlungen auf verschiedene Tabellen aufgeteilt werden. Dies erhöht die Komplexität, verringert die Übersicht. Und vor allem: Damit werden wieder mehr Indizes benötigt, was nicht möglich ist, da deren Obergrenze auch schon erreicht ist! So können z.B. nicht alle Daten der CH-Prioritäten importiert werden...
-
-Die Codierung wurde im Rahmen dieser Überarbeitung auch in der Access-DB weitgehend entfernt.
+Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthalten für Menschen unverständliche Codes. Sie werden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden können, müssen sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
 
 <a href="#top">&#8593; top</a>
 
@@ -107,8 +103,9 @@ Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art
 
 Will jemand neue Arteigenschaften ergänzen, geht das dann so:
 
-- Art- oder Lebensraumeigenschaften vorbereiten
-- Informationen über die Datensammlung vorbereiten
+- Datensammlung beschreiben
+- Art- oder Lebensraumeigenschaften vorbereiten (in einer csv-Datei)
+- Der ArtenDb die übereinstimmenden Art-ID's mitteilen
 - importieren
 
 fertig!
@@ -120,7 +117,7 @@ Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzeror
 - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
 - Optionen für Auswahllisten
 
-Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie kann fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
+Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie könnte fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
 - Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
@@ -136,9 +133,9 @@ In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschafte
 
 Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
 
-Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden. Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
+Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (und natürlich aufgrund der unterschiedlich gearteten Datensammlungen bzw. der darin enthaltenen Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
-Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus Datensammlungen dargestellt werden kann:
+Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -371,7 +368,9 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen! Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. 
+
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
 
 <a href="#top">&#8593; top</a>
 

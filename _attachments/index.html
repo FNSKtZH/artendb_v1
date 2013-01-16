@@ -45,7 +45,6 @@
 			$(document).ready(function () {
 				$("#forms").hide();
 				//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
-				console.log(Modernizr.mq('(min-width: 10px)'));
 				if (!Modernizr.mq('(min-width: 10px)')) {
 					$('#meldung_kompatibilität').modal();
 					return;
