@@ -19,7 +19,29 @@
 	<body>
 		<fieldset id="menu">
 			<div>
-				<div id="Gruppe_label">Gruppe wählen:</div>
+				<div>
+					<div id="menu_btn" class="btn-group">
+						<a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
+							Menu
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">importieren</a></li>
+							<li class="disabled"><a href="#">exportieren</a></li>
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#">über diese Anwendung</a>
+								<ul class="dropdown-menu">
+									<li><a href="https://github.com/barbalex/artendb/blob/master/README.md" target="_blank">Projektbeschreibung</a></li>
+									<li><a href="https://github.com/barbalex/artendb" target="_blank">Code</a></li>
+									<li><a href="mailto:alex.barbalex@gmail.com">Kontakt</a></li>
+								</ul>
+							</li>
+							<li class="disabled"><a href="#">Bilder suchen</a></li>
+							<li class="disabled"><a href="#">in Wikipedia suchen</a></li>
+						</ul>
+					</div>
+					<div id="Gruppe_label">Gruppe wählen:</div>
+				</div>
 				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
 					<button class="btn btn-inverse" name="Gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
 					<button class="btn btn-inverse" name="Gruppe" id="GruppeFlora" value="Flora">Flora</button>
@@ -32,7 +54,7 @@
 				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern"/>
 			</div>
 			<div id="treeMeldung"></div>
-			<div id="tree" style="margin-bottom:5px;"></div>
+			<div id="tree"></div>
 		</fieldset>
 
 		<fieldset id="forms">

@@ -1,7 +1,7 @@
 
 body {
-	/*background-color: #FFFFF0;*/
 	margin: 8px 8px 8px 8px;
+	/*padding-top: 40px;*/
 }
 
 #menu {
@@ -10,25 +10,23 @@ body {
 }
 
 #forms {
-	/*display: block;*/
 	/*wenn forms unter menu kommt muss ein margin vorhanden sein*/
 	margin-bottom:7px;
 }
 
 /*über 1000px nebeneinander*/
-/*@media only screen and (min-width: 856px) {*/
 @media screen and (min-width: 1001px) {
 	#menu {
-		width:358px;
+		width:365px;
 		position:fixed;
 	}
 
 	#forms {
 		position: absolute;
-		left: 392px;
-		width: -webkit-calc(100% - 400px);
-		width: -o-calc(100% - 400px);
-		width: calc(100% - 400px);
+		left: 399px;
+		width: -webkit-calc(100% - 407px);
+		width: -o-calc(100% - 407px);
+		width: calc(100% - 407px);
 	}
 }
 
@@ -84,6 +82,7 @@ body {
 
 #tree {
 	overflow: auto;
+	margin-bottom: 5px;
 }
 
 .accordion-heading a {
@@ -104,14 +103,25 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	border-radius: 6px;
 	padding: 8px 8px 8px 8px;
 	background-color: #FFFFF0;
-	/*background-color: #ffffee;*/
+}
+
+#menu_btn {
+	float: left;
 }
 
 #Gruppe {
 	margin-top: 5px;
 	margin-bottom: 5px;
+	position: relative;
+	margin-left: 0px;
 	/*Buttongroup darf Breite der Spalte nicht beeinflussen*/
-	white-space: normal;
+	/*white-space: normal;*/
+}
+
+#Gruppe_label {
+	position: relative;
+	left: 7px;
+	top: 10px;
 }
 
 #suchfeld {
