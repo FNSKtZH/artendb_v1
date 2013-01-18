@@ -48,7 +48,7 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
-- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Minuten neu importiert oder aktualisiert werden (nachdem die zu importierende csv-Datei vorbereitet wurde)
+- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Minuten neu importiert oder aktualisiert werden
 
 <a href="#top">&#8593; top</a>
 
