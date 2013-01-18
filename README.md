@@ -135,6 +135,8 @@ Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des S
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (und natürlich aufgrund der unterschiedlich gearteten Datensammlungen bzw. der darin enthaltenen Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
+Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche dynamisch generiert werden, auch wenn eine Datensammlung zuvor unbekannte Felder enthält. 
+
 Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
 ```javascript
