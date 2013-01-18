@@ -504,22 +504,12 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 //begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 function setzeTreehoehe() {
 	if ($(window).width() > 1000) {
-		if (($(".jstree-no-icons").height() + 157) > $(window).height()) {
-			$("#tree").css("max-height", $(window).height() - 139);
-		}
+		$("#tree").css("max-height", $(window).height() - 149);
 	} else {
-		//Spalten sind untereinander. Baum 50px weniger hoch, damit Formulare immer erreicht werden können
-		if (($(".jstree-no-icons").height() + 157) > $(window).height()-50) {
-			$("#tree").css("max-height", $(window).height() - 220);
-		}
+		//Spalten sind untereinander. Baum etwas weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
+		$("#tree").css("max-height", $(window).height() - 190);
 	}
 }
-
-(function($) {
-	$.fn.hasScrollBar = function() {
-		return this.get(0).scrollHeight > this.height();
-	}
-})(jQuery);
 
 //setzt die Höhe von textareas so, dass der Text genau rein passt
 function FitToContent(id, maxHeight) {
