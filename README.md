@@ -381,7 +381,7 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 <a name="Benutzeroberfläche"></a>
 #Benutzeroberfläche
 
-![Beispiel Eisvogel](https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg)
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel" width="100%">
 
 **Hauptelemente**
 
@@ -397,7 +397,7 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 **Formular**
 
-![Beispiel Eisvogel, Datensammlung Rote Liste](https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg)
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
 
 Die Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
 
