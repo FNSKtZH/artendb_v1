@@ -128,6 +128,11 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	line-height: 30px;
 }
 
+#suchen {
+	/*relative setzen, damit suche_leeren_btn im Verhältnis dazu absolute gesetzt werden kann*/
+	position: relative;
+}
+
 #suchfeld {
 	width: -webkit-calc(100% - 40px);
 	width: -o-calc(100% - 40px);
@@ -137,9 +142,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #suche_leeren_btn {
-	position: relative;
-	top: -30px;
-	left: -13px;
+	position: absolute;
+	top: 5px;
+	left: 340px;
 	z-index: 4;
 }
 
