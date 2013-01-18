@@ -121,7 +121,11 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 #Gruppe_label {
 	position: relative;
 	left: 7px;
-	top: 10px;
+	top: 7px;
+}
+
+#menu-div {
+	line-height: 30px;
 }
 
 #suchfeld {
