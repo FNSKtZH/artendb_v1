@@ -556,6 +556,7 @@ function setzteHöheTextareas() {
 function schliesseNichtMarkierteNodes() {
 	//wenn Suchfeld leer ist, soll der Baum zugeklappt werden
 	if (!$("#suchfeld").val()) {
+		$("#tree").jstree("clear_search");
 		var selected_nodes = $("#tree").jstree("get_selected");
 		$("#tree").jstree("close_all", -1);
 		$("#tree").jstree("deselect_all", -1);
