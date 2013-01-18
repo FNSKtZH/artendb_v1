@@ -136,6 +136,13 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-bottom: 5px;
 }
 
+#suche_leeren_btn {
+	position: relative;
+	top: -30px;
+	left: -13px;
+	z-index: 4;
+}
+
 #forms label {
 	width: 180px;
 	color: #6F6F66;

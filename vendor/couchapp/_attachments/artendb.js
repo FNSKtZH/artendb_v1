@@ -552,3 +552,17 @@ function setzteHöheTextareas() {
 		});
 	});
 }
+
+function schliesseNichtMarkierteNodes() {
+	//wenn Suchfeld leer ist, soll der Baum zugeklappt werden
+	if (!$("#suchfeld").val()) {
+		var selected_nodes = $("#tree").jstree("get_selected");
+		$("#tree").jstree("close_all", -1);
+		$("#tree").jstree("deselect_all", -1);
+		//wenn eine Art gewählt war, diese wieder wählen
+		if (selected_nodes.length === 1) {
+			console.log("einen selektieren");
+			$("#tree").jstree("select_node", selected_nodes);
+		}
+	}
+}

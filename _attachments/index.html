@@ -52,6 +52,7 @@
 			</div>
 			<div id="suchen" class="input-prepend">
 				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern"/>
+				<button id="suche_leeren_btn" class="close">&times;</button>
 			</div>
 			<div id="treeMeldung"></div>
 			<div id="tree"></div>
@@ -87,7 +88,7 @@
 				});
 				
 				//Suche steuern
-				$("body").on("keyup click", "#suchfeld", function () {
+				$("#menu").on("keyup click", "#suchfeld", function() {
 					if (this.value.length > 2) {
 						$("#tree").jstree("search", this.value);
 					} else {
@@ -95,12 +96,23 @@
 					}
 				});
 
-				$(".form").on("keyup focus", "textarea", function () {
+				$("#menu").on("keyup", "#suchfeld", function() {
+					schliesseNichtMarkierteNodes();
+				});
+
+				$("#menu").on("click", "#suche_leeren_btn", function() {
+					if ($("#suchfeld").val()) {
+						$("#suchfeld").val("");
+						schliesseNichtMarkierteNodes();
+					}
+				});
+
+				$(".form").on("keyup focus", "textarea", function() {
 					FitToContent(this, document.documentElement.clientHeight);
 				});
 
 				//Klick auf Link zu Art steuern
-				$(".form").on("click", ".LinkZuArtGleicherGruppe", function (event) {
+				$(".form").on("click", ".LinkZuArtGleicherGruppe", function(event) {
 					var id;
 					event.preventDefault();
 					id = $(this).attr("artid");
