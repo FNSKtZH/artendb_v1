@@ -107,6 +107,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 
 #menu_btn {
 	float: left;
+	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
+	z-index: 5;
 }
 
 #Gruppe {
