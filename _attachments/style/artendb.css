@@ -229,10 +229,6 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin: 0px 0px 7px 0px;
 }
 
-/*.clear {
-	clear: both;
-}*/
-
 option {
 	white-space: pre;
 }

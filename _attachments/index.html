@@ -26,7 +26,7 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li class="disabled"><a href="#">importieren</a></li>
+							<li><a id="ImportierenLink" href="#">importieren</a></li>
 							<li class="disabled"><a href="#">exportieren</a></li>
 							<li class="dropdown-submenu">
 								<a tabindex="-1" href="#">über diese Anwendung</a>
@@ -59,7 +59,111 @@
 		</fieldset>
 
 		<fieldset id="forms">
+
 			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
+			
+			<form id="import" class="form form-horizontal" action="#" method="get" autocomplete="off">
+				<div class="accordion" id="importieren_accordion">
+					<div class="accordion-group" id="importieren_anmelden">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_anmelden_collapse">
+								1. Anmelden
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_anmelden_collapse">
+							<div class="accordion-inner">
+								<div class="control-group">
+									<label class="control-label" for="inputEmail">Email</label>
+									<div class="controls">
+										<input type="text" id="inputEmail" placeholder="Email">
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="inputPasswort">Passwort</label>
+									<div class="controls">
+										<input type="password" id="inputPasswort" placeholder="Passwort">
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="controls">
+										<label class="checkbox">
+											<input type="checkbox"> angemeldet bleiben
+										</label>
+										<button class="btn">anmelden</button><button class="btn">Konto erstellen</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_aktion_waehlen">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_aktion_waehlen_collapse">
+								2. Aktion wählen
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_aktion_waehlen_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_ds_beschreiben">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_ds_beschreiben_collapse">
+								3. Datensammlung beschreiben
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_ds_beschreiben_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_daten_uploaden">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_daten_uploaden_collapse">
+								4. Daten uploaden
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_ids_identifizieren">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_ids_identifizieren_collapse">
+								5. ID's identifizieren
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_ids_identifizieren_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_import_ausfuehren">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_import_ausfuehren_collapse">
+								6. Import ausführen
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+				</div>		
+			</form>
+
 		</fieldset>
 
 		<script>
@@ -94,6 +198,11 @@
 						$("#GoogleBilderLink_li").addClass("disabled");
 						$("#WikipediaLink_li").addClass("disabled");
 					}
+				});
+
+				$("#menu").on("click", "#ImportierenLink", function() {
+					zeigeFormular("import");
+					$("#importieren_anmelden_collapse").collapse('show');
 				});
 				
 				//Suche steuern

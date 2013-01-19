@@ -392,6 +392,8 @@ function initiiere_art(id) {
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
 			setzteHöheTextareas();
+			//richtiges Formular anzeigen
+			zeigeFormular("art");
 			//jetzt die Links im Menu setzen
 			setzteLinksZuBilderUndWikipedia(art);
 		},
@@ -618,4 +620,34 @@ function schliesseNichtMarkierteNodes() {
 			$("#tree").jstree("select_node", selected_nodes);
 		}
 	}
+}
+
+//managed die Sichtbarkeit von Formularen
+//wird von allen initiiere_-Funktionen verwendet
+//wird ein Formularname übergeben, wird dieses Formular gezeigt
+//und alle anderen ausgeblendet
+//zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
+function zeigeFormular(Formularname) {
+	var formular_angezeigt = $.Deferred();
+	//zuerst alle Formulare ausblenden
+	$("#forms").hide();
+	$('form').each(function() {
+		$(this).hide();
+	});
+
+	if (Formularname) {
+		$("#forms").show();
+		$('form').each(function() {
+			$(this).hide();
+			if ($(this).attr("id") === Formularname) {
+				$(this).show();
+				$('textarea').each(function () {
+					$(this).trigger('focus');
+				});
+			}
+		});
+		$(window).scrollTop(0);
+		formular_angezeigt.resolve();
+	}
+	return formular_angezeigt.promise();
 }
