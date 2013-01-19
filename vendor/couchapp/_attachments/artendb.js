@@ -393,67 +393,73 @@ function initiiere_art(id) {
 			$("#art").html(htmlArt);
 			setzteHöheTextareas();
 			//jetzt die Links im Menu setzen
-			var googleBilderLink = "";
-			var wikipediaLink = "";;
-			switch (art.Gruppe) {
-				case "Flora":
-					googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
-					if (art.Index.Felder['Deutsche Namen']) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Deutsche Namen'] + '"';
-					}
-					if (art.Index.Felder['Name Französisch']) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
-					}
-					if (art.Index.Felder['Name Italienisch']) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Name Italienisch'] + '"';
-					}
-					if (art.Index.Felder['Deutsche Namen']) {
-						wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder['Deutsche Namen'];
-					} else {
-						wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Artname;
-					}
-					break;
-				case "Fauna":
-					googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
-					if (art.Index.Felder["Name Deutsch"]) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
-					}
-					if (art.Index.Felder['Name Französisch']) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
-					}
-					if (art.Index.Felder['Name Italienisch']) {
-						googleBilderLink += '+OR"' + art.Index.Felder['Name Italienisch'] + '"';
-					}
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
-					break;
-				case 'Moose':
-					googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Gattung + ' ' + art.Index.Felder.Art + '"';
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
-					break;
-				case 'Macromycetes':
-					googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Name + '"';
-					if (art.Index.Felder['Name Deutsch']) {
-						googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
-					}
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Name;
-					break;
-				case 'Lebensräume':
-					googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Einheit;
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Einheit;
-					break;
-			}
-			//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
-			$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
-			$("#GoogleBilderLink_li").removeClass("disabled");
-			//$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink.replace(/'/g, " ")));
-			$("#WikipediaLink").attr("href", wikipediaLink);
-			$("#WikipediaLink_li").removeClass("disabled");
-
+			setzteLinksZuBilderUndWikipedia(art);
 		},
 		error: function () {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
+}
+
+//managt die Links zu Google Bilder und Wikipedia
+//erwartet das Objekt mit der Art
+function setzteLinksZuBilderUndWikipedia(art) {
+	//jetzt die Links im Menu setzen
+	var googleBilderLink = "";
+	var wikipediaLink = "";;
+	switch (art.Gruppe) {
+		case "Flora":
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
+			if (art.Index.Felder['Deutsche Namen']) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Deutsche Namen'] + '"';
+			}
+			if (art.Index.Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
+			}
+			if (art.Index.Felder['Name Italienisch']) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Name Italienisch'] + '"';
+			}
+			if (art.Index.Felder['Deutsche Namen']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder['Deutsche Namen'];
+			} else {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Artname;
+			}
+			break;
+		case "Fauna":
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
+			if (art.Index.Felder["Name Deutsch"]) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
+			}
+			if (art.Index.Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
+			}
+			if (art.Index.Felder['Name Italienisch']) {
+				googleBilderLink += '+OR"' + art.Index.Felder['Name Italienisch'] + '"';
+			}
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
+			break;
+		case 'Moose':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Gattung + ' ' + art.Index.Felder.Art + '"';
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
+			break;
+		case 'Macromycetes':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Name + '"';
+			if (art.Index.Felder['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
+			}
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Name;
+			break;
+		case 'Lebensräume':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Einheit;
+			break;
+	}
+	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
+	$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
+	$("#GoogleBilderLink_li").removeClass("disabled");
+	//$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink.replace(/'/g, " ")));
+	$("#WikipediaLink").attr("href", wikipediaLink);
+	$("#WikipediaLink_li").removeClass("disabled");
 }
 
 //generiert den html-Inhalt für einzelne Links in Flora
@@ -609,7 +615,6 @@ function schliesseNichtMarkierteNodes() {
 		$("#tree").jstree("deselect_all", -1);
 		//wenn eine Art gewählt war, diese wieder wählen
 		if (selected_nodes.length === 1) {
-			console.log("einen selektieren");
 			$("#tree").jstree("select_node", selected_nodes);
 		}
 	}

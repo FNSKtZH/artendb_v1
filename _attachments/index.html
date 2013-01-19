@@ -59,9 +59,7 @@
 		</fieldset>
 
 		<fieldset id="forms">
-			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off">
-				
-			</form>
+			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
 		</fieldset>
 
 		<script>
@@ -85,6 +83,17 @@
 					$("#forms").hide();
 					$("#suchen").val("");
 					$("#tree").html("der Baum wird aufgebaut...");
+				});
+
+				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
+				$("#menu").on("click", "#menu_btn", function() {
+					if ($("#art").html().length > 0) {
+						$("#GoogleBilderLink_li").removeClass("disabled");
+						$("#WikipediaLink_li").removeClass("disabled");
+					} else {
+						$("#GoogleBilderLink_li").addClass("disabled");
+						$("#WikipediaLink_li").addClass("disabled");
+					}
 				});
 				
 				//Suche steuern
