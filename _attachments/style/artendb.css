@@ -87,6 +87,7 @@ body {
 
 .accordion-heading a {
 	font-size: 17px;
+	color: #B85700;
 }
 
 .accordion-inner {
@@ -173,7 +174,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 .Datensammlung {
-	color: #B85700;
+	/*color: #B85700;*/
 }
 
 .BeschreibungDatensammlung {
