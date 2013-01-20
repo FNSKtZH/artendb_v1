@@ -66,31 +66,44 @@
 				<div class="accordion" id="importieren_accordion">
 					<div class="accordion-group" id="importieren_anmelden">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_anmelden_collapse">
-								<strong>1. Anmelden</strong>
-							</a>
+							<a id="importieren_anmelden_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_anmelden_collapse">1. Anmelden</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_anmelden_collapse">
 							<div class="accordion-inner">
 								<div class="control-group">
-									<label class="control-label" for="inputEmail">Email</label>
+									<label class="control-label" for="Email">Email</label>
 									<div class="controls">
-										<input type="text" id="inputEmail" placeholder="Email">
+										<input type="email" id="Email" placeholder="Email" required>
+										<div id="Emailhinweis" class="hinweis text-error">Bitte Email erfassen</div>
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="inputPasswort">Passwort</label>
+									<label class="control-label" for="Passwort">Passwort</label>
 									<div class="controls">
-										<input type="password" id="inputPasswort" placeholder="Passwort">
+										<input type="password" id="Passwort" placeholder="Passwort" required>
+										<div id="Passworthinweis" class="hinweis text-error">Bitte Passwort erfassen</div>
+										<div class="signup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+										<div class="signup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+									</div>
+								</div>
+								<div class="control-group signup">
+									<label class="control-label" for="Passwort2">Passwort bestätigen</label>
+									<div class="controls">
+										<input type="password" id="Passwort2" placeholder="Passwort bestätigen" required>
+										<div id="Passwort2hinweis" class="hinweis text-error">Bitte Passwort bestätigen</div>
+										<div id="Passwort2hinweisFalsch" class="hinweis text-error">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
 								<div class="control-group">
 									<div class="controls">
-										<label class="checkbox">
-											<input type="checkbox"> angemeldet bleiben
-										</label>
-										<button class="btn">anmelden</button><button class="btn">Konto erstellen</button>
+										<button id="anmelden_btn" class="btn">anmelden</button>
+										<button id="konto_erstellen_btn" class="btn">neues Konto erstellen</button>
+										<button id="konto_speichern_btn" class="btn" style="display:none;">neues Konto speichern</button>
 									</div>
+								</div>
+								<div id="importieren_anmelden_fehler" class="alert alert-error">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_anmelden_fehler_text"></div>
 								</div>
 							</div>
 						</div>
@@ -98,9 +111,7 @@
 
 					<div class="accordion-group" id="importieren_aktion_waehlen">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_aktion_waehlen_collapse">
-								<strong>2. Aktion wählen</strong>
-							</a>
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_aktion_waehlen_collapse">2. Aktion wählen</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_aktion_waehlen_collapse">
 							<div class="accordion-inner">
@@ -112,7 +123,7 @@
 					<div class="accordion-group" id="importieren_ds_beschreiben">
 						<div class="accordion-heading accordion-group_gradient">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_ds_beschreiben_collapse">
-								<strong>3. Datensammlung beschreiben</strong>
+								3. Datensammlung beschreiben
 							</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_ds_beschreiben_collapse">
@@ -125,7 +136,7 @@
 					<div class="accordion-group" id="importieren_daten_uploaden">
 						<div class="accordion-heading accordion-group_gradient">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_daten_uploaden_collapse">
-								<strong>4. Daten uploaden</strong>
+								4. Daten uploaden
 							</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
@@ -138,7 +149,7 @@
 					<div class="accordion-group" id="importieren_ids_identifizieren">
 						<div class="accordion-heading accordion-group_gradient">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_ids_identifizieren_collapse">
-								<strong>5. ID's identifizieren</strong>
+								5. ID's identifizieren
 							</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_ids_identifizieren_collapse">
@@ -151,7 +162,7 @@
 					<div class="accordion-group" id="importieren_import_ausfuehren">
 						<div class="accordion-heading accordion-group_gradient">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_import_ausfuehren_collapse">
-								<strong>6. Import ausführen</strong>
+								6. Import ausführen
 							</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
@@ -176,6 +187,11 @@
 				}
 
 				$("#suchen").hide();
+
+				//wenn User noch angemeldet ist, UI anpassen
+				if (localStorage.Email) {
+					$("#importieren_anmelden_titel").text(localStorage.Email + " ist angemeldet");
+				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("body").on("click", "[name='Gruppe']", function () {
@@ -202,7 +218,11 @@
 
 				$("#menu").on("click", "#ImportierenLink", function() {
 					zeigeFormular("import");
-					$("#importieren_anmelden_collapse").collapse('show');
+					if (localStorage.Email) {
+						$("#importieren_aktion_waehlen_collapse").collapse('show');
+					} else {
+						$("#importieren_anmelden_collapse").collapse('show');
+					}
 				});
 				
 				//Suche steuern
@@ -245,6 +265,34 @@
 			$(window).resize(function () {
 				setzeTreehoehe();
 				setzteHöheTextareas();
+			});
+
+			$("#import").on("click", "#anmelden_btn", function(event) {
+				event.preventDefault();
+				meldeUserAn();
+			});
+
+			$("#import").on("click", "#konto_erstellen_btn", function(event) {
+				event.preventDefault();
+				$(".signup").css("display", "block");
+				$("#anmelden_btn").hide();
+				$("#konto_erstellen_btn").hide();
+				$("#konto_speichern_btn").show();
+				setTimeout(function() {
+					$("#Email").focus();
+				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+			});
+
+			$("#import").on("click", "#konto_speichern_btn", function(event) {
+				event.preventDefault();
+				if (validiereSignup()) {
+					erstelleKonto();
+					//Anmeldefenster zurücksetzen
+					$(".signup").css("display", "none");
+					$("#anmelden_btn").show();
+					$("#konto_erstellen_btn").show();
+					$("#konto_speichern_btn").hide();
+				}
 			});
 
 		</script>

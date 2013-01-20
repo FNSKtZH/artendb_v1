@@ -88,6 +88,7 @@ body {
 .accordion-heading a {
 	font-size: 17px;
 	color: #B85700;
+	font-weight: bold;
 }
 
 .accordion-inner {
@@ -151,20 +152,28 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	z-index: 4;
 }
 
-#forms label {
+#art label {
 	width: 180px;
 	color: #6F6F66;
 	margin-right: 7px;
+	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
+	margin-bottom: 0px;
 }
 
-#forms .feldtext {
+#art .feldtext {
 	margin-left: 192px;
 	display: block;
 	padding-top: 5px;
 }
 
-#forms .feldtext a {
+#art .feldtext a {
 	margin-left: 0px;
+}
+
+#art legend {
+	color: #6F6F66;
+	font-weight: bold;
+	margin: 0px 0px 7px 0px;
 }
 
 .controls {
@@ -174,23 +183,17 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 .Datensammlung {
-	/*color: #B85700;*/
+	color: #B85700;
+}
+
+.alert {
+	/*wird erst sichtbar geschaltet, wenn benötigt*/
+	display: none;
 }
 
 .BeschreibungDatensammlung {
 	/*font-size:80%;*/
 	padding-bottom: 0.5em;
-}
-
-#forms legend {
-	color: #6F6F66;
-	font-weight: bold;
-	margin: 0px 0px 7px 0px;
-}
-
-/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
-#forms label {
-	margin-bottom: 0px;
 }
 
 /*alle Datenfelder links ausrichten*/
@@ -204,7 +207,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
-#forms .form-horizontal .control-group {
+#art .control-group {
 	margin-bottom: 5px;
 }
 
@@ -212,7 +215,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	width: 100px;
 }
 
-#forms input, #forms select, #forms textarea {
+#art input, #art select, #art textarea {
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }
@@ -246,4 +249,14 @@ option {
 	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
 	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
 	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
+}
+
+.hinweis {
+	/*wird erst eingeblendet, wenn ein Anliegen besteht*/
+	display: none;
+}
+
+.signup {
+	/*wird erst bei signup eingeblendet*/
+	display: none;
 }
