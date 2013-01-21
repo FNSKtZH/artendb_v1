@@ -6,7 +6,7 @@ Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen]
 ## Inhalt ##
 * <a href="#Ausgangspunkt">Ausgangspunkt</a>
 * <a href="#Ziele">Ziele</a>
-* * <a href="#Taxonomien">Taxonomien</a>
+* <a href="#Taxonomien">Taxonomien</a>
 * <a href="#Datensammlungen">Datensammlungen</a>
 * <a href="#GruppenVereinen">Gruppen vereinen</a>
 * <a href="#DatenDecodieren">Daten decodieren</a>
@@ -60,6 +60,11 @@ sind ein paar Feststellungen:
 #Taxonomien
 Arten und Lebensräume werden in der [Taxonomie](http://de.wikipedia.org/wiki/Taxonomie) definiert. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Der Umgang mit unterschiedlichen Taxonomien ist anspruchsvoll. 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, Flora der Schweiz (Ausgabe 2012), Lebensraumkartierung Neeracher Riet 2009, Flora Europaea (Ellenberg, 1991).
+
+In ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
+
+Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
+Arten, die in der aktuellen Taxonomie nicht vorkommen, werden in der aktuellen Taxonomie entsprechend bezeichnet. Mit dieser Organisation ist es möglich, dass die Benutzerin die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen kann.
 
 <a href="#top">&#8593; top</a>
 
@@ -459,9 +464,10 @@ Eigenschaften anzeigen:
 
 **To do**
 
+- Import und Aktualisierung von Datensammlungen
+- Alternative Taxonomien verwalten und darstellen
 - Exporte
 - Beziehungen zwischen Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen
-- Importe, Aktualisierungen
 - Lebensräume in der Anwendung bearbeiten
 
 <a href="#top">&#8593; top</a>
