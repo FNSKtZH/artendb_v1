@@ -23,8 +23,8 @@ sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
 - Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie fehlerfrei und aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
-- Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Ausserdem kann sie zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 - Der Umgang mit unterschiedlichen Taxonomien für dieselbe Artengruppe muss mittelfristig grundlegend verbessert werden
+- Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Ausserdem kann sie zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 - Die Entwicklung und vor allem der Unterhalt der Anwendung ist in Javascript und HTML einfacher, übersichtlicher und weniger komplex
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
