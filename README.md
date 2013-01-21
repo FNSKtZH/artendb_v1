@@ -60,7 +60,7 @@ sind ein paar Feststellungen:
 #Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren Arten und Lebensräume in eine Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
-Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, Flora der Schweiz (Ausgabe 2012), Lebensraumkartierung Neeracher Riet 2009, Flora Europaea (Ellenberg, 1991).
+Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
 In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
 
