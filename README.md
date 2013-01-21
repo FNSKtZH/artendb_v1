@@ -83,12 +83,12 @@ Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb geschieht das folgendermassen:
 
 - Objekte (Arten und Lebensräume) werden im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) in [CouchDb](http://couchdb.apache.org/) als eigene Dokumente gespeichert (Typ: Objekt)
-- Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
+- Im Dokument werden alle Datensammlungen beschrieben, u.a. mit:
  - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
  - Originalbericht
  - Datenstand
  - Link
-- Alle Art- bzw. Lebensraumattribute sind innerhalb des Dokuments im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
+- Alle Art- bzw. Lebensraumattribute werden im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
