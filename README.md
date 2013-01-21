@@ -84,6 +84,7 @@ Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Auss
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:
 
 - Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
+ - Typ = "Datensammlung"
  - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
  - Originalbericht
  - Datenstand
@@ -91,6 +92,8 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 - Alle Felder sind im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
+
+Ein spezieller Fall sind Daten(-sammlungen), welche _Beziehungen_ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dateien gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte Datensammlungen vom Typ "Beziehung".
 
 <a name="FelderZusammenfassen"></a>
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
