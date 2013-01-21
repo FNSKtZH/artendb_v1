@@ -93,8 +93,6 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
-Ein spezieller Fall sind Daten(-sammlungen), welche _Beziehungen_ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dateien gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte Datensammlungen vom Typ "Beziehung".
-
 <a name="FelderZusammenfassen"></a>
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
 
@@ -102,6 +100,8 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 - Ein View fasst alle Felder aller Artgruppen mit demselben zusammenfassenden Feldnamen zusammen
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
 - Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
+
+Ein spezieller Fall sind Daten(-sammlungen), welche _Beziehungen_ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dateien gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte Datensammlungen vom Typ "Beziehung".
 
 <a href="#top">&#8593; top</a>
 
