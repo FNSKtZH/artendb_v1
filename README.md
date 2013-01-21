@@ -84,7 +84,6 @@ Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Auss
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:
 
 - Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
- - Typ = "Datensammlung"
  - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
  - Originalbericht
  - Datenstand
@@ -101,7 +100,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
 - Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
 
-Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dateien gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte Datensammlungen vom Typ "Beziehung".
+Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte die zutreffenden Datensammlungen mit ihren beschreibenden Attributen.
 
 <a href="#top">&#8593; top</a>
 
