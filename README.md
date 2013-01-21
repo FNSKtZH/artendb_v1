@@ -424,7 +424,7 @@ Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von 
 
 **Menu**
 
-Zuoberst soll eine Menuleiste erscheinen. Sie ermöglicht:
+Das Menu ermöglicht:
 
 - Exporte
 - Importe
