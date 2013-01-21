@@ -22,7 +22,7 @@ Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen]
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
-- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie fehlerfrei und aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
+- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
 - Der Umgang mit unterschiedlichen Taxonomien für dieselbe Artengruppe muss mittelfristig grundlegend verbessert werden
 - Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Ausserdem kann sie zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 - Die Entwicklung und vor allem der Unterhalt der Anwendung ist in Javascript und HTML einfacher, übersichtlicher und weniger komplex
