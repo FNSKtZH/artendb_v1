@@ -65,7 +65,7 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensr
 In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
 
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
-Arten, die in der aktuellen Taxonomie nicht vorkommen, werden in der aktuellen Taxonomie entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
+Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
 <a href="#top">&#8593; top</a>
 
