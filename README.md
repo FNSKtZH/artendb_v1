@@ -81,7 +81,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Ausser es wird ein Arten- und Lebensraum-Wiki angestrebt - dies könnte zusätzlich ermöglicht werden.
 
-Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. Das kann folgendermassen geschehen:
+Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb geschieht das folgendermassen:
 
 - Objekte (Arten und Lebensräume) werden im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) in [CouchDb](http://couchdb.apache.org/) als eigene Dokumente gespeichert (Typ: Objekt)
 - Datensammlungen werden eigens beschrieben und gespeichert, u.a. mit:
