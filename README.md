@@ -78,7 +78,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Definierte Auswahl erfasster Informationen
 - Definierte Methodik
 
-Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden. Ausser es wird ein Arten- und Lebensraum-Wiki angestrebt - dies könnte zusätzlich ermöglicht werden.
+Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb geschieht das folgendermassen:
 
