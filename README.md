@@ -58,7 +58,7 @@ sind ein paar Feststellungen:
 
 <a name="Taxonomien"></a>
 #Taxonomien
-Arten und Lebensräume werden in der [Taxonomie](http://de.wikipedia.org/wiki/Taxonomie) definiert. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden damit sind höchst anspruchsvoll.
+Arten und Lebensräume werden in der [Taxonomie](http://de.wikipedia.org/wiki/Taxonomie) definiert. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, Flora der Schweiz (Ausgabe 2012), Lebensraumkartierung Neeracher Riet 2009, Flora Europaea (Ellenberg, 1991).
 
