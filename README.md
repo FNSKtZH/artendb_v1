@@ -416,7 +416,7 @@ Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der be
 
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
 
-Die Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
+Die Taxonomien (hier noch Index genannt) und Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
 
 Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
