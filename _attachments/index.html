@@ -272,6 +272,21 @@
 				meldeUserAn();
 			});
 
+			$("#import").on("keyup", "#Email", function(event) {
+				/*allfällig noch vorhandenen Hinweis ausblenden*/
+				$("#Emailhinweis").css("display", "none");
+			});
+
+			$("#import").on("keyup", "#Passwort", function(event) {
+				/*allfällig noch vorhandenen Hinweis ausblenden*/
+				$("#Passworthinweis").css("display", "none");
+			});
+
+			$("#import").on("keyup", "#Passwort2", function(event) {
+				/*allfällig noch vorhandenen Hinweis ausblenden*/
+				$("#Passworthinweis2").css("display", "none");
+			});
+
 			$("#import").on("click", "#konto_erstellen_btn", function(event) {
 				event.preventDefault();
 				$(".signup").css("display", "block");

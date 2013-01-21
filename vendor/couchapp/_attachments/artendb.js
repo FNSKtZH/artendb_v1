@@ -716,7 +716,7 @@ function meldeUserAn() {
 	var Email, Passwort;
 	Email = $('#Email').val();
 	Passwort = $('#Passwort').val();
-	if (validiereUserIndex) {
+	if (validiereUserAnmeldung()) {
 		$.couch.login({
 			name : Email,
 			password : Passwort,
@@ -740,23 +740,28 @@ function passeUiFuerAngemeldetenUserAn() {
 	$("#importieren_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 	$("#importieren_anmelden_collapse").collapse('hide');
 	$("#importieren_aktion_waehlen_collapse").collapse('show');
+	$("#importieren_anmelden_fehler").css("display", "none");
+	$(".hinweis").css("display", "none");
 }
 
-function validiereUserIndex() {
+function validiereUserAnmeldung() {
 	var Email, Passwort;
 	Email = $('#Email').val();
-	Passwort = $('input[name=Passwort]').val();
+	Passwort = $('#Passwort').val();
+	console.log("$('#Email').val() = " + $('#Email').val());
+	console.log("$('#Passwort').val() = " + $('#Passwort').val());
 	if (!Email) {
 		setTimeout(function () { 
 			$('#Email').focus(); 
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		melde("Bitte Email eingeben");
+		$("#Emailhinweis").css("display", "block");
 		return false;
 	} else if (!Passwort) {
+		console.log("kein Passwort");
 		setTimeout(function () { 
 			$('#Passwort').focus(); 
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		melde("Bitte Passwort eingeben");
+		$("#Passworthinweis").css("display", "block");
 		return false;
 	}
 	return true;
