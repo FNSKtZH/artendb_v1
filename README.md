@@ -25,7 +25,7 @@ sind ein paar Feststellungen:
 - Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie fehlerfrei und aktuell zu halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
 - Die aktuelle Datenbank kann zwar im Internet frei heruntergeladen werden. Sie setzt aber Microsoft Access voraus. Die Anzahl Geräte, welche sie nutzen können, ist daher stark eingeschränkt
 - Microsoft Access hat technische Grenzen, die einer Weiterentwicklung im obigen Sinn im Wege stehen
-- Der Umgang mit verschiedenen Indizes für dieselbe Artengruppe muss grundlegend verbessert werden
+- Der Umgang mit verschiedenen Taxonomien für dieselbe Artengruppe muss grundlegend verbessert werden
 - Die Entwicklung und vor allem der Unterhalt der Anwendung ist in Javascript und HTML einfacher, übersichtlicher und weniger komplex
 - Bei einer Datenbank, die von verschiedensten Stellen nachgeführt wird, sollte die Benutzeroberfläche dynamisch aus den internen Datenstrukturen aufgebaut werden: Wer seine Daten aktualisiert, sollte nicht auch noch die Benutzeroberfläche gestalten müssen...
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
