@@ -26,8 +26,35 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a id="ImportierenLink" href="#">importieren</a></li>
-							<li class="disabled"><a href="#">exportieren</a></li>
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#">Daten importieren / löschen</a>
+								<ul class="dropdown-menu">
+									<li class="dropdown-submenu">
+										<a tabindex="-1" href="#">Taxonomie</a>
+										<ul class="dropdown-menu">
+											<li class="disabled"><a id="aktuelle_taxonomie_importieren" href="#">aktuelle Taxonomie importieren</a></li>
+											<li class="disabled"><a id="aktuelle_taxonomie_loeschen" href="#">aktuelle Taxonomie löschen</a></li>
+											<li class="disabled"><a id="alternative_taxonomie_importieren" href="#">alternative Taxonomie importieren</a></li>
+											<li class="disabled"><a id="alternative_taxonomie_loeschen" href="#">alternative Taxonomie löschen</a></li>
+										</ul>
+									</li>
+									<li class="dropdown-submenu">
+										<a tabindex="-1" href="#">Eigenschaften</a>
+										<ul class="dropdown-menu">
+											<li><a id="eigenschaften_importieren" href="#">importieren</a></li>
+											<li class="disabled"><a id="eigenschaften_loeschen" href="#">löschen</a></li>
+										</ul>
+									</li>
+									<li class="dropdown-submenu">
+										<a tabindex="-1" href="#">Beziehungen</a>
+										<ul class="dropdown-menu">
+											<li class="disabled"><a id="beziehungen_importieren" href="#">importieren</a></li>
+											<li class="disabled"><a id="beziehungen_loeschen" href="#">löschen</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="disabled"><a href="#">Daten exportieren</a></li>
 							<li class="dropdown-submenu">
 								<a tabindex="-1" href="#">über diese Anwendung</a>
 								<ul class="dropdown-menu">
@@ -216,7 +243,7 @@
 					}
 				});
 
-				$("#menu").on("click", "#ImportierenLink", function() {
+				$("#menu").on("click", "#eigenschaften_importieren", function() {
 					zeigeFormular("import");
 					if (localStorage.Email) {
 						$("#importieren_aktion_waehlen_collapse").collapse('show');

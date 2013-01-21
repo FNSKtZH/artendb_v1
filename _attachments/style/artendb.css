@@ -105,6 +105,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	border-radius: 6px;
 	padding: 8px 8px 8px 8px;
 	background-color: #FFFFF0;
+	/*auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht)*/
+	z-index: 1;
 }
 
 #menu_btn {
