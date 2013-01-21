@@ -59,12 +59,13 @@ sind ein paar Feststellungen:
 <a name="Taxonomien"></a>
 #Taxonomien
 Arten und Lebensräume werden in der [Taxonomie](http://de.wikipedia.org/wiki/Taxonomie) definiert. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Der Umgang mit unterschiedlichen Taxonomien ist anspruchsvoll. 
+
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, Flora der Schweiz (Ausgabe 2012), Lebensraumkartierung Neeracher Riet 2009, Flora Europaea (Ellenberg, 1991).
 
-In ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
+In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
 
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
-Arten, die in der aktuellen Taxonomie nicht vorkommen, werden in der aktuellen Taxonomie entsprechend bezeichnet. Mit dieser Organisation ist es möglich, dass die Benutzerin die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen kann.
+Arten, die in der aktuellen Taxonomie nicht vorkommen, werden in der aktuellen Taxonomie entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
 <a href="#top">&#8593; top</a>
 
