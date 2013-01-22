@@ -1,5 +1,5 @@
 ﻿function(doc) {
 	if (doc.Gruppe && doc.Gruppe === "Moose") {
-		emit (doc.Index.Felder.Klasse, null);
+		emit (doc["Aktuelle Taxonomie"].Felder.Klasse, null);
 	}
 }

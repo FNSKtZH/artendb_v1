@@ -1,5 +1,5 @@
 ﻿function(doc) {
 	if (doc.Gruppe && doc.Gruppe === "Flora") {
-		emit ([doc.Index.Felder.Familie, doc.Index.Felder.Gattung], null);
+		emit ([doc["Aktuelle Taxonomie"].Felder.Familie, doc["Aktuelle Taxonomie"].Felder.Gattung], null);
 	}
 }

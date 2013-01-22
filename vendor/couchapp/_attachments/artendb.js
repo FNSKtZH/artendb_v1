@@ -323,70 +323,40 @@ function initiiere_art(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
-			var htmlArt, htmlDatensammlung;
+			var htmlArt, htmlDatensammlung, Datensammlungen, Taxonomien;
+			Datensammlungen = [];
+			Taxonomien = [];
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion">';
+			//zuerst alle Datensammlungen und Taxonomien auflisten, damit danach sortiert werden kann
 			for (i in art) {
-				//nur Datensammlungen anzeigen
-				if (art[i].Typ === "Datensammlung") {
-					//Accordion-Gruppe und -heading anfügen
-					htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
-					//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-					htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '">';
-					//Titel für die Datensammlung einfügen
-					htmlDatensammlung += i;
-					//header abschliessen
-					htmlDatensammlung += '</a></div>';
-					//body beginnen
-					htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
-					//Datensammlung beschreiben
-					htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
-					if (art[i].Beschreibung) {
-						htmlDatensammlung += art[i].Beschreibung;
-					}
-					if (art[i].Datenstand) {
-						htmlDatensammlung += '. Stand: ';
-						htmlDatensammlung += art[i].Datenstand;
-					}
-					if (art[i]["Link"]) {
-						htmlDatensammlung += '. <a href="';
-						htmlDatensammlung += art[i]["Link"];
-						htmlDatensammlung += '">';
-						htmlDatensammlung += art[i]["Link"];
-						htmlDatensammlung += '</a>';
-					}
-					//Beschreibung der Datensammlung abschliessen
-					htmlDatensammlung += '</div>';
-					//Felder anzeigen
-					for (y in art[i].Felder) {
-						if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
-							//dann den Link aufbauen lassen
-							htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art[i].Felder[y].GUID, art[i].Felder[y].Name);
-						} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
-							//das ist ein Array von Objekten
-							htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art[i].Felder[y]);
-						} else if ((y === "Artname" && art.Gruppe === "Flora") || ((y === "Parent" || y === "Hierarchie") && art.Gruppe === "Lebensräume")) {
-							//dieses Feld nicht anzeigen
-						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].slice(0, 10) === "http://www") {
-							//www-Links als Link darstellen
-							htmlDatensammlung += generiereHtmlFuerWwwlink(y, art[i].Felder[y]);
-						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length < 70) {
-							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
-						} else if (typeof art[i].Felder[y] === "string" && art[i].Felder[y].length >= 70) {
-							htmlDatensammlung += generiereHtmlFuerTextarea(y, art[i].Felder[y]);
-						} else if (typeof art[i].Felder[y] === "number") {
-							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "number");
-						} else if (typeof art[i].Felder[y] === "boolean") {
-							htmlDatensammlung += generiereHtmlFuerBoolean(y, art[i].Felder[y]);
-						} else {
-							htmlDatensammlung += generiereHtmlFuerTextinput(y, art[i].Felder[y], "text");
-						}
-					}
-					//body und Accordion-Gruppe abschliessen
-					htmlDatensammlung += '</div></div></div>';
-					//Datensammlung (=Accordion-Gruppe) hinzufügen
-					htmlArt += htmlDatensammlung;
+				if (art[i].Typ === "Taxonomie") {
+					Taxonomien.push(i);
 				}
+				if (art[i].Typ === "Datensammlung" && i !== "Aktuelle Taxonomie") {
+					Datensammlungen.push(i);
+				}
+			}
+			//sortieren
+			Taxonomien.sort();
+			Datensammlungen.sort();
+			console.log("Taxonomien = " + Taxonomien);
+			console.log("Datensammlungen = " + Datensammlungen);
+			//in gewollter Reihenfolge hinzufügen
+			//HTML für Datensammlung erstellen lassen und hinzufügen
+			//zuerst die aktuelle Taxonomie
+			htmlArt += erstelleHtmlFuerDatensammlung("Aktuelle Taxonomie", art["Aktuelle Taxonomie"]);
+			//dann alternative Taxonomien
+			for (var z=0; z<Taxonomien.length; z++) {
+				console.log("art[Taxonomien[z]] = " + art[Taxonomien[z]]);
+				if (Taxonomien[z] !== "Aktuelle Taxonomie") {
+					htmlArt += erstelleHtmlFuerDatensammlung(Taxonomien[z], art[Taxonomien[z]]);
+				}
+			}
+			//dann Datensammlungen
+			for (var x=0; x<Datensammlungen.length; x++) {
+				console.log("art[Datensammlungen[x]] = " + art[Datensammlungen[x]]);
+				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art[Datensammlungen[x]]);
 			}
 			//accordion beenden
 			htmlArt += '</div>';
@@ -403,6 +373,70 @@ function initiiere_art(id) {
 	});
 }
 
+//erstellt die HTML für eine Datensammlung
+//benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
+function erstelleHtmlFuerDatensammlung(i, art_i) {
+	var htmlDatensammlung;
+	console.log("i = " + i);
+	console.log("art_i = " + art_i);
+	//Accordion-Gruppe und -heading anfügen
+	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '">';
+	//Titel für die Datensammlung einfügen
+	htmlDatensammlung += i;
+	//header abschliessen
+	htmlDatensammlung += '</a></div>';
+	//body beginnen
+	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	//Datensammlung beschreiben
+	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
+	if (art_i.Beschreibung) {
+		htmlDatensammlung += art_i.Beschreibung;
+	}
+	if (art_i.Datenstand) {
+		htmlDatensammlung += '. Stand: ';
+		htmlDatensammlung += art_i.Datenstand;
+	}
+	if (art_i["Link"]) {
+		htmlDatensammlung += '. <a href="';
+		htmlDatensammlung += art_i["Link"];
+		htmlDatensammlung += '">';
+		htmlDatensammlung += art_i["Link"];
+		htmlDatensammlung += '</a>';
+	}
+	//Beschreibung der Datensammlung abschliessen
+	htmlDatensammlung += '</div>';
+	//Felder anzeigen
+	for (y in art_i.Felder) {
+		if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
+			//dann den Link aufbauen lassen
+			htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art_i.Felder[y].GUID, art_i.Felder[y].Name);
+		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
+			//das ist ein Array von Objekten
+			htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Felder[y]);
+		} else if ((y === "Artname" && art.Gruppe === "Flora") || ((y === "Parent" || y === "Hierarchie") && art.Gruppe === "Lebensräume")) {
+			//dieses Feld nicht anzeigen
+		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].slice(0, 10) === "http://www") {
+			//www-Links als Link darstellen
+			htmlDatensammlung += generiereHtmlFuerWwwlink(y, art_i.Felder[y]);
+		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].length < 70) {
+			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "text");
+		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].length >= 70) {
+			htmlDatensammlung += generiereHtmlFuerTextarea(y, art_i.Felder[y]);
+		} else if (typeof art_i.Felder[y] === "number") {
+			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "number");
+		} else if (typeof art_i.Felder[y] === "boolean") {
+			htmlDatensammlung += generiereHtmlFuerBoolean(y, art_i.Felder[y]);
+		} else {
+			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "text");
+		}
+	}
+	//body und Accordion-Gruppe abschliessen
+	htmlDatensammlung += '</div></div></div>';
+	return htmlDatensammlung;
+}
+
 //managt die Links zu Google Bilder und Wikipedia
 //erwartet das Objekt mit der Art
 function setzteLinksZuBilderUndWikipedia(art) {
@@ -411,49 +445,49 @@ function setzteLinksZuBilderUndWikipedia(art) {
 	var wikipediaLink = "";;
 	switch (art.Gruppe) {
 		case "Flora":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
-			if (art.Index.Felder['Deutsche Namen']) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Deutsche Namen'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Artname + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Deutsche Namen']) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Deutsche Namen'] + '"';
 			}
-			if (art.Index.Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Französisch'] + '"';
 			}
-			if (art.Index.Felder['Name Italienisch']) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Name Italienisch'] + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Name Italienisch']) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Italienisch'] + '"';
 			}
-			if (art.Index.Felder['Deutsche Namen']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder['Deutsche Namen'];
+			if (art["Aktuelle Taxonomie"].Felder['Deutsche Namen']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder['Deutsche Namen'];
 			} else {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Artname;
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Artname;
 			}
 			break;
 		case "Fauna":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Artname + '"';
-			if (art.Index.Felder["Name Deutsch"]) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Artname + '"';
+			if (art["Aktuelle Taxonomie"].Felder["Name Deutsch"]) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Deutsch'] + '"';
 			}
-			if (art.Index.Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Name Französisch'] + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Französisch'] + '"';
 			}
-			if (art.Index.Felder['Name Italienisch']) {
-				googleBilderLink += '+OR"' + art.Index.Felder['Name Italienisch'] + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Name Italienisch']) {
+				googleBilderLink += '+OR"' + art["Aktuelle Taxonomie"].Felder['Name Italienisch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Gattung + '_' + art["Aktuelle Taxonomie"].Felder.Art;
 			break;
 		case 'Moose':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Gattung + ' ' + art.Index.Felder.Art + '"';
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Gattung + '_' + art.Index.Felder.Art;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Gattung + ' ' + art["Aktuelle Taxonomie"].Felder.Art + '"';
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Gattung + '_' + art["Aktuelle Taxonomie"].Felder.Art;
 			break;
 		case 'Macromycetes':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Name + '"';
-			if (art.Index.Felder['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art.Index.Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Name + '"';
+			if (art["Aktuelle Taxonomie"].Felder['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Deutsch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Name;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Name;
 			break;
 		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Index.Felder.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Index.Felder.Einheit;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Einheit;
 			break;
 	}
 	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
@@ -739,7 +773,7 @@ function meldeUserAn() {
 function passeUiFuerAngemeldetenUserAn() {
 	$("#importieren_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 	$("#importieren_anmelden_collapse").collapse('hide');
-	$("#importieren_aktion_waehlen_collapse").collapse('show');
+	$("#importieren_ds_beschreiben_collapse").collapse('show');
 	$("#importieren_anmelden_fehler").css("display", "none");
 	$(".hinweis").css("display", "none");
 }
@@ -748,8 +782,6 @@ function validiereUserAnmeldung() {
 	var Email, Passwort;
 	Email = $('#Email').val();
 	Passwort = $('#Passwort').val();
-	console.log("$('#Email').val() = " + $('#Email').val());
-	console.log("$('#Passwort').val() = " + $('#Passwort').val());
 	if (!Email) {
 		setTimeout(function () { 
 			$('#Email').focus(); 
@@ -757,7 +789,6 @@ function validiereUserAnmeldung() {
 		$("#Emailhinweis").css("display", "block");
 		return false;
 	} else if (!Passwort) {
-		console.log("kein Passwort");
 		setTimeout(function () { 
 			$('#Passwort').focus(); 
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
