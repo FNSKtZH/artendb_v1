@@ -340,22 +340,18 @@ function initiiere_art(id) {
 			//sortieren
 			Taxonomien.sort();
 			Datensammlungen.sort();
-			console.log("Taxonomien = " + Taxonomien);
-			console.log("Datensammlungen = " + Datensammlungen);
 			//in gewollter Reihenfolge hinzufügen
 			//HTML für Datensammlung erstellen lassen und hinzufügen
 			//zuerst die aktuelle Taxonomie
 			htmlArt += erstelleHtmlFuerDatensammlung("Aktuelle Taxonomie", art["Aktuelle Taxonomie"]);
-			//dann alternative Taxonomien
+			//dann alternative Taxonomien, ohne die aktuelle nochmals zu bringen
 			for (var z=0; z<Taxonomien.length; z++) {
-				console.log("art[Taxonomien[z]] = " + art[Taxonomien[z]]);
 				if (Taxonomien[z] !== "Aktuelle Taxonomie") {
 					htmlArt += erstelleHtmlFuerDatensammlung(Taxonomien[z], art[Taxonomien[z]]);
 				}
 			}
 			//dann Datensammlungen
 			for (var x=0; x<Datensammlungen.length; x++) {
-				console.log("art[Datensammlungen[x]] = " + art[Datensammlungen[x]]);
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art[Datensammlungen[x]]);
 			}
 			//accordion beenden
