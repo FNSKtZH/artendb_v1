@@ -202,13 +202,13 @@ function erstelleBaum(Gruppe) {
 			}
 		});
 	} else if (Gruppe === "Lebensräume") {
-		$db.view('artendb/baum_lr?group_level=1', {
+		$db.view('artendb/baum_lr_0', {
 			success: function (level1) {
-				$db.view('artendb/baum_lr?group_level=2', {
+				$db.view('artendb/baum_lr_1', {
 					success: function (level2) {
-						$db.view('artendb/baum_lr?group_level=3', {
+						$db.view('artendb/baum_lr_2', {
 							success: function (level3) {
-								$db.view('artendb/baum_lr?group_level=4', {
+								$db.view('artendb/baum_lr_3', {
 									success: function (level4) {
 										var baum, child_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr;
 										baum = [];
@@ -373,8 +373,6 @@ function initiiere_art(id) {
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 function erstelleHtmlFuerDatensammlung(i, art_i) {
 	var htmlDatensammlung;
-	console.log("i = " + i);
-	console.log("art_i = " + art_i);
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
