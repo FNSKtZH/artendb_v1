@@ -220,15 +220,17 @@ Hier als Beispiel die Schlingnatter:
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-d348c0b5ee1852015dceef081c829699",
+   "_rev": "13-56959960fbc41955d37b867d9c9de909",
    "Gruppe": "Fauna",
-   "Index": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Index der Info Fauna. Daten zu 21542 Arten",
+   "Typ": "Objekt",
+   "Aktuelle Taxonomie": {
+       "Typ": "Taxonomie",
+       "Beschreibung": "Index der Info Fauna. Eigenschaften zu 21542 Arten",
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
-           "Nuesp": 70158,
+           "GUID": "8B825C10-C098-48B1-BAB7-5C6287002635",
+           "Taxonomie ID": 70158,
            "Klasse": "Reptilia",
            "Ordnung": "Squamata",
            "Familie": "Colubridae",
@@ -247,18 +249,13 @@ Hier als Beispiel die Schlingnatter:
    },
    "CH Rote Listen": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Daten zu 2284 Arten",
+       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften zu 2284 Arten",
        "Datenstand": "unterschiedlich",
        "Felder": {
-           "Europa Smaragd": false,
            "Europa": "gefährdet",
-           "Deutschland": "keine Angabe",
            "Schweiz aktuell": "verletzlich (VU)",
            "Schweiz Kriterien": "B2a, B2b(iii, iv)",
            "Nordschweiz": "stark gefährdet",
-           "Jura": "keine Angabe",
-           "Nordostschweiz": "keine Angabe",
-           "Östliches Mittelland": "keine Angabe",
            "Kt Zürich": "vom Aussterben bedroht",
            "Bemerkungen": "Im Mittelland vom Aussterben bedroht",
            "Quelle": "BAFU 2005 (CH), älter (Regionen)"
@@ -266,7 +263,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "Blaue Liste": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Daten zu 207 Arten",
+       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Eigenschaften zu 207 Arten",
        "Datenstand": "1998",
        "Link": "http://www.bluelist.ethz.ch/",
        "Felder": {
@@ -282,7 +279,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "CH Prioritäten": {
        "Typ": "Datensammlung",
-       "Beschreibung": "BAFU. Daten zu 607 Arten",
+       "Beschreibung": "BAFU. Eigenschaften zu 607 Arten",
        "Datenstand": "2012.01",
        "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
        "Felder": {
@@ -308,7 +305,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "CH Umweltziele LW": {
        "Typ": "Datensammlung",
-       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Daten zu 374 Arten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
+       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften zu 374 Arten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
        "Datenstand": "2008",
        "Felder": {
            "Zielart": true,
@@ -323,9 +320,9 @@ Hier als Beispiel die Schlingnatter:
            "Südalpen": true
        }
    },
-   "Agroscope Zielart": {
+   "CH Agroscope Zielart": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Agroscope (2008). Daten zu 207 Arten",
+       "Beschreibung": "Agroscope (2008). Eigenschaften zu 207 Arten",
        "Datenstand": "2008",
        "Link": "http://www.agroscope.admin.ch",
        "Felder": {
@@ -352,19 +349,18 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH Artwert": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Artwerte für den Kanton Zürich. Daten zu 1530 Arten",
+       "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften zu 1530 Arten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
            "Artwert": 8,
-           "Mangelnde Datengrundlagen": false,
            "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
            "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
        }
    },
    "ZH AP": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Daten zu 36 Arten",
+       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Eigenschaften zu 36 Arten",
        "Datenstand": "2007",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -376,7 +372,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH AP Einstufung": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Daten zu 682 Arten",
+       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften zu 682 Arten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -396,14 +392,14 @@ Hier als Beispiel die Schlingnatter:
            "Umbrella- oder flagship-species": "ja",
            "Bereits irgendwo Artenschutzprogramme": "ja",
            "Dringlichkeit": "gross",
-           "Auswahl vorgeschlagen": true,
+           "Für Aktionsplan vorgeschlagen": true,
            "Bemerkungen": "Höchste Dringlichkeit? Ergänzungen zum bestehenden Konzept (übrige Standorte) ect.; ZH hat grosse Verantwortung: mehr Standorte als Nachbarkantone\r\nErfolgsaussichten (Bemerkung zu Punkt 4): grosse Pop. an Bahnlinien\r\nFörderungsmassnahmen: Massnahmen in einfacher Form vorgeschlagen: konkret Standort ermittelt, für ca. 1/2 klar, was machen, Feinumsetzung fehlt noch; Restliche Pop.: keine Massnahmen-Empfehlungen formuliert.\r\nRealisierbarkeit: Grundeigentümer z.T. nicht einverstanden\r\nProjekt: Naturnetz Pfannenstiel  für Fr. 300000.-- (Geld v.a. von Stiftungen): Schlingnatter im Zentrum, da Schwerpunktvorkommen; früheres Konzept von P. Müller war Grundlage.\r\nJetzt generelle Überlegungen im Kt. ZH machen. (SBB ev. kooperativer, wenn Programm da ist.)",
            "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
        }
    },
    "ZH AP LiWa": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Daten zu 51 Arten",
+       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Eigenschaften zu 51 Arten",
        "Datenstand": "2009",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -413,7 +409,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH AP TWW": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Daten zu 1113 Arten",
+       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Eigenschaften zu 1113 Arten",
        "Datenstand": "2011",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -426,7 +422,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH Artengruppen": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Artengruppen Kt. Zürich. Daten zu allen Arten",
+       "Beschreibung": "Artengruppen Kt. Zürich. Eigenschaften zu allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -436,12 +432,11 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH GIS": {
        "Typ": "Datensammlung",
-       "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Daten zu allen Arten",
+       "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften zu allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Betrachtungsdistanz in Meter": 3000,
-           "Berücksichtigen wenn in Betrachtungsdistanz nicht ausgewiesen": false,
+           "Betrachtungsdistanz (m)": 3000,
            "Kriterien für Bestimmung der Betrachtungsdistanz": "9"
        }
    }
