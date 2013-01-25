@@ -8,7 +8,7 @@ Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen]
 * <a href="#Konzept">Fachliches Konzept</a>
 * <a href="#ui">Benutzeroberfläche</a>
 * <a href="#Umsetzung">Technische Umsetzung</a>
-* <a href="#Zeitplan">Zeitplan</a>
+* <a href="#Zeitplan">Realisierung</a>
 * <a href="#OpenSource">Open source</a>
 
 <a name="Ziele"></a>
@@ -186,6 +186,13 @@ Geplant ist folgendes Vorgehen:
 
 <a name="Umsetzung"></a>
 #Technische Umsetzung
+##Verwendete Technologien
+Eingesetzt werden:
+* [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS3](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
+* [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
+* [CouchDb](http://couchdb.apache.org/) als Datenbank
+* CochDb als [CouchApp](http://couchapp.org/page/index), womit die Anwendung auch lokal installiert werden kann und ihr eigener Webserver ist
+
 ##Dokumentorientierte Datenbank verwenden
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
@@ -209,7 +216,7 @@ Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Date
 
 Beziehungen werden in eigenen Dokumenten auf ähnliche Art gespeichert.
 
-Sehen Sie hier am Beispiel der Schlingnatter, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen im Dokument gespeichert wird:
+Sehen Sie hier am Beispiel der Schlingnatter, wie eine Art mit vielen Informationen aus diversen Datensammlungen im Dokument gespeichert wird:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -444,12 +451,12 @@ Sehen Sie hier am Beispiel der Schlingnatter, wie damit eine Art mit vielen Info
 
 Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. 
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
-#Zeitplan
+#Realisierung
 ##Zeitplan
 Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
