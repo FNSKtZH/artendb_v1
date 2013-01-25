@@ -553,7 +553,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	HtmlContainer += InputTyp;
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly"/>\n</div>';
+	HtmlContainer += '" readonly="readonly">\n</div>';
 	return HtmlContainer;	
 }
 
