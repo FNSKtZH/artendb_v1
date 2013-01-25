@@ -303,7 +303,6 @@ function erstelleTree(baum) {
 				localStorage.art_id = node.attr("id");
 				//Anzeige im Formular initiieren. ID und Datensammlung übergeben
 				initiiere_art(node.attr("id"));
-				$("#forms").show();
 			}
 		}
 	})
