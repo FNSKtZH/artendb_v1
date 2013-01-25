@@ -157,6 +157,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 #Daten exportieren
 
 Geplant ist folgendes Vorgehen:
+
 1. Benutzer wählt Gruppe
 2. Benutzer kann innerhalb der Gruppe filtern (sonst werden die Daten für alle Arten der Gruppe exportiert)
 3. Benutzer wählt aus allen Datensammlungen die gewünschten Felder aus
