@@ -368,7 +368,7 @@ function initiiere_art(id) {
 				$("#collapseTaxonomie").collapse('show');
 				//Fokus von der Hierarchie wegnehmen
 				$("#Hierarchie").blur();
-			} else if (Taxonomien.length === 1) {
+			} else if (Datensammlungen.length === 0) {
 				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 				$(".accordion-body").collapse('show');
 			}
@@ -687,10 +687,10 @@ function zeigeFormular(Formularname) {
 	});
 
 	if (Formularname) {
-		$("#forms").show();
 		$('form').each(function() {
 			$(this).hide();
 			if ($(this).attr("id") === Formularname) {
+				$("#forms").show();
 				$(this).show();
 				$('textarea').each(function () {
 					$(this).trigger('focus');
