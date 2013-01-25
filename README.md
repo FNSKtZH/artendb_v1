@@ -65,7 +65,7 @@ Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezei
 ##Objekte
 Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begrif ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
 
-Technischer Exkurs: Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt. Dieses Enthält eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier) sowie Eigenschafen (Taxonomien und Datensammlungen).
+Technischer Exkurs: Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt. Dieses Enthält eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)) sowie Eigenschafen (Taxonomien und Datensammlungen).
 
 ##Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
