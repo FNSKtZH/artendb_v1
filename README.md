@@ -209,7 +209,7 @@ Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Date
 
 Beziehungen werden in eigenen Dokumenten auf ähnliche Art gespeichert.
 
-Sehen Sie hier am Beispiel der Schlingnatter, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
+Sehen Sie hier am Beispiel der Schlingnatter, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen im Dokument gespeichert wird:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
