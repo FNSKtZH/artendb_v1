@@ -188,12 +188,12 @@ Geplant ist folgendes Vorgehen:
 #Technische Umsetzung
 ##Verwendete Technologien
 Eingesetzt werden:
-* [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS3](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
+* [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
 * [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 * [CouchDb](http://couchdb.apache.org/) als Datenbank
-* CochDb als [CouchApp](http://couchapp.org/page/index), womit die Anwendung auch lokal installiert werden kann und ihr eigener Webserver ist
+* CouchDb als [CouchApp](http://couchapp.org/page/index), womit die Anwendung auch lokal installiert werden kann und ihr eigener Webserver ist
 
-##Dokumentorientierte Datenbank verwenden
+##Dokumentorientierte Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
 Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
@@ -204,19 +204,19 @@ Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche
 
 ##Datenstruktur
 
-Objekte (Arten und Lebensräume) werden in der Datenbank [CouchDb](http://couchdb.apache.org/) als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
+Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
 
 Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, u.a. mit:
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
-- Originalbericht
+- Originalbericht (angehängt)
 - Datenstand
 - Link
 
-Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>).
+Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert.
 
-Beziehungen werden in eigenen Dokumenten auf ähnliche Art gespeichert.
+Beziehungen werden in eigenen Dokumenten ähnlich gespeichert.
 
-Sehen Sie hier am Beispiel der Schlingnatter, wie eine Art mit vielen Informationen aus diversen Datensammlungen im Dokument gespeichert wird:
+Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
