@@ -1,7 +1,7 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen.
 
-Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content). [Das hier](https://github.com/barbalex/artendb) ist der Versuch, sie weiter zu entwickeln.
+Es existiert schon eine frühere Version als [Access-mdb](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
 
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
