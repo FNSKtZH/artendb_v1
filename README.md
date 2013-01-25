@@ -51,7 +51,7 @@ sind ein paar Feststellungen:
 #Fachliches Konzept
 
 ##Taxonomien
-[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren Arten und Lebensräume mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
+[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren [Objekte](http://de.wikipedia.org/wiki/Objekt_(Programmierung)) (Arten und Lebensräume) mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
 
