@@ -24,7 +24,7 @@ sind ein paar Feststellungen:
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
-####Für die Benutzerin
+###Für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
 - Die Datenflut kann bewältigt werden:
@@ -38,7 +38,7 @@ sind ein paar Feststellungen:
 - Exporte und Auswertungen können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg erfolgen
 
 
-##Für Datenpfleger und Systemverantwortliche
+###Für Datenpfleger und Systemverantwortliche
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
@@ -49,7 +49,7 @@ sind ein paar Feststellungen:
 <a name="Konzept"></a>
 #Fachliches Konzept
 
-##Taxonomien
+###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
@@ -61,12 +61,12 @@ In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verw
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
 Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
-##Objekte
+###Objekte
 Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begrif ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
 
 Technischer Exkurs: Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt. Dieses Enthält eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)) sowie Eigenschafen (Taxonomien und Datensammlungen).
 
-##Datensammlungen
+###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation)
@@ -90,17 +90,17 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte die zutreffenden Datensammlungen mit ihren beschreibenden Attributen.
 
-##Gruppen vereinen
+###Gruppen vereinen
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
-##Daten decodieren
+###Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
 
 <a href="#top">&#8593; top</a>
 
 <a name="ui"></a>
 #Benutzeroberfläche
-##Erscheinungsbild
+###Erscheinungsbild
 
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel" width="100%">
 
@@ -137,7 +137,7 @@ Das Menu ermöglicht:
 - Informationen über die ArtenDb
 - Rückmeldungen an den Entwickler
  
-##Neue Datensammlungen hinzufügen
+###Neue Datensammlungen hinzufügen
 Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
 Importiert werden können sollen:
@@ -172,7 +172,7 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
 
-##Daten exportieren
+###Daten exportieren
 
 Geplant ist folgendes Vorgehen:
 
@@ -185,14 +185,14 @@ Geplant ist folgendes Vorgehen:
 
 <a name="Umsetzung"></a>
 #Technische Umsetzung
-##Verwendete Technologien
+###Verwendete Technologien
 Eingesetzt werden:
 * [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
 * [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 * [CouchDb](http://couchdb.apache.org/) als Datenbank
 * CouchDb als [CouchApp](http://couchapp.org/page/index), womit die Anwendung auch lokal installiert werden kann und ihr eigener Webserver ist
 
-##Dokumentorientierte Datenbank
+###Dokumentorientierte Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
 Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
@@ -201,7 +201,7 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 
 Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche dynamisch generiert werden, auch wenn eine Datensammlung zuvor unbekannte Felder enthält. 
 
-##Datenstruktur
+###Datenstruktur
 
 Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
 
@@ -451,7 +451,7 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 
 <a name="Zeitplan"></a>
 #Realisierung
-##Zeitplan
+###Zeitplan
 Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
 Aktueller Stand:
@@ -460,7 +460,7 @@ Aktueller Stand:
 - Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
-##Was kann man mit der aktuellen Version machen?
+###Was kann man mit der aktuellen Version machen?
 
 Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Die Version im Web kann einzelne Features noch nicht enthalten.
 
