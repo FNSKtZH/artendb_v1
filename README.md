@@ -24,8 +24,7 @@ sind ein paar Feststellungen:
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
-##Ziele
-**Für die Benutzerin:**
+##Für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
 - Die Datenflut kann bewältigt werden:
@@ -39,7 +38,7 @@ sind ein paar Feststellungen:
 - Exporte und Auswertungen können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg erfolgen
 
 
-**Für Datenpfleger und Systemverantwortliche:**
+##Für Datenpfleger und Systemverantwortliche
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
