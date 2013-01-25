@@ -78,7 +78,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
-Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen eine Eigenschaft der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
+Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
 
 In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Beziehungen) pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -155,6 +155,8 @@ Will jemand z.B. neue Arteigenschaften ergänzen, geht das dann so:
 5. Import wird ausgeführt
 
 fertig!
+
+Um schon vorhandene Arteigenschaften zu verändern, würde zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Dazu würden die Feldeigenschaften verwaltet. Unter anderen:
 
