@@ -12,6 +12,8 @@ Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen]
 * <a href="#DatenDecodieren">Daten decodieren</a>
 * <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
 * <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
+* <a href="#Importe">Daten importieren</a>
+* <a href="#Exporte">Daten exportieren</a>
 * <a href="#Benutzeroberfläche">Benutzeroberfläche</a>
 * <a href="#Zeitplan">Zeitplan</a>
 * <a href="#AktuellerStand">Was kann man mit der aktuellen Version machen?</a>
@@ -392,6 +394,34 @@ Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format
 Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. 
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Ehrlich gesagt war das [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) kombiniert mit CouchDb nach Jahren des K(r)ampfes mit den Arteigenschaften in Access für mich wie eine Offenbarung.
+
+<a href="#top">&#8593; top</a>
+
+<a name="Importe"></a>
+#Daten importieren
+
+Importiert werden können sollen:
+* Taxonomien
+* Eigenschaften
+* Beziehungen
+
+Geplant ist folgendes Vorgehen:
+1. Benutzer meldet sich an (erstellt beim ersten Mal ein Konto)
+2. Benutzer beschreibt die Datensammlung/Taxonomie
+3. Benutzer lädt die vorbereitete csv-Datei mit der Taxonomie/Eigenschaften/Beziehungen
+4. Benutzer bezeichnet die für die Verknüpfung der Daten benötigten ID's
+5. Import wird ausgeführt
+
+<a href="#top">&#8593; top</a>
+
+<a name="Exporte"></a>
+#Daten exportieren
+
+Geplant ist folgendes Vorgehen:
+1. Benutzer wählt Gruppe
+2. Benutzer kann innerhalb der Gruppe filtern (sonst werden die Daten für alle Arten der Gruppe exportiert)
+3. Benutzer wählt aus allen Datensammlungen die gewünschten Felder aus
+4. Daten werden als csv heruntergeladen
 
 <a href="#top">&#8593; top</a>
 
