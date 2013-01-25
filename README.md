@@ -62,6 +62,9 @@ In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verw
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
 Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
+##Objekte
+Die Grundeinheit der Taxonomie wird als Objekt bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt.
+
 ##Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
