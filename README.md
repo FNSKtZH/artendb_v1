@@ -53,7 +53,9 @@ sind ein paar Feststellungen:
 ##Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren Arten und Lebensräume mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
-Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
+Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
+
+Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
 In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
 
@@ -72,14 +74,6 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
 Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb geschieht das folgendermassen:
-
-- Objekte (Arten und Lebensräume) werden in der Datenbank [CouchDb](http://couchdb.apache.org/) als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt")
-- Im Dokument werden alle das Objekt beschreibenden Datensammlungen beschrieben, u.a. mit:
- - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
- - Originalbericht
- - Datenstand
- - Link
-- Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -138,7 +132,7 @@ Das Menu ermöglicht:
 - Suche in Wikipedia
 - Informationen über die ArtenDb
 - Rückmeldungen an den Entwickler
-- 
+ 
 ##Neue Datensammlungen einfach hinzufügen
 Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
@@ -193,6 +187,16 @@ Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des S
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (und natürlich aufgrund der unterschiedlich gearteten Datensammlungen bzw. der darin enthaltenen Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
 Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche dynamisch generiert werden, auch wenn eine Datensammlung zuvor unbekannte Felder enthält. 
+
+##Datenstruktur
+
+- Objekte (Arten und Lebensräume) werden in der Datenbank [CouchDb](http://couchdb.apache.org/) als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt")
+- Im Dokument werden alle das Objekt beschreibenden Datensammlungen beschrieben, u.a. mit:
+ - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
+ - Originalbericht
+ - Datenstand
+ - Link
+- Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
 
 Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
