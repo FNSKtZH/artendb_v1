@@ -343,16 +343,19 @@ function initiiere_art(id) {
 			//in gewollter Reihenfolge hinzufügen
 			//HTML für Datensammlung erstellen lassen und hinzufügen
 			//zuerst die aktuelle Taxonomie
-			htmlArt += erstelleHtmlFuerDatensammlung("Aktuelle Taxonomie", art["Aktuelle Taxonomie"]);
+			//die gibt es bei LR nicht, darum prüfen
+			if (art["Aktuelle Taxonomie"]) {
+				htmlArt += erstelleHtmlFuerDatensammlung("Aktuelle Taxonomie", art, art["Aktuelle Taxonomie"]);
+			}
 			//dann alternative Taxonomien, ohne die aktuelle nochmals zu bringen
 			for (var z=0; z<Taxonomien.length; z++) {
 				if (Taxonomien[z] !== "Aktuelle Taxonomie") {
-					htmlArt += erstelleHtmlFuerDatensammlung(Taxonomien[z], art[Taxonomien[z]]);
+					htmlArt += erstelleHtmlFuerDatensammlung(Taxonomien[z], art, art[Taxonomien[z]]);
 				}
 			}
 			//dann Datensammlungen
 			for (var x=0; x<Datensammlungen.length; x++) {
-				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art[Datensammlungen[x]]);
+				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
 			//accordion beenden
 			htmlArt += '</div>';
@@ -360,6 +363,15 @@ function initiiere_art(id) {
 			setzteHöheTextareas();
 			//richtiges Formular anzeigen
 			zeigeFormular("art");
+			//Bei Lebensräumen die Taxonomie öffnen
+			if (art.Gruppe === "Lebensräume") {
+				$("#collapseTaxonomie").collapse('show');
+				//Fokus von der Hierarchie wegnehmen
+				$("#Hierarchie").blur();
+			} else if (Taxonomien.length === 1) {
+				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
+				$(".accordion-body").collapse('show');
+			}
 			//jetzt die Links im Menu setzen
 			setzteLinksZuBilderUndWikipedia(art);
 		},
@@ -371,7 +383,7 @@ function initiiere_art(id) {
 
 //erstellt die HTML für eine Datensammlung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-function erstelleHtmlFuerDatensammlung(i, art_i) {
+function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	var htmlDatensammlung;
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
@@ -409,8 +421,19 @@ function erstelleHtmlFuerDatensammlung(i, art_i) {
 		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
 			//das ist ein Array von Objekten
 			htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Felder[y]);
-		} else if ((y === "Artname" && art.Gruppe === "Flora") || ((y === "Parent" || y === "Hierarchie") && art.Gruppe === "Lebensräume")) {
+		} else if ((y === "Artname" && art.Gruppe === "Flora") || (y === "Parent" && art.Gruppe === "Lebensräume")) {
 			//dieses Feld nicht anzeigen
+		} else if (y === "Hierarchie" && art.Gruppe === "Lebensräume") {
+			//Namen kommagetrennt anzeigen
+			var hierarchie_objekt_array = art_i.Felder[y];
+			var hierarchie_string = "";
+			for (g in hierarchie_objekt_array) {
+				if (hierarchie_string !== "") {
+					hierarchie_string += "\n";
+				}
+				hierarchie_string += hierarchie_objekt_array[g].Name;
+			}
+			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, "text");
 		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].slice(0, 10) === "http://www") {
 			//www-Links als Link darstellen
 			htmlDatensammlung += generiereHtmlFuerWwwlink(y, art_i.Felder[y]);
@@ -480,8 +503,8 @@ function setzteLinksZuBilderUndWikipedia(art) {
 			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Name;
 			break;
 		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Einheit;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Taxonomie"].Felder.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Taxonomie"].Felder.Einheit;
 			break;
 	}
 	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
