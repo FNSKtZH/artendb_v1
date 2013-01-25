@@ -13,7 +13,7 @@ Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen]
 
 <a name="Ziele"></a>
 #Ziele
-##Ausgangspunkt
+###Ausgangspunkt
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
@@ -24,7 +24,7 @@ sind ein paar Feststellungen:
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
-##Für die Benutzerin
+####Für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
 - Die Datenflut kann bewältigt werden:
