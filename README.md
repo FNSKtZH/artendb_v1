@@ -51,7 +51,7 @@ sind ein paar Feststellungen:
 #Fachliches Konzept
 
 ##Taxonomien
-[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren [Objekte](http://de.wikipedia.org/wiki/Objekt_(Programmierung)) (Arten und Lebensräume) mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
+[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (Arten und Lebensräume) mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
 
@@ -63,7 +63,7 @@ Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschre
 Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
 ##Objekte
-Die Grundeinheit der Taxonomie wird als [Objekt](http://de.wikipedia.org/wiki/Objekt_(Programmierung)) bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. 
+Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. 
 
 Technischer Exkurs: Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt. Dieses Enthält eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier) sowie Eigenschafen (Taxonomien und Datensammlungen).
 
