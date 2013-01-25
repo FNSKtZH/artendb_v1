@@ -42,7 +42,7 @@ sind ein paar Feststellungen:
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
-- Datensammlungen können von technisch durchschnittlich begabten Personen mit Hilfe einer Anleitung in wenigen Minuten neu importiert oder aktualisiert werden
+- Datensammlungen können von technisch durchschnittlich begabten Personen in wenigen Minuten neu importiert oder aktualisiert werden
 
 <a href="#top">&#8593; top</a>
 
@@ -137,7 +137,7 @@ Das Menu ermöglicht:
 - Informationen über die ArtenDb
 - Rückmeldungen an den Entwickler
  
-##Neue Datensammlungen einfach hinzufügen
+##Neue Datensammlungen hinzufügen
 Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
 Importiert werden können sollen:
@@ -155,7 +155,7 @@ Will jemand z.B. neue Arteigenschaften ergänzen, geht das dann so:
 
 fertig!
 
-Um schon vorhandene Arteigenschaften zu verändern, würde zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
+Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Dazu würden die Feldeigenschaften verwaltet. Unter anderen:
 
