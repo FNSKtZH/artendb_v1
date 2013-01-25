@@ -449,7 +449,7 @@ Hier als Beispiel die Schlingnatter:
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. 
+Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind (man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten umsetzt).
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 
