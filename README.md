@@ -4,22 +4,16 @@ Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Infor
 Die ArtenDb gibt es schon als Access-mdb. Man kann sie kostenlos [herunterladen](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content). [Das hier](https://github.com/barbalex/artendb) ist der Versuch, sie weiter zu entwickeln.
 
 ## Inhalt ##
-* <a href="#Ausgangspunkt">Ausgangspunkt</a>
 * <a href="#Ziele">Ziele</a>
-* <a href="#Taxonomien">Taxonomien</a>
-* <a href="#Datensammlungen">Datensammlungen</a>
-* <a href="#GruppenVereinen">Gruppen vereinen</a>
-* <a href="#DatenDecodieren">Daten decodieren</a>
-* <a href="#NeueDatensammlungenEinfachHinzufügen">Neue Datensammlungen einfach hinzufügen</a>
-* <a href="#Exporte">Daten exportieren</a>
-* <a href="#DokumentorientierteDatenbankVerwenden">Dokumentorientierte Datenbank verwenden</a>
-* <a href="#Benutzeroberfläche">Benutzeroberfläche</a>
+* <a href="#Konzept">Fachliches Konzept</a>
+* <a href="#ui">Benutzeroberfläche</a>
+* <a href="#Umsetzung">Technische Umsetzung</a>
 * <a href="#Zeitplan">Zeitplan</a>
-* <a href="#AktuellerStand">Was kann man mit der aktuellen Version machen?</a>
 * <a href="#OpenSource">Open source</a>
 
-<a name="Ausgangspunkt"></a>
-#Ausgangspunkt
+<a name="Ziele"></a>
+#Ziele
+##Ausgangspunkt
 sind ein paar Feststellungen:
 
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
@@ -30,10 +24,7 @@ sind ein paar Feststellungen:
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
-<a href="#top">&#8593; top</a>
-
-<a name="Ziele"></a>
-#Ziele
+##Ziele
 **Für die Benutzerin:**
 
 - Die Anwendung ist einfach zu bedienen
@@ -56,8 +47,10 @@ sind ein paar Feststellungen:
 
 <a href="#top">&#8593; top</a>
 
-<a name="Taxonomien"></a>
-#Taxonomien
+<a name="Konzept"></a>
+#Fachliches Konzept
+
+##Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren Arten und Lebensräume mit einer Hierarchie. Darauf bauen alle Datensammlungen und Art- bzw. Lebensraumeigenschaften auf. Die Erstellung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
@@ -67,10 +60,7 @@ In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verw
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
 Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
-<a href="#top">&#8593; top</a>
-
-<a name="Datensammlungen"></a>
-#Datensammlungen
+##Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation)
@@ -93,7 +83,6 @@ Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datens
 
 In fast allen Fällen ist es sinnvoll, die Informationen pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
-<a name="FelderZusammenfassen"></a>
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
 
 - In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen
@@ -103,22 +92,54 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte die zutreffenden Datensammlungen mit ihren beschreibenden Attributen.
 
-<a href="#top">&#8593; top</a>
-
-<a name="GruppenVereinen"></a>
-#Gruppen vereinen
+##Gruppen vereinen
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
-<a href="#top">&#8593; top</a>
-
-<a name="DatenDecodieren"></a>
-#Daten decodieren
+##Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
 
 <a href="#top">&#8593; top</a>
 
-<a name="NeueDatensammlungenEinfachHinzufügen"></a>
-#Neue Datensammlungen einfach hinzufügen
+<a name="ui"></a>
+#Benutzeroberfläche
+##Erscheinungsbild
+
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel" width="100%">
+
+**Hauptelemente**
+
+Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Nach deren Wahl erscheinen darunter ein Suchfeld und ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Strukturbaum und mit dem Suchfeld.
+
+**Suchfeld**
+
+Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei eingegebenen Zeichen wird der Strukturbaum gefiltert.
+
+**Strukturbaum**
+
+Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der betreffenden Artengruppe vorliegt - bzw. die Hierarchie des Lebensraumschlüssels.
+
+**Formular**
+
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
+
+Die Taxonomien (hier noch Index genannt) und Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
+
+Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+
+Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
+
+**Menu**
+
+Das Menu ermöglicht:
+
+- Exporte
+- Importe
+- Bildersuche
+- Suche in Wikipedia
+- Informationen über die ArtenDb
+- Rückmeldungen an den Entwickler
+- 
+##Neue Datensammlungen einfach hinzufügen
 Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
 
 Importiert werden können sollen:
@@ -151,10 +172,7 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
 
-<a href="#top">&#8593; top</a>
-
-<a name="Exporte"></a>
-#Daten exportieren
+##Daten exportieren
 
 Geplant ist folgendes Vorgehen:
 
@@ -165,8 +183,9 @@ Geplant ist folgendes Vorgehen:
 
 <a href="#top">&#8593; top</a>
 
-<a name="DokumentorientierteDatenbankVerwenden"></a>
-#Dokumentorientierte Datenbank verwenden
+<a name="Umsetzung"></a>
+#Technische Umsetzung
+##Dokumentorientierte Datenbank verwenden
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind eigene Tabellen und werden 1:1 mit dem Index verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
 Eine dokumentbasierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
@@ -414,48 +433,9 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 
 <a href="#top">&#8593; top</a>
 
-<a name="Benutzeroberfläche"></a>
-#Benutzeroberfläche
-
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel" width="100%">
-
-**Hauptelemente**
-
-Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Nach deren Wahl erscheinen darunter ein Suchfeld und ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Strukturbaum und mit dem Suchfeld.
-
-**Suchfeld**
-
-Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei eingegebenen Zeichen wird der Strukturbaum gefiltert.
-
-**Strukturbaum**
-
-Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der betreffenden Artengruppe vorliegt - bzw. die Hierarchie des Lebensraumschlüssels.
-
-**Formular**
-
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
-
-Die Taxonomien (hier noch Index genannt) und Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
-
-Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
-
-Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
-
-**Menu**
-
-Das Menu ermöglicht:
-
-- Exporte
-- Importe
-- Bildersuche
-- Suche in Wikipedia
-- Informationen über die ArtenDb
-- Rückmeldungen an den Entwickler
-
-<a href="#top">&#8593; top</a>
-
 <a name="Zeitplan"></a>
 #Zeitplan
+##Zeitplan
 Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
 Aktueller Stand:
@@ -464,10 +444,7 @@ Aktueller Stand:
 - Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
-<a href="#top">&#8593; top</a>
-
-<a name="AktuellerStand"></a>
-#Was kann man mit der aktuellen Version machen?
+##Was kann man mit der aktuellen Version machen?
 
 Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Die Version im Web kann einzelne Features noch nicht enthalten.
 
