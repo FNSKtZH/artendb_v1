@@ -148,10 +148,10 @@ Importiert werden können sollen:
 
 Will jemand z.B. neue Arteigenschaften ergänzen, geht das dann so:
 
-1. Benutzer meldet sich an (erstellt beim ersten Mal ein Konto)
-2. Benutzer beschreibt die Datensammlung
-3. Benutzer lädt eine vorbereitete csv-Datei mit den Eigenschaften
-4. Benutzer bezeichnet die für die Verknüpfung der Daten benötigte ID
+1. Die Benutzerin meldet sich an (erstellt beim ersten Mal ein Konto)
+2. Sie beschreibt die Datensammlung
+3. Sie lädt eine vorbereitete csv-Datei mit den Eigenschaften
+4. Sie bezeichnet die für die Verknüpfung der Daten benötigte ID
 5. Import wird ausgeführt
 
 fertig!
@@ -177,9 +177,9 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 Geplant ist folgendes Vorgehen:
 
-1. Benutzer wählt Gruppe
-2. Benutzer kann innerhalb der Gruppe filtern (sonst werden die Daten für alle Arten der Gruppe exportiert)
-3. Benutzer wählt aus allen Datensammlungen die gewünschten Felder aus
+1. Die Benutzerin wählt eine Gruppe
+2. Sie kann innerhalb der Gruppe filtern (sonst werden die Daten für alle Arten der Gruppe exportiert)
+3. Sie wählt aus allen Datensammlungen die gewünschten Felder aus
 4. Daten werden als csv heruntergeladen
 
 <a href="#top">&#8593; top</a>
