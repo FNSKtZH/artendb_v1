@@ -168,7 +168,7 @@ Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzeror
 Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie könnte fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
-- Felder aus verschiedenen Datensammlungen zusammenfassen (siehe <a href="#FelderZusammenfassen">oben</a>)
+- Felder aus verschiedenen Datensammlungen zusammenfassen
 - Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
@@ -197,15 +197,19 @@ Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche
 
 ##Datenstruktur
 
-- Objekte (Arten und Lebensräume) werden in der Datenbank [CouchDb](http://couchdb.apache.org/) als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt")
-- Im Dokument werden alle das Objekt beschreibenden Datensammlungen beschrieben, u.a. mit:
- - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
- - Originalbericht
- - Datenstand
- - Link
-- Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>)
+Objekte (Arten und Lebensräume) werden in der Datenbank [CouchDb](http://couchdb.apache.org/) als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
 
-Moderne dokumentorientierte Datenbanken speichern ihre Daten oft im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation). Hier ein Beispiel, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
+Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, u.a. mit:
+- Allgemeine Beschreibung (ungefähr ein Literaturzitat)
+- Originalbericht
+- Datenstand
+- Link
+
+Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert (<a href="#JsonBeispiel">Beispiel zeigen</a>).
+
+Beziehungen werden in eigenen Dokumenten auf ähnliche Art gespeichert.
+
+Sehen Sie hier am Beispiel der Schlingnatter, wie damit eine Art mit vielen Informationen aus diversen Datensammlungen dargestellt werden kann:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
