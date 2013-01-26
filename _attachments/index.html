@@ -70,17 +70,18 @@
 					<div id="Gruppe_label">Gruppe wählen:</div>
 				</div>
 				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeFlora" value="Flora">Flora</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeMoose" value="Moose">Moose</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeMacromycetes" value="Macromycetes">Pilze</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
+					<button class="btn btn-inverse" name="Gruppe" id="GruppeFauna" value="Fauna" treeBeschriftung="Tiere">Fauna</button>
+					<button class="btn btn-inverse" name="Gruppe" id="GruppeFlora" value="Flora" treeBeschriftung="Pflanzen">Flora</button>
+					<button class="btn btn-inverse" name="Gruppe" id="GruppeMoose" value="Moose" treeBeschriftung="Moose">Moose</button>
+					<button class="btn btn-inverse" name="Gruppe" id="GruppeMacromycetes" value="Macromycetes" treeBeschriftung="Pilze">Pilze</button>
+					<button class="btn btn-inverse" name="Gruppe" id="GruppeLebensräume" value="Lebensräume" treeBeschriftung="Lebensräume">Lebensräume</button>
 				</div>
 			</div>
 			<div id="suchen" class="input-prepend">
 				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern">
 				<button id="suche_leeren_btn" class="close">&times;</button>
 			</div>
+			<div id="treeBeschriftung"></div>
 			<div id="tree"></div>
 		</fieldset>
 
@@ -216,6 +217,7 @@
 					$("#suchfeld").val("");
 					$("#Gruppe_label").html("Gruppe:");
 					$("#suchen").hide();
+					$("#treeBeschriftung").html("");
 					$("#forms").hide();
 					$("#suchen").val("");
 					$("#tree").html("der Baum wird aufgebaut...");

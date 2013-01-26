@@ -137,6 +137,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 #suchen {
 	/*relative setzen, damit suche_leeren_btn im Verhältnis dazu absolute gesetzt werden kann*/
 	position: relative;
+	margin-bottom: 2px;
 }
 
 #suchfeld {
@@ -144,7 +145,11 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	width: -o-calc(100% - 40px);
 	width: calc(100% - 40px);
 	max-width: 318px;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
+}
+
+#treeBeschriftung {
+	margin-bottom: 1px;
 }
 
 #suche_leeren_btn {
