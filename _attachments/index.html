@@ -78,10 +78,9 @@
 				</div>
 			</div>
 			<div id="suchen" class="input-prepend">
-				<span class="add-on"><i class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern">
 				<button id="suche_leeren_btn" class="close">&times;</button>
 			</div>
-			<div id="treeMeldung"></div>
 			<div id="tree"></div>
 		</fieldset>
 
@@ -214,6 +213,7 @@
 					var Gruppe;
 					Gruppe = this.value;
 					erstelleBaum(Gruppe);
+					$("#suchfeld").val("");
 					$("#Gruppe_label").html("Gruppe:");
 					$("#suchen").hide();
 					$("#forms").hide();
@@ -241,11 +241,28 @@
 					}
 				});
 				
-				//Suche steuern
-				$("#menu").on("keyup click", "#suchfeld", function() {
-					if (this.value.length > 2) {
+				//Suche steuern bei Eingabe
+				$("#menu").on("keyup click", "#suchfeld", function(e) {
+					e.preventDefault();
+					//nur automatisch suchen, wenn das schnell ist
+					//auf Enter-Taste immer suchen
+					if ((this.value.length > 2 && window.baum_laenge < 8000) || e.keyCode === 13) {
 						$("#tree").jstree("search", this.value);
+					} else if (this.value.length === 0) {
+						//Suche beenden, falls Suchfeld leer ist
+						$("#tree").jstree("clear_search");
+					}
+				});
+
+				//Suche steuern bei click auf Suchicon
+				$("#menu").on("click", "#suchfeld_icon", function(e) {
+					e.preventDefault();
+					var suchwert = $("#suchfeld").val();
+					if (suchwert) {
+						$("#tree").jstree("search", suchwert);
+						$("#suchfeld").focus();
 					} else {
+						//Suche beenden, falls Suchfeld leer ist
 						$("#tree").jstree("clear_search");
 					}
 				});

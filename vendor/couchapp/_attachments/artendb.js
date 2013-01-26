@@ -1,5 +1,7 @@
 function erstelleBaum(Gruppe) {
 	var baum;
+	//globale Variable, damit beim Suchen je nach Baumlänge sofort oder erst bei Enter gesucht werden kann
+	window.baum_laenge = 0;
 	baum = [];
 	$db = $.couch.db("artendb");
 	if (Gruppe === "Fauna") {
@@ -11,6 +13,7 @@ function erstelleBaum(Gruppe) {
 							success: function (fauna_familie) {
 								$db.view('artendb/baum_fauna_art', {
 									success: function (fauna_art) {
+										window.baum_laenge = fauna_art.rows.length;
 										var baum, child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
 										baum = [];
 										for (i in fauna_klasse.rows) {
@@ -32,6 +35,7 @@ function erstelleBaum(Gruppe) {
 																			"attr": {"id": fauna_art.rows[n].value}
 																		};
 																	children_art.push(child_art);
+
 																}
 															}
 															child_familie = {
@@ -70,6 +74,7 @@ function erstelleBaum(Gruppe) {
 					success: function (flora_gattung) {
 						$db.view('artendb/baum_flora_art', {
 							success: function (flora_art) {
+								window.baum_laenge = flora_art.rows.length;
 								var baum, child_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
 								baum = [];
 								for (i in flora_familie.rows) {
@@ -118,6 +123,7 @@ function erstelleBaum(Gruppe) {
 							success: function (moose_gattung) {
 								$db.view('artendb/baum_moose_art', {
 									success: function (moose_art) {
+										window.baum_laenge = moose_art.rows.length;
 										var baum, child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
 										baum = [];
 										for (i in moose_klasse.rows) {
@@ -175,6 +181,7 @@ function erstelleBaum(Gruppe) {
 			success: function (macromycetes_gattung) {
 				$db.view('artendb/baum_macromycetes_art', {
 					success: function (macromycetes_art) {
+						window.baum_laenge = macromycetes_art.rows.length;
 						var baum, child_gattung, gattung, child_art, children_art, art;
 						baum = [];
 						for (k in macromycetes_gattung.rows) {
@@ -204,12 +211,16 @@ function erstelleBaum(Gruppe) {
 	} else if (Gruppe === "Lebensräume") {
 		$db.view('artendb/baum_lr_0', {
 			success: function (level1) {
+				window.baum_laenge = level1.rows.length;
 				$db.view('artendb/baum_lr_1', {
 					success: function (level2) {
+						window.baum_laenge += level2.rows.length;
 						$db.view('artendb/baum_lr_2', {
 							success: function (level3) {
+								window.baum_laenge += level3.rows.length;
 								$db.view('artendb/baum_lr_3', {
 									success: function (level4) {
+										window.baum_laenge += level4.rows.length;
 										var baum, child_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr;
 										baum = [];
 										for (i in level1.rows) {
@@ -309,6 +320,7 @@ function erstelleTree(baum) {
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
 		setzeTreehoehe();
+		console.log("baum_laenge = " + baum_laenge);
 	})
 	.bind("after_open.jstree", function (e, data) {
 		setzeTreehoehe();
@@ -813,6 +825,9 @@ function validiereUserAnmeldung() {
 	}
 	return true;
 }
+
+
+
 
 
 
