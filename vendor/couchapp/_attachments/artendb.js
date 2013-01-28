@@ -390,7 +390,7 @@ function erstelleTree(baum) {
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
 		setzeTreehoehe();
-		$("#treeBeschriftung").html(baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
+		$("#treeBeschriftung").html(window.baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
 	})
 	.bind("after_open.jstree", function (e, data) {
 		setzeTreehoehe();
@@ -455,6 +455,27 @@ function initiiere_art(id) {
 			}
 			//jetzt die Links im Menu setzen
 			setzteLinksZuBilderUndWikipedia(art);
+			//Flora-Fauna-Beziehungen holen
+			if (art.Gruppe === "Fauna") {
+				$db = $.couch.db("artendb");
+				$db.view('artendb/flora_fauna_bez_fuer_fauna?include_docs=true&key="' + id + '"', {
+					success: function (data) {
+						for (i in data.rows) {
+							//jetzt die Darstellung aufbauen
+						}
+					}
+				});
+			}
+			if (art.Gruppe === "Flora") {
+				$db = $.couch.db("artendb");
+				$db.view('artendb/flora_fauna_bez_fuer_flora?include_docs=true&key="' + id + '"', {
+					success: function (data) {
+						for (i in data.rows) {
+							//jetzt die Darstellung aufbauen
+						}
+					}
+				});
+			}
 		},
 		error: function () {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
