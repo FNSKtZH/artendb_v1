@@ -438,49 +438,111 @@ function initiiere_art(id) {
 			for (var x=0; x<Datensammlungen.length; x++) {
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
-			//accordion beenden
-			htmlArt += '</div>';
-			$("#art").html(htmlArt);
-			setzteHöheTextareas();
-			//richtiges Formular anzeigen
-			zeigeFormular("art");
-			//Bei Lebensräumen die Taxonomie öffnen
-			if (art.Gruppe === "Lebensräume") {
-				$("#collapseTaxonomie").collapse('show');
-				//Fokus von der Hierarchie wegnehmen
-				$("#Hierarchie").blur();
-			} else if (Datensammlungen.length === 0) {
-				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-				$(".accordion-body").collapse('show');
-			}
-			//jetzt die Links im Menu setzen
-			setzteLinksZuBilderUndWikipedia(art);
-			//Flora-Fauna-Beziehungen holen
-			if (art.Gruppe === "Fauna") {
-				$db = $.couch.db("artendb");
-				$db.view('artendb/flora_fauna_bez_fuer_fauna?include_docs=true&key="' + id + '"', {
-					success: function (data) {
-						for (i in data.rows) {
-							//jetzt die Darstellung aufbauen
+			//div schaffen, in den die Beziehungen - auch mit Verzögerung - eingefügt werden können
+			//htmlArt += "<div id='beziehungen_div'></div>";
+
+			//Beziehungen holen
+			$db = $.couch.db("artendb");
+			//alle Beziehungen holen, in denen Beziehungen diese Art als Partner vorkommt
+			$db.view('artendb/bez_guid_id?key="' + id + '"&include_docs=true', {
+				success: function (beziehungen_mit_dieser_art) {
+					var Beziehung = {};
+					var Beziehungen = {};
+					//var html_beziehungen = "";
+					//jetzt im Objekt Beziehungen für jede Datensammlung eine Eigenschaft erstellen...
+					for (i in beziehungen_mit_dieser_art.rows) {
+						Beziehung = beziehungen_mit_dieser_art.rows[i].doc;
+						if (!Beziehungen.hasOwnProperty(Beziehung.Datensammlung.Name)) {
+							//...und diesem Array... 
+							Beziehungen[Beziehung.Datensammlung.Name] = [];
 						}
+						//...alle entsprechenden Beziehungen zuordnen
+						Beziehungen[Beziehung.Datensammlung.Name].push(Beziehung);
 					}
-				});
-			}
-			if (art.Gruppe === "Flora") {
-				$db = $.couch.db("artendb");
-				$db.view('artendb/flora_fauna_bez_fuer_flora?include_docs=true&key="' + id + '"', {
-					success: function (data) {
-						for (i in data.rows) {
-							//jetzt die Darstellung aufbauen
-						}
+					//Jetzt durch alle Datensammlungen zirkeln und ihre Beziehungen als html ausgeben
+					$.each(Beziehungen, function(key, value) {
+						htmlArt += erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, value);
+						//$("#beziehungen_div").html(html_beziehungen);
+					});
+					//accordion beenden
+					htmlArt += '</div>';
+					$("#art").html(htmlArt);
+					setzteHöheTextareas();
+					//richtiges Formular anzeigen
+					zeigeFormular("art");
+					//Bei Lebensräumen die Taxonomie öffnen
+					if (art.Gruppe === "Lebensräume") {
+						$("#collapseTaxonomie").collapse('show');
+						//Fokus von der Hierarchie wegnehmen
+						$("#Hierarchie").blur();
+					} else if (Datensammlungen.length === 0) {
+						//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
+						$(".accordion-body").collapse('show');
 					}
-				});
-			}
+					//jetzt die Links im Menu setzen
+					setzteLinksZuBilderUndWikipedia(art);
+				}
+			});
 		},
 		error: function () {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
+}
+
+//übernimmt: id der Art, deren Beziehungen erstellt werden sollen
+//und den Array mit allen Beziehungen mit dieser Datensammlung
+function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_array) {
+	//Alle übergebenen Beziehungen haben dieselbe Datensammlung
+	//die erste Beziehung verwenden, um die Datensmmlung zu beschreiben
+	//Accordion-Gruppe und -heading anfügen
+	var html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+	//"Behiehungen" zur id hinzufügen, weil dieselbe Datensammlung bei Objekten und Beziehungen vorkommen kann!
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'') + '">';
+	//Titel für die Datensammlung einfügen
+	html += beziehungen_array[0].Datensammlung.Name;
+	//header abschliessen
+	html += '</a></div>';
+	//body beginnen. Kommas aus Datensammlungsnamen entfernen, die verhindern die Funktion des Accordions
+	html += '<div id="collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	//Datensammlung beschreiben
+	html += '<div class="Datensammlung BeschreibungDatensammlung">';
+	if (beziehungen_array[0].Datensammlung.Beschreibung) {
+		html += beziehungen_array[0].Datensammlung.Beschreibung;
+	}
+	if (beziehungen_array[0].Datensammlung.Datenstand) {
+		html += '. Stand: ';
+		html += beziehungen_array[0].Datensammlung.Datenstand;
+	}
+	if (beziehungen_array[0].Datensammlung["Link"]) {
+		html += '. <a href="';
+		html += beziehungen_array[0].Datensammlung["Link"];
+		html += '">';
+		html += beziehungen_array[0].Datensammlung["Link"];
+		html += '</a>';
+	}
+	//Beschreibung der Datensammlung abschliessen
+	html += '</div>';
+	//jetzt für alle Beziehungen die Felder hinzufügen
+	for (i in beziehungen_array) {
+		for (y in beziehungen_array[i].Partner) {
+			//Partner darstellen
+			//die eigene Art nicht nochmals darstellen
+			if (beziehungen_array[i].Partner[y].GUID !== id) {
+				html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
+				//html += generiereHtmlFuerTextinput("Partner GUID", beziehungen_array[i].Partner[y].GUID, "text");
+			}
+		}
+		//Die Felder anzeigen
+		for (x in beziehungen_array[i].Felder) {
+			html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x])
+		}
+		html += "<hr>";
+	}
+	//body und Accordion-Gruppe abschliessen
+	html += '</div></div></div>';
+	return html;
 }
 
 //erstellt die HTML für eine Datensammlung
@@ -490,13 +552,13 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'') + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += i;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -536,23 +598,33 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 				hierarchie_string += hierarchie_objekt_array[g].Name;
 			}
 			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, "text");
-		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].slice(0, 10) === "http://www") {
-			//www-Links als Link darstellen
-			htmlDatensammlung += generiereHtmlFuerWwwlink(y, art_i.Felder[y]);
-		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].length < 70) {
-			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "text");
-		} else if (typeof art_i.Felder[y] === "string" && art_i.Felder[y].length >= 70) {
-			htmlDatensammlung += generiereHtmlFuerTextarea(y, art_i.Felder[y]);
-		} else if (typeof art_i.Felder[y] === "number") {
-			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "number");
-		} else if (typeof art_i.Felder[y] === "boolean") {
-			htmlDatensammlung += generiereHtmlFuerBoolean(y, art_i.Felder[y]);
 		} else {
-			htmlDatensammlung += generiereHtmlFuerTextinput(y, art_i.Felder[y], "text");
+			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Felder[y]);
 		}
 	}
 	//body und Accordion-Gruppe abschliessen
 	htmlDatensammlung += '</div></div></div>';
+	return htmlDatensammlung;
+}
+
+//übernimmt Feldname und Feldwert
+//generiert daraus und retourniert html für die Darstellung im passenden Feld
+function erstelleHtmlFuerFeld(Feldname, Feldwert) {
+	var htmlDatensammlung = "";
+	if (typeof Feldwert === "string" && Feldwert.slice(0, 10) === "http://www") {
+		//www-Links als Link darstellen
+		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert);
+	} else if (typeof Feldwert === "string" && Feldwert.length < 70) {
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
+	} else if (typeof Feldwert === "string" && Feldwert.length >= 70) {
+		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert);
+	} else if (typeof Feldwert === "number") {
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number");
+	} else if (typeof Feldwert === "boolean") {
+		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert);
+	} else {
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
+	}
 	return htmlDatensammlung;
 }
 

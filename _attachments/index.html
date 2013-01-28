@@ -248,7 +248,7 @@
 					e.preventDefault();
 					//nur automatisch suchen, wenn das schnell ist
 					//auf Enter-Taste immer suchen
-					if ((this.value.length > 2 && window.baum_laenge < 8000) || e.keyCode === 13) {
+					if ((this.value.length > 2 && window.baum_laenge < 7000) || e.keyCode === 13) {
 						$("#tree").jstree("search", this.value);
 					} else if (this.value.length === 0) {
 						//Suche beenden, falls Suchfeld leer ist
