@@ -202,6 +202,7 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche dynamisch generiert werden, auch wenn eine Datensammlung zuvor unbekannte Felder enthält. 
 
 ###Datenstruktur
+####Objekte
 
 Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
 
@@ -212,8 +213,6 @@ Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen
 - Link
 
 Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert.
-
-Beziehungen werden in eigenen Dokumenten ähnlich gespeichert.
 
 Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
@@ -446,6 +445,37 @@ Hier als Beispiel die Schlingnatter:
 Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind (man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten umsetzt).
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
+
+####Beziehungen
+Beziehungen werden in eigenen Dokumenten ähnlich gespeichert. Beispiel:
+```javascript
+{
+   "_id": "00064E7E-6B6D-4781-BC67-C36533F6D810",
+   "_rev": "1-53bf69f8f35e8a00358ff76bb3f9beab",
+   "GUID": "00064E7E-6B6D-4781-BC67-C36533F6D810",
+   "Typ": "Beziehung",
+   "Partner": [
+       {
+           "Gruppe": "Flora",
+           "Name": "Carlina acanthifolia All. (Akanthusblättrige Eberwurz)",
+           "GUID": "B3A8EC03-9CDC-46DF-B911-A73B1D2C155D"
+       },
+       {
+           "Gruppe": "Fauna",
+           "Name": "Andrena humilis Imhoff, 1832",
+           "GUID": "D34986E0-B521-401D-8213-7E203D5E5D9D"
+       }
+   ],
+   "Datensammlung": {
+       "Name": "Beziehungen zwischen Wildbienen und Flora nach Westrich, 1989",
+       "Beschreibung": "Westrich P (1989), Die Wildbienen Baden-Württembergs",
+       "Datenstand": "1989"
+   },
+   "Felder": {
+       "Imago": "oligolektische Bienenart: ist auf diese Pflanzen-Familie spezialisiert. Diese Bienen-Pflanze-Beziehung ist nicht nachgewiesen"
+   }
+}
+```
 
 <a href="#top">&#8593; top</a>
 
