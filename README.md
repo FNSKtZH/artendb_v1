@@ -212,7 +212,7 @@ Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen
 - Datenstand
 - Link
 
-Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung gespeichert.
+Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung als "Felder" gespeichert.
 
 Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
