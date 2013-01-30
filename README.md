@@ -447,7 +447,7 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 
 ####Beziehungen
-Beziehungen werden in eigenen Dokumenten ähnlich gespeichert. Beispiel:
+Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
 ```javascript
 {
    "_id": "00064E7E-6B6D-4781-BC67-C36533F6D810",
