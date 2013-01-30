@@ -476,11 +476,13 @@ Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
    }
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner. Das sind in der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es könnten aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden.
+"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es können aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden.
 
 In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
 
 "Felder" enthält die Informationen über die Art der Beziehung. 
+
+Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschreiben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert.
 
 <a href="#top">&#8593; top</a>
 
