@@ -476,6 +476,11 @@ Beziehungen werden in eigenen Dokumenten ähnlich gespeichert. Beispiel:
    }
 }
 ```
+"Partner" sind die beteiligten Beziehungspartner. Das sind in der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es könnten aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden.
+
+In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
+
+"Felder" enthält die Informationen über die Art der Beziehung. 
 
 <a href="#top">&#8593; top</a>
 
