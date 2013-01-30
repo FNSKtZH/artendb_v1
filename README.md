@@ -476,7 +476,7 @@ Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
    }
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es können aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Mannschaftsliste ("Datensammlung") wären u.a. ihre Nummern enthalten (in "Felder").
+"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es können aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (JSON-Objkete in "Felder").
 
 In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
 
