@@ -476,13 +476,15 @@ Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
    }
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen. Es können aber auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (JSON-Objkete in "Felder").
+"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen.
 
 In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
 
-"Felder" enthält die Informationen über die Art der Beziehung. 
+"Felder" enthält die Informationen über die Art der Beziehung.
 
-Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschreiben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert.
+Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (JSON-Objkete in "Felder").
+
+Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschreiben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde zur Beschreibung von Arten und Lebensräumen gewählt).
 
 <a href="#top">&#8593; top</a>
 
