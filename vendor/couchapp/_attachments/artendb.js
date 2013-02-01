@@ -492,6 +492,23 @@ function initiiere_art(id) {
 //übernimmt: id der Art, deren Beziehungen erstellt werden sollen
 //und den Array mit allen Beziehungen mit dieser Datensammlung
 function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_array) {
+	//zuerst mal die Beziehungen nach Objektnamen sortieren
+	beziehungen_array.sort(function(a, b) {
+		var aName, bName;
+		for (y in a.Partner) {
+			//die eigene Art nicht berücksichtigen
+			if (a.Partner[y].GUID !== id) {
+				aName = a.Partner[y].Name;
+			}
+		}
+		for (x in b.Partner) {
+			//die eigene Art nicht berücksichtigen
+			if (b.Partner[x].GUID !== id) {
+				bName = b.Partner[x].Name;
+			}
+		}
+		return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+	});
 	//Alle übergebenen Beziehungen haben dieselbe Datensammlung
 	//die erste Beziehung verwenden, um die Datensmmlung zu beschreiben
 	//Accordion-Gruppe und -heading anfügen
@@ -525,7 +542,6 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 	html += '</div>';
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i = 0; i < beziehungen_array.length; i++) {
-	//for (i in beziehungen_array) {
 		for (y in beziehungen_array[i].Partner) {
 			//Partner darstellen
 			//die eigene Art nicht nochmals darstellen
