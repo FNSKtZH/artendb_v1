@@ -389,6 +389,7 @@ function erstelleTree(baum) {
 	})
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
+		$("#suchfeld").focus();
 		setzeTreehoehe();
 		$("#treeBeschriftung").html(window.baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
 	})
