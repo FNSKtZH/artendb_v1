@@ -209,6 +209,10 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin: 0px 5px 10px 0px;
 }
 
+.accordion-inner hr {
+	margin: 11px 0px;
+}
+
 .form {
 	margin-left: auto;
 }

@@ -462,7 +462,6 @@ function initiiere_art(id) {
 					//Jetzt durch alle Datensammlungen zirkeln und ihre Beziehungen als html ausgeben
 					$.each(Beziehungen, function(key, value) {
 						htmlArt += erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, value);
-						//$("#beziehungen_div").html(html_beziehungen);
 					});
 					//accordion beenden
 					htmlArt += '</div>';
@@ -525,20 +524,23 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 	//Beschreibung der Datensammlung abschliessen
 	html += '</div>';
 	//jetzt für alle Beziehungen die Felder hinzufügen
-	for (i in beziehungen_array) {
+	for (var i = 0; i < beziehungen_array.length; i++) {
+	//for (i in beziehungen_array) {
 		for (y in beziehungen_array[i].Partner) {
 			//Partner darstellen
 			//die eigene Art nicht nochmals darstellen
 			if (beziehungen_array[i].Partner[y].GUID !== id) {
 				html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
-				//html += generiereHtmlFuerTextinput("Partner GUID", beziehungen_array[i].Partner[y].GUID, "text");
 			}
 		}
 		//Die Felder anzeigen
 		for (x in beziehungen_array[i].Felder) {
 			html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x])
 		}
-		html += "<hr>";
+		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
+		if (i < (beziehungen_array.length-1)) {
+			html += "<hr>";
+		}
 	}
 	//body und Accordion-Gruppe abschliessen
 	html += '</div></div></div>';
