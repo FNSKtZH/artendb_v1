@@ -435,6 +435,10 @@ function initiiere_art(id) {
 				}
 			}
 			//dann Datensammlungen
+			//Titel hinzufügen, falls Datensammlungen existieren
+			if (Datensammlungen.length > 0) {
+				htmlArt += "<h4>Eigenschaften:</h4>";
+			}
 			for (var x=0; x<Datensammlungen.length; x++) {
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
@@ -448,7 +452,10 @@ function initiiere_art(id) {
 				success: function (beziehungen_mit_dieser_art) {
 					var Beziehung = {};
 					var Beziehungen = {};
-					//var html_beziehungen = "";
+					//Titel hinzufügen, falls Beziehungen existieren
+					if (beziehungen_mit_dieser_art.rows.length > 0) {
+						htmlArt += "<h4>Beziehungen:</h4>";
+					}
 					//jetzt im Objekt Beziehungen für jede Datensammlung eine Eigenschaft erstellen...
 					for (i in beziehungen_mit_dieser_art.rows) {
 						Beziehung = beziehungen_mit_dieser_art.rows[i].doc;
