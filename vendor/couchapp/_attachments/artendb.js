@@ -604,10 +604,17 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	//Beschreibung der Datensammlung abschliessen
 	htmlDatensammlung += '</div>';
 	//Felder anzeigen
+	//zuerst die GUID, aber nur bei der aktuellen Taxonomie
+	if (i === "Aktuelle Taxonomie") {
+		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
+	}
 	for (y in art_i.Felder) {
-		if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
+		if (y === "GUID") {
+			//dieses Feld nicht anzeigen. Es wird _id verwendet
+			//dieses Feld wird künftig nicht mehr importiert
+		} else if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
 			//dann den Link aufbauen lassen
-			htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art_i.Felder[y].GUID, art_i.Felder[y].Name);
+			htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art._id, art_i.Felder[y].Name);
 		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
 			//das ist ein Array von Objekten
 			htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Felder[y]);
