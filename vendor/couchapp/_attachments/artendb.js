@@ -1,356 +1,428 @@
-function erstelleBaum(Gruppe) {
+function erstelleBaum() {
 	var baum;
+	//alle Bäume ausblenden
+	$(".baum").css("display", "none");
+	//alle Beschriftungen ausblenden
+	$(".treeBeschriftung").css("display", "none");
+	//gewollte sichtbar schalten
+	$("#tree" + window.Gruppe).css("display", "block");
+	$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
 	//globale Variable, damit beim Suchen je nach Baumlänge sofort oder erst bei Enter gesucht werden kann
 	window.baum_laenge = 0;
 	baum = [];
 	$db = $.couch.db("artendb");
-	if (Gruppe === "Fauna") {
-		$db.view('artendb/baum_fauna_klasse?group=true', {
-			success: function (fauna_klasse) {
-				$db.view('artendb/baum_fauna_ordnung?group=true', {
-					success: function (fauna_ordnung) {
-						$db.view('artendb/baum_fauna_familie?group=true', {
-							success: function (fauna_familie) {
-								$db.view('artendb/baum_fauna_art', {
-									success: function (fauna_art) {
-										window.baum_laenge = fauna_art.rows.length;
-										var baum, child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
-										baum = [];
-										for (i in fauna_klasse.rows) {
-											klasse = fauna_klasse.rows[i].key;
-											children_ordnung = [];
-											for (k in fauna_ordnung.rows) {
-												if (fauna_ordnung.rows[k].key[0] === klasse) {
-													ordnung = fauna_ordnung.rows[k].key[1];
-													children_familie = [];
-													for (l in fauna_familie.rows) {
-														if (fauna_familie.rows[l].key[0] === klasse && fauna_familie.rows[l].key[1] === ordnung) {
-															familie = fauna_familie.rows[l].key[2];
-															children_art = [];
-															for (n in fauna_art.rows) {
-																if (fauna_art.rows[n].key[0] === klasse && fauna_art.rows[n].key[1] === ordnung && fauna_art.rows[n].key[2] === familie) {
-																	art = fauna_art.rows[n].key[3];
-																	child_art = {
-																			"data": art,
-																			"attr": {"id": fauna_art.rows[n].value}
-																		};
-																	children_art.push(child_art);
+	if (window.Gruppe === "Fauna") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_fauna) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_fauna_klasse?group=true', {
+				success: function (fauna_klasse) {
+					$db.view('artendb/baum_fauna_ordnung?group=true', {
+						success: function (fauna_ordnung) {
+							$db.view('artendb/baum_fauna_familie?group=true', {
+								success: function (fauna_familie) {
+									$db.view('artendb/baum_fauna_art', {
+										success: function (fauna_art) {
+											window.baum_laenge = fauna_art.rows.length;
+											var baum, child_klasse, klasse, child_ordnung, children_ordnung, ordnung, child_familie, children_familie, familie, child_art, children_art, art;
+											baum = [];
+											for (i in fauna_klasse.rows) {
+												klasse = fauna_klasse.rows[i].key;
+												children_ordnung = [];
+												for (k in fauna_ordnung.rows) {
+													if (fauna_ordnung.rows[k].key[0] === klasse) {
+														ordnung = fauna_ordnung.rows[k].key[1];
+														children_familie = [];
+														for (l in fauna_familie.rows) {
+															if (fauna_familie.rows[l].key[0] === klasse && fauna_familie.rows[l].key[1] === ordnung) {
+																familie = fauna_familie.rows[l].key[2];
+																children_art = [];
+																for (n in fauna_art.rows) {
+																	if (fauna_art.rows[n].key[0] === klasse && fauna_art.rows[n].key[1] === ordnung && fauna_art.rows[n].key[2] === familie) {
+																		art = fauna_art.rows[n].key[3];
+																		child_art = {
+																				"data": art,
+																				"attr": {"id": fauna_art.rows[n].value}
+																			};
+																		children_art.push(child_art);
 
-																}
-															}
-															child_familie = {
-																	"data": familie,
-																	"children": children_art
-																};
-															children_familie.push(child_familie);
-														}
-													}
-													child_ordnung = {
-															"data": ordnung,
-															"children": children_familie
-														};
-													children_ordnung.push(child_ordnung);
-												}
-											}
-											child_klasse = {
-													"data": klasse,
-													"children": children_ordnung
-												};
-											baum.push(child_klasse);
-										}
-										erstelleTree(baum);
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		});
-	} else if (Gruppe === "Flora") {
-		$db.view('artendb/baum_flora_familie?group=true', {
-			success: function (flora_familie) {
-				$db.view('artendb/baum_flora_gattung?group=true', {
-					success: function (flora_gattung) {
-						$db.view('artendb/baum_flora_art', {
-							success: function (flora_art) {
-								window.baum_laenge = flora_art.rows.length;
-								var baum, child_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
-								baum = [];
-								for (i in flora_familie.rows) {
-									familie = flora_familie.rows[i].key;
-									children_gattung = [];
-									for (k in flora_gattung.rows) {
-										if (flora_gattung.rows[k].key[0] === familie) {
-											gattung = flora_gattung.rows[k].key[1];
-											children_art = [];
-											for (n in flora_art.rows) {
-												if (flora_art.rows[n].key[0] === familie && flora_art.rows[n].key[1] === gattung) {
-													art = flora_art.rows[n].key[2];
-													child_art = {
-															"data": art,
-															"attr": {"id": flora_art.rows[n].value}
-														};
-													children_art.push(child_art);
-												}
-											}
-											child_gattung = {
-													"data": gattung,
-													"children": children_art
-												};
-											children_gattung.push(child_gattung);
-										}
-									}
-									child_familie = {
-											"data": familie,
-											"children": children_gattung
-										};
-									baum.push(child_familie);
-								}
-								erstelleTree(baum);
-							}
-						});
-					}
-				});
-			}
-		});
-	} else if (Gruppe === "Moose") {
-		$db.view('artendb/baum_moose_klasse?group=true', {
-			success: function (moose_klasse) {
-				$db.view('artendb/baum_moose_familie?group=true', {
-					success: function (moose_familie) {
-						$db.view('artendb/baum_moose_gattung?group=true', {
-							success: function (moose_gattung) {
-								$db.view('artendb/baum_moose_art', {
-									success: function (moose_art) {
-										window.baum_laenge = moose_art.rows.length;
-										var baum, child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
-										baum = [];
-										for (i in moose_klasse.rows) {
-											klasse = moose_klasse.rows[i].key;
-											children_familie = [];
-											for (k in moose_familie.rows) {
-												if (moose_familie.rows[k].key[0] === klasse) {
-													familie = moose_familie.rows[k].key[1];
-													children_gattung = [];
-													for (l in moose_gattung.rows) {
-														if (moose_gattung.rows[l].key[0] === klasse && moose_gattung.rows[l].key[1] === familie) {
-															gattung = moose_gattung.rows[l].key[2];
-															children_art = [];
-															for (n in moose_art.rows) {
-																if (moose_art.rows[n].key[0] === klasse && moose_art.rows[n].key[1] === familie && moose_art.rows[n].key[2] === gattung) {
-																	art = moose_art.rows[n].key[3];
-																	child_art = {
-																			"data": art,
-																			"attr": {"id": moose_art.rows[n].value}
-																		};
-																	children_art.push(child_art);
-																}
-															}
-															child_gattung = {
-																	"data": gattung,
-																	"children": children_art
-																};
-															children_gattung.push(child_gattung);
-														}
-													}
-													child_familie = {
-															"data": familie,
-															"children": children_gattung
-														};
-													children_familie.push(child_familie);
-												}
-											}
-											child_klasse = {
-													"data": klasse,
-													"children": children_familie
-												};
-											baum.push(child_klasse);
-										}
-										erstelleTree(baum);
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		});
-	} else if (Gruppe === "Macromycetes") {
-		$db.view('artendb/baum_macromycetes_gattung?group=true', {
-			success: function (macromycetes_gattung) {
-				$db.view('artendb/baum_macromycetes_art', {
-					success: function (macromycetes_art) {
-						window.baum_laenge = macromycetes_art.rows.length;
-						var baum, child_gattung, gattung, child_art, children_art, art;
-						baum = [];
-						for (k in macromycetes_gattung.rows) {
-							gattung = macromycetes_gattung.rows[k].key;
-							children_art = [];
-							for (n in macromycetes_art.rows) {
-								if (macromycetes_art.rows[n].key[0] === gattung) {
-									art = macromycetes_art.rows[n].key[1];
-									child_art = {
-											"data": art,
-											"attr": {"id": macromycetes_art.rows[n].value}
-										};
-									children_art.push(child_art);
-								}
-							}
-							child_gattung = {
-									"data": gattung,
-									"children": children_art
-								};
-							baum.push(child_gattung);
-						}
-						erstelleTree(baum);
-					}
-				});
-			}
-		});
-	} else if (Gruppe === "Lebensräume") {
-		$db.view('artendb/baum_lr_0', {
-			success: function (level0) {
-				window.baum_laenge = level0.rows.length;
-				$db.view('artendb/baum_lr_1', {
-					success: function (level1) {
-						window.baum_laenge += level1.rows.length;
-						$db.view('artendb/baum_lr_2', {
-							success: function (level2) {
-								window.baum_laenge += level2.rows.length;
-								$db.view('artendb/baum_lr_3', {
-									success: function (level3) {
-										window.baum_laenge += level3.rows.length;
-										$db.view('artendb/baum_lr_4', {
-											success: function (level4) {
-												window.baum_laenge += level4.rows.length;
-												$db.view('artendb/baum_lr_5', {
-													success: function (level5) {
-														window.baum_laenge += level5.rows.length;
-														$db.view('artendb/baum_lr_6', {
-															success: function (level6) {
-																window.baum_laenge += level6.rows.length;
-																$db.view('artendb/baum_lr_7', {
-																	success: function (level7) {
-																		window.baum_laenge += level7.rows.length;
-																		var baum, child_level0, level0_lr, child_level1, children_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr, child_level5, children_level5, level5_lr, child_level6, children_level6, level6_lr, child_level7, children_level7, level7_lr;
-																		baum = [];
-																		for (i in level0.rows) {
-																			level0_lr = level0.rows[i].key[0].Name;
-																			children_level1 = [];
-																			for (k in level1.rows) {
-																				if (level1.rows[k].key[1] && level1.rows[k].key[0].Name === level0_lr) {
-																					level1_lr = level1.rows[k].key[1].Name;
-																					children_level2 = [];
-																					for (l in level2.rows) {
-																						if (level2.rows[l].key[2] && level2.rows[l].key[0].Name === level0_lr && level2.rows[l].key[1].Name === level1_lr) {
-																							level2_lr = level2.rows[l].key[2].Name;
-																							children_level3 = [];
-																							for (n in level3.rows) {
-																								if (level3.rows[n].key[3] && level3.rows[n].key[0].Name === level0_lr && level3.rows[n].key[1].Name === level1_lr && level3.rows[n].key[2].Name === level2_lr) {
-																									level3_lr = level3.rows[n].key[3].Name;
-																									children_level4 = [];
-																									for (n in level4.rows) {
-																										if (level4.rows[n].key[4] && level4.rows[n].key[0].Name === level0_lr && level4.rows[n].key[1].Name === level1_lr && level4.rows[n].key[2].Name === level2_lr && level4.rows[n].key[3].Name === level3_lr) {
-																											level4_lr = level4.rows[n].key[4].Name;
-																											children_level5 = [];
-																											for (n in level5.rows) {
-																												if (level5.rows[n].key[5] && level5.rows[n].key[0].Name === level0_lr && level5.rows[n].key[1].Name === level1_lr && level5.rows[n].key[2].Name === level2_lr && level5.rows[n].key[3].Name === level3_lr && level5.rows[n].key[4].Name === level4_lr) {
-																													level5_lr = level5.rows[n].key[5].Name;
-																													children_level6 = [];
-																													for (n in level6.rows) {
-																														if (level6.rows[n].key[6] && level6.rows[n].key[0].Name === level0_lr && level6.rows[n].key[1].Name === level1_lr && level6.rows[n].key[2].Name === level2_lr && level6.rows[n].key[3].Name === level3_lr && level6.rows[n].key[4].Name === level4_lr && level6.rows[n].key[5].Name === level5_lr) {
-																															level6_lr = level6.rows[n].key[6].Name;
-																															children_level7 = [];
-																															for (n in level7.rows) {
-																																if (level7.rows[n].key[7] && level7.rows[n].key[0].Name === level0_lr && level7.rows[n].key[1].Name === level1_lr && level7.rows[n].key[2].Name === level2_lr && level7.rows[n].key[3].Name === level3_lr && level7.rows[n].key[4].Name === level4_lr && level7.rows[n].key[5].Name === level5_lr && level7.rows[n].key[6].Name === level6_lr) {
-																																	level7_lr = level7.rows[n].key[7].Name;
-																																	child_level7 = {
-																																			"data": level7_lr,
-																																			"attr": {"id": level7.rows[n].key[7].GUID},
-																																			//"children": children_level8
-																																		};
-																																	children_level7.push(child_level7);
-																																}		
-																															}
-
-																															child_level6 = {
-																																	"data": level6_lr,
-																																	"attr": {"id": level6.rows[n].key[6].GUID},
-																																	"children": children_level7
-																																};
-																															children_level6.push(child_level6);
-																														}		
-																													}
-																													child_level5 = {
-																															"data": level5_lr,
-																															"attr": {"id": level5.rows[n].key[5].GUID},
-																															"children": children_level6
-																														};
-																													children_level5.push(child_level5);
-																												}		
-																											}
-																											child_level4 = {
-																													"data": level4_lr,
-																													"attr": {"id": level4.rows[n].key[4].GUID},
-																													"children": children_level5
-																												};
-																											children_level4.push(child_level4);
-																										}
-																									}
-																									child_level3 = {
-																											"data": level3_lr,
-																											"attr": {"id": level3.rows[n].key[3].GUID},
-																											"children": children_level4
-																										};
-																									children_level3.push(child_level3);
-																								}
-																							}
-																							child_level2 = {
-																									"data": level2_lr,
-																									"attr": {"id": level2.rows[l].key[2].GUID},
-																									"children": children_level3
-																								};
-																							children_level2.push(child_level2);
-																						}
-																					}
-																					child_level1 = {
-																							"data": level1_lr,
-																							"attr": {"id": level1.rows[k].key[1].GUID},
-																							"children": children_level2
-																						};
-																					children_level1.push(child_level1);
-																				}
-																			}
-																			child_level0 = {
-																					"data": level0_lr,
-																					"attr": {"id": level0.rows[i].key[0].GUID},
-																					"children": children_level1
-																				};
-																			baum.push(child_level0);
-																		}
-																		erstelleTree(baum);
 																	}
-																});
+																}
+																child_familie = {
+																		"data": familie,
+																		"children": children_art
+																	};
+																children_familie.push(child_familie);
 															}
-														});
+														}
+														child_ordnung = {
+																"data": ordnung,
+																"children": children_familie
+															};
+														children_ordnung.push(child_ordnung);
 													}
-												});
+												}
+												child_klasse = {
+														"data": klasse,
+														"children": children_ordnung
+													};
+												baum.push(child_klasse);
 											}
-										});
+											erstelleTree(baum);
+											if (!window.baum_fauna) {
+												//speichern, damit das nächste mal keine Datenbankabfrage nötig ist
+												window.baum_fauna = baum;
+											}
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		} else {
+			//Suchfeld einblenden
+			$("#suchen").show();
+			$("#suchfeld").focus();
+			setzeTreehoehe();
+		}
+	} else if (window.Gruppe === "Flora") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_flora) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_flora_familie?group=true', {
+				success: function (flora_familie) {
+					$db.view('artendb/baum_flora_gattung?group=true', {
+						success: function (flora_gattung) {
+							$db.view('artendb/baum_flora_art', {
+								success: function (flora_art) {
+									window.baum_laenge = flora_art.rows.length;
+									var baum, child_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
+									baum = [];
+									for (i in flora_familie.rows) {
+										familie = flora_familie.rows[i].key;
+										children_gattung = [];
+										for (k in flora_gattung.rows) {
+											if (flora_gattung.rows[k].key[0] === familie) {
+												gattung = flora_gattung.rows[k].key[1];
+												children_art = [];
+												for (n in flora_art.rows) {
+													if (flora_art.rows[n].key[0] === familie && flora_art.rows[n].key[1] === gattung) {
+														art = flora_art.rows[n].key[2];
+														child_art = {
+																"data": art,
+																"attr": {"id": flora_art.rows[n].value}
+															};
+														children_art.push(child_art);
+													}
+												}
+												child_gattung = {
+														"data": gattung,
+														"children": children_art
+													};
+												children_gattung.push(child_gattung);
+											}
+										}
+										child_familie = {
+												"data": familie,
+												"children": children_gattung
+											};
+										baum.push(child_familie);
 									}
-								});
+									erstelleTree(baum);
+									if (!window.baum_flora) {
+										//speichern, um wiederholte Abfrage zu vermeiden
+										window.baum_flora = baum;
+									}
+								}
+							});
+						}
+					});
+				}
+			});
+		} else {
+			//Suchfeld einblenden
+			$("#suchen").show();
+			$("#suchfeld").focus();
+			setzeTreehoehe();
+		}
+	} else if (window.Gruppe === "Moose") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_moose) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_moose_klasse?group=true', {
+				success: function (moose_klasse) {
+					$db.view('artendb/baum_moose_familie?group=true', {
+						success: function (moose_familie) {
+							$db.view('artendb/baum_moose_gattung?group=true', {
+								success: function (moose_gattung) {
+									$db.view('artendb/baum_moose_art', {
+										success: function (moose_art) {
+											window.baum_laenge = moose_art.rows.length;
+											var baum, child_klasse, klasse, child_familie, children_familie, familie, child_gattung, children_gattung, gattung, child_art, children_art, art;
+											baum = [];
+											for (i in moose_klasse.rows) {
+												klasse = moose_klasse.rows[i].key;
+												children_familie = [];
+												for (k in moose_familie.rows) {
+													if (moose_familie.rows[k].key[0] === klasse) {
+														familie = moose_familie.rows[k].key[1];
+														children_gattung = [];
+														for (l in moose_gattung.rows) {
+															if (moose_gattung.rows[l].key[0] === klasse && moose_gattung.rows[l].key[1] === familie) {
+																gattung = moose_gattung.rows[l].key[2];
+																children_art = [];
+																for (n in moose_art.rows) {
+																	if (moose_art.rows[n].key[0] === klasse && moose_art.rows[n].key[1] === familie && moose_art.rows[n].key[2] === gattung) {
+																		art = moose_art.rows[n].key[3];
+																		child_art = {
+																				"data": art,
+																				"attr": {"id": moose_art.rows[n].value}
+																			};
+																		children_art.push(child_art);
+																	}
+																}
+																child_gattung = {
+																		"data": gattung,
+																		"children": children_art
+																	};
+																children_gattung.push(child_gattung);
+															}
+														}
+														child_familie = {
+																"data": familie,
+																"children": children_gattung
+															};
+														children_familie.push(child_familie);
+													}
+												}
+												child_klasse = {
+														"data": klasse,
+														"children": children_familie
+													};
+												baum.push(child_klasse);
+											}
+											erstelleTree(baum);
+											if (!window.baum_moose) {
+												//speichern, um wiederholten Aufruf zu vermeiden
+												window.baum_moose = baum;
+											}
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		} else {
+			//Suchfeld einblenden
+			$("#suchen").show();
+			$("#suchfeld").focus();
+			setzeTreehoehe();
+		}
+	} else if (window.Gruppe === "Macromycetes") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_macromycetes) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_macromycetes_gattung?group=true', {
+				success: function (macromycetes_gattung) {
+					$db.view('artendb/baum_macromycetes_art', {
+						success: function (macromycetes_art) {
+							window.baum_laenge = macromycetes_art.rows.length;
+							var baum, child_gattung, gattung, child_art, children_art, art;
+							baum = [];
+							for (k in macromycetes_gattung.rows) {
+								gattung = macromycetes_gattung.rows[k].key;
+								children_art = [];
+								for (n in macromycetes_art.rows) {
+									if (macromycetes_art.rows[n].key[0] === gattung) {
+										art = macromycetes_art.rows[n].key[1];
+										child_art = {
+												"data": art,
+												"attr": {"id": macromycetes_art.rows[n].value}
+											};
+										children_art.push(child_art);
+									}
+								}
+								child_gattung = {
+										"data": gattung,
+										"children": children_art
+									};
+								baum.push(child_gattung);
 							}
-						});
-					}
-				});
-			}
-		});
+							erstelleTree(baum);
+							if (!window.baum_macromycetes) {
+								//speichern, um wiederholten Aufruf zu vermeiden
+								window.baum_macromycetes = baum;
+							}
+						}
+					});
+				}
+			});
+		} else {
+			//Suchfeld einblenden
+			$("#suchen").show();
+			$("#suchfeld").focus();
+			setzeTreehoehe();
+		}
+	} else if (window.Gruppe === "Lebensräume") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_lr) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_lr_0', {
+				success: function (level0) {
+					window.baum_laenge = level0.rows.length;
+					$db.view('artendb/baum_lr_1', {
+						success: function (level1) {
+							window.baum_laenge += level1.rows.length;
+							$db.view('artendb/baum_lr_2', {
+								success: function (level2) {
+									window.baum_laenge += level2.rows.length;
+									$db.view('artendb/baum_lr_3', {
+										success: function (level3) {
+											window.baum_laenge += level3.rows.length;
+											$db.view('artendb/baum_lr_4', {
+												success: function (level4) {
+													window.baum_laenge += level4.rows.length;
+													$db.view('artendb/baum_lr_5', {
+														success: function (level5) {
+															window.baum_laenge += level5.rows.length;
+															$db.view('artendb/baum_lr_6', {
+																success: function (level6) {
+																	window.baum_laenge += level6.rows.length;
+																	$db.view('artendb/baum_lr_7', {
+																		success: function (level7) {
+																			window.baum_laenge += level7.rows.length;
+																			var baum, child_level0, level0_lr, child_level1, children_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr, child_level5, children_level5, level5_lr, child_level6, children_level6, level6_lr, child_level7, children_level7, level7_lr;
+																			baum = [];
+																			for (i in level0.rows) {
+																				level0_lr = level0.rows[i].key[0].Name;
+																				children_level1 = [];
+																				for (k in level1.rows) {
+																					if (level1.rows[k].key[1] && level1.rows[k].key[0].Name === level0_lr) {
+																						level1_lr = level1.rows[k].key[1].Name;
+																						children_level2 = [];
+																						for (l in level2.rows) {
+																							if (level2.rows[l].key[2] && level2.rows[l].key[0].Name === level0_lr && level2.rows[l].key[1].Name === level1_lr) {
+																								level2_lr = level2.rows[l].key[2].Name;
+																								children_level3 = [];
+																								for (n in level3.rows) {
+																									if (level3.rows[n].key[3] && level3.rows[n].key[0].Name === level0_lr && level3.rows[n].key[1].Name === level1_lr && level3.rows[n].key[2].Name === level2_lr) {
+																										level3_lr = level3.rows[n].key[3].Name;
+																										children_level4 = [];
+																										for (n in level4.rows) {
+																											if (level4.rows[n].key[4] && level4.rows[n].key[0].Name === level0_lr && level4.rows[n].key[1].Name === level1_lr && level4.rows[n].key[2].Name === level2_lr && level4.rows[n].key[3].Name === level3_lr) {
+																												level4_lr = level4.rows[n].key[4].Name;
+																												children_level5 = [];
+																												for (n in level5.rows) {
+																													if (level5.rows[n].key[5] && level5.rows[n].key[0].Name === level0_lr && level5.rows[n].key[1].Name === level1_lr && level5.rows[n].key[2].Name === level2_lr && level5.rows[n].key[3].Name === level3_lr && level5.rows[n].key[4].Name === level4_lr) {
+																														level5_lr = level5.rows[n].key[5].Name;
+																														children_level6 = [];
+																														for (n in level6.rows) {
+																															if (level6.rows[n].key[6] && level6.rows[n].key[0].Name === level0_lr && level6.rows[n].key[1].Name === level1_lr && level6.rows[n].key[2].Name === level2_lr && level6.rows[n].key[3].Name === level3_lr && level6.rows[n].key[4].Name === level4_lr && level6.rows[n].key[5].Name === level5_lr) {
+																																level6_lr = level6.rows[n].key[6].Name;
+																																children_level7 = [];
+																																for (n in level7.rows) {
+																																	if (level7.rows[n].key[7] && level7.rows[n].key[0].Name === level0_lr && level7.rows[n].key[1].Name === level1_lr && level7.rows[n].key[2].Name === level2_lr && level7.rows[n].key[3].Name === level3_lr && level7.rows[n].key[4].Name === level4_lr && level7.rows[n].key[5].Name === level5_lr && level7.rows[n].key[6].Name === level6_lr) {
+																																		level7_lr = level7.rows[n].key[7].Name;
+																																		child_level7 = {
+																																				"data": level7_lr,
+																																				"attr": {"id": level7.rows[n].key[7].GUID},
+																																				//"children": children_level8
+																																			};
+																																		children_level7.push(child_level7);
+																																	}		
+																																}
+
+																																child_level6 = {
+																																		"data": level6_lr,
+																																		"attr": {"id": level6.rows[n].key[6].GUID},
+																																		"children": children_level7
+																																	};
+																																children_level6.push(child_level6);
+																															}		
+																														}
+																														child_level5 = {
+																																"data": level5_lr,
+																																"attr": {"id": level5.rows[n].key[5].GUID},
+																																"children": children_level6
+																															};
+																														children_level5.push(child_level5);
+																													}		
+																												}
+																												child_level4 = {
+																														"data": level4_lr,
+																														"attr": {"id": level4.rows[n].key[4].GUID},
+																														"children": children_level5
+																													};
+																												children_level4.push(child_level4);
+																											}
+																										}
+																										child_level3 = {
+																												"data": level3_lr,
+																												"attr": {"id": level3.rows[n].key[3].GUID},
+																												"children": children_level4
+																											};
+																										children_level3.push(child_level3);
+																									}
+																								}
+																								child_level2 = {
+																										"data": level2_lr,
+																										"attr": {"id": level2.rows[l].key[2].GUID},
+																										"children": children_level3
+																									};
+																								children_level2.push(child_level2);
+																							}
+																						}
+																						child_level1 = {
+																								"data": level1_lr,
+																								"attr": {"id": level1.rows[k].key[1].GUID},
+																								"children": children_level2
+																							};
+																						children_level1.push(child_level1);
+																					}
+																				}
+																				child_level0 = {
+																						"data": level0_lr,
+																						"attr": {"id": level0.rows[i].key[0].GUID},
+																						"children": children_level1
+																					};
+																				baum.push(child_level0);
+																			}
+																			erstelleTree(baum);
+																			if (!window.baum_lr) {
+																				//speichern, um wiederholten Aufruf zu vermeiden
+																				window.baum_lr = baum;
+																			}
+																		}
+																	});
+																}
+															});
+														}
+													});
+												}
+											});
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		} else {
+			//Suchfeld einblenden
+			$("#suchen").show();
+			$("#suchfeld").focus();
+			setzeTreehoehe();
+		}
 	}
 }
 
 function erstelleTree(baum) {
-	$("#tree").jstree({
+	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
 			"data": baum
 		},
@@ -390,8 +462,9 @@ function erstelleTree(baum) {
 	.bind("loaded.jstree", function (event, data) {
 		$("#suchen").show();
 		$("#suchfeld").focus();
+		$("#tree" + window.Gruppe).css("display", "block");
+		$("#tree" + window.Gruppe + "Beschriftung").html(window.baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
 		setzeTreehoehe();
-		$("#treeBeschriftung").html(window.baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
 	})
 	.bind("after_open.jstree", function (e, data) {
 		setzeTreehoehe();
@@ -826,11 +899,14 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 
 //begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 function setzeTreehoehe() {
+	var windowHeight = $(window).height();
 	if ($(window).width() > 1000) {
-		$("#tree").css("max-height", $(window).height() - 161);
+		//$("#menu").css("max-height", windowHeight - 33);
+		$(".baum").css("max-height", windowHeight - 161);
 	} else {
 		//Spalten sind untereinander. Baum 41px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
-		$("#tree").css("max-height", $(window).height() - 202);
+		//$("#menu").css("max-height", windowHeight - 74);
+		$(".baum").css("max-height", windowHeight - 202);
 	}
 }
 
@@ -869,13 +945,13 @@ function setzteHöheTextareas() {
 function schliesseNichtMarkierteNodes() {
 	//wenn Suchfeld leer ist, soll der Baum zugeklappt werden
 	if (!$("#suchfeld").val()) {
-		$("#tree").jstree("clear_search");
-		var selected_nodes = $("#tree").jstree("get_selected");
-		$("#tree").jstree("close_all", -1);
-		$("#tree").jstree("deselect_all", -1);
+		$("#tree" + window.Gruppe).jstree("clear_search");
+		var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
+		$("#tree" + window.Gruppe).jstree("close_all", -1);
+		$("#tree" + window.Gruppe).jstree("deselect_all", -1);
 		//wenn eine Art gewählt war, diese wieder wählen
 		if (selected_nodes.length === 1) {
-			$("#tree").jstree("select_node", selected_nodes);
+			$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
 		}
 	}
 }

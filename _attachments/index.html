@@ -82,8 +82,16 @@
 				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern">
 				<button id="suche_leeren_btn" class="close">&times;</button>
 			</div>
-			<div id="treeBeschriftung"></div>
-			<div id="tree"></div>
+			<div id="treeFaunaBeschriftung" class="treeBeschriftung"></div>
+			<div id="treeFloraBeschriftung" class="treeBeschriftung"></div>
+			<div id="treeMooseBeschriftung" class="treeBeschriftung"></div>
+			<div id="treeMacromycetesBeschriftung" class="treeBeschriftung"></div>
+			<div id="treeLebensräumeBeschriftung" class="treeBeschriftung"></div>
+			<div id="treeFauna" class="baum"></div>
+			<div id="treeFlora" class="baum"></div>
+			<div id="treeMoose" class="baum"></div>
+			<div id="treeMacromycetes" class="baum"></div>
+			<div id="treeLebensräume" class="baum"></div>
 		</fieldset>
 
 		<fieldset id="forms">
@@ -203,6 +211,13 @@
 					return;
 				}
 
+				//globale Variabeln ausräumen
+				/*delete window.baum_fauna;
+				delete window.baum_flora;
+				delete window.baum_moose;
+				delete window.baum_pilze;
+				delete window.baum_lr;*/
+
 				$("#suchen").hide();
 
 				//wenn User noch angemeldet ist, UI anpassen
@@ -212,16 +227,14 @@
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("body").on("click", "[name='Gruppe']", function () {
-					var Gruppe;
-					Gruppe = this.value;
-					erstelleBaum(Gruppe);
+					//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
+					window.Gruppe = this.value;
 					$("#suchfeld").val("");
 					$("#Gruppe_label").html("Gruppe:");
 					$("#suchen").hide();
-					$("#treeBeschriftung").html("");
 					$("#forms").hide();
 					$("#suchen").val("");
-					$("#tree").html("der Baum wird aufgebaut...");
+					erstelleBaum();
 				});
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
@@ -250,10 +263,10 @@
 					//nur automatisch suchen, wenn das schnell ist
 					//auf Enter-Taste immer suchen
 					if ((this.value.length > 2 && window.baum_laenge < 7000) || e.keyCode === 13) {
-						$("#tree").jstree("search", this.value);
+						$("#tree" + window.Gruppe).jstree("search", this.value);
 					} else if (this.value.length === 0) {
 						//Suche beenden, falls Suchfeld leer ist
-						$("#tree").jstree("clear_search");
+						$("#tree" + window.Gruppe).jstree("clear_search");
 					}
 				});
 
@@ -262,11 +275,11 @@
 					e.preventDefault();
 					var suchwert = $("#suchfeld").val();
 					if (suchwert) {
-						$("#tree").jstree("search", suchwert);
+						$("#tree" + window.Gruppe).jstree("search", suchwert);
 						$("#suchfeld").focus();
 					} else {
 						//Suche beenden, falls Suchfeld leer ist
-						$("#tree").jstree("clear_search");
+						$("#tree" + window.Gruppe).jstree("clear_search");
 					}
 				});
 
@@ -290,11 +303,11 @@
 					var id;
 					event.preventDefault();
 					id = $(this).attr("artid");
-					$("#tree").jstree("clear_search");
+					$("#tree" + window.Gruppe).jstree("clear_search");
 					$("#suchen").val("");
-					jQuery("#tree").jstree("deselect_all");
-					jQuery("#tree").jstree("close_all", -1);
-					jQuery("#tree").jstree("select_node", "#" + id);
+					jQuery("#tree" + window.Gruppe).jstree("deselect_all");
+					jQuery("#tree" + window.Gruppe).jstree("close_all", -1);
+					jQuery("#tree" + window.Gruppe).jstree("select_node", "#" + id);
 				});
 			});
 
