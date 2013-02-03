@@ -211,13 +211,6 @@
 					return;
 				}
 
-				//globale Variabeln ausräumen
-				/*delete window.baum_fauna;
-				delete window.baum_flora;
-				delete window.baum_moose;
-				delete window.baum_pilze;
-				delete window.baum_lr;*/
-
 				$("#suchen").hide();
 
 				//wenn User noch angemeldet ist, UI anpassen
@@ -262,7 +255,7 @@
 					e.preventDefault();
 					//nur automatisch suchen, wenn das schnell ist
 					//auf Enter-Taste immer suchen
-					if ((this.value.length > 2 && window.baum_laenge < 7000) || e.keyCode === 13) {
+					if (/*(this.value.length > 2 && window.baum_laenge < 7000) || */e.keyCode === 13) {
 						$("#tree" + window.Gruppe).jstree("search", this.value);
 					} else if (this.value.length === 0) {
 						//Suche beenden, falls Suchfeld leer ist

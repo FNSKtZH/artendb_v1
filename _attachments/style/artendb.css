@@ -90,7 +90,7 @@ body {
 
 .accordion-heading a {
 	font-size: 17px;
-	color: #B85700;
+	color: #944600;
 	font-weight: bold;
 }
 
@@ -164,7 +164,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 
 #art label {
 	width: 180px;
-	color: #6F6F66;
+	color: #555555;
 	margin-right: 7px;
 	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
 	margin-bottom: 0px;
@@ -176,8 +176,16 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	padding-top: 5px;
 }
 
+a {
+	color: #016ca2;
+}
+
 #art .feldtext a {
 	margin-left: 0px;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 #art legend {
@@ -193,7 +201,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 .Datensammlung {
-	color: #B85700;
+	color: #944600;
 }
 
 .alert {
@@ -220,6 +228,12 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 .accordion h4 {
 	padding-left: 15px;
 	margin-bottom: 3px;
+	color: #424242;
+	/*color: #555555;*/
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	color: #424242;
 }
 
 .form {
