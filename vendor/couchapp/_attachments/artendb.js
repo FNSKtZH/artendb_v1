@@ -596,13 +596,13 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 	var html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	//"Behiehungen" zur id hinzufügen, weil dieselbe Datensammlung bei Objekten und Beziehungen vorkommen kann!
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'') + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '">';
 	//Titel für die Datensammlung einfügen
 	html += beziehungen_array[0].Datensammlung.Name + " (" + beziehungen_array.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen. Kommas aus Datensammlungsnamen entfernen, die verhindern die Funktion des Accordions
-	html += '<div id="collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapseBeziehungen' + beziehungen_array[0].Datensammlung.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (beziehungen_array[0].Datensammlung.Beschreibung) {
@@ -651,13 +651,13 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += i;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {

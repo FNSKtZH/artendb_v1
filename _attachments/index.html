@@ -18,56 +18,57 @@
 		<title>ArtenDb</title>
 	</head>
 	<body>
+		<div id="menu_btn" class="btn-group">
+			<a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
+				Menu
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li class="dropdown-submenu">
+					<a tabindex="-1" href="#">Daten importieren / löschen</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#">Taxonomie</a>
+							<ul class="dropdown-menu">
+								<li class="disabled"><a id="aktuelle_taxonomie_importieren" href="#">aktuelle Taxonomie importieren</a></li>
+								<li class="disabled"><a id="aktuelle_taxonomie_loeschen" href="#">aktuelle Taxonomie löschen</a></li>
+								<li class="disabled"><a id="alternative_taxonomie_importieren" href="#">alternative Taxonomie importieren</a></li>
+								<li class="disabled"><a id="alternative_taxonomie_loeschen" href="#">alternative Taxonomie löschen</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#">Eigenschaften</a>
+							<ul class="dropdown-menu">
+								<li><a id="eigenschaften_importieren" href="#">importieren</a></li>
+								<li class="disabled"><a id="eigenschaften_loeschen" href="#">löschen</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#">Beziehungen</a>
+							<ul class="dropdown-menu">
+								<li class="disabled"><a id="beziehungen_importieren" href="#">importieren</a></li>
+								<li class="disabled"><a id="beziehungen_loeschen" href="#">löschen</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="disabled"><a href="#">Daten exportieren</a></li>
+				<li class="dropdown-submenu">
+					<a tabindex="-1" href="#">über diese Anwendung</a>
+					<ul class="dropdown-menu">
+						<li><a href="https://github.com/barbalex/artendb/blob/master/README.md" target="_blank">Projektbeschreibung</a></li>
+						<li><a href="https://github.com/barbalex/artendb" target="_blank">Code</a></li>
+						<li><a href="https://github.com/barbalex/artendb/commits/master" target="_blank">Letzte Änderungen</a></li>
+						<li><a href="mailto:alex.barbalex@gmail.com">Kontakt</a></li>
+					</ul>
+				</li>
+				<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Bilder suchen</a></li>
+				<li id="WikipediaLink_li" class="disabled"><a id="WikipediaLink" href="" target="_blank">in Wikipedia suchen</a></li>
+			</ul>
+		</div>
 		<fieldset id="menu">
 			<div>
 				<div id="menu-div">
-					<div id="menu_btn" class="btn-group">
-						<a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
-							Menu
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-submenu">
-								<a tabindex="-1" href="#">Daten importieren / löschen</a>
-								<ul class="dropdown-menu">
-									<li class="dropdown-submenu">
-										<a tabindex="-1" href="#">Taxonomie</a>
-										<ul class="dropdown-menu">
-											<li class="disabled"><a id="aktuelle_taxonomie_importieren" href="#">aktuelle Taxonomie importieren</a></li>
-											<li class="disabled"><a id="aktuelle_taxonomie_loeschen" href="#">aktuelle Taxonomie löschen</a></li>
-											<li class="disabled"><a id="alternative_taxonomie_importieren" href="#">alternative Taxonomie importieren</a></li>
-											<li class="disabled"><a id="alternative_taxonomie_loeschen" href="#">alternative Taxonomie löschen</a></li>
-										</ul>
-									</li>
-									<li class="dropdown-submenu">
-										<a tabindex="-1" href="#">Eigenschaften</a>
-										<ul class="dropdown-menu">
-											<li><a id="eigenschaften_importieren" href="#">importieren</a></li>
-											<li class="disabled"><a id="eigenschaften_loeschen" href="#">löschen</a></li>
-										</ul>
-									</li>
-									<li class="dropdown-submenu">
-										<a tabindex="-1" href="#">Beziehungen</a>
-										<ul class="dropdown-menu">
-											<li class="disabled"><a id="beziehungen_importieren" href="#">importieren</a></li>
-											<li class="disabled"><a id="beziehungen_loeschen" href="#">löschen</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li class="disabled"><a href="#">Daten exportieren</a></li>
-							<li class="dropdown-submenu">
-								<a tabindex="-1" href="#">über diese Anwendung</a>
-								<ul class="dropdown-menu">
-									<li><a href="https://github.com/barbalex/artendb/blob/master/README.md" target="_blank">Projektbeschreibung</a></li>
-									<li><a href="https://github.com/barbalex/artendb" target="_blank">Code</a></li>
-									<li><a href="mailto:alex.barbalex@gmail.com">Kontakt</a></li>
-								</ul>
-							</li>
-							<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Bilder suchen</a></li>
-							<li id="WikipediaLink_li" class="disabled"><a id="WikipediaLink" href="" target="_blank">in Wikipedia suchen</a></li>
-						</ul>
-					</div>
 					<div id="Gruppe_label">Gruppe wählen:</div>
 				</div>
 				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">

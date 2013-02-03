@@ -113,9 +113,15 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #menu_btn {
-	float: left;
+	position: absolute;
+	top: 20px;
+	left: 16px;
 	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
 	z-index: 5;
+}
+
+#menu-div {
+	line-height: 30px;
 }
 
 #Gruppe {
@@ -129,12 +135,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 
 #Gruppe_label {
 	position: relative;
-	left: 7px;
-	top: 7px;
-}
-
-#menu-div {
-	line-height: 30px;
+	left: 78px;
+	top: 9px;
 }
 
 #suchen {
