@@ -516,13 +516,12 @@ function initiiere_art(id) {
 			for (var x=0; x<Datensammlungen.length; x++) {
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
-			//div schaffen, in den die Beziehungen - auch mit Verzögerung - eingefügt werden können
-			//htmlArt += "<div id='beziehungen_div'></div>";
 
 			//Beziehungen holen
 			$db = $.couch.db("artendb");
 			//alle Beziehungen holen, in denen Beziehungen diese Art als Partner vorkommt
-			$db.view('artendb/bez_guid_id?key="' + id + '"&include_docs=true', {
+			//$db.view('artendb/bez_guid_id?key="' + id + '"&include_docs=true', {
+			$db.view('artendb/bez_guid_id?startkey=["' + id + '"]&endkey=["' + id + '",{}]&include_docs=true', {
 				success: function (beziehungen_mit_dieser_art) {
 					var Beziehung = {};
 					var Beziehungen = {};
