@@ -88,7 +88,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 - Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
 - Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
 
-Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Diese werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert. Sie enthalten in der JSON-Struktur neben den GUID's der beiden Objekte die zutreffenden Datensammlungen mit ihren beschreibenden Attributen.
+Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Sie werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert.
 
 ###Gruppen vereinen
 Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
@@ -450,29 +450,26 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
 ```javascript
 {
-   "_id": "00064E7E-6B6D-4781-BC67-C36533F6D810",
-   "_rev": "1-53bf69f8f35e8a00358ff76bb3f9beab",
-   "GUID": "00064E7E-6B6D-4781-BC67-C36533F6D810",
+   "_id": "0000752E-A8C2-40B7-A971-8B2CC55C704B",
+   "_rev": "1-fc9a5f78150419f2e51f7dd24bf671a7",
    "Typ": "Beziehung",
    "Partner": [
        {
-           "Gruppe": "Flora",
-           "Name": "Carlina acanthifolia All. (Akanthusblättrige Eberwurz)",
-           "GUID": "B3A8EC03-9CDC-46DF-B911-A73B1D2C155D"
+           "Gruppe": "Lebensräume",
+           "Name": "CH Flora Indicativa 2010: Lebensräume: 6.7 Thermophilous forest edges",
+           "GUID": "BFB9E6F7-07E4-49D6-ADE6-DD730890EC8F"
        },
        {
-           "Gruppe": "Fauna",
-           "Name": "Andrena humilis Imhoff, 1832",
-           "GUID": "D34986E0-B521-401D-8213-7E203D5E5D9D"
+           "Gruppe": "Flora",
+           "Name": "Lilium carniolicum",
+           "GUID": "C9A473A7-244F-460B-905D-63B4AC291DCB"
        }
    ],
    "Datensammlung": {
-       "Name": "Beziehungen zwischen Wildbienen und Flora nach Westrich, 1989",
-       "Beschreibung": "Westrich P (1989), Die Wildbienen Baden-Württembergs",
-       "Datenstand": "1989"
+       "Name": "CH Flora indicativa 2010: Vorkommen von Arten in Lebensräumen"
    },
    "Felder": {
-       "Imago": "oligolektische Bienenart: ist auf diese Pflanzen-Familie spezialisiert. Diese Bienen-Pflanze-Beziehung ist nicht nachgewiesen"
+       "Art der Beziehung": "Die Art kommt im Lebensraum vor"
    }
 }
 ```
