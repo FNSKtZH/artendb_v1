@@ -512,13 +512,14 @@ Eigenschaften anzeigen:
 - Die jeweilige Datemsammlung ist beschrieben
 - Beziehungen zwischen verwandten Arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
+- Beziehungen zwischen Arten und Arten, Flora und Lebensräumen
 
 **To do**
 
+- Beziehungen zwischen: Fauna/Moosen und Lebensräumen, Lebensräumen und Lebensräumen
 - Import und Aktualisierung von Datensammlungen
 - Alternative Taxonomien verwalten und darstellen
 - Exporte
-- Beziehungen zwischen Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen
 - Lebensräume in der Anwendung bearbeiten
 
 <a href="#top">&#8593; top</a>
