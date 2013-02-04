@@ -518,8 +518,8 @@ Eigenschaften anzeigen:
 
 - Beziehungen zwischen: Fauna/Moosen und Lebensräumen, Lebensräumen und Lebensräumen
 - Import und Aktualisierung von Datensammlungen
-- Alternative Taxonomien verwalten und darstellen
 - Exporte
+- Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
 
 <a href="#top">&#8593; top</a>
