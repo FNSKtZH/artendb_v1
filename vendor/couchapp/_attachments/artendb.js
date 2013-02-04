@@ -631,7 +631,11 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 		}
 		//Die Felder anzeigen
 		for (x in beziehungen_array[i].Felder) {
-			html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x])
+			//Bei Lr-Beziehungen mit Flora, Fauna und Moosen steht die Art der Beziehung schon im Titel
+			//und sollte daher besser nicht angezeigt werden
+			if (x !== "Art der Beziehung") {
+				html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x])
+			}
 		}
 		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
 		if (i < (beziehungen_array.length-1)) {
