@@ -308,28 +308,28 @@ function erstelleBaum() {
 																							if (level2.rows[l].key[2] && level2.rows[l].key[0].Name === level0_lr && level2.rows[l].key[1].Name === level1_lr) {
 																								level2_lr = level2.rows[l].key[2].Name;
 																								children_level3 = [];
-																								for (n in level3.rows) {
-																									if (level3.rows[n].key[3] && level3.rows[n].key[0].Name === level0_lr && level3.rows[n].key[1].Name === level1_lr && level3.rows[n].key[2].Name === level2_lr) {
-																										level3_lr = level3.rows[n].key[3].Name;
+																								for (m in level3.rows) {
+																									if (level3.rows[m].key[3] && level3.rows[m].key[0].Name === level0_lr && level3.rows[m].key[1].Name === level1_lr && level3.rows[m].key[2].Name === level2_lr) {
+																										level3_lr = level3.rows[m].key[3].Name;
 																										children_level4 = [];
 																										for (n in level4.rows) {
 																											if (level4.rows[n].key[4] && level4.rows[n].key[0].Name === level0_lr && level4.rows[n].key[1].Name === level1_lr && level4.rows[n].key[2].Name === level2_lr && level4.rows[n].key[3].Name === level3_lr) {
 																												level4_lr = level4.rows[n].key[4].Name;
 																												children_level5 = [];
-																												for (n in level5.rows) {
-																													if (level5.rows[n].key[5] && level5.rows[n].key[0].Name === level0_lr && level5.rows[n].key[1].Name === level1_lr && level5.rows[n].key[2].Name === level2_lr && level5.rows[n].key[3].Name === level3_lr && level5.rows[n].key[4].Name === level4_lr) {
-																														level5_lr = level5.rows[n].key[5].Name;
+																												for (o in level5.rows) {
+																													if (level5.rows[o].key[5] && level5.rows[o].key[0].Name === level0_lr && level5.rows[o].key[1].Name === level1_lr && level5.rows[o].key[2].Name === level2_lr && level5.rows[o].key[3].Name === level3_lr && level5.rows[o].key[4].Name === level4_lr) {
+																														level5_lr = level5.rows[o].key[5].Name;
 																														children_level6 = [];
-																														for (n in level6.rows) {
-																															if (level6.rows[n].key[6] && level6.rows[n].key[0].Name === level0_lr && level6.rows[n].key[1].Name === level1_lr && level6.rows[n].key[2].Name === level2_lr && level6.rows[n].key[3].Name === level3_lr && level6.rows[n].key[4].Name === level4_lr && level6.rows[n].key[5].Name === level5_lr) {
-																																level6_lr = level6.rows[n].key[6].Name;
+																														for (p in level6.rows) {
+																															if (level6.rows[p].key[6] && level6.rows[p].key[0].Name === level0_lr && level6.rows[p].key[1].Name === level1_lr && level6.rows[p].key[2].Name === level2_lr && level6.rows[p].key[3].Name === level3_lr && level6.rows[p].key[4].Name === level4_lr && level6.rows[p].key[5].Name === level5_lr) {
+																																level6_lr = level6.rows[p].key[6].Name;
 																																children_level7 = [];
-																																for (n in level7.rows) {
-																																	if (level7.rows[n].key[7] && level7.rows[n].key[0].Name === level0_lr && level7.rows[n].key[1].Name === level1_lr && level7.rows[n].key[2].Name === level2_lr && level7.rows[n].key[3].Name === level3_lr && level7.rows[n].key[4].Name === level4_lr && level7.rows[n].key[5].Name === level5_lr && level7.rows[n].key[6].Name === level6_lr) {
-																																		level7_lr = level7.rows[n].key[7].Name;
+																																for (q in level7.rows) {
+																																	if (level7.rows[q].key[7] && level7.rows[q].key[0].Name === level0_lr && level7.rows[q].key[1].Name === level1_lr && level7.rows[q].key[2].Name === level2_lr && level7.rows[q].key[3].Name === level3_lr && level7.rows[q].key[4].Name === level4_lr && level7.rows[q].key[5].Name === level5_lr && level7.rows[q].key[6].Name === level6_lr) {
+																																		level7_lr = level7.rows[q].key[7].Name;
 																																		child_level7 = {
 																																				"data": level7_lr,
-																																				"attr": {"id": level7.rows[n].key[7].GUID},
+																																				"attr": {"id": level7.rows[q].key[7].GUID},
 																																				//"children": children_level8
 																																			};
 																																		children_level7.push(child_level7);
@@ -338,7 +338,7 @@ function erstelleBaum() {
 
 																																child_level6 = {
 																																		"data": level6_lr,
-																																		"attr": {"id": level6.rows[n].key[6].GUID},
+																																		"attr": {"id": level6.rows[p].key[6].GUID},
 																																		"children": children_level7
 																																	};
 																																children_level6.push(child_level6);
@@ -346,7 +346,7 @@ function erstelleBaum() {
 																														}
 																														child_level5 = {
 																																"data": level5_lr,
-																																"attr": {"id": level5.rows[n].key[5].GUID},
+																																"attr": {"id": level5.rows[o].key[5].GUID},
 																																"children": children_level6
 																															};
 																														children_level5.push(child_level5);
@@ -362,7 +362,7 @@ function erstelleBaum() {
 																										}
 																										child_level3 = {
 																												"data": level3_lr,
-																												"attr": {"id": level3.rows[n].key[3].GUID},
+																												"attr": {"id": level3.rows[m].key[3].GUID},
 																												"children": children_level4
 																											};
 																										children_level3.push(child_level3);
