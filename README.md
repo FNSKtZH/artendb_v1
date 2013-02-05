@@ -72,8 +72,8 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Dieselbe Herkunft (Autoren, Publikation)
 - Meist eine bestimmte Artgruppe (z.B. Flora, Fauna, Schmetterlinge…)
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
-- Definierte Auswahl erfasster Informationen
-- Definierte Methodik
+- Definierte Methodik und Auswahl erfasster Informationen
+- Verwendung einer bestimmten Taxonomie
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
