@@ -3,10 +3,23 @@ body {
 	margin: 8px 8px 8px 8px;
 }
 
+#menu_btn {
+	position: fixed;
+	top: 20px;
+	left: 16px;
+	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
+	z-index: 5;
+}
+
 #menu {
 	left: 7px;
-	padding: 10px 7px 10px 7px;
 	overflow: hidden;
+	border: 1px solid #e5e5e5;
+	border-radius: 6px;
+	padding: 8px 8px 8px 8px;
+	background-color: #FFFFF0;
+	/*auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht)*/
+	z-index: 1;
 }
 
 #forms {
@@ -96,23 +109,6 @@ body {
 input[readonly="readonly"], textarea[readonly="readonly"] {
     /*background-color: transparent;*/
     background-color: #ffffff;
-}
-
-#menu {
-	border: 1px solid #e5e5e5;
-	border-radius: 6px;
-	padding: 8px 8px 8px 8px;
-	background-color: #FFFFF0;
-	/*auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht)*/
-	z-index: 1;
-}
-
-#menu_btn {
-	position: absolute;
-	top: 20px;
-	left: 16px;
-	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
-	z-index: 5;
 }
 
 #menu-div {
