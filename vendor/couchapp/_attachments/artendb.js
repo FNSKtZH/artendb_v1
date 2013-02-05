@@ -620,17 +620,26 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 	}
 	//Beschreibung der Datensammlung abschliessen
 	html += '</div>';
+	var BeteiligteGruppen;
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i = 0; i < beziehungen_array.length; i++) {
+		BeteiligteGruppen = [];
 		for (y in beziehungen_array[i].Partner) {
+			BeteiligteGruppen.push(beziehungen_array[i].Partner[y].Gruppe);
 			//Partner darstellen
 			//die eigene Art nicht nochmals darstellen
 			if (beziehungen_array[i].Partner[y].GUID !== id) {
-				html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
+				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
+					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
+					html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Taxonomie + " > " + beziehungen_array[i].Partner[y].Name, "text");
+				} else {
+					html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
+				}
 			}
 		}
 		//Für LR-LR-Beziehungen die Art der Beziehung ausgeben (wird sonst unten blockiert)
-		if (beziehungen_array[i].Felder["übergeordnete Einheit"]) {
+		//if (beziehungen_array[i].Felder["übergeordnete Einheit"]) {
+		if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 			html += erstelleHtmlFuerFeld("Art der Beziehung", beziehungen_array[i].Felder["Art der Beziehung"]);
 		}
 		//Die Felder anzeigen
@@ -691,8 +700,8 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	//Beschreibung der Datensammlung abschliessen
 	htmlDatensammlung += '</div>';
 	//Felder anzeigen
-	//zuerst die GUID, aber nur bei der aktuellen Taxonomie
-	if (i === "Aktuelle Taxonomie") {
+	//zuerst die GUID, aber nur bei der aktuellen Taxonomie (bei LR Taxonomie)
+	if (i === "Aktuelle Taxonomie" || i === "Taxonomie") {
 		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
 	}
 	for (y in art_i.Felder) {
