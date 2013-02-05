@@ -629,12 +629,23 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 				html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
 			}
 		}
+		//Für LR-LR-Beziehungen die Art der Beziehung ausgeben (wird sonst unten blockiert)
+		if (beziehungen_array[i].Felder["übergeordnete Einheit"]) {
+			html += erstelleHtmlFuerFeld("Art der Beziehung", beziehungen_array[i].Felder["Art der Beziehung"]);
+		}
 		//Die Felder anzeigen
 		for (x in beziehungen_array[i].Felder) {
-			//Bei Lr-Beziehungen mit Flora, Fauna und Moosen steht die Art der Beziehung schon im Titel
-			//und sollte daher besser nicht angezeigt werden
-			if (x !== "Art der Beziehung") {
-				html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x])
+			if (typeof beziehungen_array[i].Felder[x] === "object") {
+				//wird wohl eine LR-LR-Beziehung sein
+				if (beziehungen_array[i].Felder[x].Taxonomie && beziehungen_array[i].Felder[x].Name) {
+					html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x].Taxonomie + " > " + beziehungen_array[i].Felder[x].Name);
+				}
+			} else {
+				//Bei Lr-Beziehungen mit Flora, Fauna und Moosen steht die Art der Beziehung schon im Titel
+				//und sollte daher besser nicht angezeigt werden
+				if (x !== "Art der Beziehung") {
+					html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x]);
+				}
 			}
 		}
 		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
