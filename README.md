@@ -499,7 +499,7 @@ Aktueller Stand:
 
 ###Was kann man mit der aktuellen Version machen?
 
-Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Die Version im Web kann einzelne Features noch nicht enthalten.
+Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der Version im Web noch fehlen.
 
 Arten suchen:
 
@@ -508,17 +508,17 @@ Arten suchen:
 
 Eigenschaften anzeigen:
 
-- Für alle in der Artendb.mdb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Alle für diese Gruppen in der Artendb.mdb enthaltenen Datensammlungen
-- Die jeweilige Datemsammlung ist beschrieben
-- Beziehungen zwischen verwandten Arten werden mit Links angezeigt. Der Link führt zur betreffenden Art
+- Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
+- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen
+- Die jeweilige Datemsammlung ist beschrieben (besser als bisher)
+- Beziehungen zwischen verwandten Arten werden mit Links dargestellt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
-- Beziehungen zwischen Arten und Arten, Flora und Lebensräumen
+- Beziehungen zwischen Arten und Arten sowie Arten und Lebensräumen
 
 **To do**
 
-- Beziehungen zwischen: Fauna/Moosen und Lebensräumen, Lebensräumen und Lebensräumen
-- Import und Aktualisierung von Datensammlungen
+- Beziehungen zwischen Lebensräumen und Lebensräumen
+- Importe
 - Exporte
 - Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
