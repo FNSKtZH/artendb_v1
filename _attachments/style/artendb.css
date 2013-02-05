@@ -1,7 +1,6 @@
 
 body {
 	margin: 8px 8px 8px 8px;
-	/*padding-top: 40px;*/
 }
 
 #menu {
@@ -54,14 +53,15 @@ body {
 
 .baum {
 	overflow: auto;
+	overflow-x: hidden;
 	margin-bottom: 5px;
 }
 
 /*Text umbrechen lassen*/
-.baum a {
+#menu .jstree a {
 	white-space: normal;
 	height: auto;
-	padding: 1px 2px;
+	padding: 4px 1px;
 }
 
 .baum li > ins {
@@ -70,11 +70,6 @@ body {
 
 .baum .jstree-hovered, .baum .jstree-clicked {
 	border: 0;
-}
-
-/*Abstände zwischen nodes vergrössern*/
-.baum li {
-	min-height: 22px;
 }
 
 .baum a ins {
@@ -150,7 +145,6 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	width: -o-calc(100% - 40px);
 	width: calc(100% - 40px);
 	max-width: 318px;
-	/*margin-bottom: 5px;*/
 }
 
 .treeBeschriftung {
@@ -231,7 +225,6 @@ a:hover {
 	padding-left: 15px;
 	margin-bottom: 3px;
 	color: #424242;
-	/*color: #555555;*/
 }
 
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
