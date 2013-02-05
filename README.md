@@ -494,7 +494,7 @@ Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist zum grossen Teil [vorbereitet](https://github.com/barbalex/artendb_import)
+- Der Datenexport aus der heutigen ArtenDB ist vollständig [vorbereitet](https://github.com/barbalex/artendb_import)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 ###Was kann man mit der aktuellen Version machen?
@@ -509,15 +509,13 @@ Arten suchen:
 Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen
+- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungen
 - Die jeweilige Datemsammlung ist beschrieben (besser als bisher)
 - Beziehungen zwischen verwandten Arten werden mit Links dargestellt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
-- Beziehungen zwischen Arten und Arten sowie Arten und Lebensräumen
 
 **To do**
 
-- Beziehungen zwischen Lebensräumen und Lebensräumen
 - Importe
 - Exporte
 - Alternative Taxonomien verwalten und darstellen
