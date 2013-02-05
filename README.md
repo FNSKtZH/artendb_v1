@@ -102,7 +102,7 @@ Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch vie
 #Benutzeroberfläche
 ###Erscheinungsbild
 
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.jpg" alt="Beispiel Eisvogel" width="100%">
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.png" alt="Beispiel Eisvogel" width="100%">
 
 **Hauptelemente**
 
@@ -117,10 +117,11 @@ Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen. Ab drei ei
 Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der betreffenden Artengruppe vorliegt - bzw. die Hierarchie des Lebensraumschlüssels.
 
 **Formular**
+Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Daten angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums oder der Beziehung. Hier ein Beispiel für Arteigenschaften:
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.png" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
 
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.jpg" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
-
-Die Taxonomien (hier noch Index genannt) und Datensammlungen werden in sogenannten Accordions dargestellt. Klickt man auf den Namen der Datensammlung, öffnet sich das Accordion und zeigt die Daten der Datensammlung. Zuoberst erscheint die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art bzw. des Lebensraums. Zuunterst die Beziehungen zu anderen Arten oder Lebensräumen.
+und eines für Beziehungen:
+<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_beziehung.png" alt="Beispiel Eisvogel, Biotopbindung nach AP FM ZH" width="100%">
 
 Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
