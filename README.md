@@ -124,9 +124,9 @@ Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugeh�
 ...und eines für Beziehungen:
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_beziehung.png" alt="Beispiel Eisvogel, Biotopbindung nach AP FM ZH" width="100%">
 
-Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 90 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Datensatzes wird dynamisch eine simple Liste aller Felder generiert. Ja/nein Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld. Längerer Text mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
-Im Index werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
+In der Taxonomie werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
 
 **Menu**
 
@@ -230,7 +230,6 @@ Hier als Beispiel die Schlingnatter:
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
-           "GUID": "8B825C10-C098-48B1-BAB7-5C6287002635",
            "Taxonomie ID": 70158,
            "Klasse": "Reptilia",
            "Ordnung": "Squamata",
@@ -444,7 +443,7 @@ Hier als Beispiel die Schlingnatter:
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind (man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten umsetzt).
+Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind (man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt).
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 

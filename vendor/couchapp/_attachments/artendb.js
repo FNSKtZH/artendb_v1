@@ -723,9 +723,9 @@ function erstelleHtmlFuerFeld(Feldname, Feldwert) {
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 10) === "http://www") {
 		//www-Links als Link darstellen
 		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert);
-	} else if (typeof Feldwert === "string" && Feldwert.length < 70) {
+	} else if (typeof Feldwert === "string" && Feldwert.length < 50) {
 		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
-	} else if (typeof Feldwert === "string" && Feldwert.length >= 70) {
+	} else if (typeof Feldwert === "string" && Feldwert.length >= 50) {
 		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert);
 	} else if (typeof Feldwert === "number") {
 		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number");
