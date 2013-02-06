@@ -5,7 +5,7 @@ body {
 
 #menu_btn {
 	position: fixed;
-	top: 20px;
+	top: 18px;
 	left: 16px;
 	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
 	z-index: 5;
@@ -67,7 +67,8 @@ body {
 .baum {
 	overflow: auto;
 	overflow-x: hidden;
-	margin-bottom: 5px;
+	/*verhindern, das Text hinter dem Scrollbalken verschwindet*/
+	padding-right: 15px;
 }
 
 /*Text umbrechen lassen*/
@@ -127,7 +128,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 #Gruppe_label {
 	position: relative;
 	left: 78px;
-	top: 9px;
+	top: 8px;
 }
 
 #suchen {
