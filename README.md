@@ -69,8 +69,6 @@ In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bez
 ###Objekte
 Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begrif ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
 
-Technischer Exkurs: Für jedes Objekt wird mit der verwendeten Datenbank [CouchDb](http://couchdb.apache.org/) ein Dokument erstellt. Dieses Enthält eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)) sowie Eigenschafen (Taxonomien und Datensammlungen).
-
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
@@ -211,11 +209,12 @@ Und last but not least: Aus dokumentorientierten JSON-Daten kann die Oberfläche
 ###Datenstruktur
 ####Objekte
 
-Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt").
+Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
 Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, u.a. mit:
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
 - Originalbericht (angehängt)
+- Verwendete Taxonomie
 - Datenstand
 - Link
 
