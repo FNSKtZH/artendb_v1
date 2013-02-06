@@ -208,7 +208,8 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 
 Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
-Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, u.a. mit:
+Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, z.B. mit:
+- Name (obligatorisch, muss eineindeutig sein)
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
 - Originalbericht (angehängt)
 - Verwendete Taxonomie
@@ -444,7 +445,7 @@ Hier als Beispiel die Schlingnatter:
 }
 ```
 
-Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind (man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt).
+Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind. Man muss zum Lesen bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 
@@ -495,7 +496,7 @@ Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist vollständig [vorbereitet](https://github.com/barbalex/artendb_import)
+- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 ###Was kann man mit der aktuellen Version machen?
