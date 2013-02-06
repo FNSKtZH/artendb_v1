@@ -634,21 +634,21 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 			if (beziehungen_array[i].Partner[y].GUID !== id) {
 				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
-					html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Taxonomie + " > " + beziehungen_array[i].Partner[y].Name, "text");
+					//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
+					if (beziehungen_array[i].Felder["Art der Beziehung"] !== "hierarchisch") {
+						html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Taxonomie + " > " + beziehungen_array[i].Partner[y].Name, "text");
+					}
 				} else {
 					html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
 				}
 			}
 		}
-		//Für LR-LR-Beziehungen die Art der Beziehung ausgeben (wird sonst unten blockiert)
-		/*if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
-			html += erstelleHtmlFuerFeld("Art der Beziehung", beziehungen_array[i].Felder["Art der Beziehung"]);
-		}*/
 		//Die Felder anzeigen
 		for (x in beziehungen_array[i].Felder) {
 			if (typeof beziehungen_array[i].Felder[x] === "object") {
 				//wird wohl eine LR-LR-Beziehung sein
-				if (beziehungen_array[i].Felder[x].Taxonomie && beziehungen_array[i].Felder[x].Name) {
+				//nur den Partner anzeigen
+				if (beziehungen_array[i].Felder[x].GUID !== id) {
 					html += erstelleHtmlFuerFeld(x, beziehungen_array[i].Felder[x].Taxonomie + " > " + beziehungen_array[i].Felder[x].Name);
 				}
 			} else {
