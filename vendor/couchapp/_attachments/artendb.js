@@ -624,8 +624,11 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i = 0; i < beziehungen_array.length; i++) {
 		BeteiligteGruppen = [];
+		//zerst ermitteln, welche Gruppen beteiligt sind
 		for (y in beziehungen_array[i].Partner) {
 			BeteiligteGruppen.push(beziehungen_array[i].Partner[y].Gruppe);
+		}
+		for (y in beziehungen_array[i].Partner) {
 			//Partner darstellen
 			//die eigene Art nicht nochmals darstellen
 			if (beziehungen_array[i].Partner[y].GUID !== id) {
