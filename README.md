@@ -24,7 +24,10 @@ sind ein paar Feststellungen:
 - Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
 - Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
 
-###Für die Benutzerin
+###Zielpublikum
+Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, also z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund und Kantonen, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+
+###Ziele für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
 - Die Datenflut kann bewältigt werden:
@@ -38,7 +41,7 @@ sind ein paar Feststellungen:
 - Exporte und Auswertungen können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg erfolgen
 
 
-###Für Datenpfleger und Systemverantwortliche
+###Ziele für Datenpfleger und Systemverantwortliche
 
 - Die Komplexität der Datenstruktur ist minimiert
 - Der Code ist gut dokumentiert
