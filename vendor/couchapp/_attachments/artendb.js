@@ -641,10 +641,9 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 			}
 		}
 		//Für LR-LR-Beziehungen die Art der Beziehung ausgeben (wird sonst unten blockiert)
-		//if (beziehungen_array[i].Felder["übergeordnete Einheit"]) {
-		if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
+		/*if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 			html += erstelleHtmlFuerFeld("Art der Beziehung", beziehungen_array[i].Felder["Art der Beziehung"]);
-		}
+		}*/
 		//Die Felder anzeigen
 		for (x in beziehungen_array[i].Felder) {
 			if (typeof beziehungen_array[i].Felder[x] === "object") {
