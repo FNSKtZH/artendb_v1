@@ -636,10 +636,10 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
 					//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
 					if (beziehungen_array[i].Felder["Art der Beziehung"] !== "hierarchisch") {
-						html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Taxonomie + " > " + beziehungen_array[i].Partner[y].Name, "text");
+						html += erstelleHtmlFuerFeld("Partner", beziehungen_array[i].Partner[y].Taxonomie + " > " + beziehungen_array[i].Partner[y].Name);
 					}
 				} else {
-					html += generiereHtmlFuerTextinput("Partner", beziehungen_array[i].Partner[y].Name, "text");
+					html += erstelleHtmlFuerFeld("Partner", beziehungen_array[i].Partner[y].Name);
 				}
 			}
 		}
@@ -745,9 +745,9 @@ function erstelleHtmlFuerFeld(Feldname, Feldwert) {
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 10) === "http://www") {
 		//www-Links als Link darstellen
 		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert);
-	} else if (typeof Feldwert === "string" && Feldwert.length < 50) {
+	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
 		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
-	} else if (typeof Feldwert === "string" && Feldwert.length >= 50) {
+	} else if (typeof Feldwert === "string" && Feldwert.length >= 45) {
 		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert);
 	} else if (typeof Feldwert === "number") {
 		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number");
