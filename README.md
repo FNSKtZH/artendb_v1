@@ -67,7 +67,7 @@ Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezei
 In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet.
 
 ###Objekte
-Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begrif ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
+Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begriff ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -132,7 +132,6 @@ Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation)
 In der Taxonomie werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
 
 **Menu**
-
 Das Menu ermöglicht:
 
 - Exporte
@@ -143,8 +142,6 @@ Das Menu ermöglicht:
 - Rückmeldungen an den Entwickler
  
 ###Neue Datensammlungen hinzufügen
-Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut.
-
 Importiert werden können sollen:
 * Taxonomien
 * Eigenschaften
@@ -159,6 +156,8 @@ Will jemand z.B. neue Arteigenschaften ergänzen, geht das dann so:
 5. Import wird ausgeführt
 
 fertig!
+
+Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können soeben importierte Eigenschaften direkt angezeigt werden.
 
 Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
