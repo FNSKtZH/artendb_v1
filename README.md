@@ -43,8 +43,8 @@ Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen b
 
 ###Ziele für Datenpfleger und Systemverantwortliche
 
-- Datensammlungen können von technisch durchschnittlich begabten Personen in wenigen Minuten neu importiert oder aktualisiert werden
-- Die Komplexität der Datenstruktur ist minimiert
+- Datensammlungen können von technisch durchschnittlich begabten Personen in wenigen Minuten (neu) importiert werden
+- Die Datenstruktur ist direkt sichtbar und verständlich
 - Der Code ist gut dokumentiert
 
 <a href="#top">&#8593; top</a>
