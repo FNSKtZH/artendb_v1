@@ -35,11 +35,19 @@ body {
 	}
 
 	#forms {
-		position: absolute;
-		left: 399px;
+		/*position: absolute;
+		left: 399px;*/
 		width: -webkit-calc(100% - 407px);
 		width: -o-calc(100% - 407px);
 		width: calc(100% - 407px);
+	}
+
+	#forms {
+		transform: translate(391px,0px);
+		-ms-transform: translate(391px,0px); /* IE 9 */
+		-webkit-transform: translate(391px,0px); /* Safari and Chrome */
+		-o-transform: translate(391px,0px); /* Opera */
+		-moz-transform: translate(391px,0px); /* Firefox */
 	}
 }
 
@@ -154,6 +162,15 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	left: 340px;
 	z-index: 4;
 }
+
+/*funktioniert nicht, weil button verschwindet, wen focus auf dem feld ist
+#suche_leeren_btn {
+	transform: translate(-13px,-25px);
+	-ms-transform: translate(-13px,-25px);
+	-webkit-transform: translate(-13px,-25px);
+	-o-transform: translate(-13px,-25px);
+	-moz-transform: translate(-13px,-25px);
+}*/
 
 #art label {
 	width: 180px;
