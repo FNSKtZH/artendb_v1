@@ -1,10 +1,9 @@
 
 body {
-	margin: 8px 8px 8px 8px;
+	margin: 8px 8px 8px 7px;
 }
 
 #menu_btn {
-	position: fixed;
 	top: 18px;
 	left: 16px;
 	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
@@ -34,12 +33,16 @@ body {
 		position:fixed;
 	}
 
+	#menu_btn {
+		position: fixed;
+	}
+
 	#forms {
 		/*position: absolute;
 		left: 399px;*/
-		width: -webkit-calc(100% - 407px);
-		width: -o-calc(100% - 407px);
-		width: calc(100% - 407px);
+		width: -webkit-calc(100% - 391px);
+		width: -o-calc(100% - 391px);
+		width: calc(100% - 391px);
 	}
 
 	#forms {
@@ -64,6 +67,10 @@ body {
 		width: -o-calc(100% - 18px);
 		width: calc(100% - 18px);
 		margin-bottom: 10px;
+	}
+
+	#menu_btn {
+		position: absolute;
 	}
 
 	#forms {
