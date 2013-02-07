@@ -8,7 +8,7 @@
 		if (Gruppen.indexOf("Lebensräume") !== -1) {
 			if (Gruppen.indexOf("Flora") !== -1) {
 				//das ist eine Lr-Flora-Beziehung
-				emit (doc._id);
+				emit ([doc._id, doc._rev]);
 			}
 		}
 	}

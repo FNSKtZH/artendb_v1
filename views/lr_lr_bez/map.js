@@ -6,8 +6,8 @@
 			Gruppen.push(doc.Partner[i].Gruppe);
 		}
 		if (Gruppen[0] === "Lebensräume" && Gruppen[1] === "Lebensräume") {
-			//das ist eine Lr-Flora-Beziehung
-			emit (doc._id);
+			//das ist eine Lr-Lr-Beziehung
+			emit ([doc._id, doc._rev]);
 		}
 	}
 }

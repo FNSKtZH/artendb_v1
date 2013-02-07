@@ -8,7 +8,7 @@
 		if (Gruppen.indexOf("Lebensräume") !== -1) {
 			if (Gruppen.indexOf("Fauna") !== -1) {
 				//das ist eine Flora-Fauna-Beziehung
-				emit (doc._id);
+				emit ([doc._id, doc._rev]);
 			}
 		}
 	}
