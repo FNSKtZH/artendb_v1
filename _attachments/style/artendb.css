@@ -179,7 +179,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	-moz-transform: translate(-13px,-25px);
 }*/
 
-#art label {
+#art label, #import label {
 	width: 180px;
 	color: #555555;
 	margin-right: 7px;
@@ -187,7 +187,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-bottom: 0px;
 }
 
-#art .feldtext {
+#art .feldtext, #import .feldtext {
 	margin-left: 192px;
 	display: block;
 	padding-top: 5px;
@@ -197,7 +197,7 @@ a {
 	color: #016ca2;
 }
 
-#art .feldtext a {
+#art .feldtext a, #import .feldtext a {
 	margin-left: 0px;
 }
 
@@ -205,7 +205,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-#art legend {
+#art legend, #import legend {
 	color: #6F6F66;
 	font-weight: bold;
 	margin: 0px 0px 7px 0px;
@@ -257,7 +257,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
-#art .control-group {
+#art .control-group, #import .control-group {
 	margin-bottom: 5px;
 }
 
@@ -265,7 +265,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100px;
 }
 
-#art input, #art select, #art textarea {
+#art input, #art select, #art textarea, #import input, #import select, #import textarea {
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }
@@ -273,14 +273,6 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 /*erste Zeile des Labels vertikal ausrichten*/
 .form-horizontal .control-label {
 	padding-top: 3px;
-}
-
-/*alle Datenfelder von den letzten absetzen*/
-.fieldcontain {
-	/*floaten von label und Datenfeld des letzten Feldes aufheben*/
-	clear: both;
-	display: block;
-	margin: 0px 0px 7px 0px;
 }
 
 option {

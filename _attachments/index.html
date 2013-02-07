@@ -97,9 +97,9 @@
 
 		<fieldset id="forms">
 
-			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off" style="display:none;"></form>
+			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
 			
-			<form id="import" class="form form-horizontal" action="#" method="get" autocomplete="off" style="display:none;">
+			<form id="import" class="form form-horizontal" action="#" method="get" autocomplete="off">
 				<div class="accordion" id="importieren_accordion">
 					<div class="accordion-group" id="importieren_anmelden">
 						<div class="accordion-heading accordion-group_gradient">
@@ -154,7 +154,31 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_ds_beschreiben_collapse">
 							<div class="accordion-inner">
-								
+								<div class="control-group">
+									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
+									<select type="text" class="controls" id="DsWaehlen"></select>
+								</div>
+								<hr>
+								<div class="control-group">
+									<label class="control-label" for="DsName">Name</label>
+									<input type="text" class="controls" id="DsName">
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsBeschreibung">Beschreibung</label>
+									<textarea class="controls" id="DsBeschreibung"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsTaxonomie">verwendete Taxonomie</label>
+									<textarea class="controls" id="DsTaxonomie"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsDatenstand">Datenstand</label>
+									<textarea class="controls" id="DsDatenstand"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsLink">Link</label>
+									<textarea class="controls" id="DsLink"></textarea>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -220,7 +244,7 @@
 				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
-				$("body").on("click", "[name='Gruppe']", function () {
+				$("#menu").on("click", "[name='Gruppe']", function () {
 					//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 					window.Gruppe = this.value;
 					$("#suchfeld").val("");
@@ -232,7 +256,7 @@
 				});
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-				$("#menu").on("click", "#menu_btn", function() {
+				$("body").on("click", "#menu_btn", function() {
 					if ($("#art").html().length > 0) {
 						$("#GoogleBilderLink_li").removeClass("disabled");
 						$("#WikipediaLink_li").removeClass("disabled");
@@ -242,14 +266,20 @@
 					}
 				});
 
-				$("#menu").on("click", "#eigenschaften_importieren", function() {
+				$("#menu_btn").on("click", "#eigenschaften_importieren", function() {
+					console.log("zeige importformular");
 					zeigeFormular("import");
+					//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 					if (localStorage.Email) {
 						$("#importieren_ds_beschreiben_collapse").collapse('show');
 					} else {
 						$("#importieren_anmelden_collapse").collapse('show');
 					}
 				});
+
+				$('#importieren_ds_beschreiben_collapse').on('show', function () {
+					$("#DsName").focus();
+				})
 				
 				//Suche steuern bei Eingabe
 				$("#menu").on("keyup click", "#suchfeld", function(e) {
@@ -264,7 +294,7 @@
 					}
 				});
 
-				//Suche steuern bei click auf Suchicon
+				//Suche steuern bei click auf Such-icon
 				$("#menu").on("click", "#suchfeld_icon", function(e) {
 					e.preventDefault();
 					var suchwert = $("#suchfeld").val();

@@ -996,7 +996,7 @@ function zeigeFormular(Formularname) {
 
 	if (Formularname) {
 		$('form').each(function() {
-			$(this).hide();
+			//$(this).hide();
 			if ($(this).attr("id") === Formularname) {
 				$("#forms").show();
 				$(this).show();
