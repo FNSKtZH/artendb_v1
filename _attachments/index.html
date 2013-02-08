@@ -168,7 +168,7 @@
 									<textarea class="controls" id="DsBeschreibung"></textarea>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="DsTaxonomie">verwendete Taxonomie</label>
+									<label class="control-label" for="DsTaxonomie">verwendete Taxonomie(n)</label>
 									<textarea class="controls" id="DsTaxonomie"></textarea>
 								</div>
 								<div class="control-group">
@@ -178,6 +178,10 @@
 								<div class="control-group">
 									<label class="control-label" for="DsLink">Link</label>
 									<textarea class="controls" id="DsLink"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
+									<div id="DsAnzDs" class="feldtext controls"></div>
 								</div>
 							</div>
 						</div>
@@ -191,7 +195,10 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
 							<div class="accordion-inner">
-								
+								<div class="control-group">
+									<label class="control-label" for="DsFile">Name</label>
+									<input type="file" class="controls" id="DsFile"><span class="help-inline">Tipp: Auf modernen Desktop-Browsern können Sie die Dateien auch mit Drag & Drop im Feld neben der Schaltfläche "droppen".</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -240,7 +247,7 @@
 
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
-					$("#importieren_anmelden_titel").text(localStorage.Email + " ist angemeldet");
+					$("#importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
 				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
@@ -267,7 +274,6 @@
 				});
 
 				$("#menu_btn").on("click", "#eigenschaften_importieren", function() {
-					console.log("zeige importformular");
 					zeigeFormular("import");
 					//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 					if (localStorage.Email) {
@@ -279,7 +285,53 @@
 
 				$('#importieren_ds_beschreiben_collapse').on('show', function () {
 					$("#DsName").focus();
+					//Daten holen
+					$db = $.couch.db("artendb");
+					$db.view('artendb/ds_von_objekten?group=true', {
+						success: function (data) {
+							//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+							window.ds_von_objekten = data;
+							//DsNamen in Auswahlliste stellen
+							var DsNamen = [""];
+							for (i in data.rows) {
+								DsNamen.push(data.rows[i].key[0]);
+							}
+							DsNamen.sort();
+							var html = "";
+							for (i in DsNamen) {
+								html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
+							}
+							$("#DsWaehlen").append(html);
+						}
+					});
 				})
+
+				$("#import").on("change", "#DsWaehlen", function() {
+					var that = this;
+					//zuerst alle Felder leeren
+					$('#import textarea, #import input').each(function () {
+						$(this).val('');
+						$("#DsAnzDs").html("");
+						$("#DsAnzDs_label").html("");
+					});
+					if (that.value) {
+						for (i in window.ds_von_objekten.rows) {
+							if (window.ds_von_objekten.rows[i].key[0] === that.value) {
+								$("#DsName").val(that.value);
+								for (x in window.ds_von_objekten.rows[i].key[1]) {
+									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[1][x]);
+								}
+								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
+								$("#DsAnzDs_label").html("Anzahl Datensätze");
+								//dafür sorgen, dass textareas genug gross sind
+								$('#import textarea').each(function () {
+									$(this).trigger('focus');
+								});
+								$("#DsName").focus();
+							}
+						}
+					}
+				});
 				
 				//Suche steuern bei Eingabe
 				$("#menu").on("keyup click", "#suchfeld", function(e) {

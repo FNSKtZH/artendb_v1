@@ -190,7 +190,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 #art .feldtext, #import .feldtext {
 	margin-left: 192px;
 	display: block;
-	padding-top: 5px;
+	padding-top: 3px;
 }
 
 a {
