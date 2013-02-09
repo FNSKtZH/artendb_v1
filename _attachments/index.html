@@ -11,6 +11,7 @@
 		<script src="vendor/couchapp/jquery.cookie.js"></script>
 		<script src="vendor/couchapp/jquery.hotkeys.js"></script>
 		<script src="vendor/couchapp/jquery.couch.js"></script>
+		<script src="vendor/couchapp/jquery.csv.js"></script>
 		<script src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/bootstrap.css">
 		<link rel="stylesheet" href="style/artendb.css">
@@ -195,9 +196,12 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
 							<div class="accordion-inner">
-								<div class="control-group">
-									<label class="control-label" for="DsFile">Name</label>
-									<input type="file" class="controls" id="DsFile"><span class="help-inline">Tipp: Auf modernen Desktop-Browsern können Sie die Dateien auch mit Drag & Drop im Feld neben der Schaltfläche "droppen".</span>
+								<div class="form-actions">
+									<div class="fileupload fileupload-new" data-provides="fileupload">
+										<div class="input-append">
+											<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="DsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -304,7 +308,7 @@
 							$("#DsWaehlen").append(html);
 						}
 					});
-				})
+				});
 
 				$("#import").on("change", "#DsWaehlen", function() {
 					var that = this;
@@ -331,6 +335,29 @@
 							}
 						}
 					}
+				});
+
+				$('#importieren_daten_uploaden_collapse').on('show', function () {
+					$('#DsFile').fileupload();
+				});
+
+				$("#import").on("change", "#DsFile", function(e) {
+					e.preventDefault();
+					// Check for the various File API support
+					if (window.File && window.FileReader && window.FileList && window.Blob) {
+						// Great success! All the File APIs are supported
+					} else {
+						alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+						return;
+					}
+					var file = e.target.files[0],
+					reader = new FileReader();
+					reader.onload = function (event) {
+						console.log("DsTrennzeichen = " + $('#DsTrennzeichen').val());
+						var Datensätze = $.csv.toObjects(event.target.result);
+						console.log("Datensätze = " + JSON.stringify(Datensätze));
+					};
+					reader.readAsText(file);
 				});
 				
 				//Suche steuern bei Eingabe
