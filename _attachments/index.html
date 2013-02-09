@@ -203,6 +203,9 @@
 										</div>
 									</div>
 								</div>
+								<div id="DsTabelleEigenschaften" class="tabelle">
+								</div>
+								<div></div>
 							</div>
 						</div>
 					</div>
@@ -215,7 +218,17 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_ids_identifizieren_collapse">
 							<div class="accordion-inner">
-								
+								<div id="DsFelder_div" class="control-group"></div>
+								<div class="control-group">
+									<label class="control-label" for="DsId">zugehörige ID in ArtenDb</label>
+									<select type="text" class="controls" id="DsId"  multiple="multiple" style="height:95px;">
+										<option value="guid">GUID der ArtenDb</option>
+										<option value="fauna_id">ID der Info Fauna (NUESP)</option>
+										<option value="flora_id">ID der Info Flora (SISF-NR)</option>
+										<option value="moose_id">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
+										<option value="pilze_id">ID von Swissfungi (TaxonId)</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -356,6 +369,7 @@
 						console.log("DsTrennzeichen = " + $('#DsTrennzeichen').val());
 						var Datensätze = $.csv.toObjects(event.target.result);
 						console.log("Datensätze = " + JSON.stringify(Datensätze));
+						erstelleTabelle(Datensätze, "DsTabelleEigenschaften");
 					};
 					reader.readAsText(file);
 				});

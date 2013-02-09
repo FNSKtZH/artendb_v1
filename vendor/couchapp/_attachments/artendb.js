@@ -1122,6 +1122,55 @@ function validiereUserAnmeldung() {
 	return true;
 }
 
+//übernimmt eine Array mit Objekten und den div, in dem die Tabelle eingefügt werden soll
+//baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
+function erstelleTabelle(Datensätze, div_id) {
+	var html = "Vorschau auf die ersten 10 von " + Datensätze.length + " Datensätzen:";
+	//Tabelle initiierren
+	html += '<table class="table table-bordered table-striped table-condensed">';
+	//Titelzeile aufbauen
+	//Zeile anlegen
+	//gleichzeitig Feldliste für Formular anlegen
+	var html_ds_felder_div = "";
+	html_ds_felder_div += '<label class="control-label" for="DsFelder">Feld</label>';
+	html_ds_felder_div += '<select type="text" class="controls" id="DsFelder"  multiple="multiple" style="height:' + ((Object.keys(Datensätze[1]).length*18)+7)  + 'px">';
+	html += "<thead><tr>";
+	//durch die Felder zirkeln
+	for (x in Datensätze[0]) {
+		//Spalte anlegen
+		html += "<th>" + x + "</th>";
+		//Option für Feldliste anfügen
+		html_ds_felder_div += '<option value="' + x + '">' + x + '</option>';
+	}
+	//Titelzeile abschliessen
+	html += "</tr></thead><tbody>";
+	//Feldliste abschliessen
+	html_ds_felder_div += '</select>';
+	$("#DsFelder_div").html(html_ds_felder_div);
+
+	//durch die Datensätze zirkeln
+	//nur die ersten 20 anzeigen
+	for (var i = 0; i < 10; i++) {
+		//Datenzeilen aufbauen
+		//Zeile anlegen
+		html += "<tr>";
+		//durch die Felder zirkeln
+		for (x in Datensätze[i]) {
+			//Spalte anlegen
+			html += "<td>";
+			html += Datensätze[i][x];
+			//Spalte abschliessen
+			html += "</td>";
+		}
+		//Zeile abschliessen
+		html += "</tr>";
+	}
+	//Tabelle abschliessen
+	html += '</tbody></table>';
+	//html in div einfügen
+	$("#" + div_id).html(html);
+}
+
 
 
 

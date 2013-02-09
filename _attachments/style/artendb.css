@@ -221,6 +221,15 @@ a:hover {
 	color: #944600;
 }
 
+.tabelle {
+	overflow: auto;
+	overflow-y: hidden;
+}
+
+.table {
+	margin-bottom: 0px;
+}
+
 .alert {
 	/*wird erst sichtbar geschaltet, wenn benötigt*/
 	display: none;
@@ -309,7 +318,7 @@ option {
 	border-top: none;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	padding: 15px 20px 10px;
+	padding: 5px 20px 0px;
 }
 
 /*!
