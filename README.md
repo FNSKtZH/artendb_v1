@@ -68,7 +68,7 @@ Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezei
 In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet.
 
 ###Objekte
-Die Grundeinheit der Taxonomie wird als <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekt</a> bezeichnet. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begriff ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
+<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begriff ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -81,7 +81,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
-Um die Artdaten verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
+Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
 
 In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Beziehungen) pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -95,7 +95,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 Ein spezieller Fall sind Daten(-sammlungen), welche __Beziehungen__ zwischen Objekten (Arten und Arten, Arten und Lebensräumen, Lebensräumen und Lebensräumen) beschreiben. Sie werden in ArtenDb in eigenen Dokumenten vom Typ "Beziehung" gespeichert.
 
 ###Gruppen vereinen
-Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
+Heute werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der relationalen Datenbank verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. 10-fach... Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 ###Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
@@ -159,7 +159,7 @@ Will jemand z.B. neue Arteigenschaften ergänzen, geht das dann so:
 
 fertig!
 
-Die Datenfelder in der Benutzeroberfläche werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können soeben importierte Eigenschaften direkt angezeigt werden.
+Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können soeben importierte Eigenschaften direkt angezeigt und exportiert werden.
 
 Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
