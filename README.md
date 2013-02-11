@@ -14,25 +14,20 @@ Es existiert schon eine [frühere Version](http://www.aln.zh.ch/internet/baudire
 <a name="Ziele"></a>
 #Ziele
 ###Ausgangspunkt
-sind ein paar Feststellungen:
+sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherigen Datenbank gemacht wurden:
 
-- Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank
-- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten. Manchmal müssen schon beim erstmaligen Import Entscheidungen getroffen werden, die eigentlich nur der Datenherr fällen sollte
-- Der Umgang mit unterschiedlichen Taxonomien für dieselbe Artengruppe muss mittelfristig grundlegend verbessert werden
-- Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Ausserdem kann sie zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
-- Die Entwicklung und vor allem der Unterhalt der Anwendung ist in Javascript und HTML einfacher, übersichtlicher und weniger komplex
-- Wer Daten liefert, sollte sich nicht um die Benutzeroberfläche kümmern müssen. ArtenDb erstellt sie daher dynamisch aus der Datenstruktur
-- Mit der heutigen Datenbank können Daten auch nachgeführt werden. Das ist aber nur bei eigenen Daten sinnvoll. Und dafür eignen sich andere Tools besser. Die Nachführung von Daten ist daher nur bei Lebensraumkartierungen wichtig
+- Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
+- Entscheidend für die Aktualität einer Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach nutzen zu können
+- Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit geringem Aufwand vereint werden können
+- Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Sie kann zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 
 ###Zielpublikum
-Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, also z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund und Kantonen, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, also z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
 ###Ziele für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
-- Die Datenflut kann bewältigt werden:
- - Die Benutzerin wählt, welche Daten sie sehen oder exportieren will
- - Leere Felder werden im Lesemodus nicht angezeigt
+- Die Datenflut bleibt überschaubar
 - Die Daten sind gut dokumentiert
 - Die Daten sind gut verfügbar:
  - Von jedem Gerät im Internet
@@ -40,12 +35,18 @@ Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen b
  - Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
 - Exporte und Auswertungen können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg erfolgen
 
-
 ###Ziele für Datenpfleger und Systemverantwortliche
 
 - Datensammlungen können von technisch durchschnittlich begabten Personen in wenigen Minuten (neu) importiert werden
 - Die Datenstruktur ist direkt sichtbar und verständlich
 - Der Code ist gut dokumentiert
+
+###Was zeichnet ArtenDb aus?
+So viele konkurrierende Tools gibt es noch nicht, dass sich ArtenDb besonders auszeichnen müsste. Die wichtigsten Merkmale dürften aber sein:
+
+- ArtenDb verfügt über ein für die Erfassung von Art- und Lebensraumeigenschaften spezifisches begriffliches und (Daten-)strukturelles Gerüst
+- Daten nachzuführen ist sehr einfach und erfordert nur geringen Aufwand
+- Dieser Aufwand ist so gering, dass prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam für Auswertungen verwenden
 
 <a href="#top">&#8593; top</a>
 
