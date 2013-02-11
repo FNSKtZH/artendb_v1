@@ -44,9 +44,9 @@ Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen b
 ###Was zeichnet ArtenDb aus?
 So viele konkurrierende Tools gibt es noch nicht, dass sich ArtenDb besonders auszeichnen müsste. Die wichtigsten Merkmale dürften aber sein:
 
-- ArtenDb verfügt über ein für die Erfassung von Art- und Lebensraumeigenschaften spezifisches begriffliches und (Daten-)strukturelles Gerüst
-- Daten nachzuführen ist sehr einfach und erfordert nur geringen Aufwand
-- Dieser Aufwand ist so gering, dass prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam für Auswertungen verwenden
+- ArtenDb verfügt über ein für die Erfassung von Art- und Lebensraumeigenschaften spezifisches begriffliches und strukturelles Gerüst
+- Daten können einfach rasch importiert werden..
+- ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
 
 <a href="#top">&#8593; top</a>
 
