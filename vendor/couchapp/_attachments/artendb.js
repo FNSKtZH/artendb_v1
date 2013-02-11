@@ -1094,12 +1094,34 @@ function meldeUserAn() {
 	}
 }
 
+function meldeUserAb() {
+	delete localStorage.Email;
+	$("#importieren_anmelden_titel").text("1. Anmelden");
+	$(".alert").css("display", "none");
+	$(".hinweis").css("display", "none");
+}
+
 function passeUiFuerAngemeldetenUserAn() {
-	$("#importieren_anmelden_titel").text(localStorage.Email + " ist angemeldet");
+	$("#importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
 	$("#importieren_anmelden_collapse").collapse('hide');
 	$("#importieren_ds_beschreiben_collapse").collapse('show');
-	$("#importieren_anmelden_fehler").css("display", "none");
+	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
+	$("#anmelden_btn").hide();
+	$("#abmelden_btn").show();
+	$("#konto_erstellen_btn").hide();
+	$("#konto_speichern_btn").hide();
+}
+
+function zurueckZurAnmeldung() {
+	//Mitteilen, dass Anmeldung nötig ist
+	$("#importieren_anmelden_hinweis").alert().css("display", "block");
+	$("#importieren_anmelden_hinweis_text").html("Um Daten(sammlungen) zu bearbeiten, müssen Sie angemeldet sein");
+	$("#importieren_anmelden_collapse").collapse('show');
+	$("#anmelden_btn").show();
+	$("#abmelden_btn").hide();
+	$("#konto_erstellen_btn").show();
+	$("#konto_speichern_btn").hide();
 }
 
 function validiereUserAnmeldung() {

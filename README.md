@@ -132,6 +132,7 @@ Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation)
 In der Taxonomie werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
 
 **Menu**
+
 Das Menu ermöglicht:
 
 - Exporte
@@ -181,7 +182,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 Geplant ist folgendes Vorgehen:
 
 1. Die Benutzerin wählt eine Gruppe
-2. Sie kann innerhalb der Gruppe filtern (sonst werden die Daten für alle Arten der Gruppe exportiert)
+2. Sie kann innerhalb der Gruppe filtern
 3. Sie wählt aus allen Datensammlungen die gewünschten Felder aus
 4. Daten werden als csv heruntergeladen
 

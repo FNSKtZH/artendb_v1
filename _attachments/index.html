@@ -28,29 +28,8 @@
 				<li class="dropdown-submenu">
 					<a tabindex="-1" href="#">Daten importieren / löschen</a>
 					<ul class="dropdown-menu">
-						<li class="dropdown-submenu">
-							<a tabindex="-1" href="#">Taxonomie</a>
-							<ul class="dropdown-menu">
-								<li class="disabled"><a id="aktuelle_taxonomie_importieren" href="#">aktuelle Taxonomie importieren</a></li>
-								<li class="disabled"><a id="aktuelle_taxonomie_loeschen" href="#">aktuelle Taxonomie löschen</a></li>
-								<li class="disabled"><a id="alternative_taxonomie_importieren" href="#">alternative Taxonomie importieren</a></li>
-								<li class="disabled"><a id="alternative_taxonomie_loeschen" href="#">alternative Taxonomie löschen</a></li>
-							</ul>
-						</li>
-						<li class="dropdown-submenu">
-							<a tabindex="-1" href="#">Eigenschaften</a>
-							<ul class="dropdown-menu">
-								<li><a id="eigenschaften_importieren" href="#">importieren</a></li>
-								<li class="disabled"><a id="eigenschaften_loeschen" href="#">löschen</a></li>
-							</ul>
-						</li>
-						<li class="dropdown-submenu">
-							<a tabindex="-1" href="#">Beziehungen</a>
-							<ul class="dropdown-menu">
-								<li class="disabled"><a id="beziehungen_importieren" href="#">importieren</a></li>
-								<li class="disabled"><a id="beziehungen_loeschen" href="#">löschen</a></li>
-							</ul>
-						</li>
+						<li><a id="eigenschaften_importieren" href="#">Eigenschaften</a></li>
+						<li class="disabled"><a id="beziehungen_importieren" href="#">Beziehungen</a></li>
 					</ul>
 				</li>
 				<li class="disabled"><a href="#">Daten exportieren</a></li>
@@ -135,6 +114,7 @@
 								<div class="control-group">
 									<div class="controls">
 										<button id="anmelden_btn" class="btn">anmelden</button>
+										<button id="abmelden_btn" class="btn" style="display:none;">abmelden</button>
 										<button id="konto_erstellen_btn" class="btn">neues Konto erstellen</button>
 										<button id="konto_speichern_btn" class="btn" style="display:none;">neues Konto speichern</button>
 									</div>
@@ -142,6 +122,10 @@
 								<div id="importieren_anmelden_fehler" class="alert alert-error">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="importieren_anmelden_fehler_text"></div>
+								</div>
+								<div id="importieren_anmelden_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_anmelden_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
@@ -265,6 +249,10 @@
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
 					$("#importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
+					$("#anmelden_btn").hide();
+					$("#abmelden_btn").show();
+					$("#konto_erstellen_btn").hide();
+					$("#konto_speichern_btn").hide();
 				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
@@ -300,27 +288,61 @@
 					}
 				});
 
-				$('#importieren_ds_beschreiben_collapse').on('show', function () {
-					$("#DsName").focus();
-					//Daten holen
-					$db = $.couch.db("artendb");
-					$db.view('artendb/ds_von_objekten?group=true', {
-						success: function (data) {
-							//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
-							window.ds_von_objekten = data;
-							//DsNamen in Auswahlliste stellen
-							var DsNamen = [""];
-							for (i in data.rows) {
-								DsNamen.push(data.rows[i].key[0]);
+				$('#importieren_ds_beschreiben_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$('#importieren_ds_beschreiben_collapse').collapse('hide');
+						setTimeout(function() {
+							zurueckZurAnmeldung();
+						}, 600);
+					} else {
+						$("#DsName").focus();
+						//Daten holen
+						$db = $.couch.db("artendb");
+						$db.view('artendb/ds_von_objekten?group=true', {
+							success: function (data) {
+								//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+								window.ds_von_objekten = data;
+								//DsNamen in Auswahlliste stellen
+								var DsNamen = [""];
+								for (i in data.rows) {
+									DsNamen.push(data.rows[i].key[0]);
+								}
+								DsNamen.sort();
+								var html = "";
+								for (i in DsNamen) {
+									html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
+								}
+								$("#DsWaehlen").append(html);
 							}
-							DsNamen.sort();
-							var html = "";
-							for (i in DsNamen) {
-								html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
-							}
-							$("#DsWaehlen").append(html);
-						}
-					});
+						});
+					}
+				});
+
+				$('#importieren_daten_uploaden_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung();
+					} else {
+						$('#DsFile').fileupload();
+					}
+				});
+
+				$('#importieren_ids_identifizieren_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung();
+					} else {
+
+					}
+				});
+
+				$('#importieren_import_ausfuehren_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung();
+					} else {
+
+					}
 				});
 
 				$("#import").on("change", "#DsWaehlen", function() {
@@ -350,10 +372,6 @@
 					}
 				});
 
-				$('#importieren_daten_uploaden_collapse').on('show', function () {
-					$('#DsFile').fileupload();
-				});
-
 				$("#import").on("change", "#DsFile", function(e) {
 					e.preventDefault();
 					// Check for the various File API support
@@ -366,9 +384,7 @@
 					var file = e.target.files[0],
 					reader = new FileReader();
 					reader.onload = function (event) {
-						console.log("DsTrennzeichen = " + $('#DsTrennzeichen').val());
 						var Datensätze = $.csv.toObjects(event.target.result);
-						console.log("Datensätze = " + JSON.stringify(Datensätze));
 						erstelleTabelle(Datensätze, "DsTabelleEigenschaften");
 					};
 					reader.readAsText(file);
@@ -438,6 +454,11 @@
 				meldeUserAn();
 			});
 
+			$("#import").on("click", "#abmelden_btn", function(event) {
+				event.preventDefault();
+				meldeUserAb();
+			});
+
 			$("#import").on("keyup", "#Email", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Emailhinweis").css("display", "none");
@@ -457,6 +478,7 @@
 				event.preventDefault();
 				$(".signup").css("display", "block");
 				$("#anmelden_btn").hide();
+				$("#abmelden_btn").hide();
 				$("#konto_erstellen_btn").hide();
 				$("#konto_speichern_btn").show();
 				setTimeout(function() {
@@ -470,8 +492,9 @@
 					erstelleKonto();
 					//Anmeldefenster zurücksetzen
 					$(".signup").css("display", "none");
-					$("#anmelden_btn").show();
-					$("#konto_erstellen_btn").show();
+					$("#anmelden_btn").hide();
+					$("#abmelden_btn").show();
+					$("#konto_erstellen_btn").hide();
 					$("#konto_speichern_btn").hide();
 				}
 			});

@@ -307,6 +307,10 @@ option {
 	display: none;
 }
 
+.alert {
+	margin-bottom: 0px;
+}
+
 .signup {
 	/*wird erst bei signup eingeblendet*/
 	display: none;
