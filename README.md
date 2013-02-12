@@ -37,7 +37,7 @@ sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherig
 
 ###Ziele für Datenpfleger und Systemverantwortliche
 
-- Datensammlungen können in wenigen Minuten (neu) importiert werden, ohne dass spezielle technische Fähigkeiten vorausgesetzt würden
+- Datensammlungen können in wenigen Minuten (neu) importiert werden, ohne dass besondere technische Fähigkeiten vorausgesetzt würden
 - Die Datenstruktur ist schon in den Rohdaten direkt sichtbar und verständlich
 - Der Code ist gut dokumentiert
 
@@ -87,10 +87,15 @@ In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Bezi
 
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
 
-- In der Feldverwaltung erhalten Felder mit zusammenzufassender Information zusätzlich zum normalen Feldnamen einen zusammenfassenden Feldnamen
-- Ein View fasst alle Felder aller Artgruppen mit demselben zusammenfassenden Feldnamen zusammen
-- Für den Export von Daten können - neben allen anderen Datensammlungen - auch Felder aus diesem View gewählt werden
-- Wird für eine Artengruppe z.B. eine neue Version der Roten Liste erstellt, kann die alte in der Datenbank belassen werden. Die neue wird importiert. In der Feldverwaltung werden die zusammenfassenden Felder angepasst
+- für solche zusammenfassenden Datensammlungen wird in den jeweiligen Arten und Lebensräumen eine zusätzliche Datensammlung mit Typ "Datensammlung" und Untertyp "zusammenfassend" geschaffen
+- die entsprechenden Daten werden hier hinein kopiert
+- beim Import von Daten kann gewählt werden, welche Felder zusätzlich in eine zusammenfassende Datensammlung kopiert werden sollen (und in welche Felder dort). Genauer: Man kann entweder eine vorhandene zusammenfassende Datensammlung und ihre Felder wählen oder neu erfassen
+- wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim Import:
+ - eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken"
+ - die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
+ - die bisherigen Einträge in der zusammenfassenden Datensammlung "Aktuelle Rote Liste" werden bei allen importierten Heuschrecken überschrieben
+ - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt ein Rote-Liste-Status erhalten. Um klar zu machen, dass er älter ist, soll in der zusammenfassenden Datensammlung immer ein Aktualitätsdatum enthalten sein
+- diese zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 ###Art- und Lebensraumeigenschaften...
 ...beschreiben einzelne Arten oder Lebensräume. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
