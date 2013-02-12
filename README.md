@@ -78,6 +78,7 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
 - Verwendung einer bestimmten Taxonomie
+- dassselbe Aktualitätsdatum
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
@@ -97,7 +98,7 @@ Um das zu ermöglichen folgende Idee:
  - eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken"
  - die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
  - die bisherigen Einträge in der zusammenfassenden Datensammlung "Aktuelle Rote Liste" werden bei allen importierten Heuschrecken überschrieben
- - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt ein Rote-Liste-Status erhalten. Um klar zu machen, dass er älter ist, soll in der zusammenfassenden Datensammlung immer ein Aktualitätsdatum enthalten sein
+ - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt ein Rote-Liste-Status erhalten. Um klar zu machen, dass er älter ist, soll in der zusammenfassenden Datensammlung immer der Name der Quell-Datensammlung enthalten sein (inkl. Aktualitätsdatum, da Namen ungefähr wie Literaturzitate gewählt werden sollten)
 - diese zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 ###Art- und Lebensraumeigenschaften...
