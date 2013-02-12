@@ -22,14 +22,14 @@ sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherig
 - Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Sie kann zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 
 ###Zielpublikum
-Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, also z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
 ###Ziele für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen
 - Die Datenflut bleibt überschaubar
-- Die Daten sind gut dokumentiert
-- Die Daten sind gut verfügbar:
+- Die Daten sind gut dokumentiert...
+- ...und gut verfügbar:
  - Von jedem Gerät im Internet
  - Als Export im csv-Format (ev. weitere)
  - Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
@@ -38,14 +38,14 @@ Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen b
 ###Ziele für Datenpfleger und Systemverantwortliche
 
 - Datensammlungen können von technisch durchschnittlich begabten Personen in wenigen Minuten (neu) importiert werden
-- Die Datenstruktur ist direkt sichtbar und verständlich
+- Die Datenstruktur ist in den Rohdaten direkt sichtbar und verständlich
 - Der Code ist gut dokumentiert
 
 ###Was zeichnet ArtenDb aus?
 So viele konkurrierende Tools gibt es noch nicht, dass sich ArtenDb besonders auszeichnen müsste. Die wichtigsten Merkmale dürften aber sein:
 
-- ArtenDb verfügt über ein für die Erfassung von Art- und Lebensraumeigenschaften spezifisches begriffliches und strukturelles Gerüst
-- Daten können einfach rasch importiert werden..
+- ArtenDb verfügt über ein auf die Erfassung von Art- und Lebensraumeigenschaften zugeschnittenes begriffliches und strukturelles Gerüst
+- Daten können einfach rasch importiert werden...
 - ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
 
 <a href="#top">&#8593; top</a>
@@ -65,10 +65,10 @@ In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verw
 Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
 Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet.
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss wird keine Taxonomie als "aktuell" bezeichnet, weil dies bei den Lebensräumen kaum Sinn ergibt (Delarze 2008 ist so eine Art Standard, bloss bringt es kaum Vorteile, alle anderen Taxonomien darauf zu beziehen).
 
 ###Objekte
-<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Dieser Begriff ist von technischer und konzeptioneller Bedeutung, tritt aber in der Benutzeroberfläche nicht auf.
+<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet, der Begriff "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -455,6 +455,8 @@ Das kann jeder Laie direkt lesen, obwohl es die maschinenlesbaren Rohdaten sind.
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information.
 
+Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
+
 ####Beziehungen
 Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
 ```javascript
@@ -482,7 +484,7 @@ Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
    }
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner (eigentlich: Objekte). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen.
+"Partner" sind die beteiligten Beziehungspartner (eigentlich Objekte, aber im Kontext der Beziehung ist der Begriff "Partner" aussagekräftiger). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen.
 
 In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
 
@@ -490,7 +492,7 @@ In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschr
 
 Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (z.B. JSON-Objekte in "Felder" mit den Feldern "Titel", "Header" und "Artikel").
 
-Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschreiben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
+Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
 
 <a href="#top">&#8593; top</a>
 
