@@ -85,7 +85,10 @@ Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es
 
 In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Beziehungen) pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
-Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will (der in diversen Datensammlungen steckt, da er für viele Artengruppen separat publiziert wird). Um das zu ermöglichen folgende Idee:
+###Zusammenfassende Datensammlungen
+Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
+
+Um das zu ermöglichen folgende Idee:
 
 - für solche zusammenfassenden Datensammlungen wird in den jeweiligen Arten und Lebensräumen eine zusätzliche Datensammlung mit Typ "Datensammlung" und Untertyp "zusammenfassend" geschaffen
 - die entsprechenden Daten werden hier hinein kopiert
