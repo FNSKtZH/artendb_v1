@@ -189,7 +189,6 @@
 								</div>
 								<div id="DsTabelleEigenschaften" class="tabelle">
 								</div>
-								<div></div>
 							</div>
 						</div>
 					</div>
@@ -207,11 +206,23 @@
 									<label class="control-label" for="DsId">zugehörige ID in ArtenDb</label>
 									<select type="text" class="controls" id="DsId"  multiple="multiple" style="height:95px;">
 										<option value="guid">GUID der ArtenDb</option>
-										<option value="fauna_id">ID der Info Fauna (NUESP)</option>
-										<option value="flora_id">ID der Info Flora (SISF-NR)</option>
-										<option value="moose_id">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
-										<option value="pilze_id">ID von Swissfungi (TaxonId)</option>
+										<option value="Fauna">ID der Info Fauna (NUESP)</option>
+										<option value="Flora">ID der Info Flora (SISF-NR)</option>
+										<option value="Moose">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
+										<option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
 									</select>
+								</div>
+								<div id="importieren_ids_identifizieren_fehler" class="alert alert-error">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_ids_identifizieren_fehler_text"></div>
+								</div>
+								<div id="importieren_ids_identifizieren_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_ids_identifizieren_hinweis_text"></div>
+								</div>
+								<div id="importieren_ids_identifizieren_erfolg" class="alert alert-success">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_ids_identifizieren_erfolg_text"></div>
 								</div>
 							</div>
 						</div>
@@ -384,10 +395,18 @@
 					var file = e.target.files[0],
 					reader = new FileReader();
 					reader.onload = function (event) {
-						var Datensätze = $.csv.toObjects(event.target.result);
-						erstelleTabelle(Datensätze, "DsTabelleEigenschaften");
+						window.Datensätze = $.csv.toObjects(event.target.result);
+						erstelleTabelle(window.Datensätze, "DsTabelleEigenschaften");
 					};
 					reader.readAsText(file);
+				});
+
+				$("#import").on("change", "#DsFelder", function(e) {
+					meldeErfolgVonIdIdentifikation();
+				});
+
+				$("#import").on("change", "#DsId", function(e) {
+					meldeErfolgVonIdIdentifikation();
 				});
 				
 				//Suche steuern bei Eingabe

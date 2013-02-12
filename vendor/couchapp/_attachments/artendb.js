@@ -520,7 +520,6 @@ function initiiere_art(id) {
 			//Beziehungen holen
 			$db = $.couch.db("artendb");
 			//alle Beziehungen holen, in denen Beziehungen diese Art als Partner vorkommt
-			//$db.view('artendb/bez_guid_id?key="' + id + '"&include_docs=true', {
 			$db.view('artendb/bez_guid_id?startkey=["' + id + '"]&endkey=["' + id + '",{}]&include_docs=true', {
 				success: function (beziehungen_mit_dieser_art) {
 					var Beziehung = {};
@@ -1193,6 +1192,92 @@ function erstelleTabelle(Datensätze, div_id) {
 	$("#" + div_id).html(html);
 }
 
+function meldeErfolgVonIdIdentifikation() {
+	if ($("#DsFelder option:selected").length && $("#DsId option:selected").length) {
+		//beide ID's sind gewählt
+		var DsFelderId = $("#DsFelder option:selected").val();
+		var DsId = $("#DsId option:selected").val();
+		var IdsVonDatensätzen = [];
+		var MehrfachVorkommendeIds = [];
+		//das hier wird später noch gebraucht > globale Variable machen
+		window.ZuordbareDatensätze = [];
+		$("#importieren_ids_identifizieren_hinweis").alert().css("display", "block");
+		$("#importieren_ids_identifizieren_hinweis_text").html("Bitte warten, die Daten werden analysiert...");
+		//Dokumente aus der Gruppe der Datensätze holen
+		//durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
+		//kontrollieren, ob eine id mehr als einmal vorkommt
+		$db = $.couch.db("artendb");
+		if (DsId === "guid") {
+			$db.view('artendb/objekte', {
+				success: function (data) {
+					for (i in window.Datensätze) {
+						//durch die importierten Datensätze loopen
+						if (IdsVonDatensätzen.indexOf(window.Datensätze[i][DsFelderId]) === -1) {
+							//diese ID wurde noch nicht hinzugefügt > hinzufügen
+							IdsVonDatensätzen.push(window.Datensätze[i][DsFelderId]);
+							//prüfen, ob die ID zugeordnet werden kann
+							for (x in data.rows) {
+								if (data.rows[x].key === window.Datensätze[i][DsFelderId]) {
+									window.ZuordbareDatensätze.push(window.Datensätze[i][DsFelderId]);
+									break;
+								}
+							}
+						} else {
+							//diese ID wurden schon hinzugefügt > mehrfach!
+							MehrfachVorkommendeIds.push(window.Datensätze[i][DsFelderId]);
+						}
+					}
+					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, DsFelderId);
+				}
+			});
+		} else {
+			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + DsId + '"]&endkey=["' + DsId + '",{},{}]', {
+				success: function (data) {
+					//console.log("data.rows = " + JSON.stringify(data.rows));
+					for (i in window.Datensätze) {
+						//durch die importierten Datensätze loopen
+						if (IdsVonDatensätzen.indexOf(window.Datensätze[i][DsFelderId]) === -1) {
+							//diese ID wurde noch nicht hinzugefügt > hinzufügen
+							IdsVonDatensätzen.push(window.Datensätze[i][DsFelderId]);
+							//prüfen, ob die ID zugeordnet werden kann
+							for (x in data.rows) {
+								//Vorsicht: window.Datensätze[i][DsFelderId] kann Zahlen als string zurückgeben, nicht === verwenden
+								if (data.rows[x].key[2] == window.Datensätze[i][DsFelderId]) {
+									var Objekt = {};
+									Objekt[DsFelderId] = parseInt(window.Datensätze[i][DsFelderId]);
+									Objekt.Guid = data.rows[x].key[1];
+									window.ZuordbareDatensätze.push(Objekt);
+									break;
+								}
+							}
+						} else {
+							//diese ID wurden schon hinzugefügt > mehrfach!
+							MehrfachVorkommendeIds.push(window.Datensätze[i][DsFelderId]);
+						}
+					}
+					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, DsFelderId);
+				}
+			});
+		}
+	}
+}
+
+function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, DsFelderId) {
+	$("#importieren_ids_identifizieren_hinweis").alert().css("display", "none");
+	//rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
+	if (MehrfachVorkommendeIds.length) {
+		$("#importieren_ids_identifizieren_fehler").alert().css("display", "block");
+		$("#importieren_ids_identifizieren_fehler_text").html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
+	} else if (window.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
+		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
+		$("#importieren_ids_identifizieren_hinweis").alert().css("display", "block");
+		$("#importieren_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window.Datensätze.length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + DsFelderId + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+	} else {
+		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
+		$("#importieren_ids_identifizieren_erfolg").alert().css("display", "block");
+		$("#importieren_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window.Datensätze.length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + DsFelderId + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+	}
+}
 
 
 
