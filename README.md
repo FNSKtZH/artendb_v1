@@ -1,5 +1,5 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen.
+Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen. Ihre Stärke ist der einfache Import von Daten.
 
 Es existiert schon eine [frühere Version](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
 
@@ -17,12 +17,12 @@ Es existiert schon eine [frühere Version](http://www.aln.zh.ch/internet/baudire
 sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherigen Datenbank gemacht wurden:
 
 - Wenn man Daten aus anderen Quellen bezieht, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
-- Entscheidend für die Aktualität einer Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach nutzen zu können
+- Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und nebenbei ergänzt werden können, d.h. obwohl man sich gerade prioritäreren Aufgaben widmen sollte
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit geringem Aufwand vereint werden können
 - Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung. Sie kann zwar im Internet frei heruntergeladen, aber nur auf wenigen Geräten genutzt werden
 
-###Zielpublikum
-Das Zielpublikum ist tätig in Bereichen, die sich mit Arten und Lebensräumen befassen, z.B.: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+###Das Zielpublikum...
+...befasst sich mit Arten und Lebensräumen, kommt also primär aus diesen Bereichen: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
 ###Ziele für die Benutzerin
 
