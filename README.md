@@ -61,13 +61,13 @@ Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2
 
 Momentan werden in der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
 
-Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung" und pro Objekt (Art oder Lebensraum) wird nur und genau eine Taxonomie beschrieben (künftig, momentan ist das noch anders implementiert).
+Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung" und pro Objekt (Art oder Lebensraum) wird immer genau eine Taxonomie beschrieben (künftig - momentan ist das noch anders implementiert).
 
 Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
 
 Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können. Im Standard wird bei Arten die Struktur der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt.
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Strukturbaum alle Taxonomien gleichzeitig angezeigt.
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Strukturbaum alle Taxonomien gleichzeitig angezeigt. Das ist hier übersichtlicher, weil es hier sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet.
 
 ###Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
@@ -98,17 +98,19 @@ In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Bezi
 ###Zusammenfassende Datensammlungen
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
 
-Um das zu ermöglichen folgende Idee:
+Das soll so erfolgen:
 
-- für solche zusammenfassenden Datensammlungen wird in den jeweiligen Arten und Lebensräumen eine zusätzliche Datensammlung mit Typ "Datensammlung" und Untertyp "zusammenfassend" geschaffen
-- die entsprechenden Daten werden hier hinein kopiert
-- beim Import von Daten kann gewählt werden, welche Felder zusätzlich in eine zusammenfassende Datensammlung kopiert werden sollen (und in welche Felder dort). Genauer: Man kann entweder eine vorhandene zusammenfassende Datensammlung und ihre Felder wählen oder neu erfassen
-- wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim Import:
- - eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken"
- - die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
- - die bisherigen Einträge in der zusammenfassenden Datensammlung "Aktuelle Rote Liste" werden bei allen importierten Heuschrecken überschrieben
- - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt ein Rote-Liste-Status erhalten. Um klar zu machen, dass er älter ist, soll in der zusammenfassenden Datensammlung immer der Name der Quell-Datensammlung enthalten sein (inkl. Aktualitätsdatum, da Namen ungefähr wie Literaturzitate gewählt werden sollten)
-- diese zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
+- In den jeweiligen Arten und Lebensräumen wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
+- Die entsprechenden Daten werden zwei mal importiert:
+ - Ein mal in die Ursprungs-Datensammlung
+ - Ein mal in die zusammenfassende
+- Wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim Import:
+ - Eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Daten importiert
+ - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
+ - Entweder es gibt schon die zusammenfassende Datensammlung "Aktuelle Rote Liste". Dann werden die Daten hier hinein nochmals importiert. Dabei werden die bisherige Einträge überschrieben
+ - Oder die zusammenfassende Datensammlung wird jetzt beschrieben und als zusammenfassend markiert. Dann werden die Daten nochmals in diese Datensammlung importiert. Jetzt müssen auch die Rote-Liste-Angaben aller anderen entsprechenden Datensammlungen importiert werden (z.B. indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden) 
+ - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der alte Rote-Liste-Status erhalten. Um dies klar zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
+- die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später die neuen. Falls aber nachträglich eine ältere Datensammlung erfasst wird, für die bereits eine zusammenfassende Datensammlung existiert, sollte es die Möglichkeit geben, zu wählen, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Auswählen, aus welchen Quellen stammende zusammenfassende Einträge nicht überschrieben werden sollen.
 
