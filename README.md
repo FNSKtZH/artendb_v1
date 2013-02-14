@@ -72,6 +72,9 @@ In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bez
 ###Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
+###Gruppen
+Arten werden in Gruppen eingeteilt: Flora, Fauna, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und das hat sich auch für viele Anwendungen eingebürgert und bewährt.
+
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
@@ -80,9 +83,9 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
 - Verwendung einer bestimmten Taxonomie
-- dassselbe Aktualitäts- bzw. Publikationsdatum
+- Dassselbe Aktualitäts- bzw. Publikationsdatum
 
-Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Publikation" nicht besser wäre. Damit würde besser erkenntlich, dass eine aktualisierte Version einer bereits bestehenden Datensammlung als neue Datensammlung zu behandeln ist.
+Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Publikation" nicht besser wäre. Damit würde besser erkenntlich, dass eine aktualisierte Version einer bereits bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist.
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
@@ -113,13 +116,13 @@ Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und er
 ...beschreiben einzelne Arten oder Lebensräume. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungen...
-...beschreiben das Zusammenspiel zwischen zwei oder mehr Arten und/oder Lebensräumen. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten.
+...beschreiben das Zusammenspiel zwischen zwei oder mehr Arten und/oder Lebensräumen. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym".
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen der verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 ###Daten decodieren
-Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert, leistungshungrig und Rohdaten verlieren jede Aussagekraft. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
+Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert, leistungshungrig und Rohdaten verlieren jede Aussagekraft. Deshalb sind codierte Informationen zu vermeiden.
 
 ###Datensammlungen aktualisieren
 Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
