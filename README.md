@@ -243,19 +243,19 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 ###Datenstruktur
 ####Objekte
 
-Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
+Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
-Im Dokument werden heute alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, z.B. mit:
+Im Dokument wird die Taxonomie und alle das Objekt beschreibenden Datensammlungen beschrieben, z.B. mit:
 - Name (obligatorisch, muss eineindeutig sein)
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
 - Originalbericht (angehängt)
-- Verwendete Taxonomie
+- Verwendete Taxonomie (nur bei Datensammlungen)
 - Datenstand
 - Link
 
-Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung". Künftig soll pro Objekt nur noch eine Taxonomie erfasst werden.
+Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung".
 
-Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
+Alle Eigenschaften der Art oder des Lebensraums werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
 Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
@@ -526,6 +526,8 @@ In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschr
 Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (z.B. JSON-Objekte in "Felder" mit den Feldern "Titel", "Header" und "Artikel").
 
 Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
+
+Beziehungen taxonomischer Art wie z.B. "synonym" erhalten neben dem Typ "Beziehung" auch einen Untertyp "taxonomisch".
 
 <a href="#top">&#8593; top</a>
 
