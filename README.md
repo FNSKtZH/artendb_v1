@@ -255,7 +255,7 @@ Im Dokument wird die Taxonomie und alle das Objekt beschreibenden Datensammlunge
 - Datenstand
 - Link
 
-Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung".
+Taxonomien haben den "Typ" "Taxonomie", Datensammlungen den Typ "Datensammlung".
 
 Alle Eigenschaften der Art oder des Lebensraums werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
