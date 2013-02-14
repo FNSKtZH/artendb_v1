@@ -190,17 +190,18 @@ Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus 
 
 Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
-Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt werden und daraus eine Eingabeoberfläche generiert. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
+Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
+
+###Daten in ArtenDb bearbeiten
+Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
+
 - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
 - Optionen für Auswahllisten
 
 Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie könnte fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 
 - Felder mit einem gemeinsamen Titel gruppiert anzeigen
-- Felder aus verschiedenen Datensammlungen zusammenfassen
 - Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
-
-Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
 
 ###Daten exportieren
 
