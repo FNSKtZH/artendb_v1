@@ -190,10 +190,7 @@ Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus 
 
 Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
-Will man Daten in der Anwendung selbst erfassen, reicht es nicht, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Dazu würden die Feldeigenschaften verwaltet. Unter anderen:
-
-- Datensammlung
-- Feldname
+Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt werden und daraus eine Eingabeoberfläche generiert. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
 - Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
 - Optionen für Auswahllisten
 
@@ -209,10 +206,9 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 Geplant ist folgendes Vorgehen:
 
-1. Die Benutzerin wählt eine Gruppe
-2. Sie kann innerhalb der Gruppe filtern
-3. Sie wählt aus allen Datensammlungen die gewünschten Felder aus
-4. Daten werden als csv heruntergeladen
+1. Die Benutzerin wählt die gewünschten Objekte (mit Filter)
+2. Sie wählt aus den gewünschten Datensammlungen die gewünschten Felder
+4. Daten werden generiert und als csv heruntergeladen
 
 <a href="#top">&#8593; top</a>
 
