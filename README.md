@@ -73,7 +73,7 @@ In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bez
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Gruppen
-Arten werden in Gruppen eingeteilt: Flora, Fauna, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und das hat sich auch für viele Anwendungen eingebürgert und bewährt.
+Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und das hat sich auch für viele Anwendungen eingebürgert und bewährt.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -216,10 +216,11 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 Geplant ist folgendes Vorgehen:
 
 1. Die Benutzerin wählt die gewünschten Objekte (mit Filter)
-2. Sie wählt aus den gewünschten Datensammlungen die gewünschten Felder
-3. Daten werden generiert und als csv heruntergeladen
+2. Sie wählt, ob auch Informationen von synonymen Arten exportiert werden sollen
+3. Sie wählt aus den gewünschten Datensammlungen die gewünschten Felder
+4. Daten werden generiert und als csv heruntergeladen
 
-Beziehungen sind separat zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
+Beziehungen sind wohl separat zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
 
 <a href="#top">&#8593; top</a>
 
