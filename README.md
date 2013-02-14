@@ -69,7 +69,7 @@ Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxo
 In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss wird keine Taxonomie "aktuell" genannt, weil dies bei den Lebensräumen wenig sinnvoll ist (Delarze 2008 ist so eine Art Standard, bloss bringt es kaum Vorteile, alle anderen Taxonomien darauf zu beziehen. Kann sein, dass dieser Entscheid später überdacht werden muss).
 
 ###Objekte
-<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet, der Begriff "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
+<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -79,7 +79,9 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
 - Verwendung einer bestimmten Taxonomie
-- dassselbe Aktualitätsdatum
+- dassselbe Aktualitäts- bzw. Publikationsdatum
+
+Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Publikation" nicht besser wäre. Damit würde besser erkenntlich, dass eine aktualisierte Version einer bereits bestehenden Datensammlung als neue Datensammlung zu behandeln ist.
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
@@ -113,6 +115,15 @@ In der bisherigen, relationalen Datenbank werden die verschiedenen Gruppen (Flor
 
 ###Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert, leistungshungrig und Rohdaten verlieren jede Aussagekraft. Deshalb sind codierte Informationen zu vermeiden. Sie machen höchstens dort Sinn, wo Daten erfasst werden - und das geschieht nicht in der ArtenDb.
+
+###Datensammlungen aktualisieren
+Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
+- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände vollständig erhalten bleiben
+- Wird eine Datensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Wenn ja: Soll es ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
+
+Wenn Teile einer Datensammlung periodisch oder häufig aktualisiert werden und eine von beiden obigen Fragen mit ja beantwortet wird, kann z.B. folgendermassen vorgegangen werden:
+- Neue Daten als neue Datensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (1995)" gibt und ev. weitere
+- Für die Auswertung unter Einbezug aller Artwerte eine zusammenfassende Datensammlung schaffen "ZH Artwert (aktuell)"
 
 <a href="#top">&#8593; top</a>
 
