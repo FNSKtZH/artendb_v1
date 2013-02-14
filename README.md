@@ -44,7 +44,7 @@ sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherig
 ###Was zeichnet ArtenDb aus?
 Die wichtigsten Merkmale dürften sein:
 
-- Das verwendete begriffliche und strukturelle Gerüst ist für Eigenschaften von Arten und Lebensräumen zugeschnitten
+- Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
 - Daten können einfach und rasch importiert werden...
 - ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
 
