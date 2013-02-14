@@ -118,8 +118,8 @@ Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch vie
 
 ###Datensammlungen aktualisieren
 Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
-- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände vollständig erhalten bleiben
-- Wird eine Datensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Wenn ja: Soll es ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
+- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Datensammlungen) vollständig erhalten bleiben
+- Wird eine Datensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
 
 Wenn Teile einer Datensammlung periodisch oder häufig aktualisiert werden und eine von beiden obigen Fragen mit ja beantwortet wird, kann z.B. folgendermassen vorgegangen werden:
 - Neue Daten als neue Datensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (1995)" gibt und ev. weitere
