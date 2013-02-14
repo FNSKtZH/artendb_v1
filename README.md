@@ -206,8 +206,9 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 ###Daten in ArtenDb bearbeiten
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
 
-- Feldtyp (Text, Auswahlliste, Mehrfachauswahl möglich etc.)
+- Feldtyp (z.B. Text, Auswahlliste)
 - Optionen für Auswahllisten
+- Ob in Auswahllisten Mehrfachauswahlen möglich sein sollen
 
 Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie könnte fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
 
@@ -218,12 +219,12 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 
 Geplant ist folgendes Vorgehen:
 
-1. Die Benutzerin wählt die gewünschten Objekte (mit Filter)
+1. Die Benutzerin wählt die gewünschten Arten oder Lebensräume (mit Filter)
 2. Sie wählt, ob auch Informationen von synonymen Arten exportiert werden sollen
-3. Sie wählt aus den gewünschten Datensammlungen die gewünschten Felder
-4. Daten werden generiert und als csv heruntergeladen
+3. Sie wählt die gewünschten Datensammlungen und daraus die gewünschten Felder
+4. Die Daten werden generiert und als csv heruntergeladen
 
-Beziehungen sind wohl separat zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
+Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (wäre aber durchaus nützlich, wenn wahlweise Eigenschaften ergänzt werden können).
 
 <a href="#top">&#8593; top</a>
 
@@ -231,15 +232,15 @@ Beziehungen sind wohl separat zu exportieren, da pro Objekt mehrere Zeilen erzeu
 #Technische Umsetzung
 ###Verwendete Technologien
 Eingesetzt werden:
-* [CouchDb](http://couchdb.apache.org/) als Datenbank
-* CouchDb als [CouchApp](http://couchapp.org/page/index), womit die Anwendung auch lokal installiert werden kann und ihr eigener Webserver ist
+* Die Datenbank [CouchDb](http://couchdb.apache.org/)
+* CouchDb als [CouchApp](http://couchapp.org/page/index). In dieser Form kann die Anwendung auch lokal installiert werden und sie ist ihr eigener lokaler Webserver
 * [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 * [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
 
-###Dokumentorientierte Datenbank
+###Dokumentbasierte Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind Felder in eigenen Tabellen. Sie werden 1:1 mit der Taxonomie verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
 
-Eine dokumentenorientierte Datenbank eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
+Eine dokumentbasierte Datenbank speichert jeden Datensatz in einem eigenen Dokument statt in starren Tabellen. Sie eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
@@ -249,10 +250,8 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
 Im Dokument wird die Taxonomie und alle das Objekt beschreibenden Datensammlungen beschrieben, z.B. mit:
-- Name (obligatorisch, muss eineindeutig sein)
+- Name (obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate)
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
-- Originalbericht (angehängt)
-- Verwendete Taxonomie (nur bei Datensammlungen)
 - Datenstand
 - Link
 
