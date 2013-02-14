@@ -104,6 +104,8 @@ Um das zu ermöglichen folgende Idee:
  - falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt ein Rote-Liste-Status erhalten. Um klar zu machen, dass er älter ist, soll in der zusammenfassenden Datensammlung immer der Name der Quell-Datensammlung enthalten sein (inkl. Aktualitätsdatum, da Namen ungefähr wie Literaturzitate gewählt werden sollten)
 - diese zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
+Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später die neuen. Falls aber nachträglich eine ältere Datensammlung erfasst wird, für die bereits eine zusammenfassende Datensammlung existiert, sollte es die Möglichkeit geben, zu wählen, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Auswählen, aus welchen Quellen stammende zusammenfassende Einträge nicht überschrieben werden sollen.
+
 ###Art- und Lebensraumeigenschaften...
 ...beschreiben einzelne Arten oder Lebensräume. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
