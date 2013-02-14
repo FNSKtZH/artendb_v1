@@ -233,14 +233,14 @@ Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da p
 ###Verwendete Technologien
 Eingesetzt werden:
 * Die Datenbank [CouchDb](http://couchdb.apache.org/)
-* CouchDb als [CouchApp](http://couchapp.org/page/index). In dieser Form kann die Anwendung auch lokal installiert werden und sie ist ihr eigener lokaler Webserver
+* CouchDb als [CouchApp](http://couchapp.org/page/index). In dieser Form kann die Anwendung auch lokal installiert werden und sie ist ihr eigener Webserver
 * [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 * [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
 
-###Dokumentbasierte Datenbank
-In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind Felder in eigenen Tabellen. Sie werden 1:1 mit der Taxonomie verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine dokumentenorientierte hingegen ist sie ideal.
+###Dokumenten-Datenbank
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind Felder in eigenen Tabellen. Sie werden 1:1 mit der Taxonomie verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
-Eine dokumentbasierte Datenbank speichert jeden Datensatz in einem eigenen Dokument statt in starren Tabellen. Sie eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
+Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument statt in starren Tabellen. Sie eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
