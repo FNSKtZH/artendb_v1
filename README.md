@@ -60,12 +60,13 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensr
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". 
+In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. 
 
-Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. 
-Arten, die in der aktuellen Taxonomie nicht vorkommen, werden entsprechend bezeichnet. Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
+Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. Arten können auch nur nicht aktuelle Taxonomie(n) enthalten. 
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss wird keine Taxonomie als "aktuell" bezeichnet, weil dies bei den Lebensräumen kaum Sinn ergibt (Delarze 2008 ist so eine Art Standard, bloss bringt es kaum Vorteile, alle anderen Taxonomien darauf zu beziehen).
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
+
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss wird keine Taxonomie "aktuell" genannt, weil dies bei den Lebensräumen wenig sinnvoll ist (Delarze 2008 ist so eine Art Standard, bloss bringt es kaum Vorteile, alle anderen Taxonomien darauf zu beziehen. Kann sein, dass dieser Entscheid später überdacht werden muss).
 
 ###Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet, der Begriff "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
@@ -231,7 +232,9 @@ Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen
 - Datenstand
 - Link
 
-Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Datensammlung als "Felder" gespeichert.
+Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung".
+
+Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
 Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
