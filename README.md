@@ -60,13 +60,15 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensr
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-In der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. 
+Momentan werden in der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
 
-Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung". Somit kann jede Art aus der aktuellen Taxonomie Informationen über ihre Beschreibung in anderen Taxonomien enthalten. Arten können auch nur nicht aktuelle Taxonomie(n) enthalten. 
+Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung" und pro Objekt (Art oder Lebensraum) wird nur und genau eine Taxonomie beschrieben (künftig, momentan ist das noch anders implementiert).
 
-Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können.
+Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss wird keine Taxonomie "aktuell" genannt, weil dies bei den Lebensräumen wenig sinnvoll ist (Delarze 2008 ist so eine Art Standard, bloss bringt es kaum Vorteile, alle anderen Taxonomien darauf zu beziehen. Kann sein, dass dieser Entscheid später überdacht werden muss).
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können. Im Standard wird bei Arten die Struktur der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt.
+
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Strukturbaum alle Taxonomien gleichzeitig angezeigt.
 
 ###Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
@@ -86,6 +88,8 @@ Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Pub
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
 Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
+
+Es sollen auch Datensammlungen angezeigt und exportiert werden können, die bei einer synonymen Art beschrieben sind.
 
 In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Beziehungen) pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -159,6 +163,8 @@ Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation)
 
 In der Taxonomie werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt. Links ermöglichen die Suche nach der Art in Google-Bildern und Wikipedia.
 
+Künftig sollen zuunterst auch wahlweise Datensammlungen angezeigt werden können, die in synonymen Arten erfasst sind.
+
 **Menu**
 
 Das Menu ermöglicht:
@@ -190,7 +196,7 @@ Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus 
 
 Um schon vorhandene Arteigenschaften zu verändern, wird zuerst die vorhandene Datensammlung entfernt. Dann die korrigierte importiert.
 
-Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Und das ist ein hohes Risiko für den Unterhalt.
+Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Das wiederum ist ein hohes Risiko für den Unterhalt und verhindert eine effiziente Datenhaltung.
 
 ###Daten in ArtenDb bearbeiten
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
@@ -209,7 +215,9 @@ Geplant ist folgendes Vorgehen:
 
 1. Die Benutzerin wählt die gewünschten Objekte (mit Filter)
 2. Sie wählt aus den gewünschten Datensammlungen die gewünschten Felder
-4. Daten werden generiert und als csv heruntergeladen
+3. Daten werden generiert und als csv heruntergeladen
+
+Beziehungen sind separat zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
 
 <a href="#top">&#8593; top</a>
 
@@ -234,7 +242,7 @@ Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna,
 
 Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
-Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, z.B. mit:
+Im Dokument werden heute alle das Objekt beschreibenden Taxonomien und Datensammlungen beschrieben, z.B. mit:
 - Name (obligatorisch, muss eineindeutig sein)
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
 - Originalbericht (angehängt)
@@ -242,7 +250,7 @@ Im Dokument werden alle das Objekt beschreibenden Taxonomien und Datensammlungen
 - Datenstand
 - Link
 
-Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung".
+Taxonomien werden von Datensammlungen mit einer Eigenschaft "Typ" unterschieden. Der Typ ist "Taxonomie" oder "Datensammlung". Künftig soll pro Objekt nur noch eine Taxonomie erfasst werden.
 
 Alle Art- bzw. Lebensraumattribute werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
