@@ -42,9 +42,9 @@ sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherig
 - Der Code ist gut dokumentiert
 
 ###Was zeichnet ArtenDb aus?
-So viele konkurrierende Tools gibt es noch nicht, dass sich ArtenDb besonders auszeichnen müsste. Die wichtigsten Merkmale dürften aber sein:
+Die wichtigsten Merkmale dürften sein:
 
-- ArtenDb verwendet ein auf die Erfassung von Art- und Lebensraumeigenschaften zugeschnittenes begriffliches und strukturelles Gerüst
+- Das verwendete begriffliche und strukturelle Gerüst ist für Eigenschaften von Arten und Lebensräumen zugeschnitten
 - Daten können einfach und rasch importiert werden...
 - ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
 
@@ -52,7 +52,6 @@ So viele konkurrierende Tools gibt es noch nicht, dass sich ArtenDb besonders au
 
 <a name="Konzept"></a>
 #Fachliches Konzept
-
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren Eigenschaften auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
