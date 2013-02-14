@@ -143,6 +143,7 @@
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="DsWaehlen"></select>
 								</div>
+								<button type="button" class="btn" id="DsLoeschen" style="display:none;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und Lebensräumen entfernen</button>
 								<hr>
 								<div class="control-group">
 									<label class="control-label" for="DsName">Name</label>
@@ -151,10 +152,6 @@
 								<div class="control-group">
 									<label class="control-label" for="DsBeschreibung">Beschreibung</label>
 									<textarea class="controls" id="DsBeschreibung"></textarea>
-								</div>
-								<div class="control-group">
-									<label class="control-label" for="DsTaxonomie">verwendete Taxonomie(n)</label>
-									<textarea class="controls" id="DsTaxonomie"></textarea>
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="DsDatenstand">Datenstand</label>
@@ -175,7 +172,7 @@
 					<div class="accordion-group" id="importieren_daten_uploaden">
 						<div class="accordion-heading accordion-group_gradient">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#importieren_accordion" href="#importieren_daten_uploaden_collapse">
-								3. Daten uploaden
+								3. Eigenschaften laden
 							</a>
 						</div>
 						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
@@ -236,7 +233,7 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
 							<div class="accordion-inner">
-								
+								<button type="button" class="btn" id="DsImportieren">Datensammlung und alle Eigenschaften importieren</button>
 							</div>
 						</div>
 					</div>
@@ -379,7 +376,12 @@
 								});
 								$("#DsName").focus();
 							}
+							//löschen-Schaltfläche einblenden
+							$("#DsLoeschen").css("display", "block");
 						}
+					} else {
+						//löschen-Schaltfläche ausblenden
+						$("#DsLoeschen").css("display", "none");
 					}
 				});
 
@@ -407,6 +409,13 @@
 
 				$("#import").on("change", "#DsId", function(e) {
 					meldeErfolgVonIdIdentifikation();
+				});
+
+				$("#import").on("click", "DsImportieren", function() {
+					$.when(importiereDatensammlung()).then(function() {
+						//jetzt Ergebnisse anzeigen
+						console.log("Import ist fertig");
+					});
 				});
 				
 				//Suche steuern bei Eingabe
