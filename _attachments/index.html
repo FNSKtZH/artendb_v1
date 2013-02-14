@@ -143,7 +143,9 @@
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="DsWaehlen"></select>
 								</div>
-								<button type="button" class="btn" id="DsLoeschen" style="display:none;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und Lebensräumen entfernen</button>
+								<div class="controls">
+									<button type="button" class="btn" id="DsLoeschen" style="display:none;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+								</div>
 								<hr>
 								<div class="control-group">
 									<label class="control-label" for="DsName">Name</label>
@@ -233,7 +235,8 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
 							<div class="accordion-inner">
-								<button type="button" class="btn" id="DsImportieren">Datensammlung und alle Eigenschaften importieren</button>
+								<button type="button" class="btn" id="DsImportieren">Datensammlung mit allen Eigenschaften importieren</button>
+								<button type="button" class="btn disabled" id="DsEntfernen">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
 							</div>
 						</div>
 					</div>
@@ -411,7 +414,15 @@
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#import").on("click", "DsImportieren", function() {
+				$("#import").on("click", "#DsLoeschen", function() {
+					console.log("DsName = " + $("#DsName").val());
+					$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
+						//jetzt Ergebnisse anzeigen
+						console.log("Löschen beendet");
+					});
+				});
+
+				$("#import").on("click", "#DsImportieren", function() {
 					$.when(importiereDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
 						console.log("Import ist fertig");

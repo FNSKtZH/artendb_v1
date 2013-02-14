@@ -1250,7 +1250,7 @@ function meldeErfolgVonIdIdentifikation() {
 								//Vorsicht: window.Datensätze[i][window.DsFelderId] kann Zahlen als string zurückgeben, nicht === verwenden
 								if (data.rows[x].key[2] == window.Datensätze[i][window.DsFelderId]) {
 									var Objekt = {};
-									Objekt[window.DsFelderId] = parseInt(window.Datensätze[i][window.DsFelderId]);
+									Objekt.Id = parseInt(window.Datensätze[i][window.DsFelderId]);
 									Objekt.Guid = data.rows[x].key[1];
 									window.ZuordbareDatensätze.push(Objekt);
 									break;
@@ -1337,14 +1337,19 @@ function importiereDatensammlung() {
 				//die in der Tabelle mitgelieferte id ist die guid
 				guid = window.Datensätze[x][window.DsFelderId];
 			} else {
-				for (z in window.ZuordbareDatensätze) {
-					if (window.ZuordbareDatensätze[z][window.DsFelderId] === parseInt(window.Datensätze[x][window.DsFelderId])) {
+				for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+					//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+					if (window.ZuordbareDatensätze[z].Id == window.Datensätze[x][window.DsFelderId]) {
+						//und die guid auslesen
 						guid = window.ZuordbareDatensätze[z].Guid;
 						break;
 					}
 				}
 			}
-			fuegeDatensammlungZuObjekt(guid, $("#DsName").val(), Datensammlung);
+			//kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
+			if (guid) {
+				fuegeDatensammlungZuObjekt(guid, $("#DsName").val(), Datensammlung);
+			}
 		}
 	}
 	DsImportiert.resolve();
@@ -1374,7 +1379,7 @@ function entferneDatensammlungAusAllenObjekten(DsName) {
 		success: function (data) {
 			for (i in data.rows) {
 				//guid und DsName übergeben
-				entferneEigenschaftAusDokument(data.rows[i][1], DsName);
+				entferneEigenschaftAusDokument(data.rows[i].key[1], DsName);
 			}
 			DsEntfernt.resolve();
 		}
@@ -1386,7 +1391,7 @@ function entferneDatensammlungAusAllenObjekten(DsName) {
 //und den Namen der Eigenschaft, die zu entfernen ist
 //entfernt die Eigenschaft
 function entferneEigenschaftAusDokument(id, EigName) {
-	var EigEntfernt = $.Deferred();
+	//var EigEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
@@ -1395,12 +1400,12 @@ function entferneEigenschaftAusDokument(id, EigName) {
 			//in artendb speichern
 			$db.saveDoc(doc, {
 				success: function() {
-					EigEntfernt.resolve(); 
+					//EigEntfernt.resolve(); 
 				}
 			});
 		}
 	});
-	return EigEntfernt.promise();
+	//return EigEntfernt.promise();
 }
 
 
