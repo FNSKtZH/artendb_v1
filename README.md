@@ -1,7 +1,7 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen. 
 
-Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden, dass die Daten möglichst aktuell sind und alle benötigten Daten enthalten sind.
+Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden, dass alle benötigten Daten enthalten und möglichst aktuell sind.
 
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
