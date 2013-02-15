@@ -63,19 +63,19 @@ Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
-Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
+Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebensraumschlüssel. 
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
 Momentan wird in der ArtenDb die vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig soll sie den Namen der Datensammlung bzw. Publikation erhalten.
 
-Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" (statt "Datensammlung") und pro Objekt wird immer genau eine Taxonomie beschrieben (künftig - momentan ist das noch anders implementiert).
+Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" (statt "Datensammlung") und pro Objekt wird immer genau eine Taxonomie beschrieben.
 
-Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
+Taxonomische Beziehungen, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
 
 Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
 
-Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie keine nicht "offiziellen" Arten wie z.B. Synonyme. Sondern stattdessen Beziehungen zwischen offiziellen Arten und in anderen Taxonomien beschriebenen. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb leider nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
+Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie nur "offizielle" Arten und z.B. keine Synonyme. Stattdessen würden Beziehungen zwischen offiziellen Arten und Arten anderer Taxonomien beschrieben. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb leider nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
 In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle Taxonomien angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
 
@@ -95,13 +95,13 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 - Verwendung einer bestimmten Taxonomie
 - Dassselbe Aktualitäts- bzw. Publikationsdatum
 
-Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Publikation" nicht besser wäre. Damit würde besser erkenntlich, dass eine aktualisierte Version einer bereits bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist.
+Möglicherweise würde statt "Datensammlung" besser der Begriff "Publikation" verwendet. Damit würde klar, dass eine aktualisierte Version einer bereits bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist.
 
-Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
+Datensammlungen sollten nur durch die Autoren nachgeführt werden.
 
-Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der Objekte (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung". Dies hilft dem Benutzer auch, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen, welche heute schon in der ArtenDb vorhanden sind.
+Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der Objekte. Sie erleichtern dem Benutzer, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen, welche in der ArtenDb vorhanden sind.
 
-In ArtenDb sollen auch Datensammlungen von synonymen Arten angezeigt und exportiert werden können.
+In ArtenDb sollen künftig auch Datensammlungen von synonymen Objekten angezeigt und exportiert werden können.
 
 In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
@@ -110,13 +110,13 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 Das soll so erfolgen:
 
-- In den jeweiligen Arten und Lebensräumen wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
+- In den jeweiligen Objekten (Arten und Lebensräumen) wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
  - Ein mal in die Ursprungs-Datensammlung
  - Ein mal in die zusammenfassende
 - Die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
-Wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim Import:
+Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Eigenschaften importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" hier hinein nochmals importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
