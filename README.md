@@ -1,8 +1,6 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen. Ihre Stärke ist der einfache Import von Daten.
 
-Es existiert schon eine [frühere Version](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content).
-
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
 * <a href="#Konzept">Fachliches Konzept</a>
@@ -14,7 +12,7 @@ Es existiert schon eine [frühere Version](http://www.aln.zh.ch/internet/baudire
 <a name="Ziele"></a>
 #Ziele
 ###Ausgangspunkt
-sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der bisherigen Datenbank gemacht wurden:
+sind ein paar Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
 
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
 - Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und nebenbei ergänzt werden können, d.h. obwohl man sich gerade prioritäreren Aufgaben widmen sollte
