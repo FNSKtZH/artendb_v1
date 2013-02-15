@@ -21,8 +21,8 @@ Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit geringem Aufwand vereint werden können
 - Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung und breite Verfügbarkeit
 
-###Das Zielpublikum...
-...befasst sich mit Arten und Lebensräumen, kommt also primär aus diesen Bereichen: Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft, Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+###Das Zielpublikum
+...befasst sich mit Arten und Lebensräumen, arbeitet also primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
 ###Ziele für die Benutzerin
 
@@ -37,37 +37,40 @@ Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
 
-- Datensammlungen können in wenigen Minuten (neu) importiert werden, ohne dass besondere technische Fähigkeiten vorausgesetzt würden
-- Die Datenstruktur ist schon in den Rohdaten direkt sichtbar und verständlich
+- Datensammlungen können in wenigen Minuten importiert werden. Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
+- Die Datenstruktur ist bereits in den Rohdaten direkt sichtbar und verständlich
 - Der Code ist gut dokumentiert
+- Der Code ist open source und alle Nutzer können eigene Erweiterungen einbringen
 
 ###Was zeichnet ArtenDb aus?
 Die wichtigsten Merkmale dürften sein:
 
 - Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
 - Daten können einfach und rasch importiert werden...
-- ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man mit geringem Aufwand anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
+- ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man innert Minuten anderswo verfügbare Daten in ArtenDb vereinen und gemeinsam in Auswertungen verwenden
 
 <a href="#top">&#8593; top</a>
 
 <a name="Konzept"></a>
 #Fachliches Konzept
 ###Taxonomien
-[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren Eigenschaften auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
+[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensraumschlüssel. 
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-Momentan werden in der ArtenDb wird die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
+Momentan wird in der ArtenDb die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
 
-Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" statt "Datensammlung" und pro Objekt (Art oder Lebensraum) wird immer genau eine Taxonomie beschrieben (künftig - momentan ist das noch anders implementiert).
+Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" (statt "Datensammlung") und pro Objekt wird immer genau eine Taxonomie beschrieben (künftig - momentan ist das noch anders implementiert).
 
 Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
 
-Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien aufrufen und darstellen können. Im Standard wird bei Arten die Struktur der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt.
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Strukturbaum alle Taxonomien gleichzeitig angezeigt. Das ist hier übersichtlicher, weil es hier sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet.
+Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie keine nicht "offiziellen" Arten wie z.B. Synonyme. Sondern stattdessen Beziehungen zwischen offiziellen Arten und in anderen Taxonomien beschriebenen. Da die Daten von den nationalen Zentren (noch?) nicht so erhältlich sind, ist das leider nicht realisiert.
+
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle Taxonomien gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln (und deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können).
 
 ###Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
@@ -115,10 +118,10 @@ Wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim 
 
 Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später die neuen. Falls aber nachträglich eine ältere Datensammlung erfasst wird, für die bereits eine zusammenfassende Datensammlung existiert, sollte es die Möglichkeit geben, zu wählen, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Auswählen, aus welchen Quellen stammende zusammenfassende Einträge nicht überschrieben werden sollen.
 
-###Art- und Lebensraumeigenschaften...
+###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Arten oder Lebensräume. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
-###Beziehungen...
+###Beziehungen
 ...beschreiben das Zusammenspiel zwischen zwei oder mehr Arten und/oder Lebensräumen. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym".
 
 ###Gruppen vereinen
