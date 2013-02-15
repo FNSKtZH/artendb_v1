@@ -1,7 +1,7 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen. 
 
-Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden, dass alle benötigten Daten enthalten und möglichst aktuell sind.
+Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle benötigten Daten enthalten und möglichst aktuell sind.
 
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
@@ -22,7 +22,7 @@ Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden
 - Die aktuelle Datenbank basiert auf Microsoft Access. Technische Grenzen verhindern eine sinnvolle Weiterentwicklung und breite Verfügbarkeit
 
 ###Das Zielpublikum
-...befasst sich mit Arten und Lebensräumen, arbeitet also primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
+...befasst sich mit Arten und Lebensräumen. Es arbeitet also primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
 ###Ziele für die Benutzerin
 
@@ -38,9 +38,9 @@ Ihre Stärke ist der einfache Import von Daten. Damit soll gewährleistet werden
 ###Ziele für Datenpfleger und Systemverantwortliche
 
 - Datensammlungen können in wenigen Minuten importiert werden. Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
-- Die Datenstruktur ist bereits in den Rohdaten direkt sichtbar und verständlich
+- Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
 - Der Code ist gut dokumentiert
-- Der Code ist open source und alle Nutzer können eigene Erweiterungen einbringen
+- Der Code ist offen und Nutzer können eigene Erweiterungen entwickeln
 
 ###Was zeichnet ArtenDb aus?
 Die wichtigsten Merkmale dürften sein:
@@ -60,13 +60,13 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierungs- oder Lebensr
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-Momentan wird in der ArtenDb die aktuell vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
+Momentan wird in der ArtenDb die vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig sollen sie den Namen der Datensammlung bzw. Publikation erhalten.
 
 Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" (statt "Datensammlung") und pro Objekt wird immer genau eine Taxonomie beschrieben (künftig - momentan ist das noch anders implementiert).
 
 Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
 
-Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
 
 Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie keine nicht "offiziellen" Arten wie z.B. Synonyme. Sondern stattdessen Beziehungen zwischen offiziellen Arten und in anderen Taxonomien beschriebenen. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb leider nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
@@ -92,7 +92,7 @@ Ich bin mir noch nicht ganz im Klaren, ob statt "Datensammlung" der Begriff "Pub
 
 Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
-Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
+Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung". Dies hilft dem Benutzer auch, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen, welche heute schon in der ArtenDb vorhanden sind.
 
 In ArtenDb sollen auch Datensammlungen von synonymen Arten angezeigt und exportiert werden können.
 
@@ -119,16 +119,16 @@ Wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim 
 Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später die neuen. Es kann aber auch vorkommen, dass nachträglich eine ältere Datensammlung importiert wird, für die bereits eine zusammenfassende Datensammlung mit neueren Daten existiert. In diesem Fall sollte die Benutzerin wählen können, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Aus welchen Herkünften stammende zusammenfassende Einträge nicht überschrieben werden sollen.
 
 ###Art- und Lebensraumeigenschaften
-...beschreiben einzelne Arten oder Lebensräume. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
+...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungen
-...beschreiben das Verhältnis zwischen zwei oder mehr Arten und/oder Lebensräumen. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym".
+...beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym".
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die verschiedenen Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und müssen in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 ###Daten decodieren
-Traditionell werden Daten häufig codiert erfasst. Bis vor kurzem waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert, leistungshungrig und Rohdaten verlieren jede Aussagekraft. Deshalb sind codierte Informationen zu vermeiden.
+Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Die Rohdaten sind für Menschen nicht mehr lesbar. Deshalb sind codierte Informationen zu vermeiden.
 
 ###Datensammlungen aktualisieren
 Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
@@ -149,7 +149,7 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 
 **Hauptelemente**
 
-Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Strukturbaum und mit dem Suchfeld.
+Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Strukturbaum, der die Arten nach ihrer Verwandschaft darstellt. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Strukturbaum und mit dem Suchfeld. Zusätzlich sollen alle Verweise in den Formularen linkbar sein.
 
 **Suchfeld**
 
@@ -157,11 +157,11 @@ Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen.
 
 **Strukturbaum**
 
-Im Baum wird dynamisch die Hierarchie der Arten aufgebaut - soweit sie in der betreffenden Artengruppe vorliegt - bzw. die Hierarchie des Lebensraumschlüssels.
+Im Baum wird dynamisch die Hierarchie der Objekte aufgebaut - soweit sie in der betreffenden Gruppe vorliegt.
 
 **Formular**
 
-Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Daten angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art, des Lebensraums oder der Beziehung.<br>Hier ein Beispiel für Arteigenschaften:
+Klickt man auf den Namen einer Taxonomie, Datensammlung oder Beziehung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften der Art, des Lebensraums oder der Beziehung.<br>Hier ein Beispiel für Arteigenschaften:
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.png" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
 
 ...und eines für Beziehungen:
