@@ -235,29 +235,29 @@ Eingesetzt werden:
 * Die Datenbank [CouchDb](http://couchdb.apache.org/)
 * CouchDb als [CouchApp](http://couchapp.org/page/index). In dieser Form kann die Anwendung auch lokal installiert werden und sie ist ihr eigener Webserver
 * [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
-* [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets) und [Bootstrap](http://twitter.github.com/bootstrap/) für die Benutzeroberfläche
+* [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](http://twitter.github.com/bootstrap/) und [jsTree](http://www.jstree.com/) für die Benutzeroberfläche
 
 ###Dokumenten-Datenbank
-In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Die Arteigenschaften der Datensammlungen sind Felder in eigenen Tabellen. Sie werden 1:1 mit der Taxonomie verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Auch so bleiben viele Felder leer. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten die wenigsten Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
-Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument statt in starren Tabellen. Sie eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen machen!
+Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument statt in starren Tabellen. Sie eignet sich hervorragend, um ohne Einbezug des Systemadministrators jederzeit zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen brauchen!
 
 Sie ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Arten und Arten oder Arten und Lebensräumen gestalten sich entsprechend einfach.
 
 ###Datenstruktur
 ####Objekte
 
-Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Diese enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
+Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als eigene Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert (Typ: "Objekt"). Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
 
 Im Dokument wird die Taxonomie und alle das Objekt beschreibenden Datensammlungen beschrieben, z.B. mit:
-- Name (obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate)
+- Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
 - Allgemeine Beschreibung (ungefähr ein Literaturzitat)
 - Datenstand
 - Link
 
 Taxonomien haben den "Typ" "Taxonomie", Datensammlungen den Typ "Datensammlung".
 
-Alle Eigenschaften der Art oder des Lebensraums werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
+Alle Eigenschaften des Objekts werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
 Hier als Beispiel die Schlingnatter:
 <a name="JsonBeispiel"></a>
@@ -488,9 +488,9 @@ Hier als Beispiel die Schlingnatter:
 
 Das kann jeder Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Und die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist?
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? Dies ist in JSON kein Problem, da die Felder aufgrund der vorhandenen Hierarchie enthalten eindeutig sind.
 
-Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
+Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
 ####Beziehungen
 Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
@@ -519,7 +519,7 @@ Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
    }
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner (eigentlich Objekte, aber im Kontext der Beziehung ist der Begriff "Partner" aussagekräftiger). In der Regel zwei Arten und/oder Lebensräume aus beliebigen Gruppen.
+"Partner" sind die beteiligten Beziehungspartner (eigentlich Objekte, aber im Kontext der Beziehung ist der Begriff "Partner" aussagekräftiger). In der Regel zwei Objekte aus beliebigen Gruppen.
 
 In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
 
@@ -527,16 +527,16 @@ In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschr
 
 Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (z.B. JSON-Objekte in "Felder" mit den Feldern "Titel", "Header" und "Artikel").
 
-Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen EINES Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
+Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen _eines_ Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
 
-Beziehungen taxonomischer Art wie z.B. "synonym" erhalten neben dem Typ "Beziehung" auch einen Untertyp "taxonomisch".
+Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie spezifisch angesprochen und z.B. für den Aufbau eines Beziehungsbaums verwendet werden.
 
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
 #Realisierung
 ###Zeitplan
-Das ist ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
+Das ist grösstenteils ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
 
 Aktueller Stand:
 
@@ -561,12 +561,16 @@ Eigenschaften anzeigen:
 - Beziehungen zwischen verwandten Arten werden mit Links dargestellt. Der Link führt zur betreffenden Art
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
 
+Daten importieren:
+- Datensammlungen (im ersten Entwurf, wird noch verbessert)
+
 **To do**
 
-- Importe
+- Importe: Beziehungen, Taxonomien
 - Exporte
 - Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
+- Eventuell: Alle Objekte in der Anwendung bearbeiten
 
 <a href="#top">&#8593; top</a>
 
