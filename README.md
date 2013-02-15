@@ -68,15 +68,15 @@ Beziehungen zwischen taxonomischen Einheiten, z.B. "synonym", werden (künftig) 
 
 Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der aktuell vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
 
-Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie keine nicht "offiziellen" Arten wie z.B. Synonyme. Sondern stattdessen Beziehungen zwischen offiziellen Arten und in anderen Taxonomien beschriebenen. Da die Daten von den nationalen Zentren (noch?) nicht so erhältlich sind, ist das leider nicht realisiert.
+Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie keine nicht "offiziellen" Arten wie z.B. Synonyme. Sondern stattdessen Beziehungen zwischen offiziellen Arten und in anderen Taxonomien beschriebenen. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb leider nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
-In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle Taxonomien gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln (und deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können).
+In der ArtenDb werden Lebensraumschlüssel auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle Taxonomien gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
 
 ###Objekte
-<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet - "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
+<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Gruppen
-Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und das hat sich auch für viele Anwendungen eingebürgert und bewährt.
+Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und es hat sich auch für viele Anwendungen eingebürgert und bewährt.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
@@ -94,9 +94,9 @@ Datensammlungen sollten in der Regel durch die Autoren nachgeführt werden.
 
 Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, diese Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind Datensammlungen Eigenschaften der taxonomischen Einheit (Art oder Lebensraum) mit der Eigenschaft Typ = "Datensammlung".
 
-Es sollen auch Datensammlungen angezeigt und exportiert werden können, die bei einer synonymen Art beschrieben sind.
+In ArtenDb sollen auch Datensammlungen von synonymen Arten angezeigt und exportiert werden können.
 
-In fast allen Fällen ist es sinnvoll, die Informationen (Eigenschaften und Beziehungen) pro solcher Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
+In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
 
 ###Zusammenfassende Datensammlungen
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
@@ -107,14 +107,14 @@ Das soll so erfolgen:
 - Die entsprechenden Daten werden zwei mal importiert:
  - Ein mal in die Ursprungs-Datensammlung
  - Ein mal in die zusammenfassende
-- die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
+- Die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Wird z.B. für Heuschrecken eine neue Rote Liste publiziert, so werden nun beim Import:
 - Eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Daten importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
-- Entweder es gibt schon die zusammenfassende Datensammlung "Aktuelle Rote Liste". Dann werden die Daten hier hinein nochmals importiert. Dabei werden die bisherige Einträge überschrieben
-- Oder die zusammenfassende Datensammlung wird jetzt beschrieben und als zusammenfassend markiert. Dann werden die Daten nochmals in diese Datensammlung importiert. Zuvor müssen auch die Rote-Liste-Angaben aller anderen entsprechenden Datensammlungen importiert werden (z.B. indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden)
-- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der alte Rote-Liste-Status erhalten. Um dies klar zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
+- Entweder es gibt schon die zusammenfassende Datensammlung "Aktuelle Rote Liste". Dann werden die Daten hier hinein nochmals importiert. Dabei werden die bisherige Einträge der entsprechenden Objekte überschrieben
+- Oder die zusammenfassende Datensammlung wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst in ArtenDb von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten der aktuellen Rote-Liste-Datensammlung nochmals in diese Datensammlung importiert 
+- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der alte Rote-Liste-Status erhalten. Um dies deutlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
 Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später die neuen. Falls aber nachträglich eine ältere Datensammlung erfasst wird, für die bereits eine zusammenfassende Datensammlung existiert, sollte es die Möglichkeit geben, zu wählen, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Auswählen, aus welchen Quellen stammende zusammenfassende Einträge nicht überschrieben werden sollen.
 
