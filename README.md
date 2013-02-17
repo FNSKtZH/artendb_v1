@@ -117,7 +117,7 @@ Das soll so erfolgen:
 - Die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
-- Eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Eigenschaften importiert
+- Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Eigenschaften importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" hier hinein nochmals importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
 - Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten von "BAFU (2012): Rote Liste der Heuschrecken" nochmals in diese Datensammlung importiert
