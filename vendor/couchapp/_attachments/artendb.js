@@ -579,6 +579,8 @@ function initiiere_art(id) {
 					}
 					//jetzt die Links im Menu setzen
 					setzteLinksZuBilderUndWikipedia(art);
+					//und die URL anpassen
+					history.replaceState({id: "id"}, "id", "index.html?id=" + id);
 				}
 			});
 		},
