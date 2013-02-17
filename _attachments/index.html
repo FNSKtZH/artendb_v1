@@ -256,6 +256,12 @@
 					return;
 				}
 
+				//prüfen, ob history unterstützt wird. Wenn nein, melden und Einsteigen verhindern
+				if (!Modernizr.history) {
+					$('#meldung_kompatibilität').modal();
+					return;
+				}
+
 				$("#suchen").hide();
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
