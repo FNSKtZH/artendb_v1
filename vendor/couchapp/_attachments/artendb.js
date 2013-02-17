@@ -1,5 +1,6 @@
 function erstelleBaum() {
 	var baum;
+	var baum_erstellt = $.Deferred();
 	//alle Bäume ausblenden
 	$(".baum").css("display", "none");
 	//alle Beschriftungen ausblenden
@@ -68,7 +69,9 @@ function erstelleBaum() {
 													};
 												baum.push(child_klasse);
 											}
-											erstelleTree(baum);
+											$.when(erstelleTree(baum)).then(function() {
+												baum_erstellt.resolve();
+											});
 											if (!window.baum_fauna) {
 												//speichern, damit das nächste mal keine Datenbankabfrage nötig ist
 												window.baum_fauna = baum;
@@ -86,6 +89,7 @@ function erstelleBaum() {
 			$("#suchen").show();
 			$("#suchfeld").focus();
 			setzeTreehoehe();
+			baum_erstellt.resolve();
 		}
 	} else if (window.Gruppe === "Flora") {
 		//nur aufbauen, wenn noch nicht erfolgt
@@ -130,7 +134,9 @@ function erstelleBaum() {
 											};
 										baum.push(child_familie);
 									}
-									erstelleTree(baum);
+									$.when(erstelleTree(baum)).then(function() {
+										baum_erstellt.resolve();
+									});
 									if (!window.baum_flora) {
 										//speichern, um wiederholte Abfrage zu vermeiden
 										window.baum_flora = baum;
@@ -146,6 +152,7 @@ function erstelleBaum() {
 			$("#suchen").show();
 			$("#suchfeld").focus();
 			setzeTreehoehe();
+			baum_erstellt.resolve();
 		}
 	} else if (window.Gruppe === "Moose") {
 		//nur aufbauen, wenn noch nicht erfolgt
@@ -203,7 +210,9 @@ function erstelleBaum() {
 													};
 												baum.push(child_klasse);
 											}
-											erstelleTree(baum);
+											$.when(erstelleTree(baum)).then(function() {
+												baum_erstellt.resolve();
+											});
 											if (!window.baum_moose) {
 												//speichern, um wiederholten Aufruf zu vermeiden
 												window.baum_moose = baum;
@@ -221,6 +230,7 @@ function erstelleBaum() {
 			$("#suchen").show();
 			$("#suchfeld").focus();
 			setzeTreehoehe();
+			baum_erstellt.resolve();
 		}
 	} else if (window.Gruppe === "Macromycetes") {
 		//nur aufbauen, wenn noch nicht erfolgt
@@ -252,7 +262,9 @@ function erstelleBaum() {
 									};
 								baum.push(child_gattung);
 							}
-							erstelleTree(baum);
+							$.when(erstelleTree(baum)).then(function() {
+								baum_erstellt.resolve();
+							});
 							if (!window.baum_macromycetes) {
 								//speichern, um wiederholten Aufruf zu vermeiden
 								window.baum_macromycetes = baum;
@@ -266,6 +278,7 @@ function erstelleBaum() {
 			$("#suchen").show();
 			$("#suchfeld").focus();
 			setzeTreehoehe();
+			baum_erstellt.resolve();
 		}
 	} else if (window.Gruppe === "Lebensräume") {
 		//nur aufbauen, wenn noch nicht erfolgt
@@ -391,7 +404,9 @@ function erstelleBaum() {
 																					};
 																				baum.push(child_level0);
 																			}
-																			erstelleTree(baum);
+																			$.when(erstelleTree(baum)).then(function() {
+																				baum_erstellt.resolve();
+																			});
 																			if (!window.baum_lr) {
 																				//speichern, um wiederholten Aufruf zu vermeiden
 																				window.baum_lr = baum;
@@ -417,11 +432,14 @@ function erstelleBaum() {
 			$("#suchen").show();
 			$("#suchfeld").focus();
 			setzeTreehoehe();
+			baum_erstellt.resolve();
 		}
 	}
+	return baum_erstellt.promise();
 }
 
 function erstelleTree(baum) {
+	var jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
 			"data": baum
@@ -460,6 +478,7 @@ function erstelleTree(baum) {
 		}
 	})
 	.bind("loaded.jstree", function (event, data) {
+		jstree_erstellt.resolve();
 		$("#suchen").show();
 		$("#suchfeld").focus();
 		$("#tree" + window.Gruppe).css("display", "block");
@@ -472,6 +491,7 @@ function erstelleTree(baum) {
 	.bind("after_close.jstree", function (e, data) {
 		setzeTreehoehe();
 	});
+	return jstree_erstellt.promise();
 }
 
 function initiiere_art(id) {
@@ -1406,6 +1426,29 @@ function entferneEigenschaftAusDokument(id, EigName) {
 		}
 	});
 	//return EigEntfernt.promise();
+}
+
+//prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
+function oeffneUri() {
+	var uri = new Uri($(location).attr('href'));
+	var id = uri.getQueryParamValue('id');
+	if (id) {
+		//Gruppe ermitteln
+		$db = $.couch.db("artendb");
+		$db.openDoc(id, {
+			success: function (objekt) {
+				//window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
+				window.Gruppe = objekt.Gruppe;
+				//den richtigen Button aktivieren
+				$("#Gruppe" + objekt.Gruppe).button('toggle');
+				//tree aufbauen, danach Datensatz initiieren
+				$.when(erstelleBaum()).then(function() {
+					//jetzt das Objekt im Baum markieren, was auch das Objekt initiiert
+					$("#tree" + window.Gruppe).jstree("select_node", "#" + id);
+				});
+			}
+		});
+	}
 }
 
 
