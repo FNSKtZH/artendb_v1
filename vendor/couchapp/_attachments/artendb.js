@@ -444,16 +444,16 @@ function erstelleTree(baum) {
 		"json_data": {
 			"data": baum
 		},
+		"ui": {
+			"select_limit": 1,	//nur ein Datensatz kann aufs mal gewählt werden
+			"selected_parent_open": true,	//wenn Code einen node wählt, werden alle parents geöffnet
+			"select_prev_on_delete": true
+		},
 		"core": {
 			"open_parents": true,	//wird ein node programmatisch geöffnet, öffnen sich alle parents
 			"strings": {	//Deutsche Übersetzungen
 				"loading": "hole Daten..."
 			}
-		},
-		"ui": {
-			"select_limit": 1,	//nur ein Datensatz kann aufs mal gewählt werden
-			"selected_parent_open": true,	//wenn Code einen node wählt, werden alle parents geöffnet
-			"select_prev_on_delete": true
 		},
 		"search": {
 			"case_insensitive": true,
@@ -462,7 +462,7 @@ function erstelleTree(baum) {
 		"themes": {
 			"icons": false
 		},
-		"plugins" : ["themes", "json_data", "ui", "search"]
+		"plugins" : ["ui", "themes", "json_data", "search"]
 	})
 	.bind("select_node.jstree", function (e, data) {
 		var node;
@@ -580,7 +580,7 @@ function initiiere_art(id) {
 					//jetzt die Links im Menu setzen
 					setzteLinksZuBilderUndWikipedia(art);
 					//und die URL anpassen
-					history.replaceState({id: "id"}, "id", "index.html?id=" + id);
+					history.pushState({id: "id"}, "id", "index.html?id=" + id);
 				}
 			});
 		},
@@ -1434,6 +1434,7 @@ function entferneEigenschaftAusDokument(id, EigName) {
 function oeffneUri() {
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
+	console.log("öffne uri");
 	if (id) {
 		//Gruppe ermitteln
 		$db = $.couch.db("artendb");
@@ -1441,12 +1442,14 @@ function oeffneUri() {
 			success: function (objekt) {
 				//window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
 				window.Gruppe = objekt.Gruppe;
+				$(".baum.jstree").jstree("deselect_all");
 				//den richtigen Button aktivieren
 				$("#Gruppe" + objekt.Gruppe).button('toggle');
 				//tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum()).then(function() {
 					//jetzt das Objekt im Baum markieren, was auch das Objekt initiiert
-					$("#tree" + window.Gruppe).jstree("select_node", "#" + id);
+					//um beim vor- oder rückbewegen in der history den richtigen Baum anzusprechen, muss der aktuve Baum gewählt werden
+					$(".baum.jstree").jstree("select_node", "#" + id);
 				});
 			}
 		});

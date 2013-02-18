@@ -265,7 +265,11 @@
 				$("#suchen").hide();
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
-				oeffneUri();
+				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
+				window.addEventListener('popstate', function(event) {
+					console.log("popstate");
+					oeffneUri();
+				});
 
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
