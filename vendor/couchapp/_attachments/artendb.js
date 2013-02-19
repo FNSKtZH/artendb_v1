@@ -1450,7 +1450,6 @@ function entferneEigenschaftAusDokument(id, EigName) {
 function oeffneUri() {
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
-	console.log("öffne uri");
 	if (id) {
 		//Gruppe ermitteln
 		$db = $.couch.db("artendb");

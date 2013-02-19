@@ -33,7 +33,7 @@
 						<li class="disabled"><a id="beziehungen_importieren" href="#">Beziehungen</a></li>
 					</ul>
 				</li>
-				<li class="disabled"><a href="#">Daten exportieren</a></li>
+				<li><a id="exportieren" href="#">Daten exportieren</a></li>
 				<li class="dropdown-submenu">
 					<a tabindex="-1" href="#">über diese Anwendung</a>
 					<ul class="dropdown-menu">
@@ -245,6 +245,66 @@
 				</div>		
 			</form>
 
+			<form id="export" class="form form-horizontal" action="#" method="get" autocomplete="off">
+				<div class="accordion" id="exportieren_accordion">
+					<div class="accordion-group" id="exportieren_objekte_waehlen_gruppen">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#exportieren_accordion" href="#exportieren_objekte_waehlen_gruppen_collapse">1. Arten / Lebensräume wählen: Nach Gruppen</a>
+						</div>
+						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_gruppen_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="exportieren_objekte_waehlen_eigenschaften">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#exportieren_accordion" href="#exportieren_objekte_waehlen_eigenschaften_collapse">2. Arten / Lebensräume wählen: Nach Eigenschaften</a>
+						</div>
+						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="exportieren_felder_waehlen_taxonomie">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="exportieren_felder_waehlen_taxonomie_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#exportieren_accordion" href="#exportieren_felder_waehlen_taxonomie_collapse">3. Eigenschaften wählen: Aus der Taxonomie</a>
+						</div>
+						<div class="accordion-body collapse" id="exportieren_felder_waehlen_taxonomie_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="exportieren_felder_waehlen_datesammlungen">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="exportieren_felder_waehlen_datesammlungen_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#exportieren_accordion" href="#exportieren_felder_waehlen_datesammlungen_collapse">3. Eigenschaften wählen: Aus Datensammlungen</a>
+						</div>
+						<div class="accordion-body collapse" id="exportieren_felder_waehlen_datesammlungen_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="exportieren_exportieren">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-parent="#exportieren_accordion" href="#exportieren_exportieren_collapse">4. Export prüfen</a>
+						</div>
+						<div class="accordion-body collapse" id="exportieren_exportieren_collapse">
+							<div class="accordion-inner">
+								
+							</div>
+						</div>
+					</div>
+
+				</div>		
+			</form>
+
 		</fieldset>
 
 		<script>
@@ -267,7 +327,6 @@
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
 				window.addEventListener('popstate', function(event) {
-					console.log("popstate");
 					oeffneUri();
 				});
 
@@ -441,6 +500,10 @@
 						//jetzt Ergebnisse anzeigen
 						console.log("Import ist fertig");
 					});
+				});
+
+				$("#menu_btn").on("click", "#exportieren", function() {
+					zeigeFormular("export");
 				});
 				
 				//Suche steuern bei Eingabe
