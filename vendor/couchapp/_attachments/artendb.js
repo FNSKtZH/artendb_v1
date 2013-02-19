@@ -1016,6 +1016,14 @@ function zeigeFormular(Formularname) {
 	});
 
 	if (Formularname) {
+		if (Formularname === "import") {
+			//URL anpassen, damit kein Objekt angezeigt wird
+			history.replaceState({id: "id"}, "id", "index.html?");
+			//alle Bäume ausblenden
+			$("#suchen").hide();
+			$(".baum").css("display", "none");
+			$(".treeBeschriftung").css("display", "none");
+		}
 		$('form').each(function() {
 			if ($(this).attr("id") === Formularname) {
 				$("#forms").show();
