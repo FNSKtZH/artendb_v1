@@ -1016,15 +1016,21 @@ function zeigeFormular(Formularname) {
 	});
 
 	if (Formularname) {
-		if (Formularname === "import") {
+		if (Formularname !== "art") {
 			//URL anpassen, damit kein Objekt angezeigt wird
-			history.replaceState({id: "id"}, "id", "index.html?");
-			//alle Bäume ausblenden
+			history.pushState({id: "id"}, "id", "index.html?");
+			//alle Bäume ausblenden, suchfeld, Baumtitel
 			$("#suchen").hide();
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
 			//Gruppe Schaltfläche deaktivieren
-			$("[name='Gruppe'].active").button('toggle');
+			$('#Gruppe .active').button('toggle');	//FUNTIONIERT ALLES NICHT, BUTTON BLEIBT AKTIV!!!!!!!!
+
+			/*console.log("typeof window.Gruppe = " + typeof window.Gruppe);
+			if (typeof window.Gruppe === "string") {
+				console.log("window.Gruppe = " + window.Gruppe);
+				$("#Gruppe" + window.Gruppe).button('toggle');
+			}*/
 		}
 		$('form').each(function() {
 			if ($(this).attr("id") === Formularname) {
