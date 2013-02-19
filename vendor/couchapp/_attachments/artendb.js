@@ -1023,6 +1023,8 @@ function zeigeFormular(Formularname) {
 			$("#suchen").hide();
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
+			//Gruppe Schaltfläche deaktivieren
+			$("[name='Gruppe'].active").button('toggle');
 		}
 		$('form').each(function() {
 			if ($(this).attr("id") === Formularname) {
