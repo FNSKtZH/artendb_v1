@@ -292,6 +292,12 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_taxonomie_collapse">
 							<div class="accordion-inner">
+								<label class="checkbox">
+									<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld" type="checkbox" value="_id">GUID
+								</label>
+								<label class="checkbox">
+									<input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld" type="checkbox" value="Gruppe">Gruppe
+								</label>
 								<div id="exportieren_felder_waehlen_taxonomie_felderliste"></div>
 							</div>
 						</div>
@@ -310,11 +316,12 @@
 
 					<div class="accordion-group" id="exportieren_exportieren">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" href="#">4. Export prüfen</a>
+							<a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" href="#">4. Exportieren</a>
 						</div>
 						<div class="accordion-body collapse" id="exportieren_exportieren_collapse">
 							<div class="accordion-inner">
-								
+								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Export prüfen</button>
+								<div id="exportieren_exportieren_tabelle" class="tabelle"></div>
 							</div>
 						</div>
 					</div>
@@ -594,6 +601,44 @@
 							console.log("window.exportieren_taxonomien = " + JSON.stringify(window.exportieren_taxonomien));
 						}
 					});
+				});
+
+				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function() {
+					//Objekt mit allen Objekten kopieren und nicht gewollte Felder entfernen
+					var exportobjekte = [];
+					var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
+					var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
+					//durch alle Objekte gehen
+					for (i in window.exportieren_objekte) {
+						if (window.exportieren_objekte.hasOwnProperty(i)) {
+							var Objekt = {};
+							//id und gruppe
+							if (id_ist_gewaehlt) {
+								Objekt._id = window.exportieren_objekte[i]._id;
+							}
+							if (gruppe_ist_gewaehlt) {
+								Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
+							}
+							//durch alle Eigenschaften gehen
+							for (x in exportieren_objekte[i]) {
+								if (exportieren_objekte[i].hasOwnProperty(x)) {
+									//Innerhalb der Taxonomie
+									//alle Eigenschaften ausser "Felder" entfernen
+									//und alle nicht gewählten Felder entfernen
+									if (exportieren_objekte[i].Typ === "Taxonomie") {
+
+									}
+									
+									//Innerhalb Datensammlung
+									//Wenn kein Feld einer Datensammlung gewählt wurde: Datensammlung löschen
+									//Wenn Felder gewählt wurden: alle Eigenschaften ausser "Felder" entfernen
+									//und alle nicht gewählten entfernen
+								}
+							}
+							exportobjekte.push(Objekt);		
+						}
+					}
+					console.log("exportobjekte = " + JSON.stringify(exportobjekte));
 				});
 				
 				//Suche steuern bei Eingabe
