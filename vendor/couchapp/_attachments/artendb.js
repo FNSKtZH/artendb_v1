@@ -1510,12 +1510,10 @@ function erstelleExportString(exportobjekte) {
 	var stringTitelzeile = "";
 	var stringZeilen = "";
 	//titelzeile erstellen
-	var erstesFeld = "";
 	//durch Spalten loopen
 	for (i in exportobjekte[1]) {
 		if (stringTitelzeile !== "") {
 			stringTitelzeile += ',';
-			erstesFeld = i;
 		}
 		stringTitelzeile += '"' + i + '"';
 	}
@@ -1545,7 +1543,6 @@ function erstelleExportString(exportobjekte) {
 		}
 		stringZeilen += stringZeile;
 	}
-	console.log("erstesFeld = " + erstesFeld);
 	return stringTitelzeile + "\n" + stringZeilen;
 }
 
