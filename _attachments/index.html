@@ -528,6 +528,8 @@
 					//hier hinein werden alle Felder kopiert
 					window.exportieren_datensammlungen_namen = [];
 					window.exportieren_datensammlungen = [];
+					window.exportieren_taxonomien_namen = [];
+					window.exportieren_taxonomien = [];
 				});
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
@@ -551,12 +553,25 @@
 											if (window.exportieren_datensammlungen_namen.indexOf(x) === -1) {
 												window.exportieren_datensammlungen_namen.push(x);
 												window.exportieren_datensammlungen.push(data.rows[i].doc[x]);
-											} else {
+											} else if (data.rows[i].doc[x].Felder) {
 												//kontrollieren, ob alle Felder schon enthalten sind
 												//fehlende ergänzen
-												for (z in data.rows[i].doc[x]) {
-													if (!window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)][z]) {
-														window.exportieren_datensammlungen[z] = data.rows[i].doc[x][z];
+												for (z in data.rows[i].doc[x].Felder) {
+													if (!window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z]) {
+														window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z] = data.rows[i].doc[x].Felder[z];
+													}
+												}
+											}
+										} else if (data.rows[i].doc[x].Typ && data.rows[i].doc[x].Typ === "Taxonomie") {
+											if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
+												window.exportieren_taxonomien_namen.push(x);
+												window.exportieren_taxonomien.push(data.rows[i].doc[x]);
+											} else if (data.rows[i].doc[x].Felder) {
+												//kontrollieren, ob alle Felder schon enthalten sind
+												//fehlende ergänzen
+												for (z in data.rows[i].doc[x].Felder) {
+													if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
+														window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = data.rows[i].doc[x].Felder[z];
 													}
 												}
 											}
@@ -569,6 +584,8 @@
 							$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + that.value).html() + " geladen<br>Total " + window.exportieren_guids.length + " Objekte geladen");
 							console.log("window.exportieren_datensammlungen_namen = " + window.exportieren_datensammlungen_namen);
 							console.log("window.exportieren_datensammlungen = " + JSON.stringify(window.exportieren_datensammlungen));
+							console.log("window.exportieren_taxonomien_namen = " + window.exportieren_taxonomien_namen);
+							console.log("window.exportieren_taxonomien = " + JSON.stringify(window.exportieren_taxonomien));
 						}
 					});
 				});
