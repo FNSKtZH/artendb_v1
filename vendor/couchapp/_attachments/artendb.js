@@ -1217,7 +1217,14 @@ function erstelleTabelle(Datensätze, div_id) {
 		for (x in Datensätze[i]) {
 			//Spalte anlegen
 			html += "<td>";
-			html += Datensätze[i][x];
+			if (typeof Datensätze[i][x] === "object") {
+				html += JSON.stringify(Datensätze[i][x]);
+			} else if (Datensätze[i][x]) {
+				html += Datensätze[i][x];
+			} else {
+				//nullwerte als leerwerte (nicht) anzeigen
+				html += "";
+			}
 			//Spalte abschliessen
 			html += "</td>";
 		}
@@ -1276,7 +1283,6 @@ function meldeErfolgVonIdIdentifikation() {
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.DsId + '"]&endkey=["' + window.DsId + '",{},{}]', {
 				success: function (data) {
-					//console.log("data.rows = " + JSON.stringify(data.rows));
 					for (i in window.Datensätze) {
 						//durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window.Datensätze[i][window.DsFelderId]) === -1) {
@@ -1477,7 +1483,7 @@ function erstelleFelderUmTaxonomieEigenschaftenZuWaehlen() {
 		html += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
 		for (x in window.exportieren_taxonomien[i].Felder) {
 			html += '<label class="checkbox">';
-			html += '<input class="exportieren_felder_waehlen_taxonomie_feld" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html += '<input class="feld_waehlen" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html += '</label>';
 		}
 	}
@@ -1493,11 +1499,54 @@ function erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen() {
 		html += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
 		for (x in window.exportieren_datensammlungen[i].Felder) {
 			html += '<label class="checkbox">';
-			html += '<input class="exportieren_felder_waehlen_datensammlungen_feld" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
+			html += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
 			html += '</label>';
 		}
 	}
 	return html;
+}
+
+function erstelleExportString(exportobjekte) {
+	var stringTitelzeile = "";
+	var stringZeilen = "";
+	//titelzeile erstellen
+	var erstesFeld = "";
+	//durch Spalten loopen
+	for (i in exportobjekte[1]) {
+		if (stringTitelzeile !== "") {
+			stringTitelzeile += ',';
+			erstesFeld = i;
+		}
+		stringTitelzeile += '"' + i + '"';
+	}
+	//Datenzeilen erstellen
+	for (i in exportobjekte) {
+		if (stringZeilen !== "") {
+			stringZeilen += '\n';
+		}
+		var stringZeile = "";
+		//durch die Felder loopen
+		for (x in exportobjekte[i]) {
+		//for (var x = 0; x < exportobjekte[i].length; x++) {
+			if (stringZeile !== "") {
+				stringZeile += ',';
+			}
+			//Zahlen ohne Anführungs- und Schlusszeichen exportieren
+			if (typeof exportobjekte[i][x] === "number") {
+				stringZeile += exportobjekte[i][x];
+			} else if (typeof exportobjekte[i][x] === "object") {
+				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
+				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
+			} else if (exportobjekte[i][x] === null) {
+				stringZeile += "";
+			} else {
+				stringZeile += '"' + exportobjekte[i][x] + '"';
+			}
+		}
+		stringZeilen += stringZeile;
+	}
+	console.log("erstesFeld = " + erstesFeld);
+	return stringTitelzeile + "\n" + stringZeilen;
 }
 
 
