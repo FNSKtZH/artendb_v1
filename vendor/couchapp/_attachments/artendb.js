@@ -1471,6 +1471,35 @@ function oeffneUri() {
 	}
 }
 
+function erstelleFelderUmTaxonomieEigenschaftenZuWaehlen() {
+	var html = '';
+	for (i in window.exportieren_taxonomien) {
+		html += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
+		for (x in window.exportieren_taxonomien[i].Felder) {
+			html += '<label class="checkbox">';
+			html += '<input class="exportieren_felder_waehlen_taxonomie_feld" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html += '</label>';
+		}
+	}
+	return html;
+}
+
+function erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen() {
+	var html = '';
+	for (i in window.exportieren_datensammlungen) {
+		if (html !== '') {
+			html += '<hr>';
+		}
+		html += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
+		for (x in window.exportieren_datensammlungen[i].Felder) {
+			html += '<label class="checkbox">';
+			html += '<input class="exportieren_felder_waehlen_datensammlungen_feld" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
+			html += '</label>';
+		}
+	}
+	return html;
+}
+
 
 
 

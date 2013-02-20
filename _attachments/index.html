@@ -292,7 +292,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_taxonomie_collapse">
 							<div class="accordion-inner">
-								
+								<div id="exportieren_felder_waehlen_taxonomie_felderliste"></div>
 							</div>
 						</div>
 					</div>
@@ -303,7 +303,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_datesammlungen_collapse">
 							<div class="accordion-inner">
-								
+								<div id="exportieren_felder_waehlen_datesammlungen_felderliste"></div>
 							</div>
 						</div>
 					</div>
@@ -552,6 +552,8 @@
 										if (data.rows[i].doc[x].Typ && data.rows[i].doc[x].Typ === "Datensammlung") {
 											if (window.exportieren_datensammlungen_namen.indexOf(x) === -1) {
 												window.exportieren_datensammlungen_namen.push(x);
+												//Namen der Datensammlung im Objekt ergänzen
+												data.rows[i].doc[x].Name = x;
 												window.exportieren_datensammlungen.push(data.rows[i].doc[x]);
 											} else if (data.rows[i].doc[x].Felder) {
 												//kontrollieren, ob alle Felder schon enthalten sind
@@ -565,6 +567,8 @@
 										} else if (data.rows[i].doc[x].Typ && data.rows[i].doc[x].Typ === "Taxonomie") {
 											if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
 												window.exportieren_taxonomien_namen.push(x);
+												//Namen der Taxonomie im Objekt ergänzen
+												data.rows[i].doc[x].Name = x;
 												window.exportieren_taxonomien.push(data.rows[i].doc[x]);
 											} else if (data.rows[i].doc[x].Felder) {
 												//kontrollieren, ob alle Felder schon enthalten sind
@@ -582,8 +586,10 @@
 							//Ergebnis rückmelden
 							$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 							$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + that.value).html() + " geladen<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+							$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen());
 							console.log("window.exportieren_datensammlungen_namen = " + window.exportieren_datensammlungen_namen);
 							console.log("window.exportieren_datensammlungen = " + JSON.stringify(window.exportieren_datensammlungen));
+							$("#exportieren_felder_waehlen_taxonomie_felderliste").html(erstelleFelderUmTaxonomieEigenschaftenZuWaehlen());
 							console.log("window.exportieren_taxonomien_namen = " + window.exportieren_taxonomien_namen);
 							console.log("window.exportieren_taxonomien = " + JSON.stringify(window.exportieren_taxonomien));
 						}
