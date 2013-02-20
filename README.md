@@ -573,12 +573,15 @@ Eigenschaften anzeigen:
 - Felder, die nur einen Web-Link enthalten, werden als Link angezeigt
 
 Daten importieren:
-- Datensammlungen (im ersten Entwurf, wird noch verbessert)
+- Datensammlungen (erster Entwurf, wird noch verbessert)
+
+Daten exportieren:
+- Datensammlungen (erster Entwurf, wird noch verbessert)
 
 **To do**
 
 - Importe: Beziehungen, Taxonomien
-- Exporte
+- Exporte: Beziehungen
 - Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
 - Eventuell: Alle Objekte in der Anwendung bearbeiten
