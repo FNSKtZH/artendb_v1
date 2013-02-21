@@ -1477,33 +1477,55 @@ function oeffneUri() {
 	}
 }
 
-function erstelleFelderUmTaxonomieEigenschaftenZuWaehlen() {
-	var html = '';
+function erstelleExportfelderTaxonomie() {
+	var html_felder_waehlen = '';
+	var html_filtern = '';
 	for (i in window.exportieren_taxonomien) {
-		html += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
+		html_felder_waehlen += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
+		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + window.exportieren_taxonomien[i].Name + '</h5></label></div>';
 		for (x in window.exportieren_taxonomien[i].Felder) {
-			html += '<label class="checkbox">';
-			html += '<input class="feld_waehlen" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
-			html += '</label>';
+			//felder wählen
+			html_felder_waehlen += '<label class="checkbox">';
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '</label>';
+			//filtern
+			html_filtern += '<div class="control-group">';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
+			html_filtern += '<div class="controls">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '</div>';
+			html_filtern += '</div>';
 		}
 	}
-	return html;
+	$("#exportieren_felder_waehlen_taxonomie_felderliste").html(html_felder_waehlen);
+	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
 }
 
-function erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen() {
-	var html = '';
+function erstelleExportfelderDatensammlungen() {
+	var html_felder_waehlen = '';
+	var html_filtern = '<hr>';
 	for (i in window.exportieren_datensammlungen) {
-		if (html !== '') {
-			html += '<hr>';
+		if (html_felder_waehlen !== '') {
+			html_felder_waehlen += '<hr>';
 		}
-		html += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
+		html_felder_waehlen += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
+		html_filtern += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
 		for (x in window.exportieren_datensammlungen[i].Felder) {
-			html += '<label class="checkbox">';
-			html += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
-			html += '</label>';
+			//felder wählen
+			html_felder_waehlen += '<label class="checkbox">';
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '</label>';
+			//filtern
+			html_filtern += '<div class="control-group">';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
+			html_filtern += '<div class="controls">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">';
+			html_filtern += '</div>';
+			html_filtern += '</div>';
 		}
 	}
-	return html;
+	$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(html_felder_waehlen);
+	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
 }
 
 function erstelleExportString(exportobjekte) {
@@ -1608,9 +1630,9 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 	}
 	//Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen"); //statt geladen entfernt, wenn entfernt wurde
-	$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen());
-	$("#exportieren_felder_waehlen_taxonomie_felderliste").html(erstelleFelderUmTaxonomieEigenschaftenZuWaehlen());
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+	erstelleExportfelderTaxonomie();
+	erstelleExportfelderDatensammlungen();
 }
 
 //bereitet Daten für den Export auf: entfernt Objekte aus der getätigten Auswahl
