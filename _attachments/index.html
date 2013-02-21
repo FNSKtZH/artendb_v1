@@ -534,7 +534,7 @@
 					window.exportieren_objekte = [];
 				});
 
-				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
+				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function(event) {
 					var that = this;
 					if ($(this).prop('checked')) {
 						//Beschäftigung melden
@@ -563,6 +563,8 @@
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function() {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();
 					//Objekt mit allen Objekten kopieren und nicht gewollte Felder entfernen
 					var exportobjekte = [];
 					var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
@@ -643,12 +645,19 @@
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function() {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();	
 					var blob = new Blob([window.exportstring], {type: "text/plain;charset=utf-8"});
 					var d = new Date();
 					var month = d.getMonth()+1;
 					var day = d.getDate();
 					var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 					saveAs(blob, output + "_export.csv");
+				});
+
+				$("#export").on("click", ".accordion-heading a", function(event) {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();	
 				});
 				
 				//Suche steuern bei Eingabe
