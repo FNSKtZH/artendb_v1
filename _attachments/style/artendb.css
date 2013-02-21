@@ -238,6 +238,8 @@ a:hover {
 .BeschreibungDatensammlung {
 	/*font-size:80%;*/
 	padding-bottom: 0.5em;
+	/*sehr lange links müssen im Wort umbrechen können*/
+	word-wrap: break-word;
 }
 
 /*alle Datenfelder links ausrichten*/
