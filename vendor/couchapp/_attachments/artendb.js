@@ -1549,43 +1549,57 @@ function erstelleExportString(exportobjekte) {
 //bereitet Daten für den Export auf
 //erwartet das Resultat der Datenabfrage aus der DB
 //und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
-function bereiteGruppeFuerExportAuf(data, gruppe) {
+function ergaenzeGruppeFuerExport(data, gruppe) {
 	for (i in data.rows) {
 		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) === -1) {
 			//guid an guid-array anfügen, wenn noch nicht enthalten
 			window.exportieren_guids.push(data.rows[i].key[0]);
 			//Objekt anfügen
 			window.exportieren_objekte.push(data.rows[i].doc);
-			//Datensammlungen anfügen
-			for (x in data.rows[i].doc) {
-				if (data.rows[i].doc[x].Typ && data.rows[i].doc[x].Typ === "Datensammlung") {
-					if (window.exportieren_datensammlungen_namen.indexOf(x) === -1) {
-						window.exportieren_datensammlungen_namen.push(x);
-						//Namen der Datensammlung im Objekt ergänzen
-						data.rows[i].doc[x].Name = x;
-						window.exportieren_datensammlungen.push(data.rows[i].doc[x]);
-					} else if (data.rows[i].doc[x].Felder) {
-						//kontrollieren, ob alle Felder schon enthalten sind
-						//fehlende ergänzen
-						for (z in data.rows[i].doc[x].Felder) {
-							if (!window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z]) {
-								window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z] = data.rows[i].doc[x].Felder[z];
-							}
+		}
+	}
+	erstelleListeFuerFeldwahl(data, gruppe, "geladen");
+}
+
+//baut globale Variabeln auf, mit denen im Formular "export" die Liste aller Eigenschaften aufgebaut werden kann
+//braucht data und gruppe für die Rückmeldung
+function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
+	window.exportieren_datensammlungen_namen = [];
+	window.exportieren_datensammlungen = [];
+	window.exportieren_taxonomien_namen = [];
+	window.exportieren_taxonomien = [];
+	//Datensammlungen anfügen
+	//durch alle Objekte loopen
+	for (i in window.exportieren_objekte) {
+		//durch alle Eigenschaften des Objekts loopen
+		for (x in window.exportieren_objekte[i]) {
+			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung") {
+				if (window.exportieren_datensammlungen_namen.indexOf(x) === -1) {
+					window.exportieren_datensammlungen_namen.push(x);
+					//Namen der Datensammlung im Objekt ergänzen
+					window.exportieren_objekte[i][x].Name = x;
+					window.exportieren_datensammlungen.push(window.exportieren_objekte[i][x]);
+				} else if (window.exportieren_objekte[i][x].Felder) {
+					//kontrollieren, ob alle Felder schon enthalten sind
+					//fehlende ergänzen
+					for (z in window.exportieren_objekte[i][x].Felder) {
+						if (!window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z]) {
+							window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
 						}
 					}
-				} else if (data.rows[i].doc[x].Typ && data.rows[i].doc[x].Typ === "Taxonomie") {
-					if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
-						window.exportieren_taxonomien_namen.push(x);
-						//Namen der Taxonomie im Objekt ergänzen
-						data.rows[i].doc[x].Name = x;
-						window.exportieren_taxonomien.push(data.rows[i].doc[x]);
-					} else if (data.rows[i].doc[x].Felder) {
-						//kontrollieren, ob alle Felder schon enthalten sind
-						//fehlende ergänzen
-						for (z in data.rows[i].doc[x].Felder) {
-							if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
-								window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = data.rows[i].doc[x].Felder[z];
-							}
+				}
+			} else if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie") {
+				if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
+					window.exportieren_taxonomien_namen.push(x);
+					//Namen der Taxonomie im Objekt ergänzen
+					window.exportieren_objekte[i][x].Name = x;
+					window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
+				} else if (window.exportieren_objekte[i][x].Felder) {
+					//kontrollieren, ob alle Felder schon enthalten sind
+					//fehlende ergänzen
+					for (z in window.exportieren_objekte[i][x].Felder) {
+						if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
+							window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
 						}
 					}
 				}
@@ -1594,9 +1608,35 @@ function bereiteGruppeFuerExportAuf(data, gruppe) {
 	}
 	//Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " geladen<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen"); //statt geladen entfernt, wenn entfernt wurde
 	$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(erstelleFelderUmDatensammlungenEigenschaftenZuWaehlen());
 	$("#exportieren_felder_waehlen_taxonomie_felderliste").html(erstelleFelderUmTaxonomieEigenschaftenZuWaehlen());
+}
+
+//bereitet Daten für den Export auf: entfernt Objekte aus der getätigten Auswahl
+//erwartet das Resultat der Datenabfrage aus der DB
+//und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
+function entferneGruppeAusExport(data, gruppe) {
+	for (i in data.rows) {
+	//for (var i = 0; i < data.rows.length; i++) {
+		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) > -1) {
+			//guid ist in array enthalten. muss entfernt werden
+			window.exportieren_guids.splice(window.exportieren_guids.indexOf(data.rows[i].key[0]), 1);
+			//Objekt entfernen
+			$.each(window.exportieren_objekte, function(index, value){
+				//console.log('value = ' + JSON.stringify(value));
+				//console.log('data.rows[i].key[0] = ' + data.rows[i].key[0]);
+			    if (value !== "undefined" && typeof value !== "undefined") {
+			    	if (value._id === data.rows[i].key[0]) {
+						window.exportieren_objekte.splice(index, 1);
+						return false;
+					}
+				}
+			});
+		}
+	}
+	//Datensammlungen neu aufbauen
+	erstelleListeFuerFeldwahl(data, gruppe, "entfernt");
 }
 
 

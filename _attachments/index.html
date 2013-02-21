@@ -532,12 +532,6 @@
 					//Exportieren-Guids schaffen, damit kein altes existiert
 					window.exportieren_guids = [];
 					window.exportieren_objekte = [];
-					//das ist ein Array von Objekten = Datensammlungen
-					//hier hinein werden alle Felder kopiert
-					window.exportieren_datensammlungen_namen = [];
-					window.exportieren_datensammlungen = [];
-					window.exportieren_taxonomien_namen = [];
-					window.exportieren_taxonomien = [];
 				});
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
@@ -549,21 +543,22 @@
 						//guids aller Objekte dieser Gruppe abfragen und danach array von guids bilden / vergrössern
 						//aber nur, wenn nicht schon erfolgt
 						if (window[that.value]) {
-							bereiteGruppeFuerExportAuf(window[that.value], that.value);
+							ergaenzeGruppeFuerExport(window[that.value], that.value);
 						} else {
 							$db = $.couch.db("artendb");
 							$db.view('artendb/' + that.value + "?include_docs=true", {
 								success: function (data) {
 									//für spätere Verwendung zwischenspeichern
 									window[that.value] = data;
-									bereiteGruppeFuerExportAuf(data, that.value);
+									ergaenzeGruppeFuerExport(data, that.value);
 								}
 							});
 						}
 					} else {
-						//kontrollieren, ob Daten gespeichert sind
-						//wenn ja: diese aus variable entfernen
+						//Haken wurde entfernt
+						//Daten aus Variable entfernen
 						//und Rückmeldung aktualisieren
+						entferneGruppeAusExport(window[that.value], that.value);
 					}
 				});
 
