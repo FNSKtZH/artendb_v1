@@ -1503,13 +1503,14 @@ function erstelleExportfelderTaxonomie() {
 
 function erstelleExportfelderDatensammlungen() {
 	var html_felder_waehlen = '';
-	var html_filtern = '<hr>';
+	var html_filtern = '';
 	for (i in window.exportieren_datensammlungen) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
+			html_filtern += '<hr>';
 		}
 		html_felder_waehlen += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
-		html_filtern += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
+		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + window.exportieren_datensammlungen[i].Name + '</h5></label></div>';
 		for (x in window.exportieren_datensammlungen[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
@@ -1524,6 +1525,8 @@ function erstelleExportfelderDatensammlungen() {
 			html_filtern += '</div>';
 		}
 	}
+	//linie voranstellen
+	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
 }
@@ -1581,6 +1584,34 @@ function ergaenzeGruppeFuerExport(data, gruppe) {
 		}
 	}
 	erstelleListeFuerFeldwahl(data, gruppe, "geladen");
+}
+
+//übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie)
+//reduziert in window.exportieren_guids und -objekte auf diejenigen, welche die Bedingung erfüllen
+//oder: Wird Filter entfernt/verändert, muss neu angefangen werden
+function filtereFuerExport(DsName, FeldName, Filterwert) {
+	if (DsName === "keine") {
+		//das ist der guid
+		for (i in window.exportieren_objekte) {
+			if (window.exportieren_objekte[i]._id !== Filterwert) {
+				//Objekt entfernen
+				window.exportieren_objekte.splice(i, 1);
+			}
+		}
+	} else {
+		//ein Feld der Taxonomie oder einer Datensammlung wurde gewählt
+		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
+		var i = window.exportieren_objekte.length;
+		while (i--) {
+			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || Filterwert.indexOf(window.exportieren_objekte[i][DsName].Felder[FeldName]) === -1) {
+				//Objekt entfernen
+				window.exportieren_objekte.splice(i, 1);
+			}
+		}
+	}
+	//Ergebnis rückmelden
+	$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
+	$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Ohne Filter waren " + window.exportieren_objekte_sik.length + " Objekte geladen<br>Mit dem Filter sind es noch " + window.exportieren_objekte.length);
 }
 
 //baut globale Variabeln auf, mit denen im Formular "export" die Liste aller Eigenschaften aufgebaut werden kann

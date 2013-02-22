@@ -286,10 +286,15 @@
 								<div class="control-group">
 									<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_guid">GUID</label>
 									<div class="controls">
-										<input type="text" id="exportieren_objekte_waehlen_eigenschaften_guid">
+										<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_guid" Eigenschaft="keine" Feld="_id">
 									</div>
 								</div>
 								<div id="exportieren_objekte_waehlen_eigenschaften_felderliste"></div>
+								<button id="exportieren_objekte_waehlen_eigenschaften_filtern" class="btn">Filter anwenden</button>
+								<div id="exportieren_objekte_waehlen_eigenschaften_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="exportieren_objekte_waehlen_eigenschaften_hinweis_text"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -520,14 +525,16 @@
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#import").on("click", "#DsLoeschen", function() {
+				$("#import").on("click", "#DsLoeschen", function(e) {
+					e.preventDefault();
 					$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
 						//jetzt Ergebnisse anzeigen
 						console.log("Löschen beendet");
 					});
 				});
 
-				$("#import").on("click", "#DsImportieren", function() {
+				$("#import").on("click", "#DsImportieren", function(e) {
+					e.preventDefault();
 					$.when(importiereDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
 						console.log("Import ist fertig");
@@ -539,6 +546,28 @@
 					//Exportieren-Guids schaffen, damit kein altes existiert
 					window.exportieren_guids = [];
 					window.exportieren_objekte = [];
+					//Exportsicherung entfernen
+					delete window.exportieren_objekte_sik;
+				});
+
+				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
+					e.preventDefault();
+					//prüfen, ob schon gefiltert wurde
+					//wenn ja: Objekt-array zurücksetzen
+					if (window.exportieren_objekte_sik && window.exportieren_objekte_sik.length > window.exportieren_objekte.length) {
+						window.exportieren_objekte = window.exportieren_objekte_sik.slice(0);
+					} else {
+						//sonst: Objekt-Array sichern, damit der Vorgang rückgängig gemacht werden kann
+						window.exportieren_objekte_sik = window.exportieren_objekte.slice(0);
+					}
+					//durch alle Filterfelder loopen
+					//wenn ein Feld einen Wert enthält, danach filtern
+					$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
+						if (this.value) {
+							console.log('Datensammlung: ' + $(this).attr('eigenschaft') + ' Feld: ' + $(this).attr('feld') + ' Wert: ' + this.value);
+							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value);
+						}
+					});
 				});
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function(event) {
@@ -647,7 +676,6 @@
 					}
 					erstelleTabelle(exportobjekte, "exportieren_exportieren_tabelle");
 					window.exportstring = erstelleExportString(exportobjekte);
-					//console.log("window.exportstring = " + window.exportstring);
 					$("#exportieren_exportieren_exportieren").show();
 				});
 
