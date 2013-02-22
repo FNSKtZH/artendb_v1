@@ -1502,6 +1502,7 @@ function erstelleExportfelderTaxonomie() {
 			html_filtern += '</div>';
 		}
 	}
+	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_taxonomie_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
 }

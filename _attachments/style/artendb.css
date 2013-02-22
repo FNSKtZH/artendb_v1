@@ -257,6 +257,11 @@ a:hover {
 	margin: 11px 0px;
 }
 
+#export .accordion-inner hr {
+	margin-bottom: 0px;
+	margin-top: 16px;
+}
+
 /*Titel für Eigenschaften und Beziehungen stylen*/
 .accordion h4 {
 	padding-left: 15px;
