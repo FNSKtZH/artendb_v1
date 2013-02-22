@@ -1184,8 +1184,13 @@ function validiereUserAnmeldung() {
 //übernimmt eine Array mit Objekten und den div, in dem die Tabelle eingefügt werden soll
 //baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 function erstelleTabelle(Datensätze, div_id) {
-	var html = "Vorschau auf die ersten 10 von " + Datensätze.length + " Datensätzen:";
-	//Tabelle initiierren
+	var html = "";
+	if (Datensätze.length > 10) {
+		html += "Vorschau auf die ersten 10 von " + Datensätze.length + " Datensätzen:";
+	} else {
+		html += "Vorschau auf die " + Datensätze.length + " Datensätze:";
+	}
+	//Tabelle initiieren
 	html += '<table class="table table-bordered table-striped table-condensed">';
 	//Titelzeile aufbauen
 	//Zeile anlegen
