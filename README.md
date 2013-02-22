@@ -230,9 +230,9 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 
 Geplant ist folgendes Vorgehen:
 
-1. Die Benutzerin wählt die gewünschten Objekte (mit Filter)
+1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
 2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen
-3. Sie wählt die gewünschten Datensammlungen und daraus die gewünschten Eigenschaften
+3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
 Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (wäre aber durchaus nützlich, wenn wahlweise Eigenschaften ergänzt werden können).
@@ -576,7 +576,10 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Datensammlungen (erster Entwurf, wird noch verbessert)
+- Objekte inklusive Datensammlungen
+- Zuerst werden die gewünschten Gruppen gewählt
+- Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
+- In einer übersichtlichen Liste können die gewünschten Felder gewählt werden 
 
 **To do**
 
