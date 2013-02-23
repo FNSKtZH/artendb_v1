@@ -284,7 +284,7 @@
 
 					<div class="accordion-group" id="exportieren_objekte_waehlen_eigenschaften">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_eigenschaften_collapse" href="#">2. Arten / Lebensräume nach Eigenschaften filtern</a>
+							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_eigenschaften_collapse" href="#">2. Nach Eigenschaften filtern</a>
 						</div>
 						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
 							<div class="accordion-inner">
@@ -304,11 +304,11 @@
 						</div>
 					</div>
 
-					<div class="accordion-group" id="exportieren_felder_waehlen_taxonomie">
+					<div class="accordion-group" id="exportieren_felder_waehlen">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_felder_waehlen_taxonomie_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_taxonomie_collapse" href="#">3. Eigenschaften wählen: Aus der Taxonomie</a>
+							<a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_collapse" href="#">3. Eigenschaften wählen</a>
 						</div>
-						<div class="accordion-body collapse" id="exportieren_felder_waehlen_taxonomie_collapse">
+						<div class="accordion-body collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="accordion-inner">
 								<label class="checkbox">
 									<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="_id">GUID
@@ -316,18 +316,7 @@
 								<label class="checkbox">
 									<input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
 								</label>
-								<div id="exportieren_felder_waehlen_taxonomie_felderliste"></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="accordion-group" id="exportieren_felder_waehlen_datesammlungen">
-						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_felder_waehlen_datesammlungen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_datesammlungen_collapse" href="#">3. Eigenschaften wählen: Aus Datensammlungen</a>
-						</div>
-						<div class="accordion-body collapse" id="exportieren_felder_waehlen_datesammlungen_collapse">
-							<div class="accordion-inner">
-								<div id="exportieren_felder_waehlen_datesammlungen_felderliste"></div>
+								<div id="exportieren_felder_waehlen_felderliste"></div>
 							</div>
 						</div>
 					</div>
@@ -596,12 +585,7 @@
 							feldliste.push($(this).attr('feldname'));
 						}
 					});
-					$("#exportieren_felder_waehlen_taxonomie_felderliste .feld_waehlen").each(function() {
-						if ($(this).prop('checked')) {
-							feldliste.push($(this).attr('Taxonomie') + ": " + $(this).attr('Feld'));
-						}
-					});
-					$("#exportieren_felder_waehlen_datesammlungen_felderliste .feld_waehlen").each(function() {
+					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 						if ($(this).prop('checked')) {
 							feldliste.push($(this).attr('Datensammlung') + ": " + $(this).attr('Feld'));
 						}
@@ -625,7 +609,7 @@
 							//Innerhalb der Taxonomie alle gewählten Felder ergänzen
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
 								for (z in window.exportieren_objekte[i][x].Felder) {
-									if ($('[Taxonomie="' + x + '"][Feld="' + z + '"]').prop('checked')) {
+									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
 										/*//sicherstellen, dass die Eigenschaft dieser Taxonomie existiert
 										if (typeof Objekt[x] === "undefined") {
 											Objekt[x] = {};

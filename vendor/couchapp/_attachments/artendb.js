@@ -1222,7 +1222,10 @@ function erstelleTabelle(Datensätze, div_id) {
 		for (x in Datensätze[i]) {
 			//Spalte anlegen
 			html += "<td>";
-			if (typeof Datensätze[i][x] === "object") {
+			if (Datensätze[i][x] === null) {
+				//Null-Werte als leer anzeigen
+				html += "";
+			} else if (typeof Datensätze[i][x] === "object") {
 				html += JSON.stringify(Datensätze[i][x]);
 			} else if (Datensätze[i][x]) {
 				html += Datensätze[i][x];
@@ -1497,6 +1500,7 @@ function oeffneUri() {
 }
 
 function erstelleExportfelderTaxonomie() {
+	var felder_erstellt = $.Deferred();
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	for (i in window.exportieren_taxonomien) {
@@ -1505,7 +1509,7 @@ function erstelleExportfelderTaxonomie() {
 		for (x in window.exportieren_taxonomien[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
-			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Taxonomie="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
@@ -1516,12 +1520,16 @@ function erstelleExportfelderTaxonomie() {
 			html_filtern += '</div>';
 		}
 	}
+	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
-	$("#exportieren_felder_waehlen_taxonomie_felderliste").html(html_felder_waehlen);
+	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
+	felder_erstellt.resolve();
+	felder_erstellt.promise();
 }
 
 function erstelleExportfelderDatensammlungen() {
+	var felder_erstellt = $.Deferred();
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	for (i in window.exportieren_datensammlungen) {
@@ -1546,9 +1554,12 @@ function erstelleExportfelderDatensammlungen() {
 		}
 	}
 	//linie voranstellen
+	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
-	$("#exportieren_felder_waehlen_datesammlungen_felderliste").html(html_felder_waehlen);
+	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+	felder_erstellt.resolve();
+	felder_erstellt.promise();
 }
 
 function erstelleExportString(exportobjekte) {
@@ -1574,14 +1585,15 @@ function erstelleExportString(exportobjekte) {
 			if (stringZeile !== "") {
 				stringZeile += ',';
 			}
-			//Zahlen ohne Anführungs- und Schlusszeichen exportieren
-			if (typeof exportobjekte[i][x] === "number") {
+			//null-Werte als leere Werte
+			if (exportobjekte[i][x] === null) {
+				stringZeile += "";
+			} else if (typeof exportobjekte[i][x] === "number") {
+				//Zahlen ohne Anführungs- und Schlusszeichen exportieren
 				stringZeile += exportobjekte[i][x];
 			} else if (typeof exportobjekte[i][x] === "object") {
 				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
 				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
-			} else if (exportobjekte[i][x] === null) {
-				stringZeile += "";
 			} else {
 				stringZeile += '"' + exportobjekte[i][x] + '"';
 			}
@@ -1682,8 +1694,9 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 	//Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
-	erstelleExportfelderTaxonomie();
-	erstelleExportfelderDatensammlungen();
+	$.when(erstelleExportfelderTaxonomie()).then(function() {
+		erstelleExportfelderDatensammlungen();
+	});
 }
 
 //bereitet Daten für den Export auf: entfernt Objekte aus der getätigten Auswahl
