@@ -1018,7 +1018,7 @@ function zeigeFormular(Formularname) {
 	if (Formularname) {
 		if (Formularname !== "art") {
 			//URL anpassen, damit kein Objekt angezeigt wird
-			history.pushState({id: "id"}, "id", "index.html?");
+			history.pushState({id: "id"}, "id", "index.html");
 			//alle Bäume ausblenden, suchfeld, Baumtitel
 			$("#suchen").hide();
 			$(".baum").css("display", "none");
@@ -1344,6 +1344,9 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 function importiereDatensammlung() {
 	var Datensammlung, anzFelder, anzDs;
 	var DsImportiert = $.Deferred();
+	//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
+	var Zähler = 0;
+	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 	anzDs = 0;
 	for (x in window.Datensätze) {
 		anzDs += 1;
@@ -1398,9 +1401,20 @@ function importiereDatensammlung() {
 			//kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
 				fuegeDatensammlungZuObjekt(guid, $("#DsName").val(), Datensammlung);
+				//Für 10 Kontrollbeispiele die Links aufbauen
+				if (Zähler < 10) {
+					Zähler += 1;
+					//Rückmeldungslink aufbauen. Hat die Form:
+					//<a href="url">Link text</a>
+					//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
+					RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + window.Datensätze[x][window.DsFelderId] + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
+				}
 			}
 		}
 	}
+	//RückmeldungsLinks in Feld anzeigen:
+	$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
+	$("#importieren_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 	DsImportiert.resolve();
 	return DsImportiert.promise();
 }
@@ -1696,6 +1710,67 @@ function entferneGruppeAusExport(data, gruppe) {
 	}
 	//Datensammlungen neu aufbauen
 	erstelleListeFuerFeldwahl(data, gruppe, "entfernt");
+}
+
+function bereiteImportieren_ds_beschreibenVor() {
+	if (!localStorage.Email) {
+		$('#importieren_ds_beschreiben_collapse').collapse('hide');
+		setTimeout(function() {
+			zurueckZurAnmeldung();
+		}, 600);
+	} else {
+		$("#DsName").focus();
+		//anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
+		//$("#DsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
+		//Daten holen, wenn nötig
+		if (window.ds_von_objekten) {
+			bereiteImportieren_ds_beschreibenVor_02();
+		} else {
+			$db = $.couch.db("artendb");
+			$db.view('artendb/ds_von_objekten?group=true', {
+				success: function (data) {
+					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+					window.ds_von_objekten = data;
+					bereiteImportieren_ds_beschreibenVor_02();
+				}
+			});
+		}	
+	}
+}
+
+function bereiteImportieren_ds_beschreibenVor_02() {
+	//DsNamen in Auswahlliste stellen
+	var DsNamen = [""];
+	for (i in window.ds_von_objekten.rows) {
+		DsNamen.push(window.ds_von_objekten.rows[i].key[0]);
+	}
+	DsNamen.sort();
+	var html = "";
+	for (i in DsNamen) {
+		html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
+	}
+	$("#DsWaehlen").html(html);
+}
+
+function isFileAPIAvailable() {
+	// Check for the various File API support.
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		// Great success! All the File APIs are supported.
+		return true;
+	} else {
+		// source: File API availability - http://caniuse.com/#feat=fileapi
+		// source: <output> availability - http://html5doctor.com/the-output-element/
+		var html = "Für den Datenimport benötigen Sie mindestens einen der folgenden Browser:<br>";
+		html += "(Stand Februar 2013)<br>";
+		html += "- Google Chrome: 23.0 oder neuer<br>";
+		html += "- Mozilla Firefox: 16.0 oder neuer<br>";
+		html += "- Safari: 6.0 oder neuer<br>";
+		html += "- Opera: 12.1 oder neuer<br>";
+		html += "- eventuell mittlerweile weitere";
+		$("#fileApiMeldungText").html(html);
+		$('#fileApiMeldung').modal();
+		return false;
+	}
 }
 
 

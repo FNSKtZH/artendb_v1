@@ -113,13 +113,11 @@
 										<div id="Passwort2hinweisFalsch" class="hinweis text-error">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
-								<div class="control-group">
-									<div class="controls">
-										<button id="anmelden_btn" class="btn">anmelden</button>
-										<button id="abmelden_btn" class="btn" style="display:none;">abmelden</button>
-										<button id="konto_erstellen_btn" class="btn">neues Konto erstellen</button>
-										<button id="konto_speichern_btn" class="btn" style="display:none;">neues Konto speichern</button>
-									</div>
+								<div class="feld">
+									<button id="anmelden_btn" class="btn">anmelden</button>
+									<button id="abmelden_btn" class="btn" style="display:none;">abmelden</button>
+									<button id="konto_erstellen_btn" class="btn">neues Konto erstellen</button>
+									<button id="konto_speichern_btn" class="btn" style="display:none;">neues Konto speichern</button>
 								</div>
 								<div id="importieren_anmelden_fehler" class="alert alert-error">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -145,8 +143,12 @@
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="DsWaehlen"></select>
 								</div>
-								<div class="controls">
-									<button type="button" class="btn" id="DsLoeschen" style="display:none;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+								<div class="feld">
+									<button type="button" class="btn" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+									<div id="importieren_ds_beschreiben_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_ds_beschreiben_hinweis_text"></div>
+								</div>
 								</div>
 								<hr>
 								<div class="control-group">
@@ -237,12 +239,15 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
 							<div class="accordion-inner">
-								<button type="button" class="btn" id="DsImportieren">Datensammlung mit allen Eigenschaften importieren</button>
-								<button type="button" class="btn disabled" id="DsEntfernen">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<button type="button" class="btn" id="DsImportieren" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften importieren</button>
+								<button type="button" class="btn disabled" id="DsEntfernen" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<div id="importieren_import_ausfuehren_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_import_ausfuehren_hinweis_text"></div>
+								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>		
 			</form>
 
@@ -401,43 +406,21 @@
 				});
 
 				$("#menu_btn").on("click", "#eigenschaften_importieren", function() {
-					zeigeFormular("import");
-					//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-					if (localStorage.Email) {
-						$("#importieren_ds_beschreiben_collapse").collapse('show');
-					} else {
-						$("#importieren_anmelden_collapse").collapse('show');
+					//testen, ob der Browser das Importieren unterstützt
+					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+					if(isFileAPIAvailable()) {
+						zeigeFormular("import");
+						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+						if (localStorage.Email) {
+							$("#importieren_ds_beschreiben_collapse").collapse('show');
+						} else {
+							$("#importieren_anmelden_collapse").collapse('show');
+						}
 					}
 				});
 
-				$('#importieren_ds_beschreiben_collapse').on('shown', function (event) {
-					if (!localStorage.Email) {
-						$('#importieren_ds_beschreiben_collapse').collapse('hide');
-						setTimeout(function() {
-							zurueckZurAnmeldung();
-						}, 600);
-					} else {
-						$("#DsName").focus();
-						//Daten holen
-						$db = $.couch.db("artendb");
-						$db.view('artendb/ds_von_objekten?group=true', {
-							success: function (data) {
-								//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
-								window.ds_von_objekten = data;
-								//DsNamen in Auswahlliste stellen
-								var DsNamen = [""];
-								for (i in data.rows) {
-									DsNamen.push(data.rows[i].key[0]);
-								}
-								DsNamen.sort();
-								var html = "";
-								for (i in DsNamen) {
-									html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
-								}
-								$("#DsWaehlen").append(html);
-							}
-						});
-					}
+				$('#importieren_ds_beschreiben_collapse').on('shown', function() {
+					bereiteImportieren_ds_beschreibenVor();
 				});
 
 				$('#importieren_daten_uploaden_collapse').on('shown', function (event) {
@@ -453,8 +436,6 @@
 					if (!localStorage.Email) {
 						$(this).collapse('hide');
 						zurueckZurAnmeldung();
-					} else {
-
 					}
 				});
 
@@ -462,8 +443,6 @@
 					if (!localStorage.Email) {
 						$(this).collapse('hide');
 						zurueckZurAnmeldung();
-					} else {
-
 					}
 				});
 
@@ -527,9 +506,13 @@
 
 				$("#import").on("click", "#DsLoeschen", function(e) {
 					e.preventDefault();
+					//Rückmeldung anzeigen
+					$("#importieren_ds_beschreiben_hinweis").alert().css("display", "block");
+					$("#importieren_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
 					$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
 						//jetzt Ergebnisse anzeigen
-						console.log("Löschen beendet");
+						$("#importieren_ds_beschreiben_hinweis").alert().css("display", "block");
+						$("#importieren_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
 					});
 				});
 
@@ -815,6 +798,20 @@
 		</div>
 		<div class="modal-body">
 			<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb benutzt.<br><br>Um mit ArtenDb zu arbeiten, verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.</p>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div id="fileApiMeldung" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">inkompatibler Browser</h3>
+		</div>
+		<div class="modal-body">
+			<p id="fileApiMeldungText">One fine body…</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
 		</div>
 	</div>
 </html>
