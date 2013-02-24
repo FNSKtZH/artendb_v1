@@ -1,5 +1,12 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt" && doc["Aktuelle Taxonomie"] && doc["Aktuelle Taxonomie"].Felder && doc["Aktuelle Taxonomie"].Felder["Taxonomie ID"]) {
-		emit ([doc.Gruppe, doc._id, doc["Aktuelle Taxonomie"].Felder["Taxonomie ID"]], null);
+	var nameDerTaxonomie;
+	for (x in doc) {
+		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
+			nameDerTaxonomie = x;
+			break;
+		}
+	}
+	if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt" && doc[nameDerTaxonomie] && doc[nameDerTaxonomie].Felder && doc[nameDerTaxonomie].Felder["Taxonomie ID"]) {
+		emit ([doc.Gruppe, doc._id, doc[nameDerTaxonomie].Felder["Taxonomie ID"]], null);
 	}
 }

@@ -67,8 +67,6 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebens
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-Momentan wird in der ArtenDb die vom zuständigen nationalen Artdatenzentrum verwendete Taxonomie als "Aktuelle Taxonomie" bezeichnet. Künftig soll sie den Namen der Datensammlung bzw. Publikation erhalten.
-
 Taxonomien werden in der JSON-Struktur gleich verwaltet wie Datensammlungen. Bloss heisst ihr Typ "Taxonomie" (statt "Datensammlung") und pro Objekt wird immer genau eine Taxonomie beschrieben.
 
 Taxonomische Beziehungen, z.B. "synonym", werden (künftig) ähnlich wie andere Beziehungen verwaltet.
@@ -275,12 +273,12 @@ Hier als Beispiel die Schlingnatter:
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-56959960fbc41955d37b867d9c9de909",
+   "_rev": "13-81cfd091d707be0375927a6cce3d43a4",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
-   "Aktuelle Taxonomie": {
+   "Taxonomie des CSCF (2009)": {
        "Typ": "Taxonomie",
-       "Beschreibung": "Index der Info Fauna. Eigenschaften zu 21542 Arten",
+       "Beschreibung": "Index der Info Fauna. Eigenschaften von 21542 Tierarten",
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
@@ -301,9 +299,9 @@ Hier als Beispiel die Schlingnatter:
            "Schutz CH": "Schutz gemäss NHG"
        }
    },
-   "CH Rote Listen": {
+   "CH Rote Listen (unterschiedliche Jahre)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften zu 2284 Arten",
+       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
        "Datenstand": "unterschiedlich",
        "Felder": {
            "Europa": "gefährdet",
@@ -315,9 +313,9 @@ Hier als Beispiel die Schlingnatter:
            "Quelle": "BAFU 2005 (CH), älter (Regionen)"
        }
    },
-   "Blaue Liste": {
+   "Blaue Liste (1998)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Eigenschaften zu 207 Arten",
+       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Eigenschaften von 207 Tierarten und 885 Pflanzenarten",
        "Datenstand": "1998",
        "Link": "http://www.bluelist.ethz.ch/",
        "Felder": {
@@ -331,9 +329,9 @@ Hier als Beispiel die Schlingnatter:
            "Aufwand": "mittel"
        }
    },
-   "CH Prioritäten": {
+   "CH Prioritäten (2011)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "BAFU. Eigenschaften zu 607 Arten",
+       "Beschreibung": "BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
        "Datenstand": "2012.01",
        "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
        "Felder": {
@@ -357,10 +355,11 @@ Hier als Beispiel die Schlingnatter:
            "Verbreitung Kt Zürich": "letzter Fund aus den Jahren 2000 bis 2010"
        }
    },
-   "CH Umweltziele LW": {
+   "CH Umweltziele LW (2008)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften zu 374 Arten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
+       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften von 374 Tierarten, 731 Pflanzenarten und 99 Moosarten. 2046 Beziehungen zwischen Lebensräumen und Tierarten. 3080 Beziehungen zwischen Lebensräumen und Pflanzenarten. 602 Beziehungen zwischen Lebensräumen und Moosarten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
        "Datenstand": "2008",
+       "Link": "http://www.bafu.admin.ch/publikationen/publikation/00097/index.html?lang=de",
        "Felder": {
            "Zielart": true,
            "Leitart": false,
@@ -374,9 +373,9 @@ Hier als Beispiel die Schlingnatter:
            "Südalpen": true
        }
    },
-   "CH Agroscope Zielart": {
+   "CH Agroscope Zielart (2008)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Agroscope (2008). Eigenschaften zu 207 Arten",
+       "Beschreibung": "Agroscope (2008). Eigenschaften von 207 Tierarten",
        "Datenstand": "2008",
        "Link": "http://www.agroscope.admin.ch",
        "Felder": {
@@ -401,9 +400,9 @@ Hier als Beispiel die Schlingnatter:
            "Verbreitung Lebensraum Massnahmen": "Im Mittelland ist sie nur noch inselartig verbreitet und regional bereits ausgestorben; bis knapp über 2000 m. Bevorzugt in sich schnell erwärmenden Lagen, v.a. in flachgründigen Lebensräumen, die mit Steinstrukturen unterschiedlichster Art durchzogen sind. Lebensraum: Felsfluren, Blockschutt- und Geröllhalden, steinige Böschungen aller Art, Magerweiden, Steppenrasen, aber auch Waldränder, Eisenbahnareale, Abbaugebiete, Rebberge. Massnahmen: V.a. Erhalt bestehender Populationen und Vergrösserung deren Lebensräume durch Schaffung von Kleinstrukturen (Steinhaufen, Trockensteinmauern, Holzhaufen, etc.), extensive Nutzung (Krautschicht nur einmal jährlich mähen, spät mähen, Teile stehen lassen, Schnitthöhe > 10 cm), Waldränder mit stufigem Gebüschmantel und breitem Krautsaum; Aufwertungsmassnahmen für Eidechsen und Blindschleichen (Hauptnahrung); Bahndämme reptiliengerecht pflegen, da sie wichtige Ausbreitungs- und Verbindungskorridore sein können. Flächenanspruch einer Population (Grössenordnung): geeignete und vernetzte Teilflächen von mind. 1-5 a, insgesamt 50 ha geeignetes Habitat."
        }
    },
-   "ZH Artwert": {
+   "ZH Artwert (1995)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften zu 1530 Arten",
+       "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -412,9 +411,9 @@ Hier als Beispiel die Schlingnatter:
            "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
        }
    },
-   "ZH AP": {
+   "ZH AP Fauna": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Eigenschaften zu 36 Arten",
+       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Eigenschaften von 36 Tierarten",
        "Datenstand": "2007",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -424,9 +423,9 @@ Hier als Beispiel die Schlingnatter:
            "Link zum AP-Bericht": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fa/schlingnatter.html"
        }
    },
-   "ZH AP Einstufung": {
+   "ZH AP Grundlagen (1995)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften zu 682 Arten",
+       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -451,9 +450,9 @@ Hier als Beispiel die Schlingnatter:
            "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
        }
    },
-   "ZH AP LiWa": {
+   "ZH AP LiWa (2009)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Eigenschaften zu 51 Arten",
+       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Eigenschaften von 51 Tierarten und 609 Pflanzenarten",
        "Datenstand": "2009",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -461,9 +460,9 @@ Hier als Beispiel die Schlingnatter:
            "AP LiWa Artwert": 11
        }
    },
-   "ZH AP TWW": {
+   "ZH AP TWW (2011)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Eigenschaften zu 1113 Arten",
+       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Eigenschaften von 1113 Tierarten, 1199 Pflanzenarten, 38 Moosarten, 31 Lebensräumen sowie 5006 Beziehungen zwischen Pflanzenarten und Lebensräumen",
        "Datenstand": "2011",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -476,7 +475,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH Artengruppen": {
        "Typ": "Datensammlung",
-       "Beschreibung": "Artengruppen Kt. Zürich. Eigenschaften zu allen Arten",
+       "Beschreibung": "Artengruppen Kt. Zürich. Eigenschaften von allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
@@ -486,7 +485,7 @@ Hier als Beispiel die Schlingnatter:
    },
    "ZH GIS": {
        "Typ": "Datensammlung",
-       "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften zu allen Arten",
+       "Beschreibung": "GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften von allen Arten",
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {

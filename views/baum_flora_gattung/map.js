@@ -1,5 +1,12 @@
 ﻿function(doc) {
+	var nameDerTaxonomie;
+	for (x in doc) {
+		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
+			nameDerTaxonomie = x;
+			break;
+		}
+	}
 	if (doc.Gruppe && doc.Gruppe === "Flora") {
-		emit ([doc["Aktuelle Taxonomie"].Felder.Familie, doc["Aktuelle Taxonomie"].Felder.Gattung], null);
+		emit ([doc[nameDerTaxonomie].Felder.Familie, doc[nameDerTaxonomie].Felder.Gattung], null);
 	}
 }

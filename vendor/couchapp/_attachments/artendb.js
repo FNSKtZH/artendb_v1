@@ -498,42 +498,29 @@ function initiiere_art(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
-			var htmlArt, htmlDatensammlung, Datensammlungen, Taxonomien;
+			var htmlArt, htmlDatensammlung, Datensammlungen;
 			Datensammlungen = [];
-			Taxonomien = [];
 			//accordion beginnen
-			htmlArt = '<div id="accordion_ds" class="accordion">';
-			//zuerst alle Datensammlungen und Taxonomien auflisten, damit danach sortiert werden kann
+			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
+			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
+			//gleichzeitig die Taxonomie suchen und gleich erstellen lassen
 			for (i in art) {
 				if (art[i].Typ === "Taxonomie") {
-					Taxonomien.push(i);
+					htmlArt += erstelleHtmlFuerDatensammlung(i, art, art[i]);
 				}
-				if (art[i].Typ === "Datensammlung" && i !== "Aktuelle Taxonomie") {
+				if (art[i].Typ === "Datensammlung") {
 					Datensammlungen.push(i);
 				}
 			}
 			//sortieren
-			Taxonomien.sort();
 			Datensammlungen.sort();
 			//in gewollter Reihenfolge hinzufügen
-			//HTML für Datensammlung erstellen lassen und hinzufügen
-			//zuerst die aktuelle Taxonomie
-			//die gibt es bei LR nicht, darum prüfen
-			if (art["Aktuelle Taxonomie"]) {
-				htmlArt += erstelleHtmlFuerDatensammlung("Aktuelle Taxonomie", art, art["Aktuelle Taxonomie"]);
-			}
-			//dann alternative Taxonomien, ohne die aktuelle nochmals zu bringen
-			for (var z=0; z<Taxonomien.length; z++) {
-				if (Taxonomien[z] !== "Aktuelle Taxonomie") {
-					htmlArt += erstelleHtmlFuerDatensammlung(Taxonomien[z], art, art[Taxonomien[z]]);
-				}
-			}
-			//dann Datensammlungen
-			//Titel hinzufügen, falls Datensammlungen existieren
 			if (Datensammlungen.length > 0) {
+				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Eigenschaften:</h4>";
 			}
 			for (var x=0; x<Datensammlungen.length; x++) {
+				//HTML für Datensammlung erstellen lassen und hinzufügen
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
 
@@ -724,7 +711,7 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	htmlDatensammlung += '</div>';
 	//Felder anzeigen
 	//zuerst die GUID, aber nur bei der aktuellen Taxonomie (bei LR Taxonomie)
-	if (i === "Aktuelle Taxonomie" || i === "Taxonomie") {
+	if (art_i.Typ && art_i.Typ === "Taxonomie") {
 		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
 	}
 	for (y in art_i.Felder) {
@@ -785,52 +772,59 @@ function erstelleHtmlFuerFeld(Feldname, Feldwert) {
 function setzteLinksZuBilderUndWikipedia(art) {
 	//jetzt die Links im Menu setzen
 	var googleBilderLink = "";
-	var wikipediaLink = "";;
+	var wikipediaLink = "";
+	var nameDerTaxonomie;
+	for (x in art) {
+		if (typeof art[x].Typ !== "undefined" && art[x].Typ === "Taxonomie") {
+			nameDerTaxonomie = x;
+			break;
+		}
+	}
 	switch (art.Gruppe) {
 		case "Flora":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Artname + '"';
-			if (art["Aktuelle Taxonomie"].Felder['Deutsche Namen']) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Deutsche Namen'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Artname + '"';
+			if (art[nameDerTaxonomie].Felder['Deutsche Namen']) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Deutsche Namen'] + '"';
 			}
-			if (art["Aktuelle Taxonomie"].Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Französisch'] + '"';
+			if (art[nameDerTaxonomie].Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Französisch'] + '"';
 			}
-			if (art["Aktuelle Taxonomie"].Felder['Name Italienisch']) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Italienisch'] + '"';
+			if (art[nameDerTaxonomie].Felder['Name Italienisch']) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Italienisch'] + '"';
 			}
-			if (art["Aktuelle Taxonomie"].Felder['Deutsche Namen']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder['Deutsche Namen'];
+			if (art[nameDerTaxonomie].Felder['Deutsche Namen']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder['Deutsche Namen'];
 			} else {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Artname;
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Artname;
 			}
 			break;
 		case "Fauna":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Artname + '"';
-			if (art["Aktuelle Taxonomie"].Felder["Name Deutsch"]) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Artname + '"';
+			if (art[nameDerTaxonomie].Felder["Name Deutsch"]) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Deutsch'] + '"';
 			}
-			if (art["Aktuelle Taxonomie"].Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Französisch'] + '"';
+			if (art[nameDerTaxonomie].Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Französisch'] + '"';
 			}
-			if (art["Aktuelle Taxonomie"].Felder['Name Italienisch']) {
-				googleBilderLink += '+OR"' + art["Aktuelle Taxonomie"].Felder['Name Italienisch'] + '"';
+			if (art[nameDerTaxonomie].Felder['Name Italienisch']) {
+				googleBilderLink += '+OR"' + art[nameDerTaxonomie].Felder['Name Italienisch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Gattung + '_' + art["Aktuelle Taxonomie"].Felder.Art;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Gattung + '_' + art[nameDerTaxonomie].Felder.Art;
 			break;
 		case 'Moose':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Gattung + ' ' + art["Aktuelle Taxonomie"].Felder.Art + '"';
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Gattung + '_' + art["Aktuelle Taxonomie"].Felder.Art;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Gattung + ' ' + art[nameDerTaxonomie].Felder.Art + '"';
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Gattung + '_' + art[nameDerTaxonomie].Felder.Art;
 			break;
 		case 'Macromycetes':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Aktuelle Taxonomie"].Felder.Name + '"';
-			if (art["Aktuelle Taxonomie"].Felder['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art["Aktuelle Taxonomie"].Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Name + '"';
+			if (art[nameDerTaxonomie].Felder['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Deutsch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Aktuelle Taxonomie"].Felder.Name;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Name;
 			break;
 		case 'Lebensräume':
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Taxonomie"].Felder.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art["Taxonomie"].Felder.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Einheit;
 			break;
 	}
 	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht

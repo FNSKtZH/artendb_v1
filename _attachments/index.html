@@ -573,7 +573,7 @@
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function() {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
-					//Objekt mit allen Objekten kopieren und nicht gewollte Felder entfernen
+					//leeren Array für die Objekte gründen
 					var exportobjekte = [];
 					var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
 					var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
@@ -610,13 +610,6 @@
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
 								for (z in window.exportieren_objekte[i][x].Felder) {
 									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
-										/*//sicherstellen, dass die Eigenschaft dieser Taxonomie existiert
-										if (typeof Objekt[x] === "undefined") {
-											Objekt[x] = {};
-											Objekt[x].Typ = "Taxonomie";
-											Objekt[x].Felder = {};
-										}
-										Objekt[x].Felder[z] = window.exportieren_objekte[i][x].Felder[z];*/
 										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
 									}
 								}
@@ -626,21 +619,27 @@
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung" && window.exportieren_objekte[i][x].Felder) {
 								for (z in window.exportieren_objekte[i][x].Felder) {
 									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
-										/*//sicherstellen, dass die Eigenschaft dieser Datensammlung existiert
-										if (typeof Objekt[x] === "undefined") {
-											Objekt[x] = {};
-											Objekt[x].Typ = "Datensammlung";
-											Objekt[x].Felder = {};
-										}
-										Objekt[x].Felder[z] = window.exportieren_objekte[i][x].Felder[z];*/
 										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
 									}
 								}
 
 							}
 						}
-						exportobjekte.push(Objekt);	
+						exportobjekte.push(Objekt);
 					}
+
+					//Jetzt Beziehungen ergänzen
+					//durch alle exportobjekte loopen und eine Liste der Beziehungs-Datensammlungen sowie ihrer Felder erstellen
+					//dazu ist bei jedem Objekt eine DB-Abfrage nötig! Nur machen, wenn vom Benutzer explizit gewünscht
+					//diesen Schritt in obigen loop integrieren
+
+					//durch alle exportobjekte loopen und allen diese Felder mit Leerwerten anhängen
+
+					//durch alle exportobjekte loopen und bei jedem:
+					//Anzahl Beziehungen zählen
+					//exportobjekt entsprechend der Anzahl Beziehungen multiplizieren (hintereinander schreiben)
+					//durch Beziehungen des exportobjekts loopen und Werte dieser Beziehung in Felder schreiben
+
 					erstelleTabelle(exportobjekte, "exportieren_exportieren_tabelle");
 					window.exportstring = erstelleExportString(exportobjekte);
 					$("#exportieren_exportieren_exportieren").show();

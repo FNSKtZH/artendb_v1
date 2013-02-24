@@ -1,5 +1,12 @@
 function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc.Taxonomie.Felder.Hierarchie.length === 6) {
-		emit (doc.Taxonomie.Felder.Hierarchie, doc._id);
+	var nameDerTaxonomie;
+	for (x in doc) {
+		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
+			nameDerTaxonomie = x;
+			break;
+		}
+	}
+	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc[nameDerTaxonomie].Felder.Hierarchie.length === 6) {
+		emit (doc[nameDerTaxonomie].Felder.Hierarchie, doc._id);
 	}
 }
