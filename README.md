@@ -273,12 +273,12 @@ Hier als Beispiel die Schlingnatter:
 ```javascript
 {
    "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-81cfd091d707be0375927a6cce3d43a4",
+   "_rev": "13-231cd4663a63ec118fa4672042c0d5b3",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
-   "Taxonomie des CSCF (2009)": {
+   "CSCF (2009)": {
        "Typ": "Taxonomie",
-       "Beschreibung": "Index der Info Fauna. Eigenschaften von 21542 Tierarten",
+       "Beschreibung": "Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
@@ -498,7 +498,7 @@ Hier als Beispiel die Schlingnatter:
 
 Das kann jeder Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? Dies ist in JSON kein Problem, da die Felder aufgrund der vorhandenen Hierarchie enthalten eindeutig sind.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? Dies ist in JSON kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
@@ -540,6 +540,12 @@ Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. 
 Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen _eines_ Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
 
 Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie spezifisch angesprochen und z.B. für den Aufbau eines Beziehungsbaums verwendet werden.
+
+Hinweis: Die Struktur der Beziehungen wird nächstens umgebaut. Statt in eigenen Dokumenten sollen Beziehungen ähnlich wie Datensammlungen im Dokument des Objekts enthalten sein. Die Information über die Beziehungspartner wird wie die übrigen Eigenschaften der Beziehung in der Eigenschaft "Felder" enthalten sein. Das hat folgende Vorteile:
+
+- Die Daten sind viel besser lesbar
+- Die Informationen zusammenzuziehen erfordert VIEL weniger Datenbankzugriffe
+- Konzeptionell und in der Anwendung entstehen viele Synergien mit Datensammlungen und Taxonomien
 
 <a href="#top">&#8593; top</a>
 
