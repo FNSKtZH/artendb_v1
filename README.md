@@ -54,9 +54,9 @@ Die wichtigsten Merkmale dürften sein:
 <a name="Konzept"></a>
 #Fachliches Konzept
 ###Der Grundgedanke
-Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Irgendwann entpuppte sie sich als komplexes Monstrum, dass kaum noch zu verstehen und zu unterhalten war.
+Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Monstrum, dass kaum noch zu verstehen und zu unterhalten war.
 
-Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es nichts.
+Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
 Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe und daraus abgeleitete Datenstrukturen: Taxonomie, Objekt, Datensammlung, Eigenschaft und Beziehung. Möglichst alles soll darauf zurückgeführt werden.
 
@@ -537,8 +537,6 @@ In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschr
 
 Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (z.B. JSON-Objekte in "Felder" mit den Feldern "Titel", "Header" und "Artikel").
 
-Wenn für zwei oder mehr Beziehungspartner bzw. Objekte Beziehungen in mehreren Datensammlungen beschrieben werden, wird für jede Datensammlung ein Dokument der Beziehung erstellt. Grund: Es bringt keine Vorteile, alle Beziehungen zwischen denselben Objekten in einem Dokument zu speichern, weil (genau bzw. nur) dies gemeinsam anzuzeigen kaum je ein Bedürfnis ist. Meist sind alle Eigenschaften und/oder Beziehungen _eines_ Objekts oder einer Liste von Objekten gefragt und so werden sie auch in ArtenDb angezeigt und exportiert (dies wäre im Beispiel der Fussballmannschaft wohl anders, aber die Struktur wurde nicht dafür gewählt).
-
 Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie spezifisch angesprochen und z.B. für den Aufbau eines Beziehungsbaums verwendet werden.
 
 Hinweis: Die Struktur der Beziehungen wird nächstens umgebaut. Statt in eigenen Dokumenten sollen Beziehungen ähnlich wie Datensammlungen im Dokument des Objekts enthalten sein. Die Information über die Beziehungspartner wird wie die übrigen Eigenschaften der Beziehung in der Eigenschaft "Felder" enthalten sein. Das hat folgende Vorteile:
@@ -546,6 +544,11 @@ Hinweis: Die Struktur der Beziehungen wird nächstens umgebaut. Statt in eigenen
 - Die Daten sind viel besser lesbar
 - Die Informationen zusammenzuziehen erfordert VIEL weniger Datenbankzugriffe
 - Konzeptionell und in der Anwendung entstehen viele Synergien mit Datensammlungen und Taxonomien
+- Datenstruktur und Anwendung sind viel weniger komplex
+
+Nachteile:
+- Grössere Redundanz in den Daten, somit auch mehr Speicherbedarf (dafür viel weniger Rechenbedarf)
+- Importe und Datenänderungen sind anspruchsvoller
 
 <a href="#top">&#8593; top</a>
 
