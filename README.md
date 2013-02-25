@@ -54,7 +54,7 @@ Die wichtigsten Merkmale dürften sein:
 <a name="Konzept"></a>
 #Fachliches Konzept
 ###Der Grundgedanke
-Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Monstrum, dass kaum noch zu verstehen und zu unterhalten war.
+Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Monstrum, das kaum noch zu verstehen und unterhalten war.
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
