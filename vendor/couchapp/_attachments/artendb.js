@@ -823,7 +823,7 @@ function setzteLinksZuBilderUndWikipedia(art) {
 			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Name;
 			break;
 		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art["Taxonomie"].Felder.Einheit;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Einheit;
 			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Einheit;
 			break;
 	}
