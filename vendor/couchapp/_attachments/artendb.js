@@ -498,9 +498,9 @@ function initiiere_art(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
-			var htmlArt, htmlDatensammlung, Datensammlungen;
-			Datensammlungen = [];
-			Beziehungen = [];
+			var htmlArt;
+			var Datensammlungen = [];
+			var Beziehungen = [];
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
@@ -533,9 +533,9 @@ function initiiere_art(id) {
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Beziehungen:</h4>";
 			}
-			for (var x=0; x<Beziehungen.length; x++) {
+			for (var z=0; z<Beziehungen.length; z++) {
 				//HTML für Datensammlung erstellen lassen und hinzufügen
-				htmlArt += erstelleHtmlFuerBeziehung(Beziehungen[x], art, art[Beziehungen[x]]);
+				htmlArt += erstelleHtmlFuerBeziehung(Beziehungen[z], art, art[Beziehungen[z]]);
 			}
 
 			/*//Beziehungen holen
@@ -745,16 +745,18 @@ function erstelleHtmlFuerBeziehung(i, art, art_i) {
 	html += '</div>';
 
 	//die Beziehungen nach Objektnamen sortieren
-	art_i.Beziehungen.sort(function(a, b) {
+	//ausgeschaltet um zu sehen, ob das bremst
+	//ist auch nicht nötig, da die Daten beim Einfügen sortiert werden sollten
+	/*art_i.Beziehungen.sort(function(a, b) {
 		var aName, bName;
-		for (y in a.Partner) {
-			aName = a.Partner[y].Name;
+		for (y in a.Beziehungspartner) {
+			aName = a.Beziehungspartner[y].Name;
 		}
-		for (x in b.Partner) {
-			bName = b.Partner[x].Name;
+		for (x in b.Beziehungspartner) {
+			bName = b.Beziehungspartner[x].Name;
 		}
 		return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-	});
+	});*/
 
 	var BeteiligteGruppen;
 	//jetzt für alle Beziehungen die Felder hinzufügen
