@@ -500,6 +500,7 @@ function initiiere_art(id) {
 		success: function (art) {
 			var htmlArt, htmlDatensammlung, Datensammlungen;
 			Datensammlungen = [];
+			Beziehungen = [];
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
@@ -511,10 +512,13 @@ function initiiere_art(id) {
 				if (art[i].Typ === "Datensammlung") {
 					Datensammlungen.push(i);
 				}
+				if (art[i].Typ === "Beziehung") {
+					Beziehungen.push(i);
+				}
 			}
 			//sortieren
 			Datensammlungen.sort();
-			//in gewollter Reihenfolge hinzufügen
+			//Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (Datensammlungen.length > 0) {
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Eigenschaften:</h4>";
@@ -523,8 +527,18 @@ function initiiere_art(id) {
 				//HTML für Datensammlung erstellen lassen und hinzufügen
 				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
 			}
+			//Beziehungen in gewollter Reihenfolge hinzufügen
+			Beziehungen.sort();
+			if (Beziehungen.length > 0) {
+				//Titel hinzufügen, falls Datensammlungen existieren
+				htmlArt += "<h4>Beziehungen:</h4>";
+			}
+			for (var x=0; x<Beziehungen.length; x++) {
+				//HTML für Datensammlung erstellen lassen und hinzufügen
+				htmlArt += erstelleHtmlFuerBeziehung(Beziehungen[x], art, art[Beziehungen[x]]);
+			}
 
-			//Beziehungen holen
+			/*//Beziehungen holen
 			$db = $.couch.db("artendb");
 			//alle Beziehungen holen, in denen Beziehungen diese Art als Partner vorkommt
 			$db.view('artendb/bez_guid_id?startkey=["' + id + '"]&endkey=["' + id + '",{}]&include_docs=true', {
@@ -569,7 +583,27 @@ function initiiere_art(id) {
 					//und die URL anpassen
 					history.pushState({id: "id"}, "id", "index.html?id=" + id);
 				}
-			});
+			});*/
+
+			//accordion beenden
+			htmlArt += '</div>';
+			$("#art").html(htmlArt);
+			setzteHöheTextareas();
+			//richtiges Formular anzeigen
+			zeigeFormular("art");
+			//Bei Lebensräumen die Taxonomie öffnen
+			if (art.Gruppe === "Lebensräume") {
+				$("#collapseTaxonomie").collapse('show');
+				//Fokus von der Hierarchie wegnehmen
+				$("#Hierarchie").blur();
+			} else if (Datensammlungen.length === 0) {
+				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
+				$(".accordion-body").collapse('show');
+			}
+			//jetzt die Links im Menu setzen
+			setzteLinksZuBilderUndWikipedia(art);
+			//und die URL anpassen
+			history.pushState({id: "id"}, "id", "index.html?id=" + id);
 		},
 		error: function () {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
@@ -669,6 +703,101 @@ function erstelleHtmlFuerBeziehungenMitGleicherDatensammlung(id, beziehungen_arr
 		}
 		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
 		if (i < (beziehungen_array.length-1)) {
+			html += "<hr>";
+		}
+	}
+	//body und Accordion-Gruppe abschliessen
+	html += '</div></div></div>';
+	return html;
+}
+
+//erstellt die HTML für eine Beziehung
+//benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
+function erstelleHtmlFuerBeziehung(i, art, art_i) {
+	var html;
+	//Accordion-Gruppe und -heading anfügen
+	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '">';
+	//Titel für die Datensammlung einfügen
+	html += i + " (" + art_i.Beziehungen.length + ")";
+	//header abschliessen
+	html += '</a></div>';
+	//body beginnen
+	html += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	//Datensammlung beschreiben
+	html += '<div class="Datensammlung BeschreibungDatensammlung">';
+	if (art_i.Beschreibung) {
+		html += art_i.Beschreibung;
+	}
+	if (art_i.Datenstand) {
+		html += '. Stand: ';
+		html += art_i.Datenstand;
+	}
+	if (art_i["Link"]) {
+		html += '. <a href="';
+		html += art_i["Link"];
+		html += '">';
+		html += art_i["Link"];
+		html += '</a>';
+	}
+	//Beschreibung der Datensammlung abschliessen
+	html += '</div>';
+
+	//die Beziehungen nach Objektnamen sortieren
+	art_i.Beziehungen.sort(function(a, b) {
+		var aName, bName;
+		for (y in a.Partner) {
+			aName = a.Partner[y].Name;
+		}
+		for (x in b.Partner) {
+			bName = b.Partner[x].Name;
+		}
+		return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+	});
+
+	var BeteiligteGruppen;
+	//jetzt für alle Beziehungen die Felder hinzufügen
+	for (var i = 0; i < art_i.Beziehungen.length; i++) {
+		//zerst ermitteln, welche Gruppen beteiligt sind
+		BeteiligteGruppen = [];
+		BeteiligteGruppen.push(art.Gruppe);
+		for (y in art_i.Beziehungen[i].Beziehungspartner) {
+			BeteiligteGruppen.push(art_i.Beziehungen[i].Beziehungspartner[y].Gruppe);
+		}
+		for (y in art_i.Beziehungen[i].Beziehungspartner) {
+			//Partner darstellen
+			if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
+				//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
+				//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
+				if (art_i.Beziehungen[i]["Art der Beziehung"] !== "hierarchisch") {
+					html += erstelleHtmlFuerFeld("Beziehungsartner", art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name);
+				}
+			} else {
+				html += erstelleHtmlFuerFeld("Beziehungsartner", art_i.Beziehungen[i].Beziehungspartner[y].Name);
+			}
+		}
+		//Die Felder anzeigen
+		for (x in art_i.Beziehungen[i]) {
+			if (x !== "Beziehungspartner") {
+				//Beziehungspartner nicht nochmals anzeigen
+				if (typeof art_i.Beziehungen[i][x] === "object") {
+					//wird wohl eine LR-LR-Beziehung sein
+					//nur den Partner anzeigen
+					if (art_i.Beziehungen[i][x].GUID !== id) {
+						html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x].Taxonomie + " > " + art_i.Beziehungen[i][x].Name);
+					}
+				} else {
+					//Bei Lr-Beziehungen mit Flora, Fauna und Moosen steht die Art der Beziehung schon im Titel
+					//und sollte daher besser nicht angezeigt werden
+					if (x !== "Art der Beziehung") {
+						html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x]);
+					}
+				}
+			}
+		}
+		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
+		if (i < (art_i.Beziehungen.length-1)) {
 			html += "<hr>";
 		}
 	}
@@ -1778,6 +1907,49 @@ function isFileAPIAvailable() {
 		$('#fileApiMeldung').modal();
 		return false;
 	}
+}
+
+function maximiereForms() {
+	/*
+	@media screen and (min-width: 1001px)
+	#forms {
+		transform: translate(0px,0px);
+		-ms-transform: translate(0px,0px);
+		-webkit-transform: translate(0px,0px);
+		-o-transform: translate(0px,0px);
+		-moz-transform: translate(0px,0px);
+	}
+	#forms {
+		width: 100%;
+	}
+	#menu. #menu_btn {
+		display: none;
+	}
+	*/
+}
+
+function normalisiereForms() {
+	/*
+	@media screen and (min-width: 1001px)
+	#forms {
+		transform: translate(391px,0px);
+		-ms-transform: translate(391px,0px);
+		-webkit-transform: translate(391px,0px);
+		-o-transform: translate(391px,0px);
+		-moz-transform: translate(391px,0px);
+	}
+
+	@media screen and (min-width: 1001px)
+	#forms {
+		width: -webkit-calc(100% - 391px);
+		width: -o-calc(100% - 391px);
+		width: calc(100% - 391px);
+	}
+
+	#menu, #menu_btn {
+		display: block;
+	}
+	*/
 }
 
 
