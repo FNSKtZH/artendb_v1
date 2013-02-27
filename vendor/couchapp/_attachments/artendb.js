@@ -538,7 +538,7 @@ function initiiere_art(id) {
 				htmlArt += erstelleHtmlFuerBeziehung(Beziehungen[z], art, art[Beziehungen[z]]);
 			}
 
-			/*//Beziehungen holen
+			/*//bisherige Beziehungen holen
 			$db = $.couch.db("artendb");
 			//alle Beziehungen holen, in denen Beziehungen diese Art als Partner vorkommt
 			$db.view('artendb/bez_guid_id?startkey=["' + id + '"]&endkey=["' + id + '",{}]&include_docs=true', {
@@ -773,10 +773,11 @@ function erstelleHtmlFuerBeziehung(i, art, art_i) {
 				//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
 				//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
 				if (art_i.Beziehungen[i]["Art der Beziehung"] !== "hierarchisch") {
-					html += erstelleHtmlFuerFeld("Beziehungsartner", art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name);
+					//html += erstelleHtmlFuerFeld("Beziehungsartner", art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name);
+					html += generiereHtmlFuerObjektlink("Beziehungspartner", art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				}
 			} else {
-				html += erstelleHtmlFuerFeld("Beziehungsartner", art_i.Beziehungen[i].Beziehungspartner[y].Name);
+				html += generiereHtmlFuerObjektlink("Beziehungspartner", art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 			}
 		}
 		//Die Felder anzeigen
@@ -881,7 +882,7 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 //generiert daraus und retourniert html für die Darstellung im passenden Feld
 function erstelleHtmlFuerFeld(Feldname, Feldwert) {
 	var htmlDatensammlung = "";
-	if (typeof Feldwert === "string" && Feldwert.slice(0, 10) === "http://www") {
+	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "http://") {
 		//www-Links als Link darstellen
 		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
@@ -1007,6 +1008,19 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	HtmlContainer += ':</label><a href="';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '" class="feldtext controls ">';
+	HtmlContainer += FeldWert;
+	HtmlContainer += '</a></div>';
+	return HtmlContainer;
+}
+
+//generiert den html-Inhalt für einzelne Links in Flora
+function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
+	var HtmlContainer;
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label><a href="';
+	HtmlContainer += Url;
+	HtmlContainer += '" class="feldtext controls" target="_blank">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
 	return HtmlContainer;
