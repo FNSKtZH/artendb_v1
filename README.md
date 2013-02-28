@@ -249,7 +249,8 @@ Eingesetzt werden:
 - CouchDb als [CouchApp](http://couchapp.org/page/index). In dieser Form kann die Anwendung:
  - lokal installiert...
  - und mit anderen ArtenDb's synchronisiert werden
- - und sie ist ihr eigener Webserver: die lokale, synchronisierte Version kann genau so wie diejenige im Web verwendet werden, bloss ist sie leistungsfähiger und netzunabhängig
+ - und sie ist ihr eigener Webserver: die lokale, synchronisierte Version kann genau so wie diejenige im Web verwendet werden, bloss ist sie leistungsfähiger und netzunabhängig.
+ - dies ermöglicht es auch, daten zu integrieren, die man nicht oder nur selektiv teilen möchte
 - [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 - [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](http://twitter.github.com/bootstrap/) und [jsTree](http://www.jstree.com/) für die Benutzeroberfläche
 
