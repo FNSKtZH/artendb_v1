@@ -385,6 +385,7 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
 Zur Verdeutlichung nachfolgend Teilauszüge und Ergänzungen:
+
 Das ist die Taxonomie des Siebenschläfers:
 ```javascript
 "CSCF (2009)": {
@@ -425,9 +426,13 @@ Das ist die Taxonomie des Siebenschläfers:
    }
 }
 ```
+Unterschiede zwischen Taxonomie und (gewöhnlicher) Datensammlung:
+
+- Es gibt in jedem Dokument nur eine Taxonomie
+- Sie hat den Typ "Taxonomie"
 
 ####Beziehungen
-Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus obigem Beispiel:
+Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug von einer anderen Art:
 ```javascript
 "CH Delarze (2008): Art charakterisiert Lebensraum": {
     "Typ": "Beziehung",
