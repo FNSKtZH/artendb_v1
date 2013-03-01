@@ -452,13 +452,13 @@ Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug von
     ]
 }
 ```
-Im Unterschied zu Datensammlungen werden nicht immer alle Beziehungen der Datensammlung in eine Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben.
+Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 
-Der Begriff "Beziehungspartner" wird anstelle des an sich korrekteren Begriffs "Objekt" verwendet. Er ist im Kontext der Beziehung aussagekräftiger. Beziehungspartner sind in der Regel zwei Objekte aus beliebigen Gruppen.
-
-Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Jede Beziehung listet im Feld "Beziehungspartner" die beteiligten Objekte auf. Daneben kann sie weitere beschreibende Felder enthalten.
-
-Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie spezifisch angesprochen und z.B. für den Aufbau eines Beziehungsbaums verwendet werden.
+- Sie hat den Typ "Beziehung"
+- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
+- Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Darin sind beliebig viele Beziehungen enthalten
+- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle des an sich korrekteren Begriffs "Objekt" verwendet. Er ist im Kontext der Beziehung aussagekräftiger. Beziehungspartner sind in der Regel zwei Objekte aus beliebigen Gruppen
+- Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
 
 <a href="#top">&#8593; top</a>
 
@@ -494,7 +494,7 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Objekte inklusive Datensammlungen
+- Objekte inklusive Taxonomien und Datensammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste können die gewünschten Felder gewählt werden 
