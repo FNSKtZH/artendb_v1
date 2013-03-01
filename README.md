@@ -276,12 +276,12 @@ Taxonomien haben den "Typ" "Taxonomie", Datensammlungen den Typ "Datensammlung".
 
 Alle Eigenschaften des Objekts werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
-Hier als Beispiel die Schlingnatter:
+Hier als Beispiel der kleine Hopfen-Wurzelbohrer:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
-   "_id": "8B825C10-C098-48B1-BAB7-5C6287002635",
-   "_rev": "13-231cd4663a63ec118fa4672042c0d5b3",
+   "_id": "2A3D1FAB-19A0-430A-B660-BCD68630ACBE",
+   "_rev": "6-bb883fb93ce4e7b982e452764bb6a947",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
    "CSCF (2009)": {
@@ -290,77 +290,17 @@ Hier als Beispiel die Schlingnatter:
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
-           "Taxonomie ID": 70158,
-           "Klasse": "Reptilia",
-           "Ordnung": "Squamata",
-           "Familie": "Colubridae",
-           "Gattung": "Coronella",
-           "Art": "austriaca",
-           "Autor": "Laurenti, 1768",
-           "Artname": "Coronella austriaca Laurenti, 1768",
-           "Artname vollständig": "Coronella austriaca Laurenti, 1768 (Schlingnatter)",
-           "Name Deutsch": "Schlingnatter",
-           "Name Französisch": "Coronelle lisse",
-           "Name Italienisch": "Colubro liscio",
-           "Name Romanisch": "Natra glischa",
-           "Name Englisch": "Smooth snake",
-           "Schutz CH": "Schutz gemäss NHG"
-       }
-   },
-   "CH Rote Listen (unterschiedliche Jahre)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
-       "Datenstand": "unterschiedlich",
-       "Felder": {
-           "Europa": "gefährdet",
-           "Schweiz aktuell": "verletzlich (VU)",
-           "Schweiz Kriterien": "B2a, B2b(iii, iv)",
-           "Nordschweiz": "stark gefährdet",
-           "Kt Zürich": "vom Aussterben bedroht",
-           "Bemerkungen": "Im Mittelland vom Aussterben bedroht",
-           "Quelle": "BAFU 2005 (CH), älter (Regionen)"
-       }
-   },
-   "Blaue Liste (1998)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn. Eigenschaften von 207 Tierarten und 885 Pflanzenarten",
-       "Datenstand": "1998",
-       "Link": "http://www.bluelist.ethz.ch/",
-       "Felder": {
-           "Lebensraum": "Geröllhalden, Schuttfluren, Waldränder, Steinbrüche, Böschungen",
-           "Bestandesentwicklung": "Bestandesabnahme gesamthaft im Untersuchungsgebiet ohne oder trotz Schutzmassnahmen",
-           "Schutzmassnahmen": "Teilweises Entbuschen/Auflichten verwachsener oder verwaldeter Lebensräume, Versteck- und Überwinterungsplätze erhalten.",
-           "Wirksamkeit": "Einsatz oder Wirkung von Schutzmassnahmen nicht beurteilt oder unklar",
-           "Anwendungshäufigkeit zur Erhaltung": "Einzelfälle",
-           "Anwendungshäufigkeit zur Förderung": "noch nie",
-           "Erfolgsaussichten": "befriedigend",
-           "Aufwand": "mittel"
-       }
-   },
-   "CH Prioritäten (2011)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
-       "Datenstand": "2012.01",
-       "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
-       "Felder": {
-           "Priorität": "mässig",
-           "Gefährdung": "gefährdet bzw. verletzlich",
-           "Verantwortung": "geringe Verantwortung",
-           "Massnahmenbedarf": "klar",
-           "Bestände überwachen": "eventuell nötig",
-           "Kenntnisse vorhanden": "ausreichend",
-           "Techniken bekannt": "erfolgreiche Techniken sind bekannt",
-           "Verbreitung Jura": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung Mittelland": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung Nordalpen": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung westliche Zentralalpen": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung östliche Zentralalpen": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung Südalpen": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung kollin": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung montan": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung subalpin": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung alpin": "letzter Fund aus den Jahren 2000 bis 2010",
-           "Verbreitung Kt Zürich": "letzter Fund aus den Jahren 2000 bis 2010"
+           "Taxonomie ID": 27032,
+           "Klasse": "Insecta",
+           "Ordnung": "Lepidoptera",
+           "Familie": "Hepialidae",
+           "Gattung": "Korscheltellus",
+           "Art": "lupulinus",
+           "Autor": "Linnaeus, 1758",
+           "Artname": "Korscheltellus lupulinus Linnaeus, 1758",
+           "Artname vollständig": "Korscheltellus lupulinus Linnaeus, 1758 (Kleiner Hopfen-Wurzelbohrer)",
+           "Name Deutsch": "Kleiner Hopfen-Wurzelbohrer",
+           "Name Französisch": "La Louvette"
        }
    },
    "CH Umweltziele LW (2008)": {
@@ -369,116 +309,15 @@ Hier als Beispiel die Schlingnatter:
        "Datenstand": "2008",
        "Link": "http://www.bafu.admin.ch/publikationen/publikation/00097/index.html?lang=de",
        "Felder": {
-           "Zielart": true,
-           "Leitart": false,
-           "Priorität Umsetzung": "hoch prioritär",
-           "Qualitätsstufe": "hohe Qualität, ist nur unter günstigen Rahmenbedingungen zu erreichen",
+           "Zielart": false,
+           "Leitart": true,
+           "Qualitätsstufe": "tiefe Qualität, sollte auch bei verarmten Varianten mit wenig Aufwand erreichbar sein",
            "Jura": true,
            "Mittelland": true,
            "Nordalpen": true,
-           "Westliche Zentralalpen": true,
-           "Östliche Zentralalpen": true,
+           "Westliche Zentralalpen": false,
+           "Östliche Zentralalpen": false,
            "Südalpen": true
-       }
-   },
-   "CH Agroscope Zielart (2008)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Agroscope (2008). Eigenschaften von 207 Tierarten",
-       "Datenstand": "2008",
-       "Link": "http://www.agroscope.admin.ch",
-       "Felder": {
-           "1_1 West-Jura": true,
-           "1_2 Nord-Jura": true,
-           "1_3 Nordostschweiz": true,
-           "2_1 West-Mittelland": true,
-           "2_2 Ost-Mittelland": true,
-           "3_1 West-Nordalpen": true,
-           "3_2 Ost-Nordalpen": true,
-           "4_1 West-Zentralalpen": true,
-           "4_2 Ost-Zentralalpen": true,
-           "4_3 Engadin": true,
-           "5 Südalpen": true,
-           "Collin": true,
-           "Montan": true,
-           "Subalpin": true,
-           "Alpin": false,
-           "Rote Liste CH": "gefährdet",
-           "Aufwand für Erfolg": "gross",
-           "Beobachtbarkeit": "Die Art ist schwieriger nachzuweisen",
-           "Verbreitung Lebensraum Massnahmen": "Im Mittelland ist sie nur noch inselartig verbreitet und regional bereits ausgestorben; bis knapp über 2000 m. Bevorzugt in sich schnell erwärmenden Lagen, v.a. in flachgründigen Lebensräumen, die mit Steinstrukturen unterschiedlichster Art durchzogen sind. Lebensraum: Felsfluren, Blockschutt- und Geröllhalden, steinige Böschungen aller Art, Magerweiden, Steppenrasen, aber auch Waldränder, Eisenbahnareale, Abbaugebiete, Rebberge. Massnahmen: V.a. Erhalt bestehender Populationen und Vergrösserung deren Lebensräume durch Schaffung von Kleinstrukturen (Steinhaufen, Trockensteinmauern, Holzhaufen, etc.), extensive Nutzung (Krautschicht nur einmal jährlich mähen, spät mähen, Teile stehen lassen, Schnitthöhe > 10 cm), Waldränder mit stufigem Gebüschmantel und breitem Krautsaum; Aufwertungsmassnahmen für Eidechsen und Blindschleichen (Hauptnahrung); Bahndämme reptiliengerecht pflegen, da sie wichtige Ausbreitungs- und Verbindungskorridore sein können. Flächenanspruch einer Population (Grössenordnung): geeignete und vernetzte Teilflächen von mind. 1-5 a, insgesamt 50 ha geeignetes Habitat."
-       }
-   },
-   "ZH Artwert (1995)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
-       "Datenstand": "ca. 1995",
-       "Link": "http://www.naturschutz.zh.ch",
-       "Felder": {
-           "Artwert": 8,
-           "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
-           "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
-       }
-   },
-   "ZH AP Fauna": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Fauna des Kantons Zürich. Eigenschaften von 36 Tierarten",
-       "Datenstand": "2007",
-       "Link": "http://www.naturschutz.zh.ch",
-       "Felder": {
-           "Status": "erstellt",
-           "Beginn im Jahr": 2004,
-           "Stand Umsetzung": "noch keine Umsetzung",
-           "Link zum AP-Bericht": "http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/artenfoerderung/ap_fa/schlingnatter.html"
-       }
-   },
-   "ZH AP Grundlagen (1995)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
-       "Datenstand": "ca. 1995",
-       "Link": "http://www.naturschutz.zh.ch",
-       "Felder": {
-           "Dringlichkeit Aktionsplan": "gross",
-           "Priorität nach Naturschutz-Gesamtkonzept 1990": "gross",
-           "Bestandesentwicklung 1985-2000": "Abnahme",
-           "Keine Bestandesabnahme aber Population bedroht": "nicht beurteilt",
-           "Fördermassnahmen bekannt": "ja",
-           "Geeignete Lebensräume vohanden oder herstellbar": "ja",
-           "Überlebensfähige Populationen vorhanden": "ja",
-           "Etablierungs-Potential gut": "ja",
-           "Ausbreitungs-Potential gut": "ja",
-           "Erfolgsaussichten vorhanden": "ja",
-           "Nationales Artenschutzprogramm": "nein",
-           "Höchste Dringlichkeit": "ja",
-           "Verhältnis Aufwand-Ertrag günstig": "unbekannt",
-           "Umbrella- oder flagship-species": "ja",
-           "Bereits irgendwo Artenschutzprogramme": "ja",
-           "Dringlichkeit": "gross",
-           "Für Aktionsplan vorgeschlagen": true,
-           "Bemerkungen": "Höchste Dringlichkeit? Ergänzungen zum bestehenden Konzept (übrige Standorte) ect.; ZH hat grosse Verantwortung: mehr Standorte als Nachbarkantone\r\nErfolgsaussichten (Bemerkung zu Punkt 4): grosse Pop. an Bahnlinien\r\nFörderungsmassnahmen: Massnahmen in einfacher Form vorgeschlagen: konkret Standort ermittelt, für ca. 1/2 klar, was machen, Feinumsetzung fehlt noch; Restliche Pop.: keine Massnahmen-Empfehlungen formuliert.\r\nRealisierbarkeit: Grundeigentümer z.T. nicht einverstanden\r\nProjekt: Naturnetz Pfannenstiel  für Fr. 300000.-- (Geld v.a. von Stiftungen): Schlingnatter im Zentrum, da Schwerpunktvorkommen; früheres Konzept von P. Müller war Grundlage.\r\nJetzt generelle Überlegungen im Kt. ZH machen. (SBB ev. kooperativer, wenn Programm da ist.)",
-           "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
-       }
-   },
-   "ZH AP LiWa (2009)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Lichter Wald des Kantons Zürich. Eigenschaften von 51 Tierarten und 609 Pflanzenarten",
-       "Datenstand": "2009",
-       "Link": "http://www.naturschutz.zh.ch",
-       "Felder": {
-           "Zielart": true,
-           "AP LiWa Artwert": 11
-       }
-   },
-   "ZH AP TWW (2011)": {
-       "Typ": "Datensammlung",
-       "Beschreibung": "Aktionsplan Trockene Wiesen und Weiden des Kantons Zürich. Eigenschaften von 1113 Tierarten, 1199 Pflanzenarten, 38 Moosarten, 31 Lebensräumen sowie 5006 Beziehungen zwischen Pflanzenarten und Lebensräumen",
-       "Datenstand": "2011",
-       "Link": "http://www.naturschutz.zh.ch",
-       "Felder": {
-           "Art ist für AP TWW relevant": true,
-           "Art ist Zielart": true,
-           "Bindung an TWW": 8,
-           "Artwert AP TWW": 16,
-           "Quelle": "2006: Diverse im Auftrag der FNS"
        }
    },
    "ZH Artengruppen": {
@@ -487,8 +326,8 @@ Hier als Beispiel die Schlingnatter:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "GIS-Layer": "Reptilien",
-           "Artengruppen-ID in EvAB": 12
+           "GIS-Layer": "Nachtfalter",
+           "Artengruppen-ID in EvAB": 11
        }
    },
    "ZH GIS": {
@@ -497,9 +336,82 @@ Hier als Beispiel die Schlingnatter:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Betrachtungsdistanz (m)": 3000,
-           "Kriterien für Bestimmung der Betrachtungsdistanz": "9"
+           "Betrachtungsdistanz (m)": 500,
+           "Kriterien für Bestimmung der Betrachtungsdistanz": "500m als Minimalwert zugeteilt"
        }
+   },
+   "CH Delarze (2008): Art charakterisiert Lebensraum": {
+       "Typ": "Beziehung",
+       "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
+       "Beziehungen": [
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH Delarze (2008): Lebensräume",
+                       "Name": "4.5.1: Fromentalwiese",
+                       "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
+                   }
+               ],
+               "Art der Beziehung": "Art charakterisiert Lebensraum"
+           }
+       ]
+   },
+   "CH Umweltziele LW (2008): Ziel-/Leitart für Lebensraum": {
+       "Typ": "Beziehung",
+       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften von 374 Tierarten, 731 Pflanzenarten und 99 Moosarten. 2046 Beziehungen zwischen Lebensräumen und Tierarten. 3080 Beziehungen zwischen Lebensräumen und Pflanzenarten. 602 Beziehungen zwischen Lebensräumen und Moosarten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
+       "Datenstand": "2008",
+       "Link": "http://www.bafu.admin.ch/publikationen/publikation/00097/index.html?lang=de",
+       "Beziehungen": [
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
+                       "Name": "1.02: Extensive Wiesen normal",
+                       "GUID": "8BF073C3-50AB-4E57-8BF7-568CA4AE8792"
+                   }
+               ],
+               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
+               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
+           },
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
+                       "Name": "1.03: Extensive Wiesen trocken",
+                       "GUID": "A78105F2-5C5D-41B4-9EBF-C5E79B3FD574"
+                   }
+               ],
+               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
+               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
+           },
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
+                       "Name": "1.05: Extensive Weiden normal",
+                       "GUID": "A01CBE42-16AC-4A8F-BC3D-BC3954F12A03"
+                   }
+               ],
+               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
+               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
+           },
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
+                       "Name": "1.06: Extensive Weiden trocken",
+                       "GUID": "D7F6C53B-8759-47F9-A822-692366BF579C"
+                   }
+               ],
+               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
+               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
+           }
+       ]
    }
 }
 ```
@@ -511,52 +423,33 @@ Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzuf
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
 ####Beziehungen
-Beziehungen werden in eigenen Dokumenten gespeichert. Zum Beispiel:
+Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus obigem Beispiel:
 ```javascript
-{
-   "_id": "0000752E-A8C2-40B7-A971-8B2CC55C704B",
-   "_rev": "1-fc9a5f78150419f2e51f7dd24bf671a7",
-   "Typ": "Beziehung",
-   "Partner": [
-       {
-           "Gruppe": "Lebensräume",
-           "Name": "CH Flora Indicativa 2010: Lebensräume: 6.7 Thermophilous forest edges",
-           "GUID": "BFB9E6F7-07E4-49D6-ADE6-DD730890EC8F"
-       },
-       {
-           "Gruppe": "Flora",
-           "Name": "Lilium carniolicum",
-           "GUID": "C9A473A7-244F-460B-905D-63B4AC291DCB"
-       }
-   ],
-   "Datensammlung": {
-       "Name": "CH Flora indicativa 2010: Vorkommen von Arten in Lebensräumen"
-   },
-   "Felder": {
-       "Art der Beziehung": "Die Art kommt im Lebensraum vor"
-   }
+"CH Delarze (2008): Art charakterisiert Lebensraum": {
+    "Typ": "Beziehung",
+    "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
+    "Beziehungen": [
+        {
+            "Beziehungspartner": [
+                {
+                    "Gruppe": "Lebensräume",
+                    "Taxonomie": "CH Delarze (2008): Lebensräume",
+                    "Name": "4.5.1: Fromentalwiese",
+                    "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
+                }
+            ],
+            "Art der Beziehung": "Art charakterisiert Lebensraum"
+        }
+    ]
 }
 ```
-"Partner" sind die beteiligten Beziehungspartner (eigentlich Objekte, aber im Kontext der Beziehung ist der Begriff "Partner" aussagekräftiger). In der Regel zwei Objekte aus beliebigen Gruppen.
+Im Unterschied zu Datensammlungen werden nicht immer alle Beziehungen der Datensammlung in eine Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben.
 
-In "Datensammlung" wird wie bei Arten und Lebensräumen die Datensammlung beschrieben, aus der die Informationen stammen.
+Der Begriff "Beziehungspartner" wird anstelle des an sich korrekteren Begriffs "Objekt" verwendet. Er ist im Kontext der Beziehung aussagekräftiger. Beziehungspartner sind in der Regel zwei Objekte aus beliebigen Gruppen.
 
-"Felder" enthält die Informationen über die Art der Beziehung.
-
-Es können auch Beziehungen zwischen mehr als zwei Partnern beschrieben werden. Beispielsweise bestünde eine Fussballmannschaft aus mindestens elf "Partnern". Und in der Lokalzeitung ("Datensammlung") würden Berichte über ihre Spiele publiziert (z.B. JSON-Objekte in "Felder" mit den Feldern "Titel", "Header" und "Artikel").
+Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Jede Beziehung listet im Feld "Beziehungspartner" die beteiligten Objekte auf. Daneben kann sie weitere beschreibende Felder enthalten.
 
 Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie spezifisch angesprochen und z.B. für den Aufbau eines Beziehungsbaums verwendet werden.
-
-Hinweis: Die Struktur der Beziehungen wird nächstens umgebaut. Statt in eigenen Dokumenten sollen Beziehungen ähnlich wie Datensammlungen im Dokument des Objekts enthalten sein. Die Information über die Beziehungspartner wird wie die übrigen Eigenschaften der Beziehung in der Eigenschaft "Felder" enthalten sein. Das hat folgende Vorteile:
-
-- Die Daten sind viel besser lesbar
-- Die Informationen zusammenzuziehen erfordert VIEL weniger Datenbankzugriffe
-- Konzeptionell und in der Anwendung entstehen viele Synergien mit Datensammlungen und Taxonomien
-- Datenstruktur und Anwendung sind viel weniger komplex
-
-Nachteile:
-- Grössere Redundanz in den Daten, somit auch mehr Speicherbedarf (dafür viel weniger Rechenbedarf)
-- Importe und Datenänderungen sind anspruchsvoller
 
 <a href="#top">&#8593; top</a>
 
