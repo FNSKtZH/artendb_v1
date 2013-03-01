@@ -276,12 +276,12 @@ Taxonomien haben den "Typ" "Taxonomie", Datensammlungen den Typ "Datensammlung".
 
 Alle Eigenschaften des Objekts werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
-Hier als Beispiel der kleine Hopfen-Wurzelbohrer:
+Hier als Beispiel der Siebenschläfer:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
-   "_id": "2A3D1FAB-19A0-430A-B660-BCD68630ACBE",
-   "_rev": "6-bb883fb93ce4e7b982e452764bb6a947",
+   "_id": "509CCEB1-51BF-4629-B1FD-1B100BFDF3AD",
+   "_rev": "6-ce53932746590810687420298ffe3620",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
    "CSCF (2009)": {
@@ -290,34 +290,68 @@ Hier als Beispiel der kleine Hopfen-Wurzelbohrer:
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
-           "Taxonomie ID": 27032,
-           "Klasse": "Insecta",
-           "Ordnung": "Lepidoptera",
-           "Familie": "Hepialidae",
-           "Gattung": "Korscheltellus",
-           "Art": "lupulinus",
-           "Autor": "Linnaeus, 1758",
-           "Artname": "Korscheltellus lupulinus Linnaeus, 1758",
-           "Artname vollständig": "Korscheltellus lupulinus Linnaeus, 1758 (Kleiner Hopfen-Wurzelbohrer)",
-           "Name Deutsch": "Kleiner Hopfen-Wurzelbohrer",
-           "Name Französisch": "La Louvette"
+           "Taxonomie ID": 70810,
+           "Klasse": "Mammalia",
+           "Ordnung": "Rodentia",
+           "Familie": "Gliridae (nae)",
+           "Gattung": "Glis",
+           "Art": "glis",
+           "Autor": "(Linnaeus, 1766)",
+           "Artname": "Glis glis (Linnaeus, 1766)",
+           "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
+           "Name Deutsch": "Siebenschläfer",
+           "Name Französisch": "Loir",
+           "Name Italienisch": "Ghiro",
+           "Name Romanisch": "Durmigliet grisch",
+           "Name Englisch": "Fat dormouse",
+           "Schutz CH": "kantonal zu schützende Arten"
        }
    },
-   "CH Umweltziele LW (2008)": {
+   "CH Rote Listen (unterschiedliche Jahre)": {
        "Typ": "Datensammlung",
-       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften von 374 Tierarten, 731 Pflanzenarten und 99 Moosarten. 2046 Beziehungen zwischen Lebensräumen und Tierarten. 3080 Beziehungen zwischen Lebensräumen und Pflanzenarten. 602 Beziehungen zwischen Lebensräumen und Moosarten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
-       "Datenstand": "2008",
-       "Link": "http://www.bafu.admin.ch/publikationen/publikation/00097/index.html?lang=de",
+       "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
+       "Datenstand": "unterschiedlich",
        "Felder": {
-           "Zielart": false,
-           "Leitart": true,
-           "Qualitätsstufe": "tiefe Qualität, sollte auch bei verarmten Varianten mit wenig Aufwand erreichbar sein",
-           "Jura": true,
-           "Mittelland": true,
-           "Nordalpen": true,
-           "Westliche Zentralalpen": false,
-           "Östliche Zentralalpen": false,
-           "Südalpen": true
+           "Europa": "nicht gefährdet",
+           "Schweiz aktuell": "nicht gefährdet",
+           "Nordschweiz": "nicht gefährdet",
+           "Kt Zürich": "nicht gefährdet"
+       }
+   },
+   "ZH Artwert (1995)": {
+       "Typ": "Datensammlung",
+       "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
+       "Datenstand": "ca. 1995",
+       "Link": "http://www.naturschutz.zh.ch",
+       "Felder": {
+           "Artwert": 0,
+           "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
+           "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
+       }
+   },
+   "ZH AP Grundlagen (1995)": {
+       "Typ": "Datensammlung",
+       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
+       "Datenstand": "ca. 1995",
+       "Link": "http://www.naturschutz.zh.ch",
+       "Felder": {
+           "Dringlichkeit Aktionsplan": "nicht beurteilt",
+           "Priorität nach Naturschutz-Gesamtkonzept 1990": "nicht beurteilt",
+           "Bestandesentwicklung 1985-2000": "nicht beurteilt",
+           "Keine Bestandesabnahme aber Population bedroht": "nicht beurteilt",
+           "Fördermassnahmen bekannt": "nicht beurteilt",
+           "Geeignete Lebensräume vohanden oder herstellbar": "nicht beurteilt",
+           "Überlebensfähige Populationen vorhanden": "nicht beurteilt",
+           "Etablierungs-Potential gut": "nicht beurteilt",
+           "Ausbreitungs-Potential gut": "nicht beurteilt",
+           "Erfolgsaussichten vorhanden": "nicht beurteilt",
+           "Nationales Artenschutzprogramm": "nicht beurteilt",
+           "Höchste Dringlichkeit": "nicht beurteilt",
+           "Verhältnis Aufwand-Ertrag günstig": "nicht beurteilt",
+           "Umbrella- oder flagship-species": "nicht beurteilt",
+           "Bereits irgendwo Artenschutzprogramme": "nicht beurteilt",
+           "Dringlichkeit": "nicht beurteilt",
+           "Schutz": "kantonal zu schützende Arten"
        }
    },
    "ZH Artengruppen": {
@@ -326,8 +360,8 @@ Hier als Beispiel der kleine Hopfen-Wurzelbohrer:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "GIS-Layer": "Nachtfalter",
-           "Artengruppen-ID in EvAB": 11
+           "GIS-Layer": "Saeugetiere",
+           "Artengruppen-ID in EvAB": 13
        }
    },
    "ZH GIS": {
@@ -336,82 +370,10 @@ Hier als Beispiel der kleine Hopfen-Wurzelbohrer:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Betrachtungsdistanz (m)": 500,
-           "Kriterien für Bestimmung der Betrachtungsdistanz": "500m als Minimalwert zugeteilt"
+           "Betrachtungsdistanz (m)": 3000,
+           "Berücksichtigen wenn in Betrachtungsdistanz nicht ausgewiesen": true,
+           "Kriterien für Bestimmung der Betrachtungsdistanz": "12"
        }
-   },
-   "CH Delarze (2008): Art charakterisiert Lebensraum": {
-       "Typ": "Beziehung",
-       "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
-       "Beziehungen": [
-           {
-               "Beziehungspartner": [
-                   {
-                       "Gruppe": "Lebensräume",
-                       "Taxonomie": "CH Delarze (2008): Lebensräume",
-                       "Name": "4.5.1: Fromentalwiese",
-                       "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
-                   }
-               ],
-               "Art der Beziehung": "Art charakterisiert Lebensraum"
-           }
-       ]
-   },
-   "CH Umweltziele LW (2008): Ziel-/Leitart für Lebensraum": {
-       "Typ": "Beziehung",
-       "Beschreibung": "BAFU und BLW (2008): Umweltziele Landwirtschaft. Hergeleitet aus bestehenden rechtlichen Grundlagen. Eigenschaften von 374 Tierarten, 731 Pflanzenarten und 99 Moosarten. 2046 Beziehungen zwischen Lebensräumen und Tierarten. 3080 Beziehungen zwischen Lebensräumen und Pflanzenarten. 602 Beziehungen zwischen Lebensräumen und Moosarten\r\nUmwelt-Wissen Nr. 0820. Bundesamt für Umwelt, Bern: 221 S.",
-       "Datenstand": "2008",
-       "Link": "http://www.bafu.admin.ch/publikationen/publikation/00097/index.html?lang=de",
-       "Beziehungen": [
-           {
-               "Beziehungspartner": [
-                   {
-                       "Gruppe": "Lebensräume",
-                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
-                       "Name": "1.02: Extensive Wiesen normal",
-                       "GUID": "8BF073C3-50AB-4E57-8BF7-568CA4AE8792"
-                   }
-               ],
-               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
-               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
-           },
-           {
-               "Beziehungspartner": [
-                   {
-                       "Gruppe": "Lebensräume",
-                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
-                       "Name": "1.03: Extensive Wiesen trocken",
-                       "GUID": "A78105F2-5C5D-41B4-9EBF-C5E79B3FD574"
-                   }
-               ],
-               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
-               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
-           },
-           {
-               "Beziehungspartner": [
-                   {
-                       "Gruppe": "Lebensräume",
-                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
-                       "Name": "1.05: Extensive Weiden normal",
-                       "GUID": "A01CBE42-16AC-4A8F-BC3D-BC3954F12A03"
-                   }
-               ],
-               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
-               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
-           },
-           {
-               "Beziehungspartner": [
-                   {
-                       "Gruppe": "Lebensräume",
-                       "Taxonomie": "CH BAFU und BLW (2008): Umweltziele Landwirtschaft",
-                       "Name": "1.06: Extensive Weiden trocken",
-                       "GUID": "D7F6C53B-8759-47F9-A822-692366BF579C"
-                   }
-               ],
-               "Art der Beziehung": "Ziel-/Leitart für Lebensraum",
-               "Wert für die Beziehung": "1a : Unerlässlicher Lebensraum. Mit a bezeichnete sind gleichwertige Alternativen"
-           }
-       ]
    }
 }
 ```
@@ -421,6 +383,48 @@ Das kann jeder Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? Dies ist in JSON kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
+
+Zur Verdeutlichung nachfolgend Teilauszüge und Ergänzungen:
+Das ist die Taxonomie des Siebenschläfers:
+```javascript
+"CSCF (2009)": {
+   "Typ": "Taxonomie",
+   "Beschreibung": "Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
+   "Datenstand": "2009",
+   "Link": "http://www.cscf.ch/",
+   "Felder": {
+       "Taxonomie ID": 70810,
+       "Klasse": "Mammalia",
+       "Ordnung": "Rodentia",
+       "Familie": "Gliridae (nae)",
+       "Gattung": "Glis",
+       "Art": "glis",
+       "Autor": "(Linnaeus, 1766)",
+       "Artname": "Glis glis (Linnaeus, 1766)",
+       "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
+       "Name Deutsch": "Siebenschläfer",
+       "Name Französisch": "Loir",
+       "Name Italienisch": "Ghiro",
+       "Name Romanisch": "Durmigliet grisch",
+       "Name Englisch": "Fat dormouse",
+       "Schutz CH": "kantonal zu schützende Arten"
+   }
+}
+```
+...und das hier eine beliebige Datensammlung:
+```javascript
+"CH Rote Listen (unterschiedliche Jahre)": {
+   "Typ": "Datensammlung",
+   "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
+   "Datenstand": "unterschiedlich",
+   "Felder": {
+       "Europa": "nicht gefährdet",
+       "Schweiz aktuell": "nicht gefährdet",
+       "Nordschweiz": "nicht gefährdet",
+       "Kt Zürich": "nicht gefährdet"
+   }
+}
+```
 
 ####Beziehungen
 Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus obigem Beispiel:
