@@ -282,6 +282,7 @@
 								<label class="checkbox">
 									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="lr"><span id="exportieren_objekte_waehlen_gruppe_lr">Lebensräume</span>
 								</label>
+								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="exportieren_objekte_waehlen_gruppen_hinweis_text"></div>
@@ -575,6 +576,7 @@
 				});
 
 				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
+					//verhindern, dass bootstrap ganz nach oben scrollt
 					e.preventDefault();
 					//prüfen, ob schon gefiltert wurde
 					//wenn ja: Objekt-array zurücksetzen
@@ -622,6 +624,20 @@
 					}
 				});
 
+				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();
+					if ($(this).hasClass("active")) {
+						window.fasseTaxonomienZusammen = true;
+						$(this).html("Taxonomien einzeln behandeln");
+					} else {
+						window.fasseTaxonomienZusammen = false;
+						$(this).html("Alle Taxonomien zusammenfassen");
+					}
+					//Felder neu aufbauen, ohne Rückmeldung
+					erstelleListeFuerFeldwahl("", "", "", false);
+				});
+
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function() {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
@@ -639,8 +655,8 @@
 					});
 					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 						if ($(this).prop('checked')) {
-							if ($(this).attr('Datensammlung') !== "Lebensraum-Taxonomien") {
-								//blöd ist nur: Gewählte Felder aus den Lebensraum-Taxonomien ohne Werte tauchen nicht auf
+							if ($(this).attr('Datensammlung') !== "Taxonomie(n)") {
+								//blöd ist nur: Gewählte Felder aus den Taxonomie(n) ohne Werte tauchen nicht auf
 								feldliste.push($(this).attr('Datensammlung') + ": " + $(this).attr('Feld'));
 							}
 						}
@@ -664,8 +680,8 @@
 							//Innerhalb der Taxonomie alle gewählten Felder ergänzen
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
 								for (z in window.exportieren_objekte[i][x].Felder) {
-									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked') || (window.exportieren_objekte[i].Gruppe === "Lebensräume" && $('[Datensammlung="Lebensraum-Taxonomien"][Feld="' + z + '"]').prop('checked'))) {
-										//Lebensräume werden statt mit der Taxonomie mit "Lebensraum-Taxonomien" beschriftet, daher die Bedingung nach dem oder
+									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked') || (window.exportieren_objekte[i].Gruppe === "Lebensräume" && $('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked'))) {
+										//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
 										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
 									}
 								}

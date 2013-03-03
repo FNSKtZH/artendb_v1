@@ -1775,13 +1775,14 @@ function ergaenzeGruppeFuerExport(data, gruppe) {
 			window.exportieren_objekte.push(data.rows[i].doc);
 		}
 	}
-	erstelleListeFuerFeldwahl(data, gruppe, "geladen");
+	erstelleListeFuerFeldwahl(data, gruppe, "geladen", true);
 }
 
 //übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie) und den Filterwert
 //der Filterwert wurde bereits in Kleinschrift verwandelt. Die Vergleichswerte werden das auch, damit Gross-/Kleinschrift nicht wesentlich ist
 //reduziert in window.exportieren_guids und -objekte auf diejenigen, welche die Bedingung erfüllen
 //oder: Wird Filter entfernt/verändert, muss neu angefangen werden
+//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 function filtereFuerExport(DsName, FeldName, Filterwert) {
 	if (DsName === "keine") {
 		//das ist der guid
@@ -1794,7 +1795,7 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 				window.exportieren_objekte.splice(i, 1);
 			}
 		}
-	} /*else if (DsName === "Lebensraum-Taxonomien") {
+	} else if (window.fasseTaxonomienZusammen) {
 		//ist die Taxonomie der lr
 		//Achtung: DsName ist unbekannt, daher muss duch Eigenschaften des Typs Taxonomie geloopt werden
 		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
@@ -1820,7 +1821,7 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 				}
 			}
 		}
-	} */else {
+	} else {
 		//ein Feld der Taxonomie oder einer Datensammlung wurde gewählt
 		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
 		var i = window.exportieren_objekte.length;
@@ -1838,7 +1839,9 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 
 //baut globale Variabeln auf, mit denen im Formular "export" die Liste aller Eigenschaften aufgebaut werden kann
 //braucht data und gruppe für die Rückmeldung
-function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
+//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+//meldeZurück: Wenn false, dann keine Rückmeldung bringen (wenn Taxonomien zusammengefasst bzw. vereinzelt werden)
+function erstelleListeFuerFeldwahl(data, gruppe, gemacht, meldeZurück) {
 	window.exportieren_datensammlungen_namen = [];
 	window.exportieren_datensammlungen = [];
 	window.exportieren_taxonomien_namen = [];
@@ -1864,7 +1867,7 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 					}
 				}
 			} else if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie") {
-				//if (gruppe !== "lr") {
+				if (!window.fasseTaxonomienZusammen) {
 					if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
 						window.exportieren_taxonomien_namen.push(x);
 						//Namen der Taxonomie im Objekt ergänzen
@@ -1879,12 +1882,12 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 							}
 						}
 					}
-				/*} else {
-					//Lebensräume. Nur eine Taxonomie darstellen und auch so nennen, aber alle Felder anzeigen
-					if (window.exportieren_taxonomien_namen.indexOf("Lebensraum-Taxonomien") === -1) {
-						window.exportieren_taxonomien_namen.push("Lebensraum-Taxonomien");
+				} else {
+					//Nur eine Taxonomie darstellen und auch so nennen, aber alle Felder anzeigen
+					if (window.exportieren_taxonomien_namen.indexOf("Taxonomie(n)") === -1) {
+						window.exportieren_taxonomien_namen.push("Taxonomie(n)");
 						//Namen der Taxonomie im Objekt ergänzen
-						window.exportieren_objekte[i][x].Name = "Lebensraum-Taxonomien";
+						window.exportieren_objekte[i][x].Name = "Taxonomie(n)";
 						window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
 					} else if (window.exportieren_objekte[i][x].Felder) {
 						//kontrollieren, ob alle Felder schon enthalten sind
@@ -1895,13 +1898,15 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 							}
 						}
 					}
-				}*/
+				}
 			}
 		}
 	}
-	//Ergebnis rückmelden
-	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+	if (meldeZurück) {
+		//Ergebnis rückmelden
+		$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+	}
 	$.when(erstelleExportfelderTaxonomie()).then(function() {
 		erstelleExportfelderDatensammlungen();
 	});
@@ -1930,7 +1935,7 @@ function entferneGruppeAusExport(data, gruppe) {
 		}
 	}
 	//Datensammlungen neu aufbauen
-	erstelleListeFuerFeldwahl(data, gruppe, "entfernt");
+	erstelleListeFuerFeldwahl(data, gruppe, "entfernt", true);
 }
 
 function bereiteImportieren_ds_beschreibenVor() {
