@@ -259,6 +259,14 @@
 						</div>
 						<div class="accordion-body collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">So geht's:
+									<ul>
+										<li>Wählen Sie eine oder mehrere Gruppen</li>
+										<li>Danach wird die Gruppe aufgebaut. Sie müssen einen Moment gedulden</li>
+										<li>Sie können eine Gruppe auch wieder abwählen</li>
+										<li>Im nächsten Schritt werden Sie innerhalb der Gruppe(n) filtern können</li>
+									</ul>
+								</div>
 								<label class="checkbox">
 									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="fauna"><span id="exportieren_objekte_waehlen_gruppe_fauna">Fauna</span>
 								</label>
@@ -288,6 +296,24 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">So geht's:
+									<ul>
+										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Sie filtern, indem sie im Feld ihrer Wahl das gewünschte Kriterium erfassen...</li>
+										<li>...und danach zuunterst auf "Filter anwenden" klicken.
+											<br>Bei Gruppen mit sehr vielen Eigenschaften müssen Sie dazu an allen Feldern vorbei ganz nach unten scrollen</li>
+										<li>Unterhalb von "Filter anwenden" wird Ihnen danach die Anzahl "Treffer" angezeigt</li>
+										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Schreiben Sie im Namen "Eisvogel" und in der Ordnung "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
+										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Dann exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte einfach zusammen</li>
+										<li>Es kommt nicht auf Gross-/Kleinschreibung an.
+											<br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
+										<li>Sie können nach einem Teil des Feldinhalts filtern.
+											<br>Beispiel: Schreiben Sie "vogel", wird auch "Eisvogel" gefunden</li>
+										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false".
+											<br>Vorsicht: Es kann sein, dass "false" nicht als solches erfasst wurde - dann erhalten Sie auch keine "Treffer"</li>
+										<li>Im nächsten Schritt werden Sie wählen können, welche Felder exportiert werden sollen</li>
+									</ul>
+								</div>
 								<div class="control-group">
 									<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_guid">GUID</label>
 									<div class="controls">
@@ -310,6 +336,16 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">So geht's:
+									<ul>
+										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Markieren Sie die Felder, die Sie exportieren möchten...</li>
+										<li>...und fahren Sie danach mit "4. Exportieren" weiter
+											<br>Bei Gruppen mit sehr vielen Eigenschaften müssen Sie dazu an allen Feldern vorbei ganz nach unten scrollen</li>
+										<li>Felder werden auch dann exportiert, wenn sie keine Daten enthalten</li>
+										<li>Einzelne Felder, wie z.B. Verweise auf andere Arten/Lebensräume, enthalten JSON-Objekte. Das sind komplexe Datenstrukturen, die nicht in ein einfaches Datenfeld passen. Sie werden darum einfach im JSON-Format in das ensprechende Tabellenfeld exportiert. Erkenntlich sind sie u.a. an den {geschweiften Klammern}</li>
+									</ul>
+								</div>
 								<label class="checkbox">
 									<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="_id">GUID
 								</label>
@@ -327,6 +363,22 @@
 						</div>
 						<div id="exportieren_exportieren_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">So geht's:
+									<ul>
+										<li>Klicken Sie auf "Export prüfen"...</li>
+										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt (dauert einen Moment).
+											<br>Damit können Sie überprüfen, ob z.B. die richtigen Felder gewählt sind</li>
+										<li>... danach erscheint auch die Schaltfläche "herunterladen"</li>
+										<li>Der Download hat das .csv-Format:
+											<ul>
+												<li>Zeichensatz ist UTF 8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
+												<li>Die erste Zeile enthält die Feldnamen</li>
+												<li>Felder sind mit Kommas getrennt</li>
+												<li>Text ist in " eingeschlossen</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
 								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Export prüfen</button>
 								<button id="exportieren_exportieren_exportieren" class="btn" style="display:none;">herunterladen</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;"></div>
