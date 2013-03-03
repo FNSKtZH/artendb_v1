@@ -282,7 +282,7 @@
 								<label class="checkbox">
 									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="lr"><span id="exportieren_objekte_waehlen_gruppe_lr">Lebensräume</span>
 								</label>
-								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
+								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="exportieren_objekte_waehlen_gruppen_hinweis_text"></div>
@@ -628,12 +628,14 @@
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					if ($(this).hasClass("active")) {
-						window.fasseTaxonomienZusammen = true;
-						$(this).html("Taxonomien einzeln behandeln");
-					} else {
 						window.fasseTaxonomienZusammen = false;
 						$(this).html("Alle Taxonomien zusammenfassen");
+					} else {
+						window.fasseTaxonomienZusammen = true;
+						$(this).html("Taxonomien einzeln behandeln");
 					}
+					console.log('taxonomien zusammenfassen');
+					//$(this).button('toggle');
 					//Felder neu aufbauen, ohne Rückmeldung
 					erstelleListeFuerFeldwahl("", "", "", false);
 				});
