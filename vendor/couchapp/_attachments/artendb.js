@@ -1664,6 +1664,10 @@ function erstelleExportfelderTaxonomie() {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	for (i in window.exportieren_taxonomien) {
+		if (html_felder_waehlen !== '') {
+			html_felder_waehlen += '<hr>';
+			html_filtern += '<hr>';
+		}
 		html_felder_waehlen += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + window.exportieren_taxonomien[i].Name + '</h5></label></div>';
 		for (x in window.exportieren_taxonomien[i].Felder) {
