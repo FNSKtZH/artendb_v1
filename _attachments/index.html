@@ -82,12 +82,12 @@
 			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
 			
 			<form id="import" class="form form-horizontal" action="#" method="get" autocomplete="off">
-				<div class="accordion" id="importieren_accordion">
-					<div class="accordion-group" id="importieren_anmelden">
+				<div id="importieren_accordion" class="accordion">
+					<div id="importieren_anmelden" class="accordion-group">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="importieren_anmelden_titel" class="accordion-toggle" data-toggle="collapse" href="#importieren_anmelden_collapse">1. Anmelden</a>
+							<a id="importieren_anmelden_titel" class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_anmelden_collapse">1. Anmelden</a>
 						</div>
-						<div class="accordion-body collapse" id="importieren_anmelden_collapse">
+						<div id="importieren_anmelden_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<div class="control-group">
 									<label class="control-label" for="Email">Email</label>
@@ -133,7 +133,7 @@
 
 					<div class="accordion-group" id="importieren_ds_beschreiben">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" href="#importieren_ds_beschreiben_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_ds_beschreiben_collapse">
 								2. Datensammlung beschreiben
 							</a>
 						</div>
@@ -177,7 +177,7 @@
 
 					<div class="accordion-group" id="importieren_daten_uploaden">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" href="#importieren_daten_uploaden_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_daten_uploaden_collapse">
 								3. Eigenschaften laden
 							</a>
 						</div>
@@ -198,7 +198,7 @@
 
 					<div class="accordion-group" id="importieren_ids_identifizieren">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" href="#importieren_ids_identifizieren_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_ids_identifizieren_collapse">
 								4. ID's identifizieren
 							</a>
 						</div>
@@ -233,7 +233,7 @@
 
 					<div class="accordion-group" id="importieren_import_ausfuehren">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" href="#importieren_import_ausfuehren_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_import_ausfuehren_collapse">
 								5. Import ausführen
 							</a>
 						</div>
@@ -255,7 +255,7 @@
 				<div class="accordion" id="exportieren_accordion">
 					<div class="accordion-group" id="exportieren_objekte_waehlen_gruppen">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_gruppen_collapse" href="#">1. Gruppe(n) wählen</a>
+							<a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_gruppen_collapse" data-parent="exportieren_accordion" href="#exportieren_objekte_waehlen_gruppen_collapse">1. Gruppe(n) wählen</a>
 						</div>
 						<div class="accordion-body collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
 							<div class="accordion-inner">
@@ -284,7 +284,7 @@
 
 					<div class="accordion-group" id="exportieren_objekte_waehlen_eigenschaften">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_eigenschaften_collapse" href="#">2. Nach Eigenschaften filtern</a>
+							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_eigenschaften_collapse" data-parent="exportieren_accordion" href="#exportieren_objekte_waehlen_eigenschaften_collapse">2. Nach Eigenschaften filtern</a>
 						</div>
 						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
 							<div class="accordion-inner">
@@ -306,7 +306,7 @@
 
 					<div class="accordion-group" id="exportieren_felder_waehlen">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_collapse" href="#">3. Eigenschaften wählen</a>
+							<a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_collapse" data-parent="exportieren_accordion" href="#exportieren_felder_waehlen_collapse">3. Eigenschaften wählen</a>
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="accordion-inner">
@@ -321,11 +321,11 @@
 						</div>
 					</div>
 
-					<div class="accordion-group" id="exportieren_exportieren">
+					<div id="exportieren_exportieren" class="accordion-group">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" href="#">4. Exportieren</a>
+							<a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" data-parent="exportieren_accordion" href="#exportieren_exportieren_collapse">4. Exportieren</a>
 						</div>
-						<div class="accordion-body collapse" id="exportieren_exportieren_collapse">
+						<div id="exportieren_exportieren_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Export prüfen</button>
 								<button id="exportieren_exportieren_exportieren" class="btn" style="display:none;">herunterladen</button>
@@ -536,7 +536,7 @@
 					//wenn ein Feld einen Wert enthält, danach filtern
 					$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
 						if (this.value) {
-							console.log('Datensammlung: ' + $(this).attr('eigenschaft') + ' Feld: ' + $(this).attr('feld') + ' Wert: ' + this.value);
+							console.log('Datensammlung: "' + $(this).attr('eigenschaft') + '", Feld: "' + $(this).attr('feld') + '", Wert: "' + this.value + '"');
 							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value);
 						}
 					});
@@ -587,7 +587,10 @@
 					});
 					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 						if ($(this).prop('checked')) {
-							feldliste.push($(this).attr('Datensammlung') + ": " + $(this).attr('Feld'));
+							if ($(this).attr('Datensammlung') !== "Lebensraum-Taxonomien") {
+								//blöd ist nur: Gewählte Felder aus den Lebensraum-Taxonomien ohne Werte tauchen nicht auf
+								feldliste.push($(this).attr('Datensammlung') + ": " + $(this).attr('Feld'));
+							}
 						}
 					});
 					//durch alle Objekte gehen
@@ -609,11 +612,11 @@
 							//Innerhalb der Taxonomie alle gewählten Felder ergänzen
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
 								for (z in window.exportieren_objekte[i][x].Felder) {
-									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
+									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked') || (window.exportieren_objekte[i].Gruppe === "Lebensräume" && $('[Datensammlung="Lebensraum-Taxonomien"][Feld="' + z + '"]').prop('checked'))) {
+										//Lebensräume werden statt mit der Taxonomie mit "Lebensraum-Taxonomien" beschriftet, daher die Bedingung nach dem oder
 										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
 									}
 								}
-
 							}
 							//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
 							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung" && window.exportieren_objekte[i][x].Felder) {
@@ -658,7 +661,14 @@
 
 				$("#export").on("click", ".accordion-heading a", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
-					//event.preventDefault();	ABGESCHALTET: VERHINDERTE KLICKEN, D.H. ÖFFNEN DES COLLAPSES
+					event.preventDefault();
+					//$($(this).attr("href")).collapse("toggle");
+				});
+
+				$("#import").on("click", ".accordion-heading a", function(event) {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();
+					//$($(this).attr("href")).collapse("toggle");
 				});
 				
 				//Suche steuern bei Eingabe

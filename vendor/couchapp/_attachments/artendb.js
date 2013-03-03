@@ -1784,10 +1784,39 @@ function ergaenzeGruppeFuerExport(data, gruppe) {
 function filtereFuerExport(DsName, FeldName, Filterwert) {
 	if (DsName === "keine") {
 		//das ist der guid
-		for (i in window.exportieren_objekte) {
-			if (window.exportieren_objekte[i]._id !== Filterwert) {
+		for (var i in window.exportieren_objekte) {
+			if (typeof window.exportieren_objekte[i] !== "object") {
 				//Objekt entfernen
 				window.exportieren_objekte.splice(i, 1);
+			} else if (window.exportieren_objekte[i]._id !== Filterwert) {
+				//Objekt entfernen
+				window.exportieren_objekte.splice(i, 1);
+			}
+		}
+	} else if (DsName === "Lebensraum-Taxonomien") {
+		//ist die Taxonomie der lr
+		//Achtung: DsName ist unbekannt, daher muss duch Eigenschaften des Typs Taxonomie geloopt werden
+		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
+		var i = window.exportieren_objekte.length;
+		var entfernen;
+		while (i--) {
+			if (typeof window.exportieren_objekte[i] !== "object") {
+				//entfernen, ist kein Objekt
+				window.exportieren_objekte.splice(i, 1);
+			} else {
+				entfernen = true;
+				for (x in window.exportieren_objekte[i]) {
+					if (typeof window.exportieren_objekte[i][x] === "object" && typeof window.exportieren_objekte[i][x].Typ === "string" && window.exportieren_objekte[i][x].Typ === "Taxonomie" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "undefined" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "object") {
+						//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
+						if (window.exportieren_objekte[i][x].Felder[FeldName].toString().indexOf(Filterwert) >= 0) {
+							//Objekt belassen
+							entfernen = false;
+						}	
+					}
+				}
+				if (entfernen) {
+					window.exportieren_objekte.splice(i, 1);
+				}
 			}
 		}
 	} else {
@@ -1795,7 +1824,7 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
 		var i = window.exportieren_objekte.length;
 		while (i--) {
-			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || Filterwert.indexOf(window.exportieren_objekte[i][DsName].Felder[FeldName]) === -1) {
+			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || window.exportieren_objekte[i][DsName].Felder[FeldName].toString().indexOf(Filterwert) === -1) {
 				//Objekt entfernen
 				window.exportieren_objekte.splice(i, 1);
 			}
@@ -1834,17 +1863,35 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht) {
 					}
 				}
 			} else if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie") {
-				if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
-					window.exportieren_taxonomien_namen.push(x);
-					//Namen der Taxonomie im Objekt ergänzen
-					window.exportieren_objekte[i][x].Name = x;
-					window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
-				} else if (window.exportieren_objekte[i][x].Felder) {
-					//kontrollieren, ob alle Felder schon enthalten sind
-					//fehlende ergänzen
-					for (z in window.exportieren_objekte[i][x].Felder) {
-						if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
-							window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
+				if (gruppe !== "lr") {
+					if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
+						window.exportieren_taxonomien_namen.push(x);
+						//Namen der Taxonomie im Objekt ergänzen
+						window.exportieren_objekte[i][x].Name = x;
+						window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
+					} else if (window.exportieren_objekte[i][x].Felder) {
+						//kontrollieren, ob alle Felder schon enthalten sind
+						//fehlende ergänzen
+						for (z in window.exportieren_objekte[i][x].Felder) {
+							if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
+								window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
+							}
+						}
+					}
+				} else {
+					//Lebensräume. Nur eine Taxonomie darstellen und auch so nennen, aber alle Felder anzeigen
+					if (window.exportieren_taxonomien_namen.indexOf("Lebensraum-Taxonomien") === -1) {
+						window.exportieren_taxonomien_namen.push("Lebensraum-Taxonomien");
+						//Namen der Taxonomie im Objekt ergänzen
+						window.exportieren_objekte[i][x].Name = "Lebensraum-Taxonomien";
+						window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
+					} else if (window.exportieren_objekte[i][x].Felder) {
+						//kontrollieren, ob alle Felder schon enthalten sind
+						//fehlende ergänzen
+						for (z in window.exportieren_objekte[i][x].Felder) {
+							if (!window.exportieren_taxonomien[0].Felder[z]) {
+								window.exportieren_taxonomien[0].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
+							}
 						}
 					}
 				}
