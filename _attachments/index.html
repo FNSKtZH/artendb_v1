@@ -368,10 +368,10 @@
 										<li>Klicken Sie auf "Export prüfen"...</li>
 										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt (dauert einen Moment).
 											<br>Damit können Sie überprüfen, ob z.B. die richtigen Felder gewählt sind</li>
-										<li>... danach erscheint auch die Schaltfläche "herunterladen"</li>
+										<li>... danach erscheint die Schaltfläche "herunterladen"</li>
 										<li>Der Download hat das .csv-Format:
 											<ul>
-												<li>Zeichensatz ist UTF 8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
+												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
 												<li>Die erste Zeile enthält die Feldnamen</li>
 												<li>Felder sind mit Kommas getrennt</li>
 												<li>Text ist in " eingeschlossen</li>
@@ -588,8 +588,8 @@
 					//wenn ein Feld einen Wert enthält, danach filtern
 					$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
 						if (this.value) {
-							console.log('Datensammlung: "' + $(this).attr('eigenschaft') + '", Feld: "' + $(this).attr('feld') + '", Wert: "' + this.value + '"');
-							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value);
+							//Suchwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
+							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
 						}
 					});
 				});

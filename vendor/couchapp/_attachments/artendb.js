@@ -1778,7 +1778,8 @@ function ergaenzeGruppeFuerExport(data, gruppe) {
 	erstelleListeFuerFeldwahl(data, gruppe, "geladen");
 }
 
-//übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie)
+//übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie) und den Filterwert
+//der Filterwert wurde bereits in Kleinschrift verwandelt. Die Vergleichswerte werden das auch, damit Gross-/Kleinschrift nicht wesentlich ist
 //reduziert in window.exportieren_guids und -objekte auf diejenigen, welche die Bedingung erfüllen
 //oder: Wird Filter entfernt/verändert, muss neu angefangen werden
 function filtereFuerExport(DsName, FeldName, Filterwert) {
@@ -1808,7 +1809,7 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 				for (x in window.exportieren_objekte[i]) {
 					if (typeof window.exportieren_objekte[i][x] === "object" && typeof window.exportieren_objekte[i][x].Typ === "string" && window.exportieren_objekte[i][x].Typ === "Taxonomie" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "undefined" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "object") {
 						//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
-						if (window.exportieren_objekte[i][x].Felder[FeldName].toString().indexOf(Filterwert) >= 0) {
+						if (window.exportieren_objekte[i][x].Felder[FeldName].toString().toLowerCase().indexOf(Filterwert) >= 0) {
 							//Objekt belassen
 							entfernen = false;
 						}	
@@ -1824,7 +1825,7 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
 		var i = window.exportieren_objekte.length;
 		while (i--) {
-			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || window.exportieren_objekte[i][DsName].Felder[FeldName].toString().indexOf(Filterwert) === -1) {
+			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || window.exportieren_objekte[i][DsName].Felder[FeldName].toString().toLowerCase().indexOf(Filterwert) === -1) {
 				//Objekt entfernen
 				window.exportieren_objekte.splice(i, 1);
 			}
