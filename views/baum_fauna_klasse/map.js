@@ -1,12 +1,10 @@
 ﻿function(doc) {
-	var nameDerTaxonomie;
 	for (x in doc) {
 		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
-			nameDerTaxonomie = x;
+			if (doc.Gruppe && doc.Gruppe === "Fauna") {
+				emit (doc[x].Felder.Klasse, null);
+			}
 			break;
 		}
-	}
-	if (doc.Gruppe && doc.Gruppe === "Fauna") {
-		emit (doc[nameDerTaxonomie].Felder.Klasse, null);
 	}
 }

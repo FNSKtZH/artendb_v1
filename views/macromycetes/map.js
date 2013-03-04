@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Macromycetes" && doc.Typ && doc.Typ === "Objekt") {
+	if (doc.Gruppe && doc.Gruppe === "Macromycetes") {
 		emit ([doc._id, doc._rev]);
 	}
 }

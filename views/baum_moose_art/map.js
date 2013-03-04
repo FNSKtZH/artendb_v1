@@ -1,12 +1,10 @@
 ﻿function(doc) {
-	var nameDerTaxonomie;
 	for (x in doc) {
 		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
-			nameDerTaxonomie = x;
+			if (doc.Gruppe && doc.Gruppe === "Moose") {
+				emit ([doc[x].Felder.Klasse, doc[x].Felder.Familie, doc[x].Felder.Gattung, doc[x].Felder["Artname vollständig"]], doc._id);
+			}
 			break;
 		}
-	}
-	if (doc.Gruppe && doc.Gruppe === "Moose") {
-		emit ([doc[nameDerTaxonomie].Felder.Klasse, doc[nameDerTaxonomie].Felder.Familie, doc[nameDerTaxonomie].Felder.Gattung, doc[nameDerTaxonomie].Felder["Artname vollständig"]], doc._id);
 	}
 }

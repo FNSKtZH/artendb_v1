@@ -1,12 +1,10 @@
 ﻿function(doc) {
-	var nameDerTaxonomie;
 	for (x in doc) {
 		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
-			nameDerTaxonomie = x;
+			if (doc.Gruppe && doc.Gruppe === "Macromycetes") {
+				emit (doc[x].Felder.Gattung, null);
+			}
 			break;
 		}
-	}
-	if (doc.Gruppe && doc.Gruppe === "Macromycetes") {
-		emit (doc[nameDerTaxonomie].Felder.Gattung, null);
 	}
 }
