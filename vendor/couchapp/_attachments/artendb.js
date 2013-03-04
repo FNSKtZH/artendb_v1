@@ -1659,10 +1659,10 @@ function oeffneUri() {
 	}
 }
 
-function erstelleExportfelderTaxonomie() {
-	var felder_erstellt = $.Deferred();
+function erstelleExportfelder() {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
+	console.log('Exportfelder für Taxonomie erstellen');
 	for (i in window.exportieren_taxonomien) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
@@ -1688,14 +1688,14 @@ function erstelleExportfelderTaxonomie() {
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
-	felder_erstellt.resolve();
-	felder_erstellt.promise();
+	console.log('erstelleExportfelder ist fertig');
+	erstelleExportfelderDatensammlungen();
 }
 
 function erstelleExportfelderDatensammlungen() {
-	var felder_erstellt = $.Deferred();
 	var html_felder_waehlen = '';
 	var html_filtern = '';
+	console.log('Felder für Datensammlungen werden erstellt');
 	for (i in window.exportieren_datensammlungen) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
@@ -1720,10 +1720,11 @@ function erstelleExportfelderDatensammlungen() {
 	//linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
+	//console.log('Es folgt: append html_felder_waehlen');
 	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+	//console.log('Es folgt: append html_felder_filtern');
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
-	felder_erstellt.resolve();
-	felder_erstellt.promise();
+	console.log('erstelleExportfelderDatensammlungen ist fertig');
 }
 
 function erstelleExportString(exportobjekte) {
@@ -1771,6 +1772,7 @@ function erstelleExportString(exportobjekte) {
 //erwartet das Resultat der Datenabfrage aus der DB
 //und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
 function ergaenzeGruppeFuerExport(data, gruppe) {
+	console.log('data.rows.length = ' + data.rows.length);
 	for (i in data.rows) {
 		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) === -1) {
 			//guid an guid-array anfügen, wenn noch nicht enthalten
@@ -1779,6 +1781,7 @@ function ergaenzeGruppeFuerExport(data, gruppe) {
 			window.exportieren_objekte.push(data.rows[i].doc);
 		}
 	}
+	console.log('ergaenzeGruppeFuerExport ist fertig');
 	erstelleListeFuerFeldwahl(data, gruppe, "geladen", true);
 }
 
@@ -1850,6 +1853,7 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht, meldeZurück) {
 	window.exportieren_datensammlungen = [];
 	window.exportieren_taxonomien_namen = [];
 	window.exportieren_taxonomien = [];
+	console.log('Liste für Feldwahl wird erstellt');
 	//Datensammlungen anfügen
 	//durch alle Objekte loopen
 	for (i in window.exportieren_objekte) {
@@ -1911,17 +1915,16 @@ function erstelleListeFuerFeldwahl(data, gruppe, gemacht, meldeZurück) {
 		$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
 	}
-	$.when(erstelleExportfelderTaxonomie()).then(function() {
-		erstelleExportfelderDatensammlungen();
-	});
+	console.log('erstelleListeFuerFeldwahl ist fertig');
+	erstelleExportfelder();
 }
 
 //bereitet Daten für den Export auf: entfernt Objekte aus der getätigten Auswahl
 //erwartet das Resultat der Datenabfrage aus der DB
 //und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
 function entferneGruppeAusExport(data, gruppe) {
+	console.log('gruppe wird aus Export entfernt');
 	for (i in data.rows) {
-	//for (var i = 0; i < data.rows.length; i++) {
 		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) > -1) {
 			//guid ist in array enthalten. muss entfernt werden
 			window.exportieren_guids.splice(window.exportieren_guids.indexOf(data.rows[i].key[0]), 1);

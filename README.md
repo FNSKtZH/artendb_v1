@@ -460,6 +460,16 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 - Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
 - Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
+###Hierarchien
+Die Hierarchien werden momentan nur in den Lebensräumen logisch aus den Daten heraus aufgebaut, indem jedes Objekt seine Lage im Baum speichert. Sonst wird folgendermassen aufgebaut:
+
+- Flora: über Familie und Gattung
+- Fauna: über Klasse, Ordnung und Familie
+- Moose: über Klasse, Familie und Gattung
+- Pilze: über Gattung
+
+Langfristig sollen in allen Gruppen die Objekte ihre Lage im Baum kennen. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
+
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
