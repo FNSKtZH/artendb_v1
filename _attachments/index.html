@@ -262,25 +262,25 @@
 								<div class="well well-small">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach wird die Gruppe aufgebaut. Sie müssen einen Moment gedulden</li>
+										<li>Danach wird die Gruppe aufgebaut. Das kann dauern</li>
 										<li>Sie können eine Gruppe auch wieder abwählen</li>
 										<li>Im nächsten Schritt werden Sie innerhalb der Gruppe(n) filtern können</li>
 									</ul>
 								</div>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="fauna"><span id="exportieren_objekte_waehlen_gruppe_fauna">Fauna</span>
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="fauna">Fauna
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="flora"><span id="exportieren_objekte_waehlen_gruppe_flora">Flora</span>
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="flora">Flora
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="moose"><span id="exportieren_objekte_waehlen_gruppe_moose">Moose</span>
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="moose">Moose
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="macromycetes"><span id="exportieren_objekte_waehlen_gruppe_macromycetes">Pilze</span>
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="macromycetes">Pilze
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="lr"><span id="exportieren_objekte_waehlen_gruppe_lr">Lebensräume</span>
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="lr">Lebensräume
 								</label>
 								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis" class="alert alert-info">
@@ -374,8 +374,8 @@
 											<ul>
 												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
 												<li>Die erste Zeile enthält die Feldnamen</li>
-												<li>Felder sind mit Kommas getrennt</li>
-												<li>Text ist in " eingeschlossen</li>
+												<li>Felder sind mit Kommas (,) getrennt</li>
+												<li>Text ist in Anführungs- und Schlusszeichen (") eingeschlossen</li>
 											</ul>
 										</li>
 									</ul>
@@ -610,6 +610,7 @@
 							$db = $.couch.db("artendb");
 							$db.view('artendb/' + that.value + "?include_docs=true", {
 								success: function (data) {
+									console.log('data ist da');
 									//für spätere Verwendung zwischenspeichern
 									window[that.value] = data;
 									ergaenzeGruppeFuerExport(data, that.value);
@@ -638,7 +639,7 @@
 					erstelleListeFuerFeldwahl("", "", "", false);
 				});
 
-				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function() {
+				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					//leeren Array für die Objekte gründen
