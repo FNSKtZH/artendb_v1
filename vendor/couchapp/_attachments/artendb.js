@@ -1026,7 +1026,6 @@ function schliesseNichtMarkierteNodes() {
 }
 
 function öffneMarkiertenNode() {
-	console.log('öffne markierten node');
 	var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
 	$("#tree" + window.Gruppe).jstree("close_all", -1);
 	$("#tree" + window.Gruppe).jstree("deselect_all", -1);
@@ -1536,27 +1535,26 @@ function oeffneUri() {
 	}
 }
 
-function erstelleExportfelder() {
+function erstelleExportfelder(taxonomien, datensammlungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
-	console.log('Exportfelder für Taxonomie erstellen');
-	for (i in window.exportieren_taxonomien) {
+	for (i in taxonomien) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
 			html_filtern += '<hr>';
 		}
-		html_felder_waehlen += '<h5>' + window.exportieren_taxonomien[i].Name + '</h5>';
-		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + window.exportieren_taxonomien[i].Name + '</h5></label></div>';
-		for (x in window.exportieren_taxonomien[i].Felder) {
+		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
+		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + taxonomien[i].Name + '</h5></label></div>';
+		for (x in taxonomien[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
-			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
 			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + window.exportieren_taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1565,31 +1563,29 @@ function erstelleExportfelder() {
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
-	console.log('erstelleExportfelder ist fertig');
-	erstelleExportfelderDatensammlungen();
+	erstelleExportfelderDatensammlungen(datensammlungen);
 }
 
-function erstelleExportfelderDatensammlungen() {
+function erstelleExportfelderDatensammlungen(datensammlungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
-	console.log('Felder für Datensammlungen werden erstellt');
-	for (i in window.exportieren_datensammlungen) {
+	for (i in datensammlungen) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
 			html_filtern += '<hr>';
 		}
-		html_felder_waehlen += '<h5>' + window.exportieren_datensammlungen[i].Name + '</h5>';
-		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + window.exportieren_datensammlungen[i].Name + '</h5></label></div>';
-		for (x in window.exportieren_datensammlungen[i].Felder) {
+		html_felder_waehlen += '<h5>' + datensammlungen[i].Name + '</h5>';
+		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + datensammlungen[i].Name + '</h5></label></div>';
+		for (x in datensammlungen[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
-			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + datensammlungen[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
 			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + window.exportieren_datensammlungen[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + datensammlungen[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1597,11 +1593,8 @@ function erstelleExportfelderDatensammlungen() {
 	//linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
-	//console.log('Es folgt: append html_felder_waehlen');
 	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
-	//console.log('Es folgt: append html_felder_filtern');
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
-	console.log('erstelleExportfelderDatensammlungen ist fertig');
 }
 
 function erstelleExportString(exportobjekte) {
@@ -1649,17 +1642,15 @@ function erstelleExportString(exportobjekte) {
 //erwartet das Resultat der Datenabfrage aus der DB
 //und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
 function ergaenzeGruppeFuerExport(data, gruppe) {
-	console.log('data.rows.length = ' + data.rows.length);
-	for (i in data.rows) {
+	/*for (i in data.rows) {
 		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) === -1) {
 			//guid an guid-array anfügen, wenn noch nicht enthalten
 			window.exportieren_guids.push(data.rows[i].key[0]);
 			//Objekt anfügen
 			window.exportieren_objekte.push(data.rows[i].doc);
 		}
-	}
-	console.log('ergaenzeGruppeFuerExport ist fertig');
-	erstelleListeFuerFeldwahl(data, gruppe, "geladen", true);
+	}*/
+	//erstelleListeFuerFeldwahl(data, gruppe, "geladen", true);
 }
 
 //übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie) und den Filterwert
@@ -1726,89 +1717,25 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 //meldeZurück: Wenn false, dann keine Rückmeldung bringen (wenn Taxonomien zusammengefasst bzw. vereinzelt werden)
 function erstelleListeFuerFeldwahl(data, gruppe, gemacht, meldeZurück) {
-	window.exportieren_datensammlungen_namen = [];
-	window.exportieren_datensammlungen = [];
-	window.exportieren_taxonomien_namen = [];
-	window.exportieren_taxonomien = [];
-	console.log('Liste für Feldwahl wird erstellt');
-	//Datensammlungen anfügen
-	//durch alle Objekte loopen
-	for (i in window.exportieren_objekte) {
-		//durch alle Eigenschaften des Objekts loopen
-		for (x in window.exportieren_objekte[i]) {
-			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung") {
-				if (window.exportieren_datensammlungen_namen.indexOf(x) === -1) {
-					window.exportieren_datensammlungen_namen.push(x);
-					//Namen der Datensammlung im Objekt ergänzen
-					window.exportieren_objekte[i][x].Name = x;
-					window.exportieren_datensammlungen.push(window.exportieren_objekte[i][x]);
-				} else if (window.exportieren_objekte[i][x].Felder) {
-					//kontrollieren, ob alle Felder schon enthalten sind
-					//fehlende ergänzen
-					for (z in window.exportieren_objekte[i][x].Felder) {
-						if (!window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z]) {
-							window.exportieren_datensammlungen[window.exportieren_datensammlungen_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
-						}
-					}
-				}
-			} else if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie") {
-				if (!window.fasseTaxonomienZusammen) {
-					if (window.exportieren_taxonomien_namen.indexOf(x) === -1) {
-						window.exportieren_taxonomien_namen.push(x);
-						//Namen der Taxonomie im Objekt ergänzen
-						window.exportieren_objekte[i][x].Name = x;
-						window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
-					} else if (window.exportieren_objekte[i][x].Felder) {
-						//kontrollieren, ob alle Felder schon enthalten sind
-						//fehlende ergänzen
-						for (z in window.exportieren_objekte[i][x].Felder) {
-							if (!window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z]) {
-								window.exportieren_taxonomien[window.exportieren_taxonomien_namen.indexOf(x)].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
-							}
-						}
-					}
-				} else {
-					//Nur eine Taxonomie darstellen und auch so nennen, aber alle Felder anzeigen
-					if (window.exportieren_taxonomien_namen.indexOf("Taxonomie(n)") === -1) {
-						window.exportieren_taxonomien_namen.push("Taxonomie(n)");
-						//Namen der Taxonomie im Objekt ergänzen
-						window.exportieren_objekte[i][x].Name = "Taxonomie(n)";
-						window.exportieren_taxonomien.push(window.exportieren_objekte[i][x]);
-					} else if (window.exportieren_objekte[i][x].Felder) {
-						//kontrollieren, ob alle Felder schon enthalten sind
-						//fehlende ergänzen
-						for (z in window.exportieren_objekte[i][x].Felder) {
-							if (!window.exportieren_taxonomien[0].Felder[z]) {
-								window.exportieren_taxonomien[0].Felder[z] = window.exportieren_objekte[i][x].Felder[z];
-							}
-						}
-					}
-				}
-			}
-		}
-	}
 	if (meldeZurück) {
 		//Ergebnis rückmelden
 		$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.rows.length + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+		//$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
+		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total y Objekte geladen");
 	}
-	console.log('erstelleListeFuerFeldwahl ist fertig');
-	erstelleExportfelder();
+	erstelleExportfelder(data.Taxonomien, data.Datensammlungen);
 }
 
 //bereitet Daten für den Export auf: entfernt Objekte aus der getätigten Auswahl
 //erwartet das Resultat der Datenabfrage aus der DB
 //und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
 function entferneGruppeAusExport(data, gruppe) {
-	console.log('gruppe wird aus Export entfernt');
 	for (i in data.rows) {
 		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) > -1) {
 			//guid ist in array enthalten. muss entfernt werden
 			window.exportieren_guids.splice(window.exportieren_guids.indexOf(data.rows[i].key[0]), 1);
 			//Objekt entfernen
 			$.each(window.exportieren_objekte, function(index, value){
-				//console.log('value = ' + JSON.stringify(value));
-				//console.log('data.rows[i].key[0] = ' + data.rows[i].key[0]);
 			    if (value !== "undefined" && typeof value !== "undefined") {
 			    	if (value._id === data.rows[i].key[0]) {
 						window.exportieren_objekte.splice(index, 1);

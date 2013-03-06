@@ -578,20 +578,33 @@
 				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					e.preventDefault();
-					//prüfen, ob schon gefiltert wurde
-					//wenn ja: Objekt-array zurücksetzen
-					if (window.exportieren_objekte_sik && window.exportieren_objekte_sik.length > window.exportieren_objekte.length) {
-						window.exportieren_objekte = window.exportieren_objekte_sik.slice(0);
-					} else {
-						//sonst: Objekt-Array sichern, damit der Vorgang rückgängig gemacht werden kann
-						window.exportieren_objekte_sik = window.exportieren_objekte.slice(0);
-					}
+					//Array von Filterobjekten bilden
+					var filterkriterien = [];
+					var filterObjekt;
 					//durch alle Filterfelder loopen
 					//wenn ein Feld einen Wert enthält, danach filtern
 					$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
 						if (this.value) {
+							//Filterobjekt zurücksetzen
+							filterObjekt = {};
+							filterObjekt.DsName = $(this).attr('eigenschaft');
+							filterObjekt.FeldName = $(this).attr('feld');
+							//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
+							filterObjekt.Filterwert = this.value.toLowerCase();
+							filterkriterien.push(filterObjekt);
+
+
+
 							//Suchwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
 							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
+						}
+					});
+					//jetzt das filterObjekt übergeben
+					//Alle Felder abfragen
+					$db = $.couch.db("artendb");
+					$db.list('artendb/gruppe_felder', that.value + "?include_docs=true", {
+						success: function (data) {
+							erstelleListeFuerFeldwahl(data, that.value, "geladen", true);
 						}
 					});
 				});
@@ -602,21 +615,22 @@
 						//Beschäftigung melden
 						$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 						$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Gruppe wird geladen...");
-						//guids aller Objekte dieser Gruppe abfragen und danach array von guids bilden / vergrössern
-						//aber nur, wenn nicht schon erfolgt
-						if (window[that.value]) {
-							ergaenzeGruppeFuerExport(window[that.value], that.value);
-						} else {
-							$db = $.couch.db("artendb");
-							$db.view('artendb/' + that.value + "?include_docs=true", {
-								success: function (data) {
-									console.log('data ist da');
-									//für spätere Verwendung zwischenspeichern
-									window[that.value] = data;
-									ergaenzeGruppeFuerExport(data, that.value);
-								}
-							});
-						}
+						//Alle Felder abfragen
+						$db = $.couch.db("artendb");
+						$db.list('artendb/export', that.value + "?include_docs=true", {
+							success: function (data) {
+								ergaenzeGruppeFuerExport(data, that.value);
+							}
+						});
+
+						/*$db = $.couch.db("artendb");
+						$db.view('artendb/' + that.value + "?include_docs=true", {
+							success: function (data) {
+								//für spätere Verwendung zwischenspeichern
+								window[that.value] = data;
+								ergaenzeGruppeFuerExport(data, that.value);
+							}
+						});*/
 					} else {
 						//Haken wurde entfernt
 						//Daten aus Variable entfernen
