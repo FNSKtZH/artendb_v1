@@ -85,6 +85,8 @@ function erstelleBaum() {
 				}
 			});
 		} else {
+			//falls ein node markiert ist, Objekt wieder anzeigen
+			öffneMarkiertenNode();
 			//Suchfeld einblenden
 			$("#suchen").show();
 			$("#suchfeld").focus();
@@ -148,6 +150,8 @@ function erstelleBaum() {
 				}
 			});
 		} else {
+			//falls ein node markiert ist, Objekt wieder anzeigen
+			öffneMarkiertenNode();
 			//Suchfeld einblenden
 			$("#suchen").show();
 			$("#suchfeld").focus();
@@ -226,6 +230,8 @@ function erstelleBaum() {
 				}
 			});
 		} else {
+			//falls ein node markiert ist, Objekt wieder anzeigen
+			öffneMarkiertenNode();
 			//Suchfeld einblenden
 			$("#suchen").show();
 			$("#suchfeld").focus();
@@ -274,6 +280,8 @@ function erstelleBaum() {
 				}
 			});
 		} else {
+			//falls ein node markiert ist, Objekt wieder anzeigen
+			öffneMarkiertenNode();
 			//Suchfeld einblenden
 			$("#suchen").show();
 			$("#suchfeld").focus();
@@ -428,6 +436,8 @@ function erstelleBaum() {
 				}
 			});
 		} else {
+			//falls ein node markiert ist, Objekt wieder anzeigen
+			öffneMarkiertenNode();
 			//Suchfeld einblenden
 			$("#suchen").show();
 			$("#suchfeld").focus();
@@ -1013,6 +1023,19 @@ function schliesseNichtMarkierteNodes() {
 			$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
 		}
 	}
+}
+
+function öffneMarkiertenNode() {
+	console.log('öffne markierten node');
+	var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
+	$("#tree" + window.Gruppe).jstree("close_all", -1);
+	$("#tree" + window.Gruppe).jstree("deselect_all", -1);
+	//wenn eine Art gewählt war, diese wieder wählen
+	if (selected_nodes.length === 1) {
+		$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
+	}
+
+	//initiiere_art(node.attr("id"));
 }
 
 //managed die Sichtbarkeit von Formularen
