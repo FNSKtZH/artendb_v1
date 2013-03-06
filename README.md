@@ -94,8 +94,8 @@ Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. �
 
 Statt "Datensammlung" könnte auch der Begriff "Publikation" verwendet werden. Damit würde klar:
 
-- dass ArtenDb an Datensammlungen hohe Qualitätsansprüche stellt, für welche der Autor bürgt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte immer dem definierten Zweck entsprechen
-- dass eine aktualisierte Version einer bereits bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist
+- Dass ArtenDb an Datensammlungen minimale Qualitätsansprüche stellt, für welche der Autor bürgt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
+- Dass eine aktualisierte Version einer bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist
 
 Datensammlungen sollten nur durch die Autoren nachgeführt werden.
 
