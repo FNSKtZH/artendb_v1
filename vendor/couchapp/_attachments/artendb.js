@@ -1638,75 +1638,35 @@ function erstelleExportString(exportobjekte) {
 	return stringTitelzeile + "\n" + stringZeilen;
 }
 
-//bereitet Daten für den Export auf
-//erwartet das Resultat der Datenabfrage aus der DB
-//und die Gruppe, wie sie im Formular "export" im DOM-Objekt übergeben wird (kleingeschrieben)
-function ergaenzeGruppeFuerExport(data, gruppe) {
-	/*for (i in data.rows) {
-		if (window.exportieren_guids.indexOf(data.rows[i].key[0]) === -1) {
-			//guid an guid-array anfügen, wenn noch nicht enthalten
-			window.exportieren_guids.push(data.rows[i].key[0]);
-			//Objekt anfügen
-			window.exportieren_objekte.push(data.rows[i].doc);
-		}
-	}*/
-	//erstelleListeFuerFeldwahl(data, gruppe, "geladen", true);
-}
-
 //übernimmt den Namen eines Felds inkl. Datensammlung (bzw. Taxonomie) und den Filterwert
 //der Filterwert wurde bereits in Kleinschrift verwandelt. Die Vergleichswerte werden das auch, damit Gross-/Kleinschrift nicht wesentlich ist
 //reduziert in window.exportieren_guids und -objekte auf diejenigen, welche die Bedingung erfüllen
 //oder: Wird Filter entfernt/verändert, muss neu angefangen werden
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 function filtereFuerExport(DsName, FeldName, Filterwert) {
-	if (DsName === "keine") {
-		//das ist der guid
-		for (var i in window.exportieren_objekte) {
-			if (typeof window.exportieren_objekte[i] !== "object") {
-				//Objekt entfernen
-				window.exportieren_objekte.splice(i, 1);
-			} else if (window.exportieren_objekte[i]._id !== Filterwert) {
-				//Objekt entfernen
-				window.exportieren_objekte.splice(i, 1);
-			}
-		}
-	} else if (window.fasseTaxonomienZusammen) {
-		//ist die Taxonomie der lr
-		//Achtung: DsName ist unbekannt, daher muss duch Eigenschaften des Typs Taxonomie geloopt werden
-		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
-		var i = window.exportieren_objekte.length;
-		var entfernen;
-		while (i--) {
-			if (typeof window.exportieren_objekte[i] !== "object") {
-				//entfernen, ist kein Objekt
-				window.exportieren_objekte.splice(i, 1);
-			} else {
-				entfernen = true;
-				for (x in window.exportieren_objekte[i]) {
-					if (typeof window.exportieren_objekte[i][x] === "object" && typeof window.exportieren_objekte[i][x].Typ === "string" && window.exportieren_objekte[i][x].Typ === "Taxonomie" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "undefined" && typeof window.exportieren_objekte[i][x].Felder[FeldName] !== "object") {
-						//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
-						if (window.exportieren_objekte[i][x].Felder[FeldName].toString().toLowerCase().indexOf(Filterwert) >= 0) {
-							//Objekt belassen
-							entfernen = false;
-						}	
-					}
-				}
-				if (entfernen) {
-					window.exportieren_objekte.splice(i, 1);
-				}
-			}
-		}
-	} else {
-		//ein Feld der Taxonomie oder einer Datensammlung wurde gewählt
-		//es muss im Index von oben nach unten gezählt werden, weil splice zu einer Reindexierung führt 
-		var i = window.exportieren_objekte.length;
-		while (i--) {
-			if (typeof window.exportieren_objekte[i] !== "object" || typeof window.exportieren_objekte[i][DsName] === "undefined" || typeof window.exportieren_objekte[i][DsName].Felder[FeldName] === "undefined" || window.exportieren_objekte[i][DsName].Felder[FeldName].toString().toLowerCase().indexOf(Filterwert) === -1) {
-				//Objekt entfernen
-				window.exportieren_objekte.splice(i, 1);
-			}
-		}
+	//Alle Felder abfragen
+	$db = $.couch.db("artendb");
+	var fTz = "false";
+	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	if (window.fasseTaxonomienZusammen) {
+		var fTz = "true";
 	}
+	var queryParam = 'objekte?include_docs=true&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
+	$db.list('artendb/gruppe_felder', queryParam, {
+		success: function (data) {
+			var hinweisTaxonomien;
+			erstelleExportfelder(data.Taxonomien, data.Datensammlungen);
+			//kontrollieren, ob Taxonomien zusammengefasst werden
+			if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+				hinweisTaxonomien = "<br>Alle Taxonomien sind zusammengefasst";
+			} else {
+				hinweisTaxonomien = "<br>Alle Taxonomien werden einzeln dargestellt";
+			}
+			//Ergebnis rückmelden
+			$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
+		}
+	});
 	//Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Ohne Filter waren " + window.exportieren_objekte_sik.length + " Objekte geladen<br>Mit dem Filter sind es noch " + window.exportieren_objekte.length);
@@ -1714,37 +1674,44 @@ function filtereFuerExport(DsName, FeldName, Filterwert) {
 
 //baut im Formular "export" die Liste aller Eigenschaften auf
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-//meldeZurück: Wenn false, dann keine Rückmeldung bringen (wenn Taxonomien zusammengefasst bzw. vereinzelt werden)
 //gemacht ist entweder "hinzugefügt" oder "entfernt"
-function erstelleListeFuerFeldwahl(meldeZurück) {
+function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Gruppe wird geladen...");
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
 	//gewählte Gruppen ermitteln
-	var gruppen = [];
+	var gruppen = "";
 	$(".exportieren_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
-			gruppen.push($(this).val());
+			if (gruppen) {
+				gruppen += ",";
+			}
+			gruppen += $(this).val();
 		}
 	});
 	//Alle Felder abfragen
 	$db = $.couch.db("artendb");
+	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-	var queryParam = "objekte?include_docs=true&fasseTaxonomienZusammen=false&gruppen=" + gruppen;
 	if (window.fasseTaxonomienZusammen) {
-		var queryParam = "objekte?include_docs=true&fasseTaxonomienZusammen=true&gruppen=" + gruppen;
+		fTz = "true";
 	}
+	var queryParam = 'objekte?include_docs=true&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
 	$db.list('artendb/gruppe_felder', queryParam, {
 		success: function (data) {
-			if (meldeZurück) {
-				//Ergebnis rückmelden
-				$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-				//$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte aus der Gruppe " + $("#exportieren_objekte_waehlen_gruppe_" + gruppe).html() + " " + gemacht + "<br>Total " + window.exportieren_guids.length + " Objekte geladen");
-				$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt");
-			}
+			var hinweisTaxonomien;
 			erstelleExportfelder(data.Taxonomien, data.Datensammlungen);
+			//kontrollieren, ob Taxonomien zusammengefasst werden
+			if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+				hinweisTaxonomien = "<br>Alle Taxonomien sind zusammengefasst";
+			} else {
+				hinweisTaxonomien = "<br>Alle Taxonomien werden einzeln dargestellt";
+			}
+			//Ergebnis rückmelden
+			$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
 		}
-	});	
+	});
 }
 
 function bereiteImportieren_ds_beschreibenVor() {

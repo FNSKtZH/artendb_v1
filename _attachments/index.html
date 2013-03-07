@@ -268,19 +268,19 @@
 									</ul>
 								</div>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="fauna">Fauna
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="Fauna">Fauna
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="flora">Flora
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="Flora">Flora
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="moose">Moose
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="Moose">Moose
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="macromycetes">Pilze
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="Macromycetes">Pilze
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="lr">Lebensräume
+									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" value="Lebensräume">Lebensräume
 								</label>
 								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis" class="alert alert-info">
@@ -577,8 +577,13 @@
 				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					e.preventDefault();
+					//Beschäftigung melden
+					$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
+					$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Der Filter wird geprüft...");
 					//Array von Filterobjekten bilden
 					var filterkriterien = [];
+					//Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
+					var filterkriterienObjekt = {};
 					var filterObjekt;
 					//durch alle Filterfelder loopen
 					//wenn ein Feld einen Wert enthält, danach filtern
@@ -587,7 +592,7 @@
 							//Filterobjekt zurücksetzen
 							filterObjekt = {};
 							filterObjekt.DsName = $(this).attr('eigenschaft');
-							filterObjekt.FeldName = $(this).attr('feld');
+							filterObjekt.Feldname = $(this).attr('feld');
 							//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
 							filterObjekt.Filterwert = this.value.toLowerCase();
 							filterkriterien.push(filterObjekt);
@@ -598,32 +603,29 @@
 							//filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
 						}
 					});
+					//den array dem objekt zuweisen
+					filterkriterienObjekt.kriterien = filterkriterien;
 					//jetzt das filterObjekt übergeben
 					//Alle Felder abfragen
 					$db = $.couch.db("artendb");
+					var fTz = "false";
 					//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-					var queryParam = "_all_docs?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterien) + "&fasseTaxonomienZusammen=false";
 					if (window.fasseTaxonomienZusammen) {
-						var queryParam = "_all_docs?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterien) + "&fasseTaxonomienZusammen=true";
+						fTz = "true";
 					}
+					var queryParam = "objekte?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterienObjekt) + "&fasseTaxonomienZusammen=" + fTz;
 					$db.list('artendb/filtere_fuer_export', queryParam, {
 						success: function (data) {
 							//Ergebnis rückmelden
 							$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
-							$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Ohne Filter waren " + window.exportieren_objekte_sik.length + " Objekte geladen<br>Mit dem Filter sind es noch " + window.exportieren_objekte.length);
+							$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html(data.Objekte.length + " Objekte sind gewählt");
+							window.exportobjekte = data.Objekte;
 						}
 					});
 				});
 
-				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function(event) {
-					var that = this;
-					var gruppenliste = [];
-					$(".exportieren_objekte_waehlen_gruppe").each(function() {
-						if ($(this).prop('checked')) {
-							gruppenliste.push($(this).val());
-						}
-					});
-					erstelleListeFuerFeldwahl(gruppenliste, true);
+				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
+					erstelleListeFuerFeldwahl();
 					//TO DO: ABFANGEN, WAS PASSIERT WENN KEINE GRUPPE GEWÄHLT IST
 
 				});
@@ -631,15 +633,26 @@
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
+					var hinweisNeu;
 					if ($(this).hasClass("active")) {
 						window.fasseTaxonomienZusammen = false;
 						$(this).html("Alle Taxonomien zusammenfassen");
+						hinweisNeu = "<br>Alle Taxonomien sind zusammengefasst";
 					} else {
 						window.fasseTaxonomienZusammen = true;
 						$(this).html("Taxonomien einzeln behandeln");
+						hinweisNeu = "<br>Alle Taxonomien werden einzeln dargestellt";
 					}
-					//Felder neu aufbauen, ohne Rückmeldung
-					erstelleListeFuerFeldwahl(false);
+					//Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
+					var gruppeIstGewählt = false;
+					$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_objekte_waehlen_gruppe").each(function() {
+						if ($(this).prop('checked')) {
+							gruppeIstGewählt = true;
+						}
+					});
+					if (gruppeIstGewählt) {
+						erstelleListeFuerFeldwahl();
+					}
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {

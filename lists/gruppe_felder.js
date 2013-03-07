@@ -18,7 +18,7 @@ function(head, req) {
 				fasseTaxonomienZusammen = (req.query[i] === 'true');
 			}
 			if (i === "gruppen") {
-				gruppen = req.query[i];
+				gruppen = req.query[i].split(",");
 			}
 		}
 
