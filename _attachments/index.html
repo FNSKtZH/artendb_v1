@@ -366,10 +366,9 @@
 							<div class="accordion-inner">
 								<div class="well well-small">So geht's:
 									<ul>
-										<li>Klicken Sie auf "Export prüfen"...</li>
-										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt (dauert einen Moment).
-											<br>Damit können Sie überprüfen, ob z.B. die richtigen Felder gewählt sind</li>
-										<li>... danach erscheint die Schaltfläche "herunterladen"</li>
+										<li>Klicken Sie auf "Vorschau anzeigen"...</li>
+										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt (dauert einen Moment)</li>
+										<li>... und es erscheint die Schaltfläche "herunterladen"</li>
 										<li>Der Download hat das .csv-Format:
 											<ul>
 												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
@@ -380,7 +379,7 @@
 										</li>
 									</ul>
 								</div>
-								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Export prüfen</button>
+								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Vorschau anzeigen</button>
 								<button id="exportieren_exportieren_exportieren" class="btn" style="display:none;">herunterladen</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;"></div>
 							</div>
@@ -602,47 +601,31 @@
 					//jetzt das filterObjekt übergeben
 					//Alle Felder abfragen
 					$db = $.couch.db("artendb");
-					$db.list('artendb/export', "_all_docs?include_docs=true", JSON.stringify(filterObjekt), {
+					//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+					var queryParam = "_all_docs?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterien) + "&fasseTaxonomienZusammen=false";
+					if (window.fasseTaxonomienZusammen) {
+						var queryParam = "_all_docs?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterien) + "&fasseTaxonomienZusammen=true";
+					}
+					$db.list('artendb/filtere_fuer_export', queryParam, {
 						success: function (data) {
-							//lädt direkt im .csv-Format herunter
+							//Ergebnis rückmelden
+							$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
+							$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Ohne Filter waren " + window.exportieren_objekte_sik.length + " Objekte geladen<br>Mit dem Filter sind es noch " + window.exportieren_objekte.length);
 						}
 					});
 				});
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function(event) {
 					var that = this;
-					if ($(this).prop('checked')) {
-						//Beschäftigung melden
-						$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-						$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Gruppe wird geladen...");
-						//Alle Felder abfragen
-						$db = $.couch.db("artendb");
-						//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-						var queryParam = "?include_docs=true&fasseTaxonomienZusammen=false";
-						if (window.fasseTaxonomienZusammen) {
-							var queryParam = "?include_docs=true&fasseTaxonomienZusammen=true";
+					var gruppenliste = [];
+					$(".exportieren_objekte_waehlen_gruppe").each(function() {
+						if ($(this).prop('checked')) {
+							gruppenliste.push($(this).val());
 						}
-						$db.list('artendb/gruppe_felder', that.value + queryParam, {
-							success: function (data) {
-								erstelleListeFuerFeldwahl(data, that.value, "geladen", true);
-							}
-						});
+					});
+					erstelleListeFuerFeldwahl(gruppenliste, true);
+					//TO DO: ABFANGEN, WAS PASSIERT WENN KEINE GRUPPE GEWÄHLT IST
 
-						/*$db = $.couch.db("artendb");
-						$db.view('artendb/' + that.value + "?include_docs=true", {
-							success: function (data) {
-								//für spätere Verwendung zwischenspeichern
-								window[that.value] = data;
-								ergaenzeGruppeFuerExport(data, that.value);
-							}
-						});*/
-					} else {
-						//Haken wurde entfernt
-						//Daten aus Variable entfernen
-						//und Rückmeldung aktualisieren
-						//TO DO: ABFANGEN, WAS PASSIERT WENN LEER
-						entferneGruppeAusExport(window[that.value], that.value);
-					}
 				});
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
@@ -656,7 +639,7 @@
 						$(this).html("Taxonomien einzeln behandeln");
 					}
 					//Felder neu aufbauen, ohne Rückmeldung
-					erstelleListeFuerFeldwahl("", "", "", false);
+					erstelleListeFuerFeldwahl(false);
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {
