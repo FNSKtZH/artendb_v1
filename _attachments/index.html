@@ -596,15 +596,15 @@
 
 
 							//Suchwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
-							filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
+							//filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
 						}
 					});
 					//jetzt das filterObjekt übergeben
 					//Alle Felder abfragen
 					$db = $.couch.db("artendb");
-					$db.list('artendb/gruppe_felder', that.value + "?include_docs=true", {
+					$db.list('artendb/export', "_all_docs?include_docs=true", JSON.stringify(filterObjekt), {
 						success: function (data) {
-							erstelleListeFuerFeldwahl(data, that.value, "geladen", true);
+							//lädt direkt im .csv-Format herunter
 						}
 					});
 				});
@@ -617,9 +617,14 @@
 						$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Gruppe wird geladen...");
 						//Alle Felder abfragen
 						$db = $.couch.db("artendb");
-						$db.list('artendb/export', that.value + "?include_docs=true", {
+						//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+						var queryParam = "?include_docs=true&fasseTaxonomienZusammen=false";
+						if (window.fasseTaxonomienZusammen) {
+							var queryParam = "?include_docs=true&fasseTaxonomienZusammen=true";
+						}
+						$db.list('artendb/gruppe_felder', that.value + queryParam, {
 							success: function (data) {
-								ergaenzeGruppeFuerExport(data, that.value);
+								erstelleListeFuerFeldwahl(data, that.value, "geladen", true);
 							}
 						});
 
@@ -635,6 +640,7 @@
 						//Haken wurde entfernt
 						//Daten aus Variable entfernen
 						//und Rückmeldung aktualisieren
+						//TO DO: ABFANGEN, WAS PASSIERT WENN LEER
 						entferneGruppeAusExport(window[that.value], that.value);
 					}
 				});

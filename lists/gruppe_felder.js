@@ -9,8 +9,18 @@ function(head, req) {
 		var fasseTaxonomienZusammen = false;
 		var returnObject = {};
 		var zähler = 0;
+
+		//übergebene Variabeln extrahieren
+		for (i in req.query) {
+			if (i === "fasseTaxonomienZusammen") {
+				//das ist ein übergebenes Kriterium
+				//send(JSON.stringify(i + " = " + req.query[i]) + '         //////////            ');
+				//true oder false wird als String übergeben > umwandeln
+				fasseTaxonomienZusammen = (req.query[i] === 'true');
+			}
+		}
+
 		//Array mit allen Feldnamen erstellen
-		send(JSON.stringify(req.query) + "   ///////    ");
 		while(row = getRow()) {
 			zähler += 1;
 			Objekt = row.doc;
