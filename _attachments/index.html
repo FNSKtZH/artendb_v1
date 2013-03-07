@@ -297,7 +297,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
 							<div class="accordion-inner">
-								<div class="well well-small">So geht's:
+								<div class="well well-small" style="margin-bottom:0px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Sie filtern, indem sie im Feld ihrer Wahl das gewünschte Kriterium erfassen...</li>
@@ -316,13 +316,19 @@
 									</ul>
 								</div>
 								<div class="control-group">
+									<label class="control-label">
+										<h5>Art / Lebensraum</h5>
+									</label>
+								</div>
+								<div class="control-group">
 									<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_guid">GUID</label>
 									<div class="controls">
 										<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_guid" Eigenschaft="keine" Feld="_id">
 									</div>
 								</div>
 								<div id="exportieren_objekte_waehlen_eigenschaften_felderliste"></div>
-								<button id="exportieren_objekte_waehlen_eigenschaften_filtern" class="btn" style="margin-bottom:9px;">Filter anwenden</button>
+								<hr>
+								<button id="exportieren_objekte_waehlen_eigenschaften_filtern" class="btn" style="margin-bottom:9px;margin-top:9px;">Filter anwenden</button>
 								<div id="exportieren_objekte_waehlen_eigenschaften_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="exportieren_objekte_waehlen_eigenschaften_hinweis_text"></div>
@@ -337,7 +343,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="accordion-inner">
-								<div class="well well-small">So geht's:
+								<div class="well well-small" style="margin-bottom:0px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Markieren Sie die Felder, die Sie exportieren möchten...</li>
@@ -347,12 +353,15 @@
 										<li>Einzelne Felder, wie z.B. Verweise auf andere Arten/Lebensräume, enthalten JSON-Objekte. Das sind komplexe Datenstrukturen, die nicht in ein einfaches Datenfeld passen. Sie werden darum einfach im JSON-Format in das ensprechende Tabellenfeld exportiert. Erkenntlich sind sie u.a. an den {geschweiften Klammern}</li>
 									</ul>
 								</div>
-								<label class="checkbox">
-									<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="_id">GUID
-								</label>
-								<label class="checkbox">
-									<input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
-								</label>
+								<h5>Art / Lebensraum</h5>
+								<div class="felderspalte">
+									<label class="checkbox">
+										<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="_id">GUID
+									</label>
+									<label class="checkbox">
+										<input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+									</label>
+								</div>
 								<div id="exportieren_felder_waehlen_felderliste"></div>
 							</div>
 						</div>

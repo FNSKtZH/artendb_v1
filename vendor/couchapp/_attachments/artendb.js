@@ -1645,7 +1645,9 @@ function erstelleExportfelder(taxonomien, datensammlungen) {
 			html_filtern += '<hr>';
 		}
 		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
+		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + taxonomien[i].Name + '</h5></label></div>';
+		html_filtern += '<div class="felderspalte">';
 		for (x in taxonomien[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
@@ -1660,6 +1662,9 @@ function erstelleExportfelder(taxonomien, datensammlungen) {
 			html_filtern += '</div>';
 		}
 	}
+	//Spalten abschliessen
+	html_felder_waehlen += '</div>';
+	html_filtern += '</div>';
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
@@ -1676,7 +1681,9 @@ function erstelleExportfelderDatensammlungen(datensammlungen) {
 			html_filtern += '<hr>';
 		}
 		html_felder_waehlen += '<h5>' + datensammlungen[i].Name + '</h5>';
+		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<div class="control-group"><label class="control-label"><h5>' + datensammlungen[i].Name + '</h5></label></div>';
+		html_filtern += '<div class="felderspalte">';
 		for (x in datensammlungen[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
@@ -1690,6 +1697,9 @@ function erstelleExportfelderDatensammlungen(datensammlungen) {
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
+		//Spalten abschliessen
+		html_felder_waehlen += '</div>';
+		html_filtern += '</div>';
 	}
 	//linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;

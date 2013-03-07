@@ -171,6 +171,12 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	z-index: 4;
 }
 
+.felderspalte {
+	column-width: 450px;
+	-moz-column-width: 450px;
+	-webkit-column-width: 450px;
+}
+
 /*funktioniert nicht, weil button verschwindet, wen focus auf dem feld ist
 #suche_leeren_btn {
 	transform: translate(-13px,-25px);
