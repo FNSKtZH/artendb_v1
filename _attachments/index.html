@@ -261,7 +261,7 @@
 								<div class="well well-small">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach wird die Gruppe aufgebaut. Das kann dauern</li>
+										<li>Danach wserden die Eigenschaften der Gruppe aufgebaut. Das kann dauern</li>
 										<li>Sie können eine Gruppe auch wieder abwählen</li>
 										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet. Das ist vor allem für Lebensräume von Bedeutung, wo jeder Lebensraumschlüssel eine Taxonomie darstellt und fast alle dieselben Felder haben. So können Sie z.B. alle Informationen von Delarze gleichzeitig exportieren (im Feld "Taxonomie" nach "Delarze" filtern)</li>
 										<li>Im nächsten Schritt werden Sie innerhalb der Gruppe(n) filtern können</li>
@@ -382,6 +382,10 @@
 								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Vorschau anzeigen</button>
 								<button id="exportieren_exportieren_exportieren" class="btn" style="display:none;">herunterladen</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;"></div>
+								<div id="exportieren_exportieren_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="exportieren_exportieren_hinweis_text"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -569,7 +573,7 @@
 					zeigeFormular("export");
 					//Exportieren-Guids schaffen, damit kein altes existiert
 					window.exportieren_guids = [];
-					window.exportieren_objekte = [];
+					delete window.exportieren_objekte;
 					//Exportsicherung entfernen
 					delete window.exportieren_objekte_sik;
 				});
@@ -577,51 +581,7 @@
 				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					e.preventDefault();
-					//Beschäftigung melden
-					$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
-					$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html("Der Filter wird geprüft...");
-					//Array von Filterobjekten bilden
-					var filterkriterien = [];
-					//Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
-					var filterkriterienObjekt = {};
-					var filterObjekt;
-					//durch alle Filterfelder loopen
-					//wenn ein Feld einen Wert enthält, danach filtern
-					$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
-						if (this.value) {
-							//Filterobjekt zurücksetzen
-							filterObjekt = {};
-							filterObjekt.DsName = $(this).attr('eigenschaft');
-							filterObjekt.Feldname = $(this).attr('feld');
-							//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
-							filterObjekt.Filterwert = this.value.toLowerCase();
-							filterkriterien.push(filterObjekt);
-
-
-
-							//Suchwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
-							//filtereFuerExport($(this).attr('eigenschaft'), $(this).attr('feld'), this.value.toLowerCase());
-						}
-					});
-					//den array dem objekt zuweisen
-					filterkriterienObjekt.kriterien = filterkriterien;
-					//jetzt das filterObjekt übergeben
-					//Alle Felder abfragen
-					$db = $.couch.db("artendb");
-					var fTz = "false";
-					//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-					if (window.fasseTaxonomienZusammen) {
-						fTz = "true";
-					}
-					var queryParam = "objekte?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterienObjekt) + "&fasseTaxonomienZusammen=" + fTz;
-					$db.list('artendb/filtere_fuer_export', queryParam, {
-						success: function (data) {
-							//Ergebnis rückmelden
-							$("#exportieren_objekte_waehlen_eigenschaften_hinweis").alert().css("display", "block");
-							$("#exportieren_objekte_waehlen_eigenschaften_hinweis_text").html(data.Objekte.length + " Objekte sind gewählt");
-							window.exportobjekte = data.Objekte;
-						}
-					});
+					filtereFuerExport();
 				});
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
@@ -658,79 +618,7 @@
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
-					//leeren Array für die Objekte gründen
-					var exportobjekte = [];
-					var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
-					var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
-					//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
-					//später wird jedem Objekt jedes dieser Felder angefügt (mit Wert falls vorhanden)
-					var feldliste = [];
-					$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
-						if ($(this).prop('checked')) {
-							feldliste.push($(this).attr('feldname'));
-						}
-					});
-					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
-						if ($(this).prop('checked')) {
-							if ($(this).attr('Datensammlung') !== "Taxonomie(n)") {
-								//blöd ist nur: Gewählte Felder aus den Taxonomie(n) ohne Werte tauchen nicht auf
-								feldliste.push($(this).attr('Datensammlung') + ": " + $(this).attr('Feld'));
-							}
-						}
-					});
-					//durch alle Objekte gehen
-					for (i in window.exportieren_objekte) {
-						var Objekt = {};
-						//Alle Felder anfügen
-						for (v in feldliste) {
-							Objekt[feldliste[v]] = null;
-						}
-						//id und gruppe
-						if (id_ist_gewaehlt) {
-							Objekt.GUID = window.exportieren_objekte[i]._id;
-						}
-						if (gruppe_ist_gewaehlt) {
-							Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
-						}
-						//durch alle Eigenschaften gehen
-						for (x in window.exportieren_objekte[i]) {
-							//Innerhalb der Taxonomie alle gewählten Felder ergänzen
-							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
-								for (z in window.exportieren_objekte[i][x].Felder) {
-									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked') || (window.exportieren_objekte[i].Gruppe === "Lebensräume" && $('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked'))) {
-										//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
-									}
-								}
-							}
-							//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
-							if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung" && window.exportieren_objekte[i][x].Felder) {
-								for (z in window.exportieren_objekte[i][x].Felder) {
-									if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
-										Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
-									}
-								}
-
-							}
-						}
-						exportobjekte.push(Objekt);
-					}
-
-					//Jetzt Beziehungen ergänzen
-					//durch alle exportobjekte loopen und eine Liste der Beziehungs-Datensammlungen sowie ihrer Felder erstellen
-					//dazu ist bei jedem Objekt eine DB-Abfrage nötig! Nur machen, wenn vom Benutzer explizit gewünscht
-					//diesen Schritt in obigen loop integrieren
-
-					//durch alle exportobjekte loopen und allen diese Felder mit Leerwerten anhängen
-
-					//durch alle exportobjekte loopen und bei jedem:
-					//Anzahl Beziehungen zählen
-					//exportobjekt entsprechend der Anzahl Beziehungen multiplizieren (hintereinander schreiben)
-					//durch Beziehungen des exportobjekts loopen und Werte dieser Beziehung in Felder schreiben
-
-					erstelleTabelle(exportobjekte, "exportieren_exportieren_tabelle");
-					window.exportstring = erstelleExportString(exportobjekte);
-					$("#exportieren_exportieren_exportieren").show();
+					baueTabelleFeurExportAuf();
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function() {
@@ -887,6 +775,45 @@
 		</div>
 		<div class="modal-body">
 			<p id="fileApiMeldungText">One fine body…</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		</div>
+	</div>
+
+	<div id="meldung_keine_exportdaten" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Keine Daten gewählt</h3>
+		</div>
+		<div class="modal-body">
+			<p id="fileApiMeldungText">Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		</div>
+	</div>
+
+	<div id="meldung_keine_eigenschaften" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Keine Eigenschaften gewählt</h3>
+		</div>
+		<div class="modal-body">
+			<p id="fileApiMeldungText">Bitte wählen Sie Eigenschaften, die exportiert werden sollen</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		</div>
+	</div>
+
+	<div id="meldung_keine_gruppen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Keine Gruppe gewählt</h3>
+		</div>
+		<div class="modal-body">
+			<p id="fileApiMeldungText">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
