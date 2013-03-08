@@ -26,9 +26,9 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 
 ###Ziele für die Benutzerin
 
-- Die Anwendung ist einfach zu bedienen
-- Die Datenflut bleibt überschaubar
-- Die Daten sind gut dokumentiert...
+- Die Anwendung ist einfach zu bedienen,
+- die Datenflut überschaubar,
+- ausreichend dokumentiert...
 - ...und gut verfügbar:
  - Von jedem Gerät im Internet
  - Als Export im csv-Format (ev. weitere)
