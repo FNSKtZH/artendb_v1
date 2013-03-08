@@ -110,7 +110,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus vers
 
 Das soll so erfolgen:
 
-- In den jeweiligen Objekten (Arten und Lebensräumen) wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
+- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
  - Ein mal in die Ursprungs-Datensammlung
  - Ein mal in die zusammenfassende
