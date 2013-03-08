@@ -261,10 +261,9 @@
 								<div class="well well-small">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach wserden die Eigenschaften der Gruppe aufgebaut. Das kann dauern</li>
-										<li>Sie können eine Gruppe auch wieder abwählen</li>
-										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet. Das ist vor allem für Lebensräume von Bedeutung, wo jeder Lebensraumschlüssel eine Taxonomie darstellt und fast alle dieselben Felder haben. So können Sie z.B. alle Informationen von Delarze gleichzeitig exportieren (im Feld "Taxonomie" nach "Delarze" filtern)</li>
-										<li>Im nächsten Schritt werden Sie innerhalb der Gruppe(n) filtern können</li>
+										<li>Danach werden die Eigenschaften der Gruppe aufgebaut.<br>Sie können anschliessend innerhalb der Gruppe(n) filtern</li>
+										<li>Eine Gruppe kann auch wieder entfernt werden</li>
+										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet. Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder. Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
 									</ul>
 								</div>
 								<label class="checkbox">
@@ -301,18 +300,16 @@
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Sie filtern, indem sie im Feld ihrer Wahl das gewünschte Kriterium erfassen...</li>
-										<li>...und danach zuunterst auf "Filter anwenden" klicken.
-											<br>Bei Gruppen mit sehr vielen Eigenschaften müssen Sie dazu an allen Feldern vorbei ganz nach unten scrollen</li>
-										<li>Unterhalb von "Filter anwenden" wird Ihnen danach die Anzahl "Treffer" angezeigt</li>
-										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Schreiben Sie im Namen "Eisvogel" und in der Ordnung "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
+										<li>...und danach zuunterst bei "4. Exportieren" die Vorschau anzeigen.
+											<br>Dazu müssen Sie an allen Feldern vorbei ganz nach unten scrollen</li>
+										<li>Unterhalb von "Vorschau anzeigen" wird Ihnen danach die Anzahl "Treffer" angezeigt</li>
+										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
 										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Dann exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte einfach zusammen</li>
 										<li>Es kommt nicht auf Gross-/Kleinschreibung an.
 											<br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
 										<li>Sie können nach einem Teil des Feldinhalts filtern.
-											<br>Beispiel: Schreiben Sie "vogel", wird auch "Eisvogel" gefunden</li>
-										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false".
-											<br>Vorsicht: Es kann sein, dass "false" nicht als solches erfasst wurde - dann erhalten Sie auch keine "Treffer"</li>
-										<li>Im nächsten Schritt werden Sie wählen können, welche Felder exportiert werden sollen</li>
+											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
+										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
 									</ul>
 								</div>
 								<div class="control-group">
@@ -327,12 +324,6 @@
 									</div>
 								</div>
 								<div id="exportieren_objekte_waehlen_eigenschaften_felderliste"></div>
-								<hr>
-								<button id="exportieren_objekte_waehlen_eigenschaften_filtern" class="btn" style="margin-bottom:9px;margin-top:9px;">Filter anwenden</button>
-								<div id="exportieren_objekte_waehlen_eigenschaften_hinweis" class="alert alert-info">
-									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="exportieren_objekte_waehlen_eigenschaften_hinweis_text"></div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -587,12 +578,6 @@
 					delete window.exportieren_objekte_sik;
 				});
 
-				$("#export").on("click", "#exportieren_objekte_waehlen_eigenschaften_filtern", function(e) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
-					e.preventDefault();
-					filtereFuerExport();
-				});
-
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
 					erstelleListeFuerFeldwahl();
 					//TO DO: ABFANGEN, WAS PASSIERT WENN KEINE GRUPPE GEWÄHLT IST
@@ -627,7 +612,8 @@
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
-					baueTabelleFeurExportAuf();
+					//filtert und baut danach die Vorschautabelle auf
+					filtereFuerExport();
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function() {

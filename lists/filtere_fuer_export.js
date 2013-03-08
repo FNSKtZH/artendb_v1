@@ -4,8 +4,11 @@ function(head, req) {
 		var row, Objekt;
 		var rückgabeObjekt = {};
 		var exportObjekte = [];
+		var exportObjekt = {};
 		var filterkriterien = [];
 		var filterkriterienObjekt;
+		var felder = [];
+		var felderObjekt;
 		var objektHinzufügen;
 		var DsName_z;
 		var Feldname_z;
@@ -21,7 +24,13 @@ function(head, req) {
 			if (i === "filterkriterien") {
 				//true oder false wird als String übergeben > umwandeln
 				filterkriterienObjekt = JSON.parse(req.query[i]);
-				filterkriterien = filterkriterienObjekt.kriterien;
+				filterkriterien = filterkriterienObjekt.rows;
+				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '        //////////         ');
+			}
+			if (i === "gewaehlte_felder") {
+				//true oder false wird als String übergeben > umwandeln
+				felderObjekt = JSON.parse(req.query[i]);
+				felder = felderObjekt.rows;
 				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '        //////////         ');
 			}
 			if (i === "gruppen") {
@@ -92,28 +101,25 @@ function(head, req) {
 										//break;
 										break objectLoop;
 									}
-								} else if (DsName_z === x && Objekt[x].Typ === "Datensammlung") {
+								} else if (DsName_z === x && (Objekt[x].Typ === "Datensammlung" || Objekt[x].Typ === "Taxonomie")) {
 									//Das ist ein Feld einer Datensammlung oder: der Taxonomie und Taxonomien sollen nicht zusammengefasst werden
 									//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
-									if ((!Objekt[x].Felder[Feldname_z] && Objekt[x].Felder[Feldname_z] !== 0) || Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+									if ((Objekt[x].Felder[Feldname_z] || Objekt[x].Felder[Feldname_z] === 0) && Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
 									//if (Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
 										objektHinzufügen = true;
-										//break;
+										break;
 									} else {
 										//Kriterium ist nicht erfüllt > zum nächsten Objekt
 										objektNichtHinzufügen = true;
 										//break;
-										//break objectLoop;
+										break objectLoop;
 									}
 								} else {
 									//falls uns bei den Kriterien was durch die Latten ging
 									objektNichtHinzufügen = true;
 								}
 							}
-								
 						}
-
-							
 					}
 				}
 			}
@@ -121,8 +127,43 @@ function(head, req) {
 			//send('objektNichtHinzufügen = ' + objektNichtHinzufügen + '  /  ');
 			if (objektHinzufügen == true && objektNichtHinzufügen == false) {
 				//alle Kriterien sind erfüllt
+				//Neues Objekt aufbauen, das nur die gewünschten Felder enthält
+				//exportobjekt zurücksetzen
+				exportObjekt = {};
+				for (x in Objekt) {
+					//durch alle Eigenschaften des Dokuments loopen
+					if (typeof Objekt[x] !== "object" && x !== "_rev") {
+						for (i in felder) {
+							if (felder[i].DsName === "Objekt" && felder[i].Feldname === x) {
+								exportObjekt[x] = Objekt[x];
+								break;
+							}
+						}
+					}
+					if (Objekt[x].Typ && (Objekt[x].Typ === "Datensammlung" || Objekt[x].Typ === "Taxonomie")) {
+						for (a in Objekt[x]) {
+							if (a !== "Felder") {
+								for (v in felder) {
+									if (felder[v].DsName === x && felder[v].Feldname === a) {
+										exportObjekt[x][a] = Objekt[x][a];
+										break;
+									}
+								}
+							} else if (a === "Felder") {
+								for (b in Objekt[x][a]) {
+									for (w in felder) {
+										if (felder[w].DsName === x && felder[w].Feldname === a) {
+											exportObjekt[x][a][b] = Objekt[x][a][b];
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 				//Objekt zu Exportobjekten hinzufügen
-				exportObjekte.push(Objekt);
+				exportObjekte.push(exportObjekt);
 			}
 		}
 		send(JSON.stringify(exportObjekte));
