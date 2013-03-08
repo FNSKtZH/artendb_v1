@@ -28,12 +28,12 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 
 - Die Anwendung ist einfach zu bedienen,
 - die Datenflut überschaubar,
-- ausreichend dokumentiert...
-- ...und gut verfügbar:
- - Von jedem Gerät im Internet
- - Als Export im csv-Format (ev. weitere)
- - Über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
-- Die Daten können ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert und ausgewertet werden
+- ausreichend dokumentiert,
+- gut verfügbar:
+ - von jedem Gerät im Internet
+ - als Export im csv-Format (ev. weitere)
+ - über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
+- ...und kann ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert und ausgewertet werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
 
