@@ -53,79 +53,43 @@ function(head, req) {
 				objektNichtHinzufügen = true;
 				//break;
 			}
-
-			//send('gruppen = ' + gruppen + '   /   ');
-			//send('Objekt.Gruppe = ' + Objekt.Gruppe + '   /   ');
-			//send('Objekt.Gruppe.indexOf(gruppen) = ' + Objekt.Gruppe.indexOf(gruppen) + '   /   ');
-			//send('gruppen.indexOf(Objekt.Gruppe) = ' + gruppen.indexOf(Objekt.Gruppe) + '   /   ');
 			
-			//durch alle Eigenschaften des Objekts loopen
-			objectLoop:
-			for (x in Objekt) {
-				//durch alle Filter loopen
-				for (z in filterkriterien) {
-					DsName_z = filterkriterien[z].DsName;
-					Feldname_z = filterkriterien[z].Feldname;
-					Filterwert_z = filterkriterien[z].Filterwert;
-
-					//Spezialfall Filter nach ID
-					if (x === "_id" && DsName_z === "keine") {
-						//das ist der guid
-						if (Objekt._id === Filterwert_z) {
-							//Kriterium ist erfüllt
-							objektHinzufügen = true;
-							break;
-						} else {
-							//Kriterium ist nicht erfüllt > zum nächsten Objekt
-							objektNichtHinzufügen = true;
-							//break;
-							break objectLoop;
-						}
+			for (z in filterkriterien) {
+				DsTyp_z = filterkriterien[z].DsTyp;
+				DsName_z = filterkriterien[z].DsName;
+				Feldname_z = filterkriterien[z].Feldname;
+				Filterwert_z = filterkriterien[z].Filterwert;
+				if (DsName_z === "Objekt") {
+					//Das ist eine simple Eigenschaft des Objekts
+					if (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+						objektHinzufügen = true;
+					} else {
+						objektNichtHinzufügen = true;
 					}
-
-					//Filter nach Datensammlungen
-					if (typeof Objekt[x] === "object" && Objekt[x].Typ && Objekt[x].Felder) {
-						for (m in Objekt[x].Felder) {
-							if (m === Feldname_z) {
-								//Für dieses Feld gibt es Kriterien
-								if (DsName_z === "Taxonomie(n)" && fasseTaxonomienZusammen === true && Objekt[x].Typ === "Taxonomie") {
-									//Das ist eine Taxonomie und Taxonomien sollen zusammengefasst werden
-									//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
-									if (Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
-										//Kriterium ist erfüllt
-										objektHinzufügen = true;
-										break;
-									} else {
-										//Kriterium ist nicht erfüllt > zum nächsten Objekt
-										objektNichtHinzufügen = true;
-										//break;
-										break objectLoop;
-									}
-								} else if (DsName_z === x && (Objekt[x].Typ === "Datensammlung" || Objekt[x].Typ === "Taxonomie")) {
-									//Das ist ein Feld einer Datensammlung oder: der Taxonomie und Taxonomien sollen nicht zusammengefasst werden
-									//Achtung: Feldwert in einen String verwandeln - Nummern können nicht mit indexOf untersucht werden
-									if ((Objekt[x].Felder[Feldname_z] || Objekt[x].Felder[Feldname_z] === 0) && Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
-									//if (Objekt[x].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
-										objektHinzufügen = true;
-										break;
-									} else {
-										//Kriterium ist nicht erfüllt > zum nächsten Objekt
-										objektNichtHinzufügen = true;
-										//break;
-										break objectLoop;
-									}
-								} else {
-									//falls uns bei den Kriterien was durch die Latten ging
-									objektNichtHinzufügen = true;
-								}
+				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
+					//das Feld ist aus Taxonomie und die werden zusammengefasst
+					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wirde "Taxonomie(n)"
+					for (i in Objekt) {
+						if (Objekt[i].Typ && Objekt[i].Typ === "Taxonomie") {
+							//Taxonomie heisst i
+							if (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+								objektHinzufügen = true;
+							} else {
+								objektNichtHinzufügen = true;
 							}
 						}
+						break;
+					}
+				} else {
+					//das ist ein Feld aus Taxonomie oder Datensammlung
+					if (Objekt[DsName_z] && Objekt[DsName_z].Felder && Objekt[DsName_z].Felder[Feldname_z] && Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+						objektHinzufügen = true;
+					} else {
+						objektNichtHinzufügen = true;
 					}
 				}
 			}
-			//send('objektHinzufügen = ' + objektHinzufügen + '  /  ');
-			//send('objektNichtHinzufügen = ' + objektNichtHinzufügen + '  /  ');
-			if (objektHinzufügen == true && objektNichtHinzufügen == false) {
+			if (objektHinzufügen && objektNichtHinzufügen === false) {
 				//alle Kriterien sind erfüllt
 				//Neues Objekt aufbauen, das nur die gewünschten Felder enthält
 				//exportobjekt zurücksetzen
@@ -155,10 +119,8 @@ function(head, req) {
 									}
 								}
 							} else if (a === "Felder") {
-								//send('Feld  /  ');
 								//das sind die Eigenschaften der Datensammlung
 								for (b in Objekt[e][a]) {
-									//send('Objekt['+e+']['+a+']['+b+'] = ' + Objekt[e][a][b] + '  /  ');
 									for (w in felder) {
 										if (felder[w].DsName === e && felder[w].Feldname === b) {
 											if (typeof exportObjekt[e] === "undefined") {

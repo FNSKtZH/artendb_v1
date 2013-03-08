@@ -1550,13 +1550,13 @@ function erstelleExportfelder(taxonomien, datensammlungen) {
 		for (x in taxonomien[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
-			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="Taxonomie" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + ' DsTyp="Taxonomie" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1586,13 +1586,13 @@ function erstelleExportfelderDatensammlungen(datensammlungen) {
 		for (x in datensammlungen[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
-			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" Datensammlung="' + datensammlungen[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="Datensammlung" Datensammlung="' + datensammlungen[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + '>'+ x +'</label>';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ") + ' Eigenschaft="' + datensammlungen[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'') + ' DsTyp="Datensammlung" Eigenschaft="' + datensammlungen[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1715,6 +1715,7 @@ function filtereFuerExport() {
 		if (this.value || this.value === 0 ) {
 			//Filterobjekt zurücksetzen
 			filterObjekt = {};
+			filterObjekt.DsTyp = $(this).attr('dstyp');
 			filterObjekt.DsName = $(this).attr('eigenschaft');
 			filterObjekt.Feldname = $(this).attr('feld');
 			//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
@@ -1743,6 +1744,7 @@ function filtereFuerExport() {
 		if ($(this).prop('checked')) {
 			//feldObjekt erstellen
 			feldObjekt = {};
+			feldObjekt.DsTyp = $(this).attr('dstyp');
 			feldObjekt.DsName = $(this).attr('datensammlung');
 			feldObjekt.Feldname = $(this).attr('feld');
 			gewaehlte_felder.push(feldObjekt);
@@ -1761,7 +1763,6 @@ function filtereFuerExport() {
 	var queryParam = "objekte?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	$db.list('artendb/filtere_fuer_export', queryParam, {
 		success: function (data) {
-			console.log('data = ' + JSON.stringify(data));
 			//Ergebnis rückmelden
 			$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 			$("#exportieren_exportieren_hinweis_text").html(data.length + " Objekte sind gewählt");
