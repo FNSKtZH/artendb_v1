@@ -21,17 +21,17 @@ function(head, req) {
 				fasseTaxonomienZusammen = (req.query[i] === 'true');
 				//send('fasseTaxonomienZusammen = ' + fasseTaxonomienZusammen + '        //////////         ');
 			}
-			if (i === "filterkriterien") {
+			if (i === "filter") {
 				//true oder false wird als String übergeben > umwandeln
 				filterkriterienObjekt = JSON.parse(req.query[i]);
 				filterkriterien = filterkriterienObjekt.rows;
 				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '        //////////         ');
 			}
-			if (i === "gewaehlte_felder") {
+			if (i === "felder") {
 				//true oder false wird als String übergeben > umwandeln
 				felderObjekt = JSON.parse(req.query[i]);
 				felder = felderObjekt.rows;
-				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '        //////////         ');
+				//send('felder = ' + JSON.stringify(felder) + '        //////////         ');
 			}
 			if (i === "gruppen") {
 				gruppen = req.query[i].split(",");
@@ -130,30 +130,46 @@ function(head, req) {
 				//Neues Objekt aufbauen, das nur die gewünschten Felder enthält
 				//exportobjekt zurücksetzen
 				exportObjekt = {};
-				for (x in Objekt) {
+				for (e in Objekt) {
 					//durch alle Eigenschaften des Dokuments loopen
-					if (typeof Objekt[x] !== "object" && x !== "_rev") {
+					if (typeof Objekt[e] !== "object" && e !== "_rev") {
 						for (i in felder) {
-							if (felder[i].DsName === "Objekt" && felder[i].Feldname === x) {
-								exportObjekt[x] = Objekt[x];
+							if (felder[i].DsName === "Objekt" && felder[i].Feldname === e) {
+								exportObjekt[e] = Objekt[e];
 								break;
 							}
 						}
 					}
-					if (Objekt[x].Typ && (Objekt[x].Typ === "Datensammlung" || Objekt[x].Typ === "Taxonomie")) {
-						for (a in Objekt[x]) {
+					//if (typeof Objekt[e].Typ !== "undefined" && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie")) {
+					if (Objekt[e].Typ && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie")) {
+						for (a in Objekt[e]) {
 							if (a !== "Felder") {
+								//das sind die Felder, die die Datensammlung beschreiben
+								//im Normalfall können die gar nicht gewählt werden
 								for (v in felder) {
-									if (felder[v].DsName === x && felder[v].Feldname === a) {
-										exportObjekt[x][a] = Objekt[x][a];
-										break;
+									if (Objekt[e][a] != "Taxonomie" && Objekt[e][a] != "Datensammlung" && a != "Typ" && felder[v].DsName !== "Objekt") {
+										if (felder[v].DsName == e && felder[v].Feldname == a) {
+											exportObjekt[e][a] = Objekt[e][a];
+											break;
+										}
 									}
 								}
 							} else if (a === "Felder") {
-								for (b in Objekt[x][a]) {
+								//send('Feld  /  ');
+								//das sind die Eigenschaften der Datensammlung
+								for (b in Objekt[e][a]) {
+									//send('Objekt['+e+']['+a+']['+b+'] = ' + Objekt[e][a][b] + '  /  ');
 									for (w in felder) {
-										if (felder[w].DsName === x && felder[w].Feldname === a) {
-											exportObjekt[x][a][b] = Objekt[x][a][b];
+										if (felder[w].DsName === e && felder[w].Feldname === b) {
+											if (typeof exportObjekt[e] === "undefined") {
+												exportObjekt[e] = {};
+											}
+											if (typeof exportObjekt[e][a] === "undefined") {
+												exportObjekt[e][a] = {};
+											}
+											exportObjekt[e][a][b] = Objekt[e][a][b];
+											//Typ der Datensammlung muss immer mit
+											exportObjekt[e].Typ = Objekt[e].Typ;
 											break;
 										}
 									}

@@ -1732,7 +1732,10 @@ function filtereFuerExport() {
 			//feldObjekt erstellen
 			feldObjekt = {};
 			feldObjekt.DsName = "Objekt";
-			feldObjekt.Feldname = $(this).attr('feld');
+			feldObjekt.Feldname = $(this).attr('feldname');
+			if (feldObjekt.Feldname === "GUID") {
+				feldObjekt.Feldname = "_id";
+			}
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
@@ -1740,7 +1743,7 @@ function filtereFuerExport() {
 		if ($(this).prop('checked')) {
 			//feldObjekt erstellen
 			feldObjekt = {};
-			feldObjekt.DsName = $(this).attr('eigenschaft');
+			feldObjekt.DsName = $(this).attr('datensammlung');
 			feldObjekt.Feldname = $(this).attr('feld');
 			gewaehlte_felder.push(feldObjekt);
 		}
@@ -1755,9 +1758,10 @@ function filtereFuerExport() {
 	if (window.fasseTaxonomienZusammen) {
 		fTz = "true";
 	}
-	var queryParam = "objekte?include_docs=true&filterkriterien=" + JSON.stringify(filterkriterienObjekt) + "&felder=" + JSON.stringify(gewaehlte_felder_objekt) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+	var queryParam = "objekte?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	$db.list('artendb/filtere_fuer_export', queryParam, {
 		success: function (data) {
+			console.log('data = ' + JSON.stringify(data));
 			//Ergebnis rückmelden
 			$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 			$("#exportieren_exportieren_hinweis_text").html(data.length + " Objekte sind gewählt");
