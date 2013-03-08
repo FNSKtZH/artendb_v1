@@ -19,7 +19,7 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
 - Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und nebenbei ergänzt werden können, d.h. in den paar Minuten, die man im Alltag weniger dringlichen Aufgaben widmen kann
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit wenig Aufwand vereint werden können
-- Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung und breite Verfügbarkeit sind damit nicht möglich
+- Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachvolgend dargelegten Ideen ist damit nicht möglich
 
 ###Das Zielpublikum
 ...befasst sich mit Arten und Lebensräumen. Es arbeitet primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
