@@ -32,7 +32,7 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 - gut verfügbar:
  - von jedem Gerät im Internet
  - als Export im csv-Format (ev. weitere)
- - über Schnittstellen für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
+ - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
 - ...und kann ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert und ausgewertet werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
@@ -467,6 +467,14 @@ Die Hierarchien werden momentan nur in den Lebensräumen logisch aus den Daten h
 - Pilze: über Gattung
 
 Langfristig sollen in allen Gruppen die Objekte ihre Lage im Baum kennen. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
+
+<a name="Schnittstellen"></a>
+###Schnittstellen
+CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "Views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen View und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit Views als "offizielle" Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
+
+Genau wie die Views funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
+
+Mit Hilfe der ["View API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige Views verwendet, die dann je nach Abfrage durch Ergänzung der URL mit weiteren Kriterien wie in der View API beschrieben verfeinert werden. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 

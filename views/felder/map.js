@@ -13,7 +13,7 @@ function(doc) {
 					} else */
 					if (a === "Felder") {
 						for (b in doc[x][a]) {
-							emit ([doc.Gruppe, doc[x].Typ, x, a, typeof doc[x][a][b]], doc._id);
+							emit ([doc.Gruppe, doc[x].Typ, x, b, typeof doc[x][a][b]], doc._id);
 						}
 					}
 				}

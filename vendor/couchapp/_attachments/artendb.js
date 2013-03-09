@@ -1651,16 +1651,22 @@ function erstelleExportString(exportobjekte) {
 //baut im Formular "export" die Liste aller Eigenschaften auf
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 //gemacht ist entweder "hinzugefügt" oder "entfernt"
-/*function erstelleListeFuerFeldwahl() {
+function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
 	//gewählte Gruppen ermitteln
 	var gruppen = "";
+	$db = $.couch.db("artendb");
 	$(".exportieren_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			//Felder abfragen
-
+			$db.view('artendb/felder?group_level=4&startkey=["'+$(this).attr("view")+'",{},{},{},{}]&endkey=["'+$(this).attr("view")+'",{},{},{},{}]', {
+				success: function (data) {
+					//in data.rows ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+					//Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
+				}
+			});
 		}
 	});
 	//Alle Felder abfragen
@@ -1686,9 +1692,9 @@ function erstelleExportString(exportobjekte) {
 			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
 		}
 	});
-}*/
+}
 
-//baut im Formular "export" die Liste aller Eigenschaften auf
+/*//baut im Formular "export" die Liste aller Eigenschaften auf
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 //gemacht ist entweder "hinzugefügt" oder "entfernt"
 function erstelleListeFuerFeldwahl() {
@@ -1728,7 +1734,7 @@ function erstelleListeFuerFeldwahl() {
 			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
 		}
 	});
-}
+}*/
 
 function filtereFuerExport() {
 	//Beschäftigung melden
