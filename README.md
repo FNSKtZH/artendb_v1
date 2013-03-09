@@ -258,7 +258,21 @@ Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und 
 ###Datenstruktur
 ####Objekte
 
-Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)).
+Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Hier der noch leere Rohbau eines Objekts:
+```javascript
+{
+   "_id": "509CCEB1-51BF-4629-B1FD-1B100BFDF3AD",
+   "_rev": "6-ce53932746590810687420298ffe3620",
+   "Gruppe": "Fauna",
+   "Typ": "Objekt"
+}
+```
+- _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
+- _rev wird von CouchDb intern verwendet, um mit Schreibkonflikten umzugehen und ist hier nicht von Bedeutung
+- Gruppe ist Fauna, Flora, Moose, Macromycetes oder Lebensräume
+- Typ ist (mindestens momentan) nicht so relevant, weil alle Dokumente Objekte sind
+
+####Datensammlungen
 
 Ein Dokument enthält alle Informationen zum Objekt, also alle Datensammlungen, z.B. mit:
 - Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
@@ -266,10 +280,85 @@ Ein Dokument enthält alle Informationen zum Objekt, also alle Datensammlungen, 
 - Datenstand
 - Link
 
-Taxonomien haben den "Typ" "Taxonomie", Datensammlungen den Typ "Datensammlung".
+Alle Eigenschaften des Objekts werden hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
-Alle Eigenschaften des Objekts werden wiederum hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
+Das ist die Taxonomie des Siebenschläfers:
+```javascript
+"CSCF (2009)": {
+   "Typ": "Taxonomie",
+   "Beschreibung": "Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
+   "Datenstand": "2009",
+   "Link": "http://www.cscf.ch/",
+   "Felder": {
+       "Taxonomie ID": 70810,
+       "Klasse": "Mammalia",
+       "Ordnung": "Rodentia",
+       "Familie": "Gliridae (nae)",
+       "Gattung": "Glis",
+       "Art": "glis",
+       "Autor": "(Linnaeus, 1766)",
+       "Artname": "Glis glis (Linnaeus, 1766)",
+       "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
+       "Name Deutsch": "Siebenschläfer",
+       "Name Französisch": "Loir",
+       "Name Italienisch": "Ghiro",
+       "Name Romanisch": "Durmigliet grisch",
+       "Name Englisch": "Fat dormouse",
+       "Schutz CH": "kantonal zu schützende Arten"
+   }
+}
+```
+...und das hier eine beliebige Datensammlung:
+```javascript
+"CH Rote Listen (unterschiedliche Jahre)": {
+   "Typ": "Datensammlung",
+   "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
+   "Datenstand": "unterschiedlich",
+   "Felder": {
+       "Europa": "nicht gefährdet",
+       "Schweiz aktuell": "nicht gefährdet",
+       "Nordschweiz": "nicht gefährdet",
+       "Kt Zürich": "nicht gefährdet"
+   }
+}
+```
+Unterschiede zwischen Taxonomie und (gewöhnlicher) Datensammlung:
 
+- Es gibt in jedem Dokument nur eine Taxonomie
+- Sie hat den Typ "Taxonomie" statt "Datensammlung"
+
+Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
+
+####Beziehungen
+Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus einer anderen Art:
+```javascript
+"CH Delarze (2008): Art charakterisiert Lebensraum": {
+    "Typ": "Beziehung",
+    "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
+    "Beziehungen": [
+        {
+            "Beziehungspartner": [
+                {
+                    "Gruppe": "Lebensräume",
+                    "Taxonomie": "CH Delarze (2008): Lebensräume",
+                    "Name": "4.5.1: Fromentalwiese",
+                    "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
+                }
+            ],
+            "Art der Beziehung": "Art charakterisiert Lebensraum"
+        }
+    ]
+}
+```
+Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
+
+- Der Typ heisst "Beziehung"
+- Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Darin sind beliebig viele Beziehungen enthalten
+- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
+- Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
+- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
+
+####Dokument-Struktur
 Hier als Beispiel der Siebenschläfer:
 <a name="JsonBeispiel"></a>
 ```javascript
@@ -371,90 +460,11 @@ Hier als Beispiel der Siebenschläfer:
    }
 }
 ```
-
 Das kann jeder Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
-
-Zur Verdeutlichung nachfolgend Teilauszüge und Ergänzungen:
-
-Das ist die Taxonomie des Siebenschläfers:
-```javascript
-"CSCF (2009)": {
-   "Typ": "Taxonomie",
-   "Beschreibung": "Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
-   "Datenstand": "2009",
-   "Link": "http://www.cscf.ch/",
-   "Felder": {
-       "Taxonomie ID": 70810,
-       "Klasse": "Mammalia",
-       "Ordnung": "Rodentia",
-       "Familie": "Gliridae (nae)",
-       "Gattung": "Glis",
-       "Art": "glis",
-       "Autor": "(Linnaeus, 1766)",
-       "Artname": "Glis glis (Linnaeus, 1766)",
-       "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
-       "Name Deutsch": "Siebenschläfer",
-       "Name Französisch": "Loir",
-       "Name Italienisch": "Ghiro",
-       "Name Romanisch": "Durmigliet grisch",
-       "Name Englisch": "Fat dormouse",
-       "Schutz CH": "kantonal zu schützende Arten"
-   }
-}
-```
-...und das hier eine beliebige Datensammlung:
-```javascript
-"CH Rote Listen (unterschiedliche Jahre)": {
-   "Typ": "Datensammlung",
-   "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
-   "Datenstand": "unterschiedlich",
-   "Felder": {
-       "Europa": "nicht gefährdet",
-       "Schweiz aktuell": "nicht gefährdet",
-       "Nordschweiz": "nicht gefährdet",
-       "Kt Zürich": "nicht gefährdet"
-   }
-}
-```
-Unterschiede zwischen Taxonomie und (gewöhnlicher) Datensammlung:
-
-- Es gibt in jedem Dokument nur eine Taxonomie
-- Sie hat den Typ "Taxonomie" statt "Datensammlung"
-
-Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
-
-####Beziehungen
-Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus einer anderen Art:
-```javascript
-"CH Delarze (2008): Art charakterisiert Lebensraum": {
-    "Typ": "Beziehung",
-    "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
-    "Beziehungen": [
-        {
-            "Beziehungspartner": [
-                {
-                    "Gruppe": "Lebensräume",
-                    "Taxonomie": "CH Delarze (2008): Lebensräume",
-                    "Name": "4.5.1: Fromentalwiese",
-                    "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
-                }
-            ],
-            "Art der Beziehung": "Art charakterisiert Lebensraum"
-        }
-    ]
-}
-```
-Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
-
-- Der Typ heisst "Beziehung"
-- Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Darin sind beliebig viele Beziehungen enthalten
-- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
-- Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
-- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
 ###Hierarchien
 Die Hierarchien werden momentan nur in den Lebensräumen logisch aus den Daten heraus aufgebaut, indem jedes Objekt seine Lage im Baum speichert. Sonst wird folgendermassen aufgebaut:
