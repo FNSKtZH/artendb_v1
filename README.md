@@ -258,17 +258,17 @@ Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und 
 ###Datenstruktur
 ####Objekte
 
-Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Hier der noch leere Rohbau eines Objekts:
+Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Hier der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen (alle Beispiele stammen von der Europäischen Sumpfschildkröte):
 ```javascript
 {
-   "_id": "509CCEB1-51BF-4629-B1FD-1B100BFDF3AD",
-   "_rev": "6-ce53932746590810687420298ffe3620",
+   "_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
+   "_rev": "13-cf286524f4c701390885dc1f4fdc968a",
    "Gruppe": "Fauna",
    "Typ": "Objekt"
 }
 ```
 - _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
-- _rev wird von CouchDb intern verwendet, um mit Schreibkonflikten umzugehen und ist hier nicht von Bedeutung
+- _rev wird von CouchDb intern verwendet, um mit Schreibkonflikten umzugehen
 - Gruppe ist Fauna, Flora, Moose, Macromycetes oder Lebensräume
 - Typ ist (mindestens momentan) nicht so relevant, weil alle Dokumente Objekte sind
 
@@ -282,7 +282,7 @@ Ein Dokument enthält alle Informationen zum Objekt, also alle Datensammlungen, 
 
 Alle Eigenschaften des Objekts werden hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
 
-Das ist die Taxonomie des Siebenschläfers:
+Das ist eine Taxonomie:
 ```javascript
 "CSCF (2009)": {
    "Typ": "Taxonomie",
@@ -290,35 +290,35 @@ Das ist die Taxonomie des Siebenschläfers:
    "Datenstand": "2009",
    "Link": "http://www.cscf.ch/",
    "Felder": {
-       "Taxonomie ID": 70810,
-       "Klasse": "Mammalia",
-       "Ordnung": "Rodentia",
-       "Familie": "Gliridae (nae)",
-       "Gattung": "Glis",
-       "Art": "glis",
-       "Autor": "(Linnaeus, 1766)",
-       "Artname": "Glis glis (Linnaeus, 1766)",
-       "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
-       "Name Deutsch": "Siebenschläfer",
-       "Name Französisch": "Loir",
-       "Name Italienisch": "Ghiro",
-       "Name Romanisch": "Durmigliet grisch",
-       "Name Englisch": "Fat dormouse",
-       "Schutz CH": "kantonal zu schützende Arten"
+       "Taxonomie ID": 70150,
+       "Klasse": "Reptilia",
+       "Ordnung": "Chelonii",
+       "Familie": "Emydidae",
+       "Gattung": "Emys",
+       "Art": "orbicularis",
+       "Autor": "Linnaeus, 1758",
+       "Artname": "Emys orbicularis Linnaeus, 1758",
+       "Artname vollständig": "Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
+       "Name Deutsch": "Europ. Sumpfschildkröte",
+       "Name Französisch": "Cistude d&#39;Europe",
+       "Name Italienisch": "Emide europea",
+       "Name Romanisch": "Tartaruga da palì",
+       "Name Englisch": "European pond terrapin",
+       "Schutz CH": "Schutz gemäss NHG"
    }
 }
 ```
 ...und das hier eine beliebige Datensammlung:
 ```javascript
-"CH Rote Listen (unterschiedliche Jahre)": {
+"ZH Artwert (1995)": {
    "Typ": "Datensammlung",
-   "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
-   "Datenstand": "unterschiedlich",
+   "Beschreibung": "Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
+   "Datenstand": "ca. 1995",
+   "Link": "http://www.naturschutz.zh.ch",
    "Felder": {
-       "Europa": "nicht gefährdet",
-       "Schweiz aktuell": "nicht gefährdet",
-       "Nordschweiz": "nicht gefährdet",
-       "Kt Zürich": "nicht gefährdet"
+       "Artwert": 11,
+       "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
+       "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
    }
 }
 ```
@@ -330,24 +330,37 @@ Unterschiede zwischen Taxonomie und (gewöhnlicher) Datensammlung:
 Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
 
 ####Beziehungen
-Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug aus einer anderen Art:
+Beziehungen werden ähnlich wie Datensammlungen gespeichert:
 ```javascript
-"CH Delarze (2008): Art charakterisiert Lebensraum": {
-    "Typ": "Beziehung",
-    "Beschreibung": "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten",
-    "Beziehungen": [
-        {
-            "Beziehungspartner": [
-                {
-                    "Gruppe": "Lebensräume",
-                    "Taxonomie": "CH Delarze (2008): Lebensräume",
-                    "Name": "4.5.1: Fromentalwiese",
-                    "GUID": "A899856C-2D28-4768-A0E4-85C626B6358A"
-                }
-            ],
-            "Art der Beziehung": "Art charakterisiert Lebensraum"
-        }
-    ]
+"ZH AP Grundlagen (1995): Art kommt in Lebensraum vor": {
+   "Typ": "Beziehung",
+   "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
+   "Datenstand": "ca. 1995",
+   "Link": "http://www.naturschutz.zh.ch",
+   "Beziehungen": [
+       {
+           "Beziehungspartner": [
+               {
+                   "Gruppe": "Lebensräume",
+                   "Taxonomie": "ZH FNS (1995)",
+                   "Name": "03: Seen",
+                   "GUID": "A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
+               }
+           ],
+           "Art der Beziehung": "Art kommt in Lebensraum vor"
+       },
+       {
+           "Beziehungspartner": [
+               {
+                   "Gruppe": "Lebensräume",
+                   "Taxonomie": "ZH FNS (1995)",
+                   "Name": "04: Weiher, Teiche",
+                   "GUID": "8B07E4E6-E768-4CE9-84D6-E490432FD140"
+               }
+           ],
+           "Art der Beziehung": "Art kommt in Lebensraum vor"
+       }
+   ]
 }
 ```
 Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
@@ -358,13 +371,12 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 - Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
 - Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
-####Dokument-Struktur
-Hier als Beispiel der Siebenschläfer:
+####Beispiel des vollständigen Objekts:
 <a name="JsonBeispiel"></a>
 ```javascript
 {
-   "_id": "509CCEB1-51BF-4629-B1FD-1B100BFDF3AD",
-   "_rev": "6-ce53932746590810687420298ffe3620",
+   "_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
+   "_rev": "13-cf286524f4c701390885dc1f4fdc968a",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
    "CSCF (2009)": {
@@ -373,21 +385,21 @@ Hier als Beispiel der Siebenschläfer:
        "Datenstand": "2009",
        "Link": "http://www.cscf.ch/",
        "Felder": {
-           "Taxonomie ID": 70810,
-           "Klasse": "Mammalia",
-           "Ordnung": "Rodentia",
-           "Familie": "Gliridae (nae)",
-           "Gattung": "Glis",
-           "Art": "glis",
-           "Autor": "(Linnaeus, 1766)",
-           "Artname": "Glis glis (Linnaeus, 1766)",
-           "Artname vollständig": "Glis glis (Linnaeus, 1766) (Siebenschläfer)",
-           "Name Deutsch": "Siebenschläfer",
-           "Name Französisch": "Loir",
-           "Name Italienisch": "Ghiro",
-           "Name Romanisch": "Durmigliet grisch",
-           "Name Englisch": "Fat dormouse",
-           "Schutz CH": "kantonal zu schützende Arten"
+           "Taxonomie ID": 70150,
+           "Klasse": "Reptilia",
+           "Ordnung": "Chelonii",
+           "Familie": "Emydidae",
+           "Gattung": "Emys",
+           "Art": "orbicularis",
+           "Autor": "Linnaeus, 1758",
+           "Artname": "Emys orbicularis Linnaeus, 1758",
+           "Artname vollständig": "Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
+           "Name Deutsch": "Europ. Sumpfschildkröte",
+           "Name Französisch": "Cistude d&#39;Europe",
+           "Name Italienisch": "Emide europea",
+           "Name Romanisch": "Tartaruga da palì",
+           "Name Englisch": "European pond terrapin",
+           "Schutz CH": "Schutz gemäss NHG"
        }
    },
    "CH Rote Listen (unterschiedliche Jahre)": {
@@ -395,10 +407,66 @@ Hier als Beispiel der Siebenschläfer:
        "Beschreibung": "Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
        "Datenstand": "unterschiedlich",
        "Felder": {
-           "Europa": "nicht gefährdet",
-           "Schweiz aktuell": "nicht gefährdet",
-           "Nordschweiz": "nicht gefährdet",
-           "Kt Zürich": "nicht gefährdet"
+           "Europa Smaragd": true,
+           "Europa": "potentiell gefährdet (NT)",
+           "Schweiz aktuell": "vom Aussterben bedroht (CR)",
+           "Schweiz Kriterien": "B2a, B2b(iii)",
+           "Nordschweiz": "ausgestorben oder verschollen",
+           "Kt Zürich": "ausgestorben oder verschollen",
+           "Quelle": "BAFU 2005 (CH), älter (Regionen)"
+       }
+   },
+   "CH Prioritäten (2011)": {
+       "Typ": "Datensammlung",
+       "Beschreibung": "BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
+       "Datenstand": "2012.01",
+       "Link": "http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
+       "Felder": {
+           "Priorität": "hoch",
+           "Gefährdung": "vom Aussterben bedroht",
+           "Verantwortung": "geringe Verantwortung",
+           "Massnahmenbedarf": "klar",
+           "Bestände überwachen": "nötig",
+           "Kenntnisse vorhanden": "ausreichend",
+           "Techniken bekannt": "erfolgreiche Techniken sind bekannt",
+           "Verbreitung Jura": "nicht vorhanden",
+           "Verbreitung Mittelland": "(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
+           "Verbreitung Nordalpen": "nicht vorhanden",
+           "Verbreitung westliche Zentralalpen": "nicht vorhanden",
+           "Verbreitung östliche Zentralalpen": "nicht vorhanden",
+           "Verbreitung Südalpen": "(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
+           "Verbreitung kollin": "letzter Fund aus den Jahren 2000 bis 2010",
+           "Verbreitung montan": "nicht vorhanden",
+           "Verbreitung subalpin": "nicht vorhanden",
+           "Verbreitung alpin": "nicht vorhanden",
+           "Verbreitung Kt Zürich": "nicht vorhanden"
+       }
+   },
+   "CH Agroscope Zielart (2008)": {
+       "Typ": "Datensammlung",
+       "Beschreibung": "Agroscope (2008). Eigenschaften von 207 Tierarten",
+       "Datenstand": "2008",
+       "Link": "http://www.agroscope.admin.ch",
+       "Felder": {
+           "1_1 West-Jura": false,
+           "1_2 Nord-Jura": false,
+           "1_3 Nordostschweiz": false,
+           "2_1 West-Mittelland": true,
+           "2_2 Ost-Mittelland": true,
+           "3_1 West-Nordalpen": true,
+           "3_2 Ost-Nordalpen": false,
+           "4_1 West-Zentralalpen": false,
+           "4_2 Ost-Zentralalpen": false,
+           "4_3 Engadin": false,
+           "5 Südalpen": true,
+           "Collin": true,
+           "Montan": false,
+           "Subalpin": false,
+           "Alpin": false,
+           "Rote Liste CH": "ausgestorben oder verschollen",
+           "Aufwand für Erfolg": "sehr gross",
+           "Beobachtbarkeit": "Die Art ist relativ einfach nachweisbar",
+           "Verbreitung Lebensraum Massnahmen": "Unterhalb 500-600 m; der Status der Sumpfschildkröte in der Schweiz ist nicht vollständig geklärt, da es immer wieder Aussetzungen und Umsiedlungen gab, allerdings werden einige Vorkommen als autochthon betrachtet; sich reproduzierende Populationen gibt es in den Kantonen GE, AG, TG. Lebensraum: stehende Gewässer mit starker Ufer- und Wasservegetation und schlammigem Untergrund; Kleinseen, Weiher und Altwässer mit deckungsreicher Ufervegetation. Massnahmen sollten in Absprache mit Fachpersonen (KARCH) erfolgen. Hinweis: Aussetzungen, Wiederansiedlungen und Umsiedlungen sind bewilligungspflichtig! In Regionen, die für eine offizielle Wiederansiedlung geeignet sein könnten, ist sie als Zielart durchaus denkbar, z.B. Gebiete mit vielen stehenden Gewässern und Feuchtzonen."
        }
    },
    "ZH Artwert (1995)": {
@@ -407,7 +475,7 @@ Hier als Beispiel der Siebenschläfer:
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Artwert": 0,
+           "Artwert": 11,
            "Artwertberechnung Areal weltweit": "gross (0 Punkte)",
            "Artwertberechnung Anteil am CH-Bestand": "klein: <1/4 (0 Punkte)"
        }
@@ -420,21 +488,47 @@ Hier als Beispiel der Siebenschläfer:
        "Felder": {
            "Dringlichkeit Aktionsplan": "nicht beurteilt",
            "Priorität nach Naturschutz-Gesamtkonzept 1990": "nicht beurteilt",
-           "Bestandesentwicklung 1985-2000": "nicht beurteilt",
+           "Bestandesentwicklung 1985-2000": "Abnahme",
            "Keine Bestandesabnahme aber Population bedroht": "nicht beurteilt",
-           "Fördermassnahmen bekannt": "nicht beurteilt",
-           "Geeignete Lebensräume vohanden oder herstellbar": "nicht beurteilt",
-           "Überlebensfähige Populationen vorhanden": "nicht beurteilt",
-           "Etablierungs-Potential gut": "nicht beurteilt",
-           "Ausbreitungs-Potential gut": "nicht beurteilt",
-           "Erfolgsaussichten vorhanden": "nicht beurteilt",
+           "Fördermassnahmen bekannt": "ja",
+           "Geeignete Lebensräume vohanden oder herstellbar": "nein",
+           "Überlebensfähige Populationen vorhanden": "nein",
+           "Etablierungs-Potential gut": "nein",
+           "Ausbreitungs-Potential gut": "ja",
+           "Erfolgsaussichten vorhanden": "ja",
            "Nationales Artenschutzprogramm": "nicht beurteilt",
            "Höchste Dringlichkeit": "nicht beurteilt",
            "Verhältnis Aufwand-Ertrag günstig": "nicht beurteilt",
            "Umbrella- oder flagship-species": "nicht beurteilt",
            "Bereits irgendwo Artenschutzprogramme": "nicht beurteilt",
            "Dringlichkeit": "nicht beurteilt",
-           "Schutz": "kantonal zu schützende Arten"
+           "Schutz": "Schutz gemäss Bundesgesetz über die Jagd"
+       }
+   },
+   "ZH AP FM (2010)": {
+       "Typ": "Datensammlung",
+       "Beschreibung": "Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
+       "Datenstand": "2010",
+       "Link": "http://www.naturschutz.zh.ch",
+       "Felder": {
+           "Art ist für AP FM relevant": true,
+           "Bindung an Flachmoore": 7,
+           "Artwert AP FM": 18,
+           "An Strukturen gebunden": true,
+           "Bemerkungen": "Ob die Art im Kanton Zürich noch autochthone Bestände besitzt, bleibt nach wie vor fraglich. Die meisten der beobachteten Tiere sind vermutlich auf illegale Aussetzungen zurückzuführen. Nach heutigem Kenntnisstand ist es dennoch nicht ganz auszuschliessen, dass vereinzelt autochthone (Teil-) Populationen oder vereinzelte Individuen überlebt haben könnten.\nAnzahl Populationen: Es ist nach wie vor unbekannt, ob reproduktionsfähige Populationen existieren (eher nicht) und ob noch autochthone Individuen überlebt haben (möglich aber eher unwahrscheinlich).",
+           "Artwertberechnung Areal weltweit": "mittel (2 Punkte)",
+           "Artwertberechnung Anteil am CH-Bestand": "mittel: 1/4-1/2 (2 Punkte)",
+           "Artwertberechnung Gefährdung EU Punkte": 0,
+           "Artwertberechnung Gefährdung CH Punkte": 4,
+           "Artwertberechnung Gefährdung ZH Punkte": 3,
+           "Artwertberechnung neuer Artwert": 11,
+           "Artwertberechnung verwendeter Artwert": 11,
+           "Ansprüche ans Moor": "Kein eigentlicher Moorbewohner, obwohl sehr gern (v.a. als Jungtier fast obligat) im Schilfröhricht. Eiablagestellen nur an mikroklimatisch begünstigten Stellen (v.a. Böschungen mit xerothermophiler, lückiger Vegetation).",
+           "Kleine überlebensfähige Populationen, Anzahl angestrebt": "5+",
+           "Ansprüche für Kriterium überlebensfähig": "regelmässige Reproduktion",
+           "Regional fördern": true,
+           "Regional fördern wo": " Glatt, Thur, Greifensee, Päffikersee, Katzensee",
+           "Massnahmen": "Spezialprogramm (muss noch definiert werden)."
        }
    },
    "ZH Artengruppen": {
@@ -443,8 +537,8 @@ Hier als Beispiel der Siebenschläfer:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "GIS-Layer": "Saeugetiere",
-           "Artengruppen-ID in EvAB": 13
+           "GIS-Layer": "Reptilien",
+           "Artengruppen-ID in EvAB": 12
        }
    },
    "ZH GIS": {
@@ -453,10 +547,77 @@ Hier als Beispiel der Siebenschläfer:
        "Datenstand": "2012",
        "Link": "http://www.naturschutz.zh.ch",
        "Felder": {
-           "Betrachtungsdistanz (m)": 3000,
-           "Berücksichtigen wenn in Betrachtungsdistanz nicht ausgewiesen": true,
-           "Kriterien für Bestimmung der Betrachtungsdistanz": "12"
+           "Betrachtungsdistanz (m)": 500,
+           "Kriterien für Bestimmung der Betrachtungsdistanz": "5 (500m als Minimalwert zugeteilt)"
        }
+   },
+   "CH Agroscope Zielart (2008): Ziel-/Leitart für Lebensraum": {
+       "Typ": "Beziehung",
+       "Beschreibung": "Agroscope (2008). Eigenschaften von 207 Tierarten",
+       "Datenstand": "2008",
+       "Link": "http://www.agroscope.admin.ch",
+       "Beziehungen": [
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "CH Agroscope (2008): Ziel- und Leitarten",
+                       "Name": "06: Weiher, Tümpel, Pfütze",
+                       "GUID": "98DDA55D-7C24-4590-BEDE-9A1B02D77592"
+                   }
+               ],
+               "Art der Beziehung": "Ziel-/Leitart für Lebensraum"
+           }
+       ]
+   },
+   "ZH AP Grundlagen (1995): Art kommt in Lebensraum vor": {
+       "Typ": "Beziehung",
+       "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
+       "Datenstand": "ca. 1995",
+       "Link": "http://www.naturschutz.zh.ch",
+       "Beziehungen": [
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "ZH FNS (1995)",
+                       "Name": "03: Seen",
+                       "GUID": "A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
+                   }
+               ],
+               "Art der Beziehung": "Art kommt in Lebensraum vor"
+           },
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "ZH FNS (1995)",
+                       "Name": "04: Weiher, Teiche",
+                       "GUID": "8B07E4E6-E768-4CE9-84D6-E490432FD140"
+                   }
+               ],
+               "Art der Beziehung": "Art kommt in Lebensraum vor"
+           }
+       ]
+   },
+   "ZH AP FM (2010): Art ist an Lebensraum gebunden": {
+       "Typ": "Beziehung",
+       "Beschreibung": "Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
+       "Datenstand": "2010",
+       "Link": "http://www.naturschutz.zh.ch",
+       "Beziehungen": [
+           {
+               "Beziehungspartner": [
+                   {
+                       "Gruppe": "Lebensräume",
+                       "Taxonomie": "ZH FNS (1977): Feuchtgebietskartierung, Lebensräume",
+                       "Name": "02: Röhricht",
+                       "GUID": "BF31ECDD-A540-4BA9-956C-BE51C3AA346E"
+                   }
+               ],
+               "Biotopbindung": "7"
+           }
+       ]
    }
 }
 ```
