@@ -1651,6 +1651,46 @@ function erstelleExportString(exportobjekte) {
 //baut im Formular "export" die Liste aller Eigenschaften auf
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 //gemacht ist entweder "hinzugefügt" oder "entfernt"
+/*function erstelleListeFuerFeldwahl() {
+	//Beschäftigung melden
+	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
+	//gewählte Gruppen ermitteln
+	var gruppen = "";
+	$(".exportieren_objekte_waehlen_gruppe").each(function() {
+		if ($(this).prop('checked')) {
+			//Felder abfragen
+
+		}
+	});
+	//Alle Felder abfragen
+	$db = $.couch.db("artendb");
+	var fTz = "false";
+	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	if (window.fasseTaxonomienZusammen) {
+		fTz = "true";
+	}
+	var queryParam = 'objekte?include_docs=true&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
+	$db.list('artendb/gruppe_felder', queryParam, {
+		success: function (data) {
+			var hinweisTaxonomien;
+			erstelleExportfelder(data.Taxonomien, data.Datensammlungen);
+			//kontrollieren, ob Taxonomien zusammengefasst werden
+			if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+				hinweisTaxonomien = "<br>Alle Taxonomien sind zusammengefasst";
+			} else {
+				hinweisTaxonomien = "<br>Alle Taxonomien werden einzeln dargestellt";
+			}
+			//Ergebnis rückmelden
+			$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
+		}
+	});
+}*/
+
+//baut im Formular "export" die Liste aller Eigenschaften auf
+//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+//gemacht ist entweder "hinzugefügt" oder "entfernt"
 function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");

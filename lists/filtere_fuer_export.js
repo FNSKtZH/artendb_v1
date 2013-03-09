@@ -70,15 +70,22 @@ function(head, req) {
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wirde "Taxonomie(n)"
 					for (i in Objekt) {
+						//send('Objekt[i] = '+ JSON.stringify(Objekt[i]) +'   /   ');
+						//send('Objekt[i].Typ = '+ Objekt[i].Typ +'   /   ');
 						if (Objekt[i].Typ && Objekt[i].Typ === "Taxonomie") {
-							//Taxonomie heisst i
-							if (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
-								objektHinzufügen = true;
+							if (Objekt[i].Felder[Feldname_z]) {
+								//send('Das ist Taxonomie '+i+', sie enthält Feld '+Feldname_z+'   /   ');
+								//Taxonomie heisst i
+								if (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+									objektHinzufügen = true;
+								} else {
+									objektNichtHinzufügen = true;
+								}
 							} else {
 								objektNichtHinzufügen = true;
 							}
+							break;
 						}
-						break;
 					}
 				} else {
 					//das ist ein Feld aus Taxonomie oder Datensammlung
@@ -104,35 +111,51 @@ function(head, req) {
 							}
 						}
 					}
-					//if (typeof Objekt[e].Typ !== "undefined" && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie")) {
 					if (Objekt[e].Typ && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie")) {
 						for (a in Objekt[e]) {
 							if (a !== "Felder") {
-								//das sind die Felder, die die Datensammlung beschreiben
+								//das sind die Felder, die die Datensammlung/Taxonomie beschreiben
 								//im Normalfall können die gar nicht gewählt werden
-								for (v in felder) {
+								/*for (v in felder) {
 									if (Objekt[e][a] != "Taxonomie" && Objekt[e][a] != "Datensammlung" && a != "Typ" && felder[v].DsName !== "Objekt") {
 										if (felder[v].DsName == e && felder[v].Feldname == a) {
 											exportObjekt[e][a] = Objekt[e][a];
 											break;
 										}
 									}
-								}
+								}*/
 							} else if (a === "Felder") {
-								//das sind die Eigenschaften der Datensammlung
+								//das sind die Eigenschaften der Datensammlung/Taxonomie
 								for (b in Objekt[e][a]) {
 									for (w in felder) {
-										if (felder[w].DsName === e && felder[w].Feldname === b) {
-											if (typeof exportObjekt[e] === "undefined") {
-												exportObjekt[e] = {};
+										if (fasseTaxonomienZusammen && felder[w].DsTyp === "Taxonomie") {
+											//Das ist ein Feld der Taxonomie und die wird zusammengefasst
+											//hier ist felder[w].DsName "Taxonomie(n)", also ungleich e
+											if (felder[w].Feldname === b) {
+												if (typeof exportObjekt[e] === "undefined") {
+													exportObjekt[e] = {};
+												}
+												if (typeof exportObjekt[e][a] === "undefined") {
+													exportObjekt[e][a] = {};
+												}
+												exportObjekt[e][a][b] = Objekt[e][a][b];
+												//Typ der Datensammlung muss immer mit
+												exportObjekt[e].Typ = Objekt[e].Typ;
+												break;
 											}
-											if (typeof exportObjekt[e][a] === "undefined") {
-												exportObjekt[e][a] = {};
+										} else {
+											if (felder[w].DsName === e && felder[w].Feldname === b) {
+												if (typeof exportObjekt[e] === "undefined") {
+													exportObjekt[e] = {};
+												}
+												if (typeof exportObjekt[e][a] === "undefined") {
+													exportObjekt[e][a] = {};
+												}
+												exportObjekt[e][a][b] = Objekt[e][a][b];
+												//Typ der Datensammlung muss immer mit
+												exportObjekt[e].Typ = Objekt[e].Typ;
+												break;
 											}
-											exportObjekt[e][a][b] = Objekt[e][a][b];
-											//Typ der Datensammlung muss immer mit
-											exportObjekt[e].Typ = Objekt[e].Typ;
-											break;
 										}
 									}
 								}
