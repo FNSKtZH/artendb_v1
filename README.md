@@ -258,7 +258,7 @@ Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und 
 ###Datenstruktur
 ####Objekte
 
-Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Hier der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen (alle Beispiele stammen von der Europäischen Sumpfschildkröte):
+Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
 {
    "_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
@@ -274,15 +274,13 @@ Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 
 ####Datensammlungen
 
-Ein Dokument enthält alle Informationen zum Objekt, also alle Datensammlungen, z.B. mit:
+Alle Eigenschaften des Objekts werden hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert. Die Datensammlung selber wird auch beschrieben, z.B. mit:
 - Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
-- Allgemeine Beschreibung (ungefähr ein Literaturzitat)
-- Datenstand
+- Allgemeine Beschreibung: Vor allem, was für das Verständnis der Daten erforderlich ist
+- Datenstand (Datum, als die Daten bezogen wurden)
 - Link
 
-Alle Eigenschaften des Objekts werden hierarchisch unter ihrer Taxonomie oder Datensammlung als "Felder" gespeichert.
-
-Das ist eine Taxonomie:
+Das ist die Taxonomie:
 ```javascript
 "CSCF (2009)": {
    "Typ": "Taxonomie",
@@ -371,7 +369,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 - Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
 - Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
-####Beispiel des vollständigen Objekts:
+####Beispiel des vollständigen Objekts
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -623,19 +621,43 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 ```
 Das kann jeder Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind. Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
 ###Hierarchien
-Die Hierarchien werden momentan nur in den Lebensräumen logisch aus den Daten heraus aufgebaut, indem jedes Objekt seine Lage im Baum speichert. Sonst wird folgendermassen aufgebaut:
+Die Hierarchien werden momentan folgendermassen aufgebaut:
 
 - Flora: über Familie und Gattung
 - Fauna: über Klasse, Ordnung und Familie
 - Moose: über Klasse, Familie und Gattung
 - Pilze: über Gattung
-
-Langfristig sollen in allen Gruppen die Objekte ihre Lage im Baum kennen. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
+- Lebensräume: Jedes Objekt kennt seine Hierarchie, hier ein Beispiel:
+```javascript
+"Hierarchie": [
+   {
+       "Name": "CH Delarze (2008): Lebensräume",
+       "GUID": "69D34753-445B-4C55-B3B7-E570F7DC1819"
+   },
+   {
+       "Name": "2: Vegetation der Ufer und der Feuchtgebiete",
+       "GUID": "1525DE7D-5B59-4844-BA46-BFA16B8C2574"
+   },
+   {
+       "Name": "2.2: Flachmoore",
+       "GUID": "21ED7965-F325-4F85-8793-EE908BCA2B99"
+   },
+   {
+       "Name": "2.2.1: Grossseggenbestände",
+       "GUID": "7755D60C-100D-4405-A0E7-7B11D3930F40"
+   },
+   {
+       "Name": "2.2.1.2: Schneidbinsenried",
+       "GUID": "8913C6B2-007A-4190-AA69-8CB6EC9F0576"
+   }
+]
+```
+Langfristig sollen in allen Gruppen die Objekte ihre Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
