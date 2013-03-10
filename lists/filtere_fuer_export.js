@@ -87,6 +87,18 @@ function(head, req) {
 							break;
 						}
 					}
+				} else if (DsTyp_z === "Beziehung" && Objekt[DsName_z] && Objekt[DsName_z].Beziehungen) {
+					//das sind Beziehungen
+					//durch alle Beziehungen loopen und suchen, ob Filter trifft
+					for (g in Objekt[DsName_z].Beziehungen) {
+						//Feld kann string oder object sein. Object muss stringified werden
+						if (Objekt[DsName_z].Beziehungen[g][Feldname_z] && JSON.stringify(Objekt[DsName_z].Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) {
+							objektHinzufügen = true;
+							break;
+						} else {
+							objektNichtHinzufügen = true;
+						}
+					}
 				} else {
 					//das ist ein Feld aus Taxonomie oder Datensammlung
 					if (Objekt[DsName_z] && Objekt[DsName_z].Felder && Objekt[DsName_z].Felder[Feldname_z] && Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
@@ -111,9 +123,9 @@ function(head, req) {
 							}
 						}
 					}
-					if (Objekt[e].Typ && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie")) {
+					if (Objekt[e].Typ && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie" || Objekt[e].Typ === "Beziehung")) {
 						for (a in Objekt[e]) {
-							if (a !== "Felder") {
+							if (a !== "Felder" && a !== "Beziehungen") {
 								//das sind die Felder, die die Datensammlung/Taxonomie beschreiben
 								//im Normalfall können die gar nicht gewählt werden
 								/*for (v in felder) {
@@ -155,6 +167,44 @@ function(head, req) {
 												//Typ der Datensammlung muss immer mit
 												exportObjekt[e].Typ = Objekt[e].Typ;
 												break;
+											}
+										}
+									}
+								}
+							} else if (a === "Beziehungen") {
+								//das sind die Eigenschaften einer Beziehung
+								for (b in Objekt[e][a]) {
+									//wir loopen durch b=Beziehungen
+									for (c in Objekt[e][a][b]) {
+										//jetzt loopen wir durch c= Felder einer Beziehung
+										for (w in felder) {
+											if (felder[w].DsName === e && felder[w].Feldname === c) {
+												//jetzt alle Beziehungen ergänzen, welche die Kriterien erfüllen
+												for (q in filterkriterien) {
+													//durch Filterkriterien loopen
+													DsTyp_q = filterkriterien[q].DsTyp;
+													DsName_q = filterkriterien[q].DsName;
+													Feldname_q = filterkriterien[q].Feldname;
+													Filterwert_q = filterkriterien[q].Filterwert;
+													if (DsTyp_z === "Beziehung") {
+														if (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_z) >= 0) {
+															if (typeof exportObjekt[e] === "undefined") {
+																//Datensammlung gründen
+																exportObjekt[e] = {};
+															}
+															if (typeof exportObjekt[e][a] === "undefined") {
+																//Feld Beziehungen gründen
+																exportObjekt[e][a] = [];
+															}
+															//die passende Beziehung puschen, wenn sie noch nicht drin ist (es können mehrere Bedingungen zutreffen!)
+															if (Objekt[e][a][b].indexOf(exportObjekt[e][a]) === -1) {
+																exportObjekt[e][a].push(Objekt[e][a][b]);
+															}
+														}
+													}
+												}
+												//Typ der Datensammlung muss immer mit
+												exportObjekt[e].Typ = Objekt[e].Typ;
 											}
 										}
 									}
