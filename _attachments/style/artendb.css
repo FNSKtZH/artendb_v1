@@ -302,6 +302,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	margin-left: 2px;
 }
 
+/*alle Felder ausrichten*/
+.form-horizontal .controls {
+margin-left: 187px;
+}
+
 /*erste Zeile des Labels vertikal ausrichten*/
 .form-horizontal .control-label {
 	padding-top: 3px;
