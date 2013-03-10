@@ -633,6 +633,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 - Moose: über Klasse, Familie und Gattung
 - Pilze: über Gattung
 - Lebensräume: Jedes Objekt kennt seine Hierarchie, hier ein Beispiel:
+
 ```javascript
 "Hierarchie": [
    {
