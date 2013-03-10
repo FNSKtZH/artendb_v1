@@ -192,12 +192,14 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-right: 7px;
 	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
 	margin-bottom: 0px;
+	/*Label immer in die control-group zwingen, sonst kommt sie gelegentlich auf andere Zeile*/
+	/*position: absolute;*/
 }
 
 #art .feldtext, #import .feldtext, #export .feldtext {
 	margin-left: 192px;
 	display: block;
-	padding-top: 3px;
+	padding-top: 4px;
 }
 
 a {
@@ -206,6 +208,14 @@ a {
 
 #art .feldtext a, #import .feldtext a, #export .feldtext a {
 	margin-left: 0px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+	margin-top: 1px !important;
+}
+
+label+input[type="radio"], label+input[type="checkbox"] {
+	margin-bottom: -5px !important;
 }
 
 a:hover {
@@ -291,6 +301,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 /*vertikalen Abstand zwischen Feldern verkleinern*/
 #art .control-group, #import .control-group, #export .control-group {
 	margin-bottom: 5px;
+	position: relative;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid
 }
 
 [type=number] {
@@ -304,12 +320,17 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 /*alle Felder ausrichten*/
 .form-horizontal .controls {
-margin-left: 187px;
+	margin-left: 187px;
 }
 
 /*erste Zeile des Labels vertikal ausrichten*/
 .form-horizontal .control-label {
-	padding-top: 3px;
+	/*padding-top: 3px;*/
+	padding-top: 8px;
+}
+
+label {
+	line-height: 15px !important;
 }
 
 option {
