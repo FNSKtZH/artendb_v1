@@ -369,7 +369,7 @@
 										<li>Klicken Sie auf "Vorschau anzeigen"...</li>
 										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
 										<li>... und es erscheint die Schaltfläche "herunterladen"</li>
-										<li>Das kann eine ganze Weile dauern!</li>
+										<li>... das kann eine ganze Weile dauern!</li>
 										<li>Der Download hat das .csv-Format:
 											<ul>
 												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
@@ -383,7 +383,7 @@
 								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Vorschau anzeigen</button>
 								<button id="exportieren_exportieren_exportieren" class="btn" style="display:none;">herunterladen</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
-								<div id="exportieren_exportieren_hinweis" class="alert alert-info">
+								<div id="exportieren_exportieren_hinweis" class="alert alert-info" style="margin-top:7px;">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="exportieren_exportieren_hinweis_text"></div>
 								</div>
@@ -581,8 +581,15 @@
 
 				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
 					erstelleListeFuerFeldwahl();
+					//Tabelle ausblenden, falls sie eingeblendet war
+					$("#exportieren_exportieren_tabelle").css("display", "none");
 					//TO DO: ABFANGEN, WAS PASSIERT WENN KEINE GRUPPE GEWÄHLT IST
 
+				});
+
+				$("#export").on("change", ".feld_waehlen", function() {
+					//Tabelle ausblenden, falls sie eingeblendet war
+					$("#exportieren_exportieren_tabelle").css("display", "none");
 				});
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
