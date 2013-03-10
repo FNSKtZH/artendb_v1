@@ -666,7 +666,7 @@ CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "Views". Diese w
 
 Genau wie die Views funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
 
-Mit Hilfe der ["View API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige Views verwendet, die dann je nach Abfrage durch Ergänzung der URL mit weiteren Kriterien wie in der View API beschrieben verfeinert werden. Der externe Zugriff kann gleich erfolgen.
+Mit Hilfe der ["View API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige Views verwendet, die dann je nach Abfrage durch Ergänzung der URL mit weiteren Kriterien verfeinert werden. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 

@@ -1560,10 +1560,11 @@ function erstelleExportfelder(taxonomien, datensammlungen) {
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
+		//Spalten abschliessen
+		html_felder_waehlen += '</div>';
+		html_filtern += '</div>';
 	}
-	//Spalten abschliessen
-	html_felder_waehlen += '</div>';
-	html_filtern += '</div>';
+	//linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
@@ -1650,48 +1651,108 @@ function erstelleExportString(exportobjekte) {
 
 //baut im Formular "export" die Liste aller Eigenschaften auf
 //window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-//gemacht ist entweder "hinzugefügt" oder "entfernt"
+//bekommt den Namen der Gruppe
 function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
 	//gewählte Gruppen ermitteln
 	var gruppen = "";
+	//Objekt schaffen. Darin werden die Felder aller gewählten Gruppen gesammelt
+	var FelderObjekt = {};
+	var Taxonomien = [];
+	var Datensammlungen = [];
+	var gruppeIstGewählt = false;
 	$db = $.couch.db("artendb");
 	$(".exportieren_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
+			gruppeIstGewählt = true;
 			//Felder abfragen
-			$db.view('artendb/felder?group_level=4&startkey=["'+$(this).attr("view")+'",{},{},{},{}]&endkey=["'+$(this).attr("view")+'",{},{},{},{}]', {
+			$db.view('artendb/felder?group_level=4&startkey=["'+$(this).val()+'"]&endkey=["'+$(this).val()+'",{},{},{}]', {
 				success: function (data) {
 					//in data.rows ist eine Liste der Felder, die in dieser Gruppe enthalten sind
 					//Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
+					//die übergebenen Felder im FelderObjekt ergänzen
+					FelderObjekt = ergaenzeFelderObjekt(FelderObjekt, data.rows);
+
+					//DAS HIER KÄME BESSER ERST WENN ALLE GRUPPEN ABGEFRAGT SIND
+					//Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
+					Taxonomien = [];
+					Datensammlungen = [];
+					for (x in FelderObjekt) {
+						if (typeof FelderObjekt[x] === "object" && FelderObjekt[x].Typ) {
+							//das ist Datensammlung oder Taxonomie
+							if (FelderObjekt[x].Typ === "Datensammlung") {
+								Datensammlungen.push(FelderObjekt[x]);
+							} else if (FelderObjekt[x].Typ === "Taxonomie") {
+								Taxonomien.push(FelderObjekt[x]);
+							}
+						}
+					}
+					var hinweisTaxonomien;
+					erstelleExportfelder(Taxonomien, Datensammlungen);
+					//kontrollieren, ob Taxonomien zusammengefasst werden
+					if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+						hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
+					} else {
+						hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
+					}
+					//Ergebnis rückmelden
+					$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+					$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(hinweisTaxonomien);
 				}
 			});
 		}
 	});
-	//Alle Felder abfragen
-	$db = $.couch.db("artendb");
-	var fTz = "false";
-	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-	if (window.fasseTaxonomienZusammen) {
-		fTz = "true";
+	if (!gruppeIstGewählt) {
+		//letzte Rückmeldung anpassen
+		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("keine Gruppe gewählt");
+		//Felder entfernen
+		$("#exportieren_felder_waehlen_felderliste").html("");
+		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html("");
 	}
-	var queryParam = 'objekte?include_docs=true&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
-	$db.list('artendb/gruppe_felder', queryParam, {
-		success: function (data) {
-			var hinweisTaxonomien;
-			erstelleExportfelder(data.Taxonomien, data.Datensammlungen);
-			//kontrollieren, ob Taxonomien zusammengefasst werden
-			if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
-				hinweisTaxonomien = "<br>Alle Taxonomien sind zusammengefasst";
-			} else {
-				hinweisTaxonomien = "<br>Alle Taxonomien werden einzeln dargestellt";
+					
+}
+
+//Nimmt ein FelderObjekt entgegen. Das ist entweder leer (erste Gruppe) oder enthält schon Felder (ab der zweiten Gruppe)
+//Nimmt ein Array mit Feldern entgegen
+//mit der Struktur: {"key":["Flora","Datensammlung","Blaue Liste (1998)","Anwendungshäufigkeit zur Erhaltung"],"value":null}
+//ergänzt das FelderObjekt um diese Felder
+//retourniert das ergänzte FelderObjekt
+//das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
+function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
+	var DsTyp, DsName, FeldName;
+	for (i in FelderArray) {
+		DsTyp = FelderArray[i].key[1];
+		DsName = FelderArray[i].key[2];
+		FeldName = FelderArray[i].key[3];
+		if (DsTyp === "Objekt") {
+			//das ist eine Eigenschaft des Objekts
+			//FelderObjekt[FeldName] = null;	//NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
+		} else if (window.fasseTaxonomienZusammen && DsTyp === "Taxonomie") {
+			//Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
+			//Wenn Datensammlung noch nicht existiert, gründen
+			if (!FelderObjekt["Taxonomie(n)"]) {
+				FelderObjekt["Taxonomie(n)"] = {};
+				FelderObjekt["Taxonomie(n)"].Typ = DsTyp;
+				FelderObjekt["Taxonomie(n)"].Name = "Taxonomie(n)";
+				FelderObjekt["Taxonomie(n)"].Felder = {};
 			}
-			//Ergebnis rückmelden
-			$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
-			$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(data.AnzObjekte + " Objekte gewählt" + hinweisTaxonomien);
+			//Feld ergänzen
+			FelderObjekt["Taxonomie(n)"].Felder[FeldName] = null;
+		} else {
+			//Wenn Datensammlung noch nicht existiert, gründen
+			if (!FelderObjekt[DsName]) {
+				FelderObjekt[DsName] = {};
+				FelderObjekt[DsName].Typ = DsTyp;
+				FelderObjekt[DsName].Name = DsName;
+				FelderObjekt[DsName].Felder = {};
+			}
+			//Feld ergänzen
+			FelderObjekt[DsName].Felder[FeldName] = null;
 		}
-	});
+	}
+	return FelderObjekt;
 }
 
 /*//baut im Formular "export" die Liste aller Eigenschaften auf
