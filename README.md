@@ -632,7 +632,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 - Fauna: über Klasse, Ordnung und Familie
 - Moose: über Klasse, Familie und Gattung
 - Pilze: über Gattung
-- Lebensräume: Jedes Objekt kennt seine Hierarchie, hier ein Beispiel:
+- Lebensräume: Jedes Objekt kennt seine Position in der Hierarchie. Hier ein Beispiel:
 
 ```javascript
 "Hierarchie": [
@@ -658,15 +658,15 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
    }
 ]
 ```
-Langfristig sollen in allen Gruppen die Objekte ihre Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
+Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
-CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "Views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen View und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit Views als "offizielle" Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
+CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen "view" und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit "views" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
 
-Genau wie die Views funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
+Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
 
-Mit Hilfe der ["View API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige Views verwendet, die dann je nach Abfrage durch Ergänzung der URL mit weiteren Kriterien verfeinert werden. Der externe Zugriff kann gleich erfolgen.
+Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 
