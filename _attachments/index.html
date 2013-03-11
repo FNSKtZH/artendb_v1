@@ -622,7 +622,7 @@
 					filtereFuerExport();
 				});
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren", function() {
+				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();	
 					var blob = new Blob([window.exportstring], {type: "text/plain;charset=utf-8"});

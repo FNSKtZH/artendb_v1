@@ -50,8 +50,7 @@ function(head, req) {
 				objektHinzufügen = true;
 			} else {
 				//Kriterium ist nicht erfüllt > zum nächsten Objekt
-				objektNichtHinzufügen = true;
-				//break;
+				continue;
 			}
 			
 			for (z in filterkriterien) {
@@ -183,8 +182,8 @@ function(head, req) {
 													DsName_q = filterkriterien[q].DsName;
 													Feldname_q = filterkriterien[q].Feldname;
 													Filterwert_q = filterkriterien[q].Filterwert;
-													if (DsTyp_z === "Beziehung") {
-														if (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_z) >= 0) {
+													if (DsTyp_q === "Beziehung") {
+														if (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_q) >= 0 || Objekt[e][a][b][c].toString().toLowerCase().indexOf(Filterwert_q) >= 0) {
 															if (typeof exportObjekt[e] === "undefined") {
 																//Datensammlung gründen
 																exportObjekt[e] = {};
@@ -194,7 +193,8 @@ function(head, req) {
 																exportObjekt[e][a] = [];
 															}
 															//die passende Beziehung puschen, wenn sie noch nicht drin ist (es können mehrere Bedingungen zutreffen!)
-															if (Objekt[e][a][b].indexOf(exportObjekt[e][a]) === -1) {
+															//if (Objekt[e][a][b].indexOf(exportObjekt[e][a]) === -1) {
+															if (exportObjekt[e][a].indexOf(Objekt[e][a][b]) === -1) {
 																exportObjekt[e][a].push(Objekt[e][a][b]);
 															}
 														}
