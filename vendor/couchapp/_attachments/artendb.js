@@ -2012,7 +2012,7 @@ function baueTabelleFuerExportAuf() {
 				for (z in window.exportieren_objekte[i][x].Beziehungen) {
 					for (y in window.exportieren_objekte[i][x].Beziehungen[z]) {
 						if ($('[datensammlung="' + x + '"][feld="' + y + '"]').prop('checked')) {
-							Objekt[x + ": " + y] = window.exportieren_objekte[i][x].Beziehungen[y];
+							Objekt[x + ": " + y] = window.exportieren_objekte[i][x].Beziehungen[z][y];
 						}
 					}
 				}
