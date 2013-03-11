@@ -28,7 +28,7 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 
 - Die Anwendung ist einfach zu bedienen,
 - die Datenflut überschaubar,
-- ausreichend dokumentiert,
+- möglichst selbsterklärend,
 - gut verfügbar:
  - von jedem Gerät im Internet
  - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
@@ -54,7 +54,7 @@ Die wichtigsten Merkmale dürften sein:
 <a name="Konzept"></a>
 #Fachliches Konzept
 ###Der Grundgedanke
-Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Monstrum, das kaum noch zu verstehen und unterhalten war.
+Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Instrument, das kaum noch zu verstehen und unterhalten ist und an diverse technische Grenzen stösst.
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
