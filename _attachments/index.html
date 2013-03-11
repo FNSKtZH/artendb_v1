@@ -616,8 +616,9 @@
 				$("#export").on("click", "#exportieren_exportieren_tabelle_aufbauen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
-					//Tabelle ausblenden, falls sie sichtbar ist
-					$("#exportieren_exportieren_exportieren").css("display", "none");
+					//Tabelle und Herunterladen-Schaltfläche ausblenden
+					$("#exportieren_exportieren_tabelle").css("display", "none");
+					$("#exportieren_exportieren_exportieren").hide();
 					//filtert und baut danach die Vorschautabelle auf
 					filtereFuerExport();
 				});

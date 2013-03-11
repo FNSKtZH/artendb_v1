@@ -13,6 +13,9 @@ function(head, req) {
 		var DsName_z;
 		var Feldname_z;
 		var Filterwert_z;
+		var DsName_q;
+		var Feldname_q;
+		var Filterwert_q;
 
 		//übergebene Variabeln extrahieren
 		for (i in req.query) {
@@ -60,7 +63,7 @@ function(head, req) {
 				Filterwert_z = filterkriterien[z].Filterwert;
 				if (DsName_z === "Objekt") {
 					//Das ist eine simple Eigenschaft des Objekts
-					if (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+					if ((typeof Objekt[Feldname_z] === "number" && Objekt[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 						objektHinzufügen = true;
 					} else {
 						objektNichtHinzufügen = true;
@@ -72,7 +75,7 @@ function(head, req) {
 						if (Objekt[i].Typ && Objekt[i].Typ === "Taxonomie") {
 							if (Objekt[i].Felder[Feldname_z]) {
 								//Taxonomie heisst i
-								if (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+								if ((typeof Objekt[i].Felder[Feldname_z] === "number" && Objekt[i].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 									objektHinzufügen = true;
 								} else {
 									objektNichtHinzufügen = true;
@@ -88,16 +91,16 @@ function(head, req) {
 					//durch alle Beziehungen loopen und suchen, ob Filter trifft
 					for (g in Objekt[DsName_z].Beziehungen) {
 						//Feld kann string oder object sein. Object muss stringified werden
-						if (Objekt[DsName_z].Beziehungen[g][Feldname_z] && JSON.stringify(Objekt[DsName_z].Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) {
+						if (Objekt[DsName_z].Beziehungen[g][Feldname_z] && ((typeof Objekt[DsName_z].Beziehungen[g][Feldname_z] === "number" && Objekt[DsName_z].Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt[DsName_z].Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0))) {
 							objektHinzufügen = true;
-							break;
+							//break;
 						} else {
 							objektNichtHinzufügen = true;
 						}
 					}
 				} else {
 					//das ist ein Feld aus Taxonomie oder Datensammlung
-					if (Objekt[DsName_z] && Objekt[DsName_z].Felder && Objekt[DsName_z].Felder[Feldname_z] && Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+					if (Objekt[DsName_z] && Objekt[DsName_z].Felder && Objekt[DsName_z].Felder[Feldname_z] && ((typeof Objekt[DsName_z].Felder[Feldname_z] === "number" && Objekt[DsName_z].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0))) {
 						objektHinzufügen = true;
 					} else {
 						objektNichtHinzufügen = true;
@@ -171,6 +174,8 @@ function(head, req) {
 								//das sind die Eigenschaften einer Beziehung
 								for (b in Objekt[e][a]) {
 									//wir loopen durch b=Beziehungen
+									objektHinzufügen = false;
+									objektNichtHinzufügen = false;
 									for (c in Objekt[e][a][b]) {
 										//jetzt loopen wir durch c= Felder einer Beziehung
 										for (w in felder) {
@@ -183,27 +188,32 @@ function(head, req) {
 													Feldname_q = filterkriterien[q].Feldname;
 													Filterwert_q = filterkriterien[q].Filterwert;
 													if (DsTyp_q === "Beziehung") {
-														if (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_q) >= 0 || Objekt[e][a][b][c].toString().toLowerCase().indexOf(Filterwert_q) >= 0) {
+														if ((typeof Objekt[e][a][b][c] === "number" && JSON.stringify(Objekt[e][a][b][c]).indexOf(Filterwert_q) >= 0) || (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_q) >= 0) || (Objekt[e][a][b][c].toString().toLowerCase().indexOf(Filterwert_q) >= 0)) {
 															if (typeof exportObjekt[e] === "undefined") {
 																//Datensammlung gründen
 																exportObjekt[e] = {};
+																exportObjekt[e].Typ = "Beziehung";
 															}
 															if (typeof exportObjekt[e][a] === "undefined") {
 																//Feld Beziehungen gründen
 																exportObjekt[e][a] = [];
 															}
-															//die passende Beziehung puschen, wenn sie noch nicht drin ist (es können mehrere Bedingungen zutreffen!)
-															//if (Objekt[e][a][b].indexOf(exportObjekt[e][a]) === -1) {
-															if (exportObjekt[e][a].indexOf(Objekt[e][a][b]) === -1) {
+															objektHinzufügen = true;
+															if (containsObject(Objekt[e][a][b], exportObjekt[e][a])) {
+																//Objekt schon enthalten, nicht machen
+															} else {
 																exportObjekt[e][a].push(Objekt[e][a][b]);
 															}
+														} else {
+															objektNichtHinzufügen = true;
 														}
 													}
 												}
-												//Typ der Datensammlung muss immer mit
-												exportObjekt[e].Typ = Objekt[e].Typ;
 											}
 										}
+									}
+									if (objektHinzufügen && !objektNichtHinzufügen) {
+										exportObjekt[e][a].push(Objekt[e][a][b]);
 									}
 								}
 							}
@@ -216,4 +226,14 @@ function(head, req) {
 		}
 		send(JSON.stringify(exportObjekte));
 	});
+}
+
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+    return false;
 }

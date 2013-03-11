@@ -1259,8 +1259,10 @@ function erstelleTabelle(Datensätze, div_id) {
 	var html = "";
 	if (Datensätze.length > 10) {
 		html += "Vorschau auf die ersten 10 von " + Datensätze.length + " Datensätzen:";
-	} else {
+	} else if (Datensätze.length > 1) {
 		html += "Vorschau auf die " + Datensätze.length + " Datensätze:";
+	} else {
+		html += "Vorschau auf den " + Datensätze.length + " Datensatz:";
 	}
 	//Tabelle initiieren
 	html += '<table class="table table-bordered table-striped table-condensed">';
@@ -1269,7 +1271,7 @@ function erstelleTabelle(Datensätze, div_id) {
 	//gleichzeitig Feldliste für Formular anlegen
 	var html_ds_felder_div = "";
 	html_ds_felder_div += '<label class="control-label" for="DsFelder">Feld</label>';
-	html_ds_felder_div += '<select type="text" class="controls" id="DsFelder"  multiple="multiple" style="height:' + ((Object.keys(Datensätze[1]).length*18)+7)  + 'px">';
+	html_ds_felder_div += '<select type="text" class="controls" id="DsFelder"  multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
 	//durch die Felder zirkeln
 	for (x in Datensätze[0]) {
@@ -1972,6 +1974,7 @@ function baueTabelleFuerExportAuf() {
 		return;
 	}
 	//Beschäftigung melden
+	console.log('häh');
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 	//durch alle Objekte gehen
 	for (i in window.exportieren_objekte) {
@@ -1989,6 +1992,7 @@ function baueTabelleFuerExportAuf() {
 		}
 		//durch alle Eigenschaften gehen
 		for (x in window.exportieren_objekte[i]) {
+			console.log('x = ' + x);
 			//Innerhalb der Taxonomie alle gewählten Felder ergänzen
 			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
 				for (z in window.exportieren_objekte[i][x].Felder) {
@@ -2020,6 +2024,7 @@ function baueTabelleFuerExportAuf() {
 			}
 		}
 		exportobjekte.push(Objekt);
+		console.log('Objekt = ' + JSON.stringify(Objekt));
 	}
 
 	//Jetzt Beziehungen ergänzen
@@ -2033,7 +2038,7 @@ function baueTabelleFuerExportAuf() {
 	//Anzahl Beziehungen zählen
 	//exportobjekt entsprechend der Anzahl Beziehungen multiplizieren (hintereinander schreiben)
 	//durch Beziehungen des exportobjekts loopen und Werte dieser Beziehung in Felder schreiben
-
+	console.log('exportobjekte = ' + JSON.stringify(exportobjekte));
 	if (exportobjekte.length > 0) {
 		erstelleTabelle(exportobjekte, "exportieren_exportieren_tabelle");
 		window.exportstring = erstelleExportString(exportobjekte);
