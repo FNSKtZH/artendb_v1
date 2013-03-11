@@ -301,7 +301,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 /*vertikalen Abstand zwischen Feldern verkleinern*/
 #art .control-group, #import .control-group, #export .control-group {
 	margin-bottom: 5px;
-	position: relative;
+	/*position: relative;*/
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
 	-o-column-break-inside:avoid;

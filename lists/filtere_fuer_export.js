@@ -100,8 +100,16 @@ function(head, req) {
 					}
 				} else {
 					//das ist ein Feld aus Taxonomie oder Datensammlung
-					if (Objekt[DsName_z] && Objekt[DsName_z].Felder && Objekt[DsName_z].Felder[Feldname_z] && ((typeof Objekt[DsName_z].Felder[Feldname_z] === "number" && Objekt[DsName_z].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0))) {
-						objektHinzufügen = true;
+					if (Objekt[DsName_z] && typeof Objekt[DsName_z].Felder !== "undefined" && typeof Objekt[DsName_z].Felder[Feldname_z] !== "undefined") {
+						//send('Objekt[DsName_z].Felder[Feldname_z] = ' + Objekt[DsName_z].Felder[Feldname_z]);
+						//send('Filterwert_z = ' + Filterwert_z);
+						if (typeof Objekt[DsName_z].Felder[Feldname_z] === "number" && Objekt[DsName_z].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) {
+							objektHinzufügen = true;
+						} else if (Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+							objektHinzufügen = true;
+						} else {
+							objektNichtHinzufügen = true;
+						}
 					} else {
 						objektNichtHinzufügen = true;
 					}
