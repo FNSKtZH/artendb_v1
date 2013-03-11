@@ -70,11 +70,8 @@ function(head, req) {
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wirde "Taxonomie(n)"
 					for (i in Objekt) {
-						//send('Objekt[i] = '+ JSON.stringify(Objekt[i]) +'   /   ');
-						//send('Objekt[i].Typ = '+ Objekt[i].Typ +'   /   ');
 						if (Objekt[i].Typ && Objekt[i].Typ === "Taxonomie") {
 							if (Objekt[i].Felder[Feldname_z]) {
-								//send('Das ist Taxonomie '+i+', sie enthält Feld '+Feldname_z+'   /   ');
 								//Taxonomie heisst i
 								if (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
 									objektHinzufügen = true;

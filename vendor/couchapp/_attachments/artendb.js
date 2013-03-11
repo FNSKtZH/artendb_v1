@@ -1574,7 +1574,7 @@ function oeffneUri() {
 	}
 }
 
-function erstelleExportfelder(taxonomien, datensammlungen) {
+function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	for (i in taxonomien) {
@@ -1613,10 +1613,10 @@ function erstelleExportfelder(taxonomien, datensammlungen) {
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
-	erstelleExportfelderDatensammlungen(datensammlungen);
+	erstelleExportfelderDatensammlungen(datensammlungen, beziehungen);
 }
 
-function erstelleExportfelderDatensammlungen(datensammlungen) {
+function erstelleExportfelderDatensammlungen(datensammlungen, beziehungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	for (i in datensammlungen) {
@@ -1643,6 +1643,48 @@ function erstelleExportfelderDatensammlungen(datensammlungen) {
 			html_filtern += '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
 			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + ' DsTyp="Datensammlung" Eigenschaft="' + datensammlungen[i].Name + '" Feld="' + x + '">';
+			html_filtern += '</div>';
+			html_filtern += '</div>';
+		}
+		//Spalten abschliessen
+		html_felder_waehlen += '</div>';
+		html_filtern += '</div>';
+	}
+	//linie voranstellen
+	html_felder_waehlen = '<hr>' + html_felder_waehlen;
+	html_filtern = '<hr>' + html_filtern;
+	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+	erstelleExportfelderBeziehungen(beziehungen);
+}
+
+function erstelleExportfelderBeziehungen(beziehungen) {
+	var html_felder_waehlen = '';
+	var html_filtern = '';
+	for (i in beziehungen) {
+		if (html_felder_waehlen !== '') {
+			html_felder_waehlen += '<hr>';
+			html_filtern += '<hr>';
+		}
+		html_felder_waehlen += '<h5>' + beziehungen[i].Name + '</h5>';
+		html_felder_waehlen += '<div class="felderspalte">';
+		html_filtern += '<div class="control-group"><h5>' + beziehungen[i].Name + '</h5></div>';
+		html_filtern += '<div class="felderspalte">';
+		for (x in beziehungen[i].Beziehungen) {
+			//felder wählen
+			html_felder_waehlen += '<label class="checkbox">';
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="Beziehung" Beziehung="' + beziehungen[i].Name + '" Feld="' + beziehungen[i].Name + '">' + beziehungen[i].Name;
+			html_felder_waehlen += '</label>';
+			//filtern
+			html_filtern += '<div class="control-group">';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_"' + beziehungen[i].Name.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
+			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+			if (beziehungen[i].Name.length > 28) {
+				html_filtern += ' style="padding-top:0px"';
+			}
+			html_filtern += '>'+ beziehungen[i].Name +'</label>';
+			html_filtern += '<div class="controls">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_"' + beziehungen[i].Name.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + ' DsTyp="Beziehung" Eigenschaft="' + beziehungen[i].Name + '" Feld="' + beziehungen[i].Name + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1728,6 +1770,7 @@ function erstelleListeFuerFeldwahl() {
 					//Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
 					Taxonomien = [];
 					Datensammlungen = [];
+					Beziehungen = [];
 					for (x in FelderObjekt) {
 						if (typeof FelderObjekt[x] === "object" && FelderObjekt[x].Typ) {
 							//das ist Datensammlung oder Taxonomie
@@ -1735,11 +1778,13 @@ function erstelleListeFuerFeldwahl() {
 								Datensammlungen.push(FelderObjekt[x]);
 							} else if (FelderObjekt[x].Typ === "Taxonomie") {
 								Taxonomien.push(FelderObjekt[x]);
+							} else if (FelderObjekt[x].Typ === "Beziehung") {
+								Beziehungen.push(FelderObjekt[x]);
 							}
 						}
 					}
 					var hinweisTaxonomien;
-					erstelleExportfelder(Taxonomien, Datensammlungen);
+					erstelleExportfelder(Taxonomien, Datensammlungen, Beziehungen);
 					//kontrollieren, ob Taxonomien zusammengefasst werden
 					if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
 						hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
@@ -1790,7 +1835,7 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 			//Feld ergänzen
 			FelderObjekt["Taxonomie(n)"].Felder[FeldName] = null;
 		} else {
-			//Wenn Datensammlung noch nicht existiert, gründen
+			//Wenn Datensammlung oder Beziehungstyp noch nicht existiert, gründen
 			if (!FelderObjekt[DsName]) {
 				FelderObjekt[DsName] = {};
 				FelderObjekt[DsName].Typ = DsTyp;
