@@ -649,7 +649,7 @@ function erstelleHtmlFuerBeziehung(i, art, art_i) {
 			if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 				//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
 				//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
-				if (art_i.Beziehungen[i]["Art der Beziehung"] === "hierarchisch") {
+				if (art_i["Art der Beziehungen"] === "hierarchisch") {
 					//Feld soll mit der Rolle beschriftet werden
 					//ausserdem Name inkl. Methode
 					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
@@ -673,12 +673,6 @@ function erstelleHtmlFuerBeziehung(i, art, art_i) {
 						if (art_i.Beziehungen[i][x].GUID !== id) {
 							html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x].Taxonomie + " > " + art_i.Beziehungen[i][x].Name);
 						}
-					}
-				} else {
-					//Bei Lr-Beziehungen mit Flora, Fauna und Moosen steht die Art der Beziehung schon im Titel
-					//und sollte daher besser nicht angezeigt werden
-					if (x !== "Art der Beziehung") {
-						html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x]);
 					}
 				}
 			}

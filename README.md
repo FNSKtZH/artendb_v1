@@ -335,6 +335,7 @@ Beziehungen werden ähnlich wie Datensammlungen gespeichert:
    "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
    "Datenstand": "ca. 1995",
    "Link": "http://www.naturschutz.zh.ch",
+   "Art der Beziehungen": "Art kommt in Lebensraum vor",
    "Beziehungen": [
        {
            "Beziehungspartner": [
@@ -344,8 +345,7 @@ Beziehungen werden ähnlich wie Datensammlungen gespeichert:
                    "Name": "03: Seen",
                    "GUID": "A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
                }
-           ],
-           "Art der Beziehung": "Art kommt in Lebensraum vor"
+           ]
        },
        {
            "Beziehungspartner": [
@@ -355,8 +355,7 @@ Beziehungen werden ähnlich wie Datensammlungen gespeichert:
                    "Name": "04: Weiher, Teiche",
                    "GUID": "8B07E4E6-E768-4CE9-84D6-E490432FD140"
                }
-           ],
-           "Art der Beziehung": "Art kommt in Lebensraum vor"
+           ]
        }
    ]
 }
@@ -366,7 +365,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 - Der Typ heisst "Beziehung"
 - Anstatt "Felder" enthält die Eigenschaft "Beziehungen". Darin sind beliebig viele Beziehungen enthalten
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
-- Nicht immer werden alle Beziehungen der Datensammlung in eine einzige Eigenschaft des JSON-Dokuments gepackt: Enthält eine Datensammlung mehrere Arten von Beziehungen, werden sie in unterschiedliche JSON-Eigenschaften geschrieben. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
+- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Eigenschaften des JSON-Dokuments gepackt. Die Art der Beziehung kommt im jeweiligen Namen der Eigenschaft zum Ausdruck. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
 - Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
@@ -374,7 +373,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 ```javascript
 {
    "_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
-   "_rev": "13-cf286524f4c701390885dc1f4fdc968a",
+   "_rev": "12-6b07e244f508d6e30400551c0924da3f",
    "Gruppe": "Fauna",
    "Typ": "Objekt",
    "CSCF (2009)": {
@@ -554,6 +553,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
        "Beschreibung": "Agroscope (2008). Eigenschaften von 207 Tierarten",
        "Datenstand": "2008",
        "Link": "http://www.agroscope.admin.ch",
+       "Art der Beziehungen": "Ziel-/Leitart für Lebensraum",
        "Beziehungen": [
            {
                "Beziehungspartner": [
@@ -563,8 +563,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
                        "Name": "06: Weiher, Tümpel, Pfütze",
                        "GUID": "98DDA55D-7C24-4590-BEDE-9A1B02D77592"
                    }
-               ],
-               "Art der Beziehung": "Ziel-/Leitart für Lebensraum"
+               ]
            }
        ]
    },
@@ -573,6 +572,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
        "Beschreibung": "Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
        "Datenstand": "ca. 1995",
        "Link": "http://www.naturschutz.zh.ch",
+       "Art der Beziehungen": "Art kommt in Lebensraum vor",
        "Beziehungen": [
            {
                "Beziehungspartner": [
@@ -582,8 +582,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
                        "Name": "03: Seen",
                        "GUID": "A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
                    }
-               ],
-               "Art der Beziehung": "Art kommt in Lebensraum vor"
+               ]
            },
            {
                "Beziehungspartner": [
@@ -593,8 +592,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
                        "Name": "04: Weiher, Teiche",
                        "GUID": "8B07E4E6-E768-4CE9-84D6-E490432FD140"
                    }
-               ],
-               "Art der Beziehung": "Art kommt in Lebensraum vor"
+               ]
            }
        ]
    },
@@ -603,6 +601,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
        "Beschreibung": "Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
        "Datenstand": "2010",
        "Link": "http://www.naturschutz.zh.ch",
+       "Art der Beziehungen": "Art ist an Lebensraum gebunden",
        "Beziehungen": [
            {
                "Beziehungspartner": [
