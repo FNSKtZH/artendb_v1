@@ -682,9 +682,9 @@ Nachteile:
 - Der strukturelle Umbau ist massiv, sehr aufwändig und fehlerträchtig
 - Man kann so nicht darstellen, dass eine Taxonomie ein Objekt einer anderen als Synonym bezeichnet, umgekehrt aber nicht (kommt das vor?). Man müsste dann wie bisher (nur) im einen Objekt eine (einseitige) Beziehung schaffen. Wenn man von so bezeichneten Synonymen die Informationen des Synonyms anzeigen will, muss man dazu doch extra Funktionalitäten einbauen. Ist aber durchaus möglich
 - Datensammlungen müssen um ihre (Original-)Taxonomie ergänzt werden. Falls an der Synonymie einmal etwas geändert würde, können sie so wieder korrekt zugewiesen werden. Das wäre aber an sich sowieso korrekt. Taxonomie ist Array, da bei Beziehungen zwischen Gruppen mehrere möglich sind
-- Den Arten zugewiesene Nummern müssen statt der Datensammlung, aus der sie herkommen, den Feldern der Taxonomie zugewiesen werden. Ev. zusätzliches Feld schaffen, dass die Herkunft beschreibt (=Name der Datensammlung). Trifft zu bei: Flora FnsBis: 4 von über 3000 Arten. Zeigerwerte 2010. Das ist nicht besonders schön
 - Was machen, wenn beide Synonyme dieselbe Datensammlung haben?
  - Flora Artwert: Denjenigen nehmen, bei dem "Information original" leer ist > keine Probleme
+ - Flora FnsBis: 4 von über 3000 Arten
  - Flora RL02: 3 Synonyme (von über 3000) haben unterschiedliche Informationen!
  - Flora Witt: 3 von 915 mit unterschiedlichen Informationen!
  - Flora Zw77: 1 von 3340 mit geringen Unterschieden
