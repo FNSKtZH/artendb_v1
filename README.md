@@ -689,8 +689,7 @@ Nachteile:
  - Flora Witt: 3 von 915 mit unterschiedlichen Informationen!
  - Flora Zw77: 1 von 3340 mit geringen Unterschieden
  - Flora Zw2010: 37 von 6400. Art-Nummern in die Felder der Taxonomie schreiben, aber es gibt auch andere Unterschiede
- - Moose: Synonym über akzeptierte Referenz. RL04: 2 von 1200
- Lösung für FL02, Witt, Zw77 und Zw10, Moose RL04: Zuerst akzeptierte Arten importieren und Objekte daraus machen. Danach Synonyme importieren: Wenn die Datensammlung schon existiert: Zusätzliche Datensammlung schaffen, z.B. "Witt (1995): Informationen zum Synonym mit Taxonomie ID x" (zweiter Teil des Titels aus den nachfolgenden Feldern geholt - Datensammlung darf nicht anderst heissen). Zwei neue Felder: Typ der Ds: "Synonym-Info" und "Synonym-Info für Taxonomie-Id" > in Exportformularen nicht darstellen (würde überladen) - kommt über die gleichen Feldnamen eh mit
+ - Moose: Synonym über akzeptierte Referenz. RL04: 2 von 1200<br>Lösung: Zuerst akzeptierte Arten importieren und Objekte daraus machen. Danach Synonyme importieren: Wenn die Datensammlung schon existiert: Zusätzliche Datensammlung schaffen, z.B. "Witt (1995): Informationen zum Synonym mit Taxonomie ID x" (zweiter Teil des Titels aus den nachfolgenden Feldern geholt - Datensammlung darf nicht anderst heissen). Zwei neue Felder: Typ der Ds: "Synonym-Info" und "Synonym-Info für Taxonomie-Id" > in Exportformularen nicht darstellen (würde überladen) - kommt über die gleichen Feldnamen eh mit
 - Die Suche muss für Taxonomische Einheiten erweitert werden, die NICHT im Baum erscheinen
 
 Spätere Erweiterung: Die Position der Einheit in ihrer Hierarchie kann in den Feldern jeder Taxonomie gespeichert werden. Damit kann einfach der Strukturbaum für jede Taxonomie erstellt werden (wie aktuell bei Lebensräumen realisiert). Dazu wäre nützlich: '"Standard": true' bei der Taxonomie die im Standard dargestellt werden soll.
