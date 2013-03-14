@@ -172,10 +172,6 @@ Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugeh�
 
 Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
-In der Taxonomie werden Synonyme und eingeschlossene Arten als kommagetrennte Liste von Links angezeigt.
-
-Künftig sollen zuunterst auch Datensammlungen von synonymen Objekten angezeigt werden.
-
 **Menu**
 
 Das Menu ermöglicht:
@@ -660,7 +656,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 ###Alternative Struktur
-Nachfolgend die neusten Ideen zur Stuktur. Ich bin noch nicht sicher, ob es Ei des Kolumbus ist.
+Nachfolgend die neusten Ideen zur Stuktur.
 
 Objekte enthalten drei Arrays:
 
@@ -991,7 +987,7 @@ Eigenschaften anzeigen:
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungen
 - Die jeweilige Datemsammlung ist beschrieben (besser als bisher)
-- Beziehungen zwischen verwandten Arten werden mit Hyperlinks dargestellt
+- Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
