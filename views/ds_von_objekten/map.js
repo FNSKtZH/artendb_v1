@@ -1,13 +1,14 @@
 ﻿function(doc) {
-	for (i in doc) {
-		if (doc[i].Typ && doc[i].Typ === "Datensammlung") {
-			var Datensammlung = {};
-			for (x in doc[i]) {
+	var Datensammlung;
+	if (doc.Datensammlungen) {
+		for (i in doc.Datensammlungen) {
+			Datensammlung = {};
+			for (x in doc.Datensammlungen[i]) {
 				if (x !== "Felder" && x !== "Typ") {
-					Datensammlung[x] = doc[i][x];
+					Datensammlung[x] = doc.Datensammlungen[i][x];
 				}
 			}
-			emit ([i, Datensammlung], 1);
+			emit ([doc.Datensammlungen[i].Name, Datensammlung], 1);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿function(doc) {
-	for (i in doc) {
-		if (doc[i].Typ && doc[i].Typ === "Datensammlung") {
-			emit ([i, doc._id], 1);
+	if (doc.Datensammlungen) {
+		for (i in doc.Datensammlungen) {
+			emit ([doc.Datensammlungen[i].Name, doc._id], 1);
 		}
 	}
 }

@@ -1,10 +1,5 @@
 ﻿function(doc) {
-	for (x in doc) {
-		if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
-			if (doc.Gruppe && doc.Gruppe === "Fauna") {
-				emit ([doc[x].Felder.Klasse, doc[x].Felder.Ordnung, doc[x].Felder.Familie, doc[x].Felder["Artname vollständig"]], doc._id);
-			}
-			break;
-		}
+	if (doc.Gruppe && doc.Gruppe === "Fauna" && doc.Taxonomie && doc.Taxonomie.Felder) {
+		emit ([doc.Taxonomie.Felder.Klasse, doc.Taxonomie.Felder.Ordnung, doc.Taxonomie.Felder.Familie, doc.Taxonomie.Felder["Artname vollständig"]], doc._id);
 	}
 }

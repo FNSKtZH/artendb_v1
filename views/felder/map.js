@@ -1,28 +1,26 @@
 function(doc) {
 	if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt") {
-		for (x in doc) {
-			//durch alle Eigenschaften des Dokuments loopen
-			//zurückgegeben wird: Gruppe, Typ der Datensammlung, Datensammlung, Feld, Feldtyp
-			if (typeof doc[x] !== "object" && x !== "_rev") {
-				emit ([doc.Gruppe, "Objekt", "Objekt", x, typeof doc[x]], doc._id);
+		if (doc.Taxonomie && doc.Taxonomie.Felder) {
+			for (x in doc.Taxonomie.Felder) {
+				emit ([doc.Gruppe, "Taxonomie", doc.Taxonomie.Name, x, typeof doc.Taxonomie.Felder[x]], doc._id);
 			}
-			if (doc[x].Typ && (doc[x].Typ === "Datensammlung" || doc[x].Typ === "Taxonomie" || doc[x].Typ === "Beziehung")) {
-				for (a in doc[x]) {
-					/*if (a !== "Felder") {	Eigenschaften der Datensammlung nicht ausgeben
-						//emit ([doc.Gruppe, doc[x].Typ, x, a, typeof doc[x][a]], doc._id);
-					} else */
-					if (a === "Felder") {
-						for (b in doc[x][a]) {
-							emit ([doc.Gruppe, doc[x].Typ, x, b, typeof doc[x][a][b]], doc._id);
-						}
+		}
+		if (doc.Datensammlungen) {
+			for (x in doc.Datensammlungen) {
+				if (doc.Datensammlungen[x].Felder) {
+					for (y in doc.Datensammlungen[x].Felder) {
+						emit ([doc.Gruppe, "Datensammlung", doc.Datensammlungen[x].Name, y, typeof doc.Datensammlungen[x].Felder[y]], doc._id);
 					}
-					if (a === "Beziehungen") {
-						for (b in doc[x][a]) {
-							//wir loopen jetzt durch die Beziehungen
-							for (c in doc[x][a][b]) {
-								//jetzt loopen wir durch die Felder einer Beziehung
-								emit ([doc.Gruppe, doc[x].Typ, x, c, typeof doc[x][a][b][c]], doc._id);
-							}
+				}
+			}
+		}
+		if (doc.Beziehungen) {
+			for (x in doc.Beziehungen) {
+				if (doc.Beziehungen[x].Beziehungen) {
+					for (y in doc.Beziehungen[x].Beziehungen) {
+						for (z in doc.Beziehungen[x].Beziehungen[y]) {
+							//jetzt loopen wir durch die Felder der Beziehung
+							emit ([doc.Gruppe, "Beziehung", doc.Beziehungen[x].Name, z, typeof doc.Beziehungen[x].Beziehungen[y][z]], doc._id);
 						}
 					}
 				}

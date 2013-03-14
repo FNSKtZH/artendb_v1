@@ -1,12 +1,7 @@
 function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Lebensräume") {
-		for (x in doc) {
-			if (typeof doc[x].Typ !== "undefined" && doc[x].Typ === "Taxonomie") {
-				if (doc[x].Felder.Hierarchie && doc[x].Felder.Hierarchie.length === 5) {
-					emit (doc[x].Felder.Hierarchie, doc._id);
-					break;
-				}
-			}
+	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc.Taxonomie && doc.Taxonomie.Felder) {
+		if (doc.Taxonomie.Felder.Hierarchie && doc.Taxonomie.Felder.Hierarchie.length === 5) {
+			emit (doc.Taxonomie.Felder.Hierarchie, doc._id);
 		}
 	}
 }
