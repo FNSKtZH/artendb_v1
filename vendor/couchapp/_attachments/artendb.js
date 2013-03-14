@@ -573,7 +573,7 @@ function initiiere_art(id) {
 				$("#collapseTaxonomie").collapse('show');
 				//Fokus von der Hierarchie wegnehmen
 				$("#Hierarchie").blur();
-			} else if (Datensammlungen.length === 0) {
+			} else if (Datensammlungen.length === 0 && Beziehungen.length === 0) {
 				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 				$(".accordion-body").collapse('show');
 			}

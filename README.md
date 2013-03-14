@@ -670,30 +670,6 @@ Objekte enthalten drei Arrays:
 
 Die Arrays enthalten alle zutreffenden Informationen in der heutigen Form. Zusätzlich einen Namen (der im heutigen Objekt der Schlüssel der Eigenschaft ist und daher nicht im Objekt selbst enthalten).
 
-Vorteile:
-
-- Für Synonyme muss kein neues Objekt geschaffen werden.<br>Das ist besonders praktisch, wenn z.B. der nächste Index der Flora publiziert wird > einfach im bestehenden Objekt den SISF-Index 3 ergänzen. Sonst: Neues Objekt schaffen. Hm. Wo sollen jetzt die Datensammlungen dran hängen? Alle zügeln? Alle kopieren? Am alten Ort belassen und über die Beziehung managen? Das ist alles nicht schön oder aufwändig
-- Synonyme haben automatisch alle Datensammlungen und Beziehungen aller anderen Synonyme. Kein Aufwand in Exporten, Schnittstellen und der Benutzeroberfläche!
-- Das Datenmodell ist einheitlicher und einfacher - eleganter!
-- Eigentlich ist klar: Synonym = dieselbe Art mit denselben Eigenschaften
-
-Nachteile:
-
-- Der strukturelle Umbau ist massiv, sehr aufwändig und fehlerträchtig
-- Man kann so nicht darstellen, dass eine Taxonomie ein Objekt einer anderen als Synonym bezeichnet, umgekehrt aber nicht (kommt das vor?). Man müsste dann wie bisher (nur) im einen Objekt eine (einseitige) Beziehung schaffen. Wenn man von so bezeichneten Synonymen die Informationen des Synonyms anzeigen will, muss man dazu doch extra Funktionalitäten einbauen. Ist aber durchaus möglich
-- Datensammlungen müssen um ihre (Original-)Taxonomie ergänzt werden. Falls an der Synonymie einmal etwas geändert würde, können sie so wieder korrekt zugewiesen werden. Das wäre aber an sich sowieso korrekt. Taxonomie ist Array, da bei Beziehungen zwischen Gruppen mehrere möglich sind
-- Was machen, wenn beide Synonyme dieselbe Datensammlung haben?
- - Flora Artwert: Denjenigen nehmen, bei dem "Information original" leer ist > keine Probleme
- - Flora FnsBis: 4 von über 3000 Arten
- - Flora RL02: 3 Synonyme (von über 3000) haben unterschiedliche Informationen!
- - Flora Witt: 3 von 915 mit unterschiedlichen Informationen!
- - Flora Zw77: 1 von 3340 mit geringen Unterschieden
- - Flora Zw2010: 37 von 6400. Art-Nummern in die Felder der Taxonomie schreiben, aber es gibt auch andere Unterschiede
- - Moose: Synonym über akzeptierte Referenz. RL04: 2 von 1200<br>Lösung: Zuerst akzeptierte Arten importieren und Objekte daraus machen. Danach Synonyme importieren: Wenn die Datensammlung schon existiert: Zusätzliche Datensammlung schaffen, z.B. "Witt (1995): Informationen zum Synonym mit Taxonomie ID x" (zweiter Teil des Titels aus den nachfolgenden Feldern geholt - Datensammlung darf nicht anderst heissen). Zwei neue Felder: Typ der Ds: "Synonym-Info" und "Synonym-Info für Taxonomie-Id" > in Exportformularen nicht darstellen (würde überladen) - kommt über die gleichen Feldnamen eh mit
-- Die Suche muss für Taxonomische Einheiten erweitert werden, die NICHT im Baum erscheinen
-
-Spätere Erweiterung: Die Position der Einheit in ihrer Hierarchie kann in den Feldern jeder Taxonomie gespeichert werden. Damit kann einfach der Strukturbaum für jede Taxonomie erstellt werden (wie aktuell bei Lebensräumen realisiert). Dazu wäre nützlich: '"Standard": true' bei der Taxonomie die im Standard dargestellt werden soll.
-
 So würde die Europäische Sumpfschildkröte dargestellt:
 ```javascript
 {
@@ -949,6 +925,36 @@ So würde die Europäische Sumpfschildkröte dargestellt:
 	] 	
 }
 ```
+Datensammlungen und Beziehungen in einen Array zu setzen scheint schlüssig. 
+
+Taxonomien in einen Array zu setzen, ist hingegen keine klare Sache:
+
+Vorteile:
+
+- Für Synonyme muss kein neues Objekt geschaffen werden.<br>Das ist besonders praktisch, wenn z.B. der nächste Index der Flora publiziert wird > einfach im bestehenden Objekt den SISF-Index 3 ergänzen. Sonst: Neues Objekt schaffen. Hm. Wo sollen jetzt die Datensammlungen dran hängen? Alle zügeln? Alle kopieren? Am alten Ort belassen und über die Beziehung managen? Das ist alles nicht schön oder aufwändig
+- Synonyme haben automatisch alle Datensammlungen und Beziehungen aller anderen Synonyme. Kein Aufwand in Exporten, Schnittstellen und der Benutzeroberfläche!
+- Das Datenmodell ist einheitlicher und einfacher - eleganter!
+- Eigentlich ist klar: Synonym = dieselbe Art mit denselben Eigenschaften
+
+Nachteile:
+
+- Der strukturelle Umbau ist massiv, sehr aufwändig und fehlerträchtig
+- An sich ist es korrekt, wenn eine Datensammlung an derjenigen Taxonomie hängt, mit der sie erarbeitet wurde
+- Man kann so nicht darstellen, dass eine Taxonomie ein Objekt einer anderen als Synonym bezeichnet, umgekehrt aber nicht (kommt das vor?). Man müsste dann wie bisher (nur) im einen Objekt eine (einseitige) Beziehung schaffen. Wenn man von so bezeichneten Synonymen die Informationen des Synonyms anzeigen will, muss man dazu doch extra Funktionalitäten einbauen. Ist aber durchaus möglich
+- Datensammlungen müssen um ihre (Original-)Taxonomie ergänzt werden. Falls an der Synonymie einmal etwas geändert würde, können sie so wieder korrekt zugewiesen werden. Das wäre aber an sich sowieso korrekt. Taxonomie ist Array, da bei Beziehungen zwischen Gruppen mehrere möglich sind
+- Was machen, wenn beide Synonyme dieselbe Datensammlung haben?
+ - Flora Artwert: Denjenigen nehmen, bei dem "Information original" leer ist > keine Probleme
+ - Flora FnsBis: 4 von über 3000 Arten
+ - Flora RL02: 3 Synonyme (von über 3000) haben unterschiedliche Informationen!
+ - Flora Witt: 3 von 915 mit unterschiedlichen Informationen!
+ - Flora Zw77: 1 von 3340 mit geringen Unterschieden
+ - Flora Zw2010: 37 von 6400. Art-Nummern in die Felder der Taxonomie schreiben, aber es gibt auch andere Unterschiede
+ - Moose: Synonym über akzeptierte Referenz. RL04: 2 von 1200<br>Lösung: Zuerst akzeptierte Arten importieren und Objekte daraus machen. Danach Synonyme importieren: Wenn die Datensammlung schon existiert: Zusätzliche Datensammlung schaffen, z.B. "Witt (1995): Informationen zum Synonym mit Taxonomie ID x" (zweiter Teil des Titels aus den nachfolgenden Feldern geholt - Datensammlung darf nicht anderst heissen). Zwei neue Felder: Typ der Ds: "Synonym-Info" und "Synonym-Info für Taxonomie-Id" > in Exportformularen nicht darstellen (würde überladen) - kommt über die gleichen Feldnamen eh mit
+- Die Suche muss für Taxonomische Einheiten erweitert werden, die NICHT im Baum erscheinen
+
+Vorläufige Schlussfolgerung:
+
+Ich werde wohl die Datensammlungen und Beziehungen in Arrays setzen. Die Taxonomien mindestens vorläufig nicht.
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
