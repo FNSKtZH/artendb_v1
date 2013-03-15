@@ -16,25 +16,24 @@ function(head, req) {
 		var DsName_q;
 		var Feldname_q;
 		var Filterwert_q;
+		var Datensammlung;
+		var dsExistiertSchon;
 
 		//übergebene Variabeln extrahieren
 		for (i in req.query) {
 			if (i === "fasseTaxonomienZusammen") {
 				//true oder false wird als String übergeben > umwandeln
 				fasseTaxonomienZusammen = (req.query[i] === 'true');
-				//send('fasseTaxonomienZusammen = ' + fasseTaxonomienZusammen + '        //////////         ');
 			}
 			if (i === "filter") {
 				//true oder false wird als String übergeben > umwandeln
 				filterkriterienObjekt = JSON.parse(req.query[i]);
 				filterkriterien = filterkriterienObjekt.rows;
-				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '        //////////         ');
 			}
 			if (i === "felder") {
 				//true oder false wird als String übergeben > umwandeln
 				felderObjekt = JSON.parse(req.query[i]);
 				felder = felderObjekt.rows;
-				//send('felder = ' + JSON.stringify(felder) + '        //////////         ');
 			}
 			if (i === "gruppen") {
 				gruppen = req.query[i].split(",");
@@ -47,7 +46,6 @@ function(head, req) {
 			objektNichtHinzufügen = false;
 			
 			//Filter nach Gruppen
-			//if (Objekt.Gruppe.indexOf(gruppen) >= 0) {
 			if (gruppen && gruppen.indexOf(Objekt.Gruppe) >= 0) {
 				//Kriterium ist erfüllt
 				objektHinzufügen = true;
@@ -70,48 +68,51 @@ function(head, req) {
 					}
 				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
-					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wirde "Taxonomie(n)"
-					for (i in Objekt) {
-						if (Objekt[i].Typ && Objekt[i].Typ === "Taxonomie") {
-							if (Objekt[i].Felder[Feldname_z]) {
-								//Taxonomie heisst i
-								if ((typeof Objekt[i].Felder[Feldname_z] === "number" && Objekt[i].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[i].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-									objektHinzufügen = true;
-								} else {
-									objektNichtHinzufügen = true;
-								}
-							} else {
-								objektNichtHinzufügen = true;
-							}
-							break;
-						}
-					}
-				} else if (DsTyp_z === "Beziehung" && Objekt[DsName_z] && Objekt[DsName_z].Beziehungen) {
-					//das sind Beziehungen
-					//durch alle Beziehungen loopen und suchen, ob Filter trifft
-					for (g in Objekt[DsName_z].Beziehungen) {
-						//Feld kann string oder object sein. Object muss stringified werden
-						if (Objekt[DsName_z].Beziehungen[g][Feldname_z] && ((typeof Objekt[DsName_z].Beziehungen[g][Feldname_z] === "number" && Objekt[DsName_z].Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt[DsName_z].Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0))) {
-							objektHinzufügen = true;
-							//break;
-						} else {
-							objektNichtHinzufügen = true;
-						}
-					}
-				} else {
-					//das ist ein Feld aus Taxonomie oder Datensammlung
-					if (Objekt[DsName_z] && typeof Objekt[DsName_z].Felder !== "undefined" && typeof Objekt[DsName_z].Felder[Feldname_z] !== "undefined") {
-						//send('Objekt[DsName_z].Felder[Feldname_z] = ' + Objekt[DsName_z].Felder[Feldname_z]);
-						//send('Filterwert_z = ' + Filterwert_z);
-						if (typeof Objekt[DsName_z].Felder[Feldname_z] === "number" && Objekt[DsName_z].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) {
-							objektHinzufügen = true;
-						} else if (Objekt[DsName_z].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
+					if (Objekt.Taxonomie.Felder[Feldname_z]) {
+						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 							objektHinzufügen = true;
 						} else {
 							objektNichtHinzufügen = true;
 						}
 					} else {
 						objektNichtHinzufügen = true;
+					}
+				} else if (DsTyp_z === "Taxonomie") {
+					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
+					if (Objekt.Taxonomie.Name === DsName_z && Objekt.Taxonomie.Felder[Feldname_z]) {
+						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+							objektHinzufügen = true;
+						} else {
+							objektNichtHinzufügen = true;
+						}
+					} else {
+						objektNichtHinzufügen = true;
+					}
+				} else if (DsTyp_z === "Beziehung" && Objekt.Beziehungen) {
+					//durch alle Beziehungen loopen und suchen, ob Filter trifft
+					for (g in Objekt.Beziehungen) {
+						//Feld kann string oder object sein. Object muss stringified werden
+						if (Objekt.Beziehungen[g].Name === DsName_z && Objekt.Beziehungen[g][Feldname_z] && ((typeof Objekt.Beziehungen[g][Feldname_z] === "number" && Objekt.Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0))) {
+							objektHinzufügen = true;
+						} else {
+							objektNichtHinzufügen = true;
+						}
+					}
+				} else if (DsTyp_z === "Datensammlung" && Objekt.Datensammlungen) {
+					//das ist ein Feld aus einer Datensammlung
+					for (h in Objekt.Datensammlungen) {
+						if (Objekt.Datensammlungen[h].Name === DsName_z && typeof Objekt.Datensammlungen[h].Felder !== "undefined" && typeof Objekt.Datensammlungen[h].Felder[Feldname_z] !== "undefined") {
+							if (typeof Objekt.Datensammlungen[h].Felder[Feldname_z] === "number" && Objekt.Datensammlungen[h].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) {
+								objektHinzufügen = true;
+							} else if (Objekt.Datensammlungen[h].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+								objektHinzufügen = true;
+							} else {
+								objektNichtHinzufügen = true;
+							}
+						} else {
+							objektNichtHinzufügen = true;
+						}
 					}
 				}
 			}
@@ -130,98 +131,106 @@ function(head, req) {
 							}
 						}
 					}
-					if (Objekt[e].Typ && (Objekt[e].Typ === "Datensammlung" || Objekt[e].Typ === "Taxonomie" || Objekt[e].Typ === "Beziehung")) {
-						for (a in Objekt[e]) {
-							if (a !== "Felder" && a !== "Beziehungen") {
-								//das sind die Felder, die die Datensammlung/Taxonomie beschreiben
-								//im Normalfall können die gar nicht gewählt werden
-								/*for (v in felder) {
-									if (Objekt[e][a] != "Taxonomie" && Objekt[e][a] != "Datensammlung" && a != "Typ" && felder[v].DsName !== "Objekt") {
-										if (felder[v].DsName == e && felder[v].Feldname == a) {
-											exportObjekt[e][a] = Objekt[e][a];
+				}
+				if (Objekt.Taxonomie && Objekt.Taxonomie.Felder) {
+					for (a in Objekt.Taxonomie.Felder) {
+						for (w in felder) {
+							if (felder[w].DsTyp === "Taxonomie" && (fasseTaxonomienZusammen || felder[w].DsName === Objekt.Taxonomie.Name)) {
+								if (felder[w].Feldname === b) {
+									if (typeof exportObjekt.Taxonomie === "undefined") {
+										exportObjekt.Taxonomie = {};
+									}
+									if (typeof exportObjekt.Taxonomie.Felder === "undefined") {
+										exportObjekt.Taxonomie.Felder = {};
+									}
+									exportObjekt.Taxonomie.Felder[a] = Objekt.Taxonomie.Felder[a];
+									break;
+								}
+							}
+						}
+					}
+				}
+				if (Objekt.Datensammlungen) {
+					for (i in Objekt.Datensammlungen) {
+						if (Objekt.Datensammlungen[i].Felder) {
+							for (a in Objekt.Datensammlungen[i].Felder) {
+								for (w in felder) {
+									if (felder[w].DsTyp === "Datensammlung" && felder[w].DsName === Objekt.Datensammlungen[i].Name) {
+										if (felder[w].Feldname === a) {
+											if (typeof exportObjekt.Datensammlungen === "undefined") {
+												Datensammlung = {};
+												Datensammlung.Felder = {};
+												Datensammlung.Felder[a] = Objekt.Datensammlungen[i].Felder[a];
+												exportObjekt.Datensammlungen = [];
+												exportObjekt.Datensammlungen.push(Datensammlung);
+											} else {
+												dsExistiertSchon = false;
+												//durch alle Datensammlungen loopen und die richtige suchen
+												for (b in exportObjekt.Datensammlungen) {
+													if (exportObjekt.Datensammlungen[b].Name = felder[w].DsName) {
+														dsExistiertSchon = true;
+														if (typeof exportObjekt.Datensammlungen[b] === "undefined") {
+															exportObjekt.Datensammlungen[b].Felder = {};
+														}
+														exportObjekt.Datensammlungen[b].Felder[a] = Objekt.Datensammlungen[i].Felder[a];
+													}
+												}
+												if (!dsExistiertSchon) {
+													Datensammlung = {};
+													Datensammlung.Felder = {};
+													Datensammlung.Felder[a] = Objekt.Datensammlungen[i].Felder[a];
+													exportObjekt.Datensammlungen = [];
+													exportObjekt.Datensammlungen.push(Datensammlung);
+												}
+
+											}
 											break;
 										}
 									}
-								}*/
-							} else if (a === "Felder") {
-								//das sind die Eigenschaften der Datensammlung/Taxonomie
-								for (b in Objekt[e][a]) {
-									for (w in felder) {
-										if (fasseTaxonomienZusammen && felder[w].DsTyp === "Taxonomie") {
-											//Das ist ein Feld der Taxonomie und die wird zusammengefasst
-											//hier ist felder[w].DsName "Taxonomie(n)", also ungleich e
-											if (felder[w].Feldname === b) {
-												if (typeof exportObjekt[e] === "undefined") {
-													exportObjekt[e] = {};
-												}
-												if (typeof exportObjekt[e][a] === "undefined") {
-													exportObjekt[e][a] = {};
-												}
-												exportObjekt[e][a][b] = Objekt[e][a][b];
-												//Typ der Datensammlung muss immer mit
-												exportObjekt[e].Typ = Objekt[e].Typ;
-												break;
-											}
-										} else {
-											if (felder[w].DsName === e && felder[w].Feldname === b) {
-												if (typeof exportObjekt[e] === "undefined") {
-													exportObjekt[e] = {};
-												}
-												if (typeof exportObjekt[e][a] === "undefined") {
-													exportObjekt[e][a] = {};
-												}
-												exportObjekt[e][a][b] = Objekt[e][a][b];
-												//Typ der Datensammlung muss immer mit
-												exportObjekt[e].Typ = Objekt[e].Typ;
-												break;
-											}
-										}
-									}
 								}
-							} else if (a === "Beziehungen") {
-								//das sind die Eigenschaften einer Beziehung
-								for (b in Objekt[e][a]) {
-									//wir loopen durch b=Beziehungen
-									objektHinzufügen = false;
-									objektNichtHinzufügen = false;
-									for (c in Objekt[e][a][b]) {
-										//jetzt loopen wir durch c= Felder einer Beziehung
-										for (w in felder) {
-											if (felder[w].DsName === e && felder[w].Feldname === c) {
-												//jetzt alle Beziehungen ergänzen, welche die Kriterien erfüllen
-												for (q in filterkriterien) {
-													//durch Filterkriterien loopen
-													DsTyp_q = filterkriterien[q].DsTyp;
-													DsName_q = filterkriterien[q].DsName;
-													Feldname_q = filterkriterien[q].Feldname;
-													Filterwert_q = filterkriterien[q].Filterwert;
-													if (DsTyp_q === "Beziehung") {
-														if ((typeof Objekt[e][a][b][c] === "number" && JSON.stringify(Objekt[e][a][b][c]).indexOf(Filterwert_q) >= 0) || (JSON.stringify(Objekt[e][a][b][c]).toLowerCase().indexOf(Filterwert_q) >= 0) || (Objekt[e][a][b][c].toString().toLowerCase().indexOf(Filterwert_q) >= 0)) {
-															if (typeof exportObjekt[e] === "undefined") {
-																//Datensammlung gründen
-																exportObjekt[e] = {};
-																exportObjekt[e].Typ = "Beziehung";
-															}
-															if (typeof exportObjekt[e][a] === "undefined") {
-																//Feld Beziehungen gründen
-																exportObjekt[e][a] = [];
-															}
-															objektHinzufügen = true;
-															if (containsObject(Objekt[e][a][b], exportObjekt[e][a])) {
-																//Objekt schon enthalten, nicht machen
-															} else {
-																exportObjekt[e][a].push(Objekt[e][a][b]);
-															}
-														} else {
-															objektNichtHinzufügen = true;
+							}
+						}
+					}
+				}
+				if (Objekt.Beziehungen) {
+					for (i in Objekt.Beziehungen) {
+						if (Objekt.Beziehungen[i].Felder) {
+
+
+							
+							for (a in Objekt.Beziehungen[i].Felder) {
+								for (w in felder) {
+									if (felder[w].DsTyp === "Datensammlung" && felder[w].DsName === Objekt.Beziehungen[i].Name) {
+										if (felder[w].Feldname === a) {
+											if (typeof exportObjekt.Beziehungen === "undefined") {
+												Datensammlung = {};
+												Datensammlung.Felder = {};
+												Datensammlung.Felder[a] = Objekt.Beziehungen[i].Felder[a];
+												exportObjekt.Beziehungen = [];
+												exportObjekt.Beziehungen.push(Datensammlung);
+											} else {
+												dsExistiertSchon = false;
+												//durch alle Datensammlungen loopen und die richtige suchen
+												for (b in exportObjekt.Beziehungen) {
+													if (exportObjekt.Beziehungen[b].Name = felder[w].DsName) {
+														dsExistiertSchon = true;
+														if (typeof exportObjekt.Beziehungen[b] === "undefined") {
+															exportObjekt.Beziehungen[b].Felder = {};
 														}
+														exportObjekt.Beziehungen[b].Felder[a] = Objekt.Beziehungen[i].Felder[a];
 													}
 												}
+												if (!dsExistiertSchon) {
+													Datensammlung = {};
+													Datensammlung.Felder = {};
+													Datensammlung.Felder[a] = Objekt.Beziehungen[i].Felder[a];
+													exportObjekt.Beziehungen = [];
+													exportObjekt.Beziehungen.push(Datensammlung);
+												}
+
 											}
+											break;
 										}
-									}
-									if (objektHinzufügen && !objektNichtHinzufügen) {
-										exportObjekt[e][a].push(Objekt[e][a][b]);
 									}
 								}
 							}
