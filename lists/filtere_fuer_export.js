@@ -17,6 +17,7 @@ function(head, req) {
 		var Feldname_q;
 		var Filterwert_q;
 		var Datensammlung;
+		var Beziehung;
 		var dsExistiertSchon;
 
 		//übergebene Variabeln extrahieren
@@ -179,7 +180,7 @@ function(head, req) {
 													Datensammlung = {};
 													Datensammlung.Felder = {};
 													Datensammlung.Felder[a] = Objekt.Datensammlungen[i].Felder[a];
-													exportObjekt.Datensammlungen = [];
+													//exportObjekt.Datensammlungen = [];
 													exportObjekt.Datensammlungen.push(Datensammlung);
 												}
 
@@ -194,43 +195,40 @@ function(head, req) {
 				}
 				if (Objekt.Beziehungen) {
 					for (i in Objekt.Beziehungen) {
-						if (Objekt.Beziehungen[i].Felder) {
-
-
-							
-							for (a in Objekt.Beziehungen[i].Felder) {
-								for (w in felder) {
-									if (felder[w].DsTyp === "Datensammlung" && felder[w].DsName === Objekt.Beziehungen[i].Name) {
-										if (felder[w].Feldname === a) {
-											if (typeof exportObjekt.Beziehungen === "undefined") {
-												Datensammlung = {};
-												Datensammlung.Felder = {};
-												Datensammlung.Felder[a] = Objekt.Beziehungen[i].Felder[a];
-												exportObjekt.Beziehungen = [];
-												exportObjekt.Beziehungen.push(Datensammlung);
-											} else {
-												dsExistiertSchon = false;
-												//durch alle Datensammlungen loopen und die richtige suchen
-												for (b in exportObjekt.Beziehungen) {
-													if (exportObjekt.Beziehungen[b].Name = felder[w].DsName) {
-														dsExistiertSchon = true;
-														if (typeof exportObjekt.Beziehungen[b] === "undefined") {
-															exportObjekt.Beziehungen[b].Felder = {};
-														}
-														exportObjekt.Beziehungen[b].Felder[a] = Objekt.Beziehungen[i].Felder[a];
+						//TO DO: Art der Beziehung prüfen
+						for (a in Objekt.Beziehungen[i].Beziehungen) {
+							//wir loopen jetzt durch die Felder der Beziehung
+							for (w in felder) {
+								if (felder[w].DsTyp === "Beziehung" && felder[w].DsName === Objekt.Beziehungen[i].Name) {
+									if (felder[w].Feldname === a) {
+										if (typeof exportObjekt.Beziehungen === "undefined") {
+											Beziehung = {};
+											Beziehung.Beziehungen = [];
+											Beziehung.Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
+											exportObjekt.Beziehungen = [];
+											exportObjekt.Beziehungen.push(Beziehung);
+										} else {
+											dsExistiertSchon = false;
+											//durch alle Beziehungen loopen und die richtige suchen
+											for (b in exportObjekt.Beziehungen) {
+												if (exportObjekt.Beziehungen[b].Name = felder[w].DsName) {
+													dsExistiertSchon = true;
+													if (typeof exportObjekt.Beziehungen[b] === "undefined") {
+														exportObjekt.Beziehungen[b].Beziehungen = [];
 													}
+													exportObjekt.Beziehungen[b].Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
 												}
-												if (!dsExistiertSchon) {
-													Datensammlung = {};
-													Datensammlung.Felder = {};
-													Datensammlung.Felder[a] = Objekt.Beziehungen[i].Felder[a];
-													exportObjekt.Beziehungen = [];
-													exportObjekt.Beziehungen.push(Datensammlung);
-												}
-
 											}
-											break;
+											if (!dsExistiertSchon) {
+												Beziehung = {};
+												Beziehung.Beziehungen = [];
+												Beziehung.Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
+												//exportObjekt.Beziehungen = [];
+												exportObjekt.Beziehungen.push(Beziehung);
+											}
+
 										}
+										break;
 									}
 								}
 							}

@@ -509,59 +509,56 @@ function initiiere_art(id) {
 	$db.openDoc(id, {
 		success: function (art) {
 			var htmlArt;
-			var Datensammlungen = [];
+			var Datensammlungen = art.Datensammlungen;
 			var Beziehungen = [];
 			var taxonomischeBeziehungen = [];
+			var len;
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			//gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-			for (i in art) {
-				if (art[i].Typ === "Taxonomie") {
-					htmlArt += erstelleHtmlFuerDatensammlung(i, art, art[i]);
-				}
-				if (art[i].Typ === "Datensammlung") {
-					Datensammlungen.push(i);
-				}
-				if (art[i].Typ === "Beziehung" && typeof art[i].Untertyp === "undefined") {
-					Beziehungen.push(i);
-				}
-				if (art[i].Typ === "Beziehung" && typeof art[i].Untertyp === "string") {
-					taxonomischeBeziehungen.push(i);
+			htmlArt += erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
+			//Datensammlungen muss nicht gepusht werden
+			//aber Beziehungen aufteilen
+			if (art.Beziehungen.length > 0) {
+				for (var i=0, len=art.Beziehungen.length; i<len; i++) {
+					if (typeof art.Beziehungen[i].Typ === "undefined") {
+						Beziehungen.push(art.Beziehungen[i]);
+					} else if (art.Beziehungen[i].Typ === "taxonomisch") {
+						taxonomischeBeziehungen.push(art.Beziehungen[i]);
+					}
 				}
 			}
-			//Beziehungen in gewollter Reihenfolge hinzufügen
-			taxonomischeBeziehungen.sort();
+			//taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
 			if (taxonomischeBeziehungen.length > 0) {
+				taxonomischeBeziehungen.sort();
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
+				for (var z=0, len=taxonomischeBeziehungen.length; z<len; z++) {
+					//HTML für Datensammlung erstellen lassen und hinzufügen
+					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungen[z]);
+				}
 			}
-			for (var z=0; z<taxonomischeBeziehungen.length; z++) {
-				//HTML für Datensammlung erstellen lassen und hinzufügen
-				htmlArt += erstelleHtmlFuerBeziehung(taxonomischeBeziehungen[z], art, art[taxonomischeBeziehungen[z]]);
-			}
-			//sortieren
-			Datensammlungen.sort();
 			//Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (Datensammlungen.length > 0) {
-				//Titel hinzufügen, falls Datensammlungen existieren
+				Datensammlungen.sort();
+				//Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
-			}
-			for (var x=0; x<Datensammlungen.length; x++) {
-				//HTML für Datensammlung erstellen lassen und hinzufügen
-				htmlArt += erstelleHtmlFuerDatensammlung(Datensammlungen[x], art, art[Datensammlungen[x]]);
+				for (var x=0, len=Datensammlungen.length; x<len; x++) {
+					//HTML für Datensammlung erstellen lassen und hinzufügen
+					htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
+				}
 			}
 			//Beziehungen in gewollter Reihenfolge hinzufügen
-			Beziehungen.sort();
 			if (Beziehungen.length > 0) {
-				//Titel hinzufügen, falls Datensammlungen existieren
+				Beziehungen.sort();
+				//Titel hinzufügen
 				htmlArt += "<h4>Beziehungen:</h4>";
+				for (var z=0; z<Beziehungen.length; z++) {
+					//HTML für Datensammlung erstellen lassen und hinzufügen
+					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungen[z]);
+				}
 			}
-			for (var z=0; z<Beziehungen.length; z++) {
-				//HTML für Datensammlung erstellen lassen und hinzufügen
-				htmlArt += erstelleHtmlFuerBeziehung(Beziehungen[z], art, art[Beziehungen[z]]);
-			}
-
 			//accordion beenden
 			htmlArt += '</div>';
 			$("#art").html(htmlArt);
@@ -590,18 +587,18 @@ function initiiere_art(id) {
 
 //erstellt die HTML für eine Beziehung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-function erstelleHtmlFuerBeziehung(i, art, art_i) {
+function erstelleHtmlFuerBeziehung(art, art_i) {
 	var html;
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
 	//Titel für die Datensammlung einfügen
-	html += i + " (" + art_i.Beziehungen.length + ")";
+	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen
-	html += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -689,18 +686,18 @@ function erstelleHtmlFuerBeziehung(i, art, art_i) {
 
 //erstellt die HTML für eine Datensammlung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-function erstelleHtmlFuerDatensammlung(i, art, art_i) {
+function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	var htmlDatensammlung;
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
 	//Titel für die Datensammlung einfügen
-	htmlDatensammlung += i;
+	htmlDatensammlung += art_i.Name;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + i.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -720,8 +717,8 @@ function erstelleHtmlFuerDatensammlung(i, art, art_i) {
 	//Beschreibung der Datensammlung abschliessen
 	htmlDatensammlung += '</div>';
 	//Felder anzeigen
-	//zuerst die GUID, aber nur bei der aktuellen Taxonomie (bei LR Taxonomie)
-	if (art_i.Typ && art_i.Typ === "Taxonomie") {
+	//zuerst die GUID, aber nur bei der Taxonomie
+	if (dsTyp === "Taxonomie") {
 		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
 	}
 	for (y in art_i.Felder) {
@@ -783,58 +780,51 @@ function setzteLinksZuBilderUndWikipedia(art) {
 	//jetzt die Links im Menu setzen
 	var googleBilderLink = "";
 	var wikipediaLink = "";
-	var nameDerTaxonomie;
-	for (x in art) {
-		if (typeof art[x].Typ !== "undefined" && art[x].Typ === "Taxonomie") {
-			nameDerTaxonomie = x;
-			break;
-		}
-	}
 	switch (art.Gruppe) {
 		case "Flora":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Artname + '"';
-			if (art[nameDerTaxonomie].Felder['Deutsche Namen']) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Deutsche Namen'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Felder.Artname + '"';
+			if (art.Taxonomie.Felder['Deutsche Namen']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Deutsche Namen'] + '"';
 			}
-			if (art[nameDerTaxonomie].Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Französisch'] + '"';
+			if (art.Taxonomie.Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Name Französisch'] + '"';
 			}
-			if (art[nameDerTaxonomie].Felder['Name Italienisch']) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Italienisch'] + '"';
+			if (art.Taxonomie.Felder['Name Italienisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Name Italienisch'] + '"';
 			}
-			if (art[nameDerTaxonomie].Felder['Deutsche Namen']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder['Deutsche Namen'];
+			if (art.Taxonomie.Felder['Deutsche Namen']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder['Deutsche Namen'];
 			} else {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Artname;
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder.Artname;
 			}
 			break;
 		case "Fauna":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Artname + '"';
-			if (art[nameDerTaxonomie].Felder["Name Deutsch"]) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Felder.Artname + '"';
+			if (art.Taxonomie.Felder["Name Deutsch"]) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Name Deutsch'] + '"';
 			}
-			if (art[nameDerTaxonomie].Felder['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Französisch'] + '"';
+			if (art.Taxonomie.Felder['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Name Französisch'] + '"';
 			}
-			if (art[nameDerTaxonomie].Felder['Name Italienisch']) {
-				googleBilderLink += '+OR"' + art[nameDerTaxonomie].Felder['Name Italienisch'] + '"';
+			if (art.Taxonomie.Felder['Name Italienisch']) {
+				googleBilderLink += '+OR"' + art.Taxonomie.Felder['Name Italienisch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Gattung + '_' + art[nameDerTaxonomie].Felder.Art;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder.Gattung + '_' + art.Taxonomie.Felder.Art;
 			break;
 		case 'Moose':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Gattung + ' ' + art[nameDerTaxonomie].Felder.Art + '"';
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Gattung + '_' + art[nameDerTaxonomie].Felder.Art;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Felder.Gattung + ' ' + art.Taxonomie.Felder.Art + '"';
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder.Gattung + '_' + art.Taxonomie.Felder.Art;
 			break;
 		case 'Macromycetes':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Name + '"';
-			if (art[nameDerTaxonomie].Felder['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art[nameDerTaxonomie].Felder['Name Deutsch'] + '"';
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Felder.Name + '"';
+			if (art.Taxonomie.Felder['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Felder['Name Deutsch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Name;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder.Name;
 			break;
 		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art[nameDerTaxonomie].Felder.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art[nameDerTaxonomie].Felder.Einheit;
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Felder.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Felder.Einheit;
 			break;
 	}
 	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
@@ -1426,7 +1416,7 @@ function importiereDatensammlung() {
 		anzDs += 1;
 		//Datensammlung als Objekt gründen
 		Datensammlung = {};
-		Datensammlung.Typ = "Datensammlung";
+		Datensammlung.Name = $("#DsName").val();
 		if ($("#DsBeschreibung").val()) {
 			Datensammlung.Beschreibung = $("#DsBeschreibung").val();
 		}
@@ -1474,7 +1464,7 @@ function importiereDatensammlung() {
 			}
 			//kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
-				fuegeDatensammlungZuObjekt(guid, $("#DsName").val(), Datensammlung);
+				fuegeDatensammlungZuObjekt(guid, Datensammlung);
 				//Für 10 Kontrollbeispiele die Links aufbauen
 				if (Zähler < 10) {
 					Zähler += 1;
@@ -1495,12 +1485,19 @@ function importiereDatensammlung() {
 
 //fügt der Art eine Datensammlung hinzu
 //wenn dieselbe schon vorkommt, wird sie überschrieben
-function fuegeDatensammlungZuObjekt(GUID, DsName, Datensammlung) {
+function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function (doc) {
 			//Datensammlung anfügen
-			doc[DsName] = Datensammlung;
+			doc.Datensammlungen.push(Datensammlung);
+			//sortieren
+			//Datensammlungen nach Name sortieren
+			doc.Datensammlungen.sort(function(a, b) {
+				var aName = a.Name;
+				var bName = b.Name;
+				return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+			});
 			//in artendb speichern
 			$db.saveDoc(doc);
 		}
@@ -1995,37 +1992,41 @@ function baueTabelleFuerExportAuf() {
 		//durch alle Eigenschaften gehen
 		for (x in window.exportieren_objekte[i]) {
 			//Innerhalb der Taxonomie alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Taxonomie" && window.exportieren_objekte[i][x].Felder) {
-				for (z in window.exportieren_objekte[i][x].Felder) {
+			if (window.exportieren_objekte[i].Taxonomie.Felder) {
+				for (z in window.exportieren_objekte[i].Taxonomie.Felder) {
 					if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
 						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
+						Objekt[x + ": " + z] = window.exportieren_objekte[i].Taxonomie.Felder[z];
 					}
 					if ($('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked')) {
 						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt["Taxonomie(n): " + z] = window.exportieren_objekte[i][x].Felder[z];
+						Objekt["Taxonomie(n): " + z] = window.exportieren_objekte[i].Taxonomie.Felder[z];
 					}
 				}
 			}
 			//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Datensammlung" && window.exportieren_objekte[i][x].Felder) {
-				for (z in window.exportieren_objekte[i][x].Felder) {
-					if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
-						Objekt[x + ": " + z] = window.exportieren_objekte[i][x].Felder[z];
-					}
-				}
-
-			}
-			//Innerhalb der Beziehungen alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i][x].Typ && window.exportieren_objekte[i][x].Typ === "Beziehung" && window.exportieren_objekte[i][x].Beziehungen) {
-				for (z in window.exportieren_objekte[i][x].Beziehungen) {
-					for (y in window.exportieren_objekte[i][x].Beziehungen[z]) {
-						if ($('[datensammlung="' + x + '"][feld="' + y + '"]').prop('checked')) {
-							Objekt[x + ": " + y] = window.exportieren_objekte[i][x].Beziehungen[z][y];
+			if (window.exportieren_objekte[i].Datensammlungen) {
+				for (var a=0, var len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
+					if (window.exportieren_objekte[i].Datensammlungen[a].Felder) {
+						for (z in window.exportieren_objekte[i].Datensammlungen[a].Felder) {
+							if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + z + '"]').prop('checked')) {
+								Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + z] = window.exportieren_objekte[i].Datensammlungen[a].Felder[z];
+							}
 						}
 					}
 				}
-
+			}
+			//Innerhalb der Beziehungen alle gewählten Felder ergänzen
+			if (window.exportieren_objekte[i].Beziehungen) {
+				for (var a=0, var len2=window.exportieren_objekte[i].Beziehungen.length; a<len2; a++) {
+					for (z in window.exportieren_objekte[i].Beziehungen[a].Beziehungen) {
+						for (y in window.exportieren_objekte[i].Beziehungen[a].Beziehungen[z]) {
+							if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
+								Objekt[window.exportieren_objekte[i].Beziehungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungen[a].Beziehungen[z][y];
+							}
+						}
+					}
+				}
 			}
 		}
 		exportobjekte.push(Objekt);
