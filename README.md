@@ -916,7 +916,7 @@ So würde die Europäische Sumpfschildkröte dargestellt:
 }
 ```
 ###Alternative Struktur für die Taxonomien?
-Man könnte dem Dokument auch einen Array namens "Taxonomien" verpassen. Darin würden alle synonymen Taxonomien aufgenommen, da sie ja dasselbe Objekt beschreiben. Die Taxonomie sähe am Beispiel von Thlaspi repens Maire so aus:
+Man könnte dem Dokument auch einen Array für Taxonomien verpassen. Darin würden alle synonymen Taxonomien aufgenommen, da sie ja dasselbe Objekt beschreiben. Die Taxonomie sähe am Beispiel von Thlaspi repens Maire so aus:
 ```javascript
 "Taxonomien": [
 	{
