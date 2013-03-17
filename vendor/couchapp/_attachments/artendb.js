@@ -541,7 +541,13 @@ function initiiere_art(id) {
 			}
 			//Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (Datensammlungen.length > 0) {
-				Datensammlungen.sort();
+				//Datensammlungen nach Name sortieren
+				//ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
+				/*Datensammlungen.sort(function(a, b) {
+					var aName = a.Name;
+					var bName = b.Name;
+					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+				});*/
 				//Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
 				for (var x=0, len=Datensammlungen.length; x<len; x++) {
