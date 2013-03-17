@@ -137,9 +137,10 @@ function(head, req) {
 					for (a in Objekt.Taxonomie.Felder) {
 						for (w in felder) {
 							if (felder[w].DsTyp === "Taxonomie" && (fasseTaxonomienZusammen || felder[w].DsName === Objekt.Taxonomie.Name)) {
-								if (felder[w].Feldname === b) {
+								if (felder[w].Feldname === a) {
 									if (typeof exportObjekt.Taxonomie === "undefined") {
 										exportObjekt.Taxonomie = {};
+										exportObjekt.Taxonomie.Name = felder[w].DsName;
 									}
 									if (typeof exportObjekt.Taxonomie.Felder === "undefined") {
 										exportObjekt.Taxonomie.Felder = {};
@@ -160,6 +161,7 @@ function(head, req) {
 										if (felder[w].Feldname === a) {
 											if (typeof exportObjekt.Datensammlungen === "undefined") {
 												Datensammlung = {};
+												Datensammlung.Name = felder[w].DsName;
 												Datensammlung.Felder = {};
 												Datensammlung.Felder[a] = Objekt.Datensammlungen[i].Felder[a];
 												exportObjekt.Datensammlungen = [];
@@ -203,6 +205,7 @@ function(head, req) {
 									if (felder[w].Feldname === a) {
 										if (typeof exportObjekt.Beziehungen === "undefined") {
 											Beziehung = {};
+											Beziehung.Name = felder[w].DsName;
 											Beziehung.Beziehungen = [];
 											Beziehung.Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
 											exportObjekt.Beziehungen = [];

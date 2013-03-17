@@ -1323,7 +1323,7 @@ function meldeErfolgVonIdIdentifikation() {
 		$db = $.couch.db("artendb");
 		if (window.DsId === "guid") {
 			//$db.view('artendb/objekte', {
-			$db.view('artendb/_all_docs', {
+			$db.view('artendb/all_docs', {
 				success: function (data) {
 					for (i in window.Datensätze) {
 						//durch die importierten Datensätze loopen
@@ -1947,6 +1947,7 @@ function filtereFuerExport() {
 function baueTabelleFuerExportAuf() {
 	//leeren Array für die Objekte gründen
 	var exportobjekte = [];
+	var len, len2;
 	var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
 	var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
 	//db aufrufen, wird unten in einer Schlaufe benutzt
@@ -1991,12 +1992,12 @@ function baueTabelleFuerExportAuf() {
 		}
 		//durch alle Eigenschaften gehen
 		for (x in window.exportieren_objekte[i]) {
-			//Innerhalb der Taxonomie alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i].Taxonomie.Felder) {
+			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
+			if (window.exportieren_objekte[i].Taxonomie && window.exportieren_objekte[i].Taxonomie.Felder) {
 				for (z in window.exportieren_objekte[i].Taxonomie.Felder) {
-					if ($('[Datensammlung="' + x + '"][Feld="' + z + '"]').prop('checked')) {
+					if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + z + '"]').prop('checked')) {
 						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt[x + ": " + z] = window.exportieren_objekte[i].Taxonomie.Felder[z];
+						Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + z] = window.exportieren_objekte[i].Taxonomie.Felder[z];
 					}
 					if ($('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked')) {
 						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
@@ -2006,7 +2007,7 @@ function baueTabelleFuerExportAuf() {
 			}
 			//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
 			if (window.exportieren_objekte[i].Datensammlungen) {
-				for (var a=0, var len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
+				for (var a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
 					if (window.exportieren_objekte[i].Datensammlungen[a].Felder) {
 						for (z in window.exportieren_objekte[i].Datensammlungen[a].Felder) {
 							if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + z + '"]').prop('checked')) {
@@ -2018,7 +2019,7 @@ function baueTabelleFuerExportAuf() {
 			}
 			//Innerhalb der Beziehungen alle gewählten Felder ergänzen
 			if (window.exportieren_objekte[i].Beziehungen) {
-				for (var a=0, var len2=window.exportieren_objekte[i].Beziehungen.length; a<len2; a++) {
+				for (var a=0, len2=window.exportieren_objekte[i].Beziehungen.length; a<len2; a++) {
 					for (z in window.exportieren_objekte[i].Beziehungen[a].Beziehungen) {
 						for (y in window.exportieren_objekte[i].Beziehungen[a].Beziehungen[z]) {
 							if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
