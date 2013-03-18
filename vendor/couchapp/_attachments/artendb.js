@@ -667,8 +667,8 @@ function initiiere_art(id) {
 							//Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
 							for (var x=0, len=BeziehungenVonSynonymen.length; x<len; x++) {
-								//HTML für Beziehung erstellen lassen und hinzufügen
-								htmlArt += erstelleHtmlFuerBeziehung(art, BeziehungenVonSynonymen[x]);
+								//HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
+								htmlArt += erstelleHtmlFuerBeziehung(art, BeziehungenVonSynonymen[x], "2");
 							}
 						}
 						initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungen);
@@ -708,18 +708,19 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungen) {
 
 //erstellt die HTML für eine Beziehung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-function erstelleHtmlFuerBeziehung(art, art_i) {
+//altName ist für Beziehungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
+function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	var html;
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen
-	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {

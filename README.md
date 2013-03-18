@@ -1,7 +1,7 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen. 
+Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen.
 
-Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle benötigten Daten enthalten und möglichst aktuell sind.
+Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, ad hoc ergänzt und für Auswertungen kombiniert werden.
 
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
@@ -19,7 +19,7 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
 - Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und nebenbei ergänzt werden können, d.h. in den paar Minuten, die man im Alltag weniger dringlichen Aufgaben widmen kann
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit wenig Aufwand vereint werden können
-- Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachvolgend dargelegten Ideen ist damit nicht möglich
+- Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachfolgend dargelegten Ideen ist damit nicht möglich
 
 ###Das Zielpublikum
 ...befasst sich mit Arten und Lebensräumen. Es arbeitet primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
@@ -40,7 +40,7 @@ Ihre Stärke ist der einfache Import von Daten. So wird angestrebt, dass alle be
 - Datensammlungen können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
 - Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
 - Der Code ist gut dokumentiert
-- Der Code ist offen und Nutzer können eigene Erweiterungen entwickeln
+- Der Code ist offen. Nutzer können eigene Erweiterungen entwickeln (lassen)
 
 ###Was zeichnet ArtenDb aus?
 Die wichtigsten Merkmale dürften sein:
@@ -58,7 +58,7 @@ Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach ent
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
-Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehung und Eigenschaft. Daraus leiten sich nur noch zwei Grundstrukturen ab: Objekte und ihre Datensammlungen (inklusive Taxonomien, zusammenfassenden Datensammlungen und Beziehungen). Möglichst alles wird darauf zurückgeführt.
+Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Datensammlungen (inklusive Taxonomie und zusammenfassenden Datensammlungen) und Beziehungen. Möglichst alles wird darauf zurückgeführt.
 
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
