@@ -154,9 +154,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #suchfeld {
-	width: -webkit-calc(100% - 40px);
-	width: -o-calc(100% - 40px);
-	width: calc(100% - 40px);
+	width: -webkit-calc(100% + 125px);
+	width: -o-calc(100% + 125px);
+	width: calc(100% + 125px);
 	max-width: 318px;
 }
 
