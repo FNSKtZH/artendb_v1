@@ -551,8 +551,8 @@ function initiiere_art(id) {
 						for (h in taxonomischeBeziehungen[z].Beziehungen) {
 							if (taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner) {
 								for (k in taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner) {
-									if (taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner.GUID) {
-										guidsVonSynonymen.push(taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner.GUID);
+									if (taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner[k].GUID) {
+										guidsVonSynonymen.push(taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner[k].GUID);
 									}
 								}
 							}
@@ -589,6 +589,7 @@ function initiiere_art(id) {
 					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungen[z]);
 				}
 			}
+			console.log('guidsVonSynonymen.length = ' + guidsVonSynonymen.length);
 			//Beziehungen von synonymen Arten
 			if (guidsVonSynonymen.length > 0) {
 				$db = $.couch.db("artendb");
@@ -599,7 +600,8 @@ function initiiere_art(id) {
 							Art = data.rows[f].doc;
 							if (Art.Datensammlungen && Art.Datensammlungen.length > 0) {
 								for (var a=0, len=Art.Datensammlungen.length; a<len; a++) {
-									if (Art.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
+									//if (Art.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
+									if (dsNamen.indexOf(Art.Datensammlungen[a].Name) === -1) {
 										//diese Datensammlung wird noch nicht dargestellt
 										DatensammlungenVonSynonymen.push(Art.Datensammlungen[a]);
 										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
@@ -609,17 +611,16 @@ function initiiere_art(id) {
 									}
 								}
 							}
-							//TO DO: BEZIEHUNGEN
 							if (Art.Beziehungen && Art.Beziehungen.length > 0) {
 								for (var a=0, len=Art.Beziehungen.length; a<len; a++) {
-									if (Art.Beziehungen[a].Name.indexOf(bezNamen) === -1) {
+									if (Art.Beziehungen[a].Name.indexOf(bezNamen) === -1 && Art.Beziehungen[a]["Art der Beziehungen"] !== "synonym") {
 										//diese Datensammlung wird noch nicht dargestellt
 										BeziehungenVonSynonymen.push(Art.Beziehungen[a]);
 										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
 										bezNamen.push(Art.Beziehungen[a].Name);
 										//auch in Beziehungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
 										Beziehungen.push(Art.Beziehungen[a]);
-									} else {
+									} else if (Art.Beziehungen[a]["Art der Beziehungen"] !== "synonym") {
 										//ds2 ist die ds mit demselben Namen:
 										var ds2 = Beziehungen[Art.Beziehungen[a].Name.indexOf(bezNamen)];
 										//möglich, dass eine Beziehung aus der Datensammlung nur beim Synonym angegeben ist
