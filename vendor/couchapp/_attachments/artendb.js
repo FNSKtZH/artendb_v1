@@ -673,7 +673,7 @@ function erstelleHtmlFuerBeziehung(art, art_i) {
 						//wird wohl eine LR-LR-Beziehung sein
 						//nur den Partner anzeigen
 						//und mit der Rolle beschriften
-						if (art_i.Beziehungen[i][x].GUID !== id) {
+						if (art_i.Beziehungen[i][x].GUID !== art._id) {
 							html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x].Taxonomie + " > " + art_i.Beziehungen[i][x].Name);
 						}
 					}
