@@ -513,6 +513,12 @@ function initiiere_art(id) {
 			var Beziehungen = [];
 			var taxonomischeBeziehungen = [];
 			var len;
+			var guidsVonSynonymen = [];
+			var DatensammlungenVonSynonymen = [];
+			var BeziehungenVonSynonymen = [];
+			var ds, bez;
+			var dsNamen = [];
+			var bezNamen = [];
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
@@ -524,19 +530,34 @@ function initiiere_art(id) {
 				for (var i=0, len=art.Beziehungen.length; i<len; i++) {
 					if (typeof art.Beziehungen[i].Typ === "undefined") {
 						Beziehungen.push(art.Beziehungen[i]);
+						//bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
+						bezNamen.push(art.Beziehungen[i].Name);
 					} else if (art.Beziehungen[i].Typ === "taxonomisch") {
 						taxonomischeBeziehungen.push(art.Beziehungen[i]);
+						//bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
+						bezNamen.push(art.Beziehungen[i].Name);
 					}
 				}
 			}
 			//taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
 			if (taxonomischeBeziehungen.length > 0) {
-				taxonomischeBeziehungen.sort();
+				//taxonomischeBeziehungen.sort();
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
 				for (var z=0, len=taxonomischeBeziehungen.length; z<len; z++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
 					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungen[z]);
+					if (taxonomischeBeziehungen[z]["Art der Beziehungen"] && taxonomischeBeziehungen[z]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungen[z].Beziehungen) {
+						for (h in taxonomischeBeziehungen[z].Beziehungen) {
+							if (taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner) {
+								for (k in taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner) {
+									if (taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner.GUID) {
+										guidsVonSynonymen.push(taxonomischeBeziehungen[z].Beziehungen[h].Beziehungspartner.GUID);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			//Datensammlungen in gewollter Reihenfolge hinzufügen
@@ -544,8 +565,8 @@ function initiiere_art(id) {
 				//Datensammlungen nach Name sortieren
 				//ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
 				/*Datensammlungen.sort(function(a, b) {
-					var aName = a.Name;
-					var bName = b.Name;
+					var aName = a.Name.toLowerCase();
+					var bName = b.Name.toLowerCase();
 					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
 				});*/
 				//Titel hinzufügen
@@ -553,11 +574,14 @@ function initiiere_art(id) {
 				for (var x=0, len=Datensammlungen.length; x<len; x++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
 					htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
+					//dsNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
+					dsNamen.push(Datensammlungen[x].Name);
+
 				}
 			}
 			//Beziehungen in gewollter Reihenfolge hinzufügen
 			if (Beziehungen.length > 0) {
-				Beziehungen.sort();
+				//Beziehungen.sort();
 				//Titel hinzufügen
 				htmlArt += "<h4>Beziehungen:</h4>";
 				for (var z=0; z<Beziehungen.length; z++) {
@@ -565,30 +589,121 @@ function initiiere_art(id) {
 					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungen[z]);
 				}
 			}
-			//accordion beenden
-			htmlArt += '</div>';
-			$("#art").html(htmlArt);
-			setzteHöheTextareas();
-			//richtiges Formular anzeigen
-			zeigeFormular("art");
-			//Bei Lebensräumen die Taxonomie öffnen
-			if (art.Gruppe === "Lebensräume") {
-				$("#collapseTaxonomie").collapse('show');
-				//Fokus von der Hierarchie wegnehmen
-				$("#Hierarchie").blur();
-			} else if (Datensammlungen.length === 0 && Beziehungen.length === 0) {
-				//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-				$(".accordion-body").collapse('show');
+			//Beziehungen von synonymen Arten
+			if (guidsVonSynonymen.length > 0) {
+				$db = $.couch.db("artendb");
+				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidsVonSynonymen)) + '&include_docs=true', {
+					success: function (data) {
+						var Art;
+						for (var f = 0; f<data.rows.length; f++) {
+							Art = data.rows[f].doc;
+							if (Art.Datensammlungen && Art.Datensammlungen.length > 0) {
+								for (var a=0, len=Art.Datensammlungen.length; a<len; a++) {
+									if (Art.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
+										//diese Datensammlung wird noch nicht dargestellt
+										DatensammlungenVonSynonymen.push(Art.Datensammlungen[a]);
+										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
+										dsNamen.push(Art.Datensammlungen[a].Name);
+										//auch in Datensammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
+										Datensammlungen.push(Art.Datensammlungen[a]);
+									}
+								}
+							}
+							//TO DO: BEZIEHUNGEN
+							if (Art.Beziehungen && Art.Beziehungen.length > 0) {
+								for (var a=0, len=Art.Beziehungen.length; a<len; a++) {
+									if (Art.Beziehungen[a].Name.indexOf(bezNamen) === -1) {
+										//diese Datensammlung wird noch nicht dargestellt
+										BeziehungenVonSynonymen.push(Art.Beziehungen[a]);
+										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
+										bezNamen.push(Art.Beziehungen[a].Name);
+										//auch in Beziehungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
+										Beziehungen.push(Art.Beziehungen[a]);
+									} else {
+										//ds2 ist die ds mit demselben Namen:
+										var ds2 = Beziehungen[Art.Beziehungen[a].Name.indexOf(bezNamen)];
+										//möglich, dass eine Beziehung aus der Datensammlung nur beim Synonym angegeben ist
+										//ds kopieren und alle vorhandenen Beziehungen löschen
+										ds = Art.Beziehungen[a];
+										if (ds.Beziehungen && ds.Beziehungen.length > 0) {
+											for (b in ds.Beziehungen) {
+												//durch alle Beziehungen der DS loopen und prüfen, ob sie in den Beziehungen vorkommen
+												if (containsObject(ds.Beziehungen[b], ds2.Beziehungen)) {
+													delete ds.Beziehungen[b];
+												}
+											}
+										}
+										if (ds.Beziehungen.length > 0) {
+											//falls noch darzustellende Beziehungen verbleiben, die DS pushen
+											BeziehungenVonSynonymen.push(ds);
+										}
+									}
+								}
+							}
+						}
+						//ds von Synonymen darstellen
+						if (DatensammlungenVonSynonymen.length > 0) {
+							//DatensammlungenVonSynonymen sortieren
+							DatensammlungenVonSynonymen.sort(function(a, b) {
+								var aName = a.Name.toLowerCase();
+								var bName = b.Name.toLowerCase();
+								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+							});
+							//Titel hinzufügen
+							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
+							for (var x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
+								//HTML für Datensammlung erstellen lassen und hinzufügen
+								htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
+							}
+						}
+						//bez von Synonymen darstellen
+						if (BeziehungenVonSynonymen.length > 0) {
+							//BeziehungenVonSynonymen sortieren
+							BeziehungenVonSynonymen.sort(function(a, b) {
+								var aName = a.Name.toLowerCase();
+								var bName = b.Name.toLowerCase();
+								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+							});
+							//Titel hinzufügen
+							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
+							for (var x=0, len=BeziehungenVonSynonymen.length; x<len; x++) {
+								//HTML für Beziehung erstellen lassen und hinzufügen
+								htmlArt += erstelleHtmlFuerBeziehung(art, BeziehungenVonSynonymen[x]);
+							}
+						}
+						initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungen);
+					}
+				});
+			} else {
+				initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungen);
 			}
-			//jetzt die Links im Menu setzen
-			setzteLinksZuBilderUndWikipedia(art);
-			//und die URL anpassen
-			history.pushState({id: "id"}, "id", "index.html?id=" + id);
 		},
 		error: function () {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
+}
+
+function initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungen) {
+	//accordion beenden
+	htmlArt += '</div>';
+	$("#art").html(htmlArt);
+	setzteHöheTextareas();
+	//richtiges Formular anzeigen
+	zeigeFormular("art");
+	//Bei Lebensräumen die Taxonomie öffnen
+	if (art.Gruppe === "Lebensräume") {
+		$("#collapseTaxonomie").collapse('show');
+		//Fokus von der Hierarchie wegnehmen
+		$("#Hierarchie").blur();
+	} else if (Datensammlungen.length === 0 && Beziehungen.length === 0) {
+		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
+		$(".accordion-body").collapse('show');
+	}
+	//jetzt die Links im Menu setzen
+	setzteLinksZuBilderUndWikipedia(art);
+	//und die URL anpassen
+	history.pushState({id: "id"}, "id", "index.html?id=" + art._id);
 }
 
 //erstellt die HTML für eine Beziehung
@@ -630,10 +745,10 @@ function erstelleHtmlFuerBeziehung(art, art_i) {
 	/*art_i.Beziehungen.sort(function(a, b) {
 		var aName, bName;
 		for (y in a.Beziehungspartner) {
-			aName = a.Beziehungspartner[y].Name;
+			aName = a.Beziehungspartner[y].Name.toLowerCase();
 		}
 		for (x in b.Beziehungspartner) {
-			bName = b.Beziehungspartner[x].Name;
+			bName = b.Beziehungspartner[x].Name.toLowerCase();
 		}
 		return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
 	});*/
@@ -1500,8 +1615,8 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 			//sortieren
 			//Datensammlungen nach Name sortieren
 			doc.Datensammlungen.sort(function(a, b) {
-				var aName = a.Name;
-				var bName = b.Name;
+				var aName = a.Name.toLowerCase();
+				var bName = b.Name.toLowerCase();
 				return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
 			});
 			//in artendb speichern
@@ -2131,6 +2246,18 @@ function isFileAPIAvailable() {
 		$('#fileApiMeldung').modal();
 		return false;
 	}
+}
+
+//übernimmt ein Objekt und einen Array
+//prüft, ob das Objekt im Array enthalten ist
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function maximiereForms() {
