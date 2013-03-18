@@ -770,7 +770,8 @@ Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungen
-- Die jeweilige Datemsammlung ist beschrieben (besser als bisher)
+- Datensammlungen und Beziehungen eines synonymen Objekts werden auch angezeigt
+- Datemsammlungen sind beschrieben
 - Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
@@ -787,7 +788,7 @@ Daten exportieren:
 **To do**
 
 - Importe: Beziehungen, Taxonomien
-- Exporte: Beziehungen
+- Exporte: Beziehungen, Datensammlungen und Beziehungen von synonymen Arten
 - Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
 

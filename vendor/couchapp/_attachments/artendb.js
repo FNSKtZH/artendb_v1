@@ -589,7 +589,6 @@ function initiiere_art(id) {
 					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungen[z]);
 				}
 			}
-			console.log('guidsVonSynonymen.length = ' + guidsVonSynonymen.length);
 			//Beziehungen von synonymen Arten
 			if (guidsVonSynonymen.length > 0) {
 				$db = $.couch.db("artendb");
