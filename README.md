@@ -369,7 +369,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 - Anstatt "Felder" enthält sie "Beziehungen"
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
 - Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Eigenschaften des JSON-Dokuments gepackt. Der Name der Eigenschaft weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
-- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten zusätzlich zum Typ "Beziehung" einen Untertyp "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
+- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
 <a name="JsonBeispiel"></a>
@@ -627,7 +627,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 ```
 Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten in derselben Tabelle mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
@@ -720,7 +720,7 @@ Nachteile:
 
 - Der strukturelle Umbau ist massiv, aufwändig und fehlerträchtig
 - An sich ist es korrekt, wenn eine Datensammlung an derjenigen Taxonomie hängt, mit der sie erarbeitet wurde
-- Synonymie ist datentechnisch gesehen eine Beziehung wie andere auch (z.B. hierarchisch). Beziehungen würden somit auf zwei unterschiedliche Arten behandelt
+- Synonymie ist datentechnisch gesehen eine Beziehung wie andere auch (z.B. "hierarchisch"). Beziehungen würden somit auf zwei unterschiedliche Arten behandelt
 - Man kann nicht darstellen, dass eine Taxonomie ein Objekt einer anderen als Synonym bezeichnet, umgekehrt aber nicht (kommt das vor?). Man müsste dann wie bisher (nur) im einen Objekt eine (einseitige) Beziehung schaffen. Wenn man von so bezeichneten Synonymen die Informationen des Synonyms anzeigen will, muss man dazu doch extra Funktionalitäten einbauen. Ist aber durchaus möglich. Aber dann wird noch klarer, dass Beziehungen auf unterschiedliche Arten im Datenmodell abgebildet werden
 - In Datensammlungen müsste in einem Feld beschrieben werden, mit welcher Taxonomie (bei Beziehungen: Taxonomien) sie ursprünglich erstellt wurden. Falls an der Synonymie einmal etwas geändert würde, können sie so wieder korrekt zugewiesen werden
 - Was machen, wenn zwei Synonyme dieselbe Datensammlung haben?
@@ -734,7 +734,7 @@ Nachteile:
  <br>Lösung: Zuerst akzeptierte Arten importieren und Objekte daraus machen. Danach Synonyme importieren: Wenn die Datensammlung schon existiert: Zusätzliche Datensammlung schaffen, z.B. "Witt (1995): Informationen zum Synonym mit Taxonomie ID x" (zweiter Teil des Titels aus den nachfolgenden Feldern geholt - Datensammlung darf nicht anderst heissen). Zwei neue Felder: Typ der Ds: "Synonym-Info" und "Synonym-Info für Taxonomie-Id" > in Exportformularen nicht darstellen (würde überladen) - kommt über die gleichen Feldnamen eh mit.<br>Nicht vergessen: Dieses komplizierte Vorgehen muss auch bei gewöhnlichen Importen gewählt werden!
 - Die Suche muss für Taxonomische Einheiten erweitert werden, die nicht im Baum erscheinen
 
-Vorläufige Schlussfolgerung: Das braucht noch reifliche Überlegung. Ist wohl keine gute Idee.
+Vorläufige Schlussfolgerung: Das braucht noch reifliche Überlegung. Ist wohl keine so gute Idee.
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
@@ -754,7 +754,7 @@ Das ist grösstenteils ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komm
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
+- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit (und bleibt es auch, wenn sich etwas an der Datenstruktur ändert)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 
 ###Was kann man mit der aktuellen Version machen?
