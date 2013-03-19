@@ -93,11 +93,32 @@ function(head, req) {
 				} else if (DsTyp_z === "Beziehung" && Objekt.Beziehungen) {
 					//durch alle Beziehungen loopen und suchen, ob Filter trifft
 					for (g in Objekt.Beziehungen) {
-						//Feld kann string oder object sein. Object muss stringified werden
-						if (Objekt.Beziehungen[g].Name === DsName_z && Objekt.Beziehungen[g][Feldname_z] && ((typeof Objekt.Beziehungen[g][Feldname_z] === "number" && Objekt.Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0))) {
-							objektHinzufügen = true;
-						} else {
-							objektNichtHinzufügen = true;
+						if (Objekt.Beziehungen[g].Name === DsName_z) {
+							//durch Beziehungen der Beziehung loopen
+							//zuerst die Beziehung beschreibenede Felder prüfen
+							if (Objekt.Beziehungen[g][Feldname_z]) {
+								//Feld kann string oder object sein. Object muss stringified werden
+								if ((typeof Objekt.Beziehungen[g][Feldname_z] === "number" && Objekt.Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0)) {
+									objektHinzufügen = true;
+									break;
+								} else {
+									objektNichtHinzufügen = true;
+									break;
+								}
+							}
+							//dann die Felder der Beziehungen
+							for (h in Objekt.Beziehungen[g].Beziehungen)
+								if (Objekt.Beziehungen[g].Beziehungen[h].Beziehungen[h][Feldname_z]) {
+									//Feld kann string oder object sein. Object muss stringified werden
+									if ((typeof Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === "number" && Objekt.Beziehungen[g].Beziehungen[h][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0)) {
+										objektHinzufügen = true;
+										break;
+									} else {
+										objektNichtHinzufügen = true;
+										break;
+									}
+								}
+							}
 						}
 					}
 				} else if (DsTyp_z === "Datensammlung" && Objekt.Datensammlungen) {

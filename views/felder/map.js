@@ -15,12 +15,15 @@ function(doc) {
 			}
 		}
 		if (doc.Beziehungen) {
-			for (x in doc.Beziehungen) {
-				if (doc.Beziehungen[x].Beziehungen) {
-					for (y in doc.Beziehungen[x].Beziehungen) {
+			for (x=0; x<doc.Beziehungen.length; x++) {
+				if (doc.Beziehungen[x].Beziehungen && doc.Beziehungen[x].Beziehungen.length > 0) {
+					for (y=0; y<doc.Beziehungen[x].Beziehungen.length; y++) {
 						for (z in doc.Beziehungen[x].Beziehungen[y]) {
-							//jetzt loopen wir durch die Felder der Beziehung
-							emit ([doc.Gruppe, "Beziehung", doc.Beziehungen[x].Name, z, typeof doc.Beziehungen[x].Beziehungen[y][z]], doc._id);
+							if (typeof z !== "number") {
+								//irgendwie liefert dieser Loop auch Zahlen, die aussehen als wären sie die keys eines Arrays. Ausschliessen
+								//jetzt loopen wir durch die Felder der Beziehung
+								emit ([doc.Gruppe, "Beziehung", doc.Beziehungen[x].Name, z, typeof doc.Beziehungen[x].Beziehungen[y][z]], doc._id);
+							}
 						}
 					}
 				}

@@ -1692,6 +1692,66 @@ function oeffneUri() {
 function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
+	var dsTyp;
+	if (beziehungen) {
+		dsTyp = "Taxonomie";
+	} else if (datensammlungen) {
+		dsTyp = "Datensammlung";
+	} else {
+		dsTyp = "Beziehung";
+	}
+	console.log('dsTyp = ' + dsTyp);
+	for (i in taxonomien) {
+		if (html_felder_waehlen !== '') {
+			html_felder_waehlen += '<hr>';
+			html_filtern += '<hr>';
+		}
+		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
+		html_felder_waehlen += '<div class="felderspalte">';
+		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
+		html_filtern += '<div class="felderspalte">';
+		for (x in taxonomien[i].Felder) {
+			//felder wählen
+			html_felder_waehlen += '<label class="checkbox">';
+			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
+			html_felder_waehlen += '</label>';
+			//filtern
+			html_filtern += '<div class="control-group">';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+			if (x.length > 28) {
+				html_filtern += ' style="padding-top:0px"';
+			}
+			html_filtern += '>'+ x +'</label>';
+			html_filtern += '<div class="controls">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '</div>';
+			html_filtern += '</div>';
+		}
+		//Spalten abschliessen
+		html_felder_waehlen += '</div>';
+		html_filtern += '</div>';
+	}
+	//linie voranstellen
+	html_felder_waehlen = '<hr>' + html_felder_waehlen;
+	html_filtern = '<hr>' + html_filtern;
+	if (beziehungen) {
+		$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
+		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
+		erstelleExportfelder(datensammlungen, beziehungen);
+	} else if (datensammlungen) {
+		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+		erstelleExportfelder(datensammlungen);
+	} else {
+		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+	}
+}
+
+/*function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
+	var html_felder_waehlen = '';
+	var html_filtern = '';
 	for (i in taxonomien) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
@@ -1770,12 +1830,13 @@ function erstelleExportfelderDatensammlungen(datensammlungen, beziehungen) {
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
-	//erstelleExportfelderBeziehungen(beziehungen);	//VORLÄUGIG AUSGESCHALTET, DA NICHT FUNKTIONIEREND
+	erstelleExportfelderBeziehungen(beziehungen);
 }
 
 function erstelleExportfelderBeziehungen(beziehungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
+	console.log('beziehungen = ' + JSON.stringify(beziehungen));
 	for (i in beziehungen) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
@@ -1785,7 +1846,7 @@ function erstelleExportfelderBeziehungen(beziehungen) {
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + beziehungen[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
-		for (x in beziehungen[i].Beziehungen) {
+		for (x in beziehungen[i].Felder) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="Beziehung" Datensammlung="' + beziehungen[i].Name + '" Feld="' + x + '">' + x;
@@ -1812,7 +1873,53 @@ function erstelleExportfelderBeziehungen(beziehungen) {
 	html_filtern = '<hr>' + html_filtern;
 	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
 	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
-}
+}*/
+
+/*function erstelleExportfelderBeziehungen(beziehungen) {
+	var html_felder_waehlen = '';
+	var html_filtern = '';
+	for (i in beziehungen) {
+		console.log(beziehungen[i].Name + ': beziehungen[i].Beziehungen = ' + JSON.stringify(beziehungen[i].Beziehungen));
+		console.log(beziehungen[i].Name + ': beziehungen[i].Beziehungen.length = ' + beziehungen[i].Beziehungen.length);
+		if (beziehungen[i].Beziehungen && beziehungen[i].Beziehungen.length > 0) {
+			if (html_felder_waehlen !== '') {
+				html_felder_waehlen += '<hr>';
+				html_filtern += '<hr>';
+			}
+			html_felder_waehlen += '<h5>' + beziehungen[i].Name + '</h5>';
+			html_felder_waehlen += '<div class="felderspalte">';
+			html_filtern += '<h5>' + beziehungen[i].Name + '</h5>';
+			html_filtern += '<div class="felderspalte">';
+			//erste Beziehung als Modell für die Struktur nehmen
+			for (y in beziehungen[i].Beziehungen[0]) {
+				//felder wählen
+				html_felder_waehlen += '<label class="checkbox">';
+				html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="Beziehung" Datensammlung="' + beziehungen[i].Name + '" Feld="' + y + '">' + y;
+				html_felder_waehlen += '</label>';
+				//filtern
+				html_filtern += '<div class="control-group">';
+				html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_' + y.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+				//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+				if (y.length > 28) {
+					html_filtern += ' style="padding-top:0px"';
+				}
+				html_filtern += '>'+ y +'</label>';
+				html_filtern += '<div class="controls">';
+				html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_' + y.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="Beziehung" Eigenschaft="' + beziehungen[i].Name + '" Feld="' + y + '">';
+				html_filtern += '</div>';
+				html_filtern += '</div>';
+			}
+		}
+		//Spalten abschliessen
+		html_felder_waehlen += '</div>';
+		html_filtern += '</div>';
+	}
+	//linie voranstellen
+	html_felder_waehlen = '<hr>' + html_felder_waehlen;
+	html_filtern = '<hr>' + html_filtern;
+	$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+	$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+}*/
 
 function erstelleExportString(exportobjekte) {
 	var stringTitelzeile = "";
