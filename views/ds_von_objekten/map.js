@@ -4,7 +4,7 @@
 		for (i in doc.Datensammlungen) {
 			Datensammlung = {};
 			for (x in doc.Datensammlungen[i]) {
-				if (x !== "Felder" && x !== "Typ") {
+				if (x !== "Daten" && x !== "Typ") {
 					Datensammlung[x] = doc.Datensammlungen[i][x];
 				}
 			}

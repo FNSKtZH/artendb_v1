@@ -58,7 +58,7 @@ Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach ent
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
-Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Datensammlungen (inklusive Taxonomie und zusammenfassenden Datensammlungen) und Beziehungen. Möglichst alles wird darauf zurückgeführt.
+Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehungssammlung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Datensammlungen (inklusive Taxonomie und zusammenfassenden Datensammlungen) und Beziehungssammlungen. Möglichst alles wird darauf zurückgeführt.
 
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
@@ -99,10 +99,10 @@ Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es
 
 Künftig sollen auch Datensammlungen von synonymen Objekten angezeigt und exportiert werden können.
 
-In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Felder ausgewählt werden.
+In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Daten ausgewählt werden.
 
 ###Zusammenfassende Datensammlungen
-Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Felder aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
+Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
 
 Das soll so erfolgen:
 
@@ -124,8 +124,8 @@ Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und er
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
-###Beziehungen
-...beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen.
+###Beziehungen und ihre Sammlungen
+...beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen Beziehungssammlungen genannt.
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
@@ -167,7 +167,7 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts oder der Beziehung.<br>Hier ein Beispiel für Arteigenschaften:
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_rl.png" alt="Beispiel Eisvogel, Datensammlung Rote Liste" width="100%">
 
-...und eines für Beziehungen:
+...und eines für Beziehungssammlungen:
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_beziehung.png" alt="Beispiel Eisvogel, Biotopbindung nach AP FM ZH" width="100%">
 
 Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
@@ -269,14 +269,14 @@ Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 - Typ ist (mindestens momentan) nicht so relevant, weil alle Dokumente Objekte sind
 
 ####Taxonomie
-Die Taxonomie enthält sich selbst beschreibende Felder (Name bis Link). Ihre Eigenschaften sind unter "Felder" aufgelistet:
+Die Taxonomie enthält sich selbst beschreibende Felder (Name bis Link). Ihre Eigenschaften sind unter "Daten" aufgelistet:
 ```javascript
 "Taxonomie": {
 		"Name":"CSCF (2009)",
 		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
 		"Datenstand":"2009",
 		"Link":"http://www.cscf.ch/",
-		"Felder": {
+		"Daten": {
 			"Taxonomie ID": 70150,
 			"Klasse":"Reptilia",
 			"Ordnung":"Chelonii",
@@ -312,7 +312,7 @@ Hier ein Auszug mit nur einer Datensammlung:
 		"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
 		"Datenstand":"2008",
 		"Link":"http://www.agroscope.admin.ch",
-		"Felder": {
+		"Daten": {
 			"1_1 West-Jura": false,
 			"1_2 Nord-Jura": false,
 			"1_3 Nordostschweiz": false,
@@ -337,10 +337,10 @@ Hier ein Auszug mit nur einer Datensammlung:
 ]
 ```
 
-####Beziehungen
-Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug mit nur einer Beziehung:
+####Beziehungssammlungen
+Beziehungssammlungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
-"Beziehungen": [
+"Beziehungssammlungen": [
 	{
 		"Name":"ZH AP FM (2010): Art ist an Lebensraum gebunden",
 		"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
@@ -364,12 +364,12 @@ Beziehungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug mit
 ]
 
 ```
-Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
+Unterschiede zwischen Beziehungssammlungen und (gewöhnlicher) Datensammlung:
 
-- Anstatt "Felder" enthält sie "Beziehungen"
+- Anstatt "Daten" enthält sie "Beziehungen"
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
-- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Eigenschaften des JSON-Dokuments gepackt. Der Name der Eigenschaft weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Eigenschaft "CH Delarze (2008): Art charakterisiert Lebensraum" auch eine separate Eigenschaft "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
-- Beziehungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
+- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
+- Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
 <a name="JsonBeispiel"></a>
@@ -384,7 +384,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
 		"Datenstand":"2009",
 		"Link":"http://www.cscf.ch/",
-		"Felder":{
+		"Daten":{
 			"Taxonomie ID": 70150,
 			"Klasse":"Reptilia",
 			"Ordnung":"Chelonii",
@@ -408,7 +408,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
 			"Datenstand":"2008",
 			"Link":"http://www.agroscope.admin.ch",
-			"Felder":{
+			"Daten":{
 				"1_1 West-Jura": false,
 				"1_2 Nord-Jura": false,
 				"1_3 Nordostschweiz": false,
@@ -435,7 +435,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
 			"Datenstand":"2012.01",
 			"Link":"http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
-			"Felder":{
+			"Daten":{
 				"Priorität":"hoch",
 				"Gefährdung":"vom Aussterben bedroht",
 				"Verantwortung":"geringe Verantwortung",
@@ -460,7 +460,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Name":"CH Rote Listen (unterschiedliche Jahre)",
 			"Beschreibung":"Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
 			"Datenstand":"unterschiedlich",
-			"Felder":{
+			"Daten":{
 				"Europa Smaragd": true,
 				"Europa":"potentiell gefährdet (NT)",
 				"Schweiz aktuell":"vom Aussterben bedroht (CR)",
@@ -475,7 +475,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
 			"Datenstand":"2010",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Felder":{
+			"Daten":{
 				"Art ist für AP FM relevant": true,
 				"Bindung an Flachmoore": 7,
 				"Artwert AP FM": 18,
@@ -501,7 +501,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
 			"Datenstand":"ca. 1995",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Felder":{
+			"Daten":{
 				"Dringlichkeit Aktionsplan":"nicht beurteilt",
 				"Priorität nach Naturschutz-Gesamtkonzept 1990":"nicht beurteilt",
 				"Bestandesentwicklung 1985-2000":"Abnahme",
@@ -526,7 +526,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Artengruppen Kt. Zürich. Eigenschaften von allen Arten",
 			"Datenstand":"2012",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Felder":{
+			"Daten":{
 				"GIS-Layer":"Reptilien",
 				"Artengruppen-ID in EvAB": 12
 			}
@@ -536,7 +536,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
 			"Datenstand":"ca. 1995",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Felder":{
+			"Daten":{
 				"Artwert": 11,
 				"Artwertberechnung Areal weltweit":"gross (0 Punkte)",
 				"Artwertberechnung Anteil am CH-Bestand":"klein: <1/4 (0 Punkte)"
@@ -547,13 +547,13 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften von allen Arten",
 			"Datenstand":"2012",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Felder":{
+			"Daten":{
 				"Betrachtungsdistanz (m)": 500,
 				"Kriterien für Bestimmung der Betrachtungsdistanz":"5 (500m als Minimalwert zugeteilt)"
 			}
 		}
 	],
-	"Beziehungen": [
+	"Beziehungssammlungen": [
 		{
 			"Name":"CH Agroscope Zielart (2008): Ziel-/Leitart für Lebensraum",
 			"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
@@ -579,7 +579,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Datenstand":"2010",
 			"Link":"http://www.naturschutz.zh.ch",
 			"Art der Beziehungen":"Art ist an Lebensraum gebunden",
-			"Beziehungen": [
+			"Beziehungssammlungen": [
 				{
 					"Beziehungspartner": [
 						{
@@ -599,7 +599,7 @@ Unterschiede zwischen Beziehungen und (gewöhnlicher) Datensammlung:
 			"Datenstand":"ca. 1995",
 			"Link":"http://www.naturschutz.zh.ch",
 			"Art der Beziehungen":"Art kommt in Lebensraum vor",
-			"Beziehungen": [
+			"Beziehungssammlungen": [
 				{
 					"Beziehungspartner": [
 						{
@@ -675,7 +675,7 @@ Man könnte dem Dokument auch einen Array für Taxonomien verpassen. Darin würd
 		"Beschreibung": "D. Aeschimann & C. Heitz: Synonymie-Index der Schweizer Flora (2005). Zweite Auflage. Eigenschaften von 7973 Pflanzenarten. Arten mit NR > 1000000 von der FNS provisorisch ergänzt",
 		"Datenstand": "2007.05.08",
 		"Link": "http://www.infoflora.ch/de/daten-beziehen/standard-artenliste.html",
-		"Felder": {
+		"Daten": {
 			"Taxonomie ID": 419000,
 			"Familie": "Brassicaceae",
 			"Gattung": "Thlaspi",
@@ -694,7 +694,7 @@ Man könnte dem Dokument auch einen Array für Taxonomien verpassen. Darin würd
 		"Beschreibung": "D. Aeschimann & C. Heitz: Synonymie-Index der Schweizer Flora (2005). Zweite Auflage. Eigenschaften von 7973 Pflanzenarten. Arten mit NR > 1000000 von der FNS provisorisch ergänzt",
 		"Datenstand": "2007.05.08",
 		"Link": "http://www.infoflora.ch/de/daten-beziehen/standard-artenliste.html",
-		"Felder": {
+		"Daten": {
 			"Taxonomie ID": 419100,
 			"Familie": "Brassicaceae",
 			"Gattung": "Thlaspi",
@@ -712,7 +712,7 @@ Man könnte dem Dokument auch einen Array für Taxonomien verpassen. Darin würd
 Vorteile:
 
 - Für Synonyme muss kein neues Objekt geschaffen werden.<br>Das ist besonders praktisch, wenn z.B. der nächste Index der Flora publiziert wird > einfach im bestehenden Objekt den SISF-Index 3 ergänzen. Sonst: Neues Objekt schaffen. Hm. Wo sollen jetzt die Datensammlungen dran hängen? Alle zügeln? Alle kopieren? Am alten Ort belassen und über die Beziehung managen? Das ist alles nicht schön oder aufwändig. Am besten ist wohl die letzte Variante
-- Synonyme haben automatisch alle Datensammlungen und Beziehungen aller anderen Synonyme. Kein Aufwand in Exporten, Schnittstellen und der Benutzeroberfläche!
+- Synonyme haben automatisch alle Datensammlungen und Beziehungssammlungen aller anderen Synonyme. Kein Aufwand in Exporten, Schnittstellen und der Benutzeroberfläche!
 - Das Datenmodell ist einheitlicher und einfacher - eleganter
 - Eigentlich ist klar: Synonym = dieselbe Art mit denselben Eigenschaften (die Praxis sieht leider sicher anders aus)
 
@@ -769,8 +769,8 @@ Arten suchen:
 Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungen
-- Datensammlungen und Beziehungen eines synonymen Objekts werden auch angezeigt
+- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungssammlungen
+- Datensammlungen und Beziehungssammlungen eines synonymen Objekts werden auch angezeigt
 - Datemsammlungen sind beschrieben
 - Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
@@ -779,7 +779,7 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Objekte inklusive Taxonomien und Datensammlungen
+- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste können die gewünschten Felder gewählt werden
@@ -788,7 +788,7 @@ Daten exportieren:
 **To do**
 
 - Importe: Beziehungen, Taxonomien
-- Exporte: Beziehungen, Datensammlungen und Beziehungen von synonymen Arten
+- Exporte: Daten und Beziehungen von synonymen Arten
 - Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
 

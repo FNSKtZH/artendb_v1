@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Macromycetes" && doc.Taxonomie && doc.Taxonomie.Felder) {
-		emit ([doc.Taxonomie.Felder.Gattung, doc.Taxonomie.Felder["Artname vollständig"]], doc._id);
+	if (doc.Gruppe && doc.Gruppe === "Macromycetes" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		emit ([doc.Taxonomie.Daten.Gattung, doc.Taxonomie.Daten["Artname vollständig"]], doc._id);
 	}
 }

@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Flora" && doc.Taxonomie && doc.Taxonomie.Felder) {
-		emit ([doc.Taxonomie.Felder.Familie, doc.Taxonomie.Felder.Gattung, doc.Taxonomie.Felder["Artname vollständig"]], doc._id);
+	if (doc.Gruppe && doc.Gruppe === "Flora" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		emit ([doc.Taxonomie.Daten.Familie, doc.Taxonomie.Daten.Gattung, doc.Taxonomie.Daten["Artname vollständig"]], doc._id);
 	}
 }

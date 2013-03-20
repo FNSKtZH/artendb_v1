@@ -1,7 +1,7 @@
 function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc.Taxonomie && doc.Taxonomie.Felder) {
-		if (doc.Taxonomie.Felder.Hierarchie && doc.Taxonomie.Felder.Hierarchie.length === 2) {
-			emit (doc.Taxonomie.Felder.Hierarchie, doc._id);
+	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		if (doc.Taxonomie.Daten.Hierarchie && doc.Taxonomie.Daten.Hierarchie.length === 2) {
+			emit (doc.Taxonomie.Daten.Hierarchie, doc._id);
 		}
 	}
 }

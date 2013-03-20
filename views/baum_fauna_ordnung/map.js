@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Fauna" && doc.Taxonomie && doc.Taxonomie.Felder) {
-		emit ([doc.Taxonomie.Felder.Klasse, doc.Taxonomie.Felder.Ordnung], null);
+	if (doc.Gruppe && doc.Gruppe === "Fauna" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		emit ([doc.Taxonomie.Daten.Klasse, doc.Taxonomie.Daten.Ordnung], null);
 	}
 }
