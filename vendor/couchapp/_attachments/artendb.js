@@ -1688,19 +1688,19 @@ function oeffneUri() {
 		});
 	}
 }
-
+//übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungen
+//verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	var dsTyp;
-	if (beziehungen) {
+	if (taxonomien && datensammlungen && beziehungen) {
 		dsTyp = "Taxonomie";
-	} else if (datensammlungen) {
+	} else if (taxonomien && datensammlungen) {
 		dsTyp = "Datensammlung";
 	} else {
 		dsTyp = "Beziehung";
 	}
-	console.log('dsTyp = ' + dsTyp);
 	for (i in taxonomien) {
 		if (html_felder_waehlen !== '') {
 			html_felder_waehlen += '<hr>';
@@ -1710,7 +1710,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
-		for (x in taxonomien[i].Felder) {
+		for (x in (taxonomien[i].Felder || taxonomien[i].Beziehungen)) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
@@ -1747,6 +1747,9 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
 		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
 	}
+	//console.log('dsTyp = ' + dsTyp);
+	//console.log(dsTyp + '-Array = ' + JSON.stringify(taxonomien));
+	//console.log('html_filtern = ' + JSON.stringify(html_filtern));
 }
 
 /*function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {

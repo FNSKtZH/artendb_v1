@@ -14,12 +14,12 @@ function(doc) {
 				}
 			}
 		}
-		if (doc.Beziehungen) {
+		if (doc.Beziehungen && doc.Beziehungen.length > 0) {
 			for (x=0; x<doc.Beziehungen.length; x++) {
 				if (doc.Beziehungen[x].Beziehungen && doc.Beziehungen[x].Beziehungen.length > 0) {
 					for (y=0; y<doc.Beziehungen[x].Beziehungen.length; y++) {
 						for (z in doc.Beziehungen[x].Beziehungen[y]) {
-							if (typeof z !== "number") {
+							if (isNaN(parseInt(z))) {
 								//irgendwie liefert dieser Loop auch Zahlen, die aussehen als wären sie die keys eines Arrays. Ausschliessen
 								//jetzt loopen wir durch die Felder der Beziehung
 								emit ([doc.Gruppe, "Beziehung", doc.Beziehungen[x].Name, z, typeof doc.Beziehungen[x].Beziehungen[y][z]], doc._id);

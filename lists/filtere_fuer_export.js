@@ -17,8 +17,10 @@ function(head, req) {
 		var Feldname_q;
 		var Filterwert_q;
 		var Datensammlung;
+		var Beziehungen;
 		var Beziehung;
 		var dsExistiertSchon;
+		var dsExistiert;
 
 		//übergebene Variabeln extrahieren
 		for (i in req.query) {
@@ -61,8 +63,8 @@ function(head, req) {
 				Feldname_z = filterkriterien[z].Feldname;
 				Filterwert_z = filterkriterien[z].Filterwert;
 				if (DsName_z === "Objekt") {
-					//Das ist eine simple Eigenschaft des Objekts
-					if ((typeof Objekt[Feldname_z] === "number" && Objekt[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+					//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
+					if ((typeof Objekt[Feldname_z] === "number" && Objekt[Feldname_z] === parseInt(Filterwert_z)) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 						objektHinzufügen = true;
 					} else {
 						objektNichtHinzufügen = true;
@@ -71,7 +73,7 @@ function(head, req) {
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 					if (Objekt.Taxonomie.Felder[Feldname_z]) {
-						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z] === parseInt(Filterwert_z)) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 							objektHinzufügen = true;
 						} else {
 							objektNichtHinzufügen = true;
@@ -82,7 +84,7 @@ function(head, req) {
 				} else if (DsTyp_z === "Taxonomie") {
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 					if (Objekt.Taxonomie.Name === DsName_z && Objekt.Taxonomie.Felder[Feldname_z]) {
-						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z].indexOf(Filterwert_z) >= 0) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+						if ((typeof Objekt.Taxonomie.Felder[Feldname_z] === "number" && Objekt.Taxonomie.Felder[Feldname_z] === parseInt(Filterwert_z)) || (Objekt.Taxonomie.Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
 							objektHinzufügen = true;
 						} else {
 							objektNichtHinzufügen = true;
@@ -90,51 +92,60 @@ function(head, req) {
 					} else {
 						objektNichtHinzufügen = true;
 					}
-				} else if (DsTyp_z === "Beziehung" && Objekt.Beziehungen) {
+				} else if (DsTyp_z === "Beziehung") {
 					//durch alle Beziehungen loopen und suchen, ob Filter trifft
+					dsExistiert = false;
 					for (g in Objekt.Beziehungen) {
 						if (Objekt.Beziehungen[g].Name === DsName_z) {
+							dsExistiert = true;
 							//durch Beziehungen der Beziehung loopen
-							//zuerst die Beziehung beschreibenede Felder prüfen
-							if (Objekt.Beziehungen[g][Feldname_z]) {
-								//Feld kann string oder object sein. Object muss stringified werden
-								if ((typeof Objekt.Beziehungen[g][Feldname_z] === "number" && Objekt.Beziehungen[g][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0)) {
-									objektHinzufügen = true;
-									break;
-								} else {
-									objektNichtHinzufügen = true;
-									break;
-								}
-							}
-							//dann die Felder der Beziehungen
-							for (h in Objekt.Beziehungen[g].Beziehungen)
-								if (Objekt.Beziehungen[g].Beziehungen[h].Beziehungen[h][Feldname_z]) {
-									//Feld kann string oder object sein. Object muss stringified werden
-									if ((typeof Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === "number" && Objekt.Beziehungen[g].Beziehungen[h][Feldname_z].indexOf(Filterwert_z) >= 0) || (JSON.stringify(Objekt.Beziehungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0)) {
-										objektHinzufügen = true;
-										break;
-									} else {
-										objektNichtHinzufügen = true;
-										break;
+							if (Objekt.Beziehungen[g].Beziehungen.length > 0) {
+								for (h in Objekt.Beziehungen[g].Beziehungen) {
+									//durch die Felder der Beziehung loopen
+									if (Objekt.Beziehungen[g].Beziehungen[h][Feldname_z]) {
+										//Feld kann string oder object sein. Object muss stringified werden
+										if ((typeof Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === "number" && Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === parseInt(Filterwert_z)) || (typeof Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === "object" && JSON.stringify(Objekt.Beziehungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) || (typeof Objekt.Beziehungen[g].Beziehungen[h][Feldname_z] === "string" && Objekt.Beziehungen[g].Beziehungen[h][Feldname_z].toLowerCase().indexOf(Filterwert_z) >= 0)) {
+											objektHinzufügen = true;
+											break;
+										} else {
+											objektNichtHinzufügen = true;
+											break;
+										}
 									}
 								}
+							} else {
+								//es gibt keine passende Beziehung, nicht hinzufügen
+								objektNichtHinzufügen = true;
+								break;
 							}
 						}
 					}
-				} else if (DsTyp_z === "Datensammlung" && Objekt.Datensammlungen) {
+					if (!dsExistiert) {
+						//es gibt keine passende Beziehung, nicht hinzufügen
+						objektNichtHinzufügen = true;
+					}
+				} else if (DsTyp_z === "Datensammlung") {
+					dsExistiert = false;
 					//das ist ein Feld aus einer Datensammlung
 					for (h in Objekt.Datensammlungen) {
-						if (Objekt.Datensammlungen[h].Name === DsName_z && typeof Objekt.Datensammlungen[h].Felder !== "undefined" && typeof Objekt.Datensammlungen[h].Felder[Feldname_z] !== "undefined") {
-							if (typeof Objekt.Datensammlungen[h].Felder[Feldname_z] === "number" && Objekt.Datensammlungen[h].Felder[Feldname_z].indexOf(Filterwert_z) >= 0) {
-								objektHinzufügen = true;
-							} else if (Objekt.Datensammlungen[h].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
-								objektHinzufügen = true;
+						if (Objekt.Datensammlungen[h].Name === DsName_z) {
+							dsExistiert = true;
+							if (Objekt.Datensammlungen[h].Name === DsName_z && typeof Objekt.Datensammlungen[h].Felder !== "undefined" && typeof Objekt.Datensammlungen[h].Felder[Feldname_z] !== "undefined") {
+								if (typeof Objekt.Datensammlungen[h].Felder[Feldname_z] === "number" && Objekt.Datensammlungen[h].Felder[Feldname_z] === parseInt(Filterwert_z)) {
+									objektHinzufügen = true;
+								} else if (Objekt.Datensammlungen[h].Felder[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
+									objektHinzufügen = true;
+								} else {
+									objektNichtHinzufügen = true;
+								}
 							} else {
 								objektNichtHinzufügen = true;
 							}
-						} else {
-							objektNichtHinzufügen = true;
 						}
+					}
+					if (!dsExistiert) {
+						//es gibt keine passende Beziehung, nicht hinzufügen
+						objektNichtHinzufügen = true;
 					}
 				}
 			}
@@ -216,43 +227,54 @@ function(head, req) {
 						}
 					}
 				}
-				if (Objekt.Beziehungen) {
+				if (Objekt.Beziehungen && Objekt.Beziehungen.length > 0) {
 					for (i in Objekt.Beziehungen) {
-						//TO DO: Art der Beziehung prüfen
 						for (a in Objekt.Beziehungen[i].Beziehungen) {
-							//wir loopen jetzt durch die Felder der Beziehung
-							for (w in felder) {
-								if (felder[w].DsTyp === "Beziehung" && felder[w].DsName === Objekt.Beziehungen[i].Name) {
-									if (felder[w].Feldname === a) {
-										if (typeof exportObjekt.Beziehungen === "undefined") {
-											Beziehung = {};
-											Beziehung.Name = felder[w].DsName;
-											Beziehung.Beziehungen = [];
-											Beziehung.Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
-											exportObjekt.Beziehungen = [];
-											exportObjekt.Beziehungen.push(Beziehung);
-										} else {
-											dsExistiertSchon = false;
-											//durch alle Beziehungen loopen und die richtige suchen
-											for (b in exportObjekt.Beziehungen) {
-												if (exportObjekt.Beziehungen[b].Name = felder[w].DsName) {
-													dsExistiertSchon = true;
-													if (typeof exportObjekt.Beziehungen[b] === "undefined") {
-														exportObjekt.Beziehungen[b].Beziehungen = [];
-													}
-													exportObjekt.Beziehungen[b].Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
-												}
-											}
-											if (!dsExistiertSchon) {
+							for (b in Objekt.Beziehungen[i].Beziehungen[a]) {
+								//wir loopen jetzt durch die Felder der Beziehung
+								for (w in felder) {
+									if (felder[w].DsTyp === "Beziehung" && felder[w].DsName === Objekt.Beziehungen[i].Name) {
+										if (felder[w].Feldname === b) {
+											if (typeof exportObjekt.Beziehungen === "undefined") {
+												Beziehungen = {};
+												Beziehungen.Name = felder[w].DsName;
+												Beziehungen.Beziehungen = [];
 												Beziehung = {};
-												Beziehung.Beziehungen = [];
-												Beziehung.Beziehungen.push(Objekt.Beziehungen[i].Beziehungen[a]);
-												//exportObjekt.Beziehungen = [];
-												exportObjekt.Beziehungen.push(Beziehung);
-											}
+												Beziehung[b] = Objekt.Beziehungen[i].Beziehungen[a][b];
+												Beziehungen.Beziehungen.push(Beziehung);
+												exportObjekt.Beziehungen = [];
+												exportObjekt.Beziehungen.push(Beziehungen);
+											} else {
+												dsExistiertSchon = false;
+												//durch alle Beziehungen loopen und die richtige suchen
+												for (t in exportObjekt.Beziehungen) {
+													if (exportObjekt.Beziehungen[t].Name = felder[w].DsName) {
+														dsExistiertSchon = true;
+														if (typeof exportObjekt.Beziehungen[t].Beziehungen === "undefined") {
+															Beziehung = {};
+															Beziehung[b] = Objekt.Beziehungen[i].Beziehungen[a][b];
+															exportObjekt.Beziehungen[t].Beziehungen = [];
+															exportObjekt.Beziehungen[t].Beziehungen.push(Beziehung);
+														} else {
+															Beziehung = {};
+															Beziehung[b] = Objekt.Beziehungen[i].Beziehungen[a][b];
+															exportObjekt.Beziehungen[t].Beziehungen.push(Beziehung);
+														}
+													}
+												}
+												if (!dsExistiertSchon) {
+													Beziehungen = {};
+													Beziehungen.Beziehungen = [];
+													Beziehung = {};
+													Beziehung[b] = Objekt.Beziehungen[i].Beziehungen[a][b];
+													Beziehungen.Beziehungen.push(Beziehung);
+													//exportObjekt.Beziehungen = [];
+													exportObjekt.Beziehungen.push(Beziehungen);
+												}
 
+											}
+											break;
 										}
-										break;
 									}
 								}
 							}
