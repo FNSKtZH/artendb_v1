@@ -106,7 +106,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus versc
 
 Das soll so erfolgen:
 
-- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Untertyp "zusammenfassend" geschaffen
+- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Typ "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
  - Ein mal in die Ursprungs-Datensammlung
  - Ein mal in die zusammenfassende
@@ -116,7 +116,7 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Eigenschaften importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" nochmals hier hinein importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
-- Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten von "BAFU (2012): Rote Liste der Heuschrecken" nochmals in diese Datensammlung importiert
+- Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten von "BAFU (2012): Rote Liste der Heuschrecken" nochmals in diese Datensammlung importiert
 - Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies deutlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld "Herkunft" immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
 Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später neuere. Es kann aber auch vorkommen, dass nachträglich eine ältere Datensammlung importiert wird, für die bereits eine zusammenfassende Datensammlung mit neueren Daten existiert. In diesem Fall sollte die Benutzerin wählen können, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Aus welchen Herkünften stammende zusammenfassende Einträge nicht überschrieben werden sollen (die Idee, das mit einem Aktualitäsdatum für die Datensammlung automatisch abzufangen habe ich verworfen: Sie funktioniert nicht, wenn eine Datensammlung Eigenschaften mit unterschiedlicher Aktualität enthält).
@@ -125,7 +125,7 @@ Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und er
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungen und ihre Sammlungen
-...beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen Beziehungssammlungen genannt.
+Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen Beziehungssammlungen genannt. Im Grunde genommen sind sie Spezialfälle von Datensammlungen.
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
@@ -202,7 +202,7 @@ fertig!
 
 Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt und exportiert werden.
 
-Schon vorhandene Informationen derselben Datensammlung werden überschrieben. Eine Datensammlung kann auch aus allen Objekten entfernt werden, in denen sie enthalten ist.
+Schon vorhandene Informationen derselben Datensammlung werden überschrieben. Eine Datensammlung kann auch wieder entfernt werden.
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Das wiederum ist ein hohes Risiko für den Unterhalt und verhindert eine effiziente Datenhaltung.
 
@@ -269,7 +269,14 @@ Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 - Typ ist (mindestens momentan) nicht so relevant, weil alle Dokumente Objekte sind
 
 ####Taxonomie
-Die Taxonomie enthält sich selbst beschreibende Felder (Name bis Link). Ihre Eigenschaften sind unter "Daten" aufgelistet:
+Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
+
+- Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
+- Allgemeine Beschreibung: Vor allem, was für das Verständnis der Daten erforderlich ist
+- Datenstand (Datum, als die Daten bezogen wurden)
+- Link. 
+
+Ihre Eigenschaften sind unter "Daten" aufgelistet:
 ```javascript
 "Taxonomie": {
 		"Name":"CSCF (2009)",
@@ -298,11 +305,7 @@ Die Taxonomie enthält sich selbst beschreibende Felder (Name bis Link). Ihre Ei
 Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
 
 ####Datensammlungen
-Die Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts. Datensammlungen sind gleich aufgebaut wie die Taxonomie. Die Datensammlung selber wird auch beschrieben, z.B. mit:
-- Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
-- Allgemeine Beschreibung: Vor allem, was für das Verständnis der Daten erforderlich ist
-- Datenstand (Datum, als die Daten bezogen wurden)
-- Link
+Die JSON-Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts in einem Array. Datensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
 
 Hier ein Auszug mit nur einer Datensammlung:
 ```javascript
@@ -338,7 +341,7 @@ Hier ein Auszug mit nur einer Datensammlung:
 ```
 
 ####Beziehungssammlungen
-Beziehungssammlungen werden ähnlich wie Datensammlungen gespeichert. Hier ein Auszug mit nur einer Beziehung:
+Beziehungssammlungen werden ähnlich wie Datensammlungen aufgebaut. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
 "Beziehungssammlungen": [
 	{
@@ -369,7 +372,7 @@ Unterschiede zwischen Beziehungssammlungen und (gewöhnlicher) Datensammlung:
 - Anstatt "Daten" enthält sie "Beziehungen"
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
 - Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
-- Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung der Datensammlungen auf dem Bildschirm
+- Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen werden, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
 <a name="JsonBeispiel"></a>
@@ -627,7 +630,7 @@ Unterschiede zwischen Beziehungssammlungen und (gewöhnlicher) Datensammlung:
 ```
 Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten in derselben Tabelle mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist sehr schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
@@ -742,7 +745,7 @@ CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese w
 
 Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
 
-Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
+Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die den views zugrunde liegenden Indices kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 
