@@ -711,16 +711,18 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungssammlungen) {
 //altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
 function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	var html;
+	var Name;
+	console.log('art_i.Name = ' + art_i.Name);
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen
-	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -764,6 +766,11 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 			BeteiligteGruppen.push(art_i.Beziehungen[i].Beziehungspartner[y].Gruppe);
 		}
 		for (y in art_i.Beziehungen[i].Beziehungspartner) {
+			if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
+				Name = art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
+			} else {
+				Name = art_i.Beziehungen[i].Beziehungspartner[y].Name
+			}
 			//Partner darstellen
 			if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 				//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
@@ -771,13 +778,13 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 				if (art_i["Art der Beziehungen"] === "hierarchisch") {
 					//Feld soll mit der Rolle beschriftet werden
 					//ausserdem Name inkl. Methode
-					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				} else {
 					//synonymer LR
-					html += generiereHtmlFuerObjektlink("Beziehungspartner", art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				}
 			} else {
-				html += generiereHtmlFuerObjektlink("Beziehungspartner", art_i.Beziehungen[i].Beziehungspartner[y].Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+				html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 			}
 		}
 		//Die Felder anzeigen
