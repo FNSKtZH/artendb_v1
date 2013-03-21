@@ -18,6 +18,7 @@ function(head, req) {
 		var Filterwert_q;
 		var Datensammlung;
 		var Beziehungssammlungen;
+		var Beziehungssammlung;
 		var Beziehung;
 		var dsExistiertSchon;
 		var dsExistiert;
@@ -108,17 +109,22 @@ function(head, req) {
 							dsExistiert = true;
 							//durch Beziehungssammlungen der Beziehung loopen
 							if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
+								var feldExistiert = false;
+								var feldHinzugefügt = false;
 								for (h in Objekt.Beziehungssammlungen[g].Beziehungen) {
 									//durch die Felder der Beziehung loopen
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
+										feldExistiert = true;
 										//Feld kann string oder object sein. Object muss stringified werden
 										if ((typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "number" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === parseInt(Filterwert_z)) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "string" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z].toLowerCase().indexOf(Filterwert_z) >= 0)) {
 											objektHinzufügen = true;
-										} else {
-											objektNichtHinzufügen = true;
-											break loop_filterkriterien;
+											feldHinzugefügt = true;
 										}
 									}
+								}
+								if (feldExistiert && !feldHinzugefügt) {
+									objektNichtHinzufügen = true;
+									break loop_filterkriterien;
 								}
 							} else {
 								//es gibt keine passende Beziehung, nicht hinzufügen
@@ -235,43 +241,44 @@ function(head, req) {
 				}
 				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 					for (i in Objekt.Beziehungssammlungen) {
-						//wir loopen jetzt durch die Felder der Beziehung
+						//durch Beziehungssammlungen loopen
 						for (w in felder) {
 							if (felder[w].DsTyp === "Beziehung" && felder[w].DsName === Objekt.Beziehungssammlungen[i].Name) {
 								for (a in Objekt.Beziehungssammlungen[i].Beziehungen) {
-									for (b in Objekt.Beziehungssammlungen[i].Beziehungen[a]) {
-										if (felder[w].Feldname === b) {
-											if (typeof exportObjekt.Beziehungssammlungen === "undefined") {
-												exportObjekt.Beziehungssammlungen = [];
-											}
-											dsExistiertSchon = false;
-											//durch alle Beziehungssammlungen loopen und die richtige suchen
-											for (t in exportObjekt.Beziehungssammlungen) {
-												if (exportObjekt.Beziehungssammlungen[t].Name === felder[w].DsName) {
-													dsExistiertSchon = true;
-													if (typeof exportObjekt.Beziehungssammlungen[t].Beziehungen === "undefined") {
-														exportObjekt.Beziehungssammlungen[t].Beziehungen = [];
-													}
-													//Beziehung = {};
-													//Beziehung[b] = Objekt.Beziehungssammlungen[i].Beziehungen[a][b];
-													//exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Beziehung);
-													if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[a], exportObjekt.Beziehungssammlungen[t].Beziehungen)) {
-														//irgendwie enthilten alle Beziehungs-Arrays die Beziehungen doppelt, daher nur hinzufügen, wenn nicht enthalten
-														exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
-													}
+									//durch Beziehungen loopen
+									if (Objekt.Beziehungssammlungen[i].Beziehungen[a][felder[w].Feldname]) {
+										//im Objekt gibt es das gesuchte Feld
+										if (!exportObjekt.Beziehungssammlungen) {
+											//im Exportobjekt Beziehungssammlungen anlegen, falls noch nicht vorhanden
+											exportObjekt.Beziehungssammlungen = [];
+										}
+										dsExistiertSchon = false;
+										for (t in exportObjekt.Beziehungssammlungen) {
+											//im Exportobjekt die Beziehungssammlung suchen
+											if (exportObjekt.Beziehungssammlungen[t].Name === felder[w].DsName) {
+												dsExistiertSchon = true;
+												if (!exportObjekt.Beziehungssammlungen[t].Beziehungen) {
+													exportObjekt.Beziehungssammlungen[t].Beziehungen = [];
 												}
-											}
-											if (!dsExistiertSchon) {
-												Beziehungssammlungen = {};
-												Beziehungssammlungen.Name = felder[w].DsName;
-												Beziehungssammlungen.Beziehungen = [];
 												//Beziehung = {};
 												//Beziehung[b] = Objekt.Beziehungssammlungen[i].Beziehungen[a][b];
-												//Beziehungssammlungen.Beziehungen.push(Beziehung);
-												Beziehungssammlungen.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
-												//exportObjekt.Beziehungssammlungen = [];
-												exportObjekt.Beziehungssammlungen.push(Beziehungssammlungen);
+												//exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Beziehung);
+												if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[a], exportObjekt.Beziehungssammlungen[t].Beziehungen)) {
+													//irgendwie enthielten alle Beziehungs-Arrays die Beziehungen doppelt, daher nur hinzufügen, wenn nicht enthalten
+													exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+												}
 											}
+										}
+										if (!dsExistiertSchon) {
+											Beziehungssammlung = {};
+											Beziehungssammlung.Name = felder[w].DsName;
+											Beziehungssammlung.Beziehungen = [];
+											//Beziehung = {};
+											//Beziehung[b] = Objekt.Beziehungssammlungen[i].Beziehungen[a][b];
+											//Beziehungssammlung.Beziehungen.push(Beziehung);
+											Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+											//exportObjekt.Beziehungssammlungen = [];
+											exportObjekt.Beziehungssammlungen.push(Beziehungssammlung);
 										}
 									}
 								}

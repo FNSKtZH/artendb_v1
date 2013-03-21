@@ -1706,13 +1706,13 @@ function oeffneUri() {
 		});
 	}
 }
-//übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungen
+//übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 //verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
-function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
+function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
 	var dsTyp;
-	if (taxonomien && datensammlungen && beziehungen) {
+	if (taxonomien && datensammlungen && beziehungssammlungen) {
 		dsTyp = "Taxonomie";
 		html_felder_waehlen += '<h3>Taxonomie</h3>';
 		html_filtern += '<h3>Taxonomie</h3>';
@@ -1725,7 +1725,6 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 		html_felder_waehlen += '<h3>Beziehungen</h3>';
 		html_filtern += '<h3>Beziehungen</h3>';
 	}
-	//for (i in taxonomien) {
 	for (i=0; i<taxonomien.length; i++) {
 		if (i > 0) {
 			html_felder_waehlen += '<hr>';
@@ -1735,7 +1734,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
-		for (x in (taxonomien[i].Daten || taxonomien[i].Beziehungssammlungen)) {
+		for (x in (taxonomien[i].Daten || taxonomien[i].Beziehungen)) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
@@ -1760,10 +1759,10 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 	//linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
-	if (beziehungen) {
+	if (beziehungssammlungen) {
 		$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
 		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
-		erstelleExportfelder(datensammlungen, beziehungen);
+		erstelleExportfelder(datensammlungen, beziehungssammlungen);
 	} else if (datensammlungen) {
 		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
 		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
@@ -2072,40 +2071,49 @@ function baueTabelleFuerExportAuf() {
 		if (gruppe_ist_gewaehlt) {
 			Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
 		}
-		//durch alle Eigenschaften gehen
-		for (x in window.exportieren_objekte[i]) {
-			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
-			if (window.exportieren_objekte[i].Taxonomie && window.exportieren_objekte[i].Taxonomie.Daten) {
-				for (z in window.exportieren_objekte[i].Taxonomie.Daten) {
-					if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + z + '"]').prop('checked')) {
-						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
-					}
-					if ($('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked')) {
-						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt["Taxonomie(n): " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
-					}
+		//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
+		if (window.exportieren_objekte[i].Taxonomie && window.exportieren_objekte[i].Taxonomie.Daten) {
+			for (z in window.exportieren_objekte[i].Taxonomie.Daten) {
+				if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + z + '"]').prop('checked')) {
+					//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
+					Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
+				}
+				if ($('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked')) {
+					//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
+					Objekt["Taxonomie(n): " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
 				}
 			}
-			//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i].Datensammlungen) {
-				for (var a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
-					if (window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-						for (z in window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-							if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + z + '"]').prop('checked')) {
-								Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + z] = window.exportieren_objekte[i].Datensammlungen[a].Daten[z];
-							}
+		}
+		//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
+		if (window.exportieren_objekte[i].Datensammlungen) {
+			for (var a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
+				if (window.exportieren_objekte[i].Datensammlungen[a].Daten) {
+					for (z in window.exportieren_objekte[i].Datensammlungen[a].Daten) {
+						if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + z + '"]').prop('checked')) {
+							Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + z] = window.exportieren_objekte[i].Datensammlungen[a].Daten[z];
 						}
 					}
 				}
 			}
-			//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i].Beziehungssammlungen) {
-				for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
-					for (z in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
-						for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z]) {
-							if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
-								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
+		}
+		//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
+		if (window.exportieren_objekte[i].Beziehungssammlungen) {
+			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
+				//durch Beziehungssammlungen loopen
+				for (z in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
+					//durch Beziehungen loopen
+					for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z]) {
+						//durch die Felder der Beziehung loopen
+						//TO DO: VARIANTEN MIT MEHREREN ZEILEN BZW. NICHT-JSON IMPLEMENTIEREN
+						if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
+							if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
+								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
+							}
+							if (typeof window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y] === "object") {
+								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
+							} else {
+								//Feld ist kein Objekt
+								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
 							}
 						}
 					}
