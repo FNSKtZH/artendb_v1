@@ -1717,7 +1717,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungen) {
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
-		for (x in (taxonomien[i].Daten || taxonomien[i].Beziehungen)) {
+		for (x in (taxonomien[i].Daten || taxonomien[i].Beziehungssammlungen)) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
