@@ -712,7 +712,6 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, Beziehungssammlungen) {
 function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	var html;
 	var Name;
-	console.log('art_i.Name = ' + art_i.Name);
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
@@ -745,16 +744,26 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//die Beziehungen nach Objektnamen sortieren
 	//ausgeschaltet um zu sehen, ob das bremst
 	//ist auch nicht nötig, da die Daten beim Einfügen sortiert werden sollten
-	/*art_i.Beziehungen.sort(function(a, b) {
+	//müsste bei Gruppe Lebensräume auch die Taxonomie berücksichtigen, wie in artendb_import
+	art_i.Beziehungen.sort(function(a, b) {
 		var aName, bName;
-		for (y in a.Beziehungspartner) {
-			aName = a.Beziehungspartner[y].Name.toLowerCase();
+		for (c in a.Beziehungspartner) {
+			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+				aName = a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+			} else {
+				aName = a.Beziehungspartner[c].Name;
+			}
 		}
-		for (x in b.Beziehungspartner) {
-			bName = b.Beziehungspartner[x].Name.toLowerCase();
+		for (d in b.Beziehungspartner) {
+			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+				bName = b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+			} else {
+				bName = b.Beziehungspartner[d].Name;
+			}
 		}
-		return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-	});*/
+		return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+	});
 
 	var BeteiligteGruppen;
 	//jetzt für alle Beziehungen die Felder hinzufügen
@@ -907,61 +916,65 @@ function erstelleHtmlFuerFeld(Feldname, Feldwert) {
 //erwartet das Objekt mit der Art
 function setzteLinksZuBilderUndWikipedia(art) {
 	//jetzt die Links im Menu setzen
-	var googleBilderLink = "";
-	var wikipediaLink = "";
-	switch (art.Gruppe) {
-		case "Flora":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-			if (art.Taxonomie.Daten['Deutsche Namen']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Deutsche Namen'] + '"';
-			}
-			if (art.Taxonomie.Daten['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
-			}
-			if (art.Taxonomie.Daten['Name Italienisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
-			}
-			if (art.Taxonomie.Daten['Deutsche Namen']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Deutsche Namen'];
-			} else {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
-			}
-			break;
-		case "Fauna":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-			if (art.Taxonomie.Daten["Name Deutsch"]) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
-			}
-			if (art.Taxonomie.Daten['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
-			}
-			if (art.Taxonomie.Daten['Name Italienisch']) {
-				googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
-			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
-			break;
-		case 'Moose':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
-			break;
-		case 'Macromycetes':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
-			if (art.Taxonomie.Daten['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
-			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
-			break;
-		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
-			break;
+	if (art) {
+		var googleBilderLink = "";
+		var wikipediaLink = "";
+		switch (art.Gruppe) {
+			case "Flora":
+				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+				if (art.Taxonomie.Daten['Deutsche Namen']) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Deutsche Namen'] + '"';
+				}
+				if (art.Taxonomie.Daten['Name Französisch']) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+				}
+				if (art.Taxonomie.Daten['Name Italienisch']) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+				}
+				if (art.Taxonomie.Daten['Deutsche Namen']) {
+					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Deutsche Namen'];
+				} else {
+					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
+				}
+				break;
+			case "Fauna":
+				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+				if (art.Taxonomie.Daten["Name Deutsch"]) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+				}
+				if (art.Taxonomie.Daten['Name Französisch']) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+				}
+				if (art.Taxonomie.Daten['Name Italienisch']) {
+					googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+				}
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+				break;
+			case 'Moose':
+				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+				break;
+			case 'Macromycetes':
+				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
+				if (art.Taxonomie.Daten['Name Deutsch']) {
+					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+				}
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
+				break;
+			case 'Lebensräume':
+				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
+				break;
+		}
+		//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
+		$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
+		$("#GoogleBilderLink_li").removeClass("disabled");
+		$("#WikipediaLink").attr("href", wikipediaLink);
+		$("#WikipediaLink_li").removeClass("disabled");
+	} else {
+		$("#WikipediaLink").attr("href", "#");
+		$("#GoogleBilderLink").attr("href", "#");
 	}
-	//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
-	$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
-	$("#GoogleBilderLink_li").removeClass("disabled");
-	//$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink.replace(/'/g, " ")));
-	$("#WikipediaLink").attr("href", wikipediaLink);
-	$("#WikipediaLink_li").removeClass("disabled");
 }
 
 //generiert den html-Inhalt für einzelne Links in Flora
@@ -1183,8 +1196,6 @@ function öffneMarkiertenNode() {
 	if (selected_nodes.length === 1) {
 		$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
 	}
-
-	//initiiere_art(node.attr("id"));
 }
 
 //managed die Sichtbarkeit von Formularen
@@ -1202,6 +1213,9 @@ function zeigeFormular(Formularname) {
 
 	if (Formularname) {
 		if (Formularname !== "art") {
+			//Spuren des letzten Objekts entfernen
+			//delete window.Gruppe;
+			delete localStorage.art_id;
 			//URL anpassen, damit kein Objekt angezeigt wird
 			history.pushState({id: "id"}, "id", "index.html");
 			//alle Bäume ausblenden, suchfeld, Baumtitel
@@ -1209,13 +1223,10 @@ function zeigeFormular(Formularname) {
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
 			//Gruppe Schaltfläche deaktivieren
-			$('#Gruppe .active').button('toggle');	//FUNTIONIERT ALLES NICHT, BUTTON BLEIBT AKTIV!!!!!!!!
-
-			/*console.log("typeof window.Gruppe = " + typeof window.Gruppe);
-			if (typeof window.Gruppe === "string") {
-				console.log("window.Gruppe = " + window.Gruppe);
-				$("#Gruppe" + window.Gruppe).button('toggle');
-			}*/
+			//$('#Gruppe .active').button('toggle');	//FUNTIONIERT NICHT, BUTTON BLEIBT AKTIV!!!!!!!!  VERHINDERT GAR, DASS removeClass funktioniert!!!!
+			$('#Gruppe .active').removeClass('active');
+			//jetzt die Links im Menu deaktivieren
+			setzteLinksZuBilderUndWikipedia();
 		}
 		$('form').each(function() {
 			if ($(this).attr("id") === Formularname) {

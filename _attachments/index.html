@@ -442,7 +442,7 @@
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
 				$("body").on("click", "#menu_btn", function() {
-					if ($("#art").html().length > 0) {
+					if (localStorage.art_id) {
 						$("#GoogleBilderLink_li").removeClass("disabled");
 						$("#WikipediaLink_li").removeClass("disabled");
 					} else {
