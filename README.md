@@ -761,18 +761,20 @@ Aktueller Stand:
 
 ###Was kann man mit der aktuellen Version machen?
 
-Achtung: Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der Version im Web noch fehlen.
+Achtung: 
+- Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der Version im Web noch fehlen
+- Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für Stunden nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:
 
-- im hierarchischen Verwandschaftsbaum
-- mit einem Filterfeld
+- mit einem Filterfeld...
+- (und manuell)...im hierarchischen Verwandschaftsbaum
 
 Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Datensammlungen inkl. Beziehungssammlungen
-- Datensammlungen und Beziehungssammlungen eines synonymen Objekts werden auch angezeigt
+- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Daten- und Beziehungssammlungen
+- Datensammlungen und Beziehungssammlungen von synonymen Objekten werden auch angezeigt
 - Datemsammlungen sind beschrieben
 - Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
@@ -781,18 +783,18 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
+- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch verbesserungsfähig)
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste können die gewünschten Felder gewählt werden
-- Vor dem Export kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
+- Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
 **To do**
 
-- Importe: Beziehungen, Taxonomien
 - Exporte: Daten und Beziehungen von synonymen Arten
-- Alternative Taxonomien verwalten und darstellen
 - Lebensräume in der Anwendung bearbeiten
+- Importe: Beziehungen, Taxonomien
+- Alternative Taxonomien verwalten und darstellen
 
 <a href="#top">&#8593; top</a>
 
