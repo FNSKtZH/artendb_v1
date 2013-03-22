@@ -757,7 +757,7 @@ Aktueller Stand:
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit (und bleibt es auch, wenn sich etwas an der Datenstruktur ändert)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
-- Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
+- Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
 ###Was kann man mit der aktuellen Version machen?
 
