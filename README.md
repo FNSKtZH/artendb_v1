@@ -75,17 +75,17 @@ Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie n
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Gruppen
-Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und es hat sich eingebürgert und bewährt.
+Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation)
-- Denselben Zweck: Die Datensammlung wurde in der Regel für einen bestimmten Zweck erarbeitet. Es ist hilfreich, wenn dies beschrieben wird
+- Denselben Zweck: Die Datensammlung wurde in der Regel für einen bestimmten Zweck erarbeitet. Für das Verständnis der Daten kann diese Information sehr hilfreich sein
 - Meist eine bestimmte Artgruppe (z.B. Flora, Fauna, Schmetterlinge…)
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
-- Verwendung einer bestimmten Taxonomie
+- Bezug auf eine bestimmten Taxonomie
 - Dasselbe Aktualitäts- bzw. Publikationsdatum
 
 Statt "Datensammlung" könnte auch der Begriff "Publikation" verwendet werden. Damit würde klar:
@@ -93,11 +93,11 @@ Statt "Datensammlung" könnte auch der Begriff "Publikation" verwendet werden. D
 - Dass ArtenDb an Datensammlungen minimale Qualitätsansprüche stellt, für welche der Autor bürgt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
 - Dass eine aktualisierte Version einer bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist
 
-Datensammlungen sollten nur durch die Autoren nachgeführt werden.
+Datensammlungen sollten nur durch die Autoren nachgeführt werden (nicht zu verwechseln mit: importiert).
 
 Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind sie Eigenschaften der Objekte. Sie erleichtern dem Benutzer, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen.
 
-Künftig sollen auch Datensammlungen von synonymen Objekten angezeigt und exportiert werden können.
+Es können auch Datensammlungen von synonymen Objekten angezeigt und (künftig) exportiert werden.
 
 In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Daten ausgewählt werden.
 
@@ -119,8 +119,6 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten von "BAFU (2012): Rote Liste der Heuschrecken" nochmals in diese Datensammlung importiert
 - Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies deutlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld "Herkunft" immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
-Normalerweise würden in ArtenDb zuerst die alten Datensammlungen erfasst und erst später neuere. Es kann aber auch vorkommen, dass nachträglich eine ältere Datensammlung importiert wird, für die bereits eine zusammenfassende Datensammlung mit neueren Daten existiert. In diesem Fall sollte die Benutzerin wählen können, dass in der zusammenfassenden Datensammlung vorhandene Daten nicht überschrieben werden. Oder flexibler: Aus welchen Herkünften stammende zusammenfassende Einträge nicht überschrieben werden sollen (die Idee, das mit einem Aktualitäsdatum für die Datensammlung automatisch abzufangen habe ich verworfen: Sie funktioniert nicht, wenn eine Datensammlung Eigenschaften mit unterschiedlicher Aktualität enthält).
-
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
@@ -135,7 +133,7 @@ Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Dat
 
 ###Datensammlungen aktualisieren
 Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
-- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Datensammlungen) vollständig erhalten bleiben
+- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Datensammlungen) unverändert erhalten bleiben
 - Wird eine Datensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
 
 Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgendermassen vorgegangen werden:
@@ -170,7 +168,7 @@ Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugeh�
 ...und eines für Beziehungssammlungen:
 <img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel_beziehung.png" alt="Beispiel Eisvogel, Biotopbindung nach AP FM ZH" width="100%">
 
-Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea". Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
+Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea" (ein Feld, das mit dem Text wächst). Diese wird beim Anzeigen der Seite an die Länge des Inhalts angepasst. Zahlen werden in einem Zahlenfeld angezeigt.
 
 **Menu**
 
@@ -200,9 +198,9 @@ Will jemand z.B. neue Arteigenschaften ergänzen, geht das so:
 
 fertig!
 
-Die Datenfelder in der Benutzeroberfläche und in Exporten werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt und exportiert werden.
+Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt, exportiert und via Schnittstelle zugegriffen werden.
 
-Schon vorhandene Informationen derselben Datensammlung werden überschrieben. Eine Datensammlung kann auch wieder entfernt werden.
+Eine Datensammlung kann auch wieder entfernt werden.
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Das wiederum ist ein hohes Risiko für den Unterhalt und verhindert eine effiziente Datenhaltung.
 
@@ -220,14 +218,12 @@ Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden könne
 
 ###Daten exportieren
 
-Geplant ist folgendes Vorgehen:
-
 1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
 2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (wäre aber durchaus nützlich, wenn wahlweise Eigenschaften ergänzt werden können).
+Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
 
 <a href="#top">&#8593; top</a>
 
@@ -251,10 +247,12 @@ Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument st
 
 Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
+Mit CouchDb ist es auch sehr einfach, zu einem Objekt beliebige Dateien zu speichern, z.B. Bilder, Tonaufnahmen, Videos, Berichte...
+
 ###Datenstruktur
 ####Objekte
 
-Die durch die Taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
+Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
 {
 	"_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
@@ -274,7 +272,7 @@ Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
 - Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
 - Allgemeine Beschreibung: Vor allem, was für das Verständnis der Daten erforderlich ist
 - Datenstand (Datum, als die Daten bezogen wurden)
-- Link. 
+- Link
 
 Ihre Eigenschaften sind unter "Daten" aufgelistet:
 ```javascript
@@ -300,9 +298,9 @@ Ihre Eigenschaften sind unter "Daten" aufgelistet:
 			"Name Englisch":"European pond terrapin",
 			"Schutz CH":"Schutz gemäss NHG"
 		}
-	}
+}
 ```
-Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit der Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
+Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
 
 ####Datensammlungen
 Die JSON-Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts in einem Array. Datensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
@@ -670,7 +668,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 ###Alternative Struktur für die Taxonomien?
-Man könnte dem Dokument auch einen Array für Taxonomien verpassen. Darin würden alle synonymen Taxonomien aufgenommen, da sie ja dasselbe Objekt beschreiben. Die Taxonomie sähe am Beispiel von Thlaspi repens Maire so aus:
+Man könnte dem Dokument auch eine Liste (Array) von Taxonomien verpassen. Darin würden alle synonymen Taxonomien aufgenommen, da sie ja dasselbe Objekt beschreiben. Die Taxonomie sähe am Beispiel von Thlaspi repens Maire so aus:
 ```javascript
 "Taxonomien": [
 	{
@@ -717,7 +715,7 @@ Vorteile:
 - Für Synonyme muss kein neues Objekt geschaffen werden.<br>Das ist besonders praktisch, wenn z.B. der nächste Index der Flora publiziert wird > einfach im bestehenden Objekt den SISF-Index 3 ergänzen. Sonst: Neues Objekt schaffen. Hm. Wo sollen jetzt die Datensammlungen dran hängen? Alle zügeln? Alle kopieren? Am alten Ort belassen und über die Beziehung managen? Das ist alles nicht schön oder aufwändig. Am besten ist wohl die letzte Variante
 - Synonyme haben automatisch alle Datensammlungen und Beziehungssammlungen aller anderen Synonyme. Kein Aufwand in Exporten, Schnittstellen und der Benutzeroberfläche!
 - Das Datenmodell ist einheitlicher und einfacher - eleganter
-- Eigentlich ist klar: Synonym = dieselbe Art mit denselben Eigenschaften (die Praxis sieht leider sicher anders aus)
+- Eigentlich ist klar: Synonym = dieselbe Art mit denselben Eigenschaften (die Praxis sieht leider anders aus)
 
 Nachteile:
 
@@ -743,22 +741,23 @@ Vorläufige Schlussfolgerung: Das braucht noch reifliche Überlegung. Ist wohl k
 ###Schnittstellen
 CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen "view" und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit "views" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
 
-Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
+Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert (es kann praktisch jedes gewünschte Format erstellt werden). Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
 
-Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die den views zugrunde liegenden Indices kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
+Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die den views zugrunde liegenden Indexe kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
 #Realisierung
 ###Zeitplan
-Das ist grösstenteils ein Freizeitprojekt. Keine Ahnung, wie ich vorwärts komme.
+Bisher war das grösstenteils ein Freizeitprojekt ohne Zeitplan. Keine Ahnung, wie ich vorwärts komme.
 
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit (und bleibt es auch, wenn sich etwas an der Datenstruktur ändert)
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+- Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
 ###Was kann man mit der aktuellen Version machen?
 
