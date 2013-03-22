@@ -58,7 +58,7 @@ Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach ent
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
-Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehungssammlung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Datensammlungen (inklusive Taxonomie und zusammenfassenden Datensammlungen) und Beziehungssammlungen. Möglichst alles wird darauf zurückgeführt.
+Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehungssammlung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Daten- und Beziehungssammlungen. Möglichst alles wird darauf zurückgeführt. So sind z.B. Taxonomie und zusammenfassende Datensammlungen Spezialfälle von Datensammlungen, Beziehungssammlungen sind sehr ähnlich.
 
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
