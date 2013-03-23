@@ -829,13 +829,13 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -1395,7 +1395,7 @@ function erstelleTabelle(Datensätze) {
 	//gleichzeitig Feldliste für Formular anlegen
 	var html_ds_felder_div = "";
 	html_ds_felder_div += '<label class="control-label" for="DsFelder">Feld</label>';
-	html_ds_felder_div += '<select type="text" class="controls" id="DsFelder"  multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
+	html_ds_felder_div += '<select type="text" class="controls" id="DsFelder" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
 	//durch die Felder zirkeln
 	for (x in Datensätze[0]) {
@@ -1741,14 +1741,14 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
 			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
 				html_filtern += ' style="padding-top:0px"';
 			}
 			html_filtern += '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -2061,6 +2061,7 @@ function baueTabelleFuerExportAuf() {
 	for (i in window.exportieren_objekte) {
 		var Objekt = {};
 		//Alle Felder anfügen
+		//ist nötig, um eine Tabelle mit allen nötigen Felder zu bauen
 		for (v in feldliste) {
 			Objekt[feldliste[v]] = null;
 		}
@@ -2096,6 +2097,7 @@ function baueTabelleFuerExportAuf() {
 				}
 			}
 		}
+		//DAS IST VARIANTE MIT JSON IN EINER ZEILE. FUNKTIONIERT NICHT, WENN MEHR ALS EIN FELD AUS BEZIEHUNGEN FEFILTERT WIRD
 		//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
 		if (window.exportieren_objekte[i].Beziehungssammlungen) {
 			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
@@ -2109,7 +2111,7 @@ function baueTabelleFuerExportAuf() {
 							if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
 								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
 							}
-							if (typeof window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y] === "object") {
+							if (y === "Beziehungspartner") {
 								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
 							} else {
 								//Feld ist kein Objekt
@@ -2120,6 +2122,37 @@ function baueTabelleFuerExportAuf() {
 				}
 			}
 		}
+		/*Das ist Variante mit mehreren Spalten für Objekte. Funktioniert noch gar nicht
+		//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
+		if (window.exportieren_objekte[i].Beziehungssammlungen) {
+			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
+				//durch Beziehungssammlungen loopen
+				for (z in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
+					//durch Beziehungen loopen
+					for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z]) {
+						//durch die Felder der Beziehung loopen
+						//TO DO: VARIANTEN MIT MEHREREN ZEILEN BZW. NICHT-JSON IMPLEMENTIEREN
+						if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
+							/*if (Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
+								//in diesem Objekt gibt es dieses Feld schon > Objekt kopieren und in prov. Array pushen
+								//Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
+							}
+							//if (typeof window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y] === "object") {
+							if (y === "Beziehungspartner") {
+								for (h in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]) {
+									for (g in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][h]) {
+										Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y + " " + (parseInt(h)+1) +  ", " + g] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][h][g];
+									}
+								}
+							} else {
+								//Feld ist kein Objekt
+								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
+							}
+						}
+					}
+				}
+			}
+		}*/
 		exportobjekte.push(Objekt);
 	}
 
@@ -2652,3 +2685,19 @@ function binb2b64(binarray)
   })
 
 }(window.jQuery);
+
+
+/**
+ * JavaScript format string function
+ * 
+ */
+String.prototype.format = function()
+{
+  var args = arguments;
+
+  return this.replace(/{(\d+)}/g, function(match, number)
+  {
+    return typeof args[number] != 'undefined' ? args[number] :
+                                                '{' + number + '}';
+  });
+};

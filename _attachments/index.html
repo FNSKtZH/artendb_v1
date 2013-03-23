@@ -370,6 +370,20 @@
 										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
 										<li>... und es erscheint die Schaltfläche "herunterladen"</li>
 										<li>... das kann eine ganze Weile dauern!</li>
+										<li>Spezialfall Beziehungen:
+											<ul>
+												<li>Jede Art bzw. Lebensraum kann beliebig viele Beziehungen haben</li>
+												<li>Daher muss für jede Art / Lebensraum eine Liste der Beziehungen erstellt werden</li>
+												<li>Diese Liste ist in den jeweiligen Feldern [in eckigen Klammern] enthalten</li>
+												<li>Spezialfall Beziehungspartner:
+													<ul>
+														<li>Jeder Beziehungspartner ist mit Gruppe, GUID, Name und bei Lebensräumen mit der Taxonomie beschrieben</li>
+														<li>Diese Informationen werden in der JavaScript-JSON-Schreibweise ins Feld "Beziehungspartner" geschrieben</li>
+														<li>Eine Liste von Beziehungspartnern sieht daher schon ziemlich abenteuerlich aus...</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
 										<li>Der Download hat das .csv-Format:
 											<ul>
 												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
