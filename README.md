@@ -1,7 +1,7 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen.
 
-Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, ad hoc ergänzt und für Auswertungen kombiniert werden.
+Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, rasch ergänzt und für Auswertungen kombiniert werden.
 
 ## Inhalt ##
 * <a href="#Ziele">Ziele</a>
@@ -39,8 +39,7 @@ Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benö
 
 - Datensammlungen können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
 - Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
-- Der Code ist gut dokumentiert
-- Der Code ist offen. Nutzer können eigene Erweiterungen entwickeln (lassen)
+- Der Code ist offen und gut dokumentiert. Nutzer können eigene Erweiterungen entwickeln (lassen) und/oder ArtenDb gemeinsam weiter entwickeln
 
 ###Was zeichnet ArtenDb aus?
 Die wichtigsten Merkmale dürften sein:
@@ -67,7 +66,7 @@ Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebens
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können. Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können (noch nicht realisiert). Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
 
 Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie nur "offizielle" Arten und z.B. keine Synonyme. Stattdessen würden Beziehungen zwischen offiziellen Arten und Arten anderer Taxonomien beschrieben. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
@@ -75,22 +74,21 @@ Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie n
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In der ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Gruppen
-Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert und es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
+Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert. Es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
 
 ###Datensammlungen
 Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
-- Dieselbe Herkunft (Autoren, Publikation)
+- Dieselbe Herkunft (Autoren, Publikation, Publikationsdatum)
 - Denselben Zweck: Die Datensammlung wurde in der Regel für einen bestimmten Zweck erarbeitet. Für das Verständnis der Daten kann diese Information sehr hilfreich sein
+- Bezug auf eine bestimmte Taxonomie
 - Meist eine bestimmte Artgruppe (z.B. Flora, Fauna, Schmetterlinge…)
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
-- Bezug auf eine bestimmten Taxonomie
-- Dasselbe Aktualitäts- bzw. Publikationsdatum
 
 Statt "Datensammlung" könnte auch der Begriff "Publikation" verwendet werden. Damit würde klar:
 
-- Dass ArtenDb an Datensammlungen minimale Qualitätsansprüche stellt, für welche der Autor bürgt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
+- Dass ArtenDb an Datensammlungen minimale Qualitätsansprüche stellt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
 - Dass eine aktualisierte Version einer bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist
 
 Datensammlungen sollten nur durch die Autoren nachgeführt werden (nicht zu verwechseln mit: importiert).
@@ -99,7 +97,7 @@ Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es
 
 Es können auch Datensammlungen von synonymen Objekten angezeigt und (künftig) exportiert werden.
 
-In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen bzw. zusammenzufassen. Z.B. bei der Anzeige in der Anwendung oder wenn für Exporte Daten ausgewählt werden.
+In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen. Z.B. bei der Anzeige in der Anwendung oder wenn Daten für Exporte ausgewählt werden.
 
 ###Zusammenfassende Datensammlungen
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
@@ -113,20 +111,22 @@ Das soll so erfolgen:
 - Die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
-- Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken" und die Eigenschaften importiert
+- Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken", und die Eigenschaften importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" nochmals hier hinein importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
-- Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert (falls keine Originaldaten vorliegen: indem sie zuerst von den Ursprungs-Datensammlungen exportiert werden). Zuletzt werden die Daten von "BAFU (2012): Rote Liste der Heuschrecken" nochmals in diese Datensammlung importiert
-- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies deutlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld "Herkunft" immer der Name der Ursprungs-Datensammlung mitgeliefert werden
+- Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert. Zuletzt die Daten von "BAFU (2012): Rote Liste der Heuschrecken"
+- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld "Herkunft" immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungen und ihre Sammlungen
-Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen Beziehungssammlungen genannt. Im Grunde genommen sind sie Spezialfälle von Datensammlungen.
+Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Datensammlungen.
 
 ###Gruppen vereinen
-In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
+In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. 
+
+Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
 ###Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Daten in der bisherigen ArtenDb codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Die Rohdaten sind für Menschen nicht mehr lesbar. Deshalb sind codierte Informationen zu vermeiden.
