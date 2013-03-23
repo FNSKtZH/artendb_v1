@@ -150,7 +150,7 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 
 **Hauptelemente**
 
-Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Hierarchiebaum. Rechts werden die Informationen zum Objekt angezeigt. Navigiert werden kann mit dem Hierarchiebaum und mit dem Suchfeld. Zusätzlich sind alle Verweise zu Objekten linkbar.
+Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Hierarchiebaum. Rechts werden die Informationen zum Objekt angezeigt. Navigiert werden kann mit dem Hierarchiebaum und mit dem Suchfeld. Zusätzlich sind alle Verweise zu Objekten verlinkt.
 
 **Suchfeld**
 
@@ -162,10 +162,10 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 
 **Formular**
 
-Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts oder der Beziehung.<br>Hier ein Beispiel für Arteigenschaften:
+Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts oder der Beziehung.<br>Hier ein Beispiel einer Datensammlung:
 <img src="http://www.barbalex.ch/artendb/datensammlung.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
 
-...und eines für Beziehungssammlungen:
+...und eine Beziehungssammlung:
 <img src="http://www.barbalex.ch/artendb/beziehungssammlung.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
 
 Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea" (ein Feld, das mit dem Text wächst), Zahlen in einem Zahlenfeld.
@@ -178,15 +178,14 @@ Das Menu ermöglicht:
 - Importe
 - Bildersuche in Google
 - Suche in Wikipedia
-- Informationen über die ArtenDb
-- Anzeige des Projektbeschriebs, des Codes und der letzen Änderungen an der Anwendung
+- Informationen über die ArtenDb: Projektbeschrieb, letze Änderungen an der Anwendung, Link auf GitHub zur Code-Ablage
 - Rückmeldungen an den Entwickler
  
 ###Neue Datensammlungen hinzufügen
-Importiert werden können sollen:
-* Taxonomien
+Importiert werden können:
+* Taxonomien (geplant)
 * Eigenschaften
-* Beziehungen
+* Beziehungen (bald)
 
 Will jemand z.B. neue Arteigenschaften ergänzen, geht das so:
 
@@ -200,26 +199,23 @@ fertig!
 
 Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt, exportiert und via Schnittstelle zugegriffen werden.
 
-Eine Datensammlung kann auch wieder entfernt werden.
-
-Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Das wiederum ist ein hohes Risiko für den Unterhalt und verhindert eine effiziente Datenhaltung.
+Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
 
 ###Daten in ArtenDb bearbeiten
+Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüssel älterer Kartenwerke oder GIS-Ebenen lückig bzw. nicht vollständig nachvollziehbar. 
+
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
 
 - Feldtyp (z.B. Text, Auswahlliste)
 - Optionen für Auswahllisten
 - Ob in Auswahllisten Mehrfachauswahlen möglich sein sollen
 
-Nur Lebensraumkartierungen müssen in der Anwendung selbst erfasst werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt und in die ArtenDb importiert. Für diese Daten kann auf eine Feldverwaltung verzichtet werden. Sie könnte fakultativ benutzt werden, um von besonderen Features zu profitieren, wie zum Beispiel:
-
-- Felder mit einem gemeinsamen Titel gruppiert anzeigen
-- Bemerkungen bzw. Interpretationshilfen zum Feld anbieten
+Das ist noch nicht umgesetzt.
 
 ###Daten exportieren
 
 1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
-2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen
+2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen (noch nicht umgesetzt)
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
