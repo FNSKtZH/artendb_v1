@@ -243,7 +243,7 @@ Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. D
 
 Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
-Mit CouchDb ist es auch sehr einfach, zu einem Objekt beliebige Dateien zu speichern, z.B. Bilder, Tonaufnahmen, Videos, Berichte...
+Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email angefügt werden, z.B. Bilder, Tonaufnahmen, Videos, Berichte... (noch nicht umgesetzt)
 
 ###Datenstruktur
 ####Objekte
@@ -252,15 +252,11 @@ Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 ```javascript
 {
 	"_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
-	"_rev": "12-4bde606882a8e9c4f449166c3849963e",
-	"Gruppe": "Fauna",
-	"Typ": "Objekt"
+	"Gruppe": "Fauna"
 }
 ```
 - _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
-- _rev wird von CouchDb intern verwendet, um mit Schreibkonflikten umzugehen
 - Gruppe ist Fauna, Flora, Moose, Macromycetes oder Lebensräume
-- Typ ist (mindestens momentan) nicht so relevant, weil alle Dokumente Objekte sind
 
 ####Taxonomie
 Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
@@ -296,10 +292,10 @@ Ihre Eigenschaften sind unter "Daten" aufgelistet:
 		}
 }
 ```
-Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet. Es kann z.B. sinnvoll sein, in einem Projekt einen eigenen Lebensraumschlüssel zu entwickeln. Deshalb sollen Lebensräume auch direkt in der Anwendung bearbeitet werden können.
+Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet.
 
 ####Datensammlungen
-Die JSON-Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts in einem Array. Datensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
+Die JSON-Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts. Datensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
 
 Hier ein Auszug mit nur einer Datensammlung:
 ```javascript
@@ -335,7 +331,7 @@ Hier ein Auszug mit nur einer Datensammlung:
 ```
 
 ####Beziehungssammlungen
-Beziehungssammlungen werden ähnlich wie Datensammlungen aufgebaut. Hier ein Auszug mit nur einer Beziehung:
+Beziehungssammlungen werden ähnlich aufgebaut wie Datensammlungen. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
 "Beziehungssammlungen": [
 	{
@@ -361,7 +357,7 @@ Beziehungssammlungen werden ähnlich wie Datensammlungen aufgebaut. Hier ein Aus
 ]
 
 ```
-Unterschiede zwischen Beziehungssammlungen und (gewöhnlicher) Datensammlung:
+Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 
 - Anstatt "Daten" enthält sie "Beziehungen"
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
@@ -737,9 +733,9 @@ Vorläufige Schlussfolgerung: Das braucht noch reifliche Überlegung. Ist wohl k
 ###Schnittstellen
 CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen "view" und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit "views" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
 
-Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert (es kann praktisch jedes gewünschte Format erstellt werden). Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
+Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Es kann praktisch jedes gewünschte Format erstellt werden. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
 
-Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die den views zugrunde liegenden Indexe kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
+Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die zugrunde liegenden Indexe kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
 
 <a href="#top">&#8593; top</a>
 
@@ -751,7 +747,7 @@ Bisher war das grösstenteils ein Freizeitprojekt ohne Zeitplan. Keine Ahnung, w
 Aktueller Stand:
 
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
-- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit (und bleibt es auch, wenn sich etwas an der Datenstruktur ändert)
+- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
 - Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
@@ -763,8 +759,8 @@ Achtung:
 
 Arten suchen:
 
-- mit einem Filterfeld...
-- (und manuell)...im hierarchischen Verwandschaftsbaum
+- mit einem Filterfeld
+- und manuell im hierarchischen Verwandschaftsbaum
 
 Eigenschaften anzeigen:
 
@@ -779,10 +775,10 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch verbesserungsfähig)
+- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch stark verbesserungsfähig)
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
-- In einer übersichtlichen Liste können die gewünschten Felder gewählt werden
+- In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
 **To do**
