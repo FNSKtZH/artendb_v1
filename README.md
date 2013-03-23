@@ -182,6 +182,7 @@ Das Menu ermöglicht:
 - Rückmeldungen an den Entwickler
 
 **Mobilfähigkeit**
+
 ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig. Da CouchDb auch in mobilen Versionen existiert (iOS und Android), kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert.
  
 ###Neue Datensammlungen hinzufügen
