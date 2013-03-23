@@ -146,15 +146,15 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 #Benutzeroberfläche
 ###Erscheinungsbild
 
-<img src="http://www.barbalex.ch/artendb/achillea_moschata.png" alt="Beispiel Achillea moschata" width="100%">
+<img src="http://www.barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
 
 **Hauptelemente**
 
-Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Hierarchiebaum. Rechts ist das Formular, in dem Daten angezeigt werden. Navigiert werden kann mit dem Hierarchiebaum und mit dem Suchfeld. Zusätzlich sollen alle Verweise zu Objekten linkbar sein.
+Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Hierarchiebaum. Rechts werden die Informationen zum Objekt angezeigt. Navigiert werden kann mit dem Hierarchiebaum und mit dem Suchfeld. Zusätzlich sind alle Verweise zu Objekten linkbar.
 
 **Suchfeld**
 
-Gesucht werden kann nach wissenschaftlichem und nach Deutschem Namen.
+Gesucht werden kann nach dem vollständigen Namen.
 
 **Hierarchiebaum**
 
