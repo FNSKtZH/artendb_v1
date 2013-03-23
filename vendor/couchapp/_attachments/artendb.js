@@ -579,9 +579,8 @@ function initiiere_art(id) {
 
 				}
 			}
-			//Beziehungen in gewollter Reihenfolge hinzufügen
+			//Beziehungen hinzufügen
 			if (Beziehungssammlungen.length > 0) {
-				//Beziehungssammlungen.sort();
 				//Titel hinzufügen
 				htmlArt += "<h4>Beziehungen:</h4>";
 				for (var z=0; z<Beziehungssammlungen.length; z++) {
@@ -594,54 +593,59 @@ function initiiere_art(id) {
 				$db = $.couch.db("artendb");
 				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidsVonSynonymen)) + '&include_docs=true', {
 					success: function (data) {
-						var Art;
+						var synonymeArt;
 						for (var f = 0; f<data.rows.length; f++) {
-							Art = data.rows[f].doc;
-							if (Art.Datensammlungen && Art.Datensammlungen.length > 0) {
-								for (var a=0, len=Art.Datensammlungen.length; a<len; a++) {
-									//if (Art.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
-									if (dsNamen.indexOf(Art.Datensammlungen[a].Name) === -1) {
+							synonymeArt = data.rows[f].doc;
+							if (synonymeArt.Datensammlungen && synonymeArt.Datensammlungen.length > 0) {
+								for (var a=0, len=synonymeArt.Datensammlungen.length; a<len; a++) {
+									//if (synonymeArt.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
+									if (dsNamen.indexOf(synonymeArt.Datensammlungen[a].Name) === -1) {
 										//diese Datensammlung wird noch nicht dargestellt
-										DatensammlungenVonSynonymen.push(Art.Datensammlungen[a]);
+										DatensammlungenVonSynonymen.push(synonymeArt.Datensammlungen[a]);
 										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-										dsNamen.push(Art.Datensammlungen[a].Name);
+										dsNamen.push(synonymeArt.Datensammlungen[a].Name);
 										//auch in Datensammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-										Datensammlungen.push(Art.Datensammlungen[a]);
+										Datensammlungen.push(synonymeArt.Datensammlungen[a]);
 									}
 								}
 							}
-							if (Art.Beziehungssammlungen && Art.Beziehungssammlungen.length > 0) {
-								for (var a=0, len=Art.Beziehungssammlungen.length; a<len; a++) {
-									if (Art.Beziehungssammlungen[a].Name.indexOf(bezNamen) === -1 && Art.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
+							if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
+								for (var a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
+									//if (synonymeArt.Beziehungssammlungen[a].Name.indexOf(bezNamen) === -1 && synonymeArt.Beziehungssammlungen[a]["synonymeArt der Beziehungen"] !== "synonym") {
+									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
 										//diese Datensammlung wird noch nicht dargestellt
-										BeziehungssammlungenVonSynonymen.push(Art.Beziehungssammlungen[a]);
-										//auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-										bezNamen.push(Art.Beziehungssammlungen[a].Name);
+										BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
+										//auch in bezNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
+										bezNamen.push(synonymeArt.Beziehungssammlungen[a].Name);
 										//auch in Beziehungssammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-										Beziehungssammlungen.push(Art.Beziehungssammlungen[a]);
-									} else if (Art.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
-										//ds2 ist die ds mit demselben Namen:
-										var ds2 = Beziehungssammlungen[Art.Beziehungssammlungen[a].Name.indexOf(bezNamen)];
-										//möglich, dass eine Beziehung aus der Datensammlung nur beim Synonym angegeben ist
-										//ds kopieren und alle vorhandenen Beziehungssammlungen löschen
-										ds = Art.Beziehungssammlungen[a];
-										if (ds.Beziehungen && ds.Beziehungen.length > 0) {
-											for (b in ds.Beziehungen) {
-												//durch alle Beziehungen der DS loopen und prüfen, ob sie in den Beziehungen vorkommen
-												if (containsObject(ds.Beziehungen[b], ds2.Beziehungen)) {
-													delete ds.Beziehungen[b];
+										Beziehungssammlungen.push(synonymeArt.Beziehungssammlungen[a]);
+									} else if (synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
+										//diese Beziehungssammlung wird schon dargestellt. Kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
+										var BsDerSynonymenArt = synonymeArt.Beziehungssammlungen[a];
+										for (c=0; c<art.Beziehungssammlungen.length; c++) {
+											if (art.Beziehungssammlungen[c].Name === BsDerSynonymenArt.Name) {
+												var BsDerOriginalart = art.Beziehungssammlungen[c];
+												break;
+											}
+										}
+										if (BsDerSynonymenArt.Beziehungen && BsDerSynonymenArt.Beziehungen.length > 0) {
+											for (b=0; b<BsDerSynonymenArt.Beziehungen.length; b++) {
+												//durch alle Beziehungen von BsDerSynonymenArt loopen und prüfen, ob sie in den Beziehungen vorkommen
+												if (containsObject(BsDerSynonymenArt.Beziehungen[b], BsDerSynonymenArt.Beziehungen)) {
+													//diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
+													BsDerSynonymenArt.Beziehungen.splice(b);
 												}
 											}
 										}
-										if (ds.Beziehungen.length > 0) {
+										if (BsDerSynonymenArt.Beziehungen.length > 0) {
 											//falls noch darzustellende Beziehungen verbleiben, die DS pushen
-											BeziehungssammlungenVonSynonymen.push(ds);
+											BeziehungssammlungenVonSynonymen.push(BsDerSynonymenArt);
 										}
 									}
 								}
 							}
 						}
-						//ds von Synonymen darstellen
+						//BS von Synonymen darstellen
 						if (DatensammlungenVonSynonymen.length > 0) {
 							//DatensammlungenVonSynonymen sortieren
 							DatensammlungenVonSynonymen.sort(function(a, b) {
@@ -658,6 +662,7 @@ function initiiere_art(id) {
 						}
 						//bez von Synonymen darstellen
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
+							console.log('BeziehungssammlungenVonSynonymen = ' + JSON.stringify(BeziehungssammlungenVonSynonymen));
 							//BeziehungssammlungenVonSynonymen sortieren
 							BeziehungssammlungenVonSynonymen.sort(function(a, b) {
 								var aName = a.Name.toLowerCase();
@@ -771,29 +776,31 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		//zerst ermitteln, welche Gruppen beteiligt sind
 		BeteiligteGruppen = [];
 		BeteiligteGruppen.push(art.Gruppe);
-		for (y in art_i.Beziehungen[i].Beziehungspartner) {
-			BeteiligteGruppen.push(art_i.Beziehungen[i].Beziehungspartner[y].Gruppe);
-		}
-		for (y in art_i.Beziehungen[i].Beziehungspartner) {
-			if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
-				Name = art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
-			} else {
-				Name = art_i.Beziehungen[i].Beziehungspartner[y].Name
+		if (art_i.Beziehungen[i].Beziehungspartner && art_i.Beziehungen[i].Beziehungspartner.length > 0) {
+			for (y in art_i.Beziehungen[i].Beziehungspartner) {
+				BeteiligteGruppen.push(art_i.Beziehungen[i].Beziehungspartner[y].Gruppe);
 			}
-			//Partner darstellen
-			if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
-				//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
-				//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
-				if (art_i["Art der Beziehungen"] === "hierarchisch") {
-					//Feld soll mit der Rolle beschriftet werden
-					//ausserdem Name inkl. Methode
-					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+			for (y in art_i.Beziehungen[i].Beziehungspartner) {
+				if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
 				} else {
-					//synonymer LR
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Name
+				}
+				//Partner darstellen
+				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
+					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
+					//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
+					if (art_i["Art der Beziehungen"] === "hierarchisch") {
+						//Feld soll mit der Rolle beschriftet werden
+						//ausserdem Name inkl. Methode
+						html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					} else {
+						//synonymer LR
+						html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					}
+				} else {
 					html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				}
-			} else {
-				html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 			}
 		}
 		//Die Felder anzeigen
