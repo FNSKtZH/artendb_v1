@@ -146,7 +146,7 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 #Benutzeroberfläche
 ###Erscheinungsbild
 
-<img src="https://raw.github.com/barbalex/artendb/master/_attachments/img/eisvogel.png" alt="Beispiel Eisvogel" width="100%">
+<img src="http://www.barbalex.ch/artendb/achillea_moschata.png" alt="Beispiel Achillea moschata" width="100%">
 
 **Hauptelemente**
 
