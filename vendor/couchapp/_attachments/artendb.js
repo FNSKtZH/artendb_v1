@@ -350,7 +350,9 @@ function erstelleBaum() {
 																																		level7_lr = level7.rows[q].key[7].Name;
 																																		child_level7 = {
 																																				"data": level7_lr,
-																																				"attr": {"id": level7.rows[q].key[7].GUID},
+																																				"attr": {
+																																					"id": level7.rows[q].key[7].GUID
+																																				},
 																																				//"children": children_level8
 																																			};
 																																		children_level7.push(child_level7);
@@ -435,7 +437,156 @@ function erstelleBaum() {
 					});
 				}
 			});
-		} else {
+		} /*else if (window.Gruppe === "Lebensräume") {
+		//nur aufbauen, wenn noch nicht erfolgt
+		if (!window.baum_lr) {
+			$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
+			$db.view('artendb/baum_lr_0', {
+				success: function (level0) {
+					window.baum_laenge = level0.rows.length;
+					$db.view('artendb/baum_lr_1', {
+						success: function (level1) {
+							window.baum_laenge += level1.rows.length;
+							$db.view('artendb/baum_lr_2', {
+								success: function (level2) {
+									window.baum_laenge += level2.rows.length;
+									$db.view('artendb/baum_lr_3', {
+										success: function (level3) {
+											window.baum_laenge += level3.rows.length;
+											$db.view('artendb/baum_lr_4', {
+												success: function (level4) {
+													window.baum_laenge += level4.rows.length;
+													$db.view('artendb/baum_lr_5', {
+														success: function (level5) {
+															window.baum_laenge += level5.rows.length;
+															$db.view('artendb/baum_lr_6', {
+																success: function (level6) {
+																	window.baum_laenge += level6.rows.length;
+																	$db.view('artendb/baum_lr_7', {
+																		success: function (level7) {
+																			window.baum_laenge += level7.rows.length;
+																			var baum, child_level0, level0_lr, child_level1, children_level1, level1_lr, child_level2, children_level2, level2_lr, child_level3, children_level3, level3_lr, child_level4, children_level4, level4_lr, child_level5, children_level5, level5_lr, child_level6, children_level6, level6_lr, child_level7, children_level7, level7_lr;
+																			baum = [];
+																			for (i in level0.rows) {
+																				level0_lr = level0.rows[i].key[0].Name;
+																				children_level1 = [];
+																				for (k in level1.rows) {
+																					if (level1.rows[k].key[1] && level1.rows[k].key[0].Name === level0_lr) {
+																						level1_lr = level1.rows[k].key[1].Name;
+																						children_level2 = [];
+																						for (l in level2.rows) {
+																							if (level2.rows[l].key[2] && level2.rows[l].key[0].Name === level0_lr && level2.rows[l].key[1].Name === level1_lr) {
+																								level2_lr = level2.rows[l].key[2].Name;
+																								children_level3 = [];
+																								for (m in level3.rows) {
+																									if (level3.rows[m].key[3] && level3.rows[m].key[0].Name === level0_lr && level3.rows[m].key[1].Name === level1_lr && level3.rows[m].key[2].Name === level2_lr) {
+																										level3_lr = level3.rows[m].key[3].Name;
+																										children_level4 = [];
+																										for (n in level4.rows) {
+																											if (level4.rows[n].key[4] && level4.rows[n].key[0].Name === level0_lr && level4.rows[n].key[1].Name === level1_lr && level4.rows[n].key[2].Name === level2_lr && level4.rows[n].key[3].Name === level3_lr) {
+																												level4_lr = level4.rows[n].key[4].Name;
+																												children_level5 = [];
+																												for (o in level5.rows) {
+																													if (level5.rows[o].key[5] && level5.rows[o].key[0].Name === level0_lr && level5.rows[o].key[1].Name === level1_lr && level5.rows[o].key[2].Name === level2_lr && level5.rows[o].key[3].Name === level3_lr && level5.rows[o].key[4].Name === level4_lr) {
+																														level5_lr = level5.rows[o].key[5].Name;
+																														children_level6 = [];
+																														for (p in level6.rows) {
+																															if (level6.rows[p].key[6] && level6.rows[p].key[0].Name === level0_lr && level6.rows[p].key[1].Name === level1_lr && level6.rows[p].key[2].Name === level2_lr && level6.rows[p].key[3].Name === level3_lr && level6.rows[p].key[4].Name === level4_lr && level6.rows[p].key[5].Name === level5_lr) {
+																																level6_lr = level6.rows[p].key[6].Name;
+																																children_level7 = [];
+																																for (q in level7.rows) {
+																																	if (level7.rows[q].key[7] && level7.rows[q].key[0].Name === level0_lr && level7.rows[q].key[1].Name === level1_lr && level7.rows[q].key[2].Name === level2_lr && level7.rows[q].key[3].Name === level3_lr && level7.rows[q].key[4].Name === level4_lr && level7.rows[q].key[5].Name === level5_lr && level7.rows[q].key[6].Name === level6_lr) {
+																																		level7_lr = level7.rows[q].key[7].Name;
+																																		child_level7 = {
+																																				"data": level7_lr,
+																																				"attr": {
+																																					"id": level7.rows[q].key[7].GUID
+																																				},
+																																				//"children": children_level8
+																																			};
+																																		children_level7.push(child_level7);
+																																	}		
+																																}
+
+																																child_level6 = {
+																																		"data": level6_lr,
+																																		"attr": {"id": level6.rows[p].key[6].GUID},
+																																		"children": children_level7
+																																	};
+																																children_level6.push(child_level6);
+																															}		
+																														}
+																														child_level5 = {
+																																"data": level5_lr,
+																																"attr": {"id": level5.rows[o].key[5].GUID},
+																																"children": children_level6
+																															};
+																														children_level5.push(child_level5);
+																													}		
+																												}
+																												child_level4 = {
+																														"data": level4_lr,
+																														"attr": {"id": level4.rows[n].key[4].GUID},
+																														"children": children_level5
+																													};
+																												children_level4.push(child_level4);
+																											}
+																										}
+																										child_level3 = {
+																												"data": level3_lr,
+																												"attr": {"id": level3.rows[m].key[3].GUID},
+																												"children": children_level4
+																											};
+																										children_level3.push(child_level3);
+																									}
+																								}
+																								child_level2 = {
+																										"data": level2_lr,
+																										"attr": {"id": level2.rows[l].key[2].GUID},
+																										"children": children_level3
+																									};
+																								children_level2.push(child_level2);
+																							}
+																						}
+																						child_level1 = {
+																								"data": level1_lr,
+																								"attr": {"id": level1.rows[k].key[1].GUID},
+																								"children": children_level2
+																							};
+																						children_level1.push(child_level1);
+																					}
+																				}
+																				child_level0 = {
+																						"data": level0_lr,
+																						"attr": {"id": level0.rows[i].key[0].GUID},
+																						"children": children_level1
+																					};
+																				baum.push(child_level0);
+																			}
+																			$.when(erstelleTree(baum)).then(function() {
+																				baum_erstellt.resolve();
+																			});
+																			if (!window.baum_lr) {
+																				//speichern, um wiederholten Aufruf zu vermeiden
+																				window.baum_lr = baum;
+																			}
+																		}
+																	});
+																}
+															});
+														}
+													});
+												}
+											});
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		} */else {
 			//falls ein node markiert ist, Objekt wieder anzeigen
 			öffneMarkiertenNode();
 			//Suchfeld einblenden
@@ -469,10 +620,13 @@ function erstelleTree(baum) {
 			"case_insensitive": true,
 			"show_only_matches": true
 		},
+		"sort": function (a, b) {
+			return this.get_text(a) > this.get_text(b) ? 1 : -1;
+		},
 		"themes": {
 			"icons": false
 		},
-		"plugins" : ["ui", "themes", "json_data", "search"]
+		"plugins" : ["ui", "themes", "json_data", "sort", "search"]
 	})
 	.bind("select_node.jstree", function (e, data) {
 		var node;
