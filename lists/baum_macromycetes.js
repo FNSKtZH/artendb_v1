@@ -1,18 +1,22 @@
 function(head, req) {
 	// specify that we're providing a JSON response
     provides('json', function() {
-		var row, objekt, objekt_array, level;
-		level = parseInt(req.query["level"]);
+		var row, objekt, objekt_array, level, filter;
+		level = parseInt(req.query["group_level"]);
 		objekt_array = [];
 		while(row = getRow()) {
-			art = row.doc;
 			objekt = {};
-			objekt.data = art.key[level-1];
+			objekt.data = row.key[level-1];
 			objekt.attr = {};
 			objekt.attr.level = level;
 			objekt.attr.gruppe = "macromycetes";
+			filter = [];
+			for (i=0; i<level; i++) {
+				filter.push(row.key[i]);
+			}
+			objekt.attr.filter = filter;
 			if (level === 2) {
-				objekt.attr.id = art.key[2];
+				objekt.attr.id = row.key[2];
 			}
 			objekt.state = "closed";
 			objekt_array.push(objekt);

@@ -9,9 +9,7 @@ function erstelleBaum() {
 	//gewollte sichtbar schalten
 	$("#tree" + window.Gruppe).css("display", "block");
 	$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
-	//globale Variable, damit beim Suchen je nach Baumlänge sofort oder erst bei Enter gesucht werden kann
-	window.baum_laenge = 0;
-	baum = [];
+	/*baum = [];
 	switch (window.Gruppe) {
 		case "Fauna":
 			gruppe = "fauna";
@@ -28,8 +26,8 @@ function erstelleBaum() {
 		case "Lebensräume":
 			gruppe = "lr";
 			break;
-	}
-	$db = $.couch.db("artendb");
+	}*/
+	/*$db = $.couch.db("artendb");
 	$("#tree" + window.Gruppe).html("der Baum wird aufgebaut...");
 	$db.view('artendb/baum_'+gruppe+'?group_level=1', {
 		success: function (data) {
@@ -44,12 +42,12 @@ function erstelleBaum() {
 						}
 					};
 				baum.push(struktur);
-			}
-			$.when(erstelleTree(baum)).then(function() {
+			}*/
+			$.when(erstelleTree()).then(function() {
 				baum_erstellt.resolve();
 			});
-		}
-	});
+		/*}
+	});*/
 	return baum_erstellt.promise();
 }
 
@@ -505,19 +503,75 @@ function erstelleBaum() {
 	return baum_erstellt.promise();
 }*/
 
-function erstelleTree(baum) {
+function erstelleTree() {
 	var jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
 			"ajax": {
 				"type": 'GET',
 				"url": function(node) {
-					var level = parseInt(node.attr('level')) + 1;
-					var gruppe = node.attr('gruppe');
-					url = $(location).attr("protocol") + '//' + $(location).attr("host") + "artendb/baum_"+gruppe+"/baum_"+gruppe+"?level="+level;
-					return url;
+					var gruppe;
+					//wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
+					if (node == -1) {
+						//oberster node
+						switch (window.Gruppe) {
+							case "Fauna":
+								gruppe = "fauna";
+								break;
+							case "Flora":
+								gruppe = "flora";
+								break;
+							case "Moose":
+								gruppe = "moose";
+								break;
+							case "Macromycetes":
+								gruppe = "macromycetes";
+								break;
+							case "Lebensräume":
+								gruppe = "lr";
+								break;
+						}
+						url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
+						return url;
+					} else {
+						var level = parseInt(node.attr('level')) + 1;
+						var filter = node.attr('filter').split(",");
+						var endkey = [];
+						var startkey = filter.slice();
+						var endkey = filter.slice();
+						gruppe = node.attr('gruppe');
+						switch (gruppe) {
+							case "fauna":
+								for (a=5; a>=level; a--) {
+									endkey.push({});
+								}
+								break;
+							case "flora":
+								for (a=4; a>=level; a--) {
+									endkey.push({});
+								}
+								break;
+							case "moose":
+								for (a=5; a>=level; a--) {
+									endkey.push({});
+								}
+								break;
+							case "macromycetes":
+								for (a=3; a>=level; a--) {
+									endkey.push({});
+								}
+								break;
+						}
+						if (gruppe === "lr") {
+							url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level="+level+"&Parent="+node.attr('id');
+						} else {
+							url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?startkey="+JSON.stringify(startkey)+"&endkey="+JSON.stringify(endkey)+"&group_level="+level;
+						}
+						return url;
+					}
 				},
 				"success": function(data) {
+					console.log('data = ' + JSON.stringify(data));
 					return data;
 				}
 			}
@@ -695,9 +749,13 @@ function initiiere_art(id) {
 				//Datensammlungen nach Name sortieren
 				//ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
 				/*Datensammlungen.sort(function(a, b) {
-					var aName = a.Name.toLowerCase();
-					var bName = b.Name.toLowerCase();
-					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+					var aName = a.Name;
+					var bName = b.Name;
+					if (aName && bName) {
+						return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+					} else {
+						return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+					}
 				});*/
 				//Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
@@ -779,9 +837,13 @@ function initiiere_art(id) {
 						if (DatensammlungenVonSynonymen.length > 0) {
 							//DatensammlungenVonSynonymen sortieren
 							DatensammlungenVonSynonymen.sort(function(a, b) {
-								var aName = a.Name.toLowerCase();
-								var bName = b.Name.toLowerCase();
-								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+								var aName = a.Name;
+								var bName = b.Name;
+								if (aName && bName) {
+									return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+								} else {
+									return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+								}
 							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
@@ -795,9 +857,13 @@ function initiiere_art(id) {
 							console.log('BeziehungssammlungenVonSynonymen = ' + JSON.stringify(BeziehungssammlungenVonSynonymen));
 							//BeziehungssammlungenVonSynonymen sortieren
 							BeziehungssammlungenVonSynonymen.sort(function(a, b) {
-								var aName = a.Name.toLowerCase();
-								var bName = b.Name.toLowerCase();
-								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+								var aName = a.Name;
+								var bName = b.Name;
+								if (aName && bName) {
+									return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+								} else {
+									return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+								}
 							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
@@ -1771,9 +1837,13 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 			//sortieren
 			//Datensammlungen nach Name sortieren
 			doc.Datensammlungen.sort(function(a, b) {
-				var aName = a.Name.toLowerCase();
-				var bName = b.Name.toLowerCase();
-				return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+				var aName = a.Name;
+				var bName = b.Name;
+				if (aName && bName) {
+					return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+				} else {
+					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+				}
 			});
 			//in artendb speichern
 			$db.saveDoc(doc);
