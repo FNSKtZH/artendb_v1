@@ -788,6 +788,7 @@ Daten exportieren:
 **To do**
 
 - Exporte: Daten und Beziehungen von synonymen Arten
+- Exporte: Beziehungen wahlweise in mehreren Zeilen pro Objekt
 - Lebensräume in der Anwendung bearbeiten
 - Importe: Beziehungen, Taxonomien
 - Alternative Taxonomien verwalten und darstellen
