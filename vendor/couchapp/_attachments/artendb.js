@@ -327,6 +327,9 @@ function oeffneBaumZuId(id) {
 	});
 }
 
+//läuft von oben nach unten durch die Hierarchie der Lebensräume
+//ruft sich selber wieder auf, wenn ein tieferer level existiert
+//erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 function oeffneNodeNachIdArray(idArray) {
 	if (idArray.length > 1) {
 		$.jstree._reference("#tree" + window.Gruppe).open_node($("#"+idArray[0]), function() {
@@ -541,11 +544,12 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	//richtiges Formular anzeigen
 	zeigeFormular("art");
 	//Bei Lebensräumen die Taxonomie öffnen
-	if (art.Gruppe === "Lebensräume") {
+	/*if (art.Gruppe === "Lebensräume") {
 		$("#collapseTaxonomie").collapse('show');
 		//Fokus von der Hierarchie wegnehmen
 		$("#Hierarchie").blur();
-	} else if (Datensammlungen.length === 0 && DatensammlungenVonSynonymen.length === 0 && Beziehungssammlungen.length === 0 && taxonomischeBeziehungssammlungen.length === 0 && BeziehungssammlungenVonSynonymen.length === 0) {
+	//} else if (Datensammlungen.length === 0 && DatensammlungenVonSynonymen.length === 0 && Beziehungssammlungen.length === 0 && taxonomischeBeziehungssammlungen.length === 0 && BeziehungssammlungenVonSynonymen.length === 0) {
+	} else */if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 		$(".accordion-body").collapse('show');
 	}
