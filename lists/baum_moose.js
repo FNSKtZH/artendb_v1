@@ -3,6 +3,9 @@ function(head, req) {
     provides('json', function() {
 		var row, objekt, objekt_array, level, filter;
 		level = parseInt(req.query["group_level"]);
+		if (req.query["id"]) {
+			level--;
+		}
 		objekt_array = [];
 		while(row = getRow()) {
 			objekt = {};
@@ -15,7 +18,7 @@ function(head, req) {
 				filter.push(row.key[i]);
 			}
 			objekt.attr.filter = filter;
-			if (level === 4) {
+			if (req.query["id"]) {
 				objekt.attr.id = row.key[4];
 			}
 			objekt.state = "closed";

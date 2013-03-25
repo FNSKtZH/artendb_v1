@@ -539,26 +539,52 @@ function erstelleTree() {
 						var endkey = [];
 						var startkey = filter.slice();
 						var endkey = filter.slice();
+						//flag, um mitzuliefern, ob die id angezeigt werden soll
+						var id = false;
 						gruppe = node.attr('gruppe');
 						switch (gruppe) {
 							case "fauna":
 								for (a=5; a>=level; a--) {
 									endkey.push({});
 								}
+								//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+								if (level === 4) {
+									//das ist die Art-Ebene
+									//hier soll die id angezeigt werden
+									//dazu muss der nächste level abgerufen werden
+									//damit die list den zu hohen level korrigieren kann, id mitgeben
+									id = true;
+									level++;
+								}
 								break;
 							case "flora":
 								for (a=4; a>=level; a--) {
 									endkey.push({});
+								}
+								//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+								if (level === 3) {
+									id = true;
+									level++;
 								}
 								break;
 							case "moose":
 								for (a=5; a>=level; a--) {
 									endkey.push({});
 								}
+								//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+								if (level === 4) {
+									id = true;
+									level++;
+								}
 								break;
 							case "macromycetes":
 								for (a=3; a>=level; a--) {
 									endkey.push({});
+								}
+								//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+								if (level === 2) {
+									id = true;
+									level++;
 								}
 								break;
 						}
@@ -566,6 +592,9 @@ function erstelleTree() {
 							url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level="+level+"&Parent="+node.attr('id');
 						} else {
 							url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?startkey="+JSON.stringify(startkey)+"&endkey="+JSON.stringify(endkey)+"&group_level="+level;
+						}
+						if (id) {
+							url = url + "&id=true"
 						}
 						return url;
 					}
