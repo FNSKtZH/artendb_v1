@@ -457,7 +457,7 @@
 				$("#menu").on("click", "[name='Gruppe']", function () {
 					//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 					window.Gruppe = this.value;
-					$("#suchfeld").val("");
+					$(".suchfeld").val("");
 					$("#Gruppe_label").html("Gruppe:");
 					$(".suchen").hide();
 					$("#forms").hide();
