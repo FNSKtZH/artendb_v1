@@ -1,14 +1,13 @@
 function(head, req) {
 	// specify that we're providing a JSON response
     provides('json', function() {
-		var row, objekt, objekt_array, level;
-		level = parseInt(req.query["group_level"]);
+		var row, objekt, objekt_array;
 		objekt_array = [];
 		while(row = getRow()) {
 			objekt = {};
-			objekt.data = row.key[3];
+			objekt.data = row.key[4];
 			objekt.attr = {};
-			objekt.attr.level = level;
+			objekt.attr.level = row.key[0];
 			objekt.attr.gruppe = "lr";
 			objekt.attr.id = row.key[5];
 			objekt.state = "closed";

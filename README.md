@@ -183,7 +183,7 @@ Das Menu ermöglicht:
 
 **Mobilfähigkeit**
 
-ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig. Da CouchDb auch in mobilen Versionen existiert (iOS und Android), kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert.
+ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert.
  
 ###Neue Datensammlungen hinzufügen
 Importiert werden können:
@@ -206,7 +206,7 @@ Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden d
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
 
 ###Daten in ArtenDb bearbeiten
-Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüssel älterer Kartenwerke oder GIS-Ebenen lückig bzw. nicht vollständig nachvollziehbar. 
+Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht vollständig nachvollziehbar. 
 
 Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
 
@@ -223,7 +223,7 @@ Das ist noch nicht umgesetzt.
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden.
+Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (erst als Liste innerhalb eines Felds umgesetzt).
 
 <a href="#top">&#8593; top</a>
 
