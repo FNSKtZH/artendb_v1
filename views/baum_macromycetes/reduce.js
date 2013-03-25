@@ -1,3 +1,3 @@
 function (key, values) {
-	return count(key);
+	return count(values);
 }
