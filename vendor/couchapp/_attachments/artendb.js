@@ -17,6 +17,8 @@ function erstelleBaum() {
 
 function erstelleTree() {
 	var jstree_erstellt = $.Deferred();
+	var level;
+	var filter;
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
 			"ajax": {
@@ -26,14 +28,19 @@ function erstelleTree() {
 					if (node == -1) {
 						return holeDatenFuerTreeOberstesLevel();
 					} else {
-						var level = parseInt(node.attr('level')) + 1;
-						var filter = node.attr('filter').split(",");
+						level = parseInt(node.attr('level')) + 1;
 						var gruppe = node.attr('gruppe');
-						return holeDatenFuerTreeUntereLevel(level, filter, gruppe);
+						if (node.attr('filter')) {
+							filter = node.attr('filter').split(",");
+							var id = "";
+						} else {
+							filter = "";
+							var id = node.attr('id');
+						}
+						return holeDatenFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				"success": function(data) {
-					//console.log('data = ' + JSON.stringify(data));
 					return data;
 				}
 			}
@@ -72,11 +79,12 @@ function erstelleTree() {
 	})
 	.bind("loaded.jstree", function (event, data) {
 		jstree_erstellt.resolve();
-		$("#suchen").show();
-		$("#suchfeld").focus();
+		$("#suchen"+window.Gruppe).show();
+		$("#suchfeld"+window.Gruppe).focus();
 		initiiereSuchfeld();
 		$("#tree" + window.Gruppe).css("display", "block");
-		$("#tree" + window.Gruppe + "Beschriftung").html(window.baum_laenge + " " + $('[name="Gruppe"].active').attr("treeBeschriftung"));
+		//TO DO: ANZAHL DATENSÄTZE WIEDER ANZEIGEN
+		$("#tree" + window.Gruppe + "Beschriftung").html($('[name="Gruppe"].active').attr("treeBeschriftung"));	//TO DO: ANZAHL DATENSÄTZE WIEDER ANZEIGEN
 		setzeTreehoehe();
 	})
 	.bind("after_open.jstree", function (e, data) {
@@ -109,19 +117,22 @@ function holeDatenFuerTreeOberstesLevel() {
 			break;
 	}
 	if (window.Gruppe === "Lebensräume") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[0]&endkey=[0,{},{},{},{},{}]&group=false";
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
 	}
 	return url;
 }
 
-function holeDatenFuerTreeUntereLevel(level, filter, gruppe) {
+function holeDatenFuerTreeUntereLevel(level, filter, gruppe, id) {
 	var endkey = [];
-	var startkey = filter.slice();
-	var endkey = filter.slice();
+	if (filter) {
+		//bei lr gibt es keinen filter und das erzeugt einen fehler
+		var startkey = filter.slice();
+		var endkey = filter.slice();
+	}
 	//flag, um mitzuliefern, ob die id angezeigt werden soll
-	var id = false;
+	var id2 = false;
 	switch (gruppe) {
 		case "fauna":
 			if (level > 4) {
@@ -136,7 +147,7 @@ function holeDatenFuerTreeUntereLevel(level, filter, gruppe) {
 				//hier soll die id angezeigt werden
 				//dazu muss der nächste level abgerufen werden
 				//damit die list den zu hohen level korrigieren kann, id mitgeben
-				id = true;
+				id2 = true;
 				level++;
 			}
 			break;
@@ -149,7 +160,7 @@ function holeDatenFuerTreeUntereLevel(level, filter, gruppe) {
 			}
 			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
 			if (level === 3) {
-				id = true;
+				id2 = true;
 				level++;
 			}
 			break;
@@ -162,7 +173,7 @@ function holeDatenFuerTreeUntereLevel(level, filter, gruppe) {
 			}
 			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
 			if (level === 4) {
-				id = true;
+				id2 = true;
 				level++;
 			}
 			break;
@@ -175,17 +186,18 @@ function holeDatenFuerTreeUntereLevel(level, filter, gruppe) {
 			}
 			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
 			if (level === 2) {
-				id = true;
+				id2 = true;
 				level++;
 			}
 			break;
 	}
 	if (gruppe === "lr") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=['+level+', "'+node.attr('id')+'"]&endkey=['+level+', "'+node.attr('id')+'",{},{},{},{}]&group=false';
+		//level++;
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=['+level+', "'+id+'"]&endkey=['+level+', "'+id+'",{},{},{},{}]&group_level=6';
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?startkey="+JSON.stringify(startkey)+"&endkey="+JSON.stringify(endkey)+"&group_level="+level;
 	}
-	if (id) {
+	if (id2) {
 		url = url + "&id=true";
 	}
 	return url;
@@ -206,12 +218,12 @@ function initiiereSuchfeld() {
 			});
 		}
 	} else if (window.Gruppe) {
-		if (window.filtere_art) {
+		if (window["filtere_art_" + window.Gruppe.toLowerCase()]) {
 			initiiereSuchfeld_2();
 		} else {
 			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'", {}, {}]', {
 				success: function (data) {
-					window.filtere_art = data;
+					window["filtere_art_" + window.Gruppe.toLowerCase()] = data;
 					initiiereSuchfeld_2();
 				}
 			});
@@ -225,23 +237,22 @@ function initiiereSuchfeld_2() {
 		suchObjekte = window.filtere_lr.rows;
 	
 	} else if (window.Gruppe) {
-		suchObjekte = window.filtere_art.rows;
+		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
 	}
-	$('#suchfeld').typeahead({
+	$('#suchfeld' + window.Gruppe).typeahead({
+		items: 15,
 		source: function (query, process) {
-			namen = [];
-			map = {};
+			window.namen = [];
+			window.map = {};
 			$.each(suchObjekte, function(i, suchObjekt) {
-				map[suchObjekt.Name] = suchObjekt;
-				namen.push(suchObjekt.Name);
+				window.map[suchObjekt.value.Name] = suchObjekt.value;
+				window.namen.push(suchObjekt.value.Name);
 			});
-			process(namen);
+			process(window.namen);
 		},
 		updater: function (item) {
-			selectedState = map[item].Name;
-			initiiere_art(map[item].id);
-			//TO DO: BAUM AUFBAUEN
-			
+			selectedState = window.map[item].Name;
+			oeffneBaumZuId(window.map[item].id);
 			return item;
 		},
 		matcher: function (item) {
@@ -258,6 +269,73 @@ function initiiereSuchfeld_2() {
 			return item.replace( regex, "<strong>$1</strong>" );
 		}
 	});
+}
+
+function oeffneBaumZuId(id) {
+	//Hierarchie der id holen
+	$db = $.couch.db("artendb");
+	$db.openDoc(id, {
+		success: function (objekt) {
+			switch (objekt.Gruppe) {
+				case "Fauna":
+					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					//oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
+							$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+								$.jstree._reference("#treeFauna").select_node($("#"+objekt._id),function(){;},false);
+							},true);
+						},true);
+					},true);
+					break;
+				case "Flora":
+					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					//oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
+						$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+							$.jstree._reference("#treeFlora").select_node($("#"+objekt._id),function(){;},false);
+						},true);
+					},true);
+					break;
+				case "Moose":
+					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					//oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+							$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+								$.jstree._reference("#treeMoose").select_node($("#"+objekt._id),function(){;},false);
+							},true);
+						},true);
+					},true);
+					break;
+				case "Macromycetes":
+					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					//oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id),function(){;},false);
+					},true);
+					break;
+				case "Lebensräume":
+					var idArray = [];
+					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
+						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
+					}
+					oeffneNodeNachIdArray(idArray);
+					break;
+			}
+		}
+	});
+}
+
+function oeffneNodeNachIdArray(idArray) {
+	if (idArray.length > 1) {
+		$.jstree._reference("#tree" + window.Gruppe).open_node($("#"+idArray[0]), function() {
+			idArray.splice(0,1);
+			oeffneNodeNachIdArray(idArray);
+		},false);
+	} else if (idArray.length === 1) {
+		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function(){;},true);
+	}
 }
 
 function initiiere_art(id) {
@@ -371,7 +449,6 @@ function initiiere_art(id) {
 							}
 							if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
 								for (var a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
-									//if (synonymeArt.Beziehungssammlungen[a].Name.indexOf(bezNamen) === -1 && synonymeArt.Beziehungssammlungen[a]["synonymeArt der Beziehungen"] !== "synonym") {
 									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
 										//diese Datensammlung wird noch nicht dargestellt
 										BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
@@ -426,7 +503,6 @@ function initiiere_art(id) {
 						}
 						//bez von Synonymen darstellen
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
-							console.log('BeziehungssammlungenVonSynonymen = ' + JSON.stringify(BeziehungssammlungenVonSynonymen));
 							//BeziehungssammlungenVonSynonymen sortieren
 							BeziehungssammlungenVonSynonymen.sort(function(a, b) {
 								var aName = a.Name;
@@ -529,13 +605,17 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 			}
 		}
 		for (d in b.Beziehungspartner) {
-			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
 				bName = b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
 			} else {
 				bName = b.Beziehungspartner[d].Name;
 			}
 		}
-		return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+		if (aName && bName) {
+			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+		} else {
+			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+		}
 	});
 
 	var BeteiligteGruppen;
@@ -951,7 +1031,7 @@ function setzteHöheTextareas() {
 
 function schliesseNichtMarkierteNodes() {
 	//wenn Suchfeld leer ist, soll der Baum zugeklappt werden
-	if (!$("#suchfeld").val()) {
+	if (!$("#suchfeld" + window.Gruppe).val()) {
 		$("#tree" + window.Gruppe).jstree("clear_search");
 		var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
 		$("#tree" + window.Gruppe).jstree("close_all", -1);
@@ -994,7 +1074,7 @@ function zeigeFormular(Formularname) {
 			//URL anpassen, damit kein Objekt angezeigt wird
 			history.pushState({id: "id"}, "id", "index.html");
 			//alle Bäume ausblenden, suchfeld, Baumtitel
-			$("#suchen").hide();
+			$(".suchen").hide();
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
 			//Gruppe Schaltfläche deaktivieren
@@ -1477,9 +1557,7 @@ function oeffneUri() {
 				$("#Gruppe" + objekt.Gruppe).button('toggle');
 				//tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum()).then(function() {
-					//jetzt das Objekt im Baum markieren, was auch das Objekt initiiert
-					//um beim vor- oder rückbewegen in der history den richtigen Baum anzusprechen, muss der aktuve Baum gewählt werden
-					$(".baum.jstree").jstree("select_node", "#" + id);
+					oeffneBaumZuId(id);
 				});
 			}
 		});

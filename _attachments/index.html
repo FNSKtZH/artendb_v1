@@ -61,9 +61,20 @@
 					<button class="btn btn-inverse" name="Gruppe" id="GruppeLebensräume" value="Lebensräume" treeBeschriftung="Lebensräume">Lebensräume</button>
 				</div>
 			</div>
-			<div id="suchen" class="input-prepend">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeld" class="span2" type="search" placeholder="filtern">
-				<button id="suche_leeren_btn" class="close">&times;</button>
+			<div id="suchenFauna" class="input-prepend suchen">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldFauna" class="span2 suchfeld" type="search" placeholder="filtern">
+			</div>
+			<div id="suchenFlora" class="input-prepend suchen">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldFlora" class="span2 suchfeld" type="search" placeholder="filtern">
+			</div>
+			<div id="suchenMoose" class="input-prepend suchen">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldMoose" class="span2 suchfeld" type="search" placeholder="filtern">
+			</div>
+			<div id="suchenMacromycetes" class="input-prepend suchen">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldMacromycetes" class="span2 suchfeld" type="search" placeholder="filtern">
+			</div>
+			<div id="suchenLebensräume" class="input-prepend suchen">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldLebensräume" class="span2 suchfeld" type="search" placeholder="filtern">
 			</div>
 			<div id="treeFaunaBeschriftung" class="treeBeschriftung"></div>
 			<div id="treeFloraBeschriftung" class="treeBeschriftung"></div>
@@ -425,7 +436,7 @@
 					return;
 				}
 
-				$("#suchen").hide();
+				$(".suchen").hide();
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
@@ -448,9 +459,9 @@
 					window.Gruppe = this.value;
 					$("#suchfeld").val("");
 					$("#Gruppe_label").html("Gruppe:");
-					$("#suchen").hide();
+					$(".suchen").hide();
 					$("#forms").hide();
-					$("#suchen").val("");
+					$(".suchen").val("");
 					erstelleBaum();
 				});
 
@@ -692,13 +703,6 @@
 					schliesseNichtMarkierteNodes();
 				});
 
-				$("#menu").on("click", "#suche_leeren_btn", function() {
-					if ($("#suchfeld").val()) {
-						$("#suchfeld").val("");
-						schliesseNichtMarkierteNodes();
-					}
-				});
-
 				$(".form").on("keyup focus", "textarea", function() {
 					FitToContent(this, document.documentElement.clientHeight);
 				});
@@ -709,7 +713,7 @@
 					event.preventDefault();
 					id = $(this).attr("artid");
 					$("#tree" + window.Gruppe).jstree("clear_search");
-					$("#suchen").val("");
+					$(".suchen").val("");
 					jQuery("#tree" + window.Gruppe).jstree("deselect_all");
 					jQuery("#tree" + window.Gruppe).jstree("close_all", -1);
 					jQuery("#tree" + window.Gruppe).jstree("select_node", "#" + id);

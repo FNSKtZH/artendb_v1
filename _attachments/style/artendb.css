@@ -12,7 +12,8 @@ body {
 
 #menu {
 	left: 7px;
-	overflow: hidden;
+	/*overflow: hidden;*/
+	overflow: visible;
 	border: 1px solid #e5e5e5;
 	border-radius: 6px;
 	padding: 8px 8px 8px 8px;
@@ -147,28 +148,21 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	top: 8px;
 }
 
-#suchen {
+#menu .suchen {
 	/*relative setzen, damit suche_leeren_btn im Verhältnis dazu absolute gesetzt werden kann*/
-	position: relative;
+	/*position: relative;*/
 	margin-bottom: 2px;
 }
 
-#suchfeld {
+#menu .suchfeld {
 	width: -webkit-calc(100% + 125px);
 	width: -o-calc(100% + 125px);
 	width: calc(100% + 125px);
-	max-width: 318px;
+	max-width: 321px;
 }
 
 .treeBeschriftung {
 	margin-bottom: 1px;
-}
-
-#suche_leeren_btn {
-	position: absolute;
-	top: 5px;
-	left: 340px;
-	z-index: 4;
 }
 
 .felderspalte {
@@ -176,15 +170,6 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	-moz-column-width: 450px;
 	-webkit-column-width: 450px;
 }
-
-/*funktioniert nicht, weil button verschwindet, wen focus auf dem feld ist
-#suche_leeren_btn {
-	transform: translate(-13px,-25px);
-	-ms-transform: translate(-13px,-25px);
-	-webkit-transform: translate(-13px,-25px);
-	-o-transform: translate(-13px,-25px);
-	-moz-transform: translate(-13px,-25px);
-}*/
 
 #art label, #import label, #export .control-group label {
 	width: 180px;
