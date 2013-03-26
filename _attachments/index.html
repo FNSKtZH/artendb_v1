@@ -92,7 +92,7 @@
 
 			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
 			
-			<form id="import" class="form form-horizontal" action="#" method="get" autocomplete="off">
+			<form id="importEigenschaften" class="form form-horizontal import" action="#" method="get" autocomplete="off">
 				<div id="importieren_accordion" class="accordion">
 					<div id="importieren_anmelden" class="accordion-group">
 						<div class="accordion-heading accordion-group_gradient">
@@ -480,7 +480,7 @@
 					//testen, ob der Browser das Importieren unterstützt
 					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 					if(isFileAPIAvailable()) {
-						zeigeFormular("import");
+						zeigeFormular("importEigenschaften");
 						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
 							$("#importieren_ds_beschreiben_collapse").collapse('show');
@@ -517,10 +517,10 @@
 					}
 				});
 
-				$("#import").on("change", "#DsWaehlen", function() {
+				$("#importEigenschaften").on("change", "#DsWaehlen", function() {
 					var that = this;
 					//zuerst alle Felder leeren
-					$('#import textarea, #import input').each(function () {
+					$('#importEigenschaften textarea, #importEigenschaften input').each(function () {
 						$(this).val('');
 						$("#DsAnzDs").html("");
 						$("#DsAnzDs_label").html("");
@@ -535,7 +535,7 @@
 								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 								$("#DsAnzDs_label").html("Anzahl Datensätze");
 								//dafür sorgen, dass textareas genug gross sind
-								$('#import textarea').each(function () {
+								$('#importEigenschaften textarea').each(function () {
 									$(this).trigger('focus');
 								});
 								$("#DsName").focus();
@@ -549,7 +549,7 @@
 					}
 				});
 
-				$("#import").on("change", "#DsFile", function(e) {
+				$("#importEigenschaften").on("change", "#DsFile", function(e) {
 					e.preventDefault();
 					// Check for the various File API support
 					if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -567,15 +567,15 @@
 					reader.readAsText(file);
 				});
 
-				$("#import").on("change", "#DsFelder", function(e) {
+				$("#importEigenschaften").on("change", "#DsFelder", function(e) {
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#import").on("change", "#DsId", function(e) {
+				$("#importEigenschaften").on("change", "#DsId", function(e) {
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#import").on("click", "#DsLoeschen", function(e) {
+				$("#importEigenschaften").on("click", "#DsLoeschen", function(e) {
 					e.preventDefault();
 					//Rückmeldung anzeigen
 					$("#importieren_ds_beschreiben_hinweis").alert().css("display", "block");
@@ -587,7 +587,7 @@
 					});
 				});
 
-				$("#import").on("click", "#DsImportieren", function(e) {
+				$("#importEigenschaften").on("click", "#DsImportieren", function(e) {
 					e.preventDefault();
 					$.when(importiereDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
@@ -595,7 +595,7 @@
 					});
 				});
 
-				$("#import").on("click", "#DsEntfernen", function(e) {
+				$("#importEigenschaften").on("click", "#DsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
@@ -675,7 +675,7 @@
 					//$($(this).attr("href")).collapse("toggle");
 				});
 
-				$("#import").on("click", ".accordion-heading a", function(event) {
+				$("#importEigenschaften").on("click", ".accordion-heading a", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					//$($(this).attr("href")).collapse("toggle");
@@ -733,32 +733,32 @@
 				setzteHöheTextareas();
 			});
 
-			$("#import").on("click", "#anmelden_btn", function(event) {
+			$("#importEigenschaften").on("click", "#anmelden_btn", function(event) {
 				event.preventDefault();
 				meldeUserAn();
 			});
 
-			$("#import").on("click", "#abmelden_btn", function(event) {
+			$("#importEigenschaften").on("click", "#abmelden_btn", function(event) {
 				event.preventDefault();
 				meldeUserAb();
 			});
 
-			$("#import").on("keyup", "#Email", function(event) {
+			$("#importEigenschaften").on("keyup", "#Email", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Emailhinweis").css("display", "none");
 			});
 
-			$("#import").on("keyup", "#Passwort", function(event) {
+			$("#importEigenschaften").on("keyup", "#Passwort", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Passworthinweis").css("display", "none");
 			});
 
-			$("#import").on("keyup", "#Passwort2", function(event) {
+			$("#importEigenschaften").on("keyup", "#Passwort2", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Passworthinweis2").css("display", "none");
 			});
 
-			$("#import").on("click", "#konto_erstellen_btn", function(event) {
+			$("#importEigenschaften").on("click", "#konto_erstellen_btn", function(event) {
 				event.preventDefault();
 				$(".signup").css("display", "block");
 				$("#anmelden_btn").hide();
@@ -770,7 +770,7 @@
 				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 			});
 
-			$("#import").on("click", "#konto_speichern_btn", function(event) {
+			$("#importEigenschaften").on("click", "#konto_speichern_btn", function(event) {
 				event.preventDefault();
 				if (validiereSignup()) {
 					erstelleKonto();

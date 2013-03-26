@@ -1435,6 +1435,10 @@ function importiereDatensammlung() {
 				if (window.Datensätze[x][y] === -1) {
 					//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
 					Datensammlung.Daten[y] = true;
+				} else if (window.Datensätze[x][y] == "true") {
+					Datensammlung.Daten[y] = true;
+				} else if (window.Datensätze[x][y] == "false") {
+					Datensammlung.Daten[y] = false;
 				} else {
 					//Normalfall
 					Datensammlung.Daten[y] = window.Datensätze[x][y];
