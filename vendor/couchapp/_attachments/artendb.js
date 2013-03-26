@@ -1445,7 +1445,7 @@ function importiereDatensammlung() {
 		//entsprechenden Index öffnen
 		//sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
 		if (anzFelder > 0) {
-			//Datenbankabfrage ist langsam. Estern aufrufen, 
+			//Datenbankabfrage ist langsam. Extern aufrufen, 
 			//sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
 			var guid;
 			if (window.DsId === "guid") {
@@ -1480,6 +1480,94 @@ function importiereDatensammlung() {
 	$("#importieren_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 	DsImportiert.resolve();
 	return DsImportiert.promise();
+}
+
+//bekommt das Objekt mit den Datensätzen (window.Datensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+//holt sich selber die in den Feldern erfassten Infos der Datensammlung
+function entferneDatensammlung() {
+	var guid_array = [];
+	var guidArray = [];
+	var guid;
+	var Datensammlung, anzFelder, anzDs;
+	var DsEntfernt = $.Deferred();
+	//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
+	var Zähler = 0;
+	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
+	anzDs = 0;
+	for (x=0; x<window.Datensätze.length; x++) {
+		//zuerst die id in guid übersetzen
+		if (window.DsId === "guid") {
+			//die in der Tabelle mitgelieferte id ist die guid
+			guid = window.Datensätze[x][window.DsFelderId];
+		} else {
+			for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+				if (window.ZuordbareDatensätze[z].Id == window.Datensätze[x][window.DsFelderId]) {
+					//und die guid auslesen
+					guid = window.ZuordbareDatensätze[z].Guid;
+					break;
+				}
+			}
+		}
+		//Einen Array der id's erstellen
+		guid_array.push(guid);
+	}
+	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfern. Am Ende verbleiben keine oder die nicht entfernten
+	window.aktualisierte_objekte = guid_array.slice();
+	//alle docs gleichzeitig holen
+	//aber batchweise
+	var a = 0;
+	var batch = 150;
+	var batchGrösse = 150;
+	for (a; a<batch; a++) {
+		if (a < guid_array.length) {
+			guidArray.push(guid_array[a].GUID);
+			if (a === (batch-1)) {
+				entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+				guidArray = [];
+				batch += batchGrösse;
+			}
+		} else {
+			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+			break;
+		}
+	}
+	//alle docs: die Datensammlung entfernen
+	//alle docs: schreiben
+	//RückmeldungsLinks in Feld anzeigen:
+	$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
+	$("#importieren_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
+	DsEntfernt.resolve();
+	return DsEntfernt.promise();
+}
+
+function entferneDatensammlung_2(DsName, guidArray, a) {
+	//alle docs holen
+	setTimeout(function() {
+		$db = $.couch.db("artendb");
+		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
+			success: function (data) {
+				var Objekt;
+				for (var f=0; f<data.rows.length; f++) {
+					Objekt = data.rows[f].doc;
+					entferneDatensammlungAusObjekt(DsName, Objekt);
+				}
+			}
+		});
+	}, a*40);
+}
+
+function entferneDatensammlungAusObjekt(DsName, Objekt) {
+	if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
+		for (var i=0; i<Objekt.Datensammlungen.length; i++) {
+			if (Objekt.Datensammlungen[i].Name === DsName) {
+				Objekt.Datensammlungen.splice(i,1);
+				$db = $.couch.db("artendb");
+				$db.saveDoc(Objekt);
+				break;
+			}
+		}
+	}
 }
 
 //fügt der Art eine Datensammlung hinzu

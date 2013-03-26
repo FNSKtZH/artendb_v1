@@ -483,8 +483,10 @@
 						zeigeFormular("import");
 						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
+							console.log('angemeldet. ds beschreiben');
 							$("#importieren_ds_beschreiben_collapse").collapse('show');
 						} else {
+							console.log('anmelden');
 							$("#importieren_anmelden_collapse").collapse('show');
 						}
 					}
@@ -591,7 +593,15 @@
 					e.preventDefault();
 					$.when(importiereDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
-						console.log("Import ist fertig");
+						console.log("Datensammlung importiert");
+					});
+				});
+
+				$("#import").on("click", "#DsEntfernen", function(e) {
+					e.preventDefault();
+					$.when(entferneDatensammlung()).then(function() {
+						//jetzt Ergebnisse anzeigen
+						console.log("Datensammlung entfernt");
 					});
 				});
 
