@@ -1483,22 +1483,17 @@ function importiereDatensammlung() {
 }
 
 //bekommt das Objekt mit den Datensätzen (window.Datensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
-//holt sich selber die in den Feldern erfassten Infos der Datensammlung
+//holt sich selber den in den Feldern erfassten Namen der Datensammlung
 function entferneDatensammlung() {
 	var guid_array = [];
 	var guidArray = [];
 	var guid;
-	var Datensammlung, anzFelder, anzDs;
 	var DsEntfernt = $.Deferred();
-	//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
-	var Zähler = 0;
-	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
-	anzDs = 0;
 	for (x=0; x<window.Datensätze.length; x++) {
 		//zuerst die id in guid übersetzen
 		if (window.DsId === "guid") {
 			//die in der Tabelle mitgelieferte id ist die guid
-			guid = window.Datensätze[x][window.DsFelderId];
+			guid = window.Datensätze[x].GUID;
 		} else {
 			for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
 				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
@@ -1521,7 +1516,7 @@ function entferneDatensammlung() {
 	var batchGrösse = 150;
 	for (a; a<batch; a++) {
 		if (a < guid_array.length) {
-			guidArray.push(guid_array[a].GUID);
+			guidArray.push(guid_array[a]);
 			if (a === (batch-1)) {
 				entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 				guidArray = [];
@@ -1529,15 +1524,13 @@ function entferneDatensammlung() {
 			}
 		} else {
 			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+			//RückmeldungsLinks in Feld anzeigen:
+			$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
+			$("#importieren_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt");
+			DsEntfernt.resolve();
 			break;
 		}
 	}
-	//alle docs: die Datensammlung entfernen
-	//alle docs: schreiben
-	//RückmeldungsLinks in Feld anzeigen:
-	$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
-	$("#importieren_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
-	DsEntfernt.resolve();
 	return DsEntfernt.promise();
 }
 

@@ -251,7 +251,7 @@
 						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
 							<div class="accordion-inner">
 								<button type="button" class="btn" id="DsImportieren" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften importieren</button>
-								<button type="button" class="btn disabled" id="DsEntfernen" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<button type="button" class="btn" id="DsEntfernen" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
 								<div id="importieren_import_ausfuehren_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="importieren_import_ausfuehren_hinweis_text"></div>
@@ -483,10 +483,8 @@
 						zeigeFormular("import");
 						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
-							console.log('angemeldet. ds beschreiben');
 							$("#importieren_ds_beschreiben_collapse").collapse('show');
 						} else {
-							console.log('anmelden');
 							$("#importieren_anmelden_collapse").collapse('show');
 						}
 					}
