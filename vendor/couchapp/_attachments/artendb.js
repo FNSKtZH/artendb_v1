@@ -1436,9 +1436,16 @@ function importiereDatensammlung() {
 					//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
 					Datensammlung.Daten[y] = true;
 				} else if (window.Datensätze[x][y] == "true") {
+					//true/false nicht als string importieren
 					Datensammlung.Daten[y] = true;
 				} else if (window.Datensätze[x][y] == "false") {
 					Datensammlung.Daten[y] = false;
+				} else if (window.Datensätze[x][y] == parseInt(window.Datensätze[x][y])) {
+					//Ganzzahlen als Zahlen importieren
+					Datensammlung.Daten[y] = parseInt(window.Datensätze[x][y]);
+				} else if (window.Datensätze[x][y] == parseFloat(window.Datensätze[x][y])) {
+					//Bruchzahlen als Zahlen importieren
+					Datensammlung.Daten[y] = parseFloat(window.Datensätze[x][y]);
 				} else {
 					//Normalfall
 					Datensammlung.Daten[y] = window.Datensätze[x][y];
