@@ -1537,7 +1537,7 @@ function entferneDatensammlung() {
 			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 			//RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
-			$("#importieren_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt");
+			$("#importieren_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
 			DsEntfernt.resolve();
 			break;
 		}
