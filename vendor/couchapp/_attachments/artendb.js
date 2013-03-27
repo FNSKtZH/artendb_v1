@@ -2154,7 +2154,7 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 			bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{}]&group_level=2', {
+			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{}]&group_level=3', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
@@ -2194,7 +2194,7 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 			bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{}]&group_level=2', {
+			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{}]&group_level=3', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;
@@ -2205,7 +2205,7 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 	}
 }
 
-function bereiteImportieren_ds_beschreibenVor_02() {
+function bereiteImportieren_bs_beschreibenVor_02() {
 	//BsNamen in Auswahlliste stellen
 	var BsNamen = [""];
 	for (i in window.bs_von_objekten.rows) {
