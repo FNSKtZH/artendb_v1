@@ -194,6 +194,27 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_ds_daten_uploaden_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">Technische Anforderungen an die Datei:
+									<ul>
+										<li>Die erste Zeile enthält die Feldnamen</li>
+										<li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. die Eigenschaften für die betreffende Art oder den Lebensraum</li>
+										<li>Alle Zeilen sollten dieselbe Anzahl Felder bzw. Spalten enthalten</li>
+										<li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
+										<li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Artwert"</li>
+										<li>Ausnahmen: Zahlen und true/false-Werte brauchen keine Anführungs- und Schlusszeichen (es macht aber nichts, wenn sie sie haben)</li>
+										<li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
+										<li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
+									</ul>
+								</div>
+								<div class="well well-small">Inhaltliche Anforderungen:
+									<ul>
+										<li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
+										<li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
+										<li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li>
+										<li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li>
+										<li>ArtenDb setzt beim Export von Daten den Namen der Datensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
+									</ul>
+								</div>
 								<div class="form-actions">
 									<div class="fileupload fileupload-new" data-provides="fileupload">
 										<div class="input-append">

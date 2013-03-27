@@ -1,26 +1,25 @@
 ﻿function(doc) {
-	var Datensammlung;
-	var Beziehungssammlung;
+	var Felder;
 	if (doc.Datensammlungen) {
 		for (var i=0; i<doc.Datensammlungen.length; i++) {
-			Datensammlung = {};
+			Felder = {};
 			for (var x in doc.Datensammlungen[i]) {
-				if (x !== "Daten" && x !== "Typ") {
-					Datensammlung[x] = doc.Datensammlungen[i][x];
+				if (x !== "Typ" && x !== "Name" && x !== "Daten" ) {
+					Felder[x] = doc.Datensammlungen[i][x];
 				}
 			}
-			emit (["Datensammlung", doc.Datensammlungen[i].Name, Datensammlung], null);
+			emit (["Datensammlung", doc.Datensammlungen[i].Name, Felder], null);
 		}
 	}
 	if (doc.Beziehungssammlungen) {
 		for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-			Beziehungssammlung = {};
+			Felder = {};
 			for (var x in doc.Beziehungssammlungen[i]) {
-				if (x !== "Daten" && x !== "Typ") {
-					Beziehungssammlung[x] = doc.Beziehungssammlungen[i][x];
+				if (x !== "Typ" && x !== "Name" && x !== "Beziehungen") {
+					Felder[x] = doc.Beziehungssammlungen[i][x];
 				}
 			}
-			emit (["Beziehungssammlung", doc.Beziehungssammlungen[i].Name, Beziehungssammlung], null);
+			emit (["Beziehungssammlung", doc.Beziehungssammlungen[i].Name, Felder], null);
 		}
 	}
 }
