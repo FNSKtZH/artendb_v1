@@ -594,25 +594,22 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//Beschreibung der Datensammlung abschliessen
 	html += '</div>';
 
-	//die Beziehungen nach Objektnamen sortieren
-	//ausgeschaltet um zu sehen, ob das bremst
-	//ist auch nicht nötig, da die Daten beim Einfügen sortiert werden sollten
-	//müsste bei Gruppe Lebensräume auch die Taxonomie berücksichtigen, wie in artendb_import
+	//die Beziehungen sortieren
 	art_i.Beziehungen.sort(function(a, b) {
 		var aName, bName;
 		for (c in a.Beziehungspartner) {
 			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
 				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-				aName = a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
 			} else {
-				aName = a.Beziehungspartner[c].Name;
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
 			}
 		}
 		for (d in b.Beziehungspartner) {
 			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-				bName = b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
 			} else {
-				bName = b.Beziehungspartner[d].Name;
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
 			}
 		}
 		if (aName && bName) {
@@ -634,9 +631,9 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 			}
 			for (y in art_i.Beziehungen[i].Beziehungspartner) {
 				if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
 				} else {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Name
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name
 				}
 				//Partner darstellen
 				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
