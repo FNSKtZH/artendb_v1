@@ -171,7 +171,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	-webkit-column-width: 450px;
 }
 
-#art label, #importEigenschaften label, #export .control-group label {
+#art label, #importieren_ds label, #importieren_bs label, #export .control-group label {
 	width: 180px;
 	color: #555555;
 	margin-right: 7px;
@@ -181,7 +181,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	/*position: absolute;*/
 }
 
-#art .feldtext, #importEigenschaften .feldtext, #export .feldtext {
+#art .feldtext, #importieren_ds .feldtext, #importieren_bs .feldtext, #export .feldtext {
 	margin-left: 192px;
 	display: block;
 	padding-top: 4px;
@@ -191,7 +191,7 @@ a {
 	color: #016ca2;
 }
 
-#art .feldtext a, #importEigenschaften .feldtext a, #export .feldtext a {
+#art .feldtext a, #importieren_ds .feldtext a, #importieren_bs .feldtext a, #export .feldtext a {
 	margin-left: 0px;
 }
 
@@ -207,7 +207,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-#art legend, #importEigenschaften legend, #export legend {
+#art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
 	color: #6F6F66;
 	font-weight: bold;
 	margin: 0px 0px 7px 0px;
@@ -284,7 +284,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
-#art .control-group, #importEigenschaften .control-group, #export .control-group {
+#art .control-group, #importieren_ds .control-group, #importieren_bs .control-group, #export .control-group {
 	margin-bottom: 5px;
 	/*position: relative;*/
 	-webkit-column-break-inside:avoid;
@@ -298,7 +298,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100px;
 }
 
-#art input, #art select, #art textarea, #importEigenschaften input, #importEigenschaften select, #importEigenschaften textarea, #export .controls input, #export select, #export textarea {
+#art input, #art select, #art textarea, #importieren_ds input, #importieren_ds select, #importieren_ds textarea, #importieren_bs input, #importieren_bs select, #importieren_bs textarea, #export .controls input, #export select, #export textarea {
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }

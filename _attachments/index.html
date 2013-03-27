@@ -30,8 +30,8 @@
 				<li class="dropdown-submenu">
 					<a tabindex="-1" href="#">Daten importieren / löschen</a>
 					<ul class="dropdown-menu">
-						<li><a id="eigenschaften_importieren" href="#">Eigenschaften</a></li>
-						<li class="disabled"><a id="beziehungen_importieren" href="#">Beziehungen</a></li>
+						<li><a id="ds_importieren" href="#">Eigenschaften</a></li>
+						<li><a id="bs_importieren" href="#">Beziehungen</a></li>
 					</ul>
 				</li>
 				<li><a id="exportieren" href="#">Daten exportieren</a></li>
@@ -92,63 +92,63 @@
 
 			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
 			
-			<form id="importEigenschaften" class="form form-horizontal import" action="#" method="get" autocomplete="off">
-				<div id="importieren_accordion" class="accordion">
-					<div id="importieren_anmelden" class="accordion-group">
+			<form id="importieren_ds" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+				<div id="importieren_ds_accordion" class="accordion">
+					<div id="importieren_ds_anmelden" class="accordion-group importieren_anmelden">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="importieren_anmelden_titel" class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_anmelden_collapse">1. Anmelden</a>
+							<a id="importieren_ds_anmelden_titel" class="accordion-toggle importieren_anmelden_titel" data-toggle="collapse" data-parent="importieren_ds_accordion" href="#importieren_ds_anmelden_collapse">1. Anmelden</a>
 						</div>
-						<div id="importieren_anmelden_collapse" class="accordion-body collapse">
+						<div id="importieren_ds_anmelden_collapse" class="accordion-body collapse importieren_anmelden_collapse">
 							<div class="accordion-inner">
 								<div class="control-group">
-									<label class="control-label" for="Email">Email</label>
+									<label class="control-label" for="Email_ds">Email</label>
 									<div class="controls">
-										<input type="email" id="Email" placeholder="Email" required>
-										<div id="Emailhinweis" class="hinweis text-error">Bitte Email erfassen</div>
+										<input type="email" id="Email_ds" class="Email" placeholder="Email" required>
+										<div id="Emailhinweis_ds" class="hinweis text-error Emailhinweis">Bitte Email erfassen</div>
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="Passwort">Passwort</label>
+									<label class="control-label" for="Passwort_ds">Passwort</label>
 									<div class="controls">
-										<input type="password" id="Passwort" placeholder="Passwort" required>
-										<div id="Passworthinweis" class="hinweis text-error">Bitte Passwort erfassen</div>
+										<input type="password" id="Passwort_ds" class="Passwort" placeholder="Passwort" required>
+										<div id="Passworthinweis_ds" class="hinweis text-error">Bitte Passwort erfassen</div>
 										<div class="signup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
 										<div class="signup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
 									</div>
 								</div>
 								<div class="control-group signup">
-									<label class="control-label" for="Passwort2">Passwort bestätigen</label>
+									<label class="control-label" for="Passwort2_ds">Passwort bestätigen</label>
 									<div class="controls">
-										<input type="password" id="Passwort2" placeholder="Passwort bestätigen" required>
-										<div id="Passwort2hinweis" class="hinweis text-error">Bitte Passwort bestätigen</div>
-										<div id="Passwort2hinweisFalsch" class="hinweis text-error">Die Passwörter stimmen nicht überein</div>
+										<input type="password" id="Passwort2_ds" class="Passwort2" placeholder="Passwort bestätigen" required>
+										<div id="Passwort2hinweis_ds" class="hinweis text-error Passwort2hinweis">Bitte Passwort bestätigen</div>
+										<div id="Passwort2hinweisFalsch_ds" class="hinweis text-error Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
 								<div class="feld">
-									<button id="anmelden_btn" class="btn">anmelden</button>
-									<button id="abmelden_btn" class="btn" style="display:none;">abmelden</button>
-									<button id="konto_erstellen_btn" class="btn">neues Konto erstellen</button>
-									<button id="konto_speichern_btn" class="btn" style="display:none;">neues Konto speichern</button>
+									<button id="anmelden_btn_ds" class="btn anmelden_btn">anmelden</button>
+									<button id="abmelden_btn_ds" class="btn abmelden_btn" style="display:none;">abmelden</button>
+									<button id="konto_erstellen_btn_ds" class="btn konto_erstellen_btn">neues Konto erstellen</button>
+									<button id="konto_speichern_btn_ds" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
 								</div>
-								<div id="importieren_anmelden_fehler" class="alert alert-error">
+								<div id="importieren_ds_anmelden_fehler_ds" class="alert alert-error importieren_anmelden_fehler">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_anmelden_fehler_text"></div>
+									<div id="importieren_ds_anmelden_fehler_text_ds" class="importieren_anmelden_fehler_text"></div>
 								</div>
-								<div id="importieren_anmelden_hinweis" class="alert alert-info">
+								<div id="importieren_ds_anmelden_hinweis_ds" class="alert alert-info importieren_anmelden_hinweis">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_anmelden_hinweis_text"></div>
+									<div id="importieren_ds_anmelden_hinweis_text_ds" class="importieren_anmelden_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="accordion-group" id="importieren_ds_beschreiben">
+					<div class="accordion-group" id="importieren_ds_ds_beschreiben">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_ds_beschreiben_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_accordion" href="#importieren_ds_ds_beschreiben_collapse">
 								2. Datensammlung beschreiben
 							</a>
 						</div>
-						<div class="accordion-body collapse" id="importieren_ds_beschreiben_collapse">
+						<div class="accordion-body collapse" id="importieren_ds_ds_beschreiben_collapse">
 							<div class="accordion-inner">
 								<div class="control-group">
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
@@ -156,9 +156,9 @@
 								</div>
 								<div class="feld">
 									<button type="button" class="btn" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
-									<div id="importieren_ds_beschreiben_hinweis" class="alert alert-info">
+									<div id="importieren_ds_ds_beschreiben_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ds_beschreiben_hinweis_text"></div>
+									<div id="importieren_ds_ds_beschreiben_hinweis_text"></div>
 								</div>
 								</div>
 								<hr>
@@ -186,13 +186,13 @@
 						</div>
 					</div>
 
-					<div class="accordion-group" id="importieren_daten_uploaden">
+					<div class="accordion-group" id="importieren_ds_daten_uploaden">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_daten_uploaden_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_accordion" href="#importieren_ds_daten_uploaden_collapse">
 								3. Eigenschaften laden
 							</a>
 						</div>
-						<div class="accordion-body collapse" id="importieren_daten_uploaden_collapse">
+						<div class="accordion-body collapse" id="importieren_ds_daten_uploaden_collapse">
 							<div class="accordion-inner">
 								<div class="form-actions">
 									<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -207,13 +207,13 @@
 						</div>
 					</div>
 
-					<div class="accordion-group" id="importieren_ids_identifizieren">
+					<div class="accordion-group" id="importieren_ds_ids_identifizieren">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_ids_identifizieren_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_accordion" href="#importieren_ds_ids_identifizieren_collapse">
 								4. ID's identifizieren
 							</a>
 						</div>
-						<div class="accordion-body collapse" id="importieren_ids_identifizieren_collapse">
+						<div class="accordion-body collapse" id="importieren_ds_ids_identifizieren_collapse">
 							<div class="accordion-inner">
 								<div id="DsFelder_div" class="control-group"></div>
 								<div class="control-group">
@@ -226,35 +226,205 @@
 										<option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
 									</select>
 								</div>
-								<div id="importieren_ids_identifizieren_fehler" class="alert alert-error">
+								<div id="importieren_ds_ids_identifizieren_fehler" class="alert alert-error">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ids_identifizieren_fehler_text"></div>
+									<div id="importieren_ds_ids_identifizieren_fehler_text"></div>
 								</div>
-								<div id="importieren_ids_identifizieren_hinweis" class="alert alert-info">
+								<div id="importieren_ds_ids_identifizieren_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ids_identifizieren_hinweis_text"></div>
+									<div id="importieren_ds_ids_identifizieren_hinweis_text"></div>
 								</div>
-								<div id="importieren_ids_identifizieren_erfolg" class="alert alert-success">
+								<div id="importieren_ds_ids_identifizieren_erfolg" class="alert alert-success">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ids_identifizieren_erfolg_text"></div>
+									<div id="importieren_ds_ids_identifizieren_erfolg_text"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="accordion-group" id="importieren_import_ausfuehren">
+					<div class="accordion-group" id="importieren_ds_import_ausfuehren">
 						<div class="accordion-heading accordion-group_gradient">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_accordion" href="#importieren_import_ausfuehren_collapse">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_accordion" href="#importieren_ds_import_ausfuehren_collapse">
 								5. Import ausführen
 							</a>
 						</div>
-						<div class="accordion-body collapse" id="importieren_import_ausfuehren_collapse">
+						<div class="accordion-body collapse" id="importieren_ds_import_ausfuehren_collapse">
 							<div class="accordion-inner">
 								<button type="button" class="btn" id="DsImportieren" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften importieren</button>
 								<button type="button" class="btn" id="DsEntfernen" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
-								<div id="importieren_import_ausfuehren_hinweis" class="alert alert-info">
+								<div id="importieren_ds_import_ausfuehren_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_import_ausfuehren_hinweis_text"></div>
+									<div id="importieren_ds_import_ausfuehren_hinweis_text"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>		
+			</form>
+
+			<form id="importieren_bs" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+				<div id="importieren_bs_accordion" class="accordion">
+					<div id="importieren_bs_anmelden" class="accordion-group">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="importieren_bs_anmelden_titel" class="accordion-toggle importieren_anmelden_titel" data-toggle="collapse" data-parent="importieren_bs_accordion" href="#importieren_bs_anmelden_collapse">1. Anmelden</a>
+						</div>
+						<div id="importieren_bs_anmelden_collapse" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="control-group">
+									<label class="control-label" for="Email_beziehungen">Email</label>
+									<div class="controls">
+										<input type="email" id="Email_beziehungen" class="Email" placeholder="Email" required>
+										<div id="Emailhinweis_beziehungen" class="Emailhinweis hinweis text-error">Bitte Email erfassen</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="Passwort_beziehungen">Passwort</label>
+									<div class="controls">
+										<input type="password" id="Passwort_beziehungen" class="Passwort" placeholder="Passwort" required>
+										<div id="Passworthinweis_beziehungen" class="Passworthinweis hinweis text-error">Bitte Passwort erfassen</div>
+										<div class="signup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+										<div class="signup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+									</div>
+								</div>
+								<div class="control-group signup">
+									<label class="control-label" for="Passwort2_beziehungen">Passwort bestätigen</label>
+									<div class="controls">
+										<input type="password" id="Passwort2_beziehungen" class="Passwort2" placeholder="Passwort bestätigen" required>
+										<div id="Passwort2hinweis_beziehungen" class="Passwort2hinweis hinweis text-error">Bitte Passwort bestätigen</div>
+										<div id="Passwort2hinweisFalsch_beziehungen" class="Passwort2hinweisFalsch hinweis text-error">Die Passwörter stimmen nicht überein</div>
+									</div>
+								</div>
+								<div class="feld">
+									<button id="anmelden_btn_beziehungen" class="btn anmelden_btn">anmelden</button>
+									<button id="abmelden_btn_beziehungen" class="btn abmelden_btn" style="display:none;">abmelden</button>
+									<button id="konto_erstellen_btn_beziehungen" class="btn konto_erstellen_btn">neues Konto erstellen</button>
+									<button id="konto_speichern_btn_beziehungen" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+								</div>
+								<div id="importieren_bs_anmelden_fehler_beziehungen" class="alert alert-error importieren_bs_anmelden_fehler">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_anmelden_fehler_text_beziehungen" class="importieren_bs_anmelden_fehler_text"></div>
+								</div>
+								<div id="importieren_bs_anmelden_hinweis_beziehungen" class="alert alert-info importieren_bs_anmelden_hinweis">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_anmelden_hinweis_text_beziehungen" class="importieren_bs_anmelden_hinweis_text"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_bs_ds_beschreiben">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_accordion" href="#importieren_bs_ds_beschreiben_collapse">
+								2. Beziehungssammlung beschreiben
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_bs_ds_beschreiben_collapse">
+							<div class="accordion-inner">
+								<div class="control-group">
+									<label class="control-label" for="BsWaehlen">Bestehende wählen</label>
+									<select type="text" class="controls" id="BsWaehlen"></select>
+								</div>
+								<div class="feld">
+									<button type="button" class="btn" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+									<div id="importieren_bs_ds_beschreiben_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_ds_beschreiben_hinweis_text"></div>
+								</div>
+								</div>
+								<hr>
+								<div class="control-group">
+									<label class="control-label" for="BsName">Name</label>
+									<input type="text" class="controls" id="BsName">
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="BsBeschreibung">Beschreibung</label>
+									<textarea class="controls" id="BsBeschreibung"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="BsDatenstand">Datenstand</label>
+									<textarea class="controls" id="BsDatenstand"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="BsLink">Link</label>
+									<textarea class="controls" id="BsLink"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="BsAnzBs" id="BsAnzBs_label"></label>
+									<div id="BsAnzBs" class="feldtext controls"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_bs_daten_uploaden">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_accordion" href="#importieren_bs_daten_uploaden_collapse">
+								3. Eigenschaften laden
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_bs_daten_uploaden_collapse">
+							<div class="accordion-inner">
+								<div class="form-actions">
+									<div class="fileupload fileupload-new" data-provides="fileupload">
+										<div class="input-append">
+											<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="BsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
+										</div>
+									</div>
+								</div>
+								<div id="BsTabelleEigenschaften" class="tabelle">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_bs_ids_identifizieren">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_accordion" href="#importieren_bs_ids_identifizieren_collapse">
+								4. ID's identifizieren
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_bs_ids_identifizieren_collapse">
+							<div class="accordion-inner">
+								<div id="BsFelder_div" class="control-group"></div>
+								<div class="control-group">
+									<label class="control-label" for="BsId">zugehörige ID in ArtenDb</label>
+									<select type="text" class="controls" id="BsId"  multiple="multiple" style="height:95px;">
+										<option value="guid">GUID der ArtenDb</option>
+										<option value="Fauna">ID der Info Fauna (NUESP)</option>
+										<option value="Flora">ID der Info Flora (SISF-NR)</option>
+										<option value="Moose">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
+										<option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
+									</select>
+								</div>
+								<div id="importieren_bs_ids_identifizieren_fehler" class="alert alert-error">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_ids_identifizieren_fehler_text"></div>
+								</div>
+								<div id="importieren_bs_ids_identifizieren_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_ids_identifizieren_hinweis_text"></div>
+								</div>
+								<div id="importieren_bs_ids_identifizieren_erfolg" class="alert alert-success">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_ids_identifizieren_erfolg_text"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" id="importieren_bs_import_ausfuehren">
+						<div class="accordion-heading accordion-group_gradient">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_accordion" href="#importieren_bs_import_ausfuehren_collapse">
+								5. Import ausführen
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="importieren_bs_import_ausfuehren_collapse">
+							<div class="accordion-inner">
+								<button type="button" class="btn" id="BsImportieren" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften importieren</button>
+								<button type="button" class="btn" id="BsEntfernen" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<div id="importieren_bs_import_ausfuehren_hinweis" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_import_ausfuehren_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
@@ -279,19 +449,19 @@
 									</ul>
 								</div>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" view="fauna" value="Fauna">Fauna
+									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="fauna" value="Fauna">Fauna
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" view="flora" value="Flora">Flora
+									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="flora" value="Flora">Flora
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" view="moose" value="Moose">Moose
+									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="moose" value="Moose">Moose
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" view="macromycetes" value="Macromycetes">Pilze
+									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="macromycetes" value="Macromycetes">Pilze
 								</label>
 								<label class="checkbox">
-									<input class="exportieren_objekte_waehlen_gruppe" type="checkbox" view="lr" value="Lebensräume">Lebensräume
+									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="lr" value="Lebensräume">Lebensräume
 								</label>
 								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis" class="alert alert-info">
@@ -302,11 +472,11 @@
 						</div>
 					</div>
 
-					<div class="accordion-group" id="exportieren_objekte_waehlen_eigenschaften">
+					<div class="accordion-group" id="exportieren_objekte_waehlen_ds">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="exportieren_objekte_waehlen_eigenschaften_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_eigenschaften_collapse" data-parent="exportieren_accordion" href="#exportieren_objekte_waehlen_eigenschaften_collapse">2. Nach Eigenschaften filtern</a>
+							<a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_ds_collapse" data-parent="exportieren_accordion" href="#exportieren_objekte_waehlen_ds_collapse">2. Nach Eigenschaften filtern</a>
 						</div>
-						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_eigenschaften_collapse">
+						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_ds_collapse">
 							<div class="accordion-inner">
 								<div class="well well-small" style="margin-bottom:0px;">So geht's:
 									<ul>
@@ -329,12 +499,12 @@
 									<h3>Art / Lebensraum</h3>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_guid">GUID</label>
+									<label class="control-label" for="exportieren_objekte_waehlen_ds_guid">GUID</label>
 									<div class="controls">
-										<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_guid" Eigenschaft="keine" Feld="_id">
+										<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_ds_guid" Eigenschaft="keine" Feld="_id">
 									</div>
 								</div>
-								<div id="exportieren_objekte_waehlen_eigenschaften_felderliste"></div>
+								<div id="exportieren_objekte_waehlen_ds_felderliste"></div>
 							</div>
 						</div>
 					</div>
@@ -446,11 +616,11 @@
 
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
-					$("#importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-					$("#anmelden_btn").hide();
-					$("#abmelden_btn").show();
-					$("#konto_erstellen_btn").hide();
-					$("#konto_speichern_btn").hide();
+					$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
+					$(".anmelden_btn").hide();
+					$(".abmelden_btn").show();
+					$(".konto_erstellen_btn").hide();
+					$(".konto_speichern_btn").hide();
 				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
@@ -476,66 +646,109 @@
 					}
 				});
 
-				$("#menu_btn").on("click", "#eigenschaften_importieren", function() {
+				$("#menu_btn").on("click", "#ds_importieren", function() {
 					//testen, ob der Browser das Importieren unterstützt
 					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 					if(isFileAPIAvailable()) {
-						zeigeFormular("importEigenschaften");
+						zeigeFormular("importieren_ds");
 						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
-							$("#importieren_ds_beschreiben_collapse").collapse('show');
+							$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 						} else {
-							$("#importieren_anmelden_collapse").collapse('show');
+							$("#importieren_ds_anmelden_collapse").collapse('show');
 						}
 					}
 				});
 
-				$('#importieren_ds_beschreiben_collapse').on('shown', function() {
-					bereiteImportieren_ds_beschreibenVor();
+				$("#menu_btn").on("click", "#bs_importieren", function() {
+					//testen, ob der Browser das Importieren unterstützt
+					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+					if(isFileAPIAvailable()) {
+						zeigeFormular("importieren_bs");
+						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+						if (localStorage.Email) {
+							$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
+						} else {
+							$("#importieren_bs_anmelden_collapse").collapse('show');
+						}
+					}
 				});
 
-				$('#importieren_daten_uploaden_collapse').on('shown', function (event) {
+				$('#importieren_ds_ds_beschreiben_collapse').on('shown', function() {
+					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+					bereiteImportieren_ds_beschreibenVor("_ds");
+				});
+
+				$('#importieren_bs_ds_beschreiben_collapse').on('shown', function() {
+					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+					bereiteImportieren_bs_beschreibenVor("_bs");
+				});
+
+				$('#importieren_ds_daten_uploaden_collapse').on('shown', function (event) {
 					if (!localStorage.Email) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung();
+						zurueckZurAnmeldung("_ds");
 					} else {
 						$('#DsFile').fileupload();
 					}
 				});
 
-				$('#importieren_ids_identifizieren_collapse').on('shown', function (event) {
+				$('#importieren_bs_daten_uploaden_collapse').on('shown', function (event) {
 					if (!localStorage.Email) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung();
+						zurueckZurAnmeldung("_bs");
+					} else {
+						$('#BsFile').fileupload();
 					}
 				});
 
-				$('#importieren_import_ausfuehren_collapse').on('shown', function (event) {
+				$('#importieren_ds_ids_identifizieren_collapse').on('shown', function (event) {
 					if (!localStorage.Email) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung();
+						zurueckZurAnmeldung("_ds");
 					}
 				});
 
-				$("#importEigenschaften").on("change", "#DsWaehlen", function() {
+				$('#importieren_bs_ids_identifizieren_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung("_bs");
+					}
+				});
+
+				$('#importieren_ds_import_ausfuehren_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung("_ds");
+					}
+				});
+
+				$('#importieren_bs_import_ausfuehren_collapse').on('shown', function (event) {
+					if (!localStorage.Email) {
+						$(this).collapse('hide');
+						zurueckZurAnmeldung("_bs");
+					}
+				});
+
+				$("#importieren_ds").on("change", "#DsWaehlen", function() {
 					var that = this;
 					//zuerst alle Felder leeren
-					$('#importEigenschaften textarea, #importEigenschaften input').each(function () {
+					$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
 						$(this).val('');
-						$("#DsAnzDs").html("");
-						$("#DsAnzDs_label").html("");
 					});
+					$("#DsAnzDs").html("");
+					$("#DsAnzDs_label").html("");
 					if (that.value) {
 						for (i in window.ds_von_objekten.rows) {
-							if (window.ds_von_objekten.rows[i].key[0] === that.value) {
+							if (window.ds_von_objekten.rows[i].key[1] === that.value) {
 								$("#DsName").val(that.value);
-								for (x in window.ds_von_objekten.rows[i].key[1]) {
-									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[1][x]);
+								for (x in window.ds_von_objekten.rows[i].key[2]) {
+									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[2][x]);
 								}
 								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 								$("#DsAnzDs_label").html("Anzahl Datensätze");
 								//dafür sorgen, dass textareas genug gross sind
-								$('#importEigenschaften textarea').each(function () {
+								$('#importieren_ds textarea').each(function () {
 									$(this).trigger('focus');
 								});
 								$("#DsName").focus();
@@ -549,7 +762,39 @@
 					}
 				});
 
-				$("#importEigenschaften").on("change", "#DsFile", function(e) {
+				$("#importieren_bs").on("change", "#BsWaehlen", function() {
+					var that = this;
+					//zuerst alle Felder leeren
+					$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
+						$(this).val('');
+					});
+					$("#BsAnzDs").html("");
+					$("#BsAnzDs_label").html("");
+					if (that.value) {
+						for (i in window.bs_von_objekten.rows) {
+							if (window.bs_von_objekten.rows[i].key[1] === that.value) {
+								$("#BsName").val(that.value);
+								for (x in window.bs_von_objekten.rows[i].key[2]) {
+									$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[2][x]);
+								}
+								$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
+								$("#BsAnzDs_label").html("Anzahl Datensätze");
+								//dafür sorgen, dass textareas genug gross sind
+								$('#importieren_bs textarea').each(function () {
+									$(this).trigger('focus');
+								});
+								$("#BsName").focus();
+							}
+							//löschen-Schaltfläche einblenden
+							$("#BsLoeschen").css("display", "block");
+						}
+					} else {
+						//löschen-Schaltfläche ausblenden
+						$("#BsLoeschen").css("display", "none");
+					}
+				});
+
+				$("#importieren_ds").on("change", "#DsFile", function(e) {
 					e.preventDefault();
 					// Check for the various File API support
 					if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -567,27 +812,27 @@
 					reader.readAsText(file);
 				});
 
-				$("#importEigenschaften").on("change", "#DsFelder", function(e) {
+				$("#importieren_ds").on("change", "#DsFelder", function(e) {
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#importEigenschaften").on("change", "#DsId", function(e) {
+				$("#importieren_ds").on("change", "#DsId", function(e) {
 					meldeErfolgVonIdIdentifikation();
 				});
 
-				$("#importEigenschaften").on("click", "#DsLoeschen", function(e) {
+				$("#importieren_ds").on("click", "#DsLoeschen", function(e) {
 					e.preventDefault();
 					//Rückmeldung anzeigen
-					$("#importieren_ds_beschreiben_hinweis").alert().css("display", "block");
-					$("#importieren_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
+					$("#importieren_ds_ds_beschreiben_hinweis").alert().css("display", "block");
+					$("#importieren_ds_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
 					$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
 						//jetzt Ergebnisse anzeigen
-						$("#importieren_ds_beschreiben_hinweis").alert().css("display", "block");
-						$("#importieren_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
+						$("#importieren_ds_ds_beschreiben_hinweis").alert().css("display", "block");
+						$("#importieren_ds_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
 					});
 				});
 
-				$("#importEigenschaften").on("click", "#DsImportieren", function(e) {
+				$("#importieren_ds").on("click", "#DsImportieren", function(e) {
 					e.preventDefault();
 					$.when(importiereDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
@@ -595,7 +840,7 @@
 					});
 				});
 
-				$("#importEigenschaften").on("click", "#DsEntfernen", function(e) {
+				$("#importieren_ds").on("click", "#DsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
@@ -612,7 +857,7 @@
 					delete window.exportieren_objekte_sik;
 				});
 
-				$("#export").on("change", ".exportieren_objekte_waehlen_gruppe", function() {
+				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
 					erstelleListeFuerFeldwahl();
 					//Tabelle ausblenden, falls sie eingeblendet war
 					$("#exportieren_exportieren_tabelle").css("display", "none");
@@ -638,7 +883,7 @@
 					}
 					//Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
 					var gruppeIstGewählt = false;
-					$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_objekte_waehlen_gruppe").each(function() {
+					$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_ds_objekte_waehlen_gruppe").each(function() {
 						if ($(this).prop('checked')) {
 							gruppeIstGewählt = true;
 						}
@@ -675,7 +920,7 @@
 					//$($(this).attr("href")).collapse("toggle");
 				});
 
-				$("#importEigenschaften").on("click", ".accordion-heading a", function(event) {
+				$("#importieren_ds").on("click", ".accordion-heading a", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					//$($(this).attr("href")).collapse("toggle");
@@ -733,32 +978,32 @@
 				setzteHöheTextareas();
 			});
 
-			$("#importEigenschaften").on("click", "#anmelden_btn", function(event) {
+			$("#importieren_ds").on("click", "#anmelden_btn_ds", function(event) {
 				event.preventDefault();
-				meldeUserAn();
+				meldeUserAn("_ds");
 			});
 
-			$("#importEigenschaften").on("click", "#abmelden_btn", function(event) {
+			$("#importieren_ds").on("click", "#abmelden_btn", function(event) {
 				event.preventDefault();
 				meldeUserAb();
 			});
 
-			$("#importEigenschaften").on("keyup", "#Email", function(event) {
+			$("#importieren_ds").on("keyup", "#Email", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Emailhinweis").css("display", "none");
 			});
 
-			$("#importEigenschaften").on("keyup", "#Passwort", function(event) {
+			$("#importieren_ds").on("keyup", "#Passwort", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Passworthinweis").css("display", "none");
 			});
 
-			$("#importEigenschaften").on("keyup", "#Passwort2", function(event) {
+			$("#importieren_ds").on("keyup", "#Passwort2", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$("#Passworthinweis2").css("display", "none");
 			});
 
-			$("#importEigenschaften").on("click", "#konto_erstellen_btn", function(event) {
+			$("#importieren_ds").on("click", "#konto_erstellen_btn", function(event) {
 				event.preventDefault();
 				$(".signup").css("display", "block");
 				$("#anmelden_btn").hide();
@@ -770,10 +1015,10 @@
 				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 			});
 
-			$("#importEigenschaften").on("click", "#konto_speichern_btn", function(event) {
+			$("#importieren_ds").on("click", "#konto_speichern_btn", function(event) {
 				event.preventDefault();
-				if (validiereSignup()) {
-					erstelleKonto();
+				if (validiereSignup("_ds")) {
+					erstelleKonto("_ds");
 					//Anmeldefenster zurücksetzen
 					$(".signup").css("display", "none");
 					$("#anmelden_btn").hide();
@@ -824,7 +1069,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_keine_eigenschaften" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_keine_ds" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">Keine Eigenschaften gewählt</h3>

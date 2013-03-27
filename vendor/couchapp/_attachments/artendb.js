@@ -1101,83 +1101,83 @@ function zeigeFormular(Formularname) {
 
 //kontrollierren, ob die erforderlichen Felder etwas enthalten
 //wenn ja wird true retourniert, sonst false
-function validiereSignup() {
+function validiereSignup(woher) {
 	var Email, Passwort, Passwort2;
 	//zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
 	$(".hinweis").css("display", "none");
 	//erfasste Werte holen
-	Email = $("#Email").val();
-	Passwort = $("#Passwort").val();
-	Passwort2 = $("#Passwort2").val();
+	Email = $("#Email"+woher).val();
+	Passwort = $("#Passwort"+woher).val();
+	Passwort2 = $("#Passwort2"+woher).val();
 	//prüfen
 	if (!Email) {
-		$("#Emailhinweis").css("display", "block");
+		$("#Emailhinweis"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Email").focus();
+			$("#Email"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort) {
-		$("#Passworthinweis").css("display", "block");
+		$("#Passworthinweis"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort").focus();
+			$("#Passwort"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort2) {
-		$("#Passwort2hinweis").css("display", "block");
+		$("#Passwort2hinweis"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort2").focus();
+			$("#Passwort2"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (Passwort !== Passwort2) {
-		$("#Passwort2hinweisFalsch").css("display", "block");
+		$("#Passwort2hinweisFalsch"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort2").focus();
+			$("#Passwort2"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	}
 	return true;
 }
 
-function erstelleKonto() {
+function erstelleKonto(woher) {
 	//User in _user eintragen
 	$.couch.signup({
-			name: $('#Email').val()
-		}, $('#Passwort').val(), {
+			name: $('#Email'+woher).val()
+		}, $('#Passwort'+woher).val(), {
 		success : function() {
-			localStorage.Email = $('#Email').val();
-			passeUiFuerAngemeldetenUserAn();
+			localStorage.Email = $('#Email'+woher).val();
+			passeUiFuerAngemeldetenUserAn(woher);
 			//Werte aus Feldern entfernen
-			$("#Email").val("");
-			$("#Passwort").val("");
-			$("#Passwort2").val("");
+			$("#Email"+woher).val("");
+			$("#Passwort"+woher).val("");
+			$("#Passwort2"+woher).val("");
 		},
 		error : function () {
-			$("#importieren_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-			$("#importieren_anmelden_fehler").alert();
-			$("#importieren_anmelden_fehler").css("display", "block");
+			$("#importieren"+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+			$("#importieren"+woher+"_anmelden_fehler").alert();
+			$("#importieren"+woher+"_anmelden_fehler").css("display", "block");
 		}
 	});
 }
 
-function meldeUserAn() {
+function meldeUserAn(woher) {
 	var Email, Passwort;
-	Email = $('#Email').val();
-	Passwort = $('#Passwort').val();
-	if (validiereUserAnmeldung()) {
+	Email = $('#Email'+woher).val();
+	Passwort = $('#Passwort'+woher).val();
+	if (validiereUserAnmeldung(woher)) {
 		$.couch.login({
 			name : Email,
 			password : Passwort,
 			success : function() {
-				localStorage.Email = $('#Email').val();
-				passeUiFuerAngemeldetenUserAn();
+				localStorage.Email = $('#Email'+woher).val();
+				passeUiFuerAngemeldetenUserAn(woher);
 				//Werte aus Feldern entfernen
-				$("#Email").val("");
-				$("#Passwort").val("");
+				$("#Email"+woher).val("");
+				$("#Passwort"+woher).val("");
 			},
 			error: function () {
-				$("#importieren_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
-				$("#importieren_anmelden_fehler").alert();
-				$("#importieren_anmelden_fehler").css("display", "block");
+				$("#importieren"+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
+				$("#importieren"+woher+"_anmelden_fehler").alert();
+				$("#importieren"+woher+"_anmelden_fehler").css("display", "block");
 			}
 		});
 	}
@@ -1185,49 +1185,49 @@ function meldeUserAn() {
 
 function meldeUserAb() {
 	delete localStorage.Email;
-	$("#importieren_anmelden_titel").text("1. Anmelden");
+	$(".importieren_anmelden_titel").text("1. Anmelden");
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
 }
 
-function passeUiFuerAngemeldetenUserAn() {
-	$("#importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-	$("#importieren_anmelden_collapse").collapse('hide');
-	$("#importieren_ds_beschreiben_collapse").collapse('show');
+function passeUiFuerAngemeldetenUserAn(woher) {
+	$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
+	$("#importieren"+woher+"_anmelden_collapse").collapse('hide');
+	$("#importieren"+woher+"_ds_beschreiben_collapse").collapse('show');
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
-	$("#anmelden_btn").hide();
-	$("#abmelden_btn").show();
-	$("#konto_erstellen_btn").hide();
-	$("#konto_speichern_btn").hide();
+	$(".anmelden_btn").hide();
+	$(".abmelden_btn").show();
+	$(".konto_erstellen_btn").hide();
+	$(".konto_speichern_btn").hide();
 }
 
-function zurueckZurAnmeldung() {
+function zurueckZurAnmeldung(woher) {
 	//Mitteilen, dass Anmeldung nötig ist
-	$("#importieren_anmelden_hinweis").alert().css("display", "block");
-	$("#importieren_anmelden_hinweis_text").html("Um Daten(sammlungen) zu bearbeiten, müssen Sie angemeldet sein");
-	$("#importieren_anmelden_collapse").collapse('show');
-	$("#anmelden_btn").show();
-	$("#abmelden_btn").hide();
-	$("#konto_erstellen_btn").show();
-	$("#konto_speichern_btn").hide();
+	$("#importieren"+woher+"_anmelden_hinweis").alert().css("display", "block");
+	$("#importieren"+woher+"_anmelden_hinweis_text").html("Um Daten(sammlungen) zu bearbeiten, müssen Sie angemeldet sein");
+	$("#importieren"+woher+"_anmelden_collapse").collapse('show');
+	$(".anmelden_btn").show();
+	$(".abmelden_btn").hide();
+	$(".konto_erstellen_btn").show();
+	$(".konto_speichern_btn").hide();
 }
 
-function validiereUserAnmeldung() {
+function validiereUserAnmeldung(woher) {
 	var Email, Passwort;
-	Email = $('#Email').val();
-	Passwort = $('#Passwort').val();
+	Email = $('#Email'+woher).val();
+	Passwort = $('#Passwort'+woher).val();
 	if (!Email) {
 		setTimeout(function () { 
-			$('#Email').focus(); 
+			$('#Email'+woher).focus(); 
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		$("#Emailhinweis").css("display", "block");
+		$("#Emailhinweis"+woher).css("display", "block");
 		return false;
 	} else if (!Passwort) {
 		setTimeout(function () { 
-			$('#Passwort').focus(); 
+			$('#Passwort'+woher).focus(); 
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		$("#Passworthinweis").css("display", "block");
+		$("#Passworthinweis"+woher).css("display", "block");
 		return false;
 	}
 	return true;
@@ -1777,7 +1777,7 @@ function erstelleListeFuerFeldwahl() {
 	var Datensammlungen = [];
 	var gruppeIstGewählt = false;
 	$db = $.couch.db("artendb");
-	$(".exportieren_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
 		var gruppe = $(this).val();
 		if ($(this).prop('checked')) {
 			gruppeIstGewählt = true;
@@ -1904,7 +1904,7 @@ function filtereFuerExport() {
 	var filterObjekt;
 	//gewählte Gruppen ermitteln
 	var gruppen = "";
-	$(".exportieren_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			if (gruppen) {
 				gruppen += ",";
@@ -2131,7 +2131,7 @@ function baueTabelleFuerExportAuf() {
 
 function fuerExportGewaehlteGruppen() {
 	var gruppen = [];
-	$(".exportieren_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			gruppen.push($(this).attr('feldname'));
 		}
@@ -2139,11 +2139,11 @@ function fuerExportGewaehlteGruppen() {
 	return gruppen;
 }
 
-function bereiteImportieren_ds_beschreibenVor() {
+function bereiteImportieren_ds_beschreibenVor(woher) {
 	if (!localStorage.Email) {
-		$('#importieren_ds_beschreiben_collapse').collapse('hide');
+		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 		setTimeout(function() {
-			zurueckZurAnmeldung();
+			zurueckZurAnmeldung(woher);
 		}, 600);
 	} else {
 		$("#DsName").focus();
@@ -2154,7 +2154,7 @@ function bereiteImportieren_ds_beschreibenVor() {
 			bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?group=true', {
+			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{}]&group_level=2', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
@@ -2169,7 +2169,7 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	//DsNamen in Auswahlliste stellen
 	var DsNamen = [""];
 	for (i in window.ds_von_objekten.rows) {
-		DsNamen.push(window.ds_von_objekten.rows[i].key[0]);
+		DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
 	}
 	DsNamen.sort();
 	var html = "";
@@ -2177,6 +2177,46 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 		html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
 	}
 	$("#DsWaehlen").html(html);
+}
+
+function bereiteImportieren_bs_beschreibenVor(woher) {
+	if (!localStorage.Email) {
+		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
+		setTimeout(function() {
+			zurueckZurAnmeldung(woher);
+		}, 600);
+	} else {
+		$("#BsName").focus();
+		//anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
+		//$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
+		//Daten holen, wenn nötig
+		if (window.bs_von_objekten) {
+			bereiteImportieren_bs_beschreibenVor_02();
+		} else {
+			$db = $.couch.db("artendb");
+			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{}]&group_level=2', {
+				success: function (data) {
+					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+					window.bs_von_objekten = data;
+					bereiteImportieren_bs_beschreibenVor_02();
+				}
+			});
+		}	
+	}
+}
+
+function bereiteImportieren_ds_beschreibenVor_02() {
+	//BsNamen in Auswahlliste stellen
+	var BsNamen = [""];
+	for (i in window.bs_von_objekten.rows) {
+		BsNamen.push(window.bs_von_objekten.rows[i].key[1]);
+	}
+	BsNamen.sort();
+	var html = "";
+	for (i in BsNamen) {
+		html += "<option value='" + BsNamen[i] + "'>" + BsNamen[i] + "</option>";
+	}
+	$("#BsWaehlen").html(html);
 }
 
 function isFileAPIAvailable() {
