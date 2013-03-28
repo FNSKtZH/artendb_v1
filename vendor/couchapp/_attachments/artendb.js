@@ -619,6 +619,101 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		}
 	});
 
+	//jetzt für alle Beziehungen die Felder hinzufügen
+	for (var i=0; i<art_i.Beziehungen.length; i++) {
+		if (art_i.Beziehungen[i].Beziehungspartner && art_i.Beziehungen[i].Beziehungspartner.length > 0) {
+			for (y in art_i.Beziehungen[i].Beziehungspartner) {
+				//if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
+				if (art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie) {
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
+				} else {
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name
+				}
+				//Partner darstellen
+				if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
+					//Feld soll mit der Rolle beschriftet werden
+					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+				} else {
+					html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+				}
+			}
+		}
+		//Die Felder anzeigen
+		for (x in art_i.Beziehungen[i]) {
+			if (x !== "Beziehungspartner") {
+				html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x]);
+			}
+		}
+		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
+		if (i < (art_i.Beziehungen.length-1)) {
+			html += "<hr>";
+		}
+	}
+	//body und Accordion-Gruppe abschliessen
+	html += '</div></div></div>';
+	return html;
+}
+
+/*//erstellt die HTML für eine Beziehung
+//benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
+//altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
+function erstelleHtmlFuerBeziehung(art, art_i, altName) {
+	var html;
+	var Name;
+	//Accordion-Gruppe und -heading anfügen
+	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
+	//Titel für die Datensammlung einfügen
+	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
+	//header abschliessen
+	html += '</a></div>';
+	//body beginnen
+	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
+	//Datensammlung beschreiben
+	html += '<div class="Datensammlung BeschreibungDatensammlung">';
+	if (art_i.Beschreibung) {
+		html += art_i.Beschreibung;
+	}
+	if (art_i.Datenstand) {
+		html += '. Stand: ';
+		html += art_i.Datenstand;
+	}
+	if (art_i["Link"]) {
+		html += '. <a href="';
+		html += art_i["Link"];
+		html += '">';
+		html += art_i["Link"];
+		html += '</a>';
+	}
+	//Beschreibung der Datensammlung abschliessen
+	html += '</div>';
+
+	//die Beziehungen sortieren
+	art_i.Beziehungen.sort(function(a, b) {
+		var aName, bName;
+		for (c in a.Beziehungspartner) {
+			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+			} else {
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
+			}
+		}
+		for (d in b.Beziehungspartner) {
+			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+			} else {
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
+			}
+		}
+		if (aName && bName) {
+			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+		} else {
+			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+		}
+	});
+
 	var BeteiligteGruppen;
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i = 0; i < art_i.Beziehungen.length; i++) {
@@ -639,7 +734,8 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
 					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
 					//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
-					if (art_i["Art der Beziehungen"] === "hierarchisch") {
+					//if (art_i["Art der Beziehungen"] === "hierarchisch") {
+					if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
 						//Feld soll mit der Rolle beschriftet werden
 						//ausserdem Name inkl. Methode
 						html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
@@ -676,7 +772,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//body und Accordion-Gruppe abschliessen
 	html += '</div></div></div>';
 	return html;
-}
+}*/
 
 //erstellt die HTML für eine Datensammlung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
