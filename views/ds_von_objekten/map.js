@@ -8,7 +8,7 @@
 					Felder[x] = doc.Datensammlungen[i][x];
 				}
 			}
-			emit (["Datensammlung", doc.Datensammlungen[i].Name, Felder], null);
+			emit (["Datensammlung", doc.Datensammlungen[i].Name, Felder], doc._id);
 		}
 	}
 	if (doc.Beziehungssammlungen) {
@@ -19,7 +19,7 @@
 					Felder[x] = doc.Beziehungssammlungen[i][x];
 				}
 			}
-			emit (["Beziehungssammlung", doc.Beziehungssammlungen[i].Name, Felder], null);
+			emit (["Beziehungssammlung", doc.Beziehungssammlungen[i].Name, Felder], doc._id);
 		}
 	}
 }
