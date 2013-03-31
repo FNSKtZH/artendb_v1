@@ -1307,6 +1307,7 @@ function zurueckZurAnmeldung(woher) {
 	$(".abmelden_btn").hide();
 	$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
+	$("#Email"+woher).focus();
 }
 
 function validiereUserAnmeldung(woher) {

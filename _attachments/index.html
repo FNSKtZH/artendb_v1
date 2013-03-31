@@ -293,42 +293,42 @@
 						<div id="importieren_bs_anmelden_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<div class="control-group">
-									<label class="control-label" for="Email_beziehungen">Email</label>
+									<label class="control-label" for="Email_bs">Email</label>
 									<div class="controls">
-										<input type="email" id="Email_beziehungen" class="Email" placeholder="Email" required>
-										<div id="Emailhinweis_beziehungen" class="Emailhinweis hinweis text-error">Bitte Email erfassen</div>
+										<input type="email" id="Email_bs" class="Email" placeholder="Email" required>
+										<div id="Emailhinweis_bs" class="Emailhinweis hinweis text-error">Bitte Email erfassen</div>
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="Passwort_beziehungen">Passwort</label>
+									<label class="control-label" for="Passwort_bs">Passwort</label>
 									<div class="controls">
-										<input type="password" id="Passwort_beziehungen" class="Passwort" placeholder="Passwort" required>
-										<div id="Passworthinweis_beziehungen" class="Passworthinweis hinweis text-error">Bitte Passwort erfassen</div>
+										<input type="password" id="Passwort_bs" class="Passwort" placeholder="Passwort" required>
+										<div id="Passworthinweis_bs" class="Passworthinweis hinweis text-error">Bitte Passwort erfassen</div>
 										<div class="signup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
 										<div class="signup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
 									</div>
 								</div>
 								<div class="control-group signup">
-									<label class="control-label" for="Passwort2_beziehungen">Passwort bestätigen</label>
+									<label class="control-label" for="Passwort2_bs">Passwort bestätigen</label>
 									<div class="controls">
-										<input type="password" id="Passwort2_beziehungen" class="Passwort2" placeholder="Passwort bestätigen" required>
-										<div id="Passwort2hinweis_beziehungen" class="Passwort2hinweis hinweis text-error">Bitte Passwort bestätigen</div>
-										<div id="Passwort2hinweisFalsch_beziehungen" class="Passwort2hinweisFalsch hinweis text-error">Die Passwörter stimmen nicht überein</div>
+										<input type="password" id="Passwort2_bs" class="Passwort2" placeholder="Passwort bestätigen" required>
+										<div id="Passwort2hinweis_bs" class="Passwort2hinweis hinweis text-error">Bitte Passwort bestätigen</div>
+										<div id="Passwort2hinweisFalsch_bs" class="Passwort2hinweisFalsch hinweis text-error">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
 								<div class="feld">
-									<button id="anmelden_btn_beziehungen" class="btn anmelden_btn">anmelden</button>
-									<button id="abmelden_btn_beziehungen" class="btn abmelden_btn" style="display:none;">abmelden</button>
-									<button id="konto_erstellen_btn_beziehungen" class="btn konto_erstellen_btn">neues Konto erstellen</button>
-									<button id="konto_speichern_btn_beziehungen" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+									<button id="anmelden_btn_bs" class="btn anmelden_btn">anmelden</button>
+									<button id="abmelden_btn_bs" class="btn abmelden_btn" style="display:none;">abmelden</button>
+									<button id="konto_erstellen_btn_bs" class="btn konto_erstellen_btn">neues Konto erstellen</button>
+									<button id="konto_speichern_btn_bs" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
 								</div>
-								<div id="importieren_bs_anmelden_fehler_beziehungen" class="alert alert-error importieren_bs_anmelden_fehler">
+								<div id="importieren_bs_anmelden_fehler_bs" class="alert alert-error importieren_bs_anmelden_fehler">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_bs_anmelden_fehler_text_beziehungen" class="importieren_bs_anmelden_fehler_text"></div>
+									<div id="importieren_bs_anmelden_fehler_text_bs" class="importieren_bs_anmelden_fehler_text"></div>
 								</div>
-								<div id="importieren_bs_anmelden_hinweis_beziehungen" class="alert alert-info importieren_bs_anmelden_hinweis">
+								<div id="importieren_bs_anmelden_hinweis_bs" class="alert alert-info importieren_bs_anmelden_hinweis">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_bs_anmelden_hinweis_text_beziehungen" class="importieren_bs_anmelden_hinweis_text"></div>
+									<div id="importieren_bs_anmelden_hinweis_text_bs" class="importieren_bs_anmelden_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
@@ -678,6 +678,7 @@
 							$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 						} else {
 							$("#importieren_ds_anmelden_collapse").collapse('show');
+							$("#Email_ds").focus();
 						}
 					}
 				});
@@ -692,6 +693,7 @@
 							$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 						} else {
 							$("#importieren_bs_anmelden_collapse").collapse('show');
+							$("#Email_bs").focus();
 						}
 					}
 				});
