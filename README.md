@@ -205,6 +205,15 @@ Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden d
 
 Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
 
+###Daten exportieren
+
+1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
+2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen (noch nicht umgesetzt)
+3. Sie wählt die gewünschten Eigenschaften
+4. Die Datei wird generiert und als .csv heruntergeladen
+
+Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (erst als Liste innerhalb eines Felds umgesetzt).
+
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht vollständig nachvollziehbar. 
 
@@ -215,15 +224,6 @@ Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benu
 - Ob in Auswahllisten Mehrfachauswahlen möglich sein sollen
 
 Das ist noch nicht umgesetzt.
-
-###Daten exportieren
-
-1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
-2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen (noch nicht umgesetzt)
-3. Sie wählt die gewünschten Eigenschaften
-4. Die Datei wird generiert und als .csv heruntergeladen
-
-Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (erst als Liste innerhalb eines Felds umgesetzt).
 
 <a href="#top">&#8593; top</a>
 
@@ -769,8 +769,7 @@ Arten suchen:
 Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Alle für diese Gruppen in der bisherigen ArtenDb enthaltenen Daten- und Beziehungssammlungen
-- Datensammlungen und Beziehungssammlungen von synonymen Objekten werden auch angezeigt
+- Auch Datensammlungen und Beziehungssammlungen von synonymen Objekten werden angezeigt
 - Datemsammlungen sind beschrieben
 - Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
@@ -779,9 +778,9 @@ Daten importieren:
 - Datensammlungen (erster Entwurf, wird noch verbessert)
 
 Daten exportieren:
-- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch stark verbesserungsfähig)
+- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch verbesserungsfähig)
 - Zuerst werden die gewünschten Gruppen gewählt
-- Es kann nach JEDEM in diesen Gruppen existierenden Feld gefiltert werden
+- Es kann nach <em>jedem</em> (!) in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
