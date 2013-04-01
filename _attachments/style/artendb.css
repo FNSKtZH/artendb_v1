@@ -152,6 +152,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	/*relative setzen, damit suche_leeren_btn im Verhältnis dazu absolute gesetzt werden kann*/
 	/*position: relative;*/
 	margin-bottom: 2px;
+	display: none;
 }
 
 #menu .suchfeld {
