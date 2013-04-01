@@ -1788,14 +1788,14 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_felder_waehlen += '</label>';
 			//filtern
 			html_filtern += '<div class="control-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
 			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
 				html_filtern += ' style="padding-top:0px"';
 			}
 			html_filtern += '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_eigenschaften_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -1808,15 +1808,15 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 	html_filtern = '<hr>' + html_filtern;
 	if (beziehungssammlungen) {
 		$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
-		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html(html_filtern);
+		$("#exportieren_objekte_waehlen_ds_felderliste").html(html_filtern);
 		erstelleExportfelder(datensammlungen, beziehungssammlungen);
 	} else if (datensammlungen) {
 		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
-		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+		$("#exportieren_objekte_waehlen_ds_felderliste").append(html_filtern);
 		erstelleExportfelder(datensammlungen);
 	} else {
 		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
-		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").append(html_filtern);
+		$("#exportieren_objekte_waehlen_ds_felderliste").append(html_filtern);
 	}
 }
 
@@ -1874,7 +1874,7 @@ function erstelleListeFuerFeldwahl() {
 	var Datensammlungen = [];
 	var gruppeIstGewählt = false;
 	$db = $.couch.db("artendb");
-	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		var gruppe = $(this).val();
 		if ($(this).prop('checked')) {
 			gruppeIstGewählt = true;
@@ -1896,7 +1896,7 @@ function erstelleListeFuerFeldwahl() {
 		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("keine Gruppe gewählt");
 		//Felder entfernen
 		$("#exportieren_felder_waehlen_felderliste").html("");
-		$("#exportieren_objekte_waehlen_eigenschaften_felderliste").html("");
+		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
 	}
 					
 }
@@ -2001,7 +2001,7 @@ function filtereFuerExport() {
 	var filterObjekt;
 	//gewählte Gruppen ermitteln
 	var gruppen = "";
-	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			if (gruppen) {
 				gruppen += ",";
@@ -2011,7 +2011,7 @@ function filtereFuerExport() {
 	});
 	//durch alle Filterfelder loopen
 	//wenn ein Feld einen Wert enthält, danach filtern
-	$("#exportieren_objekte_waehlen_eigenschaften_collapse .export_feld_filtern").each(function() {
+	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
 		if (this.value || this.value === 0 ) {
 			//Filterobjekt zurücksetzen
 			filterObjekt = {};
@@ -2099,7 +2099,7 @@ function baueTabelleFuerExportAuf() {
 		}
 	});
 	if (feldliste.length === 0) {
-		$('#meldung_keine_eigenschaften').modal();
+		$('#meldung_keine_ds').modal();
 		return;
 	}
 	//Beschäftigung melden
@@ -2228,7 +2228,7 @@ function baueTabelleFuerExportAuf() {
 
 function fuerExportGewaehlteGruppen() {
 	var gruppen = [];
-	$(".exportieren_eigenschaften_objekte_waehlen_gruppe").each(function() {
+	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			gruppen.push($(this).attr('feldname'));
 		}
