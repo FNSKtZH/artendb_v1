@@ -1,5 +1,5 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen.
+Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen aus Drittapplikationen.
 
 Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, rasch ergänzt und für Auswertungen kombiniert werden.
 
@@ -53,11 +53,11 @@ Die wichtigsten Merkmale dürften sein:
 <a name="Konzept"></a>
 #Fachliches Konzept
 ###Der Grundgedanke
-Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Instrument, das kaum noch zu verstehen und unterhalten ist und an diverse technische Grenzen stösst.
+Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Instrument. Es ist schwer zu verstehen und zu unterhalten und stösst an diverse technische Grenzen.
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
-Der Grundgedanke hinter dem fachlichen und strukturellen Konzept der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe: Taxonomie, Objekt, Datensammlung, Beziehungssammlung und Eigenschaft. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Daten- und Beziehungssammlungen. Möglichst alles wird darauf zurückgeführt. So sind z.B. Taxonomie und zusammenfassende Datensammlungen Spezialfälle von Datensammlungen, Beziehungssammlungen sind sehr ähnlich.
+Der Grundgedanke hinter der ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar Grundbegriffe, sie sind nachfolgend erklärt. Daraus leiten sich nur noch drei Grundstrukturen ab: Objekte, ihre Daten- und Beziehungssammlungen.
 
 ###Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in der ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
