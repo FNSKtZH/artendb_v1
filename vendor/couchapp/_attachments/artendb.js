@@ -2096,6 +2096,10 @@ function baueTabelleFuerExportAuf() {
 	$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
 			feldliste.push($(this).attr('datensammlung') + ": " + $(this).attr('Feld'));
+			if ($(this).attr('Feld') === "Beziehungspartner") {
+				//Mit dem Beziehungspartner soll auch ein Feld mit allen GUIDs mit
+				feldliste.push($(this).attr('datensammlung') + ": Beziehungspartner GUID(s)");
+			}
 		}
 	});
 	if (feldliste.length === 0) {
@@ -2144,7 +2148,7 @@ function baueTabelleFuerExportAuf() {
 				}
 			}
 		}
-		//DAS IST VARIANTE MIT JSON IN EINER ZEILE. FUNKTIONIERT NICHT, WENN MEHR ALS EIN FELD AUS BEZIEHUNGEN FEFILTERT WIRD
+		//DAS IST VARIANTE MIT JSON IN EINER ZEILE. FUNKTIONIERT NICHT, WENN MEHR ALS EIN FELD AUS BEZIEHUNGEN GEFILTERT WIRD
 		//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
 		if (window.exportieren_objekte[i].Beziehungssammlungen) {
 			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
@@ -2158,11 +2162,14 @@ function baueTabelleFuerExportAuf() {
 							if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
 								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
 							}
+							Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
 							if (y === "Beziehungspartner") {
-								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
-							} else {
-								//Feld ist kein Objekt
-								Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
+								//Reines GUID-Feld ergänzen
+								if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"]) {
+									Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+								} else {
+									Objekt[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+								}
 							}
 						}
 					}

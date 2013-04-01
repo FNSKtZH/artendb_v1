@@ -261,16 +261,24 @@ function(head, req) {
 													exportObjekt.Beziehungssammlungen[t].Beziehungen = [];
 												}
 												//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-												for (var l in filterkriterien) {
-													var DsTyp = filterkriterien[l].DsTyp;
-													var DsName = filterkriterien[l].DsName;
-													var Feldname = filterkriterien[l].Feldname;
-													var Filterwert = filterkriterien[l].Filterwert;
-													if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
-														if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
+												if (filterkriterien && filterkriterien.length > 0) {
+													for (var l in filterkriterien) {
+														var DsTyp = filterkriterien[l].DsTyp;
+														var DsName = filterkriterien[l].DsName;
+														var Feldname = filterkriterien[l].Feldname;
+														var Filterwert = filterkriterien[l].Filterwert;
+														if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
+															if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
+																exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+															}
+														} else {
+															//kein Filter auf Feldern - alle hinzufügen
 															exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
 													}
+												} else {
+													//kein Filter auf Feldern - alle hinzufügen
+													exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 												}
 											}
 										}
@@ -278,17 +286,25 @@ function(head, req) {
 											Beziehungssammlung = {};
 											Beziehungssammlung.Name = felder[w].DsName;
 											Beziehungssammlung.Beziehungen = [];
-											//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-											for (var l in filterkriterien) {
-												var DsTyp = filterkriterien[l].DsTyp;
-												var DsName = filterkriterien[l].DsName;
-												var Feldname = filterkriterien[l].Feldname;
-												var Filterwert = filterkriterien[l].Filterwert;
-												if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
-													if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
+											if (filterkriterien && filterkriterien.length > 0) {
+												//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
+												for (var l in filterkriterien) {
+													var DsTyp = filterkriterien[l].DsTyp;
+													var DsName = filterkriterien[l].DsName;
+													var Feldname = filterkriterien[l].Feldname;
+													var Filterwert = filterkriterien[l].Filterwert;
+													if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
+														if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
+															Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+														}
+													} else {
+														//kein Filter auf Feldern - alle hinzufügen
 														Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 													}
 												}
+											} else {
+												//kein Filter auf Feldern - alle hinzufügen
+												Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 											}
 											exportObjekt.Beziehungssammlungen.push(Beziehungssammlung);
 										}
