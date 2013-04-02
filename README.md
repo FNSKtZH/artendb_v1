@@ -780,7 +780,7 @@ Daten importieren:
 Daten exportieren:
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch verbesserungsfähig)
 - Zuerst werden die gewünschten Gruppen gewählt
-- Es kann nach <em>jedem</em> (!) in diesen Gruppen existierenden Feld gefiltert werden
+- Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
