@@ -924,6 +924,15 @@
 					});
 				});
 
+				$("#importieren_bs").on("click", "#BsImportieren", function(e) {
+					e.preventDefault();
+					$.when(importiereBeziehungssammlung()).then(function() {
+						//jetzt Ergebnisse anzeigen
+						console.log("Beziehungssammlung importiert");
+					});
+				});
+
+				//TO DO: DIES AUCH FÜR BEZIEHUNGSSAMMLUNGEN
 				$("#importieren_ds").on("click", "#DsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneDatensammlung()).then(function() {
