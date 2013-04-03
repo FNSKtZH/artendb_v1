@@ -1429,69 +1429,68 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		//kontrollieren, ob eine id mehr als einmal vorkommt
 		$db = $.couch.db("artendb");
 		if (window.DsId === "guid") {
-			//$db.view('artendb/objekte', {
 			$db.view('artendb/all_docs', {
 				success: function (data) {
-					for (i in window.dsDatensätze) {
+					for (i in window[dbs.toLowerCase()+"Datensätze"]) {
 						//durch die importierten Datensätze loopen
-						if (IdsVonDatensätzen.indexOf(window.dsDatensätze[i][window.DsFelderId]) === -1) {
+						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
 							//diese ID wurde noch nicht hinzugefügt > hinzufügen
-							IdsVonDatensätzen.push(window.dsDatensätze[i][window.DsFelderId]);
+							IdsVonDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 							//prüfen, ob die ID zugeordnet werden kann
 							for (var x = 0; x < data.rows.length; x++) {
-								if (data.rows[x].key === window.dsDatensätze[i][window.DsFelderId]) {
-									window.ZuordbareDatensätze.push(window.dsDatensätze[i][window.DsFelderId]);
+								if (data.rows[x].key === window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) {
+									window.ZuordbareDatensätze.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 									break;
 								}
 								if (x === (data.rows.length-1)) {
 									//diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-									IdsVonNichtImportierbarenDatensätzen.push(window.dsDatensätze[i][window.DsFelderId]);
+									IdsVonNichtImportierbarenDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 								}
 							}
 						} else {
 							//diese ID wurden schon hinzugefügt > mehrfach!
-							MehrfachVorkommendeIds.push(window.dsDatensätze[i][window.DsFelderId]);
+							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
-					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen);
+					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.DsId + '"]&endkey=["' + window.DsId + '",{},{}]', {
 				success: function (data) {
-					for (i in window.dsDatensätze) {
+					for (i in window[dbs.toLowerCase()+"Datensätze"]) {
 						//durch die importierten Datensätze loopen
-						if (IdsVonDatensätzen.indexOf(window.dsDatensätze[i][window.DsFelderId]) === -1) {
+						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
 							//diese ID wurde noch nicht hinzugefügt > hinzufügen
-							IdsVonDatensätzen.push(window.dsDatensätze[i][window.DsFelderId]);
+							IdsVonDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 							//prüfen, ob die ID zugeordnet werden kann
 							for (var x = 0; x < data.rows.length; x++) {
-								//Vorsicht: window.dsDatensätze[i][window.DsFelderId] kann Zahlen als string zurückgeben, nicht === verwenden
-								if (data.rows[x].key[2] == window.dsDatensätze[i][window.DsFelderId]) {
+								//Vorsicht: window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]] kann Zahlen als string zurückgeben, nicht === verwenden
+								if (data.rows[x].key[2] == window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) {
 									var Objekt = {};
-									Objekt.Id = parseInt(window.dsDatensätze[i][window.DsFelderId]);
+									Objekt.Id = parseInt(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 									Objekt.Guid = data.rows[x].key[1];
 									window.ZuordbareDatensätze.push(Objekt);
 									break;
 								}
 								if (x === (data.rows.length-1)) {
 									//diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-									IdsVonNichtImportierbarenDatensätzen.push(window.dsDatensätze[i][window.DsFelderId]);
+									IdsVonNichtImportierbarenDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 								}
 							}
 						} else {
 							//diese ID wurden schon hinzugefügt > mehrfach!
-							MehrfachVorkommendeIds.push(window.dsDatensätze[i][window.DsFelderId]);
+							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
-					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen);
+					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
 		}
 	}
 }
 
-function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen) {
+function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
 	$("#importieren_ds_ids_identifizieren_hinweis").alert().css("display", "none");
 	//rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
 	if (MehrfachVorkommendeIds.length) {
@@ -1501,15 +1500,15 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
 		//es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window.dsDatensätze.length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window.DsFelderId + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window.DsFelderId + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
 	} else {
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window.dsDatensätze.length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window.DsFelderId + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
 	}
 }
 
-//bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+//bekommt das Objekt mit den Datensätzen (window[dbs.toLowerCase()+"Datensätze"]) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
 //holt sich selber die in den Feldern erfassten Infos der Datensammlung
 function importiereDatensammlung() {
 	var Datensammlung, anzFelder, anzDs;
@@ -1750,7 +1749,7 @@ function entferneDatensammlungAusDokument(id, DsName) {
 			//Datensammlung entfernen
 			for (var i=0; i<doc.Datensammlungen.length; i++) {
 				if (doc.Datensammlungen[i].Name === DsName) {
-					doc.Datensammlungen.splice(i;1);
+					doc.Datensammlungen.splice(i,1);
 				}
 			}
 			//in artendb speichern
@@ -1772,7 +1771,7 @@ function entferneBeziehungssammlungAusDokument(id, BsName) {
 			//Beziehungssammlung entfernen
 			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
 				if (doc.Beziehungssammlungen[i].Name === BsName) {
-					doc.Beziehungssammlungen.splice(i;1);
+					doc.Beziehungssammlungen.splice(i,1);
 				}
 			}
 			//in artendb speichern
