@@ -1493,18 +1493,26 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
 	$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "none");
 	//rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
-	if (MehrfachVorkommendeIds.length) {
+	if (MehrfachVorkommendeIds.length && dbs !== "Bs") {
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
 	} else if (window.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
 		//es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+		if (dbs === "Bs") {
+			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + IdsVonNichtImportierbarenDatensätzen.length + " Arten mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+		} else {
+			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+		}
 	} else {
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+		if (dbs === "Bs") {
+			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>Beziehungen von " + window.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
+		} else {
+			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+		}
 	}
 }
 
@@ -1612,6 +1620,7 @@ function importiereBeziehungssammlung() {
 				var Zähler = 0;
 				var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 				anzBs = 0;
+				var Beziehungssammlung;
 				var Beziehungssammlung_vorlage = {};
 				Beziehungssammlung_vorlage.Name = $("#BsName").val();
 				if ($("#BsBeschreibung").val()) {
@@ -1624,82 +1633,100 @@ function importiereBeziehungssammlung() {
 					Beziehungssammlung_vorlage["Link"] = $("#BsLink").val();
 				}
 				Beziehungssammlung_vorlage.Beziehungen = [];
-				for (var x in window.bsDatensätze) {
+				//zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
+				window.bsDatensätze_objekt = _.groupBy(window.bsDatensätze, function(objekt) {
+					//id in guid umwandeln
+					var guid;
+					if (window.BsId === "guid") {
+						//die in der Tabelle mitgelieferte id ist die guid
+						guid = objekt[window.BsFelderId];
+					} else {
+						for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+							//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+							if (window.ZuordbareDatensätze[z].Id == objekt[window.BsFelderId]) {
+								//und die guid auslesen
+								guid = window.ZuordbareDatensätze[z].Guid;
+								break;
+							}
+						}
+					}
+					objekt.GUID = guid;
+					return objekt.GUID;
+				});
+				//jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
+				$.each(bsDatensätze_objekt, function(key, value) {
+					var Beziehungen = [];
 					anzBs += 1;
 					//Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
-					var Beziehungssammlung = jQuery.extend(true, {}, Beziehungssammlung_vorlage);
-					//Felder anfügen, wenn sie Werte enthalten
-					anzFelder = 0;
-					for (y in window.bsDatensätze[x]) {
-					//Felder der Beziehungssammlung als Objekt gründen
+					Beziehungssammlung = jQuery.extend(true, {}, Beziehungssammlung_vorlage);
+					//console.log('value = ' + JSON.stringify(value));
+					for (var x = 0; x<value.length; x++) {
+						//durch die Beziehungen loopen
+						anzFelder = 0;
+						//Felder der Beziehungssammlung als Objekt gründen
 						var Beziehung = {};
-						//nicht importiert wird die ID und leere Felder
-						if (y !== window.BsFelderId && window.bsDatensätze[x][y] !== "" && window.bsDatensätze[x][y] !== null) {
-							if (window.bsDatensätze[x][y] === -1) {
-								//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
-								Beziehung[y] = true;
-							} else if (window.bsDatensätze[x][y] == "true") {
-								//true/false nicht als string importieren
-								Beziehung[y] = true;
-							} else if (window.bsDatensätze[x][y] == "false") {
-								Beziehung[y] = false;
-							} else if (window.bsDatensätze[x][y] == parseInt(window.bsDatensätze[x][y])) {
-								//Ganzzahlen als Zahlen importieren
-								Beziehung[y] = parseInt(window.bsDatensätze[x][y]);
-							} else if (window.bsDatensätze[x][y] == parseFloat(window.bsDatensätze[x][y])) {
-								//Bruchzahlen als Zahlen importieren
-								Beziehung[y] = parseFloat(window.bsDatensätze[x][y]);
-							} else if (y == "Beziehungspartner") {
-								Beziehung[y] = [];
-								//durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
-								for (var i=0; i<window.bsDatensätze[x][y].length; i++) {
-									Beziehung[y].push(window.bezPartner_objekt[window.bsDatensätze[x][y][i]]);
+						for (y in value[x]) {
+							//durch die Felder der Beziehung loopen
+							//nicht importiert wird die GUID und leere Felder
+							if (y !== "GUID" && value[x][y] !== "" && value[x][y] !== null) {
+								//console.log('y = ' + y);
+								if (value[x][y] === -1) {
+									//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
+									Beziehung[y] = true;
+								} else if (value[x][y] == "true") {
+									//true/false nicht als string importieren
+									Beziehung[y] = true;
+								} else if (value[x][y] == "false") {
+									Beziehung[y] = false;
+								} else if (value[x][y] == parseInt(value[x][y])) {
+									//Ganzzahlen als Zahlen importieren
+									Beziehung[y] = parseInt(value[x][y]);
+								} else if (value[x][y] == parseFloat(value[x][y])) {
+									//Bruchzahlen als Zahlen importieren
+									Beziehung[y] = parseFloat(value[x][y]);
+								} else if (y == "Beziehungspartner") {
+									Beziehung[y] = [];
+									//durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
+									//console.log('value[x][y].length = ' + value[x][y].length);
+									for (var i=0; i<value[x][y].length; i++) {
+										Beziehung[y].push(window.bezPartner_objekt[value[x][y][i]]);
+										//console.log('window.bezPartner_objekt[value[x][y][i] = ' + JSON.stringify(window.bezPartner_objekt[value[x][y][i]]));
+									}
+								} else {
+									//Normalfall
+									Beziehung[y] = value[x][y];
 								}
-							} else {
-								//Normalfall
-								Beziehung[y] = window.bsDatensätze[x][y];
+								anzFelder++;
 							}
-							anzFelder += 1;
+						}
+						console.log('anzFelder = ' + anzFelder);
+						if (anzFelder > 0) {
+							console.log('Beziehung = ' + JSON.stringify(Beziehung));
+							Beziehungen.push(Beziehung);
+							console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
 						}
 					}
 					//entsprechenden Index öffnen
 					//sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
-					if (anzFelder > 0) {
+					if (Beziehungen.length > 0) {
 						//Datenbankabfrage ist langsam. Extern aufrufen, 
 						//sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-						var guid;
-						if (window.BsId === "guid") {
-							//die in der Tabelle mitgelieferte id ist die guid
-							guid = window.bsDatensätze[x][window.BsFelderId];
-						} else {
-							for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
-								//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-								if (window.ZuordbareDatensätze[z].Id == window.bsDatensätze[x][window.BsFelderId]) {
-									//und die guid auslesen
-									guid = window.ZuordbareDatensätze[z].Guid;
-									break;
-								}
-							}
-						}
-						//kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
-						if (guid) {
-							fuegeBeziehungZuObjekt(guid, Beziehungssammlung, Beziehung);
-							//Für 10 Kontrollbeispiele die Links aufbauen
-							if (Zähler < 10) {
-								Zähler += 1;
-								//Rückmeldungslink aufbauen. Hat die Form:
-								//<a href="url">Link text</a>
-								//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
-								RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + window.bsDatensätze[x][window.BsFelderId] + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
-							}
+						fuegeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
+						//Für 10 Kontrollbeispiele die Links aufbauen
+						if (Zähler < 10) {
+							Zähler++;
+							//Rückmeldungslink aufbauen. Hat die Form:
+							//<a href="url">Link text</a>
+							//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
+							RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + key + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
 						}
 					}
-				}
+				});
 				//RückmeldungsLinks in Feld anzeigen:
 				$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 				$("#importieren_bs_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 				BsImportiert.resolve();
-			}, 500);
+			}, 1000);
 		});
 	return BsImportiert.promise();
 }
@@ -1776,7 +1803,7 @@ function entferneDatensammlung() {
 		//Einen Array der id's erstellen
 		guid_array.push(guid);
 	}
-	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfern. Am Ende verbleiben keine oder die nicht entfernten
+	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfernt. Am Ende verbleiben keine oder die nicht entfernten
 	window.aktualisierte_objekte = guid_array.slice();
 	//alle docs gleichzeitig holen
 	//aber batchweise
@@ -1838,6 +1865,7 @@ function entferneBeziehungssammlung() {
 	var guid_array = [];
 	var guidArray = [];
 	var guid;
+	var BsName = $("#BsName").val();
 	var BsEntfernt = $.Deferred();
 	for (x=0; x<window.bsDatensätze.length; x++) {
 		//zuerst die id in guid übersetzen
@@ -1857,8 +1885,10 @@ function entferneBeziehungssammlung() {
 		//Einen Array der id's erstellen
 		guid_array.push(guid);
 	}
-	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfern. Am Ende verbleiben keine oder die nicht entfernten
-	window.aktualisierte_objekte = guid_array.slice();
+
+	//guid_array auf die eindeutigen guids reduzieren
+	guid_array = _.union(guid_array);
+
 	//alle docs gleichzeitig holen
 	//aber batchweise
 	var a = 0;
@@ -1868,12 +1898,12 @@ function entferneBeziehungssammlung() {
 		if (a < guid_array.length) {
 			guidArray.push(guid_array[a]);
 			if (a === (batch-1)) {
-				entferneBeziehungssammlung_2($("#BsName").val(), guidArray, (a-batchGrösse));
+				entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
 				guidArray = [];
 				batch += batchGrösse;
 			}
 		} else {
-			entferneBeziehungssammlung_2($("#BsName").val(), guidArray, (a-batchGrösse));
+			entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
 			//RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
@@ -1940,7 +1970,8 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 
 //fügt der Art eine Datensammlung hinzu
 //wenn dieselbe schon vorkommt, wird sie überschrieben
-function fuegeBeziehungZuObjekt(GUID, Beziehungssammlung, Beziehung) {
+function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
+	console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function (doc) {
@@ -1949,29 +1980,35 @@ function fuegeBeziehungZuObjekt(GUID, Beziehungssammlung, Beziehung) {
 				var hinzugefügt = false;
 				for (i in doc.Beziehungssammlungen) {
 					if (doc.Beziehungssammlungen[i].Name === Beziehungssammlung.Name) {
-						if (!containsObject(Beziehung, doc.Beziehungssammlungen[i].Beziehungen)) {
-							doc.Beziehungssammlungen[i].Beziehungen.push(Beziehung);
-							//Beziehungen nach Name sortieren
-							doc.Beziehungssammlungen[i].Beziehungen.sort(function(a, b) {
-								var aName, bName;
-								for (c in a.Beziehungspartner) {
-									if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-										//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-										aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-									} else {
-										aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-									}
-								}
-								for (d in b.Beziehungspartner) {
-									if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-										bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-									} else {
-										bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-									}
-								}
-								return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-							});
+						for (var h=0; h<Beziehungen.length; h++) {
+							if (!containsObject(Beziehungen[h], doc.Beziehungssammlungen[i].Beziehungen)) {
+								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
+							}
 						}
+						//Beziehungen nach Name sortieren
+						doc.Beziehungssammlungen[i].Beziehungen.sort(function(a, b) {
+							var aName, bName;
+							for (c in a.Beziehungspartner) {
+								if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+									//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+									aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+								} else {
+									aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
+								}
+							}
+							for (d in b.Beziehungspartner) {
+								if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
+									bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+								} else {
+									bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
+								}
+							}
+							if (aName && bName) {
+								return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+							} else {
+								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+							}
+						});
 						hinzugefügt = true;
 						break;
 					}
@@ -1979,13 +2016,65 @@ function fuegeBeziehungZuObjekt(GUID, Beziehungssammlung, Beziehung) {
 				if (!hinzugefügt) {
 					//die Beziehungssammlung existiert noch nicht
 					Beziehungssammlung.Beziehungen = [];
-					Beziehungssammlung.Beziehungen.push(Beziehung);
+					for (var h=0; h<Beziehungen.length; h++) {
+						Beziehungssammlung.Beziehungen.push(Beziehungen[h]);
+					}
+					//Beziehungen nach Name sortieren
+					Beziehungssammlung.Beziehungen.sort(function(a, b) {
+						var aName, bName;
+						for (c in a.Beziehungspartner) {
+							if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+								//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+								aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+							} else {
+								aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
+							}
+						}
+						for (d in b.Beziehungspartner) {
+							if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
+								bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+							} else {
+								bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
+							}
+						}
+						if (aName && bName) {
+							return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+						} else {
+							return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+						}
+					});
 					doc.Beziehungssammlungen.push(Beziehungssammlung);
 				}
 			} else {
 				//Beziehungssammlung anfügen
 				Beziehungssammlung.Beziehungen = [];
-				Beziehungssammlung.Beziehungen.push(Beziehung);
+				for (var h=0; h<Beziehungen.length; h++) {
+					Beziehungssammlung.Beziehungen.push(Beziehungen[h]);
+				}
+				//Beziehungen nach Name sortieren
+				Beziehungssammlung.Beziehungen.sort(function(a, b) {
+					var aName, bName;
+					for (c in a.Beziehungspartner) {
+						if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+							//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+							aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+						} else {
+							aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
+						}
+					}
+					for (d in b.Beziehungspartner) {
+						if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
+							bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+						} else {
+							bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
+						}
+					}
+					if (aName && bName) {
+						return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+					} else {
+						return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+					}
+				});
 				doc.Beziehungssammlungen = [];
 				doc.Beziehungssammlungen.push(Beziehungssammlung);
 			}
