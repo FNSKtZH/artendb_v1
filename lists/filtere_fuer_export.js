@@ -271,10 +271,10 @@ function(head, req) {
 															if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
 																exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 															}
-														} else {
+														}/* else {
 															//kein Filter auf Feldern - alle hinzufügen
 															exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
-														}
+														}*/
 													}
 												} else {
 													//kein Filter auf Feldern - Beziehung hinzufügen
@@ -300,12 +300,12 @@ function(head, req) {
 														if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
 															Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
-													} else {
+													}/* else {
 														//kein Filter auf Feldern - alle hinzufügen
 														if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[a], Beziehungssammlung.Beziehungen)) {
 															Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
-													}
+													}*/
 												}
 											} else {
 												//kein Filter auf Feldern - alle hinzufügen
