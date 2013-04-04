@@ -770,15 +770,17 @@ Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Auch Datensammlungen und Beziehungssammlungen von synonymen Objekten werden angezeigt
-- Datemsammlungen sind beschrieben
+- Datensammlungen sind beschrieben
 - Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
-- Datensammlungen (erster Entwurf, wird noch verbessert)
+- Datensammlungen
+- Beziehungssammlungen
+- Es gibt eine Anleitung. Sollte wohl um Beispielsdaten ergänzt werden
 
 Daten exportieren:
-- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen (letzteres ist noch verbesserungsfähig)
+- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
@@ -787,9 +789,8 @@ Daten exportieren:
 **To do**
 
 - Exporte: Daten und Beziehungen von synonymen Arten
-- Exporte: Beziehungen wahlweise in mehreren Zeilen pro Objekt
 - Lebensräume in der Anwendung bearbeiten
-- Importe: Beziehungen, Taxonomien
+- Importe: Taxonomien
 - Alternative Taxonomien verwalten und darstellen
 
 <a href="#top">&#8593; top</a>

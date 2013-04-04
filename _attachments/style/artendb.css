@@ -282,6 +282,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .form {
 	margin-left: auto;
+	/*verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt*/
+	display: none;
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
