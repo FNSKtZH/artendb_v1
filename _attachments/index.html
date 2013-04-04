@@ -600,15 +600,8 @@
 											<ul>
 												<li>Jede Art bzw. Lebensraum kann beliebig viele Beziehungen haben</li>
 												<li>Daher muss für jede Art / Lebensraum eine Liste der Beziehungen erstellt werden</li>
-												<li>Diese Liste ist in den jeweiligen Feldern [in eckigen Klammern] enthalten</li>
-												<li>Spezialfall Beziehungspartner:
-													<ul>
-														<li>Jeder Beziehungspartner ist mit Gruppe, GUID, Name und bei Lebensräumen mit der Taxonomie beschrieben</li>
-														<li>Diese Informationen werden in der JavaScript-JSON-Schreibweise ins Feld "Beziehungspartner" geschrieben</li>
-														<li>Eine Liste von Beziehungspartnern sieht daher schon ziemlich abenteuerlich aus...</li>
-														<li>Zusätzlich wird eine kommagetrennte Liste der GUID's aller Beziehungspartner mitgeliefert</li>
-													</ul>
-												</li>
+												<li>Diese Liste ist in den jeweiligen Feldern enthalten. Die einzelnen Werte wurden mit Kommas (,) getrennt. Falls ein Feld schon ein Komma enthielt, wurde dieses mit "(Komma)" ersetzt. Damit bleibt gewährleistet, dass sich die Werte wieder mit einer Routine trennen lassen</li>
+												<li>Bei Beziehungspartnern wird die GUID aus der ArtenDb exportiert. Zur besseren Lesbarkeit wird in einem zweiten Feld die JSON-formattierte Beschreibung der Beziehungspartner mitgeliefert. Darin sieht man auch den Namen</li>
 											</ul>
 										</li>
 										<li>Der Download hat das .csv-Format:
