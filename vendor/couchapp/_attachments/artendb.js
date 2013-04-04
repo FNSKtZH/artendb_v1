@@ -1699,7 +1699,7 @@ function importiereBeziehungssammlung() {
 				$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 				$("#importieren_bs_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 				BsImportiert.resolve();
-			}, window.bsDatensätze.length*10);
+			}, 500);
 		});
 	return BsImportiert.promise();
 }
