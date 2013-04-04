@@ -538,7 +538,7 @@
 											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
 										<li>Platzhalter und Vergleichsoperatoren können nicht verwendet werden</li>
 										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
-										<li>Was (noch) NICHT funktioniert: Die Suche nach Beziehungen liefert zu viele Resultate, wenn man in zwei Feldern der Beziehung Kriterien erfasst und eines davon ist das Feld "Beziehungspartner" (in diesem Fall werden Arten/Lebensräume geliefert, die alle Bedingungen erfüllen, nicht Beziehungen)</li>
+										<li>Was (noch) NICHT funktioniert: Die Suche nach Beziehungen liefert zu viele Resultate, wenn man in zwei Feldern der Beziehung Kriterien erfasst und eines davon ist das Feld "Beziehungspartner" (in diesem Fall enstpricht das Resultat einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND)</li>
 									</ul>
 								</div>
 								<div class="control-group">
@@ -951,8 +951,43 @@
 				});
 
 				$("#export").on("change", ".feld_waehlen", function() {
-					//Tabelle ausblenden, falls sie eingeblendet war
-					$("#exportieren_exportieren_tabelle").css("display", "none");
+					//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird. Wenn ja: reklamieren und rückgängig machen
+					var bezDsChecked = [];
+					var that = this;
+					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
+						if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
+							bezDsChecked.push($(this).attr('datensammlung'));
+						}
+					});
+					//eindeutige Liste der dsTypen erstellen
+					bezDsChecked = _.union(bezDsChecked);
+					if (bezDsChecked && bezDsChecked.length > 1) {
+						$('#meldung_zuviele_bs').modal();
+						$(that).prop('checked', false);
+					} else {
+						//Tabelle ausblenden, falls sie eingeblendet war
+						$("#exportieren_exportieren_tabelle").css("display", "none");
+					}
+				});
+
+				$("#export").on("change", ".export_feld_filtern", function(event) {
+					//kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
+					var bezDsFiltered = [];
+					var that = this;
+					$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
+						if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
+							bezDsFiltered.push($(this).attr('eigenschaft'));
+						}
+					});
+					//eindeutige Liste der dsTypen erstellen
+					bezDsFiltered = _.union(bezDsFiltered);
+					if (bezDsFiltered && bezDsFiltered.length > 1) {
+						$('#meldung_zuviele_bs').modal();
+						$(this).val("");
+					} else {
+						//Tabelle ausblenden, falls sie eingeblendet war
+						$("#exportieren_exportieren_tabelle").css("display", "none");
+					}
 				});
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
@@ -1137,6 +1172,19 @@
 		</div>
 		<div class="modal-body">
 			<p id="fileApiMeldungText">One fine body…</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		</div>
+	</div>
+
+	<div id="meldung_zuviele_bs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Zuviele Beziehungssammlungen gewählt</h3>
+		</div>
+		<div class="modal-body">
+			<p id="fileApiMeldungText">Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>

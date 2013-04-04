@@ -269,7 +269,7 @@ function(head, req) {
 														var Filterwert = filterkriterien[l].Filterwert;
 														if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
 															if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
-																//TO DO: HIER MÜSSTE MAN, WENN FELDNAME = BEZIEHUNGSPARTNER, DURCH DIE PARTNER LOOPEN UND NUR HINZUFÜGEN, WER DIE BEDINGUNGEN ERFÜLLT
+																//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wer die Bedingung erfüllt
 																if (Feldname === "Beziehungspartner") {
 																	var bezPartner = [];
 																	var beziehung = Objekt.Beziehungssammlungen[i].Beziehungen[a];
@@ -283,7 +283,6 @@ function(head, req) {
 																} else {
 																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 																}
-																//exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 															}
 														}
 													}
@@ -309,7 +308,7 @@ function(head, req) {
 													var Filterwert = filterkriterien[l].Filterwert;
 													if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
 														if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
-															//TO DO: HIER MÜSSTE MAN, WENN FELDNAME = BEZIEHUNGSPARTNER, DURCH DIE PARTNER LOOPEN UND NUR HINZUFÜGEN, WER DIE BEDINGUNGEN ERFÜLLT
+															//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wer die Bedingung erfüllt
 															if (Feldname === "Beziehungspartner") {
 																var bezPartner = [];
 																var beziehung = Objekt.Beziehungssammlungen[i].Beziehungen[a];
@@ -323,7 +322,6 @@ function(head, req) {
 															} else {
 																Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 															}
-															//Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
 													}
 												}
