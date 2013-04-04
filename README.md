@@ -791,6 +791,7 @@ Daten exportieren:
 - Exporte: Daten und Beziehungen von synonymen Arten
 - Lebensräume in der Anwendung bearbeiten
 - Importe: Taxonomien
+_ Importe: Sicherstellen, dass Nutzer nur ihre eigenen Daten verändern können
 - Alternative Taxonomien verwalten und darstellen
 
 <a href="#top">&#8593; top</a>
