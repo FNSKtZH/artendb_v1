@@ -488,7 +488,8 @@
 								<div class="well well-small">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach werden die Eigenschaften der Gruppe aufgebaut.<br>Sie können anschliessend innerhalb der Gruppe(n) filtern</li>
+										<li>Danach werden die Daten- und Beziehungssammlungen der Gruppe aufgebaut</li>
+										<li>Sie können anschliessend innerhalb der Gruppe(n) filtern</li>
 										<li>Eine Gruppe kann auch wieder entfernt werden</li>
 										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Daten aufgelistet. Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder. Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
 									</ul>
@@ -526,7 +527,8 @@
 								<div class="well well-small" style="margin-bottom:0px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
-										<li>Erfassen Sie in den Feldern Ihrer Wahl die gewünschten Kriterien</li>
+										<li>Erfassen Sie in den Feldern Ihrer Wahl die gewünschten Kriterien...</li>
+										<li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Felder exportiert werden sollen</li>
 										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
 										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Dann exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte einfach zusammen</li>
 										<li>Es kommt nicht auf Gross-/Kleinschreibung an.
@@ -535,8 +537,8 @@
 											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
 										<li>Platzhalter und Vergleichsoperatoren können nicht verwendet werden</li>
 										<li>Pro Feld kann nur nach einer Zeichenfolge gefiltert werden</li>
-										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
-										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Feldern einer Beziehung filtern und eines davon ist "Beziehungspartner, erhalten Sie zuviele Resultate (in diesem Fall enstpricht das Resultat einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND). Sie müssen also den Filter vorläufig im exportierten Resultat nachbessern</li>
+										<li>Sie möchten nach einem Feld filtern, das entweder "ja" oder "nein", "wahr" oder "falsch" ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
+										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Feldern einer Beziehung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate (das Resultat entspricht einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND). Sie müssen also den Filter im exportierten Resultat nachbessern</li>
 									</ul>
 								</div>
 								<div class="control-group">
@@ -563,8 +565,7 @@
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Markieren Sie die Felder, die Sie exportieren möchten...</li>
-										<li>...und fahren Sie danach mit "4. Exportieren" weiter
-											<br>Bei Gruppen mit sehr vielen Eigenschaften müssen Sie dazu an allen Feldern vorbei ganz nach unten scrollen</li>
+										<li>...und fahren Sie danach mit "4. Exportieren" weiter</li>
 										<li>Felder werden auch dann exportiert, wenn sie keine Daten enthalten</li>
 										<li>Einzelne Felder, wie z.B. Verweise auf andere Arten/Lebensräume, enthalten JSON-Objekte. Das sind komplexe Datenstrukturen, die nicht in ein einfaches Datenfeld passen. Sie werden darum einfach im JSON-Format in das ensprechende Tabellenfeld exportiert. Erkenntlich sind sie u.a. an den {geschweiften Klammern}</li>
 									</ul>
@@ -594,12 +595,12 @@
 										<li>Klicken Sie auf "Vorschau anzeigen"...</li>
 										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
 										<li>... und es erscheint die Schaltfläche "herunterladen"</li>
-										<li>... <strong>das dauert eine ganze Weile!</strong></li>
+										<li>... <strong>das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
 										<li>Spezialfall Beziehungen:
 											<ul>
-												<li>Jede Art bzw. Lebensraum kann beliebig viele Beziehungen haben</li>
-												<li>Daher muss für jede Art / Lebensraum eine Liste der Beziehungen erstellt werden.<br>Enthält eine Art z.B. drei Beziehungen, erscheinen im Export drei Zeilen für diese Art, jede mit einer Beziehung</li>
-												<li>Aus diesem Grund können nur Beziehungen einer Beziehungssammlung gleichzeitig exportiert werden. Wählen Sie mehr, werden Sie darauf hingewiesen</li>
+												<li>Jede Art und jeder Lebensraum können beliebig viele Beziehungen haben</li>
+												<li>Daher muss für jede Art oder Lebensraum eine Liste der Beziehungen erstellt werden.<br>Enthält eine Art z.B. drei Beziehungen, erscheinen im Export drei Zeilen für diese Art, jede mit einer Beziehung</li>
+												<li>Aus diesem Grund können nur Beziehungen einer einzigen Beziehungssammlung gleichzeitig exportiert werden. Wählen Sie mehr, werden Sie darauf hingewiesen</li>
 											</ul>
 										</li>
 										<li>Der Download hat das .csv-Format:
