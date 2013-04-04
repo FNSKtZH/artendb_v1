@@ -526,10 +526,7 @@
 								<div class="well well-small" style="margin-bottom:0px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
-										<li>Sie filtern, indem sie im Feld ihrer Wahl das gewünschte Kriterium erfassen...</li>
-										<li>...und danach zuunterst bei "4. Exportieren" die Vorschau anzeigen.
-											<br>Dazu müssen Sie an allen Feldern vorbei ganz nach unten scrollen</li>
-										<li>Unterhalb von "Vorschau anzeigen" wird Ihnen danach die Anzahl "Treffer" angezeigt</li>
+										<li>Erfassen Sie in den Feldern Ihrer Wahl die gewünschten Kriterien</li>
 										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
 										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Dann exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte einfach zusammen</li>
 										<li>Es kommt nicht auf Gross-/Kleinschreibung an.
@@ -537,8 +534,9 @@
 										<li>Sie können nach einem Teil des Feldinhalts filtern.
 											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
 										<li>Platzhalter und Vergleichsoperatoren können nicht verwendet werden</li>
+										<li>Pro Feld kann nur nach einer Zeichenfolge gefiltert werden</li>
 										<li>Sie möchten nach einem Feld filtern, das entweder ja oder nein, wahr oder falsch ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
-										<li>Was (noch) NICHT funktioniert: Die Suche nach Beziehungen liefert zu viele Resultate, wenn man in zwei Feldern der Beziehung Kriterien erfasst und eines davon ist das Feld "Beziehungspartner" (in diesem Fall enstpricht das Resultat einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND)</li>
+										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Feldern einer Beziehung filtern und eines davon ist "Beziehungspartner, erhalten Sie zuviele Resultate (in diesem Fall enstpricht das Resultat einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND). Sie müssen also den Filter vorläufig im exportierten Resultat nachbessern</li>
 									</ul>
 								</div>
 								<div class="control-group">
@@ -600,9 +598,8 @@
 										<li>Spezialfall Beziehungen:
 											<ul>
 												<li>Jede Art bzw. Lebensraum kann beliebig viele Beziehungen haben</li>
-												<li>Daher muss für jede Art / Lebensraum eine Liste der Beziehungen erstellt werden</li>
-												<li>Diese Liste ist in den jeweiligen Feldern enthalten. Die einzelnen Werte wurden mit Kommas (,) getrennt. Falls ein Feld schon ein Komma enthielt, wurde dieses mit "(Komma)" ersetzt. Damit bleibt gewährleistet, dass sich die Werte wieder mit einer Routine trennen lassen</li>
-												<li>Bei Beziehungspartnern wird die GUID aus der ArtenDb exportiert. Zur besseren Lesbarkeit wird in einem zweiten Feld die JSON-formattierte Beschreibung der Beziehungspartner mitgeliefert. Darin sieht man auch den Namen</li>
+												<li>Daher muss für jede Art / Lebensraum eine Liste der Beziehungen erstellt werden.<br>Enthält eine Art z.B. drei Beziehungen, erscheinen im Export drei Zeilen für diese Art, jede mit einer Beziehung</li>
+												<li>Aus diesem Grund können nur Beziehungen einer Beziehungssammlung gleichzeitig exportiert werden. Wählen Sie mehr, werden Sie darauf hingewiesen</li>
 											</ul>
 										</li>
 										<li>Der Download hat das .csv-Format:
