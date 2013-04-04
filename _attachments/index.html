@@ -924,12 +924,19 @@
 					});
 				});
 
-				//TO DO: DIES AUCH FÜR BEZIEHUNGSSAMMLUNGEN
 				$("#importieren_ds").on("click", "#DsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneDatensammlung()).then(function() {
 						//jetzt Ergebnisse anzeigen
 						console.log("Datensammlung entfernt");
+					});
+				});
+
+				$("#importieren_bs").on("click", "#BsEntfernen", function(e) {
+					e.preventDefault();
+					$.when(entferneBeziehungssammlung()).then(function() {
+						//jetzt Ergebnisse anzeigen
+						console.log("Beziehungssammlung entfernt");
 					});
 				});
 

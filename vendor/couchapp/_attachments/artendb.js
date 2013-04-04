@@ -1794,8 +1794,8 @@ function entferneDatensammlung() {
 		} else {
 			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 			//RückmeldungsLinks in Feld anzeigen:
-			$("#importieren_import_ausfuehren_hinweis").css('display', 'block');
-			$("#importieren_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
+			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
 			DsEntfernt.resolve();
 			break;
 		}
@@ -1824,6 +1824,87 @@ function entferneDatensammlungAusObjekt(DsName, Objekt) {
 		for (var i=0; i<Objekt.Datensammlungen.length; i++) {
 			if (Objekt.Datensammlungen[i].Name === DsName) {
 				Objekt.Datensammlungen.splice(i,1);
+				$db = $.couch.db("artendb");
+				$db.saveDoc(Objekt);
+				break;
+			}
+		}
+	}
+}
+
+//bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+//holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
+function entferneBeziehungssammlung() {
+	var guid_array = [];
+	var guidArray = [];
+	var guid;
+	var BsEntfernt = $.Deferred();
+	for (x=0; x<window.bsDatensätze.length; x++) {
+		//zuerst die id in guid übersetzen
+		if (window.BsId === "guid") {
+			//die in der Tabelle mitgelieferte id ist die guid
+			guid = window.bsDatensätze[x].GUID;
+		} else {
+			for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+				if (window.ZuordbareDatensätze[z].Id == window.bsDatensätze[x][window.BsFelderId]) {
+					//und die guid auslesen
+					guid = window.ZuordbareDatensätze[z].Guid;
+					break;
+				}
+			}
+		}
+		//Einen Array der id's erstellen
+		guid_array.push(guid);
+	}
+	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfern. Am Ende verbleiben keine oder die nicht entfernten
+	window.aktualisierte_objekte = guid_array.slice();
+	//alle docs gleichzeitig holen
+	//aber batchweise
+	var a = 0;
+	var batch = 150;
+	var batchGrösse = 150;
+	for (a; a<batch; a++) {
+		if (a < guid_array.length) {
+			guidArray.push(guid_array[a]);
+			if (a === (batch-1)) {
+				entferneBeziehungssammlung_2($("#BsName").val(), guidArray, (a-batchGrösse));
+				guidArray = [];
+				batch += batchGrösse;
+			}
+		} else {
+			entferneBeziehungssammlung_2($("#BsName").val(), guidArray, (a-batchGrösse));
+			//RückmeldungsLinks in Feld anzeigen:
+			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
+			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
+			BsEntfernt.resolve();
+			break;
+		}
+	}
+	return BsEntfernt.promise();
+}
+
+function entferneBeziehungssammlung_2(BsName, guidArray, a) {
+	//alle docs holen
+	setTimeout(function() {
+		$db = $.couch.db("artendb");
+		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
+			success: function (data) {
+				var Objekt;
+				for (var f=0; f<data.rows.length; f++) {
+					Objekt = data.rows[f].doc;
+					entferneBeziehungssammlungAusObjekt(BsName, Objekt);
+				}
+			}
+		});
+	}, a*40);
+}
+
+function entferneBeziehungssammlungAusObjekt(BsName, Objekt) {
+	if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
+		for (var i=0; i<Objekt.Beziehungssammlungen.length; i++) {
+			if (Objekt.Beziehungssammlungen[i].Name === BsName) {
+				Objekt.Beziehungssammlungen.splice(i,1);
 				$db = $.couch.db("artendb");
 				$db.saveDoc(Objekt);
 				break;
@@ -2486,9 +2567,9 @@ function baueTabelleFuerExportAuf() {
 							} else {
 								//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
 								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y].replace(/,/g,'\(Komma\)');
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
 								} else {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y].replace(/,/g,'\(Komma\)');
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
 								}
 							}
 						}
@@ -2502,18 +2583,6 @@ function baueTabelleFuerExportAuf() {
 			exportobjekte.push(Objekt);
 		}
 	}
-
-	//Jetzt Beziehungssammlungen ergänzen
-	//durch alle exportobjekte loopen und eine Liste der Beziehungs-Datensammlungen sowie ihrer Felder erstellen
-	//dazu ist bei jedem Objekt eine DB-Abfrage nötig! Nur machen, wenn vom Benutzer explizit gewünscht
-	//diesen Schritt in obigen loop integrieren
-
-	//durch alle exportobjekte loopen und allen diese Felder mit Leerwerten anhängen
-
-	//durch alle exportobjekte loopen und bei jedem:
-	//Anzahl Beziehungen zählen
-	//exportobjekt entsprechend der Anzahl Beziehungen multiplizieren (hintereinander schreiben)
-	//durch Beziehungen des exportobjekts loopen und Werte dieser Beziehung in Felder schreiben
 	
 	if (exportobjekte.length > 0) {
 		erstelleTabelle(exportobjekte, "", "exportieren_exportieren_tabelle");
