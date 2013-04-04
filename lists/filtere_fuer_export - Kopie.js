@@ -247,13 +247,13 @@ function(head, req) {
 								for (a in Objekt.Beziehungssammlungen[i].Beziehungen) {
 									//durch Beziehungen loopen
 									if (Objekt.Beziehungssammlungen[i].Beziehungen[a][felder[w].Feldname]) {
-										//im Objekt gibt es das gesuchte Feld
+										//in der Beziehung gibt es das gesuchte Feld
 										if (!exportObjekt.Beziehungssammlungen) {
 											//im Exportobjekt Beziehungssammlungen anlegen, falls noch nicht vorhanden
 											exportObjekt.Beziehungssammlungen = [];
 										}
 										dsExistiertSchon = false;
-										for (t in exportObjekt.Beziehungssammlungen) {
+										for (var t=0; t<exportObjekt.Beziehungssammlungen.length; t++) {
 											//im Exportobjekt die Beziehungssammlung suchen
 											if (exportObjekt.Beziehungssammlungen[t].Name === felder[w].DsName) {
 												dsExistiertSchon = true;
@@ -271,14 +271,14 @@ function(head, req) {
 															if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
 																exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 															}
-														} else {
-															//kein Filter auf Feldern - alle hinzufügen
-															exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
 													}
 												} else {
-													//kein Filter auf Feldern - alle hinzufügen
-													exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+													//kein Filter auf Feldern - Beziehung hinzufügen
+													//aber sicherstellen, dass sie nicht schon drin ist
+													if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[a], exportObjekt.Beziehungssammlungen[t].Beziehungen)) {
+														exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+													}
 												}
 											}
 										}
@@ -297,14 +297,13 @@ function(head, req) {
 														if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === parseInt(Filterwert)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[a][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
 															Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 														}
-													} else {
-														//kein Filter auf Feldern - alle hinzufügen
-														Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
 													}
 												}
 											} else {
 												//kein Filter auf Feldern - alle hinzufügen
-												Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+												if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[a], Beziehungssammlung.Beziehungen)) {
+													Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[a]);
+												}
 											}
 											exportObjekt.Beziehungssammlungen.push(Beziehungssammlung);
 										}
