@@ -101,6 +101,7 @@
 						</div>
 						<div id="importieren_ds_anmelden_collapse" class="accordion-body collapse importieren_anmelden_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">Um Daten zu importieren, müssen Sie angemeldet sein.</div>
 								<div class="control-group">
 									<label class="control-label" for="Email_ds">Email</label>
 									<div class="controls">
@@ -151,6 +152,17 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_ds_ds_beschreiben_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen:
+									<ul>
+										<li>Der Name sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li>
+										<li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li>
+										<li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn"</li>
+										<li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Datensammlung enthält. Beispiel: "Eigenschaften von 207 Tierarten und 885 Pflanzenarten"</li>
+										<li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li>
+										<li>Im Datenstand ist erkenntlich, wann die Datensammlung zuletzt aktualisiert wurde</li>
+										<li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
+									</ul>
+								</div>
 								<div class="control-group">
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="DsWaehlen"></select>
@@ -272,8 +284,8 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_ds_import_ausfuehren_collapse">
 							<div class="accordion-inner">
-								<button type="button" class="btn" id="DsImportieren" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften importieren</button>
-								<button type="button" class="btn" id="DsEntfernen" style="margin-bottom:6px;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<button type="button" class="btn" id="DsImportieren" style="margin-bottom:6px; display:none;">Datensammlung mit allen Eigenschaften importieren</button>
+								<button type="button" class="btn" id="DsEntfernen" style="margin-bottom:6px; display:none;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
 								<div id="importieren_ds_import_ausfuehren_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="importieren_ds_import_ausfuehren_hinweis_text"></div>
@@ -292,6 +304,7 @@
 						</div>
 						<div id="importieren_bs_anmelden_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">Um Daten zu importieren, müssen Sie angemeldet sein.</div>
 								<div class="control-group">
 									<label class="control-label" for="Email_bs">Email</label>
 									<div class="controls">
@@ -342,6 +355,18 @@
 						</div>
 						<div class="accordion-body collapse" id="importieren_bs_ds_beschreiben_collapse">
 							<div class="accordion-inner">
+								<div class="well well-small">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen:
+									<ul>
+										<li>Der erste Teil des Namens sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Delarze (2008)"</li>
+										<li>Danach sollte der Namen die Art der Beziehung ausdrücken. Beispiel: "Delarze (2008): Art charakterisiert Lebensraum"</li>
+										<li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "CH Delarze (2008): Art charakterisiert Lebensraum"</li>
+										<li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz"</li>
+										<li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Datensammlung enthält. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten"</li>
+										<li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li>
+										<li>Im Datenstand ist erkenntlich, wann die Datensammlung zuletzt aktualisiert wurde</li>
+										<li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
+									</ul>
+								</div>
 								<div class="control-group">
 									<label class="control-label" for="BsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="BsWaehlen"></select>
@@ -843,6 +868,14 @@
 					}
 					var file = e.target.files[0],
 					reader = new FileReader();
+					if (typeof e.target.files[0] === "undefined") {
+						//vorhandene Datei wurde entfernt
+						$("#DsTabelleEigenschaften").css("display", "none");
+						$("#importieren_ds_ids_identifizieren_fehler").css("display", "none");
+						$("#importieren_ds_ids_identifizieren_erfolg").css("display", "none");
+						$("#DsImportieren").css("display", "none");
+						$("#DsEntfernen").css("display", "none");
+					}
 					reader.onload = function (event) {
 						window.dsDatensätze = $.csv.toObjects(event.target.result);
 						erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
@@ -861,6 +894,14 @@
 					}
 					var file = e.target.files[0],
 					reader = new FileReader();
+					if (typeof e.target.files[0] === "undefined") {
+						//vorhandene Datei wurde entfernt
+						$("#BsTabelleEigenschaften").css("display", "none");
+						$("#importieren_bs_ids_identifizieren_fehler").css("display", "none");
+						$("#importieren_bs_ids_identifizieren_erfolg").css("display", "none");
+						$("#BsImportieren").css("display", "none");
+						$("#BsEntfernen").css("display", "none");
+					}
 					reader.onload = function (event) {
 						window.bsDatensätze = $.csv.toObjects(event.target.result);
 						erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
@@ -1025,7 +1066,7 @@
 					event.preventDefault();
 					//Tabelle und Herunterladen-Schaltfläche ausblenden
 					$("#exportieren_exportieren_tabelle").css("display", "none");
-					$("#exportieren_exportieren_exportieren").hide();
+					$("#exportieren_exportieren_exportieren").css("display", "none");
 					//filtert und baut danach die Vorschautabelle auf
 					filtereFuerExport();
 				});

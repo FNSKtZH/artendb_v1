@@ -1505,6 +1505,8 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		} else {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
 		}
+		$("#"+dbs+"DsImportieren").css("display", "block");
+		$("#"+dbs+"DsEntfernen").css("display", "block");
 	} else {
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
@@ -1513,6 +1515,8 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		} else {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
 		}
+		$("#"+dbs+"Importieren").css("display", "block");
+		$("#"+dbs+"Entfernen").css("display", "block");
 	}
 }
 
@@ -2702,8 +2706,6 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 		}, 600);
 	} else {
 		$("#DsName").focus();
-		//anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
-		//$("#DsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
 		//Daten holen, wenn nötig
 		if (window.ds_von_objekten) {
 			bereiteImportieren_ds_beschreibenVor_02();
@@ -2726,6 +2728,8 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	for (i in window.ds_von_objekten.rows) {
 		DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
 	}
+	//sicherstellen, dass jede Datensammlung nur ein mal erwähnt wird
+	DsNamen = _.union(DsNamen);
 	DsNamen.sort();
 	var html = "";
 	for (i in DsNamen) {
