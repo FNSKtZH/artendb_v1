@@ -316,7 +316,7 @@ function(head, req) {
 				//Objekt zu Exportobjekten hinzufügen
 				exportObjekte.push(exportObjekt);
 			}
-		}
+		})
 		send(JSON.stringify(exportObjekte));
 	});
 }

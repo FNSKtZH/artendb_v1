@@ -2508,10 +2508,13 @@ function filtereFuerExport() {
 	var queryParam = "objekte?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	$db.list('artendb/filtere_fuer_export', queryParam, {
 		success: function (data) {
+			//leere Objekte entfernen
+			window.exportieren_objekte = _.reject(data, function(object) {
+				return _.isEmpty(object);
+			});
 			//Ergebnis rückmelden
 			$("#exportieren_exportieren_hinweis").alert().css("display", "block");
-			$("#exportieren_exportieren_hinweis_text").html(data.length + " Objekte sind gewählt");
-			window.exportieren_objekte = data;
+			$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
 			baueTabelleFuerExportAuf();
 		}
 	});
