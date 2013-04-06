@@ -1,30 +1,30 @@
 function(head, req) {
 	// specify that we're providing a JSON response
     provides('json', function() {
-		var row, Objekt;
-		var rückgabeObjekt = {};
-		var exportObjekte = [];
-		var exportObjekt;
-		var filterkriterien = [];
-		var filterkriterienObjekt;
-		var felder = [];
-		var felderObjekt;
-		var objektHinzufügen;
-		var DsName_z;
-		var Feldname_z;
-		var Filterwert_z;
-		var DsName_q;
-		var Feldname_q;
-		var Filterwert_q;
-		var Datensammlung;
-		var Beziehungssammlungen;
-		var Beziehungssammlung;
-		var Beziehung;
-		var dsExistiertSchon;
-		var dsExistiert;
+		var row, Objekt,
+		rückgabeObjekt = {},
+		exportObjekte = [],
+		exportObjekt,
+		filterkriterien = [],
+		filterkriterienObjekt,
+		felder = [],
+		felderObjekt,
+		objektHinzufügen,
+		DsName_z,
+		Feldname_z,
+		Filterwert_z,
+		DsName_q,
+		Feldname_q,
+		Filterwert_q,
+		Datensammlung,
+		Beziehungssammlungen,
+		Beziehungssammlung,
+		Beziehung,
+		dsExistiertSchon,
+		dsExistiert;
 
 		//übergebene Variabeln extrahieren
-		for (i in req.query) {
+		for (var i in req.query) {
 			if (i === "fasseTaxonomienZusammen") {
 				//true oder false wird als String übergeben > umwandeln
 				fasseTaxonomienZusammen = (req.query[i] === 'true');
@@ -61,7 +61,7 @@ function(head, req) {
 			}
 			
 			loop_filterkriterien:
-			for (z in filterkriterien) {
+			for (var z in filterkriterien) {
 				DsTyp_z = filterkriterien[z].DsTyp;
 				DsName_z = filterkriterien[z].DsName;
 				Feldname_z = filterkriterien[z].Feldname;
@@ -104,14 +104,14 @@ function(head, req) {
 				} else if (DsTyp_z === "Beziehung") {
 					//durch alle Beziehungssammlungen loopen und suchen, ob Filter trifft
 					dsExistiert = false;
-					for (g in Objekt.Beziehungssammlungen) {
+					for (var g in Objekt.Beziehungssammlungen) {
 						if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
 							dsExistiert = true;
 							//durch Beziehungssammlungen der Beziehung loopen
 							if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
 								var feldExistiert = false;
 								var feldHinzugefügt = false;
-								for (h in Objekt.Beziehungssammlungen[g].Beziehungen) {
+								for (var h in Objekt.Beziehungssammlungen[g].Beziehungen) {
 									//durch die Felder der Beziehung loopen
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
 										feldExistiert = true;

@@ -1,7 +1,7 @@
 function erstelleBaum() {
-	var baum;
-	var gruppe;
-	var baum_erstellt = $.Deferred();
+	var baum,
+		gruppe,
+		baum_erstellt = $.Deferred();
 	//alle Bäume ausblenden
 	$(".baum").css("display", "none");
 	//alle Beschriftungen ausblenden
@@ -16,9 +16,11 @@ function erstelleBaum() {
 }
 
 function erstelleTree() {
-	var jstree_erstellt = $.Deferred();
-	var level;
-	var filter;
+	var level,
+		gruppe,
+		filter,
+		id,
+		jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
 			"ajax": {
@@ -28,14 +30,14 @@ function erstelleTree() {
 					if (node == -1) {
 						return holeDatenFuerTreeOberstesLevel();
 					} else {
-						level = parseInt(node.attr('level')) + 1;
-						var gruppe = node.attr('gruppe');
+						level = parseInt(node.attr('level'), 10) + 1;
+						gruppe = node.attr('gruppe');
 						if (node.attr('filter')) {
 							filter = node.attr('filter').split(",");
-							var id = "";
+							id = "";
 						} else {
 							filter = "";
-							var id = node.attr('id');
+							id = node.attr('id');
 						}
 						return holeDatenFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
@@ -100,21 +102,21 @@ function holeDatenFuerTreeOberstesLevel() {
 	var gruppe;
 	//wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.Gruppe) {
-		case "Fauna":
-			gruppe = "fauna";
-			break;
-		case "Flora":
-			gruppe = "flora";
-			break;
-		case "Moose":
-			gruppe = "moose";
-			break;
-		case "Macromycetes":
-			gruppe = "macromycetes";
-			break;
-		case "Lebensräume":
-			gruppe = "lr";
-			break;
+	case "Fauna":
+		gruppe = "fauna";
+		break;
+	case "Flora":
+		gruppe = "flora";
+		break;
+	case "Moose":
+		gruppe = "moose";
+		break;
+	case "Macromycetes":
+		gruppe = "macromycetes";
+		break;
+	case "Lebensräume":
+		gruppe = "lr";
+		break;
 	}
 	if (window.Gruppe === "Lebensräume") {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
@@ -125,71 +127,73 @@ function holeDatenFuerTreeOberstesLevel() {
 }
 
 function holeDatenFuerTreeUntereLevel(level, filter, gruppe, id) {
-	var endkey = [];
+	var startkey,
+		id2,
+		endkey = [];
 	if (filter) {
 		//bei lr gibt es keinen filter und das erzeugt einen fehler
-		var startkey = filter.slice();
-		var endkey = filter.slice();
+		startkey = filter.slice();
+		endkey = filter.slice();
 	}
 	//flag, um mitzuliefern, ob die id angezeigt werden soll
-	var id2 = false;
+	id2 = false;
 	switch (gruppe) {
-		case "fauna":
-			if (level > 4) {
-				return null;
-			}
-			for (a=5; a>=level; a--) {
-				endkey.push({});
-			}
-			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 4) {
-				//das ist die Art-Ebene
-				//hier soll die id angezeigt werden
-				//dazu muss der nächste level abgerufen werden
-				//damit die list den zu hohen level korrigieren kann, id mitgeben
-				id2 = true;
-				level++;
-			}
-			break;
-		case "flora":
-			if (level > 3) {
-				return null;
-			}
-			for (a=4; a>=level; a--) {
-				endkey.push({});
-			}
-			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 3) {
-				id2 = true;
-				level++;
-			}
-			break;
-		case "moose":
-			if (level > 4) {
-				return null;
-			}
-			for (a=5; a>=level; a--) {
-				endkey.push({});
-			}
-			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 4) {
-				id2 = true;
-				level++;
-			}
-			break;
-		case "macromycetes":
-			if (level > 2) {
-				return null;
-			}
-			for (a=3; a>=level; a--) {
-				endkey.push({});
-			}
-			//im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 2) {
-				id2 = true;
-				level++;
-			}
-			break;
+	case "fauna":
+		if (level > 4) {
+			return null;
+		}
+		for (a=5; a>=level; a--) {
+			endkey.push({});
+		}
+		//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+		if (level === 4) {
+			//das ist die Art-Ebene
+			//hier soll die id angezeigt werden
+			//dazu muss der nächste level abgerufen werden
+			//damit die list den zu hohen level korrigieren kann, id mitgeben
+			id2 = true;
+			level++;
+		}
+		break;
+	case "flora":
+		if (level > 3) {
+			return null;
+		}
+		for (a=4; a>=level; a--) {
+			endkey.push({});
+		}
+		//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+		if (level === 3) {
+			id2 = true;
+			level++;
+		}
+		break;
+	case "moose":
+		if (level > 4) {
+			return null;
+		}
+		for (a=5; a>=level; a--) {
+			endkey.push({});
+		}
+		//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+		if (level === 4) {
+			id2 = true;
+			level++;
+		}
+		break;
+	case "macromycetes":
+		if (level > 2) {
+			return null;
+		}
+		for (a=3; a>=level; a--) {
+			endkey.push({});
+		}
+		//im untersten level einen level mehr anzeigen, damit id vorhanden ist
+		if (level === 2) {
+			id2 = true;
+			level++;
+		}
+		break;
 	}
 	if (gruppe === "lr") {
 		//level++;
@@ -235,7 +239,7 @@ function initiiereSuchfeld_2() {
 	var suchObjekte;
 	if (window.Gruppe && window.Gruppe === "Lebensräume") {
 		suchObjekte = window.filtere_lr.rows;
-	
+
 	} else if (window.Gruppe) {
 		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
 	}
@@ -277,51 +281,51 @@ function oeffneBaumZuId(id) {
 	$db.openDoc(id, {
 		success: function (objekt) {
 			switch (objekt.Gruppe) {
-				case "Fauna":
-					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					//oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
-						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
-							$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-								$.jstree._reference("#treeFauna").select_node($("#"+objekt._id),function(){;},false);
-							},true);
+			case "Fauna":
+				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+				//oberste Ebene aufbauen nicht nötig, die gibt es schon
+				$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
+						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+							$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
 						},true);
 					},true);
-					break;
-				case "Flora":
-					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					//oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
-						$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-							$.jstree._reference("#treeFlora").select_node($("#"+objekt._id),function(){;},false);
-						},true);
-					},true);
-					break;
-				case "Moose":
-					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					//oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
-						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-							$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-								$.jstree._reference("#treeMoose").select_node($("#"+objekt._id),function(){;},false);
-							},true);
-						},true);
-					},true);
-					break;
-				case "Macromycetes":
-					//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					//oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id),function(){;},false);
-					},true);
-					break;
-				case "Lebensräume":
-					var idArray = [];
-					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
-						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
-					}
-					oeffneNodeNachIdArray(idArray);
-					break;
+				},true);
+				break;
+			case "Flora":
+				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+				//oberste Ebene aufbauen nicht nötig, die gibt es schon
+				$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
+					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+						$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
+					}, true);
+				}, true);
+				break;
+			case "Moose":
+				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+				//oberste Ebene aufbauen nicht nötig, die gibt es schon
+				$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+							$.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
+						}, true);
+					}, true);
+				}, true);
+				break;
+			case "Macromycetes":
+				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+				//oberste Ebene aufbauen nicht nötig, die gibt es schon
+				$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+					$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
+				}, true);
+				break;
+			case "Lebensräume":
+				var idArray = [];
+				for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
+					idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
+				}
+				oeffneNodeNachIdArray(idArray);
+				break;
 			}
 		}
 	});
@@ -337,7 +341,7 @@ function oeffneNodeNachIdArray(idArray) {
 			oeffneNodeNachIdArray(idArray);
 		},false);
 	} else if (idArray.length === 1) {
-		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function(){;},true);
+		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function(){},true);
 	}
 }
 
@@ -345,17 +349,18 @@ function initiiere_art(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function (art) {
-			var htmlArt;
-			var Datensammlungen = art.Datensammlungen;
-			var Beziehungssammlungen = [];
-			var taxonomischeBeziehungssammlungen = [];
-			var len;
-			var guidsVonSynonymen = [];
-			var DatensammlungenVonSynonymen = [];
-			var BeziehungssammlungenVonSynonymen = [];
-			var ds, bez;
-			var dsNamen = [];
-			var bezNamen = [];
+			var htmlArt,
+			Datensammlungen = art.Datensammlungen,
+			Beziehungssammlungen = [],
+			taxonomischeBeziehungssammlungen = [],
+			len,
+			guidsVonSynonymen = [],
+			DatensammlungenVonSynonymen = [],
+			BeziehungssammlungenVonSynonymen = [],
+			ds, bez,
+			a, f, h, i, k, x, q,
+			dsNamen = [],
+			bezNamen = [];
 			//accordion beginnen
 			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
@@ -364,7 +369,7 @@ function initiiere_art(id) {
 			//Datensammlungen muss nicht gepusht werden
 			//aber Beziehungssammlungen aufteilen
 			if (art.Beziehungssammlungen.length > 0) {
-				for (var i=0, len=art.Beziehungssammlungen.length; i<len; i++) {
+				for (i=0, len=art.Beziehungssammlungen.length; i<len; i++) {
 					if (typeof art.Beziehungssammlungen[i].Typ === "undefined") {
 						Beziehungssammlungen.push(art.Beziehungssammlungen[i]);
 						//bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
@@ -381,15 +386,15 @@ function initiiere_art(id) {
 				//taxonomischeBeziehungssammlungen.sort();
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
-				for (var z=0, len=taxonomischeBeziehungssammlungen.length; z<len; z++) {
+				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[z]);
-					if (taxonomischeBeziehungssammlungen[z]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[z]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[z].Beziehungen) {
-						for (h in taxonomischeBeziehungssammlungen[z].Beziehungen) {
-							if (taxonomischeBeziehungssammlungen[z].Beziehungen[h].Beziehungspartner) {
-								for (k in taxonomischeBeziehungssammlungen[z].Beziehungen[h].Beziehungspartner) {
-									if (taxonomischeBeziehungssammlungen[z].Beziehungen[h].Beziehungspartner[k].GUID) {
-										guidsVonSynonymen.push(taxonomischeBeziehungssammlungen[z].Beziehungen[h].Beziehungspartner[k].GUID);
+					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q]);
+					if (taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[q].Beziehungen) {
+						for (h in taxonomischeBeziehungssammlungen[q].Beziehungen) {
+							if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
+								for (k in taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
+									if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner[k].GUID) {
+										guidsVonSynonymen.push(taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner[k].GUID);
 									}
 								}
 							}
@@ -412,7 +417,7 @@ function initiiere_art(id) {
 				});*/
 				//Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
-				for (var x=0, len=Datensammlungen.length; x<len; x++) {
+				for (x=0, len=Datensammlungen.length; x<len; x++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
 					htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
 					//dsNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
@@ -424,9 +429,9 @@ function initiiere_art(id) {
 			if (Beziehungssammlungen.length > 0) {
 				//Titel hinzufügen
 				htmlArt += "<h4>Beziehungen:</h4>";
-				for (var z=0; z<Beziehungssammlungen.length; z++) {
+				for (q=0; q<Beziehungssammlungen.length; q++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[z]);
+					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q]);
 				}
 			}
 			//Beziehungssammlungen von synonymen Arten
@@ -435,10 +440,10 @@ function initiiere_art(id) {
 				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidsVonSynonymen)) + '&include_docs=true', {
 					success: function (data) {
 						var synonymeArt;
-						for (var f = 0; f<data.rows.length; f++) {
+						for (f=0; f<data.rows.length; f++) {
 							synonymeArt = data.rows[f].doc;
 							if (synonymeArt.Datensammlungen && synonymeArt.Datensammlungen.length > 0) {
-								for (var a=0, len=synonymeArt.Datensammlungen.length; a<len; a++) {
+								for (a=0, len=synonymeArt.Datensammlungen.length; a<len; a++) {
 									//if (synonymeArt.Datensammlungen[a].Name.indexOf(dsNamen) === -1) {
 									if (dsNamen.indexOf(synonymeArt.Datensammlungen[a].Name) === -1) {
 										//diese Datensammlung wird noch nicht dargestellt
@@ -451,7 +456,7 @@ function initiiere_art(id) {
 								}
 							}
 							if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
-								for (var a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
+								for (a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
 									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
 										//diese Datensammlung wird noch nicht dargestellt
 										BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
@@ -471,10 +476,14 @@ function initiiere_art(id) {
 										if (BsDerSynonymenArt.Beziehungen && BsDerSynonymenArt.Beziehungen.length > 0) {
 											for (b=0; b<BsDerSynonymenArt.Beziehungen.length; b++) {
 												//durch alle Beziehungen von BsDerSynonymenArt loopen und prüfen, ob sie in den Beziehungen vorkommen
-												if (containsObject(BsDerSynonymenArt.Beziehungen[b], BsDerSynonymenArt.Beziehungen)) {
+												if (_.contains(BsDerSynonymenArt.Beziehungen, BsDerSynonymenArt.Beziehungen[b])) {
 													//diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
 													BsDerSynonymenArt.Beziehungen.splice(b);
 												}
+												/*if (containsObject(BsDerSynonymenArt.Beziehungen[b], BsDerSynonymenArt.Beziehungen)) {
+													//diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
+													BsDerSynonymenArt.Beziehungen.splice(b);
+												}*/
 											}
 										}
 										if (BsDerSynonymenArt.Beziehungen.length > 0) {
@@ -499,7 +508,7 @@ function initiiere_art(id) {
 							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
-							for (var x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
+							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
 								//HTML für Datensammlung erstellen lassen und hinzufügen
 								htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
 							}
@@ -518,7 +527,7 @@ function initiiere_art(id) {
 							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
-							for (var x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
+							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
 								//HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
 								htmlArt += erstelleHtmlFuerBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
 							}
@@ -549,7 +558,8 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 		//Fokus von der Hierarchie wegnehmen
 		$("#Hierarchie").blur();
 	//} else if (Datensammlungen.length === 0 && DatensammlungenVonSynonymen.length === 0 && Beziehungssammlungen.length === 0 && taxonomischeBeziehungssammlungen.length === 0 && BeziehungssammlungenVonSynonymen.length === 0) {
-	} else */if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
+	} else */
+	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 		$(".accordion-body").collapse('show');
 	}
@@ -563,8 +573,8 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 //altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
 function erstelleHtmlFuerBeziehung(art, art_i, altName) {
-	var html;
-	var Name;
+	var html,
+		Name;
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
@@ -597,7 +607,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//die Beziehungen sortieren
 	art_i.Beziehungen.sort(function(a, b) {
 		var aName, bName;
-		for (c in a.Beziehungspartner) {
+		for (var c in a.Beziehungspartner) {
 			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
 				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
@@ -605,7 +615,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
 			}
 		}
-		for (d in b.Beziehungspartner) {
+		for (var d in b.Beziehungspartner) {
 			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
 				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
 			} else {
@@ -622,12 +632,12 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i=0; i<art_i.Beziehungen.length; i++) {
 		if (art_i.Beziehungen[i].Beziehungspartner && art_i.Beziehungen[i].Beziehungspartner.length > 0) {
-			for (y in art_i.Beziehungen[i].Beziehungspartner) {
+			for (var y in art_i.Beziehungen[i].Beziehungspartner) {
 				//if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
 				if (art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie) {
 					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
 				} else {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name
+					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
 				}
 				//Partner darstellen
 				if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
@@ -639,7 +649,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 			}
 		}
 		//Die Felder anzeigen
-		for (x in art_i.Beziehungen[i]) {
+		for (var x in art_i.Beziehungen[i]) {
 			if (x !== "Beziehungspartner") {
 				html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x]);
 			}
@@ -811,7 +821,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	if (dsTyp === "Taxonomie") {
 		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
 	}
-	for (y in art_i.Daten) {
+	for (var y in art_i.Daten) {
 		if (y === "GUID") {
 			//dieses Feld nicht anzeigen. Es wird _id verwendet
 			//dieses Feld wird künftig nicht mehr importiert
@@ -827,7 +837,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 			//Namen kommagetrennt anzeigen
 			var hierarchie_objekt_array = art_i.Daten[y];
 			var hierarchie_string = "";
-			for (g in hierarchie_objekt_array) {
+			for (var g in hierarchie_objekt_array) {
 				if (hierarchie_string !== "") {
 					hierarchie_string += "\n";
 				}
@@ -872,51 +882,51 @@ function setzteLinksZuBilderUndWikipedia(art) {
 		var googleBilderLink = "";
 		var wikipediaLink = "";
 		switch (art.Gruppe) {
-			case "Flora":
-				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-				if (art.Taxonomie.Daten['Deutsche Namen']) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Deutsche Namen'] + '"';
-				}
-				if (art.Taxonomie.Daten['Name Französisch']) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
-				}
-				if (art.Taxonomie.Daten['Name Italienisch']) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
-				}
-				if (art.Taxonomie.Daten['Deutsche Namen']) {
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Deutsche Namen'];
-				} else {
-					wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
-				}
-				break;
-			case "Fauna":
-				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-				if (art.Taxonomie.Daten["Name Deutsch"]) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
-				}
-				if (art.Taxonomie.Daten['Name Französisch']) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
-				}
-				if (art.Taxonomie.Daten['Name Italienisch']) {
-					googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
-				}
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
-				break;
-			case 'Moose':
-				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
-				break;
-			case 'Macromycetes':
-				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
-				if (art.Taxonomie.Daten['Name Deutsch']) {
-					googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
-				}
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
-				break;
-			case 'Lebensräume':
-				googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
-				break;
+		case "Flora":
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+			if (art.Taxonomie.Daten['Deutsche Namen']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Deutsche Namen'] + '"';
+			}
+			if (art.Taxonomie.Daten['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+			}
+			if (art.Taxonomie.Daten['Name Italienisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+			}
+			if (art.Taxonomie.Daten['Deutsche Namen']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Deutsche Namen'];
+			} else {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
+			}
+			break;
+		case "Fauna":
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+			if (art.Taxonomie.Daten["Name Deutsch"]) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+			}
+			if (art.Taxonomie.Daten['Name Französisch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+			}
+			if (art.Taxonomie.Daten['Name Italienisch']) {
+				googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+			}
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			break;
+		case 'Moose':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			break;
+		case 'Macromycetes':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
+			if (art.Taxonomie.Daten['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+			}
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
+			break;
+		case 'Lebensräume':
+			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
+			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
+			break;
 		}
 		//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
 		$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
@@ -958,7 +968,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><span class="feldtext controls">';
-	for (a in Objektliste) {
+	for (var a in Objektliste) {
 		if (a > 0) {
 			HtmlContainer += ', ';
 		}
@@ -1031,7 +1041,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '" readonly="readonly">\n</div>';
-	return HtmlContainer;	
+	return HtmlContainer;
 }
 
 //generiert den html-Inhalt für Textarea
@@ -1054,7 +1064,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 	HtmlContainer += '>';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</textarea></div>';
-	return HtmlContainer;	
+	return HtmlContainer;
 }
 
 //generiert den html-Inhalt für ja/nein-Felder
@@ -1236,8 +1246,9 @@ function validiereSignup(woher) {
 function erstelleKonto(woher) {
 	//User in _user eintragen
 	$.couch.signup({
-			name: $('#Email'+woher).val()
-		}, $('#Passwort'+woher).val(), {
+		name: $('#Email'+woher).val()
+	},
+	$('#Passwort'+woher).val(), {
 		success : function() {
 			localStorage.Email = $('#Email'+woher).val();
 			passeUiFuerAngemeldetenUserAn(woher);
@@ -1314,14 +1325,14 @@ function validiereUserAnmeldung(woher) {
 	Email = $('#Email'+woher).val();
 	Passwort = $('#Passwort'+woher).val();
 	if (!Email) {
-		setTimeout(function () { 
-			$('#Email'+woher).focus(); 
+		setTimeout(function () {
+			$('#Email'+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		$("#Emailhinweis"+woher).css("display", "block");
 		return false;
 	} else if (!Passwort) {
-		setTimeout(function () { 
-			$('#Passwort'+woher).focus(); 
+		setTimeout(function () {
+			$('#Passwort'+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		$("#Passworthinweis"+woher).css("display", "block");
 		return false;
@@ -1360,7 +1371,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	html_ds_felder_div += '<select type="text" class="controls" id="'+Feldname+'" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
 	//durch die Felder zirkeln
-	for (x in Datensätze[0]) {
+	for (var x in Datensätze[0]) {
 		//Spalte anlegen
 		html += "<th>" + x + "</th>";
 		//Option für Feldliste anfügen
@@ -1431,7 +1442,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		if (window.DsId === "guid") {
 			$db.view('artendb/all_docs', {
 				success: function (data) {
-					for (i in window[dbs.toLowerCase()+"Datensätze"]) {
+					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
 						//durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
 							//diese ID wurde noch nicht hinzugefügt > hinzufügen
@@ -1458,7 +1469,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.DsId + '"]&endkey=["' + window.DsId + '",{},{}]', {
 				success: function (data) {
-					for (i in window[dbs.toLowerCase()+"Datensätze"]) {
+					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
 						//durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
 							//diese ID wurde noch nicht hinzugefügt > hinzufügen
@@ -1468,7 +1479,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 								//Vorsicht: window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]] kann Zahlen als string zurückgeben, nicht === verwenden
 								if (data.rows[x].key[2] == window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) {
 									var Objekt = {};
-									Objekt.Id = parseInt(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
+									Objekt.Id = parseInt(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]], 10);
 									Objekt.Guid = data.rows[x].key[1];
 									window.ZuordbareDatensätze.push(Objekt);
 									break;
@@ -1497,7 +1508,7 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
 	} else if (window.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
-		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
+		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
 		//es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
 		if (dbs === "Bs") {
@@ -1508,7 +1519,7 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		$("#"+dbs+"DsImportieren").css("display", "block");
 		$("#"+dbs+"DsEntfernen").css("display", "block");
 	} else {
-		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. z davon können zugeordnet werden
+		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
 		if (dbs === "Bs") {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>Beziehungen von " + window.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
@@ -1529,7 +1540,7 @@ function importiereDatensammlung() {
 	var Zähler = 0;
 	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 	anzDs = 0;
-	for (x in window.dsDatensätze) {
+	for (var x in window.dsDatensätze) {
 		anzDs += 1;
 		//Datensammlung als Objekt gründen
 		Datensammlung = {};
@@ -1547,7 +1558,7 @@ function importiereDatensammlung() {
 		Datensammlung.Daten = {};
 		//Felder anfügen, wenn sie Werte enthalten
 		anzFelder = 0;
-		for (y in window.dsDatensätze[x]) {
+		for (var y in window.dsDatensätze[x]) {
 			//nicht importiert wird die ID und leere Felder
 			if (y !== window.DsFelderId && window.dsDatensätze[x][y] !== "" && window.dsDatensätze[x][y] !== null) {
 				if (window.dsDatensätze[x][y] === -1) {
@@ -1558,9 +1569,9 @@ function importiereDatensammlung() {
 					Datensammlung.Daten[y] = true;
 				} else if (window.dsDatensätze[x][y] == "false") {
 					Datensammlung.Daten[y] = false;
-				} else if (window.dsDatensätze[x][y] == parseInt(window.dsDatensätze[x][y])) {
+				} else if (window.dsDatensätze[x][y] == parseInt(window.dsDatensätze[x][y], 10)) {
 					//Ganzzahlen als Zahlen importieren
-					Datensammlung.Daten[y] = parseInt(window.dsDatensätze[x][y]);
+					Datensammlung.Daten[y] = parseInt(window.dsDatensätze[x][y], 10);
 				} else if (window.dsDatensätze[x][y] == parseFloat(window.dsDatensätze[x][y])) {
 					//Bruchzahlen als Zahlen importieren
 					Datensammlung.Daten[y] = parseFloat(window.dsDatensätze[x][y]);
@@ -1581,11 +1592,11 @@ function importiereDatensammlung() {
 				//die in der Tabelle mitgelieferte id ist die guid
 				guid = window.dsDatensätze[x][window.DsFelderId];
 			} else {
-				for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+				for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
 					//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-					if (window.ZuordbareDatensätze[z].Id == window.dsDatensätze[x][window.DsFelderId]) {
+					if (window.ZuordbareDatensätze[q].Id == window.dsDatensätze[x][window.DsFelderId]) {
 						//und die guid auslesen
-						guid = window.ZuordbareDatensätze[z].Guid;
+						guid = window.ZuordbareDatensätze[q].Guid;
 						break;
 					}
 				}
@@ -1645,11 +1656,11 @@ function importiereBeziehungssammlung() {
 						//die in der Tabelle mitgelieferte id ist die guid
 						guid = objekt[window.BsFelderId];
 					} else {
-						for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+						for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
 							//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-							if (window.ZuordbareDatensätze[z].Id == objekt[window.BsFelderId]) {
+							if (window.ZuordbareDatensätze[q].Id == objekt[window.BsFelderId]) {
 								//und die guid auslesen
-								guid = window.ZuordbareDatensätze[z].Guid;
+								guid = window.ZuordbareDatensätze[q].Guid;
 								break;
 							}
 						}
@@ -1669,7 +1680,7 @@ function importiereBeziehungssammlung() {
 						anzFelder = 0;
 						//Felder der Beziehungssammlung als Objekt gründen
 						var Beziehung = {};
-						for (y in value[x]) {
+						for (var y in value[x]) {
 							//durch die Felder der Beziehung loopen
 							//nicht importiert wird die GUID und leere Felder
 							if (y !== "GUID" && value[x][y] !== "" && value[x][y] !== null) {
@@ -1682,9 +1693,9 @@ function importiereBeziehungssammlung() {
 									Beziehung[y] = true;
 								} else if (value[x][y] == "false") {
 									Beziehung[y] = false;
-								} else if (value[x][y] == parseInt(value[x][y])) {
+								} else if (value[x][y] == parseInt(value[x][y], 10)) {
 									//Ganzzahlen als Zahlen importieren
-									Beziehung[y] = parseInt(value[x][y]);
+									Beziehung[y] = parseInt(value[x][y], 10);
 								} else if (value[x][y] == parseFloat(value[x][y])) {
 									//Bruchzahlen als Zahlen importieren
 									Beziehung[y] = parseFloat(value[x][y]);
@@ -1740,7 +1751,7 @@ function bereiteBeziehungspartnerFuerImportVor() {
 	var bezPartner_array;
 	window.bezPartner_objekt = {};
 	var bpVorbereitet = $.Deferred();
-	
+
 	for (var x in window.bsDatensätze) {
 		if (window.bsDatensätze[x].Beziehungspartner) {
 			//window.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
@@ -1795,11 +1806,11 @@ function entferneDatensammlung() {
 			//die in der Tabelle mitgelieferte id ist die guid
 			guid = window.dsDatensätze[x].GUID;
 		} else {
-			for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
 				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-				if (window.ZuordbareDatensätze[z].Id == window.dsDatensätze[x][window.DsFelderId]) {
+				if (window.ZuordbareDatensätze[q].Id == window.dsDatensätze[x][window.DsFelderId]) {
 					//und die guid auslesen
-					guid = window.ZuordbareDatensätze[z].Guid;
+					guid = window.ZuordbareDatensätze[q].Guid;
 					break;
 				}
 			}
@@ -1877,11 +1888,11 @@ function entferneBeziehungssammlung() {
 			//die in der Tabelle mitgelieferte id ist die guid
 			guid = window.bsDatensätze[x].GUID;
 		} else {
-			for (var z = 0; z < window.ZuordbareDatensätze.length; z++) {
+			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
 				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-				if (window.ZuordbareDatensätze[z].Id == window.bsDatensätze[x][window.BsFelderId]) {
+				if (window.ZuordbareDatensätze[q].Id == window.bsDatensätze[x][window.BsFelderId]) {
 					//und die guid auslesen
-					guid = window.ZuordbareDatensätze[z].Guid;
+					guid = window.ZuordbareDatensätze[q].Guid;
 					break;
 				}
 			}
@@ -1982,37 +1993,18 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 			//prüfen, ob die Beziehung schon existiert
 			if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
 				var hinzugefügt = false;
-				for (i in doc.Beziehungssammlungen) {
+				for (var i in doc.Beziehungssammlungen) {
 					if (doc.Beziehungssammlungen[i].Name === Beziehungssammlung.Name) {
 						for (var h=0; h<Beziehungen.length; h++) {
-							if (!containsObject(Beziehungen[h], doc.Beziehungssammlungen[i].Beziehungen)) {
+							if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, Beziehungen[h])) {
 								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
 							}
+							/*if (!containsObject(Beziehungen[h], doc.Beziehungssammlungen[i].Beziehungen)) {
+								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
+							}*/
 						}
 						//Beziehungen nach Name sortieren
-						doc.Beziehungssammlungen[i].Beziehungen.sort(function(a, b) {
-							var aName, bName;
-							for (c in a.Beziehungspartner) {
-								if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-									//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-									aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-								} else {
-									aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-								}
-							}
-							for (d in b.Beziehungspartner) {
-								if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-									bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-								} else {
-									bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-								}
-							}
-							if (aName && bName) {
-								return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-							} else {
-								return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-							}
-						});
+						doc.Beziehungssammlungen[i].Beziehungen = sortiereBeziehungenNachName(doc.Beziehungssammlungen[i].Beziehungen);
 						hinzugefügt = true;
 						break;
 					}
@@ -2020,78 +2012,26 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 				if (!hinzugefügt) {
 					//die Beziehungssammlung existiert noch nicht
 					Beziehungssammlung.Beziehungen = [];
-					for (var h=0; h<Beziehungen.length; h++) {
-						Beziehungssammlung.Beziehungen.push(Beziehungen[h]);
+					for (var a=0; a<Beziehungen.length; a++) {
+						Beziehungssammlung.Beziehungen.push(Beziehungen[a]);
 					}
 					//Beziehungen nach Name sortieren
-					Beziehungssammlung.Beziehungen.sort(function(a, b) {
-						var aName, bName;
-						for (c in a.Beziehungspartner) {
-							if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-								//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-								aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-							} else {
-								aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-							}
-						}
-						for (d in b.Beziehungspartner) {
-							if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-								bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-							} else {
-								bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-							}
-						}
-						if (aName && bName) {
-							return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-						} else {
-							return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-						}
-					});
+					Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 					doc.Beziehungssammlungen.push(Beziehungssammlung);
 				}
 			} else {
 				//Beziehungssammlung anfügen
 				Beziehungssammlung.Beziehungen = [];
-				for (var h=0; h<Beziehungen.length; h++) {
-					Beziehungssammlung.Beziehungen.push(Beziehungen[h]);
+				for (var b=0; b<Beziehungen.length; b++) {
+					Beziehungssammlung.Beziehungen.push(Beziehungen[b]);
 				}
 				//Beziehungen nach Name sortieren
-				Beziehungssammlung.Beziehungen.sort(function(a, b) {
-					var aName, bName;
-					for (c in a.Beziehungspartner) {
-						if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-							//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-							aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-						} else {
-							aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-						}
-					}
-					for (d in b.Beziehungspartner) {
-						if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-							bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-						} else {
-							bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-						}
-					}
-					if (aName && bName) {
-						return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-					} else {
-						return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-					}
-				});
+				Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 				doc.Beziehungssammlungen = [];
 				doc.Beziehungssammlungen.push(Beziehungssammlung);
 			}
 			//Beziehungssammlungen nach Name sortieren
-			doc.Beziehungssammlungen.sort(function(a, b) {
-				var aName = a.Name;
-				var bName = b.Name;
-				if (aName && bName) {
-					return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-				} else {
-					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-				}
-			});
+			doc.Beziehungssammlungen = sortiereObjektarrayNachName(doc.Beziehungssammlungen);
 			//in artendb speichern
 			$db.saveDoc(doc);
 		}
@@ -2105,7 +2045,7 @@ function entferneDatensammlungAusAllenObjekten(DsName) {
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + DsName + '"]&endkey=["' + DsName + '",{}]', {
 		success: function (data) {
-			for (i in data.rows) {
+			for (var i in data.rows) {
 				//guid und DsName übergeben
 				entferneDatensammlungAusDokument(data.rows[i].key[1], DsName);
 			}
@@ -2122,7 +2062,7 @@ function entferneBeziehungssammlungAusAllenObjekten(BsName) {
 	$db = $.couch.db("artendb");
 	$db.view('artendb/bs_guid?startkey=["' + BsName + '"]&endkey=["' + BsName + '",{}]', {
 		success: function (data) {
-			for (i in data.rows) {
+			for (var i in data.rows) {
 				//guid und DsName übergeben
 				entferneBeziehungssammlungAusDokument(data.rows[i].key[1], BsName);
 			}
@@ -2226,7 +2166,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
-		for (x in (taxonomien[i].Daten || taxonomien[i].Beziehungen)) {
+		for (var x in (taxonomien[i].Daten || taxonomien[i].Beziehungen)) {
 			//felder wählen
 			html_felder_waehlen += '<label class="checkbox">';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
@@ -2270,20 +2210,20 @@ function erstelleExportString(exportobjekte) {
 	var stringZeilen = "";
 	//titelzeile erstellen
 	//durch Spalten loopen
-	for (i in exportobjekte[1]) {
+	for (var a in exportobjekte[1]) {
 		if (stringTitelzeile !== "") {
 			stringTitelzeile += ',';
 		}
-		stringTitelzeile += '"' + i + '"';
+		stringTitelzeile += '"' + a + '"';
 	}
 	//Datenzeilen erstellen
-	for (i in exportobjekte) {
+	for (var i in exportobjekte) {
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}
 		var stringZeile = "";
 		//durch die Felder loopen
-		for (x in exportobjekte[i]) {
+		for (var x in exportobjekte[i]) {
 		//for (var x = 0; x < exportobjekte[i].length; x++) {
 			if (stringZeile !== "") {
 				stringZeile += ',';
@@ -2343,7 +2283,6 @@ function erstelleListeFuerFeldwahl() {
 		$("#exportieren_felder_waehlen_felderliste").html("");
 		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
 	}
-					
 }
 
 function erstelleListeFuerFeldwahl_2(data) {
@@ -2359,7 +2298,7 @@ function erstelleListeFuerFeldwahl_2(data) {
 	Taxonomien = [];
 	Datensammlungen = [];
 	Beziehungssammlungen = [];
-	for (x in FelderObjekt) {
+	for (var x in FelderObjekt) {
 		if (typeof FelderObjekt[x] === "object" && FelderObjekt[x].Typ) {
 			//das ist Datensammlung oder Taxonomie
 			if (FelderObjekt[x].Typ === "Datensammlung") {
@@ -2392,7 +2331,7 @@ function erstelleListeFuerFeldwahl_2(data) {
 //das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	var DsTyp, DsName, FeldName;
-	for (i in FelderArray) {
+	for (var i in FelderArray) {
 		DsTyp = FelderArray[i].key[1];
 		DsName = FelderArray[i].key[2];
 		FeldName = FelderArray[i].key[3];
@@ -2558,11 +2497,12 @@ function baueTabelleFuerExportAuf() {
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 	//durch alle Objekte gehen
 	objekte_loop:
-	for (i in window.exportieren_objekte) {
-		var Objekt = {};
+	for (var i in window.exportieren_objekte) {
+		var Objekt = {},
+		a, b;
 		//Alle Felder anfügen
 		//ist nötig, um eine Tabelle mit allen nötigen Felder zu bauen
-		for (v in feldliste) {
+		for (var v in feldliste) {
 			Objekt[feldliste[v]] = null;
 		}
 		//id und gruppe
@@ -2574,24 +2514,24 @@ function baueTabelleFuerExportAuf() {
 		}
 		//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
 		if (window.exportieren_objekte[i].Taxonomie && window.exportieren_objekte[i].Taxonomie.Daten) {
-			for (z in window.exportieren_objekte[i].Taxonomie.Daten) {
-				if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + z + '"]').prop('checked')) {
+			for (var q in window.exportieren_objekte[i].Taxonomie.Daten) {
+				if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + q + '"]').prop('checked')) {
 					//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-					Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
+					Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + q] = window.exportieren_objekte[i].Taxonomie.Daten[q];
 				}
-				if ($('[Datensammlung="Taxonomie(n)"][Feld="' + z + '"]').prop('checked')) {
+				if ($('[Datensammlung="Taxonomie(n)"][Feld="' + q + '"]').prop('checked')) {
 					//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-					Objekt["Taxonomie(n): " + z] = window.exportieren_objekte[i].Taxonomie.Daten[z];
+					Objekt["Taxonomie(n): " + q] = window.exportieren_objekte[i].Taxonomie.Daten[q];
 				}
 			}
 		}
 		//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
 		if (window.exportieren_objekte[i].Datensammlungen) {
-			for (var a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
+			for (a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
 				if (window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-					for (z in window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-						if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + z + '"]').prop('checked')) {
-							Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + z] = window.exportieren_objekte[i].Datensammlungen[a].Daten[z];
+					for (var r in window.exportieren_objekte[i].Datensammlungen[a].Daten) {
+						if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + r + '"]').prop('checked')) {
+							Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + r] = window.exportieren_objekte[i].Datensammlungen[a].Daten[r];
 						}
 					}
 				}
@@ -2602,9 +2542,9 @@ function baueTabelleFuerExportAuf() {
 		if (window.exportieren_objekte[i].Beziehungssammlungen) {
 			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
 				//durch Beziehungssammlungen loopen
-				for (z in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
+				for (q in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
 					//durch Beziehungen loopen
-					for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z]) {
+					for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q]) {
 						//durch die Felder der Beziehung loopen
 						if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
 							//Variante kommagetrennt
@@ -2613,19 +2553,19 @@ function baueTabelleFuerExportAuf() {
 								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
 									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
 								}
-								objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
+								objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q][y]);
 								//Reines GUID-Feld ergänzen
 								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q][y][0].GUID;
 								} else {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q][y][0].GUID;
 								}
 							} else {
 								//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
 								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y].replace(/,/g,'\(Komma\)');
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q][y].replace(/,/g,'\(Komma\)');
 								} else {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y].replace(/,/g,'\(Komma\)');
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[q][y].replace(/,/g,'\(Komma\)');
 								}
 							}
 						}
@@ -2637,35 +2577,35 @@ function baueTabelleFuerExportAuf() {
 		//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
 		var schonKopiert = false;
 		if (window.exportieren_objekte[i].Beziehungssammlungen) {
-			for (var a=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; a<len2; a++) {
+			for (b=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; b<len2; b++) {
 				//durch Beziehungssammlungen loopen
 				var zähler = 0;
-				for (z in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen) {
+				for (var s in window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen) {
 					//durch Beziehungen loopen
 					zähler++;
 					var objektKopiert = jQuery.extend(true, {}, Objekt);
-					for (y in window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z]) {
+					for (var y in window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s]) {
 						//durch die Felder der Beziehung loopen
-						if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[a].Name + '"][feld="' + y + '"]').prop('checked')) {
+						if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[b].Name + '"][feld="' + y + '"]').prop('checked')) {
 							//Variante kommagetrennt
 							if (y === "Beziehungspartner") {
 								//zuerst die Beziehungspartner in JSON hinzufügen
-								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = [];
+								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y]) {
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] = [];
 								}
-								objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y]);
+								objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y]);
 								//Reines GUID-Feld ergänzen
-								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"]) {
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y][0].GUID;
 								} else {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y][0].GUID;
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y][0].GUID;
 								}
 							} else {
 								//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y]) {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
+								if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y]) {
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y];
 								} else {
-									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[a].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[a].Beziehungen[z][y];
+									objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y];
 								}
 							}
 						}
@@ -2679,7 +2619,7 @@ function baueTabelleFuerExportAuf() {
 			exportobjekte.push(Objekt);
 		}
 	}
-	
+
 	if (exportobjekte.length > 0) {
 		erstelleTabelle(exportobjekte, "", "exportieren_exportieren_tabelle");
 		window.exportstring = erstelleExportString(exportobjekte);
@@ -2721,14 +2661,14 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 					bereiteImportieren_ds_beschreibenVor_02();
 				}
 			});
-		}	
+		}
 	}
 }
 
 function bereiteImportieren_ds_beschreibenVor_02() {
 	//DsNamen in Auswahlliste stellen
 	var DsNamen = [""];
-	for (i in window.ds_von_objekten.rows) {
+	for (var i in window.ds_von_objekten.rows) {
 		DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
 	}
 	//sicherstellen, dass jede Datensammlung nur ein mal erwähnt wird
@@ -2763,20 +2703,20 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 					bereiteImportieren_bs_beschreibenVor_02();
 				}
 			});
-		}	
+		}
 	}
 }
 
 function bereiteImportieren_bs_beschreibenVor_02() {
 	//BsNamen in Auswahlliste stellen
 	var BsNamen = [""];
-	for (i in window.bs_von_objekten.rows) {
+	for (var i in window.bs_von_objekten.rows) {
 		BsNamen.push(window.bs_von_objekten.rows[i].key[1]);
 	}
 	BsNamen.sort();
 	var html = "";
-	for (i in BsNamen) {
-		html += "<option value='" + BsNamen[i] + "'>" + BsNamen[i] + "</option>";
+	for (var h in BsNamen) {
+		html += "<option value='" + BsNamen[h] + "'>" + BsNamen[h] + "</option>";
 	}
 	$("#BsWaehlen").html(html);
 }
@@ -2805,13 +2745,57 @@ function isFileAPIAvailable() {
 //übernimmt ein Objekt und einen Array
 //prüft, ob das Objekt im Array enthalten ist
 function containsObject(obj, list) {
-    var i;
-    for (i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
-            return true;
-        }
-    }
-    return false;
+	var i;
+	for (i = 0; i < list.length; i++) {
+		if (list[i] === obj) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function sortiereObjektarrayNachName(objektarray) {
+	//Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
+	objektarray.sort(function(a, b) {
+		var aName = a.Name;
+		var bName = b.Name;
+		if (aName && bName) {
+			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+		} else {
+			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+		}
+	});
+	return objektarray;
+}
+
+//übernimmt einen Array mit den Beziehungen
+//gibt diesen sortiert zurück
+function sortiereBeziehungenNachName(beziehungen) {
+//Beziehungen nach Name sortieren
+	beziehungen.sort(function(a, b) {
+		var aName, bName;
+		for (var c in a.Beziehungspartner) {
+			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
+				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
+			} else {
+				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
+			}
+		}
+		for (var d in b.Beziehungspartner) {
+			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
+			} else {
+				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
+			}
+		}
+		if (aName && bName) {
+			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
+		} else {
+			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
+		}
+	});
+	return beziehungen;
 }
 
 function maximiereForms() {
@@ -2877,9 +2861,9 @@ function normalisiereForms() {
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;	/* hex output format. 0 - lowercase; 1 - uppercase				*/
-var b64pad	= "="; /* base-64 pad character. "=" for strict RFC compliance	 */
-var chrsz	 = 8;	/* bits per input character. 8 - ASCII; 16 - Unicode			*/
+var hexcase = 0;	/* hex output format. 0 - lowercase; 1 - uppercase*/
+var b64pad = "=";	/* base-64 pad character. "=" for strict RFC compliance*/
+var chrsz = 8;	/* bits per input character. 8 - ASCII; 16 - Unicode*/
 
 /*
  * These are the functions you'll usually want to call
@@ -2929,7 +2913,7 @@ function core_sha1(x, len)
 			if(j < 16) w[j] = x[i + j];
 			else w[j] = rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1);
 			var t = safe_add(safe_add(rol(a, 5), sha1_ft(j, b, c, d)),
-											 safe_add(safe_add(e, w[j]), sha1_kt(j)));
+											safe_add(safe_add(e, w[j]), sha1_kt(j)));
 			e = d;
 			d = c;
 			c = rol(b, 30);
@@ -2964,8 +2948,7 @@ function sha1_ft(t, b, c, d)
  */
 function sha1_kt(t)
 {
-	return (t < 20) ?	1518500249 : (t < 40) ?	1859775393 :
-				 (t < 60) ? -1894007588 : -899497514;
+	return (t < 20) ?	1518500249 : (t < 40) ?	1859775393 : (t < 60) ? -1894007588 : -899497514;
 }
 
 /*
@@ -3040,8 +3023,7 @@ function binb2hex(binarray)
 	var str = "";
 	for(var i = 0; i < binarray.length * 4; i++)
 	{
-		str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
-					 hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8	)) & 0xF);
+		str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) + hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8	)) & 0xF);
 	}
 	return str;
 }
@@ -3055,7 +3037,7 @@ function binb2b64(binarray)
 	var str = "";
 	for(var i = 0; i < binarray.length * 4; i += 3)
 	{
-		var triplet = (((binarray[i	 >> 2] >> 8 * (3 -	i	 %4)) & 0xFF) << 16)
+		var triplet = (((binarray[i >> 2] >> 8 * (3 - i %4)) & 0xFF) << 16)
 								| (((binarray[i+1 >> 2] >> 8 * (3 - (i+1)%4)) & 0xFF) << 8 )
 								|	((binarray[i+2 >> 2] >> 8 * (3 - (i+2)%4)) & 0xFF);
 		for(var j = 0; j < 4; j++)
@@ -3089,152 +3071,152 @@ function binb2b64(binarray)
 
 !function ($) {
 
-  "use strict"; // jshint ;_
+	"use strict";
 
- /* FILEUPLOAD PUBLIC CLASS DEFINITION
-  * ================================= */
+	/* FILEUPLOAD PUBLIC CLASS DEFINITION
+	* ================================= */
 
-  var Fileupload = function (element, options) {
-    this.$element = $(element)
-    this.type = this.$element.data('uploadtype') || (this.$element.find('.thumbnail').length > 0 ? "image" : "file")
-      
-    this.$input = this.$element.find(':file')
-    if (this.$input.length === 0) return
+	var Fileupload = function (element, options) {
+		this.$element = $(element);
+		this.type = this.$element.data('uploadtype') || (this.$element.find('.thumbnail').length > 0 ? "image" : "file");
 
-    this.name = this.$input.attr('name') || options.name
+		this.$input = this.$element.find(':file');
+		if (this.$input.length === 0) return;
 
-    this.$hidden = this.$element.find('input[type=hidden][name="'+this.name+'"]')
-    if (this.$hidden.length === 0) {
-      this.$hidden = $('<input type="hidden" />')
-      this.$element.prepend(this.$hidden)
-    }
+		this.name = this.$input.attr('name') || options.name;
 
-    this.$preview = this.$element.find('.fileupload-preview')
-    var height = this.$preview.css('height')
-    if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height)
+		this.$hidden = this.$element.find('input[type=hidden][name="'+this.name+'"]');
+		if (this.$hidden.length === 0) {
+			this.$hidden = $('<input type="hidden" />');
+			this.$element.prepend(this.$hidden);
+		}
 
-    this.original = {
-      'exists': this.$element.hasClass('fileupload-exists'),
-      'preview': this.$preview.html(),
-      'hiddenVal': this.$hidden.val()
-    }
-    
-    this.$remove = this.$element.find('[data-dismiss="fileupload"]')
+		this.$preview = this.$element.find('.fileupload-preview');
+		var height = this.$preview.css('height');
+		if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height);
 
-    this.$element.find('[data-trigger="fileupload"]').on('click.fileupload', $.proxy(this.trigger, this))
+		this.original = {
+			'exists': this.$element.hasClass('fileupload-exists'),
+			'preview': this.$preview.html(),
+			'hiddenVal': this.$hidden.val()
+		};
 
-    this.listen()
-  }
-  
-  Fileupload.prototype = {
-    
-    listen: function() {
-      this.$input.on('change.fileupload', $.proxy(this.change, this))
-      $(this.$input[0].form).on('reset.fileupload', $.proxy(this.reset, this))
-      if (this.$remove) this.$remove.on('click.fileupload', $.proxy(this.clear, this))
-    },
-    
-    change: function(e, invoked) {
-      if (invoked === 'clear') return
-      
-      var file = e.target.files !== undefined ? e.target.files[0] : (e.target.value ? { name: e.target.value.replace(/^.+\\/, '') } : null)
-      
-      if (!file) {
-        this.clear()
-        return
-      }
-      
-      this.$hidden.val('')
-      this.$hidden.attr('name', '')
-      this.$input.attr('name', this.name)
+		this.$remove = this.$element.find('[data-dismiss="fileupload"]');
 
-      if (this.type === "image" && this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match('image.*') : file.name.match('\\.(gif|png|jpe?g)$')) && typeof FileReader !== "undefined") {
-        var reader = new FileReader()
-        var preview = this.$preview
-        var element = this.$element
+		this.$element.find('[data-trigger="fileupload"]').on('click.fileupload', $.proxy(this.trigger, this));
 
-        reader.onload = function(e) {
-          preview.html('<img src="' + e.target.result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />')
-          element.addClass('fileupload-exists').removeClass('fileupload-new')
-        }
+		this.listen();
+	};
 
-        reader.readAsDataURL(file)
-      } else {
-        this.$preview.text(file.name)
-        this.$element.addClass('fileupload-exists').removeClass('fileupload-new')
-      }
-    },
+	Fileupload.prototype = {
 
-    clear: function(e) {
-      this.$hidden.val('')
-      this.$hidden.attr('name', this.name)
-      this.$input.attr('name', '')
+		listen: function() {
+			this.$input.on('change.fileupload', $.proxy(this.change, this));
+			$(this.$input[0].form).on('reset.fileupload', $.proxy(this.reset, this));
+			if (this.$remove) this.$remove.on('click.fileupload', $.proxy(this.clear, this));
+		},
 
-      //ie8+ doesn't support changing the value of input with type=file so clone instead
-      if (navigator.userAgent.match(/msie/i)){ 
-          var inputClone = this.$input.clone(true);
-          this.$input.after(inputClone);
-          this.$input.remove();
-          this.$input = inputClone;
-      }else{
-          this.$input.val('')
-      }
+		change: function(e, invoked) {
+			if (invoked === 'clear') return;
 
-      this.$preview.html('')
-      this.$element.addClass('fileupload-new').removeClass('fileupload-exists')
+			var file = e.target.files !== undefined ? e.target.files[0] : (e.target.value ? { name: e.target.value.replace(/^.+\\/, '') } : null);
 
-      if (e) {
-        this.$input.trigger('change', [ 'clear' ])
-        e.preventDefault()
-      }
-    },
-    
-    reset: function(e) {
-      this.clear()
-      
-      this.$hidden.val(this.original.hiddenVal)
-      this.$preview.html(this.original.preview)
-      
-      if (this.original.exists) this.$element.addClass('fileupload-exists').removeClass('fileupload-new')
-       else this.$element.addClass('fileupload-new').removeClass('fileupload-exists')
-    },
-    
-    trigger: function(e) {
-      this.$input.trigger('click')
-      e.preventDefault()
-    }
-  }
+			if (!file) {
+				this.clear();
+				return;
+			}
 
-  
- /* FILEUPLOAD PLUGIN DEFINITION
-  * =========================== */
+			this.$hidden.val('');
+			this.$hidden.attr('name', '');
+			this.$input.attr('name', this.name);
 
-  $.fn.fileupload = function (options) {
-    return this.each(function () {
-      var $this = $(this)
-      , data = $this.data('fileupload')
-      if (!data) $this.data('fileupload', (data = new Fileupload(this, options)))
-      if (typeof options == 'string') data[options]()
-    })
-  }
+			if (this.type === "image" && this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match('image.*') : file.name.match('\\.(gif|png|jpe?g)$')) && typeof FileReader !== "undefined") {
+				var reader = new FileReader();
+				var preview = this.$preview;
+				var element = this.$element;
 
-  $.fn.fileupload.Constructor = Fileupload
+				reader.onload = function(e) {
+					preview.html('<img src="' + e.target.result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />');
+					element.addClass('fileupload-exists').removeClass('fileupload-new');
+				};
+
+				reader.readAsDataURL(file);
+			} else {
+				this.$preview.text(file.name);
+				this.$element.addClass('fileupload-exists').removeClass('fileupload-new');
+			}
+		},
+
+		clear: function(e) {
+			this.$hidden.val('');
+			this.$hidden.attr('name', this.name);
+			this.$input.attr('name', '');
+
+			//ie8+ doesn't support changing the value of input with type=file so clone instead
+			if (navigator.userAgent.match(/msie/i)){
+				var inputClone = this.$input.clone(true);
+				this.$input.after(inputClone);
+				this.$input.remove();
+				this.$input = inputClone;
+			} else {
+				this.$input.val('');
+			}
+
+			this.$preview.html('');
+			this.$element.addClass('fileupload-new').removeClass('fileupload-exists');
+
+			if (e) {
+				this.$input.trigger('change', [ 'clear' ]);
+				e.preventDefault();
+			}
+		},
+
+		reset: function(e) {
+			this.clear();
+
+			this.$hidden.val(this.original.hiddenVal);
+			this.$preview.html(this.original.preview);
+
+			if (this.original.exists) this.$element.addClass('fileupload-exists').removeClass('fileupload-new');
+			else this.$element.addClass('fileupload-new').removeClass('fileupload-exists');
+		},
+
+		trigger: function(e) {
+			this.$input.trigger('click');
+			e.preventDefault();
+		}
+	};
 
 
- /* FILEUPLOAD DATA-API
-  * ================== */
+	/* FILEUPLOAD PLUGIN DEFINITION
+	* =========================== */
 
-  $(document).on('click.fileupload.data-api', '[data-provides="fileupload"]', function (e) {
-    var $this = $(this)
-    if ($this.data('fileupload')) return
-    $this.fileupload($this.data())
-      
-    var $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
-    if ($target.length > 0) {
-      $target.trigger('click.fileupload')
-      e.preventDefault()
-    }
-  })
+	$.fn.fileupload = function (options) {
+		return this.each(function () {
+			var $this = $(this),
+				data = $this.data('fileupload');
+			if (!data) $this.data('fileupload', (data = new Fileupload(this, options)));
+			if (typeof options == 'string') data[options]();
+		});
+	};
+
+	$.fn.fileupload.Constructor = Fileupload;
+
+
+	/* FILEUPLOAD DATA-API
+	* ================== */
+
+	$(document).on('click.fileupload.data-api', '[data-provides="fileupload"]', function (e) {
+		var $this = $(this);
+		if ($this.data('fileupload')) return;
+		$this.fileupload($this.data());
+
+		var $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
+		if ($target.length > 0) {
+			$target.trigger('click.fileupload');
+			e.preventDefault();
+		}
+	});
 
 }(window.jQuery);
 
@@ -3243,13 +3225,9 @@ function binb2b64(binarray)
  * JavaScript format string function
  * 
  */
-String.prototype.format = function()
-{
-  var args = arguments;
-
-  return this.replace(/{(\d+)}/g, function(match, number)
-  {
-    return typeof args[number] != 'undefined' ? args[number] :
-                                                '{' + number + '}';
-  });
+String.prototype.format = function() {
+	var args = arguments;
+	return this.replace(/{(\d+)}/g, function(match, number) {
+		return typeof args[number] != 'undefined' ? args[number] : '{' + number + '}';
+	});
 };
