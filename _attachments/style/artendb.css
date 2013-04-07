@@ -252,7 +252,7 @@ a:hover {
 /*alle Datenfelder links ausrichten*/
 .Datenfelder {
 	float: left;
-	margin: 0px 5px 10px 0px;
+	margin: 0 5px 10px 0;
 }
 
 /*ausrichten wie die Felder*/
@@ -261,11 +261,11 @@ a:hover {
 }
 
 .accordion-inner hr {
-	margin: 11px 0px;
+	margin: 11px 0;
 }
 
 #export .accordion-inner hr {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	margin-top: 16px;
 }
 
@@ -360,6 +360,10 @@ option {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	padding: 5px 20px 0px;
+}
+
+.well {
+	background-color: #FBFCF7;
 }
 
 /*!
