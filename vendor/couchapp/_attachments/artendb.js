@@ -383,7 +383,6 @@ function initiiere_art(id) {
 			}
 			//taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
 			if (taxonomischeBeziehungssammlungen.length > 0) {
-				//taxonomischeBeziehungssammlungen.sort();
 				//Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
 				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
@@ -488,16 +487,8 @@ function initiiere_art(id) {
 						}
 						//BS von Synonymen darstellen
 						if (DatensammlungenVonSynonymen.length > 0) {
-							//DatensammlungenVonSynonymen sortieren
-							DatensammlungenVonSynonymen.sort(function(a, b) {
-								var aName = a.Name;
-								var bName = b.Name;
-								if (aName && bName) {
-									return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-								} else {
-									return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-								}
-							});
+							//DatensammlungenVonSynonymen nach Name sortieren
+							DatensammlungenVonSynonymen = sortiereObjektarrayNachName(DatensammlungenVonSynonymen);
 							//Titel hinzufügen
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
 							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
@@ -508,14 +499,7 @@ function initiiere_art(id) {
 						//bez von Synonymen darstellen
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
 							//BeziehungssammlungenVonSynonymen sortieren
-							BeziehungssammlungenVonSynonymen.sort(function(a, b) {
-								var aName = a.Name;
-								var bName = b.Name;
-								if (aName && bName) {
-									return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-								} else {
-									return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-								}
+							BeziehungssammlungenVonSynonymen = sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
 							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
@@ -602,29 +586,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	html += '</div>';
 
 	//die Beziehungen sortieren
-	art_i.Beziehungen.sort(function(a, b) {
-		var aName, bName;
-		for (var c in a.Beziehungspartner) {
-			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-			} else {
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-			}
-		}
-		for (var d in b.Beziehungspartner) {
-			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-			} else {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-			}
-		}
-		if (aName && bName) {
-			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-		} else {
-			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-		}
-	});
+	art_i.Beziehungen = sortiereBeziehungenNachName(art_i.Beziehungen);
 
 	//jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i=0; i<art_i.Beziehungen.length; i++) {
@@ -660,126 +622,6 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	html += '</div></div></div>';
 	return html;
 }
-
-/*//erstellt die HTML für eine Beziehung
-//benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-//altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
-function erstelleHtmlFuerBeziehung(art, art_i, altName) {
-	var html;
-	var Name;
-	//Accordion-Gruppe und -heading anfügen
-	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
-	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
-	//Titel für die Datensammlung einfügen
-	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
-	//header abschliessen
-	html += '</a></div>';
-	//body beginnen
-	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
-	//Datensammlung beschreiben
-	html += '<div class="Datensammlung BeschreibungDatensammlung">';
-	if (art_i.Beschreibung) {
-		html += art_i.Beschreibung;
-	}
-	if (art_i.Datenstand) {
-		html += '. Stand: ';
-		html += art_i.Datenstand;
-	}
-	if (art_i["Link"]) {
-		html += '. <a href="';
-		html += art_i["Link"];
-		html += '">';
-		html += art_i["Link"];
-		html += '</a>';
-	}
-	//Beschreibung der Datensammlung abschliessen
-	html += '</div>';
-
-	//die Beziehungen sortieren
-	art_i.Beziehungen.sort(function(a, b) {
-		var aName, bName;
-		for (c in a.Beziehungspartner) {
-			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-			} else {
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-			}
-		}
-		for (d in b.Beziehungspartner) {
-			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-			} else {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-			}
-		}
-		if (aName && bName) {
-			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-		} else {
-			return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-		}
-	});
-
-	var BeteiligteGruppen;
-	//jetzt für alle Beziehungen die Felder hinzufügen
-	for (var i = 0; i < art_i.Beziehungen.length; i++) {
-		//zerst ermitteln, welche Gruppen beteiligt sind
-		BeteiligteGruppen = [];
-		BeteiligteGruppen.push(art.Gruppe);
-		if (art_i.Beziehungen[i].Beziehungspartner && art_i.Beziehungen[i].Beziehungspartner.length > 0) {
-			for (y in art_i.Beziehungen[i].Beziehungspartner) {
-				BeteiligteGruppen.push(art_i.Beziehungen[i].Beziehungspartner[y].Gruppe);
-			}
-			for (y in art_i.Beziehungen[i].Beziehungspartner) {
-				if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
-				} else {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name
-				}
-				//Partner darstellen
-				if (BeteiligteGruppen[0] === "Lebensräume" && BeteiligteGruppen[1] === "Lebensräume") {
-					//LR-LR-Beziehung. Hier soll auch die Taxonomie angezeigt werden
-					//Bei LR-LR-Beziehungen, die über-/untergeordnet sind, den Partner nicht darstellen, sondern die über-/untergeordnete Einheit weiter unten
-					//if (art_i["Art der Beziehungen"] === "hierarchisch") {
-					if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
-						//Feld soll mit der Rolle beschriftet werden
-						//ausserdem Name inkl. Methode
-						html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
-					} else {
-						//synonymer LR
-						html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
-					}
-				} else {
-					html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
-				}
-			}
-		}
-		//Die Felder anzeigen
-		for (x in art_i.Beziehungen[i]) {
-			if (x !== "Beziehungspartner") {
-				//Beziehungspartner nicht nochmals anzeigen
-				if (typeof art_i.Beziehungen[i][x] === "object") {
-					if (x !== "Beziehungspartner") {
-						//wird wohl eine LR-LR-Beziehung sein
-						//nur den Partner anzeigen
-						//und mit der Rolle beschriften
-						if (art_i.Beziehungen[i][x].GUID !== art._id) {
-							html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x].Taxonomie + " > " + art_i.Beziehungen[i][x].Name);
-						}
-					}
-				}
-			}
-		}
-		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
-		if (i < (art_i.Beziehungen.length-1)) {
-			html += "<hr>";
-		}
-	}
-	//body und Accordion-Gruppe abschliessen
-	html += '</div></div></div>';
-	return html;
-}*/
 
 //erstellt die HTML für eine Datensammlung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
@@ -1984,15 +1826,7 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 			doc.Datensammlungen.push(Datensammlung);
 			//sortieren
 			//Datensammlungen nach Name sortieren
-			doc.Datensammlungen.sort(function(a, b) {
-				var aName = a.Name;
-				var bName = b.Name;
-				if (aName && bName) {
-					return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-				} else {
-					return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-				}
-			});
+			doc.Datensammlungen = sortiereObjektarrayNachName(doc.Datensammlungen);
 			//in artendb speichern
 			$db.saveDoc(doc);
 		}
