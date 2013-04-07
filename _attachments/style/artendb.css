@@ -47,11 +47,11 @@ body {
 	}
 
 	#forms {
-		transform: translate(391px,0px);
 		-ms-transform: translate(391px,0px); /* IE 9 */
 		-webkit-transform: translate(391px,0px); /* Safari and Chrome */
 		-o-transform: translate(391px,0px); /* Opera */
 		-moz-transform: translate(391px,0px); /* Firefox */
+		transform: translate(391px,0px);
 	}
 }
 
@@ -62,7 +62,7 @@ body {
 */
 @media handheld, only screen and (max-width: 1000px) {
 	#menu {
-		right: 0px;
+		right: 0;
 		float: left;
 		width: -webkit-calc(100% - 18px);
 		width: -o-calc(100% - 18px);
@@ -137,9 +137,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	position: relative;
-	margin-left: 0px;
-	/*Buttongroup darf Breite der Spalte nicht beeinflussen*/
-	/*white-space: normal;*/
+	margin-left: 0;
 }
 
 #Gruppe_label {
@@ -167,9 +165,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 .felderspalte {
-	column-width: 450px;
 	-moz-column-width: 450px;
 	-webkit-column-width: 450px;
+	column-width: 450px;
 }
 
 #art label, #importieren_ds label, #importieren_bs label, #export .control-group label {
@@ -177,7 +175,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	color: #555555;
 	margin-right: 7px;
 	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	/*Label immer in die control-group zwingen, sonst kommt sie gelegentlich auf andere Zeile*/
 	/*position: absolute;*/
 }
@@ -193,7 +191,7 @@ a {
 }
 
 #art .feldtext a, #importieren_ds .feldtext a, #importieren_bs .feldtext a, #export .feldtext a {
-	margin-left: 0px;
+	margin-left: 0;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -211,7 +209,7 @@ a:hover {
 #art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
 	color: #6F6F66;
 	font-weight: bold;
-	margin: 0px 0px 7px 0px;
+	margin: 0 0 7px 0;
 }
 
 .controls {
@@ -234,7 +232,7 @@ a:hover {
 }
 
 .table {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .alert {
@@ -294,7 +292,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	-moz-column-break-inside:avoid;
 	-o-column-break-inside:avoid;
 	-ms-column-break-inside:avoid;
-	column-break-inside:avoid
+	column-break-inside:avoid;
 }
 
 [type=number] {
@@ -345,7 +343,7 @@ option {
 }
 
 .alert {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .signup {
@@ -357,9 +355,9 @@ option {
 .form-actions {
 	background-color: transparent;
 	border-top: none;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	padding: 5px 20px 0px;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 5px 20px 0;
 }
 
 .well {
@@ -380,7 +378,7 @@ option {
 .hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;}
 .input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .btn-file{overflow:hidden;position:relative;vertical-align:middle;}.btn-file>input{position:absolute;top:0;right:0;margin:0;opacity:0;filter:alpha(opacity=0);transform:translate(-300px, 0) scale(4);font-size:23px;direction:ltr;cursor:pointer;}
-.fileupload{margin-bottom:9px;}.fileupload .uneditable-input{display:inline-block;margin-bottom:0px;vertical-align:middle;cursor:text;}
+.fileupload{margin-bottom:9px;}.fileupload .uneditable-input{display:inline-block;margin-bottom:0;vertical-align:middle;cursor:text;}
 .fileupload .thumbnail{overflow:hidden;display:inline-block;margin-bottom:5px;vertical-align:middle;text-align:center;}.fileupload .thumbnail>img{display:inline-block;vertical-align:middle;max-height:100%;}
 .fileupload .btn{vertical-align:middle;}
 .fileupload-exists .fileupload-new,.fileupload-new .fileupload-exists{display:none;}
