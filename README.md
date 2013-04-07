@@ -113,8 +113,7 @@ Das geht so:
 Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken", und die Eigenschaften importiert
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
-- Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" nochmals hier hinein importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
-- Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert. Zuletzt die Daten von "BAFU (2012): Rote Liste der Heuschrecken"
+- Die Eigenschaften werden nochmals in die zusammenfassende Datensammlung "Rote Listen (aktuell)" importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
 - Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
 ###Art- und Lebensraumeigenschaften
@@ -187,9 +186,9 @@ ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Im
  
 ###Neue Datensammlungen hinzufügen
 Importiert werden können:
-* Taxonomien (geplant)
+* Taxonomien (noch nicht umgesetzt)
 * Eigenschaften
-* Beziehungen (bald)
+* Beziehungen
 
 Will jemand z.B. neue Arteigenschaften ergänzen, geht das so:
 
@@ -212,7 +211,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Beziehungen sind wohl separat und pro Beziehungstyp einzeln zu exportieren, da pro Objekt mehrere Zeilen erzeugt werden (erst als Liste innerhalb eines Felds umgesetzt).
+Bei Beziehungen können nur Informationen einer Beziehungssammlung gleichzeitig exportiert werden, da pro Objekt mehrere Zeilen erzeugt werden. Es können aber beliebige Informationen aus Taxonomie und Datensammlungen ergänzt werden.
 
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht vollständig nachvollziehbar. 
