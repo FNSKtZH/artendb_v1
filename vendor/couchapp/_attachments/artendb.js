@@ -1,14 +1,43 @@
 function erstelleBaum() {
 	var baum,
-		gruppe,
+		gruppe, gruppenbezeichung,
+		anzahl_objekte,
 		baum_erstellt = $.Deferred();
 	//alle Bäume ausblenden
 	$(".baum").css("display", "none");
 	//alle Beschriftungen ausblenden
 	$(".treeBeschriftung").css("display", "none");
-	//gewollte sichtbar schalten
-	$("#tree" + window.Gruppe).css("display", "block");
-	$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
+	//gewollte beschriften und sichtbar schalten
+	switch (window.Gruppe) {
+	case "Fauna":
+		gruppe = "fauna";
+		gruppenbezeichung = "Tiere";
+		break;
+	case "Flora":
+		gruppe = "flora";
+		gruppenbezeichung = "Pflanzen";
+		break;
+	case "Moose":
+		gruppe = "moose";
+		gruppenbezeichung = "Moose";
+		break;
+	case "Macromycetes":
+		gruppe = "macromycetes";
+		gruppenbezeichung = "Pilze";
+		break;
+	case "Lebensräume":
+		gruppe = "lr";
+		gruppenbezeichung = "Lebensräume";
+		break;
+	}
+	$db = $.couch.db("artendb");
+	$db.view('artendb/' + gruppe, {
+		success: function (data) {
+			anzahl_objekte = data.rows[0].value;
+			$("#tree" + window.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
+			//eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
+		}
+	});
 	$.when(erstelleTree()).then(function() {
 		baum_erstellt.resolve();
 	});
@@ -85,8 +114,7 @@ function erstelleTree() {
 		$("#suchfeld"+window.Gruppe).focus();
 		initiiereSuchfeld();
 		$("#tree" + window.Gruppe).css("display", "block");
-		//TO DO: ANZAHL DATENSÄTZE WIEDER ANZEIGEN
-		$("#tree" + window.Gruppe + "Beschriftung").html($('[name="Gruppe"].active').attr("treeBeschriftung"));	//TO DO: ANZAHL DATENSÄTZE WIEDER ANZEIGEN
+		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
 		setzeTreehoehe();
 	})
 	.bind("after_open.jstree", function (e, data) {
@@ -500,7 +528,6 @@ function initiiere_art(id) {
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
 							//BeziehungssammlungenVonSynonymen sortieren
 							BeziehungssammlungenVonSynonymen = sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
-							});
 							//Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
 							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
