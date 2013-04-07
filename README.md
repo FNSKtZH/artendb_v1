@@ -104,7 +104,7 @@ Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus versc
 
 Das geht so:
 
-- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Typ "zusammenfassend" geschaffen
+- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Eigenschaft "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
  - Ein mal in die Ursprungs-Datensammlung
  - Ein mal in die zusammenfassende
@@ -115,7 +115,7 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Entweder es gibt schon die zusammenfassende Datensammlung "Rote Listen (aktuell)". Dann werden die Eigenschaften von "BAFU (2012): Rote Liste der Heuschrecken" nochmals hier hinein importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
 - Oder "Rote Listen (aktuell)" wird jetzt erstmals beschrieben und als zusammenfassend markiert. Dann werden die Rote-Liste-Angaben allenfalls bereits existierender Datensammlungen (im Beispiel diejenige von 1985, aber z.B. auch von Vögeln, Reptilien etc.) in der Reihenfolge ihrer Publikation importiert. Zuletzt die Daten von "BAFU (2012): Rote Liste der Heuschrecken"
-- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld "Herkunft" immer der Name der Ursprungs-Datensammlung mitgeliefert werden
+- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
 
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
