@@ -405,16 +405,8 @@ function initiiere_art(id) {
 			//Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (Datensammlungen.length > 0) {
 				//Datensammlungen nach Name sortieren
-				//ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
-				/*Datensammlungen.sort(function(a, b) {
-					var aName = a.Name;
-					var bName = b.Name;
-					if (aName && bName) {
-						return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-					} else {
-						return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-					}
-				});*/
+				/*ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
+				Datensammlungen = sortiereObjektarrayNachName(Datensammlungen);*/
 				//Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
 				for (x=0, len=Datensammlungen.length; x<len; x++) {
@@ -813,6 +805,11 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		htmlDatensammlung += '">';
 		htmlDatensammlung += art_i["Link"];
 		htmlDatensammlung += '</a>';
+	}
+	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
+		htmlDatensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
+	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
+		htmlDatensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben';
 	}
 	//Beschreibung der Datensammlung abschliessen
 	htmlDatensammlung += '</div>';
@@ -1553,6 +1550,13 @@ function importiereDatensammlung() {
 		}
 		if ($("#DsLink").val()) {
 			Datensammlung["Link"] = $("#DsLink").val();
+		}
+		//falls die Datensammlung zusammenfassend ist
+		if ($("#DsZusammenfassend").prop('checked')) {
+			Datensammlung.zusammenfassend = true;
+		}
+		if ($("#DsUrsprungsDs").val()) {
+			Datensammlung.Ursprungsdatensammlung = $("#DsUrsprungsDs").val();
 		}
 		//Felder der Datensammlung als Objekt gründen
 		Datensammlung.Daten = {};
@@ -2641,6 +2645,7 @@ function fuerExportGewaehlteGruppen() {
 	return gruppen;
 }
 
+//woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_ds_beschreibenVor(woher) {
 	if (!localStorage.Email) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
@@ -2654,7 +2659,7 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 			bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{}]&group_level=3', {
+			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{}]&group_level=4', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
@@ -2679,8 +2684,10 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 		html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
 	}
 	$("#DsWaehlen").html(html);
+	$("#DsUrsprungsDs").html(html);
 }
 
+//woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_bs_beschreibenVor(woher) {
 	if (!localStorage.Email) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
@@ -2696,7 +2703,7 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 			bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{}]&group_level=3', {
+			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{}]&group_level=4', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;

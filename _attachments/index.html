@@ -163,9 +163,24 @@
 										<li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
 									</ul>
 								</div>
+								<div class="well well-small">Zusammenfassende Datensammlungen:
+									<ul>
+										<li>Wenn eine zusammenfassende Datensammlung erstellt werden soll, sind die Daten zwei mal zu importieren:</li>
+										<ul>
+											<li>zuerst in die Ursprungs-Datensammlung</li>
+											<li>dann in die zusammenfassende</li>
+										</ul>
+										<li></li>
+										<li>Ursprungs-Datensammlung angeben</li>
+									</ul>
+								</div>
 								<div class="control-group">
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
 									<select type="text" class="controls" id="DsWaehlen"></select>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="DsZusammenfassend">zusammenfassend</label>
+									<input class="controls" type="checkbox" id="DsZusammenfassend">
 								</div>
 								<div class="feld">
 									<button type="button" class="btn" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
@@ -190,6 +205,10 @@
 								<div class="control-group">
 									<label class="control-label" for="DsLink">Link</label>
 									<textarea class="controls" id="DsLink"></textarea>
+								</div>
+								<div class="control-group" id="DsUrsprungsDs_div">
+									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label" style="display:none;">Ursprungs-Datensammlung</label>
+									<select type="text" class="controls DsUrsprungsDs" id="DsUrsprungsDs" style="display:none;"></select>
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
@@ -805,8 +824,8 @@
 						for (i in window.ds_von_objekten.rows) {
 							if (window.ds_von_objekten.rows[i].key[1] === that.value) {
 								$("#DsName").val(that.value);
-								for (x in window.ds_von_objekten.rows[i].key[2]) {
-									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[2][x]);
+								for (x in window.ds_von_objekten.rows[i].key[3]) {
+									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[3][x]);
 								}
 								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 								$("#DsAnzDs_label").html("Anzahl Datensätze");
@@ -822,6 +841,14 @@
 					} else {
 						//löschen-Schaltfläche ausblenden
 						$("#DsLoeschen").css("display", "none");
+					}
+				});
+
+				$("#importieren_ds").on("change", "#DsZusammenfassend", function() {
+					if ($(this).prop('checked')) {
+						$(".DsUrsprungsDs").show();
+					} else {
+						$(".DsUrsprungsDs").hide();
 					}
 				});
 
