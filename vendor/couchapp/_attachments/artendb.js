@@ -593,6 +593,11 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		html += art_i["Link"];
 		html += '</a>';
 	}
+	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
+		html += '<br>Diese Beziehungssammlung fasst die Daten mehrerer Ursprungs-Beziehungssammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Beziehungssammlung "' + art_i.Ursprungsdatensammlung + '"';
+	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
+		html += '<br>Diese Beziehungssammlung fasst die Daten mehrerer Ursprungs-Beziehungssammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Beziehungssammlung leider nicht beschrieben';
+	}
 	//Beschreibung der Datensammlung abschliessen
 	html += '</div>';
 
@@ -1650,6 +1655,13 @@ function importiereBeziehungssammlung() {
 				}
 				if ($("#BsLink").val()) {
 					Beziehungssammlung_vorlage["Link"] = $("#BsLink").val();
+				}
+				//falls die Datensammlung zusammenfassend ist
+				if ($("#BsZusammenfassend").prop('checked')) {
+					Beziehungssammlung_vorlage.zusammenfassend = true;
+				}
+				if ($("#BsUrsprungsBs").val()) {
+					Beziehungssammlung_vorlage.Ursprungsdatensammlung = $("#BsUrsprungsBs").val();
 				}
 				Beziehungssammlung_vorlage.Beziehungen = [];
 				//zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
@@ -2726,6 +2738,7 @@ function bereiteImportieren_bs_beschreibenVor_02() {
 		html += "<option value='" + BsNamen[h] + "'>" + BsNamen[h] + "</option>";
 	}
 	$("#BsWaehlen").html(html);
+	$("#BsUrsprungsBs").html(html);
 }
 
 function isFileAPIAvailable() {

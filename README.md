@@ -102,7 +102,7 @@ In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensa
 ###Zusammenfassende Datensammlungen
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er für viele Artengruppen separat publiziert wird.
 
-Das soll so erfolgen:
+Das geht so:
 
 - In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Typ "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
@@ -775,8 +775,8 @@ Eigenschaften anzeigen:
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
-- Datensammlungen
-- Beziehungssammlungen
+- Datensammlungen inkl. zusammenfassende
+- Beziehungssammlungen inkl. zusammenfassende
 - Es gibt eine Anleitung. Sollte wohl um Beispielsdaten ergänzt werden
 
 Daten exportieren:
