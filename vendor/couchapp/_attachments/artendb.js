@@ -1599,11 +1599,11 @@ function importiereBeziehungssammlung() {
 								anzFelder++;
 							}
 						}
-						console.log('anzFelder = ' + anzFelder);
+						//console.log('anzFelder = ' + anzFelder);
 						if (anzFelder > 0) {
-							console.log('Beziehung = ' + JSON.stringify(Beziehung));
+							//console.log('Beziehung = ' + JSON.stringify(Beziehung));
 							Beziehungen.push(Beziehung);
-							console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
+							//console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
 						}
 					}
 					//entsprechenden Index öffnen
@@ -1863,7 +1863,6 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 //fügt der Art eine Datensammlung hinzu
 //wenn dieselbe schon vorkommt, wird sie überschrieben
 function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
-	console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function (doc) {
@@ -2216,7 +2215,6 @@ function erstelleListeFuerFeldwahl_2() {
 				Datensammlungen.push(FelderObjekt[x]);
 			} else if (FelderObjekt[x].Typ === "Taxonomie") {
 				Taxonomien.push(FelderObjekt[x]);
-				console.log('Taxonomien = ' + JSON.stringify(Taxonomien));
 			} else if (FelderObjekt[x].Typ === "Beziehung") {
 				Beziehungssammlungen.push(FelderObjekt[x]);
 			}

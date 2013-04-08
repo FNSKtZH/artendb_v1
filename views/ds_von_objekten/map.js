@@ -4,7 +4,7 @@
 	if (doc.Datensammlungen) {
 		for (var i=0; i<doc.Datensammlungen.length; i++) {
 			//ds_zusammenfassend ergänzen
-			if (doc.Datensammlungen[i].ds_zusammenfassend) {
+			if (doc.Datensammlungen[i].zusammenfassend) {
 				ds_zusammenfassend = true;
 			} else {
 				ds_zusammenfassend = false;
@@ -21,7 +21,7 @@
 	if (doc.Beziehungssammlungen) {
 		for (var h=0; h<doc.Beziehungssammlungen.length; h++) {
 			//bs_zusammenfassend ergänzen
-			if (doc.Beziehungssammlungen[h].bs_zusammenfassend) {
+			if (doc.Beziehungssammlungen[h].zusammenfassend) {
 				bs_zusammenfassend = true;
 			} else {
 				bs_zusammenfassend = false;

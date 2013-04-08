@@ -438,8 +438,8 @@
 									<select type="text" class="controls BsUrsprungsBs" id="BsUrsprungsBs" style="display:none;"></select>
 								</div>
 								<div class="control-group">
-									<label class="control-label" for="BsAnzBs" id="BsAnzBs_label"></label>
-									<div id="BsAnzBs" class="feldtext controls"></div>
+									<label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
+									<div id="BsAnzDs" class="feldtext controls"></div>
 								</div>
 							</div>
 						</div>
@@ -854,11 +854,14 @@
 								}
 								if (window.ds_von_objekten.rows[i].key[2] === true) {
 									$("#DsZusammenfassend").prop('checked', true);
+									//Feld für Ursprungs-DS anzeigen
+									$("#DsUrsprungsDs_div").show();
 								} else {
 									//sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
 									$("#DsZusammenfassend").prop('checked', false);
+									//und Feld für Ursprungs-DS verstecken
+									$("#DsUrsprungsDs_div").hide();
 								}
-								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 								//wenn die ds/bs kein "importiert von" hat ist der Wert null
 								//verhindern, dass null angezeigt wird
 								if (window.ds_von_objekten.rows[i].key[3]) {
@@ -867,6 +870,7 @@
 									$("#DsImportiertVon").val("");
 								}
 								$("#DsAnzDs_label").html("Anzahl Datensätze");
+								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 								//dafür sorgen, dass textareas genug gross sind
 								$('#importieren_ds textarea').each(function () {
 									$(this).trigger('focus');
@@ -890,6 +894,14 @@
 					}
 				});
 
+				$("#importieren_bs").on("change", "#BsZusammenfassend", function() {
+					if ($(this).prop('checked')) {
+						$("#BsUrsprungsBs_div").show();
+					} else {
+						$("#BsUrsprungsBs_div").hide();
+					}
+				});
+
 				$("#importieren_bs").on("change", "#BsWaehlen", function() {
 					var BsName = this.value;
 					//zuerst alle Felder leeren
@@ -902,17 +914,28 @@
 						for (i in window.bs_von_objekten.rows) {
 							if (window.bs_von_objekten.rows[i].key[1] === BsName) {
 								$("#BsName").val(BsName);
-								for (x in window.bs_von_objekten.rows[i].key[2]) {
-									$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[2][x]);
+								for (x in window.bs_von_objekten.rows[i].key[4]) {
+									if (x !== "importiert von") {
+										$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[4][x]);
+									}
 								}
 								if (window.bs_von_objekten.rows[i].key[2] === true) {
 									$("#BsZusammenfassend").prop('checked', true);
+									$("#BsUrsprungsBs_div").show();
 								} else {
 									//sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
 									$("#BsZusammenfassend").prop('checked', false);
+									$("#BsUrsprungsBs_div").hide();
 								}
-								$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
+								//wenn die ds/bs kein "importiert von" hat ist der Wert null
+								//verhindern, dass null angezeigt wird
+								if (window.bs_von_objekten.rows[i].key[3]) {
+									$("#BsImportiertVon").val(window.bs_von_objekten.rows[i].key[3]);
+								} else {
+									$("#BsImportiertVon").val("");
+								}
 								$("#BsAnzDs_label").html("Anzahl Datensätze");
+								$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
 								//dafür sorgen, dass textareas genug gross sind
 								$('#importieren_bs textarea').each(function () {
 									$(this).trigger('focus');
