@@ -208,9 +208,9 @@
 									<label class="control-label" for="DsZusammenfassend">zusammenfassend</label>
 									<input class="controls" type="checkbox" id="DsZusammenfassend">
 								</div>
-								<div class="control-group" id="DsUrsprungsDs_div">
-									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label" style="display:none;">Ursprungs-Datensammlung</label>
-									<select type="text" class="controls DsUrsprungsDs" id="DsUrsprungsDs" style="display:none;"></select>
+								<div class="control-group" id="DsUrsprungsDs_div" style="display:none;">
+									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Datensammlung</label>
+									<select type="text" class="controls DsUrsprungsDs" id="DsUrsprungsDs"></select>
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
@@ -433,9 +433,9 @@
 									<label class="control-label" for="BsZusammenfassend">zusammenfassend</label>
 									<input class="controls" type="checkbox" id="BsZusammenfassend">
 								</div>
-								<div class="control-group" id="BsUrsprungsBs_div">
-									<label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label" style="display:none;">Ursprungs-Datensammlung</label>
-									<select type="text" class="controls BsUrsprungsBs" id="BsUrsprungsBs" style="display:none;"></select>
+								<div class="control-group" id="BsUrsprungsBs_div" style="display:none;">
+									<label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
+									<select type="text" class="controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
@@ -848,7 +848,9 @@
 							if (window.ds_von_objekten.rows[i].key[1] === DsName) {
 								$("#DsName").val(DsName);
 								for (x in window.ds_von_objekten.rows[i].key[4]) {
-									if (x !== "importiert von") {
+									if (x === "Ursprungsdatensammlung") {
+										$("#DsUrsprungsDs").val(window.ds_von_objekten.rows[i].key[4][x]);
+									} else if (x !== "importiert von") {
 										$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[4][x]);
 									}
 								}
@@ -915,7 +917,9 @@
 							if (window.bs_von_objekten.rows[i].key[1] === BsName) {
 								$("#BsName").val(BsName);
 								for (x in window.bs_von_objekten.rows[i].key[4]) {
-									if (x !== "importiert von") {
+									if (x === "Ursprungsdatensammlung") {
+										$("#BsUrsprungsBs").val(window.bs_von_objekten.rows[i].key[4][x]);
+									} else if (x !== "importiert von") {
 										$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[4][x]);
 									}
 								}
