@@ -776,7 +776,7 @@ Eigenschaften anzeigen:
 Daten importieren:
 - Datensammlungen inkl. zusammenfassende
 - Beziehungssammlungen inkl. zusammenfassende
-- Es gibt eine Anleitung. Sollte wohl um Beispielsdaten ergänzt werden
+- Es gibt eine Anleitung
 
 Daten exportieren:
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
@@ -790,7 +790,7 @@ Daten exportieren:
 - Exporte: Daten und Beziehungen von synonymen Arten
 - Lebensräume in der Anwendung bearbeiten
 - Importe: Taxonomien
-_ Importe: Sicherstellen, dass Nutzer nur ihre eigenen Daten verändern können
+- Importe: Sicherstellen, dass Nutzer nur selber importierte Daten verändern können
 - Alternative Taxonomien verwalten und darstellen
 
 <a href="#top">&#8593; top</a>
