@@ -1387,8 +1387,8 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		} else {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
 		}
-		$("#"+dbs+"DsImportieren").css("display", "block");
-		$("#"+dbs+"DsEntfernen").css("display", "block");
+		$("#"+dbs+"Importieren").css("display", "block");
+		$("#"+dbs+"Entfernen").css("display", "block");
 	} else {
 		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
@@ -2532,7 +2532,7 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 			bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{}]&group_level=4', {
+			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
@@ -2554,7 +2554,7 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	DsNamen.sort();
 	var html = "";
 	for (i in DsNamen) {
-		html += "<option value='" + DsNamen[i] + "'>" + DsNamen[i] + "</option>";
+		html += "<option value='" + DsNamen[i] + "'><em>" + DsNamen[i] + "</em></option>";
 	}
 	$("#DsWaehlen").html(html);
 	$("#DsUrsprungsDs").html(html);
@@ -2576,7 +2576,7 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 			bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
-			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{}]&group_level=4', {
+			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
 				success: function (data) {
 					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;

@@ -201,6 +201,10 @@
 									<textarea class="controls" id="DsLink"></textarea>
 								</div>
 								<div class="control-group">
+									<label class="control-label" for="DsImportiertVon">importiert von</label>
+									<input type="text" class="controls" id="DsImportiertVon">
+								</div>
+								<div class="control-group">
 									<label class="control-label" for="DsZusammenfassend">zusammenfassend</label>
 									<input class="controls" type="checkbox" id="DsZusammenfassend">
 								</div>
@@ -420,6 +424,10 @@
 								<div class="control-group">
 									<label class="control-label" for="BsLink">Link</label>
 									<textarea class="controls" id="BsLink"></textarea>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="BsImportiertVon">importiert von</label>
+									<input type="text" class="controls" id="BsImportiertVon">
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="BsZusammenfassend">zusammenfassend</label>
@@ -828,19 +836,21 @@
 				});
 
 				$("#importieren_ds").on("change", "#DsWaehlen", function() {
-					var that = this;
+					var DsName = this.value;
 					//zuerst alle Felder leeren
 					$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
 						$(this).val('');
 					});
 					$("#DsAnzDs").html("");
 					$("#DsAnzDs_label").html("");
-					if (that.value) {
+					if (DsName) {
 						for (i in window.ds_von_objekten.rows) {
-							if (window.ds_von_objekten.rows[i].key[1] === that.value) {
-								$("#DsName").val(that.value);
-								for (x in window.ds_von_objekten.rows[i].key[3]) {
-									$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[3][x]);
+							if (window.ds_von_objekten.rows[i].key[1] === DsName) {
+								$("#DsName").val(DsName);
+								for (x in window.ds_von_objekten.rows[i].key[4]) {
+									if (x !== "importiert von") {
+										$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[4][x]);
+									}
 								}
 								if (window.ds_von_objekten.rows[i].key[2] === true) {
 									$("#DsZusammenfassend").prop('checked', true);
@@ -849,6 +859,13 @@
 									$("#DsZusammenfassend").prop('checked', false);
 								}
 								$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
+								//wenn die ds/bs kein "importiert von" hat ist der Wert null
+								//verhindern, dass null angezeigt wird
+								if (window.ds_von_objekten.rows[i].key[3]) {
+									$("#DsImportiertVon").val(window.ds_von_objekten.rows[i].key[3]);
+								} else {
+									$("#DsImportiertVon").val("");
+								}
 								$("#DsAnzDs_label").html("Anzahl Datensätze");
 								//dafür sorgen, dass textareas genug gross sind
 								$('#importieren_ds textarea').each(function () {
@@ -874,17 +891,17 @@
 				});
 
 				$("#importieren_bs").on("change", "#BsWaehlen", function() {
-					var that = this;
+					var BsName = this.value;
 					//zuerst alle Felder leeren
 					$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
 						$(this).val('');
 					});
 					$("#BsAnzDs").html("");
 					$("#BsAnzDs_label").html("");
-					if (that.value) {
+					if (BsName) {
 						for (i in window.bs_von_objekten.rows) {
-							if (window.bs_von_objekten.rows[i].key[1] === that.value) {
-								$("#BsName").val(that.value);
+							if (window.bs_von_objekten.rows[i].key[1] === BsName) {
+								$("#BsName").val(BsName);
 								for (x in window.bs_von_objekten.rows[i].key[2]) {
 									$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[2][x]);
 								}
