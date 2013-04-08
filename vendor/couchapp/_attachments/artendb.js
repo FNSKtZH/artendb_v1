@@ -31,7 +31,7 @@ function erstelleBaum() {
 		break;
 	}
 	$db = $.couch.db("artendb");
-	$db.view('artendb/' + gruppe, {
+	$db.view('artendb/' + gruppe + "_gruppiert", {
 		success: function (data) {
 			anzahl_objekte = data.rows[0].value;
 			$("#tree" + window.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
