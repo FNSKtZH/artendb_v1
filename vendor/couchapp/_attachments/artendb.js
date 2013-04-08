@@ -2131,29 +2131,47 @@ function erstelleListeFuerFeldwahl() {
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
 	//gewählte Gruppen ermitteln
-	var gruppen = "";
-	var Taxonomien = [];
-	var Datensammlungen = [];
-	var gruppeIstGewählt = false;
+	//globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
+	var export_gruppen = [];
+	var gruppen = [];
+	//globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
+	window.export_felder_arrays = [];
 	$db = $.couch.db("artendb");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
-		var gruppe = $(this).val();
 		if ($(this).prop('checked')) {
-			gruppeIstGewählt = true;
+			export_gruppen.push($(this).val());
+		}
+	});
+	if (export_gruppen.length > 0) {
+		gruppen = export_gruppen;
+		for (var i=0; i<gruppen.length; i++) {
 			//Felder abfragen
-			if (window[gruppe + '_felder']) {
-				erstelleListeFuerFeldwahl_2(window[gruppe + '_felder']);
+			if (window[gruppen[i] + '_felder']) {
+				window.export_felder_arrays = _.union(window.export_felder_arrays, window[gruppen[i] + '_felder'].rows);
+				//die verarbeitete Gruppe aus export_gruppen entfernen
+				export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
+				//export_gruppen = _.without(export_gruppen, gruppen[i]);
+				if (export_gruppen.length === 0) {
+					//alle Gruppen sind verarbeitet
+					erstelleListeFuerFeldwahl_2();
+				}
 			} else {
-				$db.view('artendb/felder?group_level=4&startkey=["'+gruppe+'"]&endkey=["'+gruppe+'",{},{},{}]', {
+				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{}]', {
 					success: function (data) {
-						window[gruppe + '_felder'] = data;
-						erstelleListeFuerFeldwahl_2(data);
+						window[gruppen[i] + '_felder'] = data;
+						window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
+						//die verarbeitete Gruppe aus export_gruppen entfernen
+						export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
+						//export_gruppen = _.without(export_gruppen, gruppen[i]);
+						if (export_gruppen.length === 0) {
+							//alle Gruppen sind verarbeitet
+							erstelleListeFuerFeldwahl_2();
+						}
 					}
 				});
 			}
 		}
-	});
-	if (!gruppeIstGewählt) {
+	} else {
 		//letzte Rückmeldung anpassen
 		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("keine Gruppe gewählt");
 		//Felder entfernen
@@ -2162,15 +2180,31 @@ function erstelleListeFuerFeldwahl() {
 	}
 }
 
-function erstelleListeFuerFeldwahl_2(data) {
-	//in data.rows ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+function erstelleListeFuerFeldwahl_2() {
+	//in window.export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+	//sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
 	//Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
-	//die übergebenen Felder im FelderObjekt ergänzen
-	//Objekt schaffen. Darin werden die Felder aller gewählten Gruppen gesammelt
-	var FelderObjekt = {};
-	FelderObjekt = ergaenzeFelderObjekt(FelderObjekt, data.rows);
+	//Mehrfacheinträge sollen entfernt werden
+	//dazu muss zuerst die Gruppe entfernt werden
+	for (var i=0; i<window.export_felder_arrays.length; i++) {
+		window.export_felder_arrays[i].key.splice(0,1);
+	}
+	//jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
+	window.export_felder_arrays = _.union(window.export_felder_arrays);
+	//jetzt den Array von Objekten nach key sortieren
+	window.export_felder_arrays = _.sortBy(window.export_felder_arrays, function(object) {
+		return object.key;
+	});
 
-	//DAS HIER KÄME BESSER ERST WENN ALLE GRUPPEN ABGEFRAGT SIND
+	//Objekt "FelderObjekt" schaffen. Darin werden die Felder aller gewählten Gruppen gesammelt
+	var FelderObjekt = {};
+	FelderObjekt = ergaenzeFelderObjekt(FelderObjekt, window.export_felder_arrays);
+
+	//bei allfälligen "Taxonomie(n)" Feldnamen sortieren
+	if (FelderObjekt["Taxonomie(n)"] && FelderObjekt["Taxonomie(n)"].Daten) {
+		FelderObjekt["Taxonomie(n)"].Daten = sortKeysOfObject(FelderObjekt["Taxonomie(n)"].Daten);
+	}
+
 	//Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
 	Taxonomien = [];
 	Datensammlungen = [];
@@ -2182,6 +2216,7 @@ function erstelleListeFuerFeldwahl_2(data) {
 				Datensammlungen.push(FelderObjekt[x]);
 			} else if (FelderObjekt[x].Typ === "Taxonomie") {
 				Taxonomien.push(FelderObjekt[x]);
+				console.log('Taxonomien = ' + JSON.stringify(Taxonomien));
 			} else if (FelderObjekt[x].Typ === "Beziehung") {
 				Beziehungssammlungen.push(FelderObjekt[x]);
 			}
@@ -2209,9 +2244,10 @@ function erstelleListeFuerFeldwahl_2(data) {
 function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	var DsTyp, DsName, FeldName;
 	for (var i in FelderArray) {
-		DsTyp = FelderArray[i].key[1];
-		DsName = FelderArray[i].key[2];
-		FeldName = FelderArray[i].key[3];
+		//Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
+		DsTyp = FelderArray[i].key[0];
+		DsName = FelderArray[i].key[1];
+		FeldName = FelderArray[i].key[2];
 		if (DsTyp === "Objekt") {
 			//das ist eine Eigenschaft des Objekts
 			//FelderObjekt[FeldName] = null;	//NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
@@ -2677,6 +2713,26 @@ function sortiereBeziehungenNachName(beziehungen) {
 		}
 	});
 	return beziehungen;
+}
+
+//sortiert nach den keys des Objekts
+//resultat nicht garantiert!
+function sortKeysOfObject(o) {
+	var sorted = {},
+	key, a = [];
+
+	for (key in o) {
+		if (o.hasOwnProperty(key)) {
+			a.push(key);
+		}
+	}
+
+	a.sort();
+
+	for (key = 0; key < a.length; key++) {
+		sorted[a[key]] = o[a[key]];
+	}
+	return sorted;
 }
 
 function maximiereForms() {
