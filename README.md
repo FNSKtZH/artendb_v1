@@ -676,6 +676,8 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 ###Alternative Struktur für die Taxonomien?
+Das hier ist nur für mich und etwaige Spezialisten aus den Artdatenzentren, <a href="#Schnittstellen">springen Sie einfach zum nächsten Kapitel</a>.
+
 Man könnte dem Dokument auch eine Liste (Array) von Taxonomien verpassen. Darin würden alle synonymen Taxonomien aufgenommen, da sie ja dasselbe Objekt beschreiben. Die Taxonomie sähe am Beispiel von Thlaspi repens Maire so aus:
 ```javascript
 "Taxonomien": [
