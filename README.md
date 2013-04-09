@@ -27,7 +27,7 @@ Die wichtigsten Merkmale dürften sein:
 - Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
 - Daten können einfach und rasch importiert werden...
 - ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man innert Minuten anderswo verfügbare Daten in ArtenDb vereinen und in Auswertungen mit anderen Daten kombinieren
-- Daten können einfach und rasch für Auswertungen kombiniert und exportiert werden
+- Daten können einfach und rasch kombiniert und exportiert werden, um anschliessend mit ihrer Hilfe Auswertungen durchzuführen
 
 ###Hauptanwendungszweck
 Man kann ArtenDb benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. ArtenDb ist aber in der Darstellung von Informationen eingeschränkt, da es die Darstellung dynamisch aus flexiblen Datenstrukturen generiert und (bisher) keine Bilder enthält. Anwendungen, deren Datenstruktur fix vorgegeben ist, können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass ArtenDb besonders umfassende und aktuelle Informationen enthält.
@@ -43,7 +43,7 @@ ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen 
 
 Besonders geeignet ist ArtenDb, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
 
-ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung in ArtenDb einverstanden sind. 
+ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung einverstanden sind. 
 
 ArtenDb ist <a href="#OpenSource">Open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS bzw. mit Daten, die man nicht veröffentlichen will.
 
@@ -138,7 +138,7 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
-###Beziehungen und ihre Sammlungen
+###Beziehungssammlungen
 Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Datensammlungen.
 
 ###Gruppen vereinen
