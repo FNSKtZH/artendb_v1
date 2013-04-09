@@ -1,5 +1,5 @@
 <a name="top"></a>
-Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren und den direkten Zugriff auf die Informationen aus Drittapplikationen.
+Die Arten- und Lebensraumdatenbank (ArtenDb) enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren, Exportieren sowie den direkten Zugriff auf die Informationen aus Drittapplikationen.
 
 Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, rasch ergänzt und für Auswertungen kombiniert werden.
 
@@ -21,6 +21,32 @@ Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benö
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit wenig Aufwand vereint werden können
 - Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachfolgend dargelegten Ideen ist damit nicht möglich
 
+###Was zeichnet ArtenDb aus?
+Die wichtigsten Merkmale dürften sein:
+
+- Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
+- Daten können einfach und rasch importiert werden...
+- ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man innert Minuten anderswo verfügbare Daten in ArtenDb vereinen und in Auswertungen mit anderen Daten kombinieren
+- Daten können einfach und rasch für Auswertungen kombiniert und exportiert werden
+
+###Hauptanwendungszweck
+Man kann ArtenDb benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. ArtenDb ist aber in der Darstellung von Informationen eingeschränkt, da es die Darstellung dynamisch aus flexiblen Datenstrukturen generiert und (bisher) keine Bilder enthält. Anwendungen, deren Datenstruktur fix vorgegeben ist, können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass ArtenDb besonders umfassende und aktuelle Informationen enthält.
+
+ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen durchzuführen. Meist in Kombination mit Artbeobachtungen oder Lebensraumkartierungen. Beispiele:
+
+- In einer Liste von Artbeobachtungen die wertvollsten Arten identifizieren, z.B. mithilfe des Artwerts, der nationalen Priorität oder des Rote-Liste-Status
+- Aus Vegetationsaufnahmen Zeigerwerte berechnen
+- In Zeitreihen Veränderungen von ausgewählten Parametern darstellen (z.B. Artwerte, Rote-Liste-Arten, Spätblüher, Magerkeitszeiger, störungsempfindliche Arten...)
+- Für eine Region, Lebensraum, Programm oder Massnahme geeignete/prioritäre Arten bestimmen
+- Aus Kartierungen und/oder physikalischen Modellen für bestimmte Arten/Förderprogramme prioritäre Flächen identifizieren
+- Modellieren, z.B. den Einfluss der Klimaerwärmung auf Arten und Schutzprioritäten
+
+Besonders geeignet ist ArtenDb, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
+
+ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Zum Beispiel können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung in ArtenDb einverstanden sind. 
+
+ArtenDb ist <a href="#OpenSource">Open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS bzw. mit Daten, die man nicht veröffentlichen will. Oder besser: gemeinsam mit uns weiter zu entwickeln.
+
 ###Das Zielpublikum
 ...befasst sich mit Arten und Lebensräumen. Es arbeitet primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
@@ -39,14 +65,7 @@ Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benö
 
 - Datensammlungen können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
 - Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
-- Der Code ist offen und gut dokumentiert. Nutzer können eigene Erweiterungen entwickeln (lassen) und/oder ArtenDb gemeinsam weiter entwickeln
-
-###Was zeichnet ArtenDb aus?
-Die wichtigsten Merkmale dürften sein:
-
-- Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
-- Daten können einfach und rasch importiert werden...
-- ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man innert Minuten anderswo verfügbare Daten in ArtenDb vereinen und in Auswertungen mit anderen Daten kombinieren
+- Der Code ist offen und dokumentiert. Nutzer können eigene Erweiterungen entwickeln (lassen) und/oder ArtenDb gemeinsam weiter entwickeln
 
 <a href="#top">&#8593; top</a>
 
