@@ -17,7 +17,7 @@ Ihre Stärke ist der einfache Import von Daten. Die Absicht dahinter: Alle benö
 ...sind Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
 
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
-- Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und nebenbei ergänzt werden können, d.h. in den paar Minuten, die man im Alltag weniger dringlichen Aufgaben widmen kann
+- Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können. Neu erscheinende Datensammlungen müssen rasch und einfach ergänzt werden können
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder mindestens: Ein Ort, an dem frei zugängliche Daten mit wenig Aufwand vereint werden können
 - Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachfolgend dargelegten Ideen ist damit nicht möglich
 
@@ -43,9 +43,9 @@ ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen 
 
 Besonders geeignet ist ArtenDb, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
 
-ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Zum Beispiel können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung in ArtenDb einverstanden sind. 
+ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung in ArtenDb einverstanden sind. 
 
-ArtenDb ist <a href="#OpenSource">Open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS bzw. mit Daten, die man nicht veröffentlichen will. Oder besser: gemeinsam mit uns weiter zu entwickeln.
+ArtenDb ist <a href="#OpenSource">Open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS bzw. mit Daten, die man nicht veröffentlichen will.
 
 ###Das Zielpublikum
 ...befasst sich mit Arten und Lebensräumen. Es arbeitet primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
@@ -201,7 +201,7 @@ Das Menu ermöglicht:
 
 **Mobilfähigkeit**
 
-ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert.
+ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig, womit ArtenDb auf meinem iPad ganz brauchbar ist. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert, damit ArtenDb auch auf Smartphones brauchbar ist.
  
 ###Neue Datensammlungen hinzufügen
 Importiert werden können:
@@ -209,7 +209,7 @@ Importiert werden können:
 * Eigenschaften
 * Beziehungen
 
-Will jemand z.B. neue Arteigenschaften ergänzen, geht das so:
+Will jemand zum Beispiel neue Arteigenschaften ergänzen, geht das so:
 
 1. Die Benutzerin meldet sich an (erstellt beim ersten Mal ein Konto)
 2. Sie beschreibt die Datensammlung
@@ -230,16 +230,10 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Bei Beziehungen können nur Informationen einer Beziehungssammlung gleichzeitig exportiert werden, da pro Objekt mehrere Zeilen erzeugt werden. Es können aber beliebige Informationen aus Taxonomie und Datensammlungen ergänzt werden.
+Bei Beziehungen können nur Informationen einer Beziehungssammlung gleichzeitig exportiert werden, da pro Objekt für jede Beziehung eine neue Zeile erzeugt wird. Es können aber beliebige Informationen aus Taxonomie und Datensammlungen ergänzt werden.
 
 ###Daten in ArtenDb bearbeiten
-Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Allzu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht vollständig nachvollziehbar. 
-
-Will man Daten in der Anwendung selbst erfassen, reicht es nicht immer, die Benutzerorberfläche aus den vorhandenen Datenstrukturen aufzubauen. Grundsätzlich können zwar alle in der betreffenden Datensammlung existierenden Felder und ihr Datentyp ermittelt und daraus eine Eingabeoberfläche generiert werden. Je nach Bedürfnissen müssten aber zusätzlich Feldeigenschaften in einer Feldverwaltung verwaltet werden, um besondere Eigenschaften zu bestimmen wie z.B.:
-
-- Feldtyp (z.B. Text, Auswahlliste)
-- Optionen für Auswahllisten
-- Ob in Auswahllisten Mehrfachauswahlen möglich sein sollen
+Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar. 
 
 Das ist noch nicht umgesetzt.
 
