@@ -1411,6 +1411,14 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 function importiereDatensammlung() {
 	var Datensammlung, anzFelder, anzDs;
 	var DsImportiert = $.Deferred();
+	//prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
+	if (!$("#DsName").val()) {
+		$("#meldung_individuell_label").html("Namen fehlt");
+		$("#meldung_individuell_text").html("Bitte geben Sie der Datensammlung einen Namen");
+		$('#meldung_individuell').modal();
+		$("#DsName").focus();
+		return false;
+	}
 	//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
 	var Zähler = 0;
 	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
@@ -1510,6 +1518,14 @@ function importiereDatensammlung() {
 function importiereBeziehungssammlung() {
 	var Beziehungssammlung, anzFelder, anzBs;
 	var BsImportiert = $.Deferred();
+	//prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
+	if (!$("#BsName").val()) {
+		$("#meldung_individuell_label").html("Namen fehlt");
+		$("#meldung_individuell_text").html("Bitte geben Sie der Beziehungssammlung einen Namen");
+		$('#meldung_individuell').modal();
+		$("#BsName").focus();
+		return false;
+	}
 	//zuerst: Veranlassen, dass die Beziehungspartner in window.bsDatensätze in einen Array der richtigen Form umgewandelt werden
 	$.when(bereiteBeziehungspartnerFuerImportVor())
 		.then(function() {
