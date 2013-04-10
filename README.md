@@ -802,6 +802,9 @@ Daten exportieren:
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
+- Bei Beziehungen kann man wahlweise:
+ - pro Beziehung eine Zeile erstellen
+ - pro Beziehung die Informationen eines Felds kommagetrennt hintereinander in dieses Feld schreiben
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
 **To do**
