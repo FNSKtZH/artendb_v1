@@ -2587,7 +2587,8 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 //veränderbare sind normal, übrige grau
 function bereiteImportieren_ds_beschreibenVor_02() {
 	//in diesem Array werden alle keys gesammelt
-	var DsKeys = [];
+	//diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
+	window.DsKeys = [];
 	for (var i=0; i< window.ds_von_objekten.rows.length; i++) {
 		DsKeys.push(window.ds_von_objekten.rows[i].key);
 	}
@@ -2641,25 +2642,26 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 
 function bereiteImportieren_bs_beschreibenVor_02() {
 	//in diesem Array werden alle keys gesammelt
-	var DsKeys = [];
+	//diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
+	window.BsKeys = [];
 	for (var i=0; i< window.bs_von_objekten.rows.length; i++) {
-		DsKeys.push(window.bs_von_objekten.rows[i].key);
+		BsKeys.push(window.bs_von_objekten.rows[i].key);
 	}
 	//nach DsNamen sortieren
-	DsKeys = _.sortBy(DsKeys, function(key) {
+	BsKeys = _.sortBy(BsKeys, function(key) {
 		return key[1];
 	});
 	//mit leerer Zeile beginnen
 	var html = "<option value=''></option>";
 	//Namen der Datensammlungen als Optionen anfügen
-	for (var z in DsKeys) {
+	for (var z in BsKeys) {
 		//veränderbar sind nur selbst importierte und zusammenfassende
-		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
+		if (BsKeys[z][3] === localStorage.Email || BsKeys[z][2]) {
 			//veränderbare sind normal = schwarz
-			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
+			html += "<option value='" + BsKeys[z][1] + "' waehlbar=true>" + BsKeys[z][1] + "</option>";
 		} else {
 			//nicht veränderbare sind grau
-			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + DsKeys[z][1] + "</option>";
+			html += "<option value='" + BsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + BsKeys[z][1] + "</option>";
 		}
 	}
 	$("#BsWaehlen").html(html);

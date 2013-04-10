@@ -910,13 +910,55 @@
 					}
 				});
 
+				$("#importieren_ds").on("change", "#DsName", function() {
+					var that = this;
+					//suchen, ob schon eine Datensammlung mit diesem Namen existiert
+					//und sie von jemand anderem importiert wurde
+					//und sie nicht zusammenfassend ist
+					var DsKey = _.find(window.DsKeys, function(key) {
+						return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+					});
+					if (DsKey) {
+						$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "block");
+						$("#importieren_ds_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+						setTimeout(function() {
+							$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "none");
+						}, 30000);
+						$("#DsName").val("");
+						$("#DsName").focus();
+					} else {
+						$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "none");
+					}
+				});
+
+				$("#importieren_bs").on("change", "#BsName", function() {
+					var that = this;
+					//suchen, ob schon eine Datensammlung mit diesem Namen existiert
+					//und sie von jemand anderem importiert wurde
+					//und sie nicht zusammenfassend ist
+					var BsKey = _.find(window.BsKeys, function(key) {
+						return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+					});
+					if (BsKey) {
+						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
+						$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+						setTimeout(function() {
+							$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+						}, 30000);
+						$("#BsName").val("");
+						$("#BsName").focus();
+					} else {
+						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+					}
+				});
+
 				$("#importieren_ds").on("change", "#DsImportiertVon", function() {
 					$("#DsImportiertVon").val(localStorage.Email);
 					$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "block");
 					$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 					setTimeout(function() {
 						$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "none");
-					}, 5000);
+					}, 10000);
 				});
 
 				$("#importieren_bs").on("change", "#BsImportiertVon", function() {
@@ -925,7 +967,7 @@
 					$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 					setTimeout(function() {
 						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
-					}, 5000);
+					}, 10000);
 				});
 
 				$("#importieren_ds").on("change", "#DsZusammenfassend", function() {
