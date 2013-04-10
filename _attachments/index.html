@@ -219,6 +219,10 @@
 									<label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
 									<div id="DsAnzDs" class="feldtext controls"></div>
 								</div>
+								<div id="importieren_ds_ds_beschreiben_hinweis2" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_ds_ds_beschreiben_hinweis_text2"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -446,6 +450,10 @@
 								<div class="control-group">
 									<label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
 									<div id="BsAnzDs" class="feldtext controls"></div>
+								</div>
+								<div id="importieren_bs_ds_beschreiben_hinweis2" class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="importieren_bs_ds_beschreiben_hinweis_text2"></div>
 								</div>
 							</div>
 						</div>
@@ -788,11 +796,13 @@
 				$('#importieren_ds_ds_beschreiben_collapse').on('shown', function() {
 					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 					bereiteImportieren_ds_beschreibenVor("_ds");
+					$("#DsImportiertVon").val(localStorage.Email);
 				});
 
 				$('#importieren_bs_ds_beschreiben_collapse').on('shown', function() {
 					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 					bereiteImportieren_bs_beschreibenVor("_bs");
+					$("#BsImportiertVon").val(localStorage.Email);
 				});
 
 				$('#importieren_ds_daten_uploaden_collapse').on('shown', function (event) {
@@ -892,6 +902,24 @@
 						//löschen-Schaltfläche ausblenden
 						$("#DsLoeschen").css("display", "none");
 					}
+				});
+
+				$("#importieren_ds").on("change", "#DsImportiertVon", function() {
+					$("#DsImportiertVon").val(localStorage.Email);
+					$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "block");
+					$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+					setTimeout(function() {
+						$("#importieren_ds_ds_beschreiben_hinweis2").alert().css("display", "none");
+					}, 5000);
+				});
+
+				$("#importieren_bs").on("change", "#BsImportiertVon", function() {
+					$("#BsImportiertVon").val(localStorage.Email);
+					$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
+					$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+					setTimeout(function() {
+						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+					}, 5000);
 				});
 
 				$("#importieren_ds").on("change", "#DsZusammenfassend", function() {

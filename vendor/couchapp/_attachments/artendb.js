@@ -1432,6 +1432,7 @@ function importiereDatensammlung() {
 		if ($("#DsUrsprungsDs").val()) {
 			Datensammlung.Ursprungsdatensammlung = $("#DsUrsprungsDs").val();
 		}
+		Datensammlung["importiert von"] = localStorage.Email;
 		//Felder der Datensammlung als Objekt gründen
 		Datensammlung.Daten = {};
 		//Felder anfügen, wenn sie Werte enthalten
@@ -1532,6 +1533,7 @@ function importiereBeziehungssammlung() {
 				if ($("#BsUrsprungsBs").val()) {
 					Beziehungssammlung_vorlage.Ursprungsdatensammlung = $("#BsUrsprungsBs").val();
 				}
+				Beziehungssammlung_vorlage["importiert von"] = localStorage.Email;
 				Beziehungssammlung_vorlage.Beziehungen = [];
 				//zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
 				window.bsDatensätze_objekt = _.groupBy(window.bsDatensätze, function(objekt) {

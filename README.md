@@ -233,7 +233,9 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 Bei Beziehungen können nur Informationen einer Beziehungssammlung gleichzeitig exportiert werden, da pro Objekt für jede Beziehung eine neue Zeile erzeugt wird. Es können aber beliebige Informationen aus Taxonomie und Datensammlungen ergänzt werden.
 
 ###Daten in ArtenDb bearbeiten
-Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar. 
+Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. 
+
+Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar. 
 
 Das ist noch nicht umgesetzt.
 
