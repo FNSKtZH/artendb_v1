@@ -2599,7 +2599,8 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	var html = "<option value=''></option>";
 	//Namen der Datensammlungen als Optionen anfügen
 	for (var z in DsKeys) {
-		if (DsKeys[z][3] === localStorage.Email) {
+		//veränderbar sind nur selbst importierte und zusammenfassende
+		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
 			//veränderbare sind normal = schwarz
 			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
 		} else {
@@ -2652,7 +2653,8 @@ function bereiteImportieren_bs_beschreibenVor_02() {
 	var html = "<option value=''></option>";
 	//Namen der Datensammlungen als Optionen anfügen
 	for (var z in DsKeys) {
-		if (DsKeys[z][3] === localStorage.Email) {
+		//veränderbar sind nur selbst importierte und zusammenfassende
+		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
 			//veränderbare sind normal = schwarz
 			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
 		} else {
