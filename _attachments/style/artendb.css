@@ -202,6 +202,10 @@ label+input[type="radio"], label+input[type="checkbox"] {
 	margin-bottom: -5px !important;
 }
 
+.export_zum_titel_gehoerig {
+	margin-bottom: 15px;
+}
+
 a:hover {
 	text-decoration: underline;
 }

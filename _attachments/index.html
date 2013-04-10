@@ -674,16 +674,9 @@
 								<div class="well well-small" style="margin-bottom:9px;">So geht's:
 									<ul>
 										<li>Klicken Sie auf "Vorschau anzeigen"...</li>
-										<li>... danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
-										<li>... und es erscheint die Schaltfläche "herunterladen"</li>
-										<li>... <strong>das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
-										<li>Spezialfall Beziehungen:
-											<ul>
-												<li>Jede Art und jeder Lebensraum können beliebig viele Beziehungen haben</li>
-												<li>Daher muss für jede Art oder Lebensraum eine Liste der Beziehungen erstellt werden.<br>Enthält eine Art z.B. drei Beziehungen, erscheinen im Export drei Zeilen für diese Art, jede mit einer Beziehung</li>
-												<li>Aus diesem Grund können nur Beziehungen einer einzigen Beziehungssammlung gleichzeitig exportiert werden. Wählen Sie mehr, werden Sie darauf hingewiesen</li>
-											</ul>
-										</li>
+										<li>...danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
+										<li>...und es erscheint die Schaltfläche "herunterladen"</li>
+										<li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
 										<li>Der Download hat das .csv-Format:
 											<ul>
 												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
@@ -1182,23 +1175,27 @@
 					$("#exportieren_exportieren_tabelle").css("display", "none");
 				});
 
+				//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
+				//und pro Beziehung eine Zeile ausgegeben wird. 
+				//Wenn ja: reklamieren und rückgängig machen
 				$("#export").on("change", ".feld_waehlen", function() {
-					//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird. Wenn ja: reklamieren und rückgängig machen
-					var bezDsChecked = [];
-					var that = this;
-					$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
-						if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
-							bezDsChecked.push($(this).attr('datensammlung'));
+					if ($("#export_bez_in_zeilen").prop('checked')) {
+						var bezDsChecked = [];
+						var that = this;
+						$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
+							if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
+								bezDsChecked.push($(this).attr('datensammlung'));
+							}
+						});
+						//eindeutige Liste der dsTypen erstellen
+						bezDsChecked = _.union(bezDsChecked);
+						if (bezDsChecked && bezDsChecked.length > 1) {
+							$('#meldung_zuviele_bs').modal();
+							$(that).prop('checked', false);
+						} else {
+							//Tabelle ausblenden, falls sie eingeblendet war
+							$("#exportieren_exportieren_tabelle").css("display", "none");
 						}
-					});
-					//eindeutige Liste der dsTypen erstellen
-					bezDsChecked = _.union(bezDsChecked);
-					if (bezDsChecked && bezDsChecked.length > 1) {
-						$('#meldung_zuviele_bs').modal();
-						$(that).prop('checked', false);
-					} else {
-						//Tabelle ausblenden, falls sie eingeblendet war
-						$("#exportieren_exportieren_tabelle").css("display", "none");
 					}
 				});
 
