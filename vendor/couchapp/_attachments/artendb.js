@@ -2583,36 +2583,30 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 	}
 }
 
+//DsNamen in Auswahlliste stellen
+//veränderbare sind normal, übrige grau
 function bereiteImportieren_ds_beschreibenVor_02() {
-	//DsNamen in Auswahlliste stellen
-	//var DsNamen = [""];
+	//in diesem Array werden alle keys gesammelt
 	var DsKeys = [];
-	var DsNamenObjekt = {"":window.Email};
-	for (var i in window.ds_von_objekten.rows) {
+	for (var i=0; i< window.ds_von_objekten.rows.length; i++) {
 		DsKeys.push(window.ds_von_objekten.rows[i].key);
-		//DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
-		//DsNamenObjekt[window.ds_von_objekten.rows[i].key[1]] = window.ds_von_objekten.rows[i].key[3];
 	}
+	//nach DsNamen sortieren
 	DsKeys = _.sortBy(DsKeys, function(key) {
 		return key[1];
 	});
-	//sicherstellen, dass jede Datensammlung nur ein mal erwähnt wird
-	//DsNamen = _.union(DsNamen);
-	//DsNamen.sort();
-	var html = "";
-	//leere Zeile hinzufügen
-	html += "<option value=''></option>";
+	//mit leerer Zeile beginnen
+	var html = "<option value=''></option>";
+	//Namen der Datensammlungen als Optionen anfügen
 	for (var z in DsKeys) {
 		if (DsKeys[z][3] === localStorage.Email) {
-			html += "<option value='" + DsKeys[z][1] + "'>" + DsKeys[z][1] + "</option>";
+			//veränderbare sind normal = schwarz
+			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
 		} else {
-			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;'>" + DsKeys[z][1] + "</option>";
+			//nicht veränderbare sind grau
+			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + DsKeys[z][1] + "</option>";
 		}
 	}
-	/*for (i in DsNamen) {
-		//html += "<option value='" + DsNamen[i] + "' style=' -webkit-appearance: none; font-style:italic !important;'>" + DsNamen[i] + "</option>";
-		html += "<option value='" + DsNamen[i] + "' style='color:grey;'>" + DsNamen[i] + "</option>";
-	}*/
 	$("#DsWaehlen").html(html);
 	$("#DsUrsprungsDs").html(html);
 }
@@ -2645,18 +2639,29 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 }
 
 function bereiteImportieren_bs_beschreibenVor_02() {
-	//BsNamen in Auswahlliste stellen
-	var BsNamen = [""];
-	for (var i in window.bs_von_objekten.rows) {
-		BsNamen.push(window.bs_von_objekten.rows[i].key[1]);
+	//in diesem Array werden alle keys gesammelt
+	var DsKeys = [];
+	for (var i=0; i< window.bs_von_objekten.rows.length; i++) {
+		DsKeys.push(window.bs_von_objekten.rows[i].key);
 	}
-	BsNamen.sort();
-	var html = "";
-	for (var h in BsNamen) {
-		html += "<option value='" + BsNamen[h] + "'>" + BsNamen[h] + "</option>";
+	//nach DsNamen sortieren
+	DsKeys = _.sortBy(DsKeys, function(key) {
+		return key[1];
+	});
+	//mit leerer Zeile beginnen
+	var html = "<option value=''></option>";
+	//Namen der Datensammlungen als Optionen anfügen
+	for (var z in DsKeys) {
+		if (DsKeys[z][3] === localStorage.Email) {
+			//veränderbare sind normal = schwarz
+			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
+		} else {
+			//nicht veränderbare sind grau
+			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + DsKeys[z][1] + "</option>";
+		}
 	}
 	$("#BsWaehlen").html(html);
-	$("#BsUrsprungsBs").html(html);
+	$("#BsUrsprungsDs").html(html);
 }
 
 function isFileAPIAvailable() {
