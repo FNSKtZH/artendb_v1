@@ -126,19 +126,19 @@
 										<div id="Passwort2hinweisFalsch_ds" class="hinweis text-error Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
-								<div class="feld">
+								<div class="feld" style="padding-bottom:6px;">
 									<button id="anmelden_btn_ds" class="btn anmelden_btn">anmelden</button>
 									<button id="abmelden_btn_ds" class="btn abmelden_btn" style="display:none;">abmelden</button>
 									<button id="konto_erstellen_btn_ds" class="btn konto_erstellen_btn">neues Konto erstellen</button>
 									<button id="konto_speichern_btn_ds" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
 								</div>
-								<div id="importieren_ds_anmelden_fehler_ds" class="alert alert-error importieren_anmelden_fehler">
+								<div id="importieren_ds_anmelden_fehler" class="alert alert-error importieren_anmelden_fehler">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ds_anmelden_fehler_text_ds" class="importieren_anmelden_fehler_text"></div>
+									<div id="importieren_ds_anmelden_fehler_text" class="importieren_anmelden_fehler_text"></div>
 								</div>
-								<div id="importieren_ds_anmelden_hinweis_ds" class="alert alert-info importieren_anmelden_hinweis">
+								<div id="importieren_ds_anmelden_hinweis" class="alert alert-info importieren_anmelden_hinweis">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_ds_anmelden_hinweis_text_ds" class="importieren_anmelden_hinweis_text"></div>
+									<div id="importieren_ds_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
@@ -357,19 +357,19 @@
 										<div id="Passwort2hinweisFalsch_bs" class="Passwort2hinweisFalsch hinweis text-error">Die Passwörter stimmen nicht überein</div>
 									</div>
 								</div>
-								<div class="feld">
+								<div class="feld" style="padding-bottom:6px;">
 									<button id="anmelden_btn_bs" class="btn anmelden_btn">anmelden</button>
 									<button id="abmelden_btn_bs" class="btn abmelden_btn" style="display:none;">abmelden</button>
 									<button id="konto_erstellen_btn_bs" class="btn konto_erstellen_btn">neues Konto erstellen</button>
 									<button id="konto_speichern_btn_bs" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
 								</div>
-								<div id="importieren_bs_anmelden_fehler_bs" class="alert alert-error importieren_bs_anmelden_fehler">
+								<div id="importieren_bs_anmelden_fehler" class="alert alert-error importieren_anmelden_fehler">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_bs_anmelden_fehler_text_bs" class="importieren_bs_anmelden_fehler_text"></div>
+									<div id="importieren_bs_anmelden_fehler_text" class="importieren_anmelden_fehler_text"></div>
 								</div>
-								<div id="importieren_bs_anmelden_hinweis_bs" class="alert alert-info importieren_bs_anmelden_hinweis">
+								<div id="importieren_bs_anmelden_hinweis" class="alert alert-info importieren_anmelden_hinweis">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div id="importieren_bs_anmelden_hinweis_text_bs" class="importieren_bs_anmelden_hinweis_text"></div>
+									<div id="importieren_bs_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text"></div>
 								</div>
 							</div>
 						</div>
@@ -1278,53 +1278,58 @@
 				setzteHöheTextareas();
 			});
 
-			$("#importieren_ds").on("click", "#anmelden_btn_ds", function(event) {
+			$(".import").on("click", ".anmelden_btn", function(event) {
 				event.preventDefault();
-				meldeUserAn("_ds");
+				//es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
+				var bs_ds = this.id.substring(this.id.length-3);
+				meldeUserAn(bs_ds);
 			});
 
-			$("#importieren_ds").on("click", "#abmelden_btn", function(event) {
+			$(".import").on("click", ".abmelden_btn", function(event) {
 				event.preventDefault();
 				meldeUserAb();
 			});
 
-			$("#importieren_ds").on("keyup", "#Email", function(event) {
+			$(".import").on("keyup", ".Email", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$("#Emailhinweis").css("display", "none");
+				$(".Emailhinweis").css("display", "none");
 			});
 
-			$("#importieren_ds").on("keyup", "#Passwort", function(event) {
+			$(".import").on("keyup", ".Passwort", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$("#Passworthinweis").css("display", "none");
+				$(".Passworthinweis").css("display", "none");
 			});
 
-			$("#importieren_ds").on("keyup", "#Passwort2", function(event) {
+			$(".import").on("keyup", ".Passwort2", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$("#Passworthinweis2").css("display", "none");
+				$(".Passworthinweis2").css("display", "none");
 			});
 
-			$("#importieren_ds").on("click", "#konto_erstellen_btn", function(event) {
+			$(".import").on("click", ".konto_erstellen_btn", function(event) {
 				event.preventDefault();
+				var bs_ds = this.id.substring(this.id.length-3);
 				$(".signup").css("display", "block");
-				$("#anmelden_btn").hide();
-				$("#abmelden_btn").hide();
-				$("#konto_erstellen_btn").hide();
-				$("#konto_speichern_btn").show();
+				$(".anmelden_btn").hide();
+				$(".abmelden_btn").hide();
+				$(".konto_erstellen_btn").hide();
+				$(".konto_speichern_btn").show();
+				$(".importieren_anmelden_fehler").hide();
 				setTimeout(function() {
-					$("#Email").focus();
+					$("#Email" + bs_ds).focus();
 				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 			});
 
-			$("#importieren_ds").on("click", "#konto_speichern_btn", function(event) {
+			$(".import").on("click", ".konto_speichern_btn", function(event) {
 				event.preventDefault();
-				if (validiereSignup("_ds")) {
-					erstelleKonto("_ds");
+				var bs_ds = this.id.substring(this.id.length-3);
+				if (validiereSignup(bs_ds)) {
+					erstelleKonto(bs_ds);
 					//Anmeldefenster zurücksetzen
 					$(".signup").css("display", "none");
-					$("#anmelden_btn").hide();
-					$("#abmelden_btn").show();
-					$("#konto_erstellen_btn").hide();
-					$("#konto_speichern_btn").hide();
+					$(".anmelden_btn").hide();
+					$(".abmelden_btn").show();
+					$(".konto_erstellen_btn").hide();
+					$(".konto_speichern_btn").hide();
 				}
 			});
 

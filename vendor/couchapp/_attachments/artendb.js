@@ -1165,6 +1165,10 @@ function meldeUserAb() {
 	$(".importieren_anmelden_titel").text("1. Anmelden");
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
+	$(".anmelden_btn").show();
+	$(".abmelden_btn").hide();
+	$(".konto_erstellen_btn").show();
+	$(".konto_speichern_btn").hide();
 }
 
 function passeUiFuerAngemeldetenUserAn(woher) {
@@ -2581,17 +2585,34 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 
 function bereiteImportieren_ds_beschreibenVor_02() {
 	//DsNamen in Auswahlliste stellen
-	var DsNamen = [""];
+	//var DsNamen = [""];
+	var DsKeys = [];
+	var DsNamenObjekt = {"":window.Email};
 	for (var i in window.ds_von_objekten.rows) {
-		DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
+		DsKeys.push(window.ds_von_objekten.rows[i].key);
+		//DsNamen.push(window.ds_von_objekten.rows[i].key[1]);
+		//DsNamenObjekt[window.ds_von_objekten.rows[i].key[1]] = window.ds_von_objekten.rows[i].key[3];
 	}
+	DsKeys = _.sortBy(DsKeys, function(key) {
+		return key[1];
+	});
 	//sicherstellen, dass jede Datensammlung nur ein mal erwähnt wird
-	DsNamen = _.union(DsNamen);
-	DsNamen.sort();
+	//DsNamen = _.union(DsNamen);
+	//DsNamen.sort();
 	var html = "";
-	for (i in DsNamen) {
-		html += "<option value='" + DsNamen[i] + "'><em>" + DsNamen[i] + "</em></option>";
+	//leere Zeile hinzufügen
+	html += "<option value=''></option>";
+	for (var z in DsKeys) {
+		if (DsKeys[z][3] === localStorage.Email) {
+			html += "<option value='" + DsKeys[z][1] + "'>" + DsKeys[z][1] + "</option>";
+		} else {
+			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;'>" + DsKeys[z][1] + "</option>";
+		}
 	}
+	/*for (i in DsNamen) {
+		//html += "<option value='" + DsNamen[i] + "' style=' -webkit-appearance: none; font-style:italic !important;'>" + DsNamen[i] + "</option>";
+		html += "<option value='" + DsNamen[i] + "' style='color:grey;'>" + DsNamen[i] + "</option>";
+	}*/
 	$("#DsWaehlen").html(html);
 	$("#DsUrsprungsDs").html(html);
 }
