@@ -2308,6 +2308,112 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 }
 
 function filtereFuerExport() {
+	//kontrollieren, ob eine Gruppe gewählt wurde
+	if (fuerExportGewaehlteGruppen().length === 0) {
+		$('#meldung_keine_gruppen').modal();
+		return;
+	}
+	//Beschäftigung melden
+	$("#exportieren_exportieren_hinweis").alert().css("display", "block");
+	$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
+	//Array von Filterobjekten bilden
+	var filterkriterien = [];
+	//Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
+	var filterkriterienObjekt = {};
+	var filterObjekt;
+	//gewählte Gruppen ermitteln
+	var gruppen_array = [];
+	var gruppen = "";
+	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
+		if ($(this).prop('checked')) {
+			gruppen_array.push($(this).attr('view'));
+			if (gruppen) {
+				gruppen += ",";
+			}
+			gruppen += $(this).val();
+		}
+	});
+	//durch alle Filterfelder loopen
+	//wenn ein Feld einen Wert enthält, danach filtern
+	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
+		if (this.value || this.value === 0) {
+			//Filterobjekt zurücksetzen
+			filterObjekt = {};
+			filterObjekt.DsTyp = $(this).attr('dstyp');
+			filterObjekt.DsName = $(this).attr('eigenschaft');
+			filterObjekt.Feldname = $(this).attr('feld');
+			//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
+			filterObjekt.Filterwert = this.value.toLowerCase();
+			filterkriterien.push(filterObjekt);
+		}
+	});
+	//den array dem objekt zuweisen
+	filterkriterienObjekt.rows = filterkriterien;
+	//gewählte Felder ermitteln
+	var gewaehlte_felder = [];
+	var gewaehlte_felder_objekt = {};
+	$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
+		if ($(this).prop('checked')) {
+			//feldObjekt erstellen
+			feldObjekt = {};
+			feldObjekt.DsName = "Objekt";
+			feldObjekt.Feldname = $(this).attr('feldname');
+			if (feldObjekt.Feldname === "GUID") {
+				feldObjekt.Feldname = "_id";
+			}
+			gewaehlte_felder.push(feldObjekt);
+		}
+	});
+	$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
+		if ($(this).prop('checked')) {
+			//feldObjekt erstellen
+			feldObjekt = {};
+			feldObjekt.DsTyp = $(this).attr('dstyp');
+			feldObjekt.DsName = $(this).attr('datensammlung');
+			feldObjekt.Feldname = $(this).attr('feld');
+			gewaehlte_felder.push(feldObjekt);
+		}
+	});
+	//den array dem objekt zuweisen
+	gewaehlte_felder_objekt.rows = gewaehlte_felder;
+	//jetzt das filterObjekt übergeben
+	//Alle Felder abfragen
+	$db = $.couch.db("artendb");
+	var fTz = "false";
+	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	if (window.fasseTaxonomienZusammen) {
+		fTz = "true";
+	}
+	//globale Variable vorbereiten
+	window.exportieren_objekte = [];
+	//in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
+	//jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
+	var anz_gruppen_abgefragt = 0;
+	for (var i=0; i<gruppen_array.length; i++) {
+		var queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+		$db.list('artendb/filtere_fuer_export', queryParam, {
+			success: function (data) {
+				//leere Objekte entfernen
+				var exportieren_objekte_temp = _.reject(data, function(object) {
+					return _.isEmpty(object);
+				});
+				//alle Objekte in exportieren_objekte_temp in window.exportieren_objekte anfügen
+				window.exportieren_objekte = _.union(window.exportieren_objekte, exportieren_objekte_temp);
+				//speichern, dass eine Gruppe abgefragt wurde
+				anz_gruppen_abgefragt++;
+				if (anz_gruppen_abgefragt === gruppen_array.length) {
+					//alle Gruppen wurden abgefragt, jetzt kann es weitergehen
+					//Ergebnis rückmelden
+					$("#exportieren_exportieren_hinweis").alert().css("display", "block");
+					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
+					baueTabelleFuerExportAuf();
+				}
+			}
+		});
+	}
+}
+
+/*function filtereFuerExport() {
 	//Beschäftigung melden
 	$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 	$("#exportieren_exportieren_hinweis_text").html("Der Filter wird geprüft...");
@@ -2390,7 +2496,7 @@ function filtereFuerExport() {
 			baueTabelleFuerExportAuf();
 		}
 	});
-}
+}*/
 
 function baueTabelleFuerExportAuf() {
 	//leeren Array für die Objekte gründen
@@ -2400,11 +2506,6 @@ function baueTabelleFuerExportAuf() {
 	var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
 	//db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
-	//kontrollieren, ob eine Gruppe gewählt wurde
-	if (fuerExportGewaehlteGruppen().length === 0) {
-		$('#meldung_keine_gruppen').modal();
-		return;
-	}
 	//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
 	//später wird jedem Objekt jedes dieser Felder angefügt (mit Wert falls vorhanden)
 	var feldliste = [];

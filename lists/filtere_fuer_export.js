@@ -60,7 +60,7 @@ function(head, req) {
 			}
 
 			loop_filterkriterien:
-			for (var z in filterkriterien) {
+			for (var z=0; z<filterkriterien.length; z++) {
 				DsTyp_z = filterkriterien[z].DsTyp;
 				DsName_z = filterkriterien[z].DsName;
 				Feldname_z = filterkriterien[z].Feldname;
@@ -103,14 +103,14 @@ function(head, req) {
 				} else if (DsTyp_z === "Beziehung") {
 					//durch alle Beziehungssammlungen loopen und suchen, ob Filter trifft
 					dsExistiert = false;
-					for (var g in Objekt.Beziehungssammlungen) {
+					for (var g=0; g<Objekt.Beziehungssammlungen.length; g++) {
 						if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
 							dsExistiert = true;
 							//durch Beziehungssammlungen der Beziehung loopen
 							if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
 								var feldExistiert = false;
 								var feldHinzugefügt = false;
-								for (var h in Objekt.Beziehungssammlungen[g].Beziehungen) {
+								for (var h=0; h<Objekt.Beziehungssammlungen[g].Beziehungen.length; h++) {
 									//durch die Felder der Beziehung loopen
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
 										feldExistiert = true;
@@ -139,7 +139,7 @@ function(head, req) {
 				} else if (DsTyp_z === "Datensammlung") {
 					dsExistiert = false;
 					//das ist ein Feld aus einer Datensammlung
-					for (var k in Objekt.Datensammlungen) {
+					for (var k=0; k<Objekt.Datensammlungen.length; k++) {
 						if (Objekt.Datensammlungen[k].Name === DsName_z) {
 							dsExistiert = true;
 							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
@@ -171,7 +171,7 @@ function(head, req) {
 				for (var e in Objekt) {
 					//durch alle Eigenschaften des Dokuments loopen
 					if (typeof Objekt[e] !== "object" && e !== "_rev") {
-						for (i in felder) {
+						for (i=0; i<felder.length; i++) {
 							if (felder[i].DsName === "Objekt" && felder[i].Feldname === e) {
 								exportObjekt[e] = Objekt[e];
 							}
@@ -197,10 +197,10 @@ function(head, req) {
 					}
 				}
 				if (Objekt.Datensammlungen) {
-					for (i in Objekt.Datensammlungen) {
+					for (i=0; i<Objekt.Datensammlungen.length; i++) {
 						if (Objekt.Datensammlungen[i].Daten) {
 							for (var aa in Objekt.Datensammlungen[i].Daten) {
-								for (var u in felder) {
+								for (var u=0; u<felder.length; u++) {
 									if (felder[u].DsTyp === "Datensammlung" && felder[u].DsName === Objekt.Datensammlungen[i].Name) {
 										if (felder[u].Feldname === aa) {
 											if (typeof exportObjekt.Datensammlungen === "undefined") {
@@ -213,7 +213,7 @@ function(head, req) {
 											} else {
 												dsExistiertSchon = false;
 												//durch alle Datensammlungen loopen und die richtige suchen
-												for (var b in exportObjekt.Datensammlungen) {
+												for (var b=0; b<exportObjekt.Datensammlungen.length; b++) {
 													if (exportObjekt.Datensammlungen[b].Name === felder[u].DsName) {
 														dsExistiertSchon = true;
 														if (typeof exportObjekt.Datensammlungen[b] === "undefined") {
@@ -239,11 +239,11 @@ function(head, req) {
 					}
 				}
 				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
-					for (i in Objekt.Beziehungssammlungen) {
+					for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
 						//durch Beziehungssammlungen loopen
-						for (var ww in felder) {
+						for (var ww=0; ww<felder.length; ww++) {
 							if (felder[ww].DsTyp === "Beziehung" && felder[ww].DsName === Objekt.Beziehungssammlungen[i].Name) {
-								for (var aaa in Objekt.Beziehungssammlungen[i].Beziehungen) {
+								for (var aaa=0; aaa<Objekt.Beziehungssammlungen[i].Beziehungen.length; aaa++) {
 									//durch Beziehungen loopen
 									if (Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[ww].Feldname]) {
 										//in der Beziehung gibt es das gesuchte Feld
@@ -261,7 +261,7 @@ function(head, req) {
 												}
 												//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
 												if (filterkriterien && filterkriterien.length > 0) {
-													for (var l in filterkriterien) {
+													for (var l=0; l<filterkriterien.length; l++) {
 														var DsTyp = filterkriterien[l].DsTyp;
 														var DsName = filterkriterien[l].DsName;
 														var Feldname = filterkriterien[l].Feldname;
@@ -272,7 +272,7 @@ function(head, req) {
 																if (Feldname === "Beziehungspartner") {
 																	var bezPartner = [];
 																	var beziehung = Objekt.Beziehungssammlungen[i].Beziehungen[aaa];
-																	for (var m in Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname]) {
+																	for (var m=0; m<Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname].length; m++) {
 																		if (JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname][m]).toLowerCase().indexOf(Filterwert) >= 0) {
 																			bezPartner.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname][m]);
 																		}
@@ -300,7 +300,7 @@ function(head, req) {
 											Beziehungssammlung.Beziehungen = [];
 											if (filterkriterien && filterkriterien.length > 0) {
 												//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-												for (var ll in filterkriterien) {
+												for (var ll=0; ll<filterkriterien.length; ll++) {
 													Feldname2 = filterkriterien[ll].Feldname;
 													Filterwert2 = filterkriterien[ll].Filterwert;
 													if (filterkriterien[ll].DsTyp === "Beziehung" && filterkriterien[ll].DsName === felder[ww].DsName && Feldname2 === felder[ww].Feldname) {
@@ -309,7 +309,7 @@ function(head, req) {
 															if (Feldname2 === "Beziehungspartner") {
 																var bezPartner2 = [];
 																var beziehung2 = Objekt.Beziehungssammlungen[i].Beziehungen[aaa];
-																for (var mm in Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2]) {
+																for (var mm=0; mm<Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2].length; mm++) {
 																	if (JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2][mm]).toLowerCase().indexOf(Filterwert2) >= 0) {
 																		bezPartner2.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2][mm]);
 																	}
@@ -345,11 +345,11 @@ function(head, req) {
 }
 
 function containsObject(obj, list) {
-    var i;
-    for (i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
-            return true;
-        }
-    }
-    return false;
+	var i;
+	for (i = 0; i < list.length; i++) {
+		if (list[i] === obj) {
+			return true;
+		}
+	}
+	return false;
 }
