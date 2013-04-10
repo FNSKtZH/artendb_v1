@@ -230,7 +230,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 3. Sie wählt die gewünschten Eigenschaften
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Bei Beziehungen kann die Benutzerin wahlweise pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung exportieren). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig exportieren). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen ergänzt werden.
+Bei Beziehungen kann die Benutzerin wahlweise pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
 
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. 
