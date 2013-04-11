@@ -771,12 +771,13 @@ Aktueller Stand:
 - Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
 - Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+- Es sind schon fast alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können. Die Anwendung ist aber noch im Beta-Stadium, kaum getestet
 - Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
 ###Was kann man mit der aktuellen Version machen?
 
 Achtung: 
-- Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der Version im Web noch fehlen
+- Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html) noch fehlen
 - Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für Stunden nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:
@@ -787,15 +788,15 @@ Arten suchen:
 Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
-- Auch Datensammlungen und Beziehungssammlungen von synonymen Objekten werden angezeigt
+- Auch Daten- und Beziehungssammlungen von synonymen Objekten werden angezeigt
 - Datensammlungen sind beschrieben
-- Beziehungen zwischen Arten werden mit Hyperlinks dargestellt
+- Beziehungen zwischen Objekten sind verlinkt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
-- Datensammlungen inkl. zusammenfassende
-- Beziehungssammlungen inkl. zusammenfassende
-- Es gibt eine Anleitung
+- Datensammlungen (auch zusammenfassende)
+- Beziehungssammlungen (auch zusammenfassende)
+- Eine Anleitung hilft
 
 Daten exportieren:
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
@@ -810,10 +811,12 @@ Daten exportieren:
 
 **To do**
 
-- Lebensräume in der Anwendung bearbeiten
+- Lebensräume in der Anwendung bearbeiten*
 - Schnittstellen beschreiben und bedürfnisgerecht erweitern
 - Taxonomien importieren
 - Alternative Taxonomien verwalten und darstellen
+
+*heisst: muss implementiert sein, damit die bisherige ArtenDb abgelöst werden kann
 
 <a href="#top">&#8593; top</a>
 
