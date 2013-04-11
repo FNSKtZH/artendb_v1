@@ -327,6 +327,12 @@ option {
 	white-space: pre;
 }
 
+.bearb_toolbar {
+	position: absolute;
+	margin-top: 3px;
+	right: 23px;
+}
+
 #vakata-contextmenu {
 	width: 230px;
 }

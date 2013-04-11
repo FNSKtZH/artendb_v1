@@ -656,6 +656,10 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	var htmlDatensammlung;
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	//bei LR: Symbolleiste einfügen
+	if (art.Gruppe === "Lebensräume") {
+		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar"><div class="btn-group"><a class="btn lr_bearb_bearb disabled" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
+	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
 	//Titel für die Datensammlung einfügen

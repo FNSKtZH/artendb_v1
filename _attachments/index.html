@@ -1226,6 +1226,11 @@
 					exportZuruecksetzen();
 				});
 
+				$("#art").on("click", ".btn", function(event) {
+					console.log('clicked');
+					event.preventDefault();
+				});
+
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
