@@ -7,7 +7,7 @@
 			var zähler = 1;
 			//durch alle Beziehungssammlungen loopen
 			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-				if (doc.Beziehungssammlungen[i].Typ && doc.Beziehungssammlungen[i].Typ === "taxonomisch" && doc.Beziehungssammlungen[i]["Art der Beziehungen"] && doc.Beziehungssammlungen[i]["Art der Beziehungen"] === "synonym" && doc.Beziehungssammlungen[i].Beziehungen && doc.Beziehungssammlungen[i].Beziehungen.length > 0) {
+				if (doc.Taxonomie.Daten["Synonym-Status"] && doc.Taxonomie.Daten["Synonym-Status"] === "Synonym umfasst das gleiche Taxon (= dieselbe Art)" && doc.Beziehungssammlungen[i].Typ && doc.Beziehungssammlungen[i].Typ === "taxonomisch" && doc.Beziehungssammlungen[i]["Art der Beziehungen"] && doc.Beziehungssammlungen[i]["Art der Beziehungen"] === "akzeptierte Referenz" && doc.Beziehungssammlungen[i].Beziehungen && doc.Beziehungssammlungen[i].Beziehungen.length > 0) {
 					//jetzt durch alle synonymen Beziehungen loopen
 					for (var x=0; x<doc.Beziehungssammlungen[i].Beziehungen.length; x++) {
 						if (doc.Beziehungssammlungen[i].Beziehungen[x].Beziehungspartner && doc.Beziehungssammlungen[i].Beziehungen[x].Beziehungspartner.length > 0) {
