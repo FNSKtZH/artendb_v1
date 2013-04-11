@@ -768,22 +768,23 @@ Bisher war das grösstenteils ein Freizeitprojekt ohne Zeitplan. Keine Ahnung, w
 
 Aktueller Stand:
 
-- Die Ideen sind weit gediehen und im wesentlichen oben dargestellt
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
-- Ich habe mit der Umsetzung begonnen: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
-- Es sind schon fast alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können. Die Anwendung ist aber noch im Beta-Stadium, kaum getestet
-- Ich gehe davon aus, dass die ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
+- ArtenDb ist in Entwicklung: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
+- Es sind schon fast alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können
+- Die Anwendung ist aber noch kaum getestet
+- Ich gehe davon aus, dass sie noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
 ###Was kann man mit der aktuellen Version machen?
 
-Achtung: 
-- Die hier aufgelisteten features beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html) noch fehlen
+Achtung:
+
+- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html) noch fehlen
 - Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für Stunden nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:
 
-- mit einem Filterfeld
-- und manuell im hierarchischen Verwandschaftsbaum
+- Mit einem Filterfeld
+- Manuell im hierarchischen Verwandschaftsbaum
 
 Eigenschaften anzeigen:
 
@@ -813,8 +814,8 @@ Daten exportieren:
 
 - Lebensräume in der Anwendung bearbeiten*
 - Schnittstellen beschreiben und bedürfnisgerecht erweitern
-- Taxonomien importieren
-- Alternative Taxonomien verwalten und darstellen
+- Taxonomien importieren (wenig prioritär)
+- Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
 *heisst: muss implementiert sein, damit die bisherige ArtenDb abgelöst werden kann
 
