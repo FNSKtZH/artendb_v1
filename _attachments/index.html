@@ -1227,17 +1227,14 @@
 				});
 
 				$("#art").on("click", ".btn", function(event) {
-					console.log('symbol clicked');
 					event.preventDefault();
 				});
 
-				$('#art').on('shown', ".accordion-body,.Lebensräume,.Taxonomie", function (event) {
-					console.log('Taxonomie Lebensräume geöffnet');
+				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {
 					$(".bearb_toolbar").show();
 				});
 
-				$('#art').on('hidden', ".accordion-body,.Lebensräume,.Taxonomie", function (event) {
-					console.log('Taxonomie Lebensräume geschlosssen');
+				$('#art').on('hidden', '.accordion-body.Lebensräume.Taxonomie', function () {
 					$(".bearb_toolbar").hide();
 				});
 
