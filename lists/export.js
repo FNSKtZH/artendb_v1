@@ -224,6 +224,7 @@ function(head, req) {
 												}
 												if (!dsExistiertSchon) {
 													Datensammlung = {};
+													Datensammlung.Name = felder[u].DsName;
 													Datensammlung.Daten = {};
 													Datensammlung.Daten[aa] = Objekt.Datensammlungen[i].Daten[aa];
 													//exportObjekt.Datensammlungen = [];
