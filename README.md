@@ -114,7 +114,7 @@ Datensammlungen sollten nur durch die Autoren nachgeführt werden (nicht zu verw
 
 Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In ArtenDb sind sie Eigenschaften der Objekte. Sie erleichtern dem Benutzer, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen.
 
-Es können auch Datensammlungen von synonymen Objekten angezeigt und (künftig) exportiert werden.
+Es können auch Datensammlungen von synonymen Objekten angezeigt und exportiert werden.
 
 In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen. Z.B. bei der Anzeige in der Anwendung oder wenn Daten für Exporte ausgewählt werden.
 
@@ -226,16 +226,11 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 ###Daten exportieren
 
 1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
-2. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen (noch nicht umgesetzt)
-3. Sie wählt die gewünschten Eigenschaften
+2. Sie wählt die gewünschten Eigenschaften
+3. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen
 4. Die Datei wird generiert und als .csv heruntergeladen
 
-Bei Beziehungen kann die Benutzerin wahlweise:
-
-- pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung)
-- oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig).
-
-In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
+Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
 
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. 
@@ -807,6 +802,7 @@ Daten exportieren:
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
+- Informationen von synonymen Arten können mit exportiert werden
 - Bei Beziehungen kann man wahlweise:
  - pro Beziehung eine Zeile erstellen
  - pro Beziehung die Informationen eines Felds kommagetrennt hintereinander in dieses Feld schreiben
@@ -814,10 +810,9 @@ Daten exportieren:
 
 **To do**
 
-- Exporte: Daten und Beziehungen von synonymen Arten
 - Lebensräume in der Anwendung bearbeiten
 - Schnittstellen beschreiben und bedürfnisgerecht erweitern
-- Importe: Taxonomien
+- Taxonomien importieren
 - Alternative Taxonomien verwalten und darstellen
 
 <a href="#top">&#8593; top</a>
