@@ -2392,8 +2392,15 @@ function filtereFuerExport() {
 	//jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
 	var anz_gruppen_abgefragt = 0;
 	for (var i=0; i<gruppen_array.length; i++) {
-		var queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
-		$db.list('artendb/filtere_fuer_export', queryParam, {
+		var dbParam, queryParam;
+		if ($("#exportieren_synonym_infos").prop('checked')) {
+			dbParam = "artendb/export_mit_synonymen";
+			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen + "&descending=true";
+		} else {
+			dbParam = "artendb/export";
+			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+		}
+		$db.list(dbParam, queryParam, {
 			success: function (data) {
 				//leere Objekte entfernen
 				var exportieren_objekte_temp = _.reject(data, function(object) {
@@ -2809,6 +2816,12 @@ function sortKeysOfObject(o) {
 		sorted[a[key]] = o[a[key]];
 	}
 	return sorted;
+}
+
+function exportZuruecksetzen() {
+	//Tabelle ausblenden, falls sie eingeblendet war
+	$("#exportieren_exportieren_tabelle").hide();
+	$("#exportieren_exportieren_exportieren").hide();
 }
 
 function maximiereForms() {

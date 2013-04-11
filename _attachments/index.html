@@ -642,7 +642,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="accordion-inner">
-								<div class="well well-small" style="margin-bottom:0px;">So geht's:
+								<div class="well well-small" style="margin-bottom:15px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Markieren Sie die Felder, die Sie exportieren möchten...</li>
@@ -651,7 +651,12 @@
 										<li>Einzelne Felder, wie z.B. Verweise auf andere Arten/Lebensräume, enthalten JSON-Objekte. Das sind komplexe Datenstrukturen, die nicht in ein einfaches Datenfeld passen. Sie werden darum einfach im JSON-Format in das ensprechende Tabellenfeld exportiert. Erkenntlich sind sie u.a. an den {geschweiften Klammern}</li>
 									</ul>
 								</div>
-								<h5>Art / Lebensraum</h5>
+								<label class="checkbox">
+									<input type="checkbox" id="exportieren_synonym_infos" checked>
+									inklusive Informationen von Synonymen
+								</label>
+								<hr>
+								<h3>Art / Lebensraum</h3>
 								<div class="felderspalte">
 									<label class="checkbox">
 										<input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="_id">GUID
@@ -1193,8 +1198,7 @@
 							$('#meldung_zuviele_bs').modal();
 							$(that).prop('checked', false);
 						} else {
-							//Tabelle ausblenden, falls sie eingeblendet war
-							$("#exportieren_exportieren_tabelle").css("display", "none");
+							exportZuruecksetzen();
 						}
 					}
 				});
@@ -1214,9 +1218,12 @@
 						$('#meldung_zuviele_bs').modal();
 						$(this).val("");
 					} else {
-						//Tabelle ausblenden, falls sie eingeblendet war
-						$("#exportieren_exportieren_tabelle").css("display", "none");
+						exportZuruecksetzen();
 					}
+				});
+
+				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos", function() {
+					exportZuruecksetzen();
 				});
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
