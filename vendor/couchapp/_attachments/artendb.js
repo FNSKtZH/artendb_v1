@@ -2932,6 +2932,31 @@ function bearbeiteLrTaxonomie() {
 	$(".lr_bearb_bearb").addClass('disabled');
 }
 
+function loescheLr(id) {
+	$db = $.couch.db("artendb");
+	$db.openDoc(id, {
+		success: function (object) {
+			$db.removeDoc(object, {
+				success: function () {
+					
+				},
+				error: function () {
+					$("#meldung_individuell_label").html("Fehler");
+					$("#meldung_individuell_text").html("Der Lebensraum wurde nicht gelöscht");
+					$('#meldung_individuell').modal();
+				}
+			});
+		},
+		error: function () {
+			$("#meldung_individuell_label").html("Fehler");
+			$("#meldung_individuell_text").html("Der Lebensraum wurde nicht gelöscht");
+			$('#meldung_individuell').modal();
+		}
+	});
+	console.log('id = ' + id);
+			
+}
+
 function schuetzeLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
