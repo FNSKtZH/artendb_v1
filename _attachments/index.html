@@ -1242,17 +1242,14 @@
 					delete window.lr_bearb;
 				});
 
-				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function(event) {
-					//console.log('speichern: '+this.id+', '+$(this).attr('dsTyp')+', '+$(this).attr('dsName'));
+				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function() {
 					speichern(this.value, this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
 				});
 
 				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {
 					if (window.lr_bearb) {
 						bearbeiteLrTaxonomie();
-					}/* else {
-						schuetzeLrTaxonomie();
-					}*/
+					}
 					$(".bearb_toolbar").show();
 				});
 

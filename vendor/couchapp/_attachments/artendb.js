@@ -2917,6 +2917,13 @@ function bearbeiteLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', false);
+		if ($(this).parent().attr('href')) {
+			$(this).parent().attr('href', '#');
+			//Standardverhalten beim Klicken von Links verhindern
+			$(this).parent().attr('onclick', 'return false;');
+			//Mauspointer nicht mehr als Finger
+			this.style.cursor = '';
+		}
 	});
 	$('.lr_bearb').removeClass('disabled');
 	$(".lr_bearb_bearb").addClass('disabled');
@@ -2926,6 +2933,16 @@ function schuetzeLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
+		if ($(this).parent().attr('href')) {
+			var feldWert = $(this).val();
+			if (typeof feldWert === "string" && feldWert.slice(0, 7) === "http://") {
+				$(this).parent().attr('href', feldWert);
+				//falls onclick besteht, entfernen
+				$(this).parent().removeAttr("onclick");
+				//Mauspointer nicht mehr als Finger
+				this.style.cursor = 'pointer';
+			}
+		}
 	});
 	$('.lr_bearb').addClass('disabled');
 	$(".lr_bearb_bearb").removeClass('disabled');
