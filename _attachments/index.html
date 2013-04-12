@@ -1231,21 +1231,15 @@
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_bearb", function(event) {
-					//alle Felder schreibbar setzen
-					$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
-						$(this).attr('readonly', false);
-					});
-					$('.lr_bearb').removeClass('disabled');
-					$(".lr_bearb_bearb").addClass('disabled');
+					bearbeiteLrTaxonomie();
+					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+					window.lr_bearb = true;
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_schuetzen", function(event) {
-					//alle Felder schreibbar setzen
-					$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
-						$(this).attr('readonly', true);
-					});
-					$('.lr_bearb').addClass('disabled');
-					$(".lr_bearb_bearb").removeClass('disabled');
+					schuetzeLrTaxonomie();
+					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+					delete window.lr_bearb;
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function(event) {
@@ -1254,6 +1248,11 @@
 				});
 
 				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {
+					if (window.lr_bearb) {
+						bearbeiteLrTaxonomie();
+					}/* else {
+						schuetzeLrTaxonomie();
+					}*/
 					$(".bearb_toolbar").show();
 				});
 

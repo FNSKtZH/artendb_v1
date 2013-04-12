@@ -2913,6 +2913,24 @@ function myTypeOf(Wert) {
 	}
 }
 
+function bearbeiteLrTaxonomie() {
+	//alle Felder schreibbar setzen
+	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+		$(this).attr('readonly', false);
+	});
+	$('.lr_bearb').removeClass('disabled');
+	$(".lr_bearb_bearb").addClass('disabled');
+}
+
+function schuetzeLrTaxonomie() {
+	//alle Felder schreibbar setzen
+	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+		$(this).attr('readonly', true);
+	});
+	$('.lr_bearb').addClass('disabled');
+	$(".lr_bearb_bearb").removeClass('disabled');
+}
+
 function maximiereForms() {
 	/*
 	@media screen and (min-width: 1001px)
