@@ -2916,13 +2916,16 @@ function myTypeOf(Wert) {
 function bearbeiteLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
-		$(this).attr('readonly', false);
-		if ($(this).parent().attr('href')) {
-			$(this).parent().attr('href', '#');
-			//Standardverhalten beim Klicken von Links verhindern
-			$(this).parent().attr('onclick', 'return false;');
-			//Mauspointer nicht mehr als Finger
-			this.style.cursor = '';
+		//GUID nicht bearbeiten
+		if ($(this).attr('id') !== "GUID") {
+			$(this).attr('readonly', false);
+			if ($(this).parent().attr('href')) {
+				$(this).parent().attr('href', '#');
+				//Standardverhalten beim Klicken von Links verhindern
+				$(this).parent().attr('onclick', 'return false;');
+				//Mauspointer nicht mehr als Finger
+				this.style.cursor = '';
+			}
 		}
 	});
 	$('.lr_bearb').removeClass('disabled');
