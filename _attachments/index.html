@@ -1226,8 +1226,30 @@
 					exportZuruecksetzen();
 				});
 
-				$("#art").on("click", ".btn", function(event) {
+				$("#art").on("click", ".btn.lr_bearb", function(event) {
 					event.preventDefault();
+				});
+
+				$("#art").on("click", ".btn.lr_bearb_bearb", function(event) {
+					//alle Felder schreibbar setzen
+					$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+						$(this).attr('readonly', false);
+					});
+					$('.lr_bearb').removeClass('disabled');
+					$(".lr_bearb_bearb").addClass('disabled');
+				});
+
+				$("#art").on("click", ".btn.lr_bearb_schuetzen", function(event) {
+					//alle Felder schreibbar setzen
+					$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+						$(this).attr('readonly', true);
+					});
+					$('.lr_bearb').addClass('disabled');
+					$(".lr_bearb_bearb").removeClass('disabled');
+				});
+
+				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function(event) {
+					console.log(this.id + ' verändert');
 				});
 
 				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {

@@ -658,7 +658,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//bei LR: Symbolleiste einfügen
 	if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
-		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group"><a class="btn lr_bearb_bearb disabled" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
+		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group"><a class="btn lr_bearb lr_bearb_bearb" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
 	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
@@ -694,7 +694,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	//Felder anzeigen
 	//zuerst die GUID, aber nur bei der Taxonomie
 	if (dsTyp === "Taxonomie") {
-		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id);
+		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp);
 	}
 	for (var y in art_i.Daten) {
 		if (y === "GUID") {
@@ -718,9 +718,9 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 				}
 				hierarchie_string += hierarchie_objekt_array[g].Name;
 			}
-			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, "text");
+			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, "text", dsTyp);
 		} else {
-			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y]);
+			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp);
 		}
 	}
 	//body und Accordion-Gruppe abschliessen
@@ -730,21 +730,21 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 
 //übernimmt Feldname und Feldwert
 //generiert daraus und retourniert html für die Darstellung im passenden Feld
-function erstelleHtmlFuerFeld(Feldname, Feldwert) {
+function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp) {
 	var htmlDatensammlung = "";
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "http://") {
 		//www-Links als Link darstellen
-		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert);
+		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp);
 	} else if (typeof Feldwert === "string" && Feldwert.length >= 45) {
-		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert);
+		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert, dsTyp);
 	} else if (typeof Feldwert === "number") {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number");
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp);
 	} else if (typeof Feldwert === "boolean") {
-		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert);
+		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp);
 	} else {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text");
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp);
 	}
 	return htmlDatensammlung;
 }
@@ -858,7 +858,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 }
 
 //generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
+/*function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
@@ -872,6 +872,35 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	HtmlContainer += '" class="feldtext controls ">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
+	return HtmlContainer;
+}*/
+
+//generiert den html-Inhalt für einzelne Links in Flora
+function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
+	var HtmlContainer;
+	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '"';
+	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+	if (FeldName.length > 28) {
+		HtmlContainer += ' style="padding-top:0px"';
+	}
+	HtmlContainer += '>';
+	HtmlContainer += FeldName;
+	HtmlContainer += ':</label>\n\t';
+	//jetzt Link beginnen, damit das Feld klickbar wird
+	HtmlContainer += '<a href="';
+	HtmlContainer += FeldWert;
+	HtmlContainer += '"><input class="controls" id="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" name="';
+	HtmlContainer += FeldName;
+	HtmlContainer += '" type="text" value="';
+	HtmlContainer += FeldWert;
+	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
+	//Link abschliessen
+	HtmlContainer += '</a>';
+	HtmlContainer += '\n</div>';
 	return HtmlContainer;
 }
 
