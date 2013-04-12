@@ -962,7 +962,7 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 	if (FeldWert === true) {
 		HtmlContainer += ' checked="true"';
 	}
-	HtmlContainer += '></div>';
+	HtmlContainer += ' readonly="readonly"></div>';
 	return HtmlContainer;
 }
 
