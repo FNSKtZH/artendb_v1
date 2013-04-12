@@ -267,12 +267,12 @@ function initiiereSuchfeld_2() {
 	var suchObjekte;
 	if (window.Gruppe && window.Gruppe === "Lebensräume") {
 		suchObjekte = window.filtere_lr.rows;
-
 	} else if (window.Gruppe) {
 		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
 	}
 	$('#suchfeld' + window.Gruppe).typeahead({
-		items: 15,
+		items: 20,
+		minLength: 1,
 		source: function (query, process) {
 			window.namen = [];
 			window.map = {};
@@ -301,6 +301,49 @@ function initiiereSuchfeld_2() {
 			return item.replace( regex, "<strong>$1</strong>" );
 		}
 	});
+	//$("#suchfeldLebensräume").on('click', $("#suchfeldLebensräume").typeahead.bind($("#suchfeldLebensräume"), 'lookup'));
+}
+
+function initiiereLrParentAuswahlliste() {
+	//window.filtere_lr.rows deep kopieren
+	var suchObjekte = _.union(window.filtere_lr.rows)
+	//zuoberst ermöglichen, eine neue Taxonomie zu erfassen
+	var neueTaxonomie = {value:{Name:"das ist eine neue Taxonomie bzw. das oberste Element der Hierarchie",id:""}};
+	suchObjekte.unshift(neueTaxonomie);
+	window.test = suchObjekte;
+	//console.log('suchObjekte = ' + JSON.stringify(suchObjekte));
+	$('#lr_parent_wahlen_filtern').typeahead({
+		items: 3000,
+		minLength: 0,
+		source: function (query, process) {
+			window.namen = [];
+			window.map = {};
+			$.each(suchObjekte, function(i, suchObjekt) {
+				window.map[suchObjekt.value.Name] = suchObjekt.value;
+				window.namen.push(suchObjekt.value.Name);
+			});
+			process(window.namen);
+		},
+		updater: function (item) {
+			selectedState = window.map[item].Name;
+			oeffneBaumZuId(window.map[item].id);
+			return item;
+		},
+		matcher: function (item) {
+			//this.query enthält den im Filterfeld eingegebenen Text
+			if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
+				return true;
+			}
+		},
+		/*sorter: function (items) {
+			return items.sort();
+		},*/
+		highlighter: function (item) {
+			var regex = new RegExp( '(' + this.query + ')', 'gi' );
+			return item.replace( regex, "<strong>$1</strong>" );
+		}
+	});
+	//$("#suchfeldLebensräume").on('click', $("#suchfeldLebensräume").typeahead.bind($("#suchfeldLebensräume"), 'lookup'));
 }
 
 function oeffneBaumZuId(id) {
@@ -1038,20 +1081,6 @@ function setzteHöheTextareas() {
 			$(this).trigger('focus');
 		});
 	});
-}
-
-function schliesseNichtMarkierteNodes() {
-	//wenn Suchfeld leer ist, soll der Baum zugeklappt werden
-	if (!$("#suchfeld" + window.Gruppe).val()) {
-		$("#tree" + window.Gruppe).jstree("clear_search");
-		var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
-		$("#tree" + window.Gruppe).jstree("close_all", -1);
-		$("#tree" + window.Gruppe).jstree("deselect_all", -1);
-		//wenn eine Art gewählt war, diese wieder wählen
-		if (selected_nodes.length === 1) {
-			$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
-		}
-	}
 }
 
 function öffneMarkiertenNode() {
@@ -2916,8 +2945,8 @@ function myTypeOf(Wert) {
 function bearbeiteLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
-		//GUID nicht bearbeiten
-		if ($(this).attr('id') !== "GUID") {
+		//einige Felder nicht bearbeiten
+		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Hierarchie") {
 			$(this).attr('readonly', false);
 			if ($(this).parent().attr('href')) {
 				$(this).parent().attr('href', '#');

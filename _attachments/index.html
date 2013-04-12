@@ -1242,11 +1242,28 @@
 					delete window.lr_bearb;
 				});
 
+				$("#art").on("click", ".btn.lr_bearb_neu", function(event) {
+					initiiereLrParentAuswahlliste();
+					$('#lr_parent_wahlen').modal();
+				});
+
 				$("#art").on("click", ".btn.lr_bearb_loeschen", function(event) {
 					if (!$(this).hasClass('disabled')) {
 						//rückfragen
 						$('#rueckfrage_lr_loeschen').modal();
 					}
+				});
+
+				$(document).on("change", "#lr_parent_wahlen_filtern", function(event) {
+					//prüfen, ob oberster Node gewählt wurde
+
+					//ja: Hierarchie aufbauen, sobald Einheit beschrieben wurde
+
+					//Wenn nein: den Parent setzen
+
+					//die Hierarchie aufbauen und setzen
+					//einfach diejenige des gewählten LR nehmen und um das neue Objekt ergänzen, sobald Einheit und Label beschrieben wurden
+
 				});
 
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
@@ -1334,36 +1351,6 @@
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					//$($(this).attr("href")).collapse("toggle");
-				});
-				
-				//Suche steuern bei Eingabe
-				$("#menu").on("keyup click", "#suchfeld", function(e) {
-					e.preventDefault();
-					//nur automatisch suchen, wenn das schnell ist
-					//auf Enter-Taste immer suchen
-					if (/*(this.value.length > 2 && window.baum_laenge < 7000) || */e.keyCode === 13) {
-						$("#tree" + window.Gruppe).jstree("search", this.value);
-					} else if (this.value.length === 0) {
-						//Suche beenden, falls Suchfeld leer ist
-						$("#tree" + window.Gruppe).jstree("clear_search");
-					}
-				});
-
-				//Suche steuern bei click auf Such-icon
-				$("#menu").on("click", "#suchfeld_icon", function(e) {
-					e.preventDefault();
-					var suchwert = $("#suchfeld").val();
-					if (suchwert) {
-						$("#tree" + window.Gruppe).jstree("search", suchwert);
-						$("#suchfeld").focus();
-					} else {
-						//Suche beenden, falls Suchfeld leer ist
-						$("#tree" + window.Gruppe).jstree("clear_search");
-					}
-				});
-
-				$("#menu").on("keyup", "#suchfeld", function() {
-					schliesseNichtMarkierteNodes();
 				});
 
 				$(".form").on("keyup focus", "textarea", function() {
@@ -1573,6 +1560,19 @@
 		<div class="modal-footer">
 			<a href="#" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</a>
 			<a href="#" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</a>
+		</div>
+	</div>
+
+	<div id="lr_parent_wahlen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Parent wählen</h3>
+		</div>
+		<div class="modal-body">
+			<p id="meldung_individuell_text">Wählen sie den hierarchisch höher gelegenen Lebensraum:</p>
+			<div id="lr_parent_wahlen_lr" class="input-prepend suchen" style="width:100%;">
+				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="lr_parent_wahlen_filtern" class="span2" type="search" placeholder="filtern" style="width:90%;max-width:600px;">
+			</div>
 		</div>
 	</div>
 </html>
