@@ -1249,7 +1249,8 @@
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function(event) {
-					console.log(this.id + ' verändert');
+					//console.log('speichern: '+this.id+', '+$(this).attr('dsTyp')+', '+$(this).attr('dsName'));
+					speichern(this.value, this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
 				});
 
 				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {

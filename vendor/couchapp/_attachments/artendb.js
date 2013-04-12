@@ -637,7 +637,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		//Die Felder anzeigen
 		for (var x in art_i.Beziehungen[i]) {
 			if (x !== "Beziehungspartner") {
-				html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x]);
+				html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x], "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
 			}
 		}
 		//Am Schluss eine Linie, nicht aber bei der letzen Beziehung
@@ -694,7 +694,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	//Felder anzeigen
 	//zuerst die GUID, aber nur bei der Taxonomie
 	if (dsTyp === "Taxonomie") {
-		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp);
+		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
 	}
 	for (var y in art_i.Daten) {
 		if (y === "GUID") {
@@ -718,9 +718,9 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 				}
 				hierarchie_string += hierarchie_objekt_array[g].Name;
 			}
-			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, "text", dsTyp);
+			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
 		} else {
-			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp);
+			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
 		}
 	}
 	//body und Accordion-Gruppe abschliessen
@@ -730,21 +730,21 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 
 //übernimmt Feldname und Feldwert
 //generiert daraus und retourniert html für die Darstellung im passenden Feld
-function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp) {
+function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp, dsName) {
 	var htmlDatensammlung = "";
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "http://") {
 		//www-Links als Link darstellen
-		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp);
+		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp);
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length >= 45) {
 		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert, dsTyp);
 	} else if (typeof Feldwert === "number") {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp);
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp, dsName);
 	} else if (typeof Feldwert === "boolean") {
-		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp);
+		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp, dsName);
 	} else {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp);
+		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
 	}
 	return htmlDatensammlung;
 }
@@ -876,7 +876,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 }*/
 
 //generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
+function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -891,7 +891,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	//jetzt Link beginnen, damit das Feld klickbar wird
 	HtmlContainer += '<a href="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '"><input class="controls" id="';
+	HtmlContainer += '"><input class="controls" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -925,7 +925,7 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 }
 
 //generiert den html-Inhalt für Textinputs
-function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
+function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -944,12 +944,12 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp) {
 	HtmlContainer += InputTyp;
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly">\n</div>';
+	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
 	return HtmlContainer;
 }
 
 //generiert den html-Inhalt für Textarea
-function generiereHtmlFuerTextarea(FeldName, FeldWert) {
+function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -964,7 +964,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '" readonly="readonly"';
+	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"';
 	HtmlContainer += '>';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</textarea></div>';
@@ -972,7 +972,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert) {
 }
 
 //generiert den html-Inhalt für ja/nein-Felder
-function generiereHtmlFuerBoolean(FeldName, FeldWert) {
+function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -991,7 +991,7 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert) {
 	if (FeldWert === true) {
 		HtmlContainer += ' checked="true"';
 	}
-	HtmlContainer += ' readonly="readonly"></div>';
+	HtmlContainer += ' readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
 	return HtmlContainer;
 }
 
@@ -2855,6 +2855,62 @@ function exportZuruecksetzen() {
 	//Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").hide();
 	$("#exportieren_exportieren_exportieren").hide();
+}
+
+//schreibt Änderungen in Feldern in die Datenbank
+//wird vorläufig nur für LR Taxonomie verwendet
+function speichern(feldWert, feldName, dsName, dsTyp) {
+	//zuerst die id des Objekts holen
+	var uri = new Uri($(location).attr('href'));
+	var id = uri.getQueryParamValue('id');
+	$db = $.couch.db("artendb");
+	$db.openDoc(id, {
+		success: function(object) {
+			//sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
+			object.Taxonomie.Daten[feldName] = convertToCorrectType(feldWert);
+			$db.saveDoc(object, {
+				error: function (data) {
+					$("#meldung_individuell_label").html("Fehler");
+					$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+					$('#meldung_individuell').modal();
+				}
+			});
+		},
+		error: function () {
+			$("#meldung_individuell_label").html("Fehler");
+			$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+			$('#meldung_individuell').modal();
+		}
+	});
+}
+
+function convertToCorrectType(feldWert) {
+	if (myTypeOf(feldWert) === "boolean") {
+		return Boolean(feldWert);
+	} else if (myTypeOf(feldWert) === "float") {
+		return parseFloat(feldWert);
+	} else if (myTypeOf(feldWert) === "integer") {
+		return parseInt(feldWert);
+	} else {
+		return feldWert;
+	}
+}
+
+//Hilfsfunktion, die typeof ersetzt und ergänzt
+//typeof gibt bei input-Feldern immer String zurück!
+function myTypeOf(Wert) {
+	if (typeof Wert === "boolean") {
+		return "boolean";
+	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert)) {
+		//es ist eine Float
+		return "float";
+	} else if (parseInt(Wert)) {
+		//es ist eine Integer
+		return "integer";
+	} else {
+		//als String behandeln
+		return "string";
+	}
 }
 
 function maximiereForms() {
