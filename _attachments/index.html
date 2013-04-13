@@ -1230,31 +1230,31 @@
 					event.preventDefault();
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_bearb", function(event) {
+				$("#art").on("click", ".btn.lr_bearb_bearb", function() {
 					bearbeiteLrTaxonomie();
 					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 					window.lr_bearb = true;
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_schuetzen", function(event) {
+				$("#art").on("click", ".btn.lr_bearb_schuetzen", function() {
 					schuetzeLrTaxonomie();
 					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 					delete window.lr_bearb;
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_neu", function(event) {
+				$("#art").on("click", ".btn.lr_bearb_neu", function() {
 					initiiereLrParentAuswahlliste();
 					$('#lr_parent_wahlen').modal();
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_loeschen", function(event) {
+				$("#art").on("click", ".btn.lr_bearb_loeschen", function() {
 					if (!$(this).hasClass('disabled')) {
 						//rückfragen
 						$('#rueckfrage_lr_loeschen').modal();
 					}
 				});
 
-				$(document).on("change", "#lr_parent_wahlen_filtern", function(event) {
+				$(document).on("change", "#lr_parent_wahlen_filtern", function() {
 					//prüfen, ob oberster Node gewählt wurde
 
 					//ja: Hierarchie aufbauen, sobald Einheit beschrieben wurde
@@ -1262,6 +1262,7 @@
 					//Wenn nein: den Parent setzen
 
 					//die Hierarchie aufbauen und setzen
+					aktualisiereHierarchieEinesNeuenLr(null, object, aktualisiereHierarchiefeld);
 					//einfach diejenige des gewählten LR nehmen und um das neue Objekt ergänzen, sobald Einheit und Label beschrieben wurden
 
 				});
