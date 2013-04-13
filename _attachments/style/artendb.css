@@ -348,33 +348,13 @@ option {
 	overflow-x: hidden;
 }
 
-#lr_parent_wahlen .typeahead {
-	/*max-height: 600px;*/
-	/*height: -webkit-calc(100% - 140px);
-	height: -o-calc(100% - 140px);
-	height: calc(100% - 140px);*/
-	height: 80%;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-#lr_parent_wahlen {
+#lr_parent_waehlen {
 	background-color: #FFFFF0;
-	height: -webkit-calc(100% - 40px);
-	height: -o-calc(100% - 40px);
-	height: calc(100% - 40px);
-	width: -webkit-calc(100% - 40px);
-	width: -o-calc(100% - 40px);
-	width: calc(100% - 40px);
-	left: 300px;
-	top: 20px;
-}
-
-#lr_parent_wahlen .modal-body {
-	max-height: 100%;
-	height: 100%;
-	/*overflow-y: auto;
-	overflow-x: hidden;*/
+	max-width: -webkit-calc(100% - 20px);
+	max-width: -o-calc(100% - 20px);
+	max-width: calc(100% - 20px);
+	width: auto;
+	top: 5%;
 }
 
 #vakata-contextmenu {

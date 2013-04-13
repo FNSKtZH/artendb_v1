@@ -1243,8 +1243,7 @@
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_neu", function() {
-					initiiereLrParentAuswahlliste();
-					$('#lr_parent_wahlen').modal();
+					initiiereLrParentAuswahlliste($("#Taxonomie").val());
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_loeschen", function() {
@@ -1254,17 +1253,41 @@
 					}
 				});
 
-				$(document).on("change", "#lr_parent_wahlen_filtern", function() {
+				$("#lr_parent_wahlen").on("change", "#lr_parent_wahlen_filtern", function() {
 					//prüfen, ob oberster Node gewählt wurde
-
-					//ja: Hierarchie aufbauen, sobald Einheit beschrieben wurde
-
-					//Wenn nein: den Parent setzen
-
-					//die Hierarchie aufbauen und setzen
-					aktualisiereHierarchieEinesNeuenLr(null, object, aktualisiereHierarchiefeld);
-					//einfach diejenige des gewählten LR nehmen und um das neue Objekt ergänzen, sobald Einheit und Label beschrieben wurden
-
+					var parent_name = $(this).val(),
+						parent_row, 
+						parent = {}, 
+						object = {};
+					object._id = _.uniqueId();
+					object.Gruppe = "Lebensräume";
+					object.Typ = "Objekt";
+					object.Taxonomie = {};
+					object.Taxonomie.Daten = {};
+					object.Datensammlungen = [];
+					object.Beziehungssammlungen = [];
+					//jetzt den parent erstellen
+					if (parent_name === "Neue Taxonomie beginnen") {
+						parent.GUID = object._id;
+						parent.Name = "unbenannte Taxonomie > unbenannter Lebensraum";
+					} else {
+						var parent_row = _.find(window.filtere_lr.rows, function(row) {
+							return row.value.Name === parent_name;
+						});
+						parent.GUID = parent_row.value.id;
+						parent.Name = parent_row.value.Name;
+					}
+					object.Taxonomie.Daten.Parent = parent;
+					//neuen LR speichern, damit die folgende Funktion ihn zum Aufbau der Hierarchie schon benutzen kann
+					$db = $.couch.db("artendb");
+					$db.saveDoc(object, {
+						success: function (data) {
+							//rev übernehmen, damit nächster Speichervorgang ohne openDoc erfolgen kann
+							object._rev = data._rev;
+							//die Hierarchie aufbauen und setzen
+							aktualisiereHierarchieEinesNeuenLr(null, object, aktualisiereHierarchiefeld);
+						}
+					});
 				});
 
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
@@ -1564,16 +1587,12 @@
 		</div>
 	</div>
 
-	<div id="lr_parent_wahlen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="lr_parent_waehlen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>Parent wählen</h3>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Hierarchie</h3>
 		</div>
-		<div class="modal-body">
-			<p id="meldung_individuell_text">Wählen sie den hierarchisch höher gelegenen Lebensraum:</p>
-			<div id="lr_parent_wahlen_lr" class="input-prepend suchen" style="width:100%;">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="lr_parent_wahlen_filtern" class="span2" type="search" placeholder="filtern" style="width:90%;max-width:600px;">
-			</div>
+		<div id="lr_parent_waehlen_optionen" class="modal-body" style="margin-bottom:5px;">
 		</div>
 	</div>
 </html>

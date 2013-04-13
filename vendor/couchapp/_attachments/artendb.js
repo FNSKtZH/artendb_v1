@@ -304,43 +304,83 @@ function initiiereSuchfeld_2() {
 	//$("#suchfeldLebensräume").on('click', $("#suchfeldLebensräume").typeahead.bind($("#suchfeldLebensräume"), 'lookup'));
 }
 
-function initiiereLrParentAuswahlliste() {
-	//window.filtere_lr.rows deep kopieren
-	var suchObjekte = _.union(window.filtere_lr.rows)
-	//zuoberst ermöglichen, eine neue Taxonomie zu erfassen
-	var neueTaxonomie = {value:{Name:"das ist eine neue Taxonomie bzw. das oberste Element der Hierarchie",id:""}};
-	suchObjekte.unshift(neueTaxonomie);
-	window.test = suchObjekte;
-	//console.log('suchObjekte = ' + JSON.stringify(suchObjekte));
-	$('#lr_parent_wahlen_filtern').typeahead({
-		items: 3000,
-		minLength: 0,
-		source: function (query, process) {
-			window.namen = [];
-			window.map = {};
-			$.each(suchObjekte, function(i, suchObjekt) {
-				window.map[suchObjekt.value.Name] = suchObjekt.value;
-				window.namen.push(suchObjekt.value.Name);
+//baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
+//bekommt die id des LR, von dem aus ein neuer LR erstellt werden soll
+//In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
+//plus man soll auch einen neue Taxonomie beginnen können
+function initiiereLrParentAuswahlliste(taxonomie_name) {
+	//lr holen
+	$db = $.couch.db("artendb");
+	$db.view('artendb/lr?include_docs=true', {
+		success: function (lr) {
+			var taxonomie_objekte, 
+				object,
+				neueTaxonomie,
+				object_html,
+				html,
+				myLabel = 1;
+			//reduzieren auf die LR der Taxonomie
+			taxonomie_objekte = _.filter(lr.rows, function(row) {
+				return row.doc.Taxonomie.Name === taxonomie_name;
 			});
-			process(window.namen);
-		},
-		updater: function (item) {
-			selectedState = window.map[item].Name;
-			oeffneBaumZuId(window.map[item].id);
-			return item;
-		},
-		matcher: function (item) {
-			//this.query enthält den im Filterfeld eingegebenen Text
-			if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
-				return true;
+			//einen Array von Objekten schaffen mit id und Name
+			taxonomie_objekte = _.map(taxonomie_objekte, function(row) {
+				object = {};
+				object.id = row.doc._id;
+				if (row.doc.Taxonomie.Daten && row.doc.Taxonomie.Daten.Einheit) {
+					if (row.doc.Taxonomie.Daten.Label) {
+						object.Name = row.doc.Taxonomie.Daten.Label + ": " + row.doc.Taxonomie.Daten.Einheit;
+						myLabel = row.doc.Taxonomie.Daten.Label;
+					} else {
+						object.Name = row.doc.Taxonomie.Daten.Einheit;
+					}
+					if (row.doc.Taxonomie.Daten.Hierarchie && row.doc.Taxonomie.Daten.Hierarchie.length === 1) {
+						//das ist das oberste Objekt, soll auch zuoberst einsortiert werden
+						//oft hat es als einziges keinen label und würde daher zuunterst sortiert!
+						object.Sortier = 0;
+					} else {
+						//mittels Array sortieren
+						object.Sortier = object.Name;
+					}
+				}
+				return object;
+			});
+			//jetzt nach Name sortieren
+			taxonomie_objekte = _.sortBy(taxonomie_objekte, function(objekt) {
+				return objekt.Sortier;
+			});
+			neueTaxonomie = {};
+			neueTaxonomie.id = 0;
+			neueTaxonomie.Name = "Neue Taxonomie beginnen";
+			//neueTaxonomie als erstes Objekt in den Array einfügen
+			taxonomie_objekte.unshift(neueTaxonomie);
+
+			//jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
+			html = "";
+			for (var i=0; i<taxonomie_objekte.length; i++) {
+				object_html = '';
+				if (i === 1) {
+					object_html += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
+				}
+				object_html += '<label class="radio">';
+				object_html += '<input type="radio" name="parent_optionen" id="';
+				object_html += taxonomie_objekte[i].id;
+				object_html += '" value="';
+				object_html += taxonomie_objekte[i].Name;
+				object_html += '">';
+				object_html += taxonomie_objekte[i].Name;
+				object_html += '</label>';
+				html += object_html;
 			}
-		},
-		highlighter: function (item) {
-			var regex = new RegExp( '(' + this.query + ')', 'gi' );
-			return item.replace( regex, "<strong>$1</strong>" );
+			$("#lr_parent_waehlen_optionen").html(html);
+			//jetzt das modal aufrufen
+			//höhe Anpassen funktioniert leider nicht über css mit calc
+			$('#lr_parent_waehlen').modal();
+			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()*0.9-88);
+			var width = $('#lr_parent_waehlen').css("width");
+			$('#lr_parent_waehlen').css('margin-left', -parseFloat(width)/2);
 		}
 	});
-	//$("#suchfeldLebensräume").on('click', $("#suchfeldLebensräume").typeahead.bind($("#suchfeldLebensräume"), 'lookup'));
 }
 
 function oeffneBaumZuId(id) {
@@ -3048,7 +3088,66 @@ function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefe
 function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld) {
 	var object_array,
 		hierarchie = [];
-	object_array = _.map(window.lr.rows, function(row) {
+	object_array = _.map(window.filtere_lr.rows, function(row) {
+		return row.doc;
+	});
+	if (!object.Taxonomie) {
+		object.Taxonomie = {};
+	}
+	if (!object.Taxonomie.Daten) {
+		object.Taxonomie.Daten = {};
+	}
+	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
+	//jetzt den parent aktualisieren
+	object.Taxonomie.Daten.Hierarchie.push(erstelleHierarchieobjektFuerNeuenLr());
+	//jetzt für den neuen Lebensraum ein Hierarchieobjekt anfügen
+	if (aktualisiereHierarchiefeld) {
+		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
+	}
+	//save ohne open: _rev wurde zuvor übernommen
+	$db.saveDoc(object, {
+		success: function (doc) {
+			initiiere_art(doc._id);
+		},
+		error: function() {
+			//TODO: Meldung, wenn gescheitert
+		}
+	});
+}
+
+function erstelleHierarchieobjektFuerNeuenLr() {
+	var label = $("#").val();
+	var name = $("#").val();
+	var hierarchieobjekt = {};
+	if (label && name) {
+
+	}
+}
+
+//aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
+//und auch den parent
+//prüft, ob dieses Objekt children hat
+//wenn ja, wird deren Hierarchie auch aktualisiert
+//ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
+//wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
+//diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
+function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktualisiereHierarchiefeld) {
+	var hierarchie = [],
+		parent = object.Taxonomie.Daten.Parent;
+	if (lr) {
+		aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld);
+	} else {
+		$db = $.couch.db("artendb");
+		$db.view('artendb/lr?include_docs=true', {
+			success: function (lr) {
+				aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld);
+			}
+		});
+	}
+}
+
+function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld) {
+	var object_array = _.map(lr.rows, function(row) {
 		return row.doc;
 	});
 	if (!object.Taxonomie) {
@@ -3061,44 +3160,28 @@ function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld
 	if (aktualisiereHierarchiefeld) {
 		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
 	}
-	$db.saveDoc(object);
-}
-
-//aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
-//prüft, ob dieses Objekt children hat
-//wenn ja, wird deren Hierarchie auch aktualisiert
-//ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
-//diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
-function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(object, aktualisiereHierarchiefeld) {
-	var hierarchie = [],
-		parent = object.Taxonomie.Daten.Parent;
-	//array aller objekte holen (hier: lr)
-	$db = $.couch.db("artendb");
-	$db.view('artendb/lr?include_docs=true', {
+	//jetzt den parent aktualisieren
+	if (object.Taxonomie.Daten.Hierarchie.length > 1) {
+		//es gibt höhere Ebenen
+		//das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
+		object.Taxonomie.Daten.Parent = object.Taxonomie.Daten.Hierarchie[object.Taxonomie.Daten.Hierarchie.length-2];
+	} else if (object.Taxonomie.Daten.Hierarchie.length === 1) {
+		//das ist die oberste Ebene
+		object.Taxonomie.Daten.Parent = object.Taxonomie.Daten.Hierarchie[0];
+	}
+	$db.saveDoc(object, {
 		success: function (data) {
-			var parent,
-				object,
-				object_array;
-			object_array = _.map(data.rows, function(row) {
-				return row.doc;
-			});
-			if (!object.Taxonomie) {
-				object.Taxonomie = {};
-			}
-			if (!object.Taxonomie.Daten) {
-				object.Taxonomie.Daten = {};
-			}
-			object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
-			if (aktualisiereHierarchiefeld) {
-				$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
-			}
-			$db.saveDoc(object, {
-				success: function (data) {
-					//TODO: kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-
-
+			var doc;
+			//TODO: kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
+			for (var i=0; i<lr.rows.length; i++) {
+				doc = lr.rows[i].doc;
+				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === data._id) {
+					//das ist ein child
+					//auch aktualisieren
+					//lr mitgeben, damit die Abfrage nicht wiederholt werden muss
+					aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, doc, false);
 				}
-			});
+			}
 		}
 	});
 }
