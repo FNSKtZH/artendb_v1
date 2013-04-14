@@ -770,7 +770,7 @@ Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch der Hauptteil der Arbeit
 - ArtenDb ist in Entwicklung: [http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html](http://www.barbalex.iriscouch.com/artendb/_design/artendb/index.html)
-- Es sind schon fast alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können
+- Es sind schon alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können
 - Die Anwendung ist aber noch kaum getestet
 - Ich gehe davon aus, dass sie noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
@@ -795,11 +795,13 @@ Eigenschaften anzeigen:
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
+
 - Datensammlungen (auch zusammenfassende)
 - Beziehungssammlungen (auch zusammenfassende)
 - Eine Anleitung hilft
 
 Daten exportieren:
+
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
@@ -810,14 +812,15 @@ Daten exportieren:
  - pro Beziehung die Informationen eines Felds kommagetrennt hintereinander in dieses Feld schreiben
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
+Lebensräume in der Anwendung bearbeiten:
+
+- Ist erst grob implementiert. Muss noch getestet und verbessert werden
+
 **To do**
 
-- Lebensräume in der Anwendung bearbeiten*
 - Schnittstellen beschreiben und bedürfnisgerecht erweitern
 - Taxonomien importieren (wenig prioritär)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
-
-*heisst: muss implementiert sein, damit die bisherige ArtenDb abgelöst werden kann
 
 <a href="#top">&#8593; top</a>
 
