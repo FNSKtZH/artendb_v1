@@ -1283,7 +1283,7 @@
 					$db.saveDoc(object, {
 						success: function (data) {
 							//rev übernehmen, damit nächster Speichervorgang ohne openDoc erfolgen kann
-							object._rev = data._rev;
+							object._rev = data.rev;
 							//die Hierarchie aufbauen und setzen
 							aktualisiereHierarchieEinesNeuenLr(null, object, aktualisiereHierarchiefeld);
 						}
