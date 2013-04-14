@@ -3064,7 +3064,7 @@ function loescheLr(id) {
 		success: function (object) {
 			$db.removeDoc(object, {
 				success: function () {
-					
+					oeffneGruppe("Lebensräume");
 				},
 				error: function () {
 					$("#meldung_individuell_label").html("Fehler");
@@ -3161,23 +3161,19 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
 	console.log('hierarchie = ' + JSON.stringify(hierarchie));
 	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
-	//jetzt den parent aktualisieren
-	//object.Taxonomie.Daten.Hierarchie.push(erstelleLrLabelName($("#Label").val(), $("#Einheit").val()));
-	//jetzt für den neuen Lebensraum ein Hierarchieobjekt anfügen
-	if (aktualisiereHierarchiefeld) {
-		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
-	}
 	//save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function (doc) {
-			initiiere_art(doc._id);
-			$('#lr_parent_waehlen').modal('hide');
+			$.when(erstelleBaum()).then(function() {
+				oeffneBaumZuId(object._id);
+				$('#lr_parent_waehlen').modal('hide');
+			});
 		},
 		error: function() {
 			$("#meldung_individuell_label").html("Fehler");
 			$("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
 			$('#meldung_individuell').modal();
-			initiiere_art(doc._id);
+			initiiere_art(object._id);
 		}
 	});
 }

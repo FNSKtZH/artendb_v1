@@ -1288,10 +1288,11 @@
 										//bei der Wurzel ist sie schon gesetzt
 										aktualisiereHierarchieEinesNeuenLr(null, object, true);
 									} else {
-										$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
-										initiiere_art(object._id);
-										$('#lr_parent_waehlen').modal('hide');
-										//TODO: Anzeige aktualisieren oder einfach den Baum neu aufbauen?
+										//$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
+										$.when(erstelleBaum()).then(function() {
+											oeffneBaumZuId(object._id);
+											$('#lr_parent_waehlen').modal('hide');
+										});
 									}
 								}
 							});
@@ -1311,13 +1312,7 @@
 					//zuerst die id des Objekts holen
 					var uri = new Uri($(location).attr('href'));
 					var id = uri.getQueryParamValue('id');
-					console.log('id = ' + id);
 					loescheLr(id);
-					uri = new Uri(uri).deleteQueryParam('id', id);
-					console.log('uri = ' + uri);
-					history.pushState(null, null, uri);
-					oeffneGruppe("Lebensräume");
-					//location.reload();
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function() {
