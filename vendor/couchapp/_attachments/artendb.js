@@ -810,6 +810,7 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 		}
 		hierarchie_string += hierarchie_array[g].Name;
 	}
+	return hierarchie_string;
 }
 
 //übernimmt Feldname und Feldwert
