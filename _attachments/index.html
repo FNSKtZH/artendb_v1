@@ -740,14 +740,7 @@
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", "[name='Gruppe']", function () {
-					//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
-					window.Gruppe = this.value;
-					$(".suchfeld").val("");
-					$("#Gruppe_label").html("Gruppe:");
-					$(".suchen").hide();
-					$("#forms").hide();
-					$(".suchen").val("");
-					erstelleBaum();
+					oeffneGruppe(this.value);
 				});
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
@@ -1246,48 +1239,71 @@
 					initiiereLrParentAuswahlliste($("#Taxonomie").val());
 				});
 
+				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', function() {
+					//prüfen, ob oberster Node gewählt wurde
+					var parent_name = $(this).val(),
+					parent_id = this.id,
+						parent_row, 
+						parent = {}, 
+						object = {};
+					object.Gruppe = "Lebensräume";
+					object.Typ = "Objekt";
+					object.Taxonomie = {};
+					object.Taxonomie.Name = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+					object.Taxonomie.Daten = {};
+					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+					object.Taxonomie.Daten.Einheit = "unbenannter Lebensraum";
+					object.Taxonomie.Daten["Einheit-Abkürzung"] = "";
+					object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
+					object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
+					object.Taxonomie.Daten["Beschreibung"] = "";
+					object.Datensammlungen = [];
+					object.Beziehungssammlungen = [];
+					//neuen LR speichern, damit die folgende Funktion ihn zum Aufbau der Hierarchie schon benutzen kann
+					$db = $.couch.db("artendb");
+					$db.saveDoc(object, {
+						success: function (data) {
+							//id und rev übernehmen, damit nächster Speichervorgang ohne openDoc erfolgen kann
+							object._id = data.id;
+							object._rev = data.rev;
+							//jetzt den parent erstellen
+							//geht nicht vorher, weil die id bekannt sein muss
+							if (parent_id == 0) {
+								//das ist die Wurzel der Taxonomie
+								parent.Name = "neue Taxonomie > unbenannter Lebensraum";
+								parent.GUID = object._id;
+								//bei der Wurzel ist Hierarchie gleich parent
+								object.Taxonomie.Daten.Hierarchie = [];
+								object.Taxonomie.Daten.Hierarchie.push(parent);
+							} else {
+								parent.Name = parent_name;
+								parent.GUID = parent_id;
+							}
+							object.Taxonomie.Daten.Parent = parent;
+							$db.saveDoc(object, {
+								success: function (data2) {
+									object._rev = data2.rev;
+									if (parent_id != 0) {
+										//die Hierarchie aufbauen und setzen
+										//bei der Wurzel ist sie schon gesetzt
+										aktualisiereHierarchieEinesNeuenLr(null, object, true);
+									} else {
+										$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
+										initiiere_art(object._id);
+										$('#lr_parent_waehlen').modal('hide');
+										//TODO: Anzeige aktualisieren oder einfach den Baum neu aufbauen?
+									}
+								}
+							});
+						}
+					});
+				});
+
 				$("#art").on("click", ".btn.lr_bearb_loeschen", function() {
 					if (!$(this).hasClass('disabled')) {
 						//rückfragen
 						$('#rueckfrage_lr_loeschen').modal();
 					}
-				});
-
-				$("#lr_parent_wahlen").on("change", "#lr_parent_wahlen_filtern", function() {
-					//prüfen, ob oberster Node gewählt wurde
-					var parent_name = $(this).val(),
-						parent_row, 
-						parent = {}, 
-						object = {};
-					object._id = _.uniqueId();
-					object.Gruppe = "Lebensräume";
-					object.Typ = "Objekt";
-					object.Taxonomie = {};
-					object.Taxonomie.Daten = {};
-					object.Datensammlungen = [];
-					object.Beziehungssammlungen = [];
-					//jetzt den parent erstellen
-					if (parent_name === "Neue Taxonomie beginnen") {
-						parent.GUID = object._id;
-						parent.Name = "unbenannte Taxonomie > unbenannter Lebensraum";
-					} else {
-						var parent_row = _.find(window.filtere_lr.rows, function(row) {
-							return row.value.Name === parent_name;
-						});
-						parent.GUID = parent_row.value.id;
-						parent.Name = parent_row.value.Name;
-					}
-					object.Taxonomie.Daten.Parent = parent;
-					//neuen LR speichern, damit die folgende Funktion ihn zum Aufbau der Hierarchie schon benutzen kann
-					$db = $.couch.db("artendb");
-					$db.saveDoc(object, {
-						success: function (data) {
-							//rev übernehmen, damit nächster Speichervorgang ohne openDoc erfolgen kann
-							object._rev = data.rev;
-							//die Hierarchie aufbauen und setzen
-							aktualisiereHierarchieEinesNeuenLr(null, object, aktualisiereHierarchiefeld);
-						}
-					});
 				});
 
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
@@ -1297,11 +1313,11 @@
 					var id = uri.getQueryParamValue('id');
 					console.log('id = ' + id);
 					loescheLr(id);
-					uri = new Uri(uri).deleteQueryParam('id', id)
-					//var url = $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname");
+					uri = new Uri(uri).deleteQueryParam('id', id);
 					console.log('uri = ' + uri);
 					history.pushState(null, null, uri);
-					location.reload();
+					oeffneGruppe("Lebensräume");
+					//location.reload();
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function() {

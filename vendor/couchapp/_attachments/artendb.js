@@ -2929,6 +2929,17 @@ function exportZuruecksetzen() {
 	$("#exportieren_exportieren_exportieren").hide();
 }
 
+function oeffneGruppe(Gruppe) {
+	//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
+	window.Gruppe = Gruppe;
+	$(".suchfeld").val("");
+	$("#Gruppe_label").html("Gruppe:");
+	$(".suchen").hide();
+	$("#forms").hide();
+	$(".suchen").val("");
+	erstelleBaum();
+}
+
 //schreibt Änderungen in Feldern in die Datenbank
 //wird vorläufig nur für LR Taxonomie verwendet
 function speichern(feldWert, feldName, dsName, dsTyp) {
@@ -3120,16 +3131,16 @@ function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefe
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function (data) {
-				aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
+				aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
 			}
 		});
 	}
 }
 
-function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld) {
+function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchiefeld) {
 	var object_array,
 		hierarchie = [];
-	object_array = _.map(window.filtere_lr.rows, function(row) {
+	object_array = _.map(LR.rows, function(row) {
 		return row.doc;
 	});
 	if (!object.Taxonomie) {
@@ -3138,11 +3149,20 @@ function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld
 	if (!object.Taxonomie.Daten) {
 		object.Taxonomie.Daten = {};
 	}
+	var parent_object = _.find(object_array, function(obj) {
+		return obj._id === object.Taxonomie.Daten.Parent.GUID;
+	});
+	console.log('parent_object = ' + JSON.stringify(parent_object));
+	//object.Name setzen
+	object.Taxonomie.Name = parent_object.Taxonomie.Name;
+	//object.Taxonomie.Daten.Taxonomie setzen
+	object.Taxonomie.Daten.Taxonomie = parent_object.Taxonomie.Daten.Taxonomie;
 	//als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
-	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
+	console.log('hierarchie = ' + JSON.stringify(hierarchie));
+	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
 	//jetzt den parent aktualisieren
-	object.Taxonomie.Daten.Hierarchie.push(erstelleHierarchieobjektFuerNeuenLr());
+	//object.Taxonomie.Daten.Hierarchie.push(erstelleLrLabelName($("#Label").val(), $("#Einheit").val()));
 	//jetzt für den neuen Lebensraum ein Hierarchieobjekt anfügen
 	if (aktualisiereHierarchiefeld) {
 		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
@@ -3151,6 +3171,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld
 	$db.saveDoc(object, {
 		success: function (doc) {
 			initiiere_art(doc._id);
+			$('#lr_parent_waehlen').modal('hide');
 		},
 		error: function() {
 			$("#meldung_individuell_label").html("Fehler");
@@ -3159,15 +3180,6 @@ function aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld
 			initiiere_art(doc._id);
 		}
 	});
-}
-
-function erstelleHierarchieobjektFuerNeuenLr() {
-	var label = $("#").val();
-	var name = $("#").val();
-	var hierarchieobjekt = {};
-	if (label && name) {
-
-	}
 }
 
 //aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
