@@ -2935,17 +2935,43 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 	//zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
+	//sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
+	feldWert = convertToCorrectType(feldWert);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
-			//sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
-			object.Taxonomie.Daten[feldName] = convertToCorrectType(feldWert);
+			//prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie
+			if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+				//das ist die Wurzel der Taxonomie
+				//somit ändert auch der Taxonomiename
+				//diesen mitgeben
+				//Einheit ändert und Taxonomiename muss auch angepasst werden
+				object.Taxonomie.Name = feldWert;
+				object.Taxonomie.Daten.Taxonomie = feldWert;
+				//TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
+				//TODO: allfällige Beziehungen anpassen
+			}
+			//den übergebenen Wert im übergebenen Feldnamen speichern
+			object.Taxonomie.Daten[feldName] = feldWert;
 			$db.saveDoc(object, {
 				success: function(data) {
 					object._rev = data.rev;
 					//prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
 					if (feldName === "Label" || feldName === "Einheit") {
-						aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true);
+						if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+							//das ist die Wurzel der Taxonomie
+							//somit ändert auch der Taxonomiename
+							//diesen mitgeben
+							//Einheit ändert und Taxonomiename muss auch angepasst werden
+							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
+							//Feld Taxonomie und Beschriftung des Accordions aktualisiern
+							//dazu neu initiieren, weil sonst das Accordion nicht verändert wird
+							initiiere_art(id);
+							//Taxonomie anzeigen
+							$('#' + feldWert.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'')).collapse('show');
+						} else {
+							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
+						}
 						//node umbenennen
 						var neuerNodetext;
 						if (feldName === "Label") {
@@ -3006,7 +3032,7 @@ function bearbeiteLrTaxonomie() {
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
 		//einige Felder nicht bearbeiten
-		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Hierarchie") {
+		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
 			$(this).attr('readonly', false);
 			if ($(this).parent().attr('href')) {
 				$(this).parent().attr('href', '#');
@@ -3151,23 +3177,23 @@ function erstelleHierarchieobjektFuerNeuenLr() {
 //ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
 //wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
 //diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
-function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktualisiereHierarchiefeld) {
-	var hierarchie = [],
-		parent = object.Taxonomie.Daten.Parent;
+function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+	var hierarchie = [];
 	if (lr) {
-		aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld);
+		aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function (lr) {
-				aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld);
+				aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 			}
 		});
 	}
 }
 
-function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktualisiereHierarchiefeld) {
-	var hierarchie = [];
+function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+	var hierarchie = [],
+		parent = objekt.Taxonomie.Daten.Parent;
 	var object_array = _.map(lr.rows, function(row) {
 		return row.doc;
 	});
@@ -3179,7 +3205,12 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 	}
 	//als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
-	objekt.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
+	if (parent.GUID !== objekt._id) {
+		objekt.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
+	} else {
+		//aha, das ist die Wurzel des Baums
+		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
+	}
 	if (aktualisiereHierarchiefeld) {
 		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
 	}
@@ -3192,17 +3223,22 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 		//das ist die oberste Ebene
 		objekt.Taxonomie.Daten.Parent = objekt.Taxonomie.Daten.Hierarchie[0];
 	}
+	if (einheit_ist_taxonomiename) {
+		//Einheit ändert und Taxonomiename muss auch angepasst werden
+		objekt.Taxonomie.Name = einheit_ist_taxonomiename;
+		objekt.Taxonomie.Daten.Taxonomie = einheit_ist_taxonomiename;
+	}
 	$db.saveDoc(objekt, {
 		success: function (data) {
 			var doc;
 			//TODO: kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
 			for (var i=0; i<lr.rows.length; i++) {
 				doc = lr.rows[i].doc;
-				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id) {
+				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
 					//das ist ein child
 					//auch aktualisieren
 					//lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-					aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false);
+					aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
 				}
 			}
 		}
