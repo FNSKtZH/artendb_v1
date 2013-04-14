@@ -2946,8 +2946,16 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 					//prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
 					if (feldName === "Label" || feldName === "Einheit") {
 						aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true);
-						//TODO: node umbenennen
-						
+						//node umbenennen
+						var neuerNodetext;
+						if (feldName === "Label") {
+							//object hat noch den alten Wert für Label, neuen verwenden
+							neuerNodetext = erstelleLrLabelName(feldWert, object.Taxonomie.Daten.Einheit);
+						} else {
+							//object hat noch den alten Wert für Einheit, neuen verwenden
+							neuerNodetext = erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
+						}
+						$("#tree" + window.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
 					}
 				},
 				error: function(data) {
@@ -3171,12 +3179,10 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 	}
 	//als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
-	console.log('hierarchie = ' + JSON.stringify(hierarchie));
 	objekt.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
 	if (aktualisiereHierarchiefeld) {
 		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
 	}
-	console.log('objekt.Taxonomie.Daten.Hierarchie = ' + JSON.stringify(objekt.Taxonomie.Daten.Hierarchie));
 	//jetzt den parent aktualisieren
 	if (objekt.Taxonomie.Daten.Hierarchie.length > 1) {
 		//es gibt höhere Ebenen
@@ -3227,16 +3233,26 @@ function ergänzeParentZuLrHierarchie(objekt_array, parentGUID, Hierarchie) {
 
 function erstelleHierarchieobjektAusObjekt(objekt) {
 	var hierarchieobjekt = {};
-	if (objekt.Taxonomie.Daten.Label) {
-		hierarchieobjekt.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Einheit;
-	} else if (objekt.Taxonomie.Daten.Einheit) {
-		hierarchieobjekt.Name = objekt.Taxonomie.Daten.Einheit;
-	} else {
-		//aha, ein neues Objekt, noch ohne Label und Einheit
-		hierarchieobjekt.Name = "unbenannte Einheit";
-	}
+	hierarchieobjekt.Name = erstelleLrLabelNameAusObjekt(objekt);
 	hierarchieobjekt.GUID = objekt._id;
 	return hierarchieobjekt;
+}
+
+function erstelleLrLabelNameAusObjekt(objekt) {
+	var Label = objekt.Taxonomie.Daten.Label || "";
+	var Einheit = objekt.Taxonomie.Daten.Einheit || "";
+	return erstelleLrLabelName(Label, Einheit);
+}
+
+function erstelleLrLabelName(Label, Einheit) {
+	if (Label && Einheit) {
+		return Label + ": " + Einheit;
+	} else if (Einheit) {
+		return Einheit;
+	} else {
+		//aha, ein neues Objekt, noch ohne Label und Einheit
+		return "unbenannte Einheit";
+	}
 }
 
 function maximiereForms() {
