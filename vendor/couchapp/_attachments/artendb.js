@@ -3018,11 +3018,12 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 }
 
 function convertToCorrectType(feldWert) {
-	if (myTypeOf(feldWert) === "boolean") {
+	var type = myTypeOf(feldWert);
+	if (type === "boolean") {
 		return Boolean(feldWert);
-	} else if (myTypeOf(feldWert) === "float") {
+	} else if (type === "float") {
 		return parseFloat(feldWert);
-	} else if (myTypeOf(feldWert) === "integer") {
+	} else if (type === "integer") {
 		return parseInt(feldWert);
 	} else {
 		return feldWert;
@@ -3034,10 +3035,10 @@ function convertToCorrectType(feldWert) {
 function myTypeOf(Wert) {
 	if (typeof Wert === "boolean") {
 		return "boolean";
-	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert)) {
+	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert) && parseInt(Wert) == Wert) {
 		//es ist eine Float
 		return "float";
-	} else if (parseInt(Wert)) {
+	} else if (parseInt(Wert) == Wert) {
 		//es ist eine Integer
 		return "integer";
 	} else {
