@@ -1265,7 +1265,10 @@
 					object.Taxonomie.Name = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
 					object.Taxonomie.Daten = {};
 					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-					object.Taxonomie.Daten.Einheit = "unbenannter Lebensraum";
+					object.Taxonomie.Daten.Einheit = "unbeschriebener Lebensraum";
+					if (parent_id === "0") {
+						object.Taxonomie.Daten.Einheit = "neue Taxonomie";
+					}
 					object.Taxonomie.Daten["Einheit-Abkürzung"] = "";
 					object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
 					object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
@@ -1281,9 +1284,9 @@
 							object._rev = data.rev;
 							//jetzt den parent erstellen
 							//geht nicht vorher, weil die id bekannt sein muss
-							if (parent_id == 0) {
+							if (parent_id === "0") {
 								//das ist die Wurzel der Taxonomie
-								parent.Name = "neue Taxonomie > unbenannter Lebensraum";
+								parent.Name = "neue Taxonomie > neue Taxonomie";
 								parent.GUID = object._id;
 								//bei der Wurzel ist Hierarchie gleich parent
 								object.Taxonomie.Daten.Hierarchie = [];
@@ -1296,7 +1299,7 @@
 							$db.saveDoc(object, {
 								success: function (data2) {
 									object._rev = data2.rev;
-									if (parent_id != 0) {
+									if (parent_id !== "0") {
 										//die Hierarchie aufbauen und setzen
 										//bei der Wurzel ist sie schon gesetzt
 										aktualisiereHierarchieEinesNeuenLr(null, object, true);
@@ -1329,7 +1332,7 @@
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function() {
-					speichern(this.value, this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
+					speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
 				});
 
 				$('#art').on('shown', '.accordion-body.Lebensräume.Taxonomie', function () {
