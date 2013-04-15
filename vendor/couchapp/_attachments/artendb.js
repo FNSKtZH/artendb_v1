@@ -336,7 +336,7 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 					if (row.doc.Taxonomie.Daten.Hierarchie && row.doc.Taxonomie.Daten.Hierarchie.length === 1) {
 						//das ist das oberste Objekt, soll auch zuoberst einsortiert werden
 						//oft hat es als einziges keinen label und würde daher zuunterst sortiert!
-						object.Sortier = 0;
+						object.Sortier = "0";
 					} else {
 						//mittels Array sortieren
 						object.Sortier = object.Name;
