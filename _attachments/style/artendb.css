@@ -150,6 +150,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	position: relative;
 	left: 78px;
 	top: 8px;
+	/*sonst überlappt es das Formular rechts davon!*/
+	width: 250px;
 }
 
 #menu .suchen {

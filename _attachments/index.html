@@ -1196,6 +1196,18 @@
 					}
 				});
 
+				$("#export").on("change", ".feld_waehlen_alle_von_ds", function() {
+					//wenn checked: alle unchecken, sonst alle checken
+					var ds = $(this).attr('datensammlung');
+					var status = false;
+					if ($(this).prop('checked')) {
+						status = true;
+					}
+					$('[datensammlung="'+ds+'"]').each(function() {
+						$(this).prop('checked', status);
+					});
+				});
+
 				$("#export").on("change", ".export_feld_filtern", function(event) {
 					//kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
 					var bezDsFiltered = [];

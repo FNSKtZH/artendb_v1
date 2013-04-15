@@ -2133,6 +2133,7 @@ function oeffneUri() {
 				$(".baum.jstree").jstree("deselect_all");
 				//den richtigen Button aktivieren
 				$("#Gruppe" + objekt.Gruppe).button('toggle');
+				$("#Gruppe_label").html("Gruppe:");
 				//tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum()).then(function() {
 					oeffneBaumZuId(id);
@@ -2168,6 +2169,10 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_filtern += '<hr>';
 		}
 		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
+		//jetzt die checkbox um alle auswählen zu können
+		html_felder_waehlen += '<label class="checkbox">';
+		html_felder_waehlen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '"><em>alle</em>';
+		html_felder_waehlen += '</label>';
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
