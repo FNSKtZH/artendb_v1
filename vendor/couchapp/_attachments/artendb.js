@@ -113,6 +113,7 @@ function erstelleTree() {
 		$("#suchen"+window.Gruppe).show();
 		$("#suchfeld"+window.Gruppe).focus();
 		initiiereSuchfeld();
+		$("#treeMitteilung").hide();
 		$("#tree" + window.Gruppe).css("display", "block");
 		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
 		setzeTreehoehe();
@@ -2942,6 +2943,7 @@ function oeffneGruppe(Gruppe) {
 	$(".suchen").hide();
 	$("#forms").hide();
 	$(".suchen").val("");
+	$("#treeMitteilung").show();
 	erstelleBaum();
 }
 
