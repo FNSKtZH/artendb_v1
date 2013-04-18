@@ -1259,6 +1259,8 @@
 						parent_row, 
 						parent = {}, 
 						object = {};
+					//zuerst eine id holen
+					object._id = $.couch.newUUID(1);
 					object.Gruppe = "Lebensräume";
 					object.Typ = "Objekt";
 					object.Taxonomie = {};
@@ -1282,43 +1284,35 @@
 					object.Taxonomie.Daten["Beschreibung"] = "";
 					object.Datensammlungen = [];
 					object.Beziehungssammlungen = [];
-					//neuen LR speichern, damit die folgende Funktion ihn zum Aufbau der Hierarchie schon benutzen kann
+					//jetzt den parent erstellen
+					//geht nicht vorher, weil die id bekannt sein muss
+					if (parent_id === "0") {
+						//das ist die Wurzel der Taxonomie
+						parent.Name = "neue Taxonomie";
+						parent.GUID = object._id;
+						//bei der Wurzel ist Hierarchie gleich parent
+						object.Taxonomie.Daten.Hierarchie = [];
+						object.Taxonomie.Daten.Hierarchie.push(parent);
+					} else {
+						parent.Name = parent_name;
+						parent.GUID = parent_id;
+					}
+					object.Taxonomie.Daten.Parent = parent;
 					$db = $.couch.db("artendb");
 					$db.saveDoc(object, {
-						success: function (data) {
-							//id und rev übernehmen, damit nächster Speichervorgang ohne openDoc erfolgen kann
-							object._id = data.id;
-							object._rev = data.rev;
-							//jetzt den parent erstellen
-							//geht nicht vorher, weil die id bekannt sein muss
-							if (parent_id === "0") {
-								//das ist die Wurzel der Taxonomie
-								parent.Name = "neue Taxonomie";
-								parent.GUID = object._id;
-								//bei der Wurzel ist Hierarchie gleich parent
-								object.Taxonomie.Daten.Hierarchie = [];
-								object.Taxonomie.Daten.Hierarchie.push(parent);
+						success: function (data2) {
+							object._rev = data2.rev;
+							if (parent_id !== "0") {
+								//die Hierarchie aufbauen und setzen
+								//bei der Wurzel ist sie schon gesetzt
+								aktualisiereHierarchieEinesNeuenLr(null, object, true);
 							} else {
-								parent.Name = parent_name;
-								parent.GUID = parent_id;
+								//$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
+								$.when(erstelleBaum()).then(function() {
+									oeffneBaumZuId(object._id);
+									$('#lr_parent_waehlen').modal('hide');
+								});
 							}
-							object.Taxonomie.Daten.Parent = parent;
-							$db.saveDoc(object, {
-								success: function (data2) {
-									object._rev = data2.rev;
-									if (parent_id !== "0") {
-										//die Hierarchie aufbauen und setzen
-										//bei der Wurzel ist sie schon gesetzt
-										aktualisiereHierarchieEinesNeuenLr(null, object, true);
-									} else {
-										//$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
-										$.when(erstelleBaum()).then(function() {
-											oeffneBaumZuId(object._id);
-											$('#lr_parent_waehlen').modal('hide');
-										});
-									}
-								}
-							});
 						}
 					});
 				});
