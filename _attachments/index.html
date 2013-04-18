@@ -1329,7 +1329,25 @@
 					//zuerst die id des Objekts holen
 					var uri = new Uri($(location).attr('href'));
 					var id = uri.getQueryParamValue('id');
-					loescheLr(id);
+					//Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
+					$db = $.couch.db("artendb");
+					$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
+						success: function (data) {
+							//daraus einen Array von docs machen
+							var doc_array = _.map(data.rows, function(row) {
+								return row.doc;
+							});
+							//und diese Dokumente nun löschen
+							loescheMassenMitObjektArray(doc_array);
+							//vorigen node ermitteln
+							var vorigerNode;
+							voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+							//node des gelöschten LR entfernen
+							jQuery.jstree._reference("#" + id).delete_node("#" + id);
+							//vorigen node öffnen
+							$.jstree._reference(voriger_node).select_node(voriger_node);
+						}
+					});
 				});
 
 				$("#art").on("change", ".accordion-body.Lebensräume.Taxonomie .controls", function() {
@@ -1607,7 +1625,7 @@
 			<h3 id="rueckfrage_lr_loeschen_label">Sicher?</h3>
 		</div>
 		<div class="modal-body">
-			<p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?</p>
+			<p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p>
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</a>

@@ -3308,6 +3308,30 @@ function erstelleLrLabelName(Label, Einheit) {
 	}
 }
 
+//löscht Datensätze in Massen
+//nimmt einen Array von Objekten entgegen
+//baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
+//aktualisiert die Objekte mit einer einzigen Operation
+function loescheMassenMitObjektArray(objekt_array) {
+	var objekte_mit_objekte, objekte, objekt;
+	objekte = [];
+	for (i=0; i<objekt_array.length; i++) {
+		objekt = {};
+		objekt._id = objekt_array[i]._id;
+		objekt._rev = objekt_array[i]._rev;
+		objekt._deleted = true;
+		objekte.push(objekt);
+	}
+	objekte_mit_objekte = {};
+	objekte_mit_objekte.docs = objekte;
+	$.ajax({
+		type: "POST",
+		url: "../../_bulk_docs",
+		contentType: "application/json", 
+		data: JSON.stringify(objekte_mit_objekte)
+	});
+}
+
 function maximiereForms() {
 	/*
 	@media screen and (min-width: 1001px)
