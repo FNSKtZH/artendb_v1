@@ -2466,7 +2466,7 @@ function filtereFuerExport() {
 		});
 		if (ds_zaehler === 0) {
 			$("#meldung_individuell_label").html("Kriterien überprüfen");
-			$("#meldung_individuell_text").html('Die Filter-Option "nur Datensätze mit Informationen aus Daten- und Beziehungssammlungen" ist gewählt. Aber kein entsprechendes Feld!');
+			$("#meldung_individuell_text").html('Die Filter-Option "nur Datensätze mit Informationen aus den gewählten Daten- und Beziehungssammlungen exportieren" ist gewählt. Aber kein entsprechendes Feld!');
 			$('#meldung_individuell').modal();
 			return;
 		}
