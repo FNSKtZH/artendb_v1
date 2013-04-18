@@ -725,6 +725,12 @@
 					return;
 				}
 
+				BrowserDetect.init();
+				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version <= 10) {
+					$('#meldung_kompatibilität').modal();
+					return;
+				}
+
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
 				window.addEventListener('popstate', function(event) {
