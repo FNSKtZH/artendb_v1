@@ -1265,13 +1265,20 @@
 					object.Taxonomie.Name = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
 					object.Taxonomie.Daten = {};
 					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+					//wenn keine Wurzel: Label anzeigen
+					if (parent_id !== "0") {
+						object.Taxonomie.Daten.Label = "";
+					}
 					object.Taxonomie.Daten.Einheit = "unbeschriebener Lebensraum";
 					if (parent_id === "0") {
 						object.Taxonomie.Daten.Einheit = "neue Taxonomie";
 					}
-					object.Taxonomie.Daten["Einheit-Abkürzung"] = "";
-					object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
-					object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
+					/*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
+					object.Taxonomie.Daten["Einheit-Nr FNS"] = "";
+					if (parent_id === "0") {
+						object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
+						object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
+					}*/
 					object.Taxonomie.Daten["Beschreibung"] = "";
 					object.Datensammlungen = [];
 					object.Beziehungssammlungen = [];
@@ -1286,7 +1293,7 @@
 							//geht nicht vorher, weil die id bekannt sein muss
 							if (parent_id === "0") {
 								//das ist die Wurzel der Taxonomie
-								parent.Name = "neue Taxonomie > neue Taxonomie";
+								parent.Name = "neue Taxonomie";
 								parent.GUID = object._id;
 								//bei der Wurzel ist Hierarchie gleich parent
 								object.Taxonomie.Daten.Hierarchie = [];

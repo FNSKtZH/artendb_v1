@@ -3038,7 +3038,8 @@ function myTypeOf(Wert) {
 	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert) && parseInt(Wert) == Wert) {
 		//es ist eine Float
 		return "float";
-	} else if (parseInt(Wert) == Wert) {
+	//verhindern, dass führende Nullen abgeschnitten werden
+	} else if (parseInt(Wert) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert)/10)) {
 		//es ist eine Integer
 		return "integer";
 	} else {
