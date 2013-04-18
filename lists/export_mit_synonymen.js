@@ -6,6 +6,8 @@ function(head, req) {
 		filterkriterien = [],
 		filterkriterienObjekt,
 		felder = [],
+		gruppen,
+		nur_ds,
 		felderObjekt,
 		objektHinzufügen,
 		DsName_z,
@@ -39,6 +41,10 @@ function(head, req) {
 			}
 			if (i === "gruppen") {
 				gruppen = req.query[i].split(",");
+			}
+			if (i === "nur_ds") {
+				//true oder false wird als String übergeben > umwandeln
+				nur_ds = (req.query[i] === 'true');
 			}
 		}
 
@@ -94,7 +100,9 @@ function(head, req) {
 				}
 			}
 
+			//wird true gesetzt, wenn in einem Feld ein Filterkriterium gesetzt und dieses erfüllt ist
 			objektHinzufügen = false;
+			//wird true gesetzt, wenn in einem Feld ein Filterkriterium gesetzt und dieses nicht erfüllt ist
 			objektNichtHinzufügen = false;
 			//exportobjekt zurücksetzen
 			exportObjekt = {};
@@ -102,7 +110,9 @@ function(head, req) {
 			//Filter nach Gruppen
 			if (gruppen && gruppen.indexOf(Objekt.Gruppe) >= 0) {
 				//Kriterium ist erfüllt
-				objektHinzufügen = true;
+				if (!nur_ds) {
+					objektHinzufügen = true;
+				}
 			} else {
 				//Kriterium ist nicht erfüllt > zum nächsten Objekt
 				continue;
@@ -117,7 +127,9 @@ function(head, req) {
 				if (DsName_z === "Objekt") {
 					//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
 					if ((typeof Objekt[Feldname_z] === "number" && Objekt[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-						objektHinzufügen = true;
+						if (!nur_ds) {
+							objektHinzufügen = true;
+						}
 					} else {
 						objektNichtHinzufügen = true;
 						break loop_filterkriterien;
@@ -127,7 +139,9 @@ function(head, req) {
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 					if (Objekt.Taxonomie.Daten[Feldname_z]) {
 						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-							objektHinzufügen = true;
+							if (!nur_ds) {
+								objektHinzufügen = true;
+							}
 						} else {
 							objektNichtHinzufügen = true;
 							break loop_filterkriterien;
@@ -140,7 +154,9 @@ function(head, req) {
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 					if (Objekt.Taxonomie.Name === DsName_z && Objekt.Taxonomie.Daten[Feldname_z]) {
 						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-							objektHinzufügen = true;
+							if (!nur_ds) {
+								objektHinzufügen = true;
+							}
 						} else {
 							objektNichtHinzufügen = true;
 							break loop_filterkriterien;
@@ -210,6 +226,44 @@ function(head, req) {
 						//es gibt keine passende Beziehung, nicht hinzufügen
 						objektNichtHinzufügen = true;
 						break loop_filterkriterien;
+					}
+				}
+			}
+
+			if (filterkriterien.length === 0 && nur_ds) {
+				//hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+				//wenn ja und Feld aus DS/BS: objektHinzufügen = true;
+				//wenn nein, soll der Datensatz ja nicht exportiert werden
+				for (var z=0; z<felder.length; z++) {
+					DsTyp_z = felder[z].DsTyp;
+					DsName_z = felder[z].DsName;
+					Feldname_z = felder[z].Feldname;
+					if (DsTyp_z === "Beziehung") {
+						//durch alle Beziehungssammlungen loopen
+						for (var g=0; g<Objekt.Beziehungssammlungen.length; g++) {
+							if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
+								//durch Beziehungssammlungen der Beziehung loopen
+								if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
+									for (var h=0; h<Objekt.Beziehungssammlungen[g].Beziehungen.length; h++) {
+										//durch die Felder der Beziehung loopen
+										if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
+											//ja, so ein Feld kommt vor > Objekt exportieren
+											objektHinzufügen = true;
+										}
+									}
+								}
+							}
+						}
+					} else if (DsTyp_z === "Datensammlung") {
+						//das ist ein Feld aus einer Datensammlung
+						for (var k=0; k<Objekt.Datensammlungen.length; k++) {
+							if (Objekt.Datensammlungen[k].Name === DsName_z) {
+								if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
+									//ja, so ein Feld kommt vor > Objekt exportieren
+									objektHinzufügen = true;
+								}
+							}
+						}
 					}
 				}
 			}

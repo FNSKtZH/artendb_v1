@@ -659,7 +659,7 @@
 						</div>
 						<div class="accordion-body collapse" id="exportieren_objekte_waehlen_ds_collapse">
 							<div class="accordion-inner">
-								<div class="well well-small" style="margin-bottom:0px;">So geht's:
+								<div class="well well-small" style="margin-bottom:15px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Erfassen Sie in den Feldern Ihrer Wahl die gewünschten Kriterien...</li>
@@ -676,6 +676,11 @@
 										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Feldern einer Beziehung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate (das Resultat entspricht einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND). Sie müssen also den Filter im exportierten Resultat nachbessern</li>
 									</ul>
 								</div>
+								<label class="checkbox">
+									<input type="checkbox" id="exportieren_nur_ds" checked>
+									nur Datensätze mit Informationen aus Daten- und Beziehungssammlungen (sonst erhalten Sie alle Datensätze der gewählten Gruppen)
+								</label>
+								<hr>
 								<div class="control-group">
 									<h3>Art / Lebensraum</h3>
 								</div>
@@ -1287,7 +1292,7 @@
 					}
 				});
 
-				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos", function() {
+				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds", function() {
 					exportZuruecksetzen();
 				});
 
