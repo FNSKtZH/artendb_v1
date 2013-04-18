@@ -93,7 +93,59 @@
 
 		<fieldset id="forms">
 
-			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off"></form>
+			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off">
+				<div id="accordion_art" class="accordion">
+					<div id="art_anmelden" class="accordion-group" style="display:none;">
+						<div class="accordion-heading accordion-group_gradient">
+							<a id="art_anmelden_titel" class="accordion-toggle importieren_anmelden_titel" data-toggle="collapse" data-parent="accordion_art" href="#art_anmelden_collapse">Anmelden</a>
+						</div>
+						<div id="art_anmelden_collapse" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="well well-small">Um Daten zu importieren, müssen Sie angemeldet sein.</div>
+								<div class="control-group">
+									<label class="control-label" for="Email_art">Email</label>
+									<div class="controls">
+										<input type="email" id="Email_art" class="Email" placeholder="Email" required>
+										<div id="Emailhinweis_art" class="Emailhinweis hinweis text-error">Bitte Email erfassen</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="Passwort_art">Passwort</label>
+									<div class="controls">
+										<input type="password" id="Passwort_art" class="Passwort" placeholder="Passwort" required>
+										<div id="Passworthinweis_art" class="Passworthinweis hinweis text-error">Bitte Passwort erfassen</div>
+										<div class="signup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+										<div class="signup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+									</div>
+								</div>
+								<div class="control-group signup">
+									<label class="control-label" for="Passwort2_art">Passwort bestätigen</label>
+									<div class="controls">
+										<input type="password" id="Passwort2_art" class="Passwort2" placeholder="Passwort bestätigen" required>
+										<div id="Passwort2hinweis_art" class="Passwort2hinweis hinweis text-error">Bitte Passwort bestätigen</div>
+										<div id="Passwort2hinweisFalsch_art" class="Passwort2hinweisFalsch hinweis text-error">Die Passwörter stimmen nicht überein</div>
+									</div>
+								</div>
+								<div class="feld" style="padding-bottom:6px;">
+									<button id="anmelden_btn_art" class="btn anmelden_btn">anmelden</button>
+									<button id="abmelden_btn_art" class="btn abmelden_btn" style="display:none;">abmelden</button>
+									<button id="konto_erstellen_btn_art" class="btn konto_erstellen_btn">neues Konto erstellen</button>
+									<button id="konto_speichern_btn_art" class="btn konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+								</div>
+								<div id="art_anmelden_fehler" class="alert alert-error importieren_anmelden_fehler">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="art_anmelden_fehler_text" class="importieren_anmelden_fehler_text"></div>
+								</div>
+								<div id="art_anmelden_hinweis" class="alert alert-info importieren_anmelden_hinweis">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div id="art_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="art_inhalt"></div>
+				</div>
+			</form>
 			
 			<form id="importieren_ds" class="form form-horizontal import" action="#" method="get" autocomplete="off">
 				<div id="importieren_ds_accordion" class="accordion">
@@ -1454,36 +1506,42 @@
 				setzteHöheTextareas();
 			});
 
-			$(".import").on("click", ".anmelden_btn", function(event) {
+			$(document).on("click", ".anmelden_btn", function(event) {
 				event.preventDefault();
 				//es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
-				var bs_ds = this.id.substring(this.id.length-3);
+				var bs_ds = this.id.substring(this.id.length-2);
+				if (bs_ds === "rt") {
+					bs_ds = "art";
+				}
 				meldeUserAn(bs_ds);
 			});
 
-			$(".import").on("click", ".abmelden_btn", function(event) {
+			$(document).on("click", ".abmelden_btn", function(event) {
 				event.preventDefault();
 				meldeUserAb();
 			});
 
-			$(".import").on("keyup", ".Email", function(event) {
+			$(document).on("keyup", ".Email", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$(".Emailhinweis").css("display", "none");
 			});
 
-			$(".import").on("keyup", ".Passwort", function(event) {
+			$(document).on("keyup", ".Passwort", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$(".Passworthinweis").css("display", "none");
 			});
 
-			$(".import").on("keyup", ".Passwort2", function(event) {
+			$(document).on("keyup", ".Passwort2", function(event) {
 				/*allfällig noch vorhandenen Hinweis ausblenden*/
 				$(".Passworthinweis2").css("display", "none");
 			});
 
-			$(".import").on("click", ".konto_erstellen_btn", function(event) {
+			$(document).on("click", ".konto_erstellen_btn", function(event) {
 				event.preventDefault();
-				var bs_ds = this.id.substring(this.id.length-3);
+				var bs_ds = this.id.substring(this.id.length-2);
+				if (bs_ds === "rt") {
+					bs_ds = "art";
+				}
 				$(".signup").css("display", "block");
 				$(".anmelden_btn").hide();
 				$(".abmelden_btn").hide();
@@ -1491,13 +1549,16 @@
 				$(".konto_speichern_btn").show();
 				$(".importieren_anmelden_fehler").hide();
 				setTimeout(function() {
-					$("#Email" + bs_ds).focus();
+					$("#Email_" + bs_ds).focus();
 				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 			});
 
-			$(".import").on("click", ".konto_speichern_btn", function(event) {
+			$(document).on("click", ".konto_speichern_btn", function(event) {
 				event.preventDefault();
-				var bs_ds = this.id.substring(this.id.length-3);
+				var bs_ds = this.id.substring(this.id.length-2);
+				if (bs_ds === "rt") {
+					bs_ds = "art";
+				}
 				if (validiereSignup(bs_ds)) {
 					erstelleKonto(bs_ds);
 					//Anmeldefenster zurücksetzen

@@ -468,7 +468,7 @@ function initiiere_art(id) {
 			dsNamen = [],
 			bezNamen = [];
 			//accordion beginnen
-			htmlArt = '<div id="accordion_ds" class="accordion"><h4>Taxonomie:</h4>';
+			htmlArt = '<h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			//gleichzeitig die Taxonomie suchen und gleich erstellen lassen
 			htmlArt += erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
@@ -628,8 +628,9 @@ function initiiere_art(id) {
 
 function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
 	//accordion beenden
-	htmlArt += '</div>';
-	$("#art").html(htmlArt);
+	//htmlArt += '</div>';
+	//TODO: in neues div einfügen statt #art
+	$("#art_inhalt").html(htmlArt);
 	setzteHöheTextareas();
 	//richtiges Formular anzeigen
 	zeigeFormular("art");
@@ -659,7 +660,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
@@ -739,7 +740,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group"><a class="btn lr_bearb lr_bearb_bearb" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
 	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_ds" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
 	//header abschliessen
@@ -1187,32 +1188,32 @@ function validiereSignup(woher) {
 	//zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
 	$(".hinweis").css("display", "none");
 	//erfasste Werte holen
-	Email = $("#Email"+woher).val();
-	Passwort = $("#Passwort"+woher).val();
-	Passwort2 = $("#Passwort2"+woher).val();
+	Email = $("#Email_"+woher).val();
+	Passwort = $("#Passwort_"+woher).val();
+	Passwort2 = $("#Passwort2_"+woher).val();
 	//prüfen
 	if (!Email) {
-		$("#Emailhinweis"+woher).css("display", "block");
+		$("#Emailhinweis_"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Email"+woher).focus();
+			$("#Email_"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort) {
-		$("#Passworthinweis"+woher).css("display", "block");
+		$("#Passworthinweis_"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort"+woher).focus();
+			$("#Passwort_"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort2) {
-		$("#Passwort2hinweis"+woher).css("display", "block");
+		$("#Passwort2hinweis_"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort2"+woher).focus();
+			$("#Passwort2_"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (Passwort !== Passwort2) {
-		$("#Passwort2hinweisFalsch"+woher).css("display", "block");
+		$("#Passwort2hinweisFalsch_"+woher).css("display", "block");
 		setTimeout(function() {
-			$("#Passwort2"+woher).focus();
+			$("#Passwort2_"+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	}
@@ -1222,44 +1223,53 @@ function validiereSignup(woher) {
 function erstelleKonto(woher) {
 	//User in _user eintragen
 	$.couch.signup({
-		name: $('#Email'+woher).val()
+		name: $('#Email_'+woher).val()
 	},
-	$('#Passwort'+woher).val(), {
+	$('#Passwort_'+woher).val(), {
 		success : function() {
-			localStorage.Email = $('#Email'+woher).val();
+			localStorage.Email = $('#Email_'+woher).val();
 			passeUiFuerAngemeldetenUserAn(woher);
 			//Werte aus Feldern entfernen
-			$("#Email"+woher).val("");
-			$("#Passwort"+woher).val("");
-			$("#Passwort2"+woher).val("");
+			$("#Email_"+woher).val("");
+			$("#Passwort_"+woher).val("");
+			$("#Passwort2_"+woher).val("");
 		},
 		error : function () {
-			$("#importieren"+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-			$("#importieren"+woher+"_anmelden_fehler").alert();
-			$("#importieren"+woher+"_anmelden_fehler").css("display", "block");
+				var praefix = "importieren_";
+				if (woher === "art") {
+					praefix = "";
+				}
+			$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+			$("#"+praefix+woher+"_anmelden_fehler").alert();
+			$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
 		}
 	});
 }
 
 function meldeUserAn(woher) {
 	var Email, Passwort;
-	Email = $('#Email'+woher).val();
-	Passwort = $('#Passwort'+woher).val();
+	Email = $('#Email_'+woher).val();
+	Passwort = $('#Passwort_'+woher).val();
 	if (validiereUserAnmeldung(woher)) {
 		$.couch.login({
 			name : Email,
 			password : Passwort,
 			success : function() {
-				localStorage.Email = $('#Email'+woher).val();
+				localStorage.Email = $('#Email_'+woher).val();
 				passeUiFuerAngemeldetenUserAn(woher);
 				//Werte aus Feldern entfernen
-				$("#Email"+woher).val("");
-				$("#Passwort"+woher).val("");
+				$("#Email_"+woher).val("");
+				$("#Passwort_"+woher).val("");
+				$("#art_anmelden").show();
 			},
 			error: function () {
-				$("#importieren"+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
-				$("#importieren"+woher+"_anmelden_fehler").alert();
-				$("#importieren"+woher+"_anmelden_fehler").css("display", "block");
+				var praefix = "importieren_";
+				if (woher === "art") {
+					praefix = "";
+				}
+				$("#"+praefix+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
+				$("#"+praefix+woher+"_anmelden_fehler").alert();
+				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
 			}
 		});
 	}
@@ -1267,6 +1277,7 @@ function meldeUserAn(woher) {
 
 function meldeUserAb() {
 	delete localStorage.Email;
+	$(".art_anmelden_titel").text("Anmelden");
 	$(".importieren_anmelden_titel").text("1. Anmelden");
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
@@ -1274,12 +1285,18 @@ function meldeUserAb() {
 	$(".abmelden_btn").hide();
 	$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
+	$("#art_anmelden").hide();
 }
 
 function passeUiFuerAngemeldetenUserAn(woher) {
+	var praefix = "importieren_";
+	if (woher === "art") {
+		praefix = "";
+	}
+	$(".art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 	$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-	$("#importieren"+woher+"_anmelden_collapse").collapse('hide');
-	$("#importieren"+woher+"_ds_beschreiben_collapse").collapse('show');
+	$("#"+praefix+woher+"_anmelden_collapse").collapse('hide');
+	$("#importieren_"+woher+"_ds_beschreiben_collapse").collapse('show');
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
 	$(".anmelden_btn").hide();
@@ -1290,31 +1307,35 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 
 function zurueckZurAnmeldung(woher) {
 	//Mitteilen, dass Anmeldung nötig ist
-	$("#importieren"+woher+"_anmelden_hinweis").alert().css("display", "block");
-	$("#importieren"+woher+"_anmelden_hinweis_text").html("Um Daten(sammlungen) zu bearbeiten, müssen Sie angemeldet sein");
-	$("#importieren"+woher+"_anmelden_collapse").collapse('show');
+	var praefix = "importieren_";
+	if (woher === "art") {
+		praefix = "";
+	}
+	$("#"+praefix+woher+"_anmelden_hinweis").alert().css("display", "block");
+	$("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
+	$("#"+praefix+woher+"_anmelden_collapse").collapse('show');
 	$(".anmelden_btn").show();
 	$(".abmelden_btn").hide();
 	$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
-	$("#Email"+woher).focus();
+	$("#Email_"+woher).focus();
 }
 
 function validiereUserAnmeldung(woher) {
 	var Email, Passwort;
-	Email = $('#Email'+woher).val();
-	Passwort = $('#Passwort'+woher).val();
+	Email = $('#Email_'+woher).val();
+	Passwort = $('#Passwort_'+woher).val();
 	if (!Email) {
 		setTimeout(function () {
-			$('#Email'+woher).focus();
+			$('#Email_'+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		$("#Emailhinweis"+woher).css("display", "block");
+		$("#Emailhinweis_"+woher).css("display", "block");
 		return false;
 	} else if (!Passwort) {
 		setTimeout(function () {
-			$('#Passwort'+woher).focus();
+			$('#Passwort_'+woher).focus();
 		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
-		$("#Passworthinweis"+woher).css("display", "block");
+		$("#Passworthinweis_"+woher).css("display", "block");
 		return false;
 	}
 	return true;
@@ -3048,6 +3069,12 @@ function myTypeOf(Wert) {
 }
 
 function bearbeiteLrTaxonomie() {
+	//Benutzer muss anmelden
+	$("#art_anmelden").show();
+	if (!window.Email) {
+		meldeUserAn("art");
+	}
+
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
 		//einige Felder nicht bearbeiten
@@ -3083,6 +3110,7 @@ function schuetzeLrTaxonomie() {
 	});
 	$('.lr_bearb').addClass('disabled');
 	$(".lr_bearb_bearb").removeClass('disabled');
+	$("#art_anmelden").hide();
 }
 
 //aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)
