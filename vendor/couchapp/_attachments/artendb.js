@@ -1281,6 +1281,9 @@ function meldeUserAb() {
 	$(".importieren_anmelden_titel").text("1. Anmelden");
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
+	$(".well.anmelden").show();
+	$(".Email").show();
+	$(".Passwort").show();
 	$(".anmelden_btn").show();
 	$(".abmelden_btn").hide();
 	$(".konto_erstellen_btn").show();
@@ -1299,6 +1302,9 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$("#importieren_"+woher+"_ds_beschreiben_collapse").collapse('show');
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
+	$(".well.anmelden").hide();
+	$(".Email").hide();
+	$(".Passwort").hide();
 	$(".anmelden_btn").hide();
 	$(".abmelden_btn").show();
 	$(".konto_erstellen_btn").hide();
