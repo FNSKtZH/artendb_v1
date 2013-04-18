@@ -302,7 +302,6 @@ function initiiereSuchfeld_2() {
 			return item.replace( regex, "<strong>$1</strong>" );
 		}
 	});
-	//$("#suchfeldLebensräume").on('click', $("#suchfeldLebensräume").typeahead.bind($("#suchfeldLebensräume"), 'lookup'));
 }
 
 //baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
@@ -3065,29 +3064,6 @@ function bearbeiteLrTaxonomie() {
 	});
 	$('.lr_bearb').removeClass('disabled');
 	$(".lr_bearb_bearb").addClass('disabled');
-}
-
-function loescheLr(id) {
-	$db = $.couch.db("artendb");
-	$db.openDoc(id, {
-		success: function (object) {
-			$db.removeDoc(object, {
-				success: function () {
-					oeffneGruppe("Lebensräume");
-				},
-				error: function () {
-					$("#meldung_individuell_label").html("Fehler");
-					$("#meldung_individuell_text").html("Der Lebensraum wurde nicht gelöscht");
-					$('#meldung_individuell').modal();
-				}
-			});
-		},
-		error: function () {
-			$("#meldung_individuell_label").html("Fehler");
-			$("#meldung_individuell_text").html("Der Lebensraum wurde nicht gelöscht");
-			$('#meldung_individuell').modal();
-		}
-	});
 }
 
 function schuetzeLrTaxonomie() {

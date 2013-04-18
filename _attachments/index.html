@@ -1307,7 +1307,6 @@
 								//bei der Wurzel ist sie schon gesetzt
 								aktualisiereHierarchieEinesNeuenLr(null, object, true);
 							} else {
-								//$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(object.Taxonomie.Daten.Hierarchie));
 								$.when(erstelleBaum()).then(function() {
 									oeffneBaumZuId(object._id);
 									$('#lr_parent_waehlen').modal('hide');
@@ -1340,12 +1339,15 @@
 							//und diese Dokumente nun löschen
 							loescheMassenMitObjektArray(doc_array);
 							//vorigen node ermitteln
-							var vorigerNode;
-							voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+							var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
 							//node des gelöschten LR entfernen
 							jQuery.jstree._reference("#" + id).delete_node("#" + id);
 							//vorigen node öffnen
-							$.jstree._reference(voriger_node).select_node(voriger_node);
+							if (voriger_node) {
+								$.jstree._reference(voriger_node).select_node(voriger_node);
+							} else {
+								oeffneGruppe("Lebensräume");
+							}
 						}
 					});
 				});
