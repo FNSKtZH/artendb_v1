@@ -1294,7 +1294,7 @@ function erstelleKonto(woher) {
 }
 
 function meldeUserAn(woher) {
-	console.log(woher);
+	//console.log(woher);
 	var Email, Passwort;
 	Email = $('#Email_'+woher).val();
 	Passwort = $('#Passwort_'+woher).val();
@@ -1304,9 +1304,9 @@ function meldeUserAn(woher) {
 			password : Passwort,
 			success : function() {
 				localStorage.Email = $('#Email_'+woher).val();
-				console.log(woher);
+				//console.log(woher);
 				if (woher === "art") {
-					console.log('bearbeiteLrTaxonomie');
+					//console.log('bearbeiteLrTaxonomie');
 					bearbeiteLrTaxonomie();
 				}
 				passeUiFuerAngemeldetenUserAn(woher);
@@ -3256,14 +3256,12 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	var parent_object = _.find(object_array, function(obj) {
 		return obj._id === object.Taxonomie.Daten.Parent.GUID;
 	});
-	console.log('parent_object = ' + JSON.stringify(parent_object));
 	//object.Name setzen
 	object.Taxonomie.Name = parent_object.Taxonomie.Name;
 	//object.Taxonomie.Daten.Taxonomie setzen
 	object.Taxonomie.Daten.Taxonomie = parent_object.Taxonomie.Daten.Taxonomie;
 	//als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
-	console.log('hierarchie = ' + JSON.stringify(hierarchie));
 	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
 	//save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
