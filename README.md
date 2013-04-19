@@ -693,7 +693,7 @@ Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von Cou
 Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
-- ArtenDb ist in Entwicklung: [https://barbalex.cloudant.com/artendb/_design/artendb/index.htm](https://barbalex.cloudant.com/artendb/_design/artendb/index.htm)
+- ArtenDb ist in Entwicklung: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
 - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können
 - Die Anwendung ist aber noch kaum getestet
 - Ich gehe davon aus, dass sie noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
@@ -702,7 +702,7 @@ Aktueller Stand:
 
 Achtung:
 
-- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](https://barbalex.cloudant.com/artendb/_design/artendb/index.htm) noch fehlen
+- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](https://barbalex.cloudant.com/artendb/_design/artendb/index.html) noch fehlen
 - Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für Stunden nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:

@@ -1221,32 +1221,80 @@ function validiereSignup(woher) {
 }
 
 function erstelleKonto(woher) {
-	//User in _user eintragen
-	$.couch.signup({
-		name: $('#Email_'+woher).val()
-	},
-	$('#Passwort_'+woher).val(), {
-		success : function() {
-			localStorage.Email = $('#Email_'+woher).val();
-			passeUiFuerAngemeldetenUserAn(woher);
-			//Werte aus Feldern entfernen
-			$("#Email_"+woher).val("");
-			$("#Passwort_"+woher).val("");
-			$("#Passwort2_"+woher).val("");
+	//zuerst den User in cloudant freischeffeln
+	var uri = new Uri($(location).attr('href'));
+	if (uri.host().indexOf("cloudant") >= 0) {
+		//wenn mit cloudant verbunden wird, anderst authentifizieren
+		$.ajax({
+			type: "PUT",
+			url: 'https://barbalex.cloudant.com/artendb/_security',
+			data: {
+					"cloudant": {"nobody": ["_reader"]},
+					"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]}
+			},
+			success: function() {
+				//User in _user eintragen
+				$.couch.signup({
+					name: $('#Email_'+woher).val()
+				},
+				$('#Passwort_'+woher).val(), {
+					success : function() {
+						localStorage.Email = $('#Email_'+woher).val();
+						if (woher === "art") {
+							bearbeiteLrTaxonomie();
+						}
+						passeUiFuerAngemeldetenUserAn(woher);
+						//Werte aus Feldern entfernen
+						$("#Email_"+woher).val("");
+						$("#Passwort_"+woher).val("");
+						$("#Passwort2_"+woher).val("");
+					},
+					error : function () {
+						var praefix = "importieren_";
+						if (woher === "art") {
+							praefix = "";
+						}
+						$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+						$("#"+praefix+woher+"_anmelden_fehler").alert();
+						$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+					},
+					//username: "ndegiverialocieverimpled",
+					//password: "JL4Wej8QW5c4REMAyil5C5hK"
+				});
+			}
+		});
+	} else {
+		//User in _user eintragen
+		$.couch.signup({
+			name: $('#Email_'+woher).val()
 		},
-		error : function () {
+		$('#Passwort_'+woher).val(), {
+			success : function() {
+				localStorage.Email = $('#Email_'+woher).val();
+				if (woher === "art") {
+					bearbeiteLrTaxonomie();
+				}
+				passeUiFuerAngemeldetenUserAn(woher);
+				//Werte aus Feldern entfernen
+				$("#Email_"+woher).val("");
+				$("#Passwort_"+woher).val("");
+				$("#Passwort2_"+woher).val("");
+			},
+			error : function () {
 				var praefix = "importieren_";
 				if (woher === "art") {
 					praefix = "";
 				}
-			$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-			$("#"+praefix+woher+"_anmelden_fehler").alert();
-			$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
-		}
-	});
+				$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+				$("#"+praefix+woher+"_anmelden_fehler").alert();
+				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+			}
+		});
+	}
 }
 
 function meldeUserAn(woher) {
+	console.log(woher);
 	var Email, Passwort;
 	Email = $('#Email_'+woher).val();
 	Passwort = $('#Passwort_'+woher).val();
@@ -1256,6 +1304,11 @@ function meldeUserAn(woher) {
 			password : Passwort,
 			success : function() {
 				localStorage.Email = $('#Email_'+woher).val();
+				console.log(woher);
+				if (woher === "art") {
+					console.log('bearbeiteLrTaxonomie');
+					bearbeiteLrTaxonomie();
+				}
 				passeUiFuerAngemeldetenUserAn(woher);
 				//Werte aus Feldern entfernen
 				$("#Email_"+woher).val("");
@@ -3101,10 +3154,17 @@ function myTypeOf(Wert) {
 
 function bearbeiteLrTaxonomie() {
 	//Benutzer muss anmelden
-	$("#art_anmelden").show();
-	if (!window.Email) {
-		meldeUserAn("art");
+	if (!localStorage.Email) {
+		$("#art_anmelden").show();
+		$("#art_anmelden_collapse").collapse('show');
+		$("#Email_art").focus();
+		return;
 	}
+	//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+	window.lr_bearb = true;
+	$("#art_anmelden_collapse").collapse('hide');
+	$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
+	//$("#art_anmelden").show();
 
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
@@ -3420,41 +3480,41 @@ function normalisiereForms() {
 //Quelle: http://stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 var BrowserDetect = 
 {
-    init: function () 
-    {
-        this.browser = this.searchString(this.dataBrowser) || "Other";
-        this.version = this.searchVersion(navigator.userAgent) ||       this.searchVersion(navigator.appVersion) || "Unknown";
-    },
+	init: function () 
+	{
+		this.browser = this.searchString(this.dataBrowser) || "Other";
+		this.version = this.searchVersion(navigator.userAgent) ||	   this.searchVersion(navigator.appVersion) || "Unknown";
+	},
 
-    searchString: function (data) 
-    {
-        for (var i=0 ; i < data.length ; i++)   
-        {
-            var dataString = data[i].string;
-            this.versionSearchString = data[i].subString;
+	searchString: function (data) 
+	{
+		for (var i=0 ; i < data.length ; i++)   
+		{
+			var dataString = data[i].string;
+			this.versionSearchString = data[i].subString;
 
-            if (dataString.indexOf(data[i].subString) != -1)
-            {
-                return data[i].identity;
-            }
-        }
-    },
+			if (dataString.indexOf(data[i].subString) != -1)
+			{
+				return data[i].identity;
+			}
+		}
+	},
 
-    searchVersion: function (dataString) 
-    {
-        var index = dataString.indexOf(this.versionSearchString);
-        if (index == -1) return;
-        return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
-    },
+	searchVersion: function (dataString) 
+	{
+		var index = dataString.indexOf(this.versionSearchString);
+		if (index == -1) return;
+		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+	},
 
-    dataBrowser: 
-    [
-        { string: navigator.userAgent, subString: "Chrome",  identity: "Chrome" },
-        { string: navigator.userAgent, subString: "MSIE",    identity: "Explorer" },
-        { string: navigator.userAgent, subString: "Firefox", identity: "Firefox" },
-        { string: navigator.userAgent, subString: "Safari",  identity: "Safari" },
-        { string: navigator.userAgent, subString: "Opera",   identity: "Opera" },
-    ]
+	dataBrowser: 
+	[
+		{ string: navigator.userAgent, subString: "Chrome",  identity: "Chrome" },
+		{ string: navigator.userAgent, subString: "MSIE",	identity: "Explorer" },
+		{ string: navigator.userAgent, subString: "Firefox", identity: "Firefox" },
+		{ string: navigator.userAgent, subString: "Safari",  identity: "Safari" },
+		{ string: navigator.userAgent, subString: "Opera",   identity: "Opera" },
+	]
 
 };
 
