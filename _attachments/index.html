@@ -1470,7 +1470,7 @@
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();	
-					var blob = new Blob([window.exportstring], {type: "text/plain;charset=utf-8"});
+					var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
 					var d = new Date();
 					var month = d.getMonth()+1;
 					var day = d.getDate();
