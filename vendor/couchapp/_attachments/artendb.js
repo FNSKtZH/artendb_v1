@@ -1294,7 +1294,6 @@ function erstelleKonto(woher) {
 }
 
 function meldeUserAn(woher) {
-	//console.log(woher);
 	var Email, Passwort;
 	Email = $('#Email_'+woher).val();
 	Passwort = $('#Passwort_'+woher).val();
@@ -1304,9 +1303,7 @@ function meldeUserAn(woher) {
 			password : Passwort,
 			success : function() {
 				localStorage.Email = $('#Email_'+woher).val();
-				//console.log(woher);
 				if (woher === "art") {
-					//console.log('bearbeiteLrTaxonomie');
 					bearbeiteLrTaxonomie();
 				}
 				passeUiFuerAngemeldetenUserAn(woher);

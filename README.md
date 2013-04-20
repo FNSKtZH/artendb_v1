@@ -225,15 +225,14 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 ###Daten exportieren
 
-1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern
-2. Sie wählt die gewünschten Eigenschaften
-3. Sie wählt, ob auch Informationen von synonymen Objekten exportiert werden sollen
-4. Die Datei wird generiert und als .csv-Datei heruntergeladen
+1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern<br>Standardmässig werden nur Datensätze exportiert, die Informationen von Daten- oder Beziehungssammlungen enthalten. Diese Option kann aber ausgeschaltet werden
+2. Sie wählt die gewünschten Eigenschaften<br>Standardmässig werden auch Informationen von synonymen Objekten exportiert. Diese Option kann aber ausgeschaltet werden
+4. Die Datei wird generiert und im .csv-Format heruntergeladen
 
 Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
 
 ###Daten in ArtenDb bearbeiten
-Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert. 
+Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert.
 
 Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in ArtenDb erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar.
 
@@ -252,7 +251,7 @@ Eingesetzt werden:
 - [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 - [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](http://twitter.github.com/bootstrap/) und [jsTree](http://www.jstree.com/) für die Benutzeroberfläche
 
-ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Leider funktioniert ArtenDb auf dem Internet Explorer nicht einmal in der Version 10.
+ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Im- und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Leider funktioniert ArtenDb auf dem Internet Explorer gar nicht, nicht einmal in der Version 10.
 
 ###Dokumenten-Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.

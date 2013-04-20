@@ -1473,7 +1473,15 @@
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
 					//verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();	
+					//das funktioniert nicht so super:
+					//Chrome: super
+					//Firefox: Dateiname verändert. Leeres Fenster geöffnet
+					//Safari auf MacOs: Fehlermeldung
+					//iOs: Fehlermeldung
+					//Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt
+					//soll besser werden, sobald Standards umgesetzt werden
 					var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
+					//var blob = new Blob([window.exportstring], {type: "application/octet-stream;charset=utf-8;"});
 					var d = new Date();
 					var month = d.getMonth()+1;
 					var day = d.getDate();
