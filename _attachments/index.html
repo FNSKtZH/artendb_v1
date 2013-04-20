@@ -1237,6 +1237,22 @@
 					$("#exportieren_exportieren_tabelle").css("display", "none");
 				});
 
+				$("#exportieren_objekte_waehlen_ds_collapse").on('show', function() {
+					console.log('scrolle');
+					//Accordion nach oben scrollen
+					$('html, body').animate({
+						scrollTop: $("#exportieren_objekte_waehlen_ds_titel").offset().top
+					}, 2000);
+				})
+
+				$(".accordion-inner").on('show', function() {
+					//Accordion nach oben scrollen
+					console.log('scrolle accordion-inner');
+					$('html, body').animate({
+						scrollTop: $(this).offset().top
+					}, 2000);
+				});
+
 				//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 				//und pro Beziehung eine Zeile ausgegeben wird. 
 				//Wenn ja: reklamieren und rückgängig machen
@@ -1291,8 +1307,15 @@
 					}
 				});
 
-				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds", function() {
+				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", function() {
 					exportZuruecksetzen();
+				});
+
+				$("#exportieren_exportieren").on("show", function() {
+					//zur Schaltfläche Vorschau scrollen
+					$('html, body').animate({
+						scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
+					}, 2000);
 				});
 
 				$("#art").on("click", ".btn.lr_bearb", function(event) {

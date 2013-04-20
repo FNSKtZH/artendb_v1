@@ -2346,6 +2346,10 @@ function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
+	//scrollen, damit Hinweis sicher ganz sichtbar ist
+	$('html, body').animate({
+		scrollTop: $("#exportieren_objekte_waehlen_gruppen_hinweis_text").offset().top
+	}, 2000);
 	//gewählte Gruppen ermitteln
 	//globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	var export_gruppen = [];
@@ -2531,6 +2535,10 @@ function filtereFuerExport() {
 	//Beschäftigung melden
 	$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 	$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
+	//zum Hinweistext scrollen
+	$('html, body').animate({
+		scrollTop: $("#exportieren_exportieren_hinweis_text").offset().top
+	}, 2000);
 	//Array von Filterobjekten bilden
 	var filterkriterien = [];
 	//Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
@@ -2812,6 +2820,10 @@ function baueTabelleFuerExportAuf() {
 		erstelleTabelle(exportobjekte, "", "exportieren_exportieren_tabelle");
 		window.exportstring = erstelleExportString(exportobjekte);
 		$("#exportieren_exportieren_exportieren").show();
+		//zur Tabelle scrollen
+		$('html, body').animate({
+			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
+		}, 2000);
 	} else if (exportobjekte && exportobjekte.length === 0) {
 		$('#meldung_keine_exportdaten').modal();
 	}
