@@ -1237,22 +1237,6 @@
 					$("#exportieren_exportieren_tabelle").css("display", "none");
 				});
 
-				$("#exportieren_objekte_waehlen_ds_collapse").on('show', function() {
-					console.log('scrolle');
-					//Accordion nach oben scrollen
-					$('html, body').animate({
-						scrollTop: $("#exportieren_objekte_waehlen_ds_titel").offset().top
-					}, 2000);
-				})
-
-				$(".accordion-inner").on('show', function() {
-					//Accordion nach oben scrollen
-					console.log('scrolle accordion-inner');
-					$('html, body').animate({
-						scrollTop: $(this).offset().top
-					}, 2000);
-				});
-
 				//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 				//und pro Beziehung eine Zeile ausgegeben wird. 
 				//Wenn ja: reklamieren und rückgängig machen
