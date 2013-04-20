@@ -2250,9 +2250,12 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 		}
 		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
 		//jetzt die checkbox um alle auswählen zu können
-		html_felder_waehlen += '<label class="checkbox">';
-		html_felder_waehlen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '"><em>alle</em>';
-		html_felder_waehlen += '</label>';
+		//aber nur, wenn mehr als 1 Feld existieren
+		if ((taxonomien[i].Daten && _.size(taxonomien[i].Daten) > 1) || (taxonomien[i].Beziehungen && _.size(taxonomien[i].Beziehungen) > 1)) {
+			html_felder_waehlen += '<label class="checkbox">';
+			html_felder_waehlen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '"><em>alle</em>';
+			html_felder_waehlen += '</label>';
+		}
 		html_felder_waehlen += '<div class="felderspalte">';
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
