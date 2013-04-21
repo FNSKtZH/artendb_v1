@@ -13,9 +13,7 @@ function(head, req) {
 		DsName_z,
 		Feldname_z,
 		Filterwert_z,
-		DsName_q,
-		Feldname_q,
-		Filterwert_q,
+		Vergleichsoperator_z = "",
 		Datensammlung,
 		beziehungssammlungen, datensammlungen,
 		beziehungssammlungen_aus_synonymen, datensammlungen_aus_synonymen,
@@ -34,6 +32,7 @@ function(head, req) {
 			if (i === "filter") {
 				filterkriterienObjekt = JSON.parse(req.query[i]);
 				filterkriterien = filterkriterienObjekt.rows;
+				//send(JSON.stringify(filterkriterien) + '   /   ');
 			}
 			if (i === "felder") {
 				felderObjekt = JSON.parse(req.query[i]);
@@ -110,7 +109,7 @@ function(head, req) {
 			//Filter nach Gruppen
 			if (gruppen && gruppen.indexOf(Objekt.Gruppe) >= 0) {
 				//Kriterium ist erfüllt
-				if (!nur_ds) {
+				if (filterkriterien.length > 0 || !nur_ds) {
 					objektHinzufügen = true;
 				}
 			} else {
@@ -124,10 +123,43 @@ function(head, req) {
 				DsName_z = filterkriterien[z].DsName;
 				Feldname_z = filterkriterien[z].Feldname;
 				Filterwert_z = filterkriterien[z].Filterwert;
+				/*//prüfen, ob > oder < mitgegeben wurde
+				if (Filterwert_z.indexOf(">=") === 0) {
+					Vergleichsoperator_z = ">=";
+					if (Filterwert_z.indexOf(" ") === 2) {
+						Filterwert_z = Filterwert_z.slice(3);
+					} else {
+						Filterwert_z = Filterwert_z.slice(2);
+					}
+				}
+				if (Filterwert_z.indexOf("<=") === 0) {
+					Vergleichsoperator_z = "<=";
+					if (Filterwert_z.indexOf(" ") === 2) {
+						Filterwert_z = Filterwert_z.slice(3);
+					} else {
+						Filterwert_z = Filterwert_z.slice(2);
+					}
+				}
+				if (Filterwert_z.indexOf(">") === 0) {
+					Vergleichsoperator_z = ">";
+					if (Filterwert_z.indexOf(" ") === 1) {
+						Filterwert_z = Filterwert_z.slice(2);
+					} else {
+						Filterwert_z = Filterwert_z.slice(1);
+					}
+				}
+				if (Filterwert_z.indexOf("<") === 0) {
+					Vergleichsoperator_z = "<";
+					if (Filterwert_z.indexOf(" ") === 1) {
+						Filterwert_z = Filterwert_z.slice(2);
+					} else {
+						Filterwert_z = Filterwert_z.slice(1);
+					}
+				}*/
 				if (DsName_z === "Objekt") {
 					//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
-					if ((typeof Objekt[Feldname_z] === "number" && Objekt[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-						if (!nur_ds) {
+					if ((typeof Objekt[Feldname_z] === "number" && typeof Filterwert_z === "number" && Objekt[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+						if (filterkriterien.length > 0 || !nur_ds) {
 							objektHinzufügen = true;
 						}
 					} else {
@@ -138,8 +170,8 @@ function(head, req) {
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 					if (Objekt.Taxonomie.Daten[Feldname_z]) {
-						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-							if (!nur_ds) {
+						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && typeof Filterwert_z === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+							if (filterkriterien.length > 0 || !nur_ds) {
 								objektHinzufügen = true;
 							}
 						} else {
@@ -153,8 +185,8 @@ function(head, req) {
 				} else if (DsTyp_z === "Taxonomie") {
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 					if (Objekt.Taxonomie.Name === DsName_z && Objekt.Taxonomie.Daten[Feldname_z]) {
-						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
-							if (!nur_ds) {
+						if ((typeof Objekt.Taxonomie.Daten[Feldname_z] === "number" && typeof Filterwert_z === "number" && Objekt.Taxonomie.Daten[Feldname_z] === parseInt(Filterwert_z, 10)) || (Objekt.Taxonomie.Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0)) {
+							if (filterkriterien.length > 0 || !nur_ds) {
 								objektHinzufügen = true;
 							}
 						} else {
@@ -180,7 +212,7 @@ function(head, req) {
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
 										feldExistiert = true;
 										//Feld kann string oder object sein. Object muss stringified werden
-										if ((typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "number" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === parseInt(Filterwert_z, 10)) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "string" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z].toLowerCase().indexOf(Filterwert_z) >= 0)) {
+										if ((typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "number" && typeof Filterwert_z === "number" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === parseInt(Filterwert_z, 10)) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]).toLowerCase().indexOf(Filterwert_z) >= 0) || (typeof Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === "string" && Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z].toLowerCase().indexOf(Filterwert_z) >= 0)) {
 											objektHinzufügen = true;
 											feldHinzugefügt = true;
 										}
@@ -208,7 +240,7 @@ function(head, req) {
 						if (Objekt.Datensammlungen[k].Name === DsName_z) {
 							dsExistiert = true;
 							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
-								if (typeof Objekt.Datensammlungen[k].Daten[Feldname_z] === "number" && Objekt.Datensammlungen[k].Daten[Feldname_z] === parseInt(Filterwert_z, 10)) {
+								if (typeof Objekt.Datensammlungen[k].Daten[Feldname_z] === "number" && typeof Filterwert_z === "number" && Objekt.Datensammlungen[k].Daten[Feldname_z] === parseInt(Filterwert_z, 10)) {
 									objektHinzufügen = true;
 								} else if (Objekt.Datensammlungen[k].Daten[Feldname_z].toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
 									objektHinzufügen = true;
@@ -234,19 +266,19 @@ function(head, req) {
 				//hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
 				//wenn ja und Feld aus DS/BS: objektHinzufügen = true;
 				//wenn nein, soll der Datensatz ja nicht exportiert werden
-				for (var z=0; z<felder.length; z++) {
-					DsTyp_z = felder[z].DsTyp;
-					DsName_z = felder[z].DsName;
-					Feldname_z = felder[z].Feldname;
+				for (var zz=0; zz<felder.length; zz++) {
+					DsTyp_z = felder[zz].DsTyp;
+					DsName_z = felder[zz].DsName;
+					Feldname_z = felder[zz].Feldname;
 					if (DsTyp_z === "Beziehung") {
 						//durch alle Beziehungssammlungen loopen
-						for (var g=0; g<Objekt.Beziehungssammlungen.length; g++) {
-							if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
+						for (var gg=0; gg<Objekt.Beziehungssammlungen.length; gg++) {
+							if (Objekt.Beziehungssammlungen[gg].Name === DsName_z) {
 								//durch Beziehungssammlungen der Beziehung loopen
-								if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
-									for (var h=0; h<Objekt.Beziehungssammlungen[g].Beziehungen.length; h++) {
+								if (Objekt.Beziehungssammlungen[gg].Beziehungen.length > 0) {
+									for (var hh=0; hh<Objekt.Beziehungssammlungen[gg].Beziehungen.length; hh++) {
 										//durch die Felder der Beziehung loopen
-										if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
+										if (Objekt.Beziehungssammlungen[gg].Beziehungen[hh][Feldname_z]) {
 											//ja, so ein Feld kommt vor > Objekt exportieren
 											objektHinzufügen = true;
 										}
@@ -256,9 +288,9 @@ function(head, req) {
 						}
 					} else if (DsTyp_z === "Datensammlung") {
 						//das ist ein Feld aus einer Datensammlung
-						for (var k=0; k<Objekt.Datensammlungen.length; k++) {
-							if (Objekt.Datensammlungen[k].Name === DsName_z) {
-								if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
+						for (var kk=0; kk<Objekt.Datensammlungen.length; kk++) {
+							if (Objekt.Datensammlungen[kk].Name === DsName_z) {
+								if (Objekt.Datensammlungen[kk].Name === DsName_z && typeof Objekt.Datensammlungen[kk].Daten !== "undefined" && typeof Objekt.Datensammlungen[kk].Daten[Feldname_z] !== "undefined") {
 									//ja, so ein Feld kommt vor > Objekt exportieren
 									objektHinzufügen = true;
 								}

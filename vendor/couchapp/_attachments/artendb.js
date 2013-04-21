@@ -2363,6 +2363,7 @@ function erstelleListeFuerFeldwahl() {
 		gruppen = export_gruppen;
 		for (var i=0; i<gruppen.length; i++) {
 			//Felder abfragen
+			//console.log('gruppen['+i+'] = ' + gruppen[i]);
 			if (window[gruppen[i] + '_felder']) {
 				window.export_felder_arrays = _.union(window.export_felder_arrays, window[gruppen[i] + '_felder'].rows);
 				//die verarbeitete Gruppe aus export_gruppen entfernen
@@ -2373,9 +2374,10 @@ function erstelleListeFuerFeldwahl() {
 					erstelleListeFuerFeldwahl_2();
 				}
 			} else {
-				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{}]', {
+				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
 					success: function (data) {
 						window[gruppen[i] + '_felder'] = data;
+						//console.log('data = ' + JSON.stringify(data));
 						window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
 						//die verarbeitete Gruppe aus export_gruppen entfernen
 						export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
@@ -2567,8 +2569,10 @@ function filtereFuerExport() {
 			filterkriterien.push(filterObjekt);
 		}
 	});
+	console.log('filterkriterien = ' + JSON.stringify(filterkriterien));
 	//den array dem objekt zuweisen
 	filterkriterienObjekt.rows = filterkriterien;
+	console.log('filterkriterienObjekt = ' + JSON.stringify(filterkriterienObjekt));
 	//gewählte Felder ermitteln
 	var gewaehlte_felder = [];
 	var gewaehlte_felder_objekt = {};
@@ -2594,11 +2598,11 @@ function filtereFuerExport() {
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
+	console.log('gewaehlte_felder = ' + JSON.stringify(gewaehlte_felder));
 	//den array dem objekt zuweisen
 	gewaehlte_felder_objekt.rows = gewaehlte_felder;
 	//jetzt das filterObjekt übergeben
 	//Alle Felder abfragen
-	$db = $.couch.db("artendb");
 	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 	if (window.fasseTaxonomienZusammen) {
@@ -2623,8 +2627,12 @@ function filtereFuerExport() {
 		} else {
 			queryParam += "&nur_ds=false";
 		}
+		console.log('dbParam = ' + dbParam);
+		console.log('queryParam = ' + queryParam);
+		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
+				console.log('data = ' + JSON.stringify(data));
 				//leere Objekte entfernen
 				var exportieren_objekte_temp = _.reject(data, function(object) {
 					return _.isEmpty(object);
@@ -2640,6 +2648,9 @@ function filtereFuerExport() {
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
 					baueTabelleFuerExportAuf();
 				}
+			},
+			error: function() {
+				console.log('error in $db.list');
 			}
 		});
 	}
