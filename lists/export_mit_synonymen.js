@@ -39,9 +39,6 @@ function(head, req) {
 				for (x=0; x<filterkriterien.length; x++) {
 					//send('typeof filterkriterien['+x+'].Filterwert = ' + typeof filterkriterien[x].Filterwert + '   /   ')
 					filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
-					if (typeof filterkriterien[x].Filterwert === "string") {
-						filterkriterien[x].Filterwert = filterkriterien[x].Filterwert.toLowerCase();
-					}
 				}
 				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '   /   ');
 			}
@@ -134,17 +131,14 @@ function(head, req) {
 				DsTyp_z = filterkriterien[z].DsTyp;
 				DsName_z = filterkriterien[z].DsName;
 				Feldname_z = filterkriterien[z].Feldname;
-				Filterwert_z = filterkriterien[z].Filterwert;
+				Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
 				Vergleichsoperator_z = filterkriterien[z].Vergleichsoperator;
 				//send('Vergleichsoperator_z = ' + Vergleichsoperator_z + '   /   ');
 				//Filterkriterien prüfen
 				if (DsName_z === "Objekt") {
 					feldwert = convertToCorrectType(Objekt[Feldname_z]);
-					if (typeof feldwert === "string") {
-						feldwert = feldwert.toLowerCase();
-					}
 					//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
-					if (Vergleichsoperator_z === "=" && ((typeof feldwert === "number" && typeof Filterwert_z === "number" && feldwert === Filterwert_z) || (feldwert.indexOf(Filterwert_z) >= 0))) {
+					if (Vergleichsoperator_z === "=" && ((feldwert === Filterwert_z) || (myTypeof(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0))) {
 						objektHinzufügen = true;
 						//send('Objekt wegen = zugefuegt   /   ');
 					} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
@@ -166,13 +160,10 @@ function(head, req) {
 					}
 				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
 					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
-					if (typeof feldwert === "string") {
-						feldwert = feldwert.toLowerCase();
-					}
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 					if (feldwert) {
-						if (Vergleichsoperator_z === "=" && ((typeof feldwert === "number" && typeof Filterwert_z === "number" && feldwert === Filterwert_z) || (feldwert.indexOf(Filterwert_z) >= 0))) {
+						if (Vergleichsoperator_z === "=" && ((feldwert === Filterwert_z) || (myTypeof(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0))) {
 							objektHinzufügen = true;
 						} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
 							objektHinzufügen = true;
@@ -194,12 +185,9 @@ function(head, req) {
 					}
 				} else if (DsTyp_z === "Taxonomie") {
 					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
-					if (typeof feldwert === "string") {
-						feldwert = feldwert.toLowerCase();
-					}
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 					if (Objekt.Taxonomie.Name === DsName_z && feldwert) {
-						if (Vergleichsoperator_z === "=" && ((typeof feldwert === "number" && typeof Filterwert_z === "number" && feldwert === Filterwert_z) || (feldwert.indexOf(Filterwert_z) >= 0))) {
+						if (Vergleichsoperator_z === "=" && ((feldwert === Filterwert_z) || (myTypeof(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0))) {
 							objektHinzufügen = true;
 						} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
 							objektHinzufügen = true;
@@ -234,11 +222,8 @@ function(head, req) {
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
 										feldExistiert = true;
 										feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]);
-										if (typeof feldwert === "string") {
-											feldwert = feldwert.toLowerCase();
-										}
 										//Feld kann string oder object sein. Object muss stringified werden
-										if (Vergleichsoperator_z === "=" && ((typeof feldwert === "number" && typeof Filterwert_z === "number" && feldwert === Filterwert_z) || (typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (typeof feldwert === "string" && feldwert.indexOf(Filterwert_z) >= 0))) {
+										if (Vergleichsoperator_z === "=" && (feldwert === Filterwert_z || (myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) || (typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0))) {
 											objektHinzufügen = true;
 											feldHinzugefügt = true;
 										} else if (Vergleichsoperator_z === ">" && ((typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (feldwert > Filterwert_z))) {
@@ -278,19 +263,22 @@ function(head, req) {
 						if (Objekt.Datensammlungen[k].Name === DsName_z) {
 							dsExistiert = true;
 							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
+								//wir haben das gesuchte Feld gefunden!
 								feldwert = convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
-								if (typeof feldwert === "string") {
-									feldwert = feldwert.toLowerCase();
-								}
-								if (Vergleichsoperator_z === "=" && ((typeof feldwert === "number" && typeof Filterwert_z === "number" && feldwert === Filterwert_z) || (typeof feldwert !== "number" && feldwert.indexOf(Filterwert_z) >= 0))) {
+								//send('feldwert = ' + feldwert + '   /   ');
+								//send('myTypeOf(feldwert) = ' + myTypeOf(feldwert) + '   /   ');
+								//in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
+								/*if (Vergleichsoperator_z == "=" && (feldwert == Filterwert_z || (feldwert.toString().indexOf(Filterwert_z.toString()) >= 0))) {
 									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
+								} else */if (Vergleichsoperator_z == ">" && ((parseInt(feldwert, 10) > parseInt(Filterwert_z, 10)) || (feldwert > Filterwert_z))) {
 									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
+								} else if (Vergleichsoperator_z === ">=" && ((parseInt(feldwert, 10) >= parseInt(Filterwert_z, 10)) || (feldwert >= Filterwert_z))) {
 									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
+								} else if (Vergleichsoperator_z === "<" && ((parseInt(feldwert, 10) < parseInt(Filterwert_z, 10)) || (feldwert < Filterwert_z))) {
 									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+								} else if (Vergleichsoperator_z === "<=" && ((parseInt(feldwert, 10) <= parseInt(Filterwert_z, 10)) || (feldwert <= Filterwert_z))) {
+									objektHinzufügen = true;
+								} else if (parseInt(feldwert, 10) === parseInt(Filterwert_z, 10) || feldwert.toString().toLowerCase().indexOf(Filterwert_z) >= 0) {
 									objektHinzufügen = true;
 								} else {
 									objektNichtHinzufügen = true;
@@ -548,8 +536,12 @@ function convertToCorrectType(feldWert) {
 	} else if (type === "float") {
 		return parseFloat(feldWert);
 	} else if (type === "integer") {
-		return parseInt(feldWert);
+		return parseInt(feldWert, 10);
+	} else if (type === "string") {
+		//string jetzt kleinschreiben, damit das nicht später erfolgen muss
+		return feldWert.toLowerCase();
 	} else {
+		//object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
 		return feldWert;
 	}
 }
@@ -563,9 +555,12 @@ function myTypeOf(Wert) {
 		//es ist eine Float
 		return "float";
 	//verhindern, dass führende Nullen abgeschnitten werden
-	} else if (parseInt(Wert) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert)/10)) {
+	} else if ((parseInt(Wert) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert)/10)) || Wert == "0") {
 		//es ist eine Integer
 		return "integer";
+	} else if (typeof Wert === "object") {
+		//es ist ein Objekt
+		return "object";
 	} else {
 		//als String behandeln
 		return "string";
