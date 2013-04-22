@@ -136,34 +136,35 @@ function(head, req) {
 				//send('Vergleichsoperator_z = ' + Vergleichsoperator_z + '   /   ');
 				//Filterkriterien prüfen
 				if (DsName_z === "Objekt") {
-					//TODO: IF OBJEKT[FELDNAME_Z]
 					feldwert = convertToCorrectType(Objekt[Feldname_z]);
-					//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
-					if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen = zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-						objektHinzufügen = true;
-						//send('Objekt wegen = zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen = zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen > zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen >= zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen < zugefuegt   /   ');
-					} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
-						objektHinzufügen = true;
-						//send('Objekt wegen <= zugefuegt   /   ');
-					} else {
-						objektNichtHinzufügen = true;
-						//send('Objekt wegen ' + Vergleichsoperator_z + ' NICHT zugefuegt   /   ');
-						break loop_filterkriterien;
+					if (feldwert){
+						//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
+						if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen = zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+							objektHinzufügen = true;
+							//send('Objekt wegen = zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen = zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen > zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen >= zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen < zugefuegt   /   ');
+						} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+							objektHinzufügen = true;
+							//send('Objekt wegen <= zugefuegt   /   ');
+						} else {
+							objektNichtHinzufügen = true;
+							//send('Objekt wegen ' + Vergleichsoperator_z + ' NICHT zugefuegt   /   ');
+							break loop_filterkriterien;
+						}
 					}
 				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
 					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
@@ -197,34 +198,37 @@ function(head, req) {
 				} else if (DsTyp_z === "Taxonomie") {
 					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
-					if (Objekt.Taxonomie.Name === DsName_z && feldwert) {
-						if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
-							objektHinzufügen = true;
+					if (feldwert) {
+						if (Objekt.Taxonomie.Name === DsName_z) {
+							if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
+								objektHinzufügen = true;
+							} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+								objektHinzufügen = true;
+							} else {
+								//Bedingung nicht erfüllt
+								objektNichtHinzufügen = true;
+								break loop_filterkriterien;
+							}
 						} else {
 							//Bedingung nicht erfüllt
 							objektNichtHinzufügen = true;
 							break loop_filterkriterien;
 						}
-					} else {
-						//Bedingung nicht erfüllt
-						objektNichtHinzufügen = true;
-						break loop_filterkriterien;
 					}
 				} else if (DsTyp_z === "Beziehung") {
 					//durch alle Beziehungssammlungen loopen und suchen, ob Filter trifft
 					dsExistiert = false;
+					loop_beziehungssammlungen:
 					for (var g=0; g<Objekt.Beziehungssammlungen.length; g++) {
 						if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
 							dsExistiert = true;
@@ -268,6 +272,7 @@ function(head, req) {
 								objektNichtHinzufügen = true;
 								break loop_filterkriterien;
 							}
+							break loop_beziehungssammlungen;
 						}
 					}
 					if (!dsExistiert) {
@@ -277,6 +282,7 @@ function(head, req) {
 				} else if (DsTyp_z === "Datensammlung") {
 					dsExistiert = false;
 					//das ist ein Feld aus einer Datensammlung
+					loop_datensammlungen:
 					for (var k=0; k<Objekt.Datensammlungen.length; k++) {
 						if (Objekt.Datensammlungen[k].Name === DsName_z) {
 							dsExistiert = true;
@@ -304,13 +310,16 @@ function(head, req) {
 								} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && myTypeOf(Filterwert_z) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 									objektHinzufügen = true;
 								} else {
+									//Feld existiert aber Kriterium ist nicht erfüllt
 									objektNichtHinzufügen = true;
 									break loop_filterkriterien;
 								}
 							} else {
+								//das Feld existiert nicht, also Filterkriterium nicht erfüllt
 								objektNichtHinzufügen = true;
 								break loop_filterkriterien;
 							}
+							break loop_datensammlungen;
 						}
 					}
 					if (!dsExistiert) {

@@ -2509,25 +2509,6 @@ function filtereFuerExport() {
 		$('#meldung_keine_gruppen').modal();
 		return;
 	}
-	//kontrollieren, ob nur Zeilen mit Infos aus DS gewählt ist, aber keine Infos aus ds
-	if ($("#exportieren_nur_ds").prop('checked')) {
-		var ds_zaehler = 0;
-		var myDsTyp;
-		$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
-			if ($(this).prop('checked')) {
-				myDsTyp = $(this).attr('dstyp');
-				if (myDsTyp === "Beziehung" || myDsTyp === "Datensammlung") {
-					ds_zaehler++;
-				}
-			}
-		});
-		if (ds_zaehler === 0) {
-			$("#meldung_individuell_label").html("Kriterien überprüfen");
-			$("#meldung_individuell_text").html('Die Filter-Option "nur Datensätze mit Informationen aus den gewählten Daten- und Beziehungssammlungen exportieren" ist gewählt. Aber kein entsprechendes Feld!');
-			$('#meldung_individuell').modal();
-			return;
-		}
-	}
 
 	//Beschäftigung melden
 	$("#exportieren_exportieren_hinweis").alert().css("display", "block");
@@ -2575,6 +2556,7 @@ function filtereFuerExport() {
 	//gewählte Felder ermitteln
 	var gewaehlte_felder = [];
 	var gewaehlte_felder_objekt = {};
+	var anz_ds_gewaehlt = 0;
 	$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
 			//feldObjekt erstellen
@@ -2592,6 +2574,9 @@ function filtereFuerExport() {
 			//feldObjekt erstellen
 			feldObjekt = {};
 			feldObjekt.DsTyp = $(this).attr('dstyp');
+			if (feldObjekt.DsTyp !== "Taxonomie") {
+				anz_ds_gewaehlt++;
+			}
 			feldObjekt.DsName = $(this).attr('datensammlung');
 			feldObjekt.Feldname = $(this).attr('feld');
 			gewaehlte_felder.push(feldObjekt);
@@ -2620,7 +2605,9 @@ function filtereFuerExport() {
 			dbParam = "artendb/export";
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 		}
-		if ($("#exportieren_nur_ds").prop('checked')) {
+		if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
+			//prüfen, ob mindestens ein ds gewählt ist
+			//wenn ja: true, sonst false
 			queryParam += "&nur_ds=true";
 		} else {
 			queryParam += "&nur_ds=false";
