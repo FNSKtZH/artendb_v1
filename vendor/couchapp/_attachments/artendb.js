@@ -2363,7 +2363,6 @@ function erstelleListeFuerFeldwahl() {
 		gruppen = export_gruppen;
 		for (var i=0; i<gruppen.length; i++) {
 			//Felder abfragen
-			//console.log('gruppen['+i+'] = ' + gruppen[i]);
 			if (window[gruppen[i] + '_felder']) {
 				window.export_felder_arrays = _.union(window.export_felder_arrays, window[gruppen[i] + '_felder'].rows);
 				//die verarbeitete Gruppe aus export_gruppen entfernen
@@ -2377,7 +2376,6 @@ function erstelleListeFuerFeldwahl() {
 				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
 					success: function (data) {
 						window[gruppen[i] + '_felder'] = data;
-						//console.log('data = ' + JSON.stringify(data));
 						window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
 						//die verarbeitete Gruppe aus export_gruppen entfernen
 						export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
@@ -2565,14 +2563,15 @@ function filtereFuerExport() {
 			filterObjekt.DsName = $(this).attr('eigenschaft');
 			filterObjekt.Feldname = $(this).attr('feld');
 			//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
-			filterObjekt.Filterwert = this.value.toLowerCase();
+			filterObjekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
+			console.log('Filterwert = ' + filterObjekt.Filterwert);
+			filterObjekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
+			console.log('Vergleichsoperator = ' + filterObjekt.Vergleichsoperator);
 			filterkriterien.push(filterObjekt);
 		}
 	});
-	console.log('filterkriterien = ' + JSON.stringify(filterkriterien));
 	//den array dem objekt zuweisen
 	filterkriterienObjekt.rows = filterkriterien;
-	console.log('filterkriterienObjekt = ' + JSON.stringify(filterkriterienObjekt));
 	//gewählte Felder ermitteln
 	var gewaehlte_felder = [];
 	var gewaehlte_felder_objekt = {};
@@ -2598,7 +2597,6 @@ function filtereFuerExport() {
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
-	console.log('gewaehlte_felder = ' + JSON.stringify(gewaehlte_felder));
 	//den array dem objekt zuweisen
 	gewaehlte_felder_objekt.rows = gewaehlte_felder;
 	//jetzt das filterObjekt übergeben
@@ -2627,12 +2625,9 @@ function filtereFuerExport() {
 		} else {
 			queryParam += "&nur_ds=false";
 		}
-		console.log('dbParam = ' + dbParam);
-		console.log('queryParam = ' + queryParam);
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
-				console.log('data = ' + JSON.stringify(data));
 				//leere Objekte entfernen
 				var exportieren_objekte_temp = _.reject(data, function(object) {
 					return _.isEmpty(object);
@@ -3446,6 +3441,53 @@ function loescheMassenMitObjektArray(objekt_array) {
 		contentType: "application/json", 
 		data: JSON.stringify(objekte_mit_objekte)
 	});
+}
+
+//erhält einen filterwert
+//dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
+//retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
+function ermittleVergleichsoperator(filterwert) {
+	var vergleichsoperator;
+	if (filterwert.indexOf(">=") === 0) {
+		vergleichsoperator = ">=";
+		if (filterwert.indexOf(" ") === 2) {
+			filterwert = filterwert.slice(3);
+		} else {
+			filterwert = filterwert.slice(2);
+		}
+	} else if (filterwert.indexOf("<=") === 0) {
+		vergleichsoperator = "<=";
+		if (filterwert.indexOf(" ") === 2) {
+			filterwert = filterwert.slice(3);
+		} else {
+			filterwert = filterwert.slice(2);
+		}
+	} else if (filterwert.indexOf(">") === 0) {
+		vergleichsoperator = ">";
+		if (filterwert.indexOf(" ") === 1) {
+			filterwert = filterwert.slice(2);
+		} else {
+			filterwert = filterwert.slice(1);
+		}
+	} else if (filterwert.indexOf("<") === 0) {
+		vergleichsoperator = "<";
+		if (filterwert.indexOf(" ") === 1) {
+			filterwert = filterwert.slice(2);
+		} else {
+			filterwert = filterwert.slice(1);
+		}
+	} else if (filterwert.indexOf("=") === 0) {
+		//abfangen, falls jemand "=" eingibt
+		vergleichsoperator = "=";
+		if (filterwert.indexOf(" ") === 1) {
+			filterwert = filterwert.slice(2);
+		} else {
+			filterwert = filterwert.slice(1);
+		}
+	} else {
+		vergleichsoperator = "=";
+	}
+	return [vergleichsoperator, filterwert.toLowerCase()];
 }
 
 function maximiereForms() {

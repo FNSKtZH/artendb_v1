@@ -4,7 +4,7 @@ function(head, req) {
 		exportObjekte = [],
 		exportObjekt,
 		filterkriterien = [],
-		filterkriterienObjekt,
+		filterkriterienObjekt = {"rows": []},
 		felder = [],
 		gruppen,
 		nur_ds,
