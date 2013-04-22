@@ -3474,7 +3474,7 @@ function ermittleVergleichsoperator(filterwert) {
 	} else {
 		vergleichsoperator = "kein";
 	}
-	return [vergleichsoperator, filterwert.toLowerCase()];
+	return [vergleichsoperator, filterwert];
 }
 
 function maximiereForms() {

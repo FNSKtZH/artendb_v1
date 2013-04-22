@@ -131,12 +131,17 @@ function(head, req) {
 				DsTyp_z = filterkriterien[z].DsTyp;
 				DsName_z = filterkriterien[z].DsName;
 				Feldname_z = filterkriterien[z].Feldname;
-				Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
+				if (Feldname_z !== "_id") {
+					Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
+				} else {
+					//die ID darf nicht in Kleinschrift verwandelt werden
+					Filterwert_z = filterkriterien[z].Filterwert;
+				}
 				Vergleichsoperator_z = filterkriterien[z].Vergleichsoperator;
 				//send('Vergleichsoperator_z = ' + Vergleichsoperator_z + '   /   ');
 				//Filterkriterien prüfen
 				if (DsName_z === "Objekt") {
-					feldwert = convertToCorrectType(Objekt[Feldname_z]);
+					feldwert = Objekt[Feldname_z];
 					if (feldwert){
 						//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
 						if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
