@@ -3485,7 +3485,7 @@ function ermittleVergleichsoperator(filterwert) {
 			filterwert = filterwert.slice(1);
 		}
 	} else {
-		vergleichsoperator = "=";
+		vergleichsoperator = "kein";
 	}
 	return [vergleichsoperator, filterwert.toLowerCase()];
 }
