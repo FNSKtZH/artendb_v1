@@ -2592,6 +2592,7 @@ function filtereFuerExport() {
 		fTz = "true";
 	}
 	//globale Variable vorbereiten
+	delete window.exportieren_objekte;
 	window.exportieren_objekte = [];
 	//in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
 	//jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
@@ -2600,7 +2601,7 @@ function filtereFuerExport() {
 		var dbParam, queryParam;
 		if ($("#exportieren_synonym_infos").prop('checked')) {
 			dbParam = "artendb/export_mit_synonymen";
-			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen + "&descending=true";
+			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 		} else {
 			dbParam = "artendb/export";
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;

@@ -2,9 +2,8 @@
 	if (doc.Gruppe && doc.Gruppe === "Flora") {
 		//erst mal das eigene Dokument senden
 		//der zweite key markiert, dass dies das Original ist
-		emit ([doc._id, 0]);
+		emit ([doc._id, 1]);
 		if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
-			var zähler = 1;
 			//durch alle Beziehungssammlungen loopen
 			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
 				if (doc.Beziehungssammlungen[i].Typ && doc.Beziehungssammlungen[i].Typ === "taxonomisch" && doc.Beziehungssammlungen[i]["Art der Beziehungen"] && doc.Beziehungssammlungen[i]["Art der Beziehungen"] === "synonym" && doc.Beziehungssammlungen[i].Beziehungen && doc.Beziehungssammlungen[i].Beziehungen.length > 0) {
@@ -16,8 +15,7 @@
 								if (doc.Beziehungssammlungen[i].Beziehungen[x].Beziehungspartner[z].GUID) {
 									//veranlassen, dass mit include_docs=true auch das Dokument dieses Synonyms gesendet wird
 									//der zweite key markiert, dass es ein Synonym ist
-									emit ([doc._id, zähler], {_id: doc.Beziehungssammlungen[i].Beziehungen[x].Beziehungspartner[z].GUID});
-									zähler++;
+									emit ([doc._id, 0], {_id: doc.Beziehungssammlungen[i].Beziehungen[x].Beziehungspartner[z].GUID});
 								}
 							}
 						}
