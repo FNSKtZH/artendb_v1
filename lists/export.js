@@ -58,15 +58,17 @@ function(head, req) {
 			//exportobjekt zurücksetzen
 			exportObjekt = {};
 
-			//Filter nach Gruppen
-			if (gruppen && gruppen.indexOf(Objekt.Gruppe) >= 0) {
-				//Kriterium ist erfüllt
-				if (filterkriterien.length === 0 && !nur_ds) {
-					objektHinzufügen = true;
-				}
-			} else {
-				//Kriterium ist nicht erfüllt > zum nächsten Objekt
-				continue;
+			//sicherstellen, dass DS und BS existieren
+			if (!Objekt.Datensammlungen) {
+				Objekt.Datensammlungen = [];
+			}
+			if (!Objekt.Beziehungssammlungen) {
+				Objekt.Beziehungssammlungen = [];
+			}
+
+			//kein Filter aber nur Datensätze mit Infos aus DS/BS
+			if (filterkriterien.length === 0 && !nur_ds) {
+				objektHinzufügen = true;
 			}
 
 			loop_filterkriterien:

@@ -2607,7 +2607,7 @@ function filtereFuerExport() {
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 		}
 		if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
-			//prüfen, ob mindestens ein ds gewählt ist
+			//prüfen, ob mindestens ein Feld aus ds gewählt ist
 			//wenn ja: true, sonst false
 			queryParam += "&nur_ds=true";
 		} else {
