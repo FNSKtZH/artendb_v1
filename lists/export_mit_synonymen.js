@@ -33,14 +33,14 @@ function(head, req) {
 			if (i === "filter") {
 				filterkriterienObjekt = JSON.parse(req.query[i]);
 				filterkriterien = filterkriterienObjekt.rows;
-				//send('filterkriterien vor Umwandlung = ' + JSON.stringify(filterkriterien) + '   /   ');
 				//jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
 				//damit das später nicht dauern wiederholt werden muss
-				for (x=0; x<filterkriterien.length; x++) {
-					//send('typeof filterkriterien['+x+'].Filterwert = ' + typeof filterkriterien[x].Filterwert + '   /   ')
-					filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
+				for (var x=0; x<filterkriterien.length; x++) {
+					//die id darf nicht in Kleinschrift verwandelt werden
+					if (filterkriterien[x].Feldname !== "_id") {
+						filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
+					}
 				}
-				//send('filterkriterien = ' + JSON.stringify(filterkriterien) + '   /   ');
 			}
 			if (i === "felder") {
 				felderObjekt = JSON.parse(req.query[i]);
@@ -55,23 +55,22 @@ function(head, req) {
 			}
 		}
 
-		//total_rows = head.total_rows;
 		//arrays für sammlungen aus synonymen gründen
 		beziehungssammlungen_aus_synonymen = [];
 		datensammlungen_aus_synonymen = [];
 
-		//for (var row_number=0; row_number<total_rows; row_number++) {
-		loop_object:
 		while (row = getRow()) {
-			row = getRow();
+			//row = getRow();
 			Objekt = row.doc;
+			//send('row.key[0] = '+row.key[0]+'   /   ');
+			//send('row.key[1] = '+row.key[1]+'   /   ');
 
 			//row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 			if (row.key[1] === 0) {
 				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 					var ds_aus_syn_namen = [];
 					if (datensammlungen_aus_synonymen.length > 0) {
-						for (var i=0; i<datensammlungen_aus_synonymen.length; i++) {
+						for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
 							if (datensammlungen_aus_synonymen[i].Name) {
 								ds_aus_syn_namen.push(datensammlungen_aus_synonymen[i].Name);
 							}
@@ -83,13 +82,15 @@ function(head, req) {
 							ds_aus_syn_name = Objekt.Datensammlungen[i].Name;
 							if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
 								datensammlungen_aus_synonymen.push(Objekt.Datensammlungen[i]);
+								//sicherstellen, dass diese ds nicht nochmals gepuscht wird
+								ds_aus_syn_namen.push(ds_aus_syn_name);
 							}
 						}
 					}
 
 					var bs_aus_syn_namen = [];
 					if (beziehungssammlungen_aus_synonymen.length > 0) {
-						for (var i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
+						for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
 							if (beziehungssammlungen_aus_synonymen[i].Name) {
 								bs_aus_syn_namen.push(beziehungssammlungen_aus_synonymen[i].Name);
 							}
@@ -101,6 +102,8 @@ function(head, req) {
 							bs_aus_syn_name = Objekt.Beziehungssammlungen[i].Name;
 							if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
 								beziehungssammlungen_aus_synonymen.push(Objekt.Beziehungssammlungen[i]);
+								//sicherstellen, dass diese bs nicht nochmals gepuscht wird
+								bs_aus_syn_namen.push(bs_aus_syn_name);
 							}
 						}
 					}
@@ -108,8 +111,12 @@ function(head, req) {
 				//das war ein Synonym. Hier aufhören
 				//send('datensammlungen_aus_synonymen = ' + JSON.stringify(datensammlungen_aus_synonymen) + '   /   ');
 				//send('beziehungssammlungen_aus_synonymen = ' + JSON.stringify(beziehungssammlungen_aus_synonymen) + '   /   ');
-				//continue loop_object;
 			} else if (row.key[1] === 1) {
+				//send('Objekt._id = '+Objekt._id+'   /   ');
+				//send('datensammlungen_aus_synonymen = ' + JSON.stringify(datensammlungen_aus_synonymen) + '   /   ');
+				//send('datensammlungen des Objekts = ' + JSON.stringify(Objekt.Datensammlungen) + '   /   ');
+				//send('beziehungssammlungen_aus_synonymen = ' + JSON.stringify(beziehungssammlungen_aus_synonymen) + '   /   ');
+				//send('beziehungssammlungen des Objekts = ' + JSON.stringify(Objekt.Beziehungssammlungen) + '   /   ');
 				//wir sind jetzt im Originalobjekt
 				//sicherstellen, dass DS und BS existieren
 				if (!Objekt.Datensammlungen) {
@@ -119,26 +126,32 @@ function(head, req) {
 					Objekt.Beziehungssammlungen = [];
 				}
 				//allfällige DS und BS aus Synonymen anhängen
+				//TODO: FUNKTIONIERT NICHT, DS UND BS AUS SYNONYMEN WERDEN NICHT ANGEHÄNGT!
 				//zuerst DS
 				//eine Liste der im Objekt enthaltenen DsNamen erstellen
 				var dsNamen = [];
 				if (Objekt.Datensammlungen.length > 0) {
-					for (var i=0; i<Objekt.Datensammlungen.length; i++) {
+					for (i=0; i<Objekt.Datensammlungen.length; i++) {
 						if (Objekt.Datensammlungen[i].Name) {
 							dsNamen.push(Objekt.Datensammlungen[i].Name);
 						}
 					}
 				}
-				var ds_aus_syn_name;
+				//nicht enthaltene Datensammlungen ergänzen
+				var ds_aus_syn_name2;
 				if (datensammlungen_aus_synonymen.length > 0) {
 					for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-						ds_aus_syn_name = datensammlungen_aus_synonymen[i].Name;
-						if (dsNamen.length === 0 || ds_aus_syn_name.indexOf(dsNamen) === -1) {
+						ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
+						if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
 							Objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
+							//send('ds aus Synonym gepusht: '+JSON.stringify(datensammlungen_aus_synonymen[i])+'   /   ');
+							//den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+							dsNamen.push(ds_aus_syn_name2);
 						}
 					}
 				}
 				//jetzt BS aus Synonymen anhängen
+				//eine Liste der im Objekt enthaltenen BsNamen erstellen
 				var bsNamen = [];
 				if (Objekt.Beziehungssammlungen.length > 0) {
 					for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
@@ -147,15 +160,22 @@ function(head, req) {
 						}
 					}
 				}
-				var bs_aus_syn_name;
+				//nicht enthaltene Beziehungssammlungen ergänzen
+				var bs_aus_syn_name2;
 				if (beziehungssammlungen_aus_synonymen.length > 0) {
 					for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-						bs_aus_syn_name = beziehungssammlungen_aus_synonymen[i].Name;
-						if (bsNamen.length === 0 || bs_aus_syn_name.indexOf(bsNamen) === -1) {
-							Objekt.Datensammlungen.push(beziehungssammlungen_aus_synonymen[i]);
+						bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
+						if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
+							Objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
+							//send('bs aus Synonym gepusht: '+JSON.stringify(beziehungssammlungen_aus_synonymen[i])+'   /   ');
+							//den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+							bsNamen.push(bs_aus_syn_name2);
 						}
 					}
 				}
+
+				//send('datensammlungen des Objekts, inkl. Synonyme = ' + JSON.stringify(Objekt.Datensammlungen) + '   /   ');
+				//send('beziehungssammlungen des Objekts, inkl. Synonyme = ' + JSON.stringify(Objekt.Beziehungssammlungen) + '   /   ');
 
 				//wird true gesetzt, wenn in einem Feld ein Filterkriterium gesetzt und dieses erfüllt ist
 				objektHinzufügen = false;
@@ -183,7 +203,7 @@ function(head, req) {
 					//Filterkriterien prüfen
 					if (DsName_z === "Objekt") {
 						feldwert = Objekt[Feldname_z];
-						if (feldwert){
+						if (feldwert || feldwert === 0) {
 							//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
 							if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
 								objektHinzufügen = true;
@@ -216,7 +236,7 @@ function(head, req) {
 						feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
 						//das Feld ist aus Taxonomie und die werden zusammengefasst
 						//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
-						if (feldwert) {
+						if (feldwert || feldwert === 0) {
 							if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
 								objektHinzufügen = true;
 							} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
@@ -244,7 +264,7 @@ function(head, req) {
 					} else if (DsTyp_z === "Taxonomie") {
 						feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
 						//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
-						if (feldwert) {
+						if (feldwert || feldwert === 0) {
 							if (Objekt.Taxonomie.Name === DsName_z) {
 								if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
 									objektHinzufügen = true;
@@ -284,7 +304,7 @@ function(head, req) {
 									var feldHinzugefügt = false;
 									for (var h=0; h<Objekt.Beziehungssammlungen[g].Beziehungen.length; h++) {
 										//durch die Felder der Beziehung loopen
-										if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]) {
+										if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] || Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === 0) {
 											feldExistiert = true;
 											feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]);
 											//Feld kann string oder object sein. Object muss stringified werden
@@ -519,13 +539,14 @@ function(head, req) {
 						}
 					}
 					if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
-						for (var iii=0; iii<Objekt.Beziehungssammlungen.length; iii++) {
+						for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
 							//durch Beziehungssammlungen loopen
 							for (var ww=0; ww<felder.length; ww++) {
-								if (felder[ww].DsTyp === "Beziehung" && felder[ww].DsName === Objekt.Beziehungssammlungen[iii].Name) {
-									for (var aaa=0; aaa<Objekt.Beziehungssammlungen[iii].Beziehungen.length; aaa++) {
+								if (felder[ww].DsTyp === "Beziehung" && felder[ww].DsName === Objekt.Beziehungssammlungen[i].Name) {
+									for (var aaa=0; aaa<Objekt.Beziehungssammlungen[i].Beziehungen.length; aaa++) {
 										//durch Beziehungen loopen
-										if (Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][felder[ww].Feldname]) {
+										if (Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[ww].Feldname] || Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[ww].Feldname] === 0) {
+											feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[ww].Feldname]);
 											//in der Beziehung gibt es das gesuchte Feld
 											if (!exportObjekt.Beziehungssammlungen) {
 												//im Exportobjekt Beziehungssammlungen anlegen, falls noch nicht vorhanden
@@ -545,22 +566,32 @@ function(head, req) {
 															var DsTyp = filterkriterien[l].DsTyp;
 															var DsName = filterkriterien[l].DsName;
 															var Feldname = filterkriterien[l].Feldname;
-															var Filterwert = filterkriterien[l].Filterwert;
+															var Filterwert = convertToCorrectType(filterkriterien[l].Filterwert);
+															var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
 															if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[ww].Feldname) {
-																if ((typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname] === "number" && Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname] === parseInt(Filterwert, 10)) || (typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname]).toLowerCase().indexOf(Filterwert) >= 0) || (typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname] === "string" && Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname].toLowerCase().indexOf(Filterwert) >= 0)) {
-																	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wer die Bedingung erfüllt
-																	if (Feldname === "Beziehungspartner") {
-																		var bezPartner = [];
-																		var beziehung = Objekt.Beziehungssammlungen[iii].Beziehungen[aaa];
-																		for (var m=0; m<Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname].length; m++) {
-																			if (JSON.stringify(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname][m]).toLowerCase().indexOf(Filterwert) >= 0) {
-																				bezPartner.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname][m]);
-																			}
-																		}
-																		beziehung.Beziehungspartner = bezPartner;
-																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(beziehung);
-																	} else {
-																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa]);
+																//Beziehungspartner sind Objekte und müssen separat gefiltert werden
+																if (Feldname === "Beziehungspartner") {
+																	var bezPartner = filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
+																	if (bezPartner.length > 0) {
+																		Objekt.Beziehungssammlungen[i].Beziehungen[aaa].Beziehungspartner = bezPartner;
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	}
+																} else {
+																	//jetzt müssen die verschiedenen möglichen Vergleichsoperatoren berücksichtigt werden
+																	if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																	} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
+																		exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																	}
 																}
 															}
@@ -568,8 +599,8 @@ function(head, req) {
 													} else {
 														//kein Filter auf Feldern - Beziehung hinzufügen
 														//aber sicherstellen, dass sie nicht schon drin ist
-														if (!containsObject(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa], exportObjekt.Beziehungssammlungen[t].Beziehungen)) {
-															exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa]);
+														if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[aaa], exportObjekt.Beziehungssammlungen[t].Beziehungen)) {
+															exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 														}
 													}
 												}
@@ -584,28 +615,28 @@ function(head, req) {
 														Feldname2 = filterkriterien[ll].Feldname;
 														Filterwert2 = filterkriterien[ll].Filterwert;
 														if (filterkriterien[ll].DsTyp === "Beziehung" && filterkriterien[ll].DsName === felder[ww].DsName && Feldname2 === felder[ww].Feldname) {
-															if ((typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2] === "number" && Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2] === parseInt(Filterwert2, 10)) || (typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2]).toLowerCase().indexOf(Filterwert2) >= 0) || (typeof Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2] === "string" && Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2].toLowerCase().indexOf(Filterwert2) >= 0)) {
+															if ((typeof Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2] === "number" && Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2] === parseInt(Filterwert2, 10)) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2] === "object" && JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2]).toLowerCase().indexOf(Filterwert2) >= 0) || (typeof Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2] === "string" && Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2].toLowerCase().indexOf(Filterwert2) >= 0)) {
 																//Wenn Feldname2 = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wer die Bedingung erfüllt
 																if (Feldname2 === "Beziehungspartner") {
 																	var bezPartner2 = [];
-																	var beziehung2 = Objekt.Beziehungssammlungen[iii].Beziehungen[aaa];
-																	for (var mm=0; mm<Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2].length; mm++) {
-																		if (JSON.stringify(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2][mm]).toLowerCase().indexOf(Filterwert2) >= 0) {
-																			bezPartner2.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa][Feldname2][mm]);
+																	var beziehung2 = Objekt.Beziehungssammlungen[i].Beziehungen[aaa];
+																	for (var mm=0; mm<Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2].length; mm++) {
+																		if (JSON.stringify(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2][mm]).toLowerCase().indexOf(Filterwert2) >= 0) {
+																			bezPartner2.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][Feldname2][mm]);
 																		}
 																	}
 																	beziehung2.Beziehungspartner = bezPartner2;
 																	Beziehungssammlung.Beziehungen.push(beziehung2);
 																} else {
-																	Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa]);
+																	Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																}
 															}
 														}
 													}
 												} else {
 													//kein Filter auf Feldern - alle hinzufügen
-													if (!containsObject(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa], Beziehungssammlung.Beziehungen)) {
-														Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[iii].Beziehungen[aaa]);
+													if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[aaa], Beziehungssammlung.Beziehungen)) {
+														Beziehungssammlung.Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 													}
 												}
 												exportObjekt.Beziehungssammlungen.push(Beziehungssammlung);
@@ -626,6 +657,30 @@ function(head, req) {
 		}
 		send(JSON.stringify(exportObjekte));
 	});
+}
+
+function filtereBeziehungspartner(beziehungspartner, Filterwert, Vergleichsoperator) {
+	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wessen Name die Bedingung erfüllt
+	var bezPartner = [];
+	for (var m=0; m<beziehungspartner.length; m++) {
+		var feldwert = beziehungspartner[m].Name.toLowerCase();
+		if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
+			bezPartner.push(beziehungspartner[m]);
+		}
+	}
+	return bezPartner;
 }
 
 function containsObject(obj, list) {
