@@ -449,25 +449,29 @@ function(head, req) {
 														var Filterwert = convertToCorrectType(filterkriterien[l].Filterwert);
 														var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
 														if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[ww].Feldname) {
-															//Bei Objekten kann der Vergleichsoperator nicht berücksichtigt werden
-															if (typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert) >= 0) {
-																exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert));
+															//Beziehungspartner sind Objekte und müssen separat gefiltert werden
+															if (Feldname === "Beziehungspartner") {
+																var bezPartner = filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
+																if (bezPartner.length > 0) {
+																	Objekt.Beziehungssammlungen[i].Beziehungen[aaa].Beziehungspartner = bezPartner;
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
+																}
 															} else {
 																//jetzt müssen die verschiedenen möglichen Vergleichsoperatoren berücksichtigt werden
 																if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
-																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(erstelleBeziehungFuerExportObjekt(Feldname, Objekt.Beziehungssammlungen[i].Beziehungen[aaa], feldwert, Filterwert));
+																	exportObjekt.Beziehungssammlungen[t].Beziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 																}
 															}
 														}
@@ -531,18 +535,28 @@ function(head, req) {
 	});
 }
 
-function erstelleBeziehungFuerExportObjekt(Feldname, beziehung, feldwert, Filterwert) {
-	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wer die Bedingung erfüllt
-	if (Feldname === "Beziehungspartner") {
-		var bezPartner = [];
-		for (var m=0; m<feldwert.length; m++) {
-			if (JSON.stringify(feldwert[m]).toLowerCase().indexOf(Filterwert) >= 0) {
-				bezPartner.push(feldwert[m]);
-			}
+function filtereBeziehungspartner(beziehungspartner, Filterwert, Vergleichsoperator) {
+	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wessen Name die Bedingung erfüllt
+	var bezPartner = [];
+	for (var m=0; m<beziehungspartner.length; m++) {
+		var feldwert = beziehungspartner[m].Name.toLowerCase();
+		if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
+		} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
+			 bezPartner.push(beziehungspartner[m]);
 		}
-		beziehung.Beziehungspartner = bezPartner;
 	}
-	return beziehung;
+	return bezPartner;
 }
 
 function containsObject(obj, list) {
