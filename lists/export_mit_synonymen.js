@@ -288,22 +288,43 @@ function(head, req) {
 											feldExistiert = true;
 											feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]);
 											//Feld kann string oder object sein. Object muss stringified werden
-											if (Vergleichsoperator_z === "kein" && (feldwert === Filterwert_z || (myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) || (typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0))) {
+											if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === "=" && (feldwert == Filterwert_z || (typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0))) {
+											} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === ">" && ((typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (parseInt(feldwert, 10) > parseInt(Filterwert_z, 10)) || (feldwert > Filterwert_z))) {
+											} else if (Vergleichsoperator_z === "kein" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === ">=" && ((typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (parseInt(feldwert, 10) >= parseInt(Filterwert_z, 10)) || (feldwert >= Filterwert_z))) {
+											} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === "<" && ((typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (parseInt(feldwert, 10) < parseInt(Filterwert_z, 10)) || (feldwert < Filterwert_z))) {
+											} else if (Vergleichsoperator_z === "=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === "<=" && ((typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) || (parseInt(feldwert, 10) <= parseInt(Filterwert_z, 10)) || (feldwert <= Filterwert_z))) {
+											} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === ">" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === ">=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
 											}
