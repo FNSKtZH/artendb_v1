@@ -626,9 +626,15 @@
 								<div class="well well-small">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach werden die Daten- und Beziehungssammlungen der Gruppe aufgebaut</li>
-										<li>Sie können anschliessend innerhalb der Gruppe(n) filtern</li>
-										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet. Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder. Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
+										<li>Danach werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
+										<li>...und Sie können filtern und Eigenschaften wählen</li>
+										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet
+											<ul>
+												<li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.
+												<br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
+											<li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
+											</ul>
+										</li>
 									</ul>
 								</div>
 								<label class="checkbox">
@@ -663,18 +669,24 @@
 							<div class="accordion-inner">
 								<div class="well well-small" style="margin-bottom:15px;">So geht's:
 									<ul>
-										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
-										<li>Erfassen Sie in den Feldern Ihrer Wahl die gewünschten Kriterien...</li>
-										<li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Felder exportiert werden sollen</li>
-										<li>Sie können nach beliebig vielen Feldern filtern. Jedes Kriterium reduziert die Anzahl "Treffer".<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
-										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Dann exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte einfach zusammen</li>
-										<li>Es kommt nicht auf Gross-/Kleinschreibung an.
+										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Erfassen Sie in den Eigenschaften Ihrer Wahl die gewünschten Kriterien...</li>
+										<li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li>
+									</ul>
+									<p>Tipps zum Filtern:</p>
+									<ul>
+										<li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"
+											<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
+										<li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte zusammen</li>
+										<li>Es kommt nicht auf Gross-/Kleinschreibung an
 											<br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
-										<li>Sie können nach einem Teil des Feldinhalts filtern.
+										<li>Sie können nach einem Teil des Feldinhalts filtern (wenn Sie keine Vergleichsoperatoren verwenden)
 											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
-										<li>Platzhalter und Vergleichsoperatoren können nicht verwendet werden</li>
+										<li>Sie können die folgenden Vergleichsoperatoren verwenden: =, >, >=, <, <=
+											<br>Beispiel 1: Schreiben Sie im Feld "Artwert" ">5", werden Arten mit Artwert ab 6 gefunden
+											<br>Beispiel 2: Schreiben Sie "=Vogel", wird nur "Vogel" gefunden, nicht aber "Eisvogel"</li>
 										<li>Sie möchten nach einem Feld filtern, das entweder "ja" oder "nein", "wahr" oder "falsch" ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
-										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Feldern einer Beziehung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate (das Resultat entspricht einer Suche nach Kriterium 1 ODER Kriterium 2, statt UND). Sie müssen also den Filter im exportierten Resultat nachbessern</li>
+										<li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Eigenschaften derselben Beziehungssammlung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate. Filtern Sie hier also bloss nach einer Eigenschaft und im exportierten Resultat nach der zweiten</li>
 									</ul>
 								</div>
 								<label class="checkbox">
@@ -704,8 +716,9 @@
 							<div class="accordion-inner">
 								<div class="well well-small" style="margin-bottom:15px;">So geht's:
 									<ul>
-										<li>Nachfolgend sind alle Felder aufgelistet, die in den gewählten Gruppen vorkommen</li>
-										<li>Markieren Sie die Felder, die Sie exportieren möchten...</li>
+										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Bestimmen Sie, ob Informationen von Synonymen mitgeliefert werden sollen...</li>
+										<li>...markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
 										<li>...und fahren Sie danach mit "4. Exportieren" weiter</li>
 									</ul>
 								</div>

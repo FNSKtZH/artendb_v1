@@ -225,8 +225,8 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 
 ###Daten exportieren
 
-1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern<br>Standardmässig werden nur Datensätze exportiert, die Informationen von Daten- oder Beziehungssammlungen enthalten. Diese Option kann aber ausgeschaltet werden
-2. Sie wählt die gewünschten Eigenschaften<br>Standardmässig werden auch Informationen von synonymen Objekten exportiert. Diese Option kann aber ausgeschaltet werden
+1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern und dazu Vergleichsoperatoren verwenden.<br>Standardmässig werden nur Datensätze exportiert, die Informationen von Daten- oder Beziehungssammlungen enthalten. Diese Option kann ausgeschaltet werden
+2. Sie wählt die gewünschten Eigenschaften<br>Standardmässig werden auch Informationen von synonymen Objekten exportiert. Diese Option kann ausgeschaltet werden
 4. Die Datei wird generiert und im .csv-Format heruntergeladen
 
 Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
@@ -693,7 +693,7 @@ Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
 - ArtenDb ist in Entwicklung: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
-- Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb ablösen zu können
+- Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
 - Die Anwendung ist aber noch kaum getestet
 - Ich gehe davon aus, dass sie noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
@@ -702,7 +702,7 @@ Aktueller Stand:
 Achtung:
 
 - Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](https://barbalex.cloudant.com/artendb/_design/artendb/index.html) noch fehlen
-- Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für Stunden nicht erreichbar (wenn die Indexe neu aufgebaut werden)
+- Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:
 
@@ -728,6 +728,7 @@ Daten exportieren:
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
+- Beim Filtern können Vergleichsoperatoren verwendet werden (=, >, >=, <, <=)
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Informationen von synonymen Arten können mit exportiert werden
 - Bei Beziehungen kann man wahlweise:
