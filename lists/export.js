@@ -35,7 +35,10 @@ function(head, req) {
 				//jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
 				//damit das später nicht dauern wiederholt werden muss
 				for (x=0; x<filterkriterien.length; x++) {
-					filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
+					//die id darf nicht in Kleinschrift verwandelt werden
+					if (filterkriterien[x].Feldname !== "_id") {
+						filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
+					}
 				}
 			}
 			if (i === "felder") {
