@@ -109,7 +109,7 @@ function(head, req) {
 				//send('datensammlungen_aus_synonymen = ' + JSON.stringify(datensammlungen_aus_synonymen) + '   /   ');
 				//send('beziehungssammlungen_aus_synonymen = ' + JSON.stringify(beziehungssammlungen_aus_synonymen) + '   /   ');
 				//continue loop_object;
-			} else {
+			} else if (row.key[1] === 1) {
 				//wir sind jetzt im Originalobjekt
 				//sicherstellen, dass DS und BS existieren
 				if (!Objekt.Datensammlungen) {
