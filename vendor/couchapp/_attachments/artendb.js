@@ -641,6 +641,8 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 		$("#Hierarchie").blur();
 	//} else if (Datensammlungen.length === 0 && DatensammlungenVonSynonymen.length === 0 && Beziehungssammlungen.length === 0 && taxonomischeBeziehungssammlungen.length === 0 && BeziehungssammlungenVonSynonymen.length === 0) {
 	} else */
+	//accordion initiieren
+	//$("#accordion_art").collapse();
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 		$(".accordion-body").collapse('show');
@@ -1231,12 +1233,26 @@ function erstelleKonto(woher) {
 	if (uri.host().indexOf("cloudant") >= 0) {
 		//wenn mit cloudant verbunden wird, anderst authentifizieren
 		$.ajax({
-			type: "PUT",
-			url: 'https://barbalex.cloudant.com/artendb/_security',
-			data: {
+			type: "POST",
+			url: 'https://barbalex.cloudant.com/artendb/_session',
+			//url: 'https://cloudant.com/api/set_permissions',
+			/*data: {
 					"cloudant": {"nobody": ["_reader"]},
-					"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]}
-			},
+					//"readers": {"names":['"'+$('#Email_'+woher).val()+'"'],"roles":["_reader"]
+					"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]
+				}
+			},*/
+			//username: "barbalex",
+			//password: "dLhdMg12",
+			username: "ndegiverialocieverimpled",
+			password: "JL4Wej8QW5c4REMAyil5C5hK",
+			//database: "barbalex/artendb",
+			//roles: "_reader",
+			//roles: "_writer",
+			//accept: "*/*",
+			contentType: "application/x-www-form-urlencoded",
+			//contentType: "text/plain; charset=UTF-8",
+			//contentType: "multipart/form-data",
 			success: function() {
 				//User in _user eintragen
 				$.couch.signup({
@@ -1266,6 +1282,15 @@ function erstelleKonto(woher) {
 					//username: "ndegiverialocieverimpled",
 					//password: "JL4Wej8QW5c4REMAyil5C5hK"
 				});
+			},
+			error: function() {
+				var praefix = "importieren_";
+				if (woher === "art") {
+					praefix = "";
+				}
+				$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+				$("#"+praefix+woher+"_anmelden_fehler").alert();
+				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
 			}
 		});
 	} else {
@@ -2550,9 +2575,7 @@ function filtereFuerExport() {
 			filterObjekt.Feldname = $(this).attr('feld');
 			//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
 			filterObjekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
-			console.log('Filterwert = ' + filterObjekt.Filterwert);
 			filterObjekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
-			console.log('Vergleichsoperator = ' + filterObjekt.Vergleichsoperator);
 			filterkriterien.push(filterObjekt);
 		}
 	});
