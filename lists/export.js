@@ -58,7 +58,6 @@ function(head, req) {
 			Objekt = row.doc;
 			objektHinzufügen = false;
 			objektNichtHinzufügen = false;
-			//send(Objekt._id+'   /   ');
 
 			//sicherstellen, dass DS und BS existieren
 			if (!Objekt.Datensammlungen) {
@@ -182,47 +181,36 @@ function(head, req) {
 									//durch die Felder der Beziehung loopen
 									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] || Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === 0) {
 										feldExistiert = true;
-										feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]);
-										//Feld kann string oder object sein. Object muss stringified werden
-										if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "kein" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === ">" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === ">=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "<" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
-										} else if (Vergleichsoperator_z === "<=" && typeof feldwert === "object" && JSON.stringify(feldwert).toLowerCase().indexOf(Filterwert_z) >= 0) {
-											objektHinzufügen = true;
-											feldHinzugefügt = true;
+										//Beziehungspartner sind Objekte und müssen separat gefiltert werden
+										if (Feldname_z === "Beziehungspartner") {
+											var bezPartner = filtereBeziehungspartner(feldwert, Filterwert_z, Vergleichsoperator_z);
+											if (bezPartner.length > 0) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											}
+										} else {
+											if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+												objektHinzufügen = true;
+												feldHinzugefügt = true;
+											}
 										}
 									}
 								}
@@ -252,10 +240,6 @@ function(head, req) {
 							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
 								//wir haben das gesuchte Feld gefunden!
 								feldwert = convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
-								//send('feldwert = ' + feldwert + '   /   ');
-								//send('myTypeOf(feldwert) = ' + myTypeOf(feldwert) + '   /   ');
-								//send('Filterwert_z = ' + Filterwert_z + '   /   ');
-								//send('myTypeOf(Filterwert_z) = ' + myTypeOf(Filterwert_z) + '   /   ');
 								//in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
 								if (Vergleichsoperator_z == ">" && feldwert > Filterwert_z) {
 									objektHinzufügen = true;
@@ -327,6 +311,51 @@ function(head, req) {
 							}
 						}
 					}
+				}
+			}
+
+			if (nur_ds) {
+				//hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+				//wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
+				//wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
+				var hinzufuegen = false;
+				for (var zz=0; zz<felder.length; zz++) {
+					DsTyp_z = felder[zz].DsTyp;
+					DsName_z = felder[zz].DsName;
+					Feldname_z = felder[zz].Feldname;
+					if (DsTyp_z === "Beziehung") {
+						//durch alle Beziehungssammlungen loopen
+						for (var gg=0; gg<Objekt.Beziehungssammlungen.length; gg++) {
+							if (Objekt.Beziehungssammlungen[gg].Name === DsName_z) {
+								//durch Beziehungssammlungen der Beziehung loopen
+								if (Objekt.Beziehungssammlungen[gg].Beziehungen.length > 0) {
+									for (var hh=0; hh<Objekt.Beziehungssammlungen[gg].Beziehungen.length; hh++) {
+										//durch die Felder der Beziehung loopen
+										if (Objekt.Beziehungssammlungen[gg].Beziehungen[hh][Feldname_z] || Objekt.Beziehungssammlungen[gg].Beziehungen[hh][Feldname_z] === 0) {
+											hinzufuegen = true;
+										}
+									}
+								}
+							}
+						}
+					} else if (DsTyp_z === "Datensammlung") {
+						//das ist ein Feld aus einer Datensammlung
+						for (var kk=0; kk<Objekt.Datensammlungen.length; kk++) {
+							if (Objekt.Datensammlungen[kk].Name === DsName_z) {
+								if (Objekt.Datensammlungen[kk].Name === DsName_z && typeof Objekt.Datensammlungen[kk].Daten !== "undefined" && typeof Objekt.Datensammlungen[kk].Daten[Feldname_z] !== "undefined") {
+									hinzufuegen = true;
+								}
+							}
+						}
+					}
+				}
+				if (filterkriterien.length > 0 && !hinzufuegen) {
+					//ein Filter wurde gesetzt. Es sind keine Daten aus BS oder DS enthalten > nicht hinzufügen
+					objektNichtHinzufügen = true;
+				}
+				if (filterkriterien.length === 0 && hinzufuegen) {
+					//keine Filter, es gibt Daten aus BS oder DS > hinzufuegen
+					objektHinzufügen = true;
 				}
 			}
 
