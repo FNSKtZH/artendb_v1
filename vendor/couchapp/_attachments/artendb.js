@@ -656,17 +656,19 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 //altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
 function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	var html,
-		Name;
+		Name,
+		art_i_name;
+	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName;
 	//Accordion-Gruppe und -heading anfügen
 	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '">';
+	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen
-	html += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapse' + art_i_name + '" class="accordion-body collapse"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -732,7 +734,10 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 //erstellt die HTML für eine Datensammlung
 //benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
-	var htmlDatensammlung, hierarchie_string;
+	var htmlDatensammlung,
+		hierarchie_string,
+		art_i_name;
+	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 	//Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
 	//bei LR: Symbolleiste einfügen
@@ -740,13 +745,13 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group"><a class="btn lr_bearb lr_bearb_bearb" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
 	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '">';
+	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" class="accordion-body collapse ' + art.Gruppe + ' ' + dsTyp + '"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="accordion-body collapse ' + art.Gruppe + ' ' + dsTyp + '"><div class="accordion-inner">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
