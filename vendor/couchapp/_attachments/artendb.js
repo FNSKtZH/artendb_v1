@@ -493,7 +493,7 @@ function initiiere_art(id) {
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
 				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q]);
+					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
 					if (taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[q].Beziehungen) {
 						for (h in taxonomischeBeziehungssammlungen[q].Beziehungen) {
 							if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
@@ -528,7 +528,7 @@ function initiiere_art(id) {
 				htmlArt += "<h4>Beziehungen:</h4>";
 				for (q=0; q<Beziehungssammlungen.length; q++) {
 					//HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q]);
+					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q], "");
 				}
 			}
 			//Beziehungssammlungen von synonymen Arten
