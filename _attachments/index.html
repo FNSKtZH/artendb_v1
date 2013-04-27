@@ -961,7 +961,8 @@
 									$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 									//dafür sorgen, dass textareas genug gross sind
 									$('#importieren_ds textarea').each(function () {
-										$(this).trigger('focus');
+										//$(this).trigger('focus');
+										FitToContent(this, document.documentElement.clientHeight);
 									});
 									$("#DsName").focus();
 								}
@@ -1094,7 +1095,8 @@
 									$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
 									//dafür sorgen, dass textareas genug gross sind
 									$('#importieren_bs textarea').each(function () {
-										$(this).trigger('focus');
+										//$(this).trigger('focus');
+										FitToContent(this, document.documentElement.clientHeight);
 									});
 									$("#BsName").focus();
 								}

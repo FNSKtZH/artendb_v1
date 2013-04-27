@@ -1129,7 +1129,8 @@ function FitToContent(id, maxHeight) {
 function setzteHöheTextareas() {
 	$('form').each(function() {
 		$('textarea').each(function () {
-			$(this).trigger('focus');
+			//$(this).trigger('focus');
+			FitToContent(this, document.documentElement.clientHeight);
 		});
 	});
 }
@@ -3096,7 +3097,7 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
-			//prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie
+			//prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
 			if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
 				//das ist die Wurzel der Taxonomie
 				//somit ändert auch der Taxonomiename
