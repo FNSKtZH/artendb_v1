@@ -30,20 +30,20 @@ Die wichtigsten Merkmale dürften sein:
 - Daten können einfach und rasch kombiniert und exportiert werden, um anschliessend mit ihrer Hilfe Auswertungen durchzuführen
 
 ###Hauptanwendungszweck
-Man kann ArtenDb benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. ArtenDb ist aber in der Darstellung von Informationen eingeschränkt, da es die Darstellung dynamisch aus flexiblen Datenstrukturen generiert und (bisher) keine Bilder enthält. Anwendungen, deren Datenstruktur fix vorgegeben ist, können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass ArtenDb besonders umfassende und aktuelle Informationen enthält.
+Man kann ArtenDb benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. Da die Benutzeroberfläche dynamisch aus flexiblen Datenstrukturen generiert wird und ArtenDb (bisher) keine Bilder enthält, ist die Darstellung aber eingeschränkt. Anwendungen mit statischer Datenstruktur können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass ArtenDb besonders umfassende und aktuelle Informationen enthält.
 
 ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen durchzuführen. Meist in Kombination mit Artbeobachtungen oder Lebensraumkartierungen. Beispiele:
 
 - In einer Liste von Artbeobachtungen die wertvollsten Arten identifizieren, z.B. mithilfe des Artwerts, der nationalen Priorität oder des Rote-Liste-Status
 - Aus Vegetationsaufnahmen Zeigerwerte berechnen
 - In Zeitreihen Veränderungen von ausgewählten Parametern darstellen (z.B. Artwerte, Rote-Liste-Arten, Spätblüher, Magerkeitszeiger, störungsempfindliche Arten...)
-- Für eine Region, Lebensraum, Programm oder Massnahme geeignete/prioritäre Arten bestimmen
+- Für eine Region, Lebensraum, Förderprogramm oder Massnahme geeignete/prioritäre Arten bestimmen
 - Aus Kartierungen und/oder physikalischen Modellen für bestimmte Arten/Förderprogramme prioritäre Flächen identifizieren
 - Modellieren, z.B. den Einfluss der Klimaerwärmung auf Arten und Schutzprioritäten
 
 Besonders geeignet ist ArtenDb, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
 
-ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung einverstanden sind. 
+ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten. Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung einverstanden sind.
 
 ArtenDb ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS bzw. mit Daten, die man nicht veröffentlichen will.
 
@@ -139,7 +139,7 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungssammlungen
-Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Datensammlungen.
+Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Datensammlungen und werden separat behandelt, weil sie eine leicht abweichende Datenstruktur erfordern.
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. 
@@ -201,7 +201,7 @@ Das Menu ermöglicht:
 
 **Mobilfähigkeit**
 
-ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig, womit ArtenDb auf meinem iPad ganz brauchbar ist. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert und die Fingerbedienbarkeit verbessert, damit ArtenDb auch auf Smartphones brauchbar ist.
+ArtenDb ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig, womit ArtenDb auf meinem iPad ganz brauchbar ist. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert, die Fingerbedienbarkeit und die Darstellung verbessert, damit ArtenDb auch auf Smartphones brauchbar ist (wenn man unbedingt will, klappt es schon heute).
  
 ###Neue Datensammlungen hinzufügen
 Importiert werden können:
@@ -251,7 +251,7 @@ Eingesetzt werden:
 - [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
 - [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](http://twitter.github.com/bootstrap/) und [jsTree](http://www.jstree.com/) für die Benutzeroberfläche
 
-ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Im- und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Leider funktioniert ArtenDb auf dem Internet Explorer gar nicht, nicht einmal in der Version 10.
+ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Importe und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Leider funktioniert ArtenDb auf dem Internet Explorer gar nicht, nicht einmal in der Version 10.
 
 ###Dokumenten-Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
@@ -260,7 +260,7 @@ Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. D
 
 Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
-Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email angefügt werden, z.B. Bilder, Tonaufnahmen, Videos, Berichte... (noch nicht umgesetzt)
+Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email angefügt werden, z.B. Bilder, Tonaufnahmen, Videos, Berichte (noch nicht umgesetzt).
 
 ###Datenstruktur
 ####Objekte
@@ -378,7 +378,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 
 - Anstatt "Daten" enthält sie "Beziehungen"
 - Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
-- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben. Aufgrund dieser Methodik ist auch der nächste Punkt möglich:
+- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
 - Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen werden, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
@@ -639,7 +639,7 @@ Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. M
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
-Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
+Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
 
 ###Hierarchien
 Die Hierarchien werden momentan folgendermassen aufgebaut:
@@ -647,7 +647,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 - Flora: über Familie und Gattung
 - Fauna: über Klasse, Ordnung und Familie
 - Moose: über Klasse, Familie und Gattung
-- Pilze: über Gattung
+- Pilze: über die Gattung
 - Lebensräume: Jedes Objekt kennt seine Position in der Hierarchie. Hier zum Beispiel das Schneidbinsenried nach Delarze:
 
 ```javascript
@@ -684,6 +684,8 @@ Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfu
 
 Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die zugrunde liegenden Indexe kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
 
+Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
+
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
@@ -692,10 +694,10 @@ Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von Cou
 Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
-- ArtenDb ist in Entwicklung: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
-- Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
-- Die Anwendung ist aber noch kaum getestet
-- Ich gehe davon aus, dass sie noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
+- ArtenDb ist entworfen und in der Testphase: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
+ - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
+ - Die Anwendung ist aber noch kaum getestet
+- Ich gehe davon aus, dass ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
 
 ###Was kann man mit der aktuellen Version machen?
 
@@ -713,7 +715,7 @@ Eigenschaften anzeigen:
 
 - Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
 - Auch Daten- und Beziehungssammlungen von synonymen Objekten werden angezeigt
-- Datensammlungen sind beschrieben
+- Daten- und Beziehungssammlungen sind beschrieben
 - Beziehungen zwischen Objekten sind verlinkt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
@@ -728,12 +730,12 @@ Daten exportieren:
 - Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
-- Beim Filtern können Vergleichsoperatoren verwendet werden (=, >, >=, <, <=)
+- Dabei können Vergleichsoperatoren verwendet werden (=, >, >=, <, <=)
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Informationen von synonymen Arten können mit exportiert werden
-- Bei Beziehungen kann man wahlweise:
+- Bei Beziehungssammlungen kann man wahlweise:
  - pro Beziehung eine Zeile erstellen
- - pro Beziehung die Informationen eines Felds kommagetrennt hintereinander in dieses Feld schreiben
+ - pro Objekt eine Zeile erstellen und die Informationen aller Beziehungen kommagetrennt hintereinander ins entsprechende Feld schreiben
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
 Lebensräume in der Anwendung bearbeiten:
@@ -742,7 +744,7 @@ Lebensräume in der Anwendung bearbeiten:
 
 **To do**
 
-- Schnittstellen beschreiben und bedürfnisgerecht erweitern
+- Schnittstellen bedürfnisgerecht beschreiben und erweitern
 - Taxonomien importieren (wenig prioritär)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
