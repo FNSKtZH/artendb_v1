@@ -628,24 +628,22 @@ function initiiere_art(id) {
 
 function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
 	//accordion beenden
-	//htmlArt += '</div>';
-	//TODO: in neues div einfügen statt #art
 	$("#art_inhalt").html(htmlArt);
 	setzteHöheTextareas();
 	//richtiges Formular anzeigen
 	zeigeFormular("art");
 	//Bei Lebensräumen die Taxonomie öffnen
-	/*if (art.Gruppe === "Lebensräume") {
-		$("#collapseTaxonomie").collapse('show');
-		//Fokus von der Hierarchie wegnehmen
-		$("#Hierarchie").blur();
-	//} else if (Datensammlungen.length === 0 && DatensammlungenVonSynonymen.length === 0 && Beziehungssammlungen.length === 0 && taxonomischeBeziehungssammlungen.length === 0 && BeziehungssammlungenVonSynonymen.length === 0) {
-	} else */
 	//accordion initiieren
-	//$("#accordion_art").collapse();
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-		$(".accordion-body").collapse('show');
+		if (localStorage.Email) {
+			$("#art_anmelden").show();
+		}
+		$('.accordion-body').each(function() {
+			if ($(this).attr('id') !== "art_anmelden_collapse") {
+				$(this).collapse('show');
+			}
+		});
 	}
 	//jetzt die Links im Menu setzen
 	setzteLinksZuBilderUndWikipedia(art);
@@ -1369,6 +1367,7 @@ function meldeUserAb() {
 	$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
+	schuetzeLrTaxonomie();
 }
 
 function passeUiFuerAngemeldetenUserAn(woher) {
@@ -3198,7 +3197,6 @@ function bearbeiteLrTaxonomie() {
 	window.lr_bearb = true;
 	$("#art_anmelden_collapse").collapse('hide');
 	$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
-	//$("#art_anmelden").show();
 
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
