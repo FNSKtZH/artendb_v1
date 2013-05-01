@@ -1231,57 +1231,56 @@ function validiereSignup(woher) {
 function erstelleKonto(woher) {
 	//zuerst den User in cloudant freischeffeln
 	var uri = new Uri($(location).attr('href'));
-	if (uri.host().indexOf("cloudant") >= 0) {
+	if (uri.host().indexOf("cloudant__t") >= 0) {
 		//wenn mit cloudant verbunden wird, anderst authentifizieren
 		$.ajax({
-			type: "POST",
-			url: 'https://barbalex.cloudant.com/artendb/_session',
+			//type: "POST",
+			type: "PUT",
+			//url: 'https://barbalex.cloudant.com/artendb/_session',
+			url: 'https://barbalex.cloudant.com/artendb/_security',
 			//url: 'https://cloudant.com/api/set_permissions',
-			/*data: {
-					"cloudant": {"nobody": ["_reader"]},
-					//"readers": {"names":['"'+$('#Email_'+woher).val()+'"'],"roles":["_reader"]
-					"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]
-				}
-			},*/
-			//username: "barbalex",
-			//password: "dLhdMg12",
-			username: "ndegiverialocieverimpled",
-			password: "JL4Wej8QW5c4REMAyil5C5hK",
+			data: {
+				"cloudant": {"nobody": ["_reader", "_writer"]},
+				//"readers": {"names":['"'+$('#Email_'+woher).val()+'"'],"roles":["_reader"]
+				//"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]
+				"members": {"names": ['"'+$('#Email_'+woher).val()+'"'],"roles":["cats"]},
+				username: "barbalex",
+				password: "pwd"
+				//database: "barbalex/artendb"
+			},
+			//username: "ndegiverialocieverimpled",
+			//password: "JL4Wej8QW5c4REMAyil5C5hK",
 			//database: "barbalex/artendb",
-			//roles: "_reader",
-			//roles: "_writer",
-			//accept: "*/*",
+			//contentType: "application/json",
 			contentType: "application/x-www-form-urlencoded",
 			//contentType: "text/plain; charset=UTF-8",
 			//contentType: "multipart/form-data",
 			success: function() {
 				//User in _user eintragen
-				$.couch.signup({
-					name: $('#Email_'+woher).val()
-				},
-				$('#Passwort_'+woher).val(), {
-					success : function() {
-						localStorage.Email = $('#Email_'+woher).val();
-						if (woher === "art") {
-							bearbeiteLrTaxonomie();
+				$.couch.signup(
+					{name: $('#Email_'+woher).val()},
+					$('#Passwort_'+woher).val(), 
+					{
+						success : function() {
+							localStorage.Email = $('#Email_'+woher).val();
+							if (woher === "art") {
+								bearbeiteLrTaxonomie();
+							}
+							passeUiFuerAngemeldetenUserAn(woher);
+							//Werte aus Feldern entfernen
+							$("#Email_"+woher).val("");
+							$("#Passwort_"+woher).val("");
+							$("#Passwort2_"+woher).val("");
+						},
+						error : function () {
+							var praefix = "importieren_";
+							if (woher === "art") {
+								praefix = "";
+							}
+							$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt 2");
+							$("#"+praefix+woher+"_anmelden_fehler").alert();
+							$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
 						}
-						passeUiFuerAngemeldetenUserAn(woher);
-						//Werte aus Feldern entfernen
-						$("#Email_"+woher).val("");
-						$("#Passwort_"+woher).val("");
-						$("#Passwort2_"+woher).val("");
-					},
-					error : function () {
-						var praefix = "importieren_";
-						if (woher === "art") {
-							praefix = "";
-						}
-						$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-						$("#"+praefix+woher+"_anmelden_fehler").alert();
-						$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
-					},
-					//username: "ndegiverialocieverimpled",
-					//password: "JL4Wej8QW5c4REMAyil5C5hK"
 				});
 			},
 			error: function() {
