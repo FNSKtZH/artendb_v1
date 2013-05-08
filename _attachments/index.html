@@ -682,7 +682,7 @@
 											<br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
 										<li>Sie können nach einem Teil des Feldinhalts filtern (wenn Sie keine Vergleichsoperatoren verwenden)
 											<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
-										<li>Sie können die folgenden Vergleichsoperatoren verwenden: =, >, >=, <, <=
+										<li>Sie können die folgenden Vergleichsoperatoren verwenden: "=", ">", ">=", "<", "<="
 											<br>Beispiel 1: Schreiben Sie im Feld "Artwert" ">5", werden Arten mit Artwert ab 6 gefunden
 											<br>Beispiel 2: Schreiben Sie "=Vogel", wird nur "Vogel" gefunden, nicht aber "Eisvogel"</li>
 										<li>Sie möchten nach einem Feld filtern, das entweder "ja" oder "nein", "wahr" oder "falsch" ist? Verwenden Sie die Englischen Begriffe "true" und "false" (ohne Hochzeichen)</li>
@@ -795,9 +795,9 @@
 				}
 
 				BrowserDetect.init();
-				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version <= 10) {
+				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 10) {
 					$('#meldung_kompatibilität').modal();
-					return;
+					//return;
 				}
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
