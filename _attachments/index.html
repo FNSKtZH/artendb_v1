@@ -1495,20 +1495,34 @@
 					//zuerst die id des Objekts holen
 					var uri = new Uri($(location).attr('href'));
 					var id = uri.getQueryParamValue('id');
+					//wenn browser history nicht unterstützt, erstellt history.js eine hash
+					//dann muss die id durch die id in der hash ersetzt werden
+					var hash = uri.anchor();
+					if (hash) {
+						var uri2 = new Uri(hash);
+						id = uri2.getQueryParamValue('id');
+					}
+					console.log('id = ' + id);
 					//Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
 					$db = $.couch.db("artendb");
 					$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
 						success: function (data) {
+							console.log('2');
 							//daraus einen Array von docs machen
 							var doc_array = _.map(data.rows, function(row) {
 								return row.doc;
 							});
+							console.log('3');
 							//und diese Dokumente nun löschen
 							loescheMassenMitObjektArray(doc_array);
+							console.log('4');
+							console.log('id = ' + id);
 							//vorigen node ermitteln
 							var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+							console.log('5');
 							//node des gelöschten LR entfernen
 							jQuery.jstree._reference("#" + id).delete_node("#" + id);
+							console.log('6');
 							//vorigen node öffnen
 							if (voriger_node) {
 								$.jstree._reference(voriger_node).select_node(voriger_node);
