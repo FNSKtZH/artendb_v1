@@ -1626,6 +1626,7 @@ function importiereDatensammlung() {
 	if (!$("#DsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
 		$("#meldung_individuell_text").html("Bitte geben Sie der Datensammlung einen Namen");
+		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
 		$("#DsName").focus();
 		return false;
@@ -1733,6 +1734,7 @@ function importiereBeziehungssammlung() {
 	if (!$("#BsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
 		$("#meldung_individuell_text").html("Bitte geben Sie der Beziehungssammlung einen Namen");
+		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
 		$("#BsName").focus();
 		return false;
@@ -3149,6 +3151,7 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 				error: function(data) {
 					$("#meldung_individuell_label").html("Fehler");
 					$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+					$("#meldung_individuell_schliessen").html("schliessen");
 					$('#meldung_individuell').modal();
 				}
 			});
@@ -3156,6 +3159,7 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 		error: function () {
 			$("#meldung_individuell_label").html("Fehler");
 			$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+			$("#meldung_individuell_schliessen").html("schliessen");
 			$('#meldung_individuell').modal();
 		}
 	});
@@ -3313,6 +3317,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 		error: function() {
 			$("#meldung_individuell_label").html("Fehler");
 			$("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
+			$("#meldung_individuell_schliessen").html("schliessen");
 			$('#meldung_individuell').modal();
 			initiiere_art(object._id);
 		}
