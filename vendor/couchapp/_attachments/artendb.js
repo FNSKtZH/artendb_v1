@@ -1162,7 +1162,6 @@ function zeigeFormular(Formularname) {
 	if (Formularname) {
 		if (Formularname !== "art") {
 			//Spuren des letzten Objekts entfernen
-			//delete window.Gruppe;
 			delete localStorage.art_id;
 			//URL anpassen, damit kein Objekt angezeigt wird
 			history.pushState({id: "id"}, "id", "index.html");
@@ -2631,7 +2630,6 @@ function filtereFuerExport() {
 		fTz = "true";
 	}
 	//globale Variable vorbereiten
-	delete window.exportieren_objekte;
 	window.exportieren_objekte = [];
 	//in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
 	//jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja

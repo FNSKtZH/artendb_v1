@@ -1309,9 +1309,20 @@
 					zeigeFormular("export");
 					//Exportieren-Guids schaffen, damit kein altes existiert
 					window.exportieren_guids = [];
-					delete window.exportieren_objekte;
+					//IE8 kann globale Variabeln nicht löschen!
+					try {
+						delete window.exportieren_objekte;
+					}
+					catch (e) {
+						window.exportieren_objekte = undefined;
+					}
 					//Exportsicherung entfernen
-					delete window.exportieren_objekte_sik;
+					try {
+						delete window.exportieren_objekte_sik;
+					}
+					catch (e) {
+						window.exportieren_objekte_sik = undefined;
+					}
 				});
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
@@ -1396,7 +1407,12 @@
 				$("#art").on("click", ".btn.lr_bearb_schuetzen", function() {
 					schuetzeLrTaxonomie();
 					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-					delete window.lr_bearb;
+					try {
+						delete window.lr_bearb;
+					}
+					catch (e) {
+						window.lr_bearb = undefined;
+					}
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_neu", function() {
