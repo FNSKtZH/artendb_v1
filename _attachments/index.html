@@ -790,10 +790,19 @@
 				}
 
 				//prüfen, ob history unterstützt wird. Wenn nein, shim laden
+				//achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
+				//aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
+				//zurück-Taste funktioniert dann auch nicht
 				Modernizr.load({
 					test: Modernizr.history,
 					nope: 'vendor/couchapp/history.js'
 				});
+
+				if (!Modernizr.history) {
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history<br>Sie können die Tasten für 'zurück' und 'vorwärts' nicht benutzen");
+					$('#meldung_individuell_label').html("inkompatibler Browser");
+					$('#meldung_individuell').modal();
+				}
 
 				BrowserDetect.init();
 				//console.log('IE Version ' + BrowserDetect.version);
@@ -807,6 +816,12 @@
 					console.log('oeffneUri');
 					oeffneUri();
 				});
+
+				//Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
+				//daher oeffneUri nochmals auslösen
+				window.onload = function() {
+					oeffneUri();
+				}
 
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {

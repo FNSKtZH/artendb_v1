@@ -2229,6 +2229,13 @@ function entferneBeziehungssammlungAusDokument(id, BsName) {
 function oeffneUri() {
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
+	//wenn browser history nicht unterstützt, erstellt history.js eine hash
+	//dann muss die id durch die id in der hash ersetzt werden
+	var hash = uri.anchor();
+	if (hash) {
+		var uri2 = new Uri(hash);
+		id = uri2.getQueryParamValue('id');
+	}
 	if (id) {
 		//Gruppe ermitteln
 		$db = $.couch.db("artendb");
