@@ -1367,7 +1367,7 @@ function meldeUserAb() {
 		delete localStorage.Email;
 	}
 	catch (e) {
-		localStorage.Email = undefined;
+		localS
 	}
 	$(".art_anmelden_titel").text("Anmelden");
 	$(".importieren_anmelden_titel").text("1. Anmelden");
@@ -2399,7 +2399,6 @@ function erstelleListeFuerFeldwahl() {
 	$('html, body').animate({
 		scrollTop: $("#exportieren_objekte_waehlen_gruppen_hinweis_text").offset().top
 	}, 2000);
-	console.log('1');
 	//gewählte Gruppen ermitteln
 	//globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	var export_gruppen = [];
@@ -2412,36 +2411,21 @@ function erstelleListeFuerFeldwahl() {
 			export_gruppen.push($(this).val());
 		}
 	});
-	console.log('2');
 	if (export_gruppen.length > 0) {
 		gruppen = export_gruppen;
 		for (var i=0; i<gruppen.length; i++) {
 			//Felder abfragen
-			if (window[gruppen[i] + '_felder']) {
-				window.export_felder_arrays = _.union(window.export_felder_arrays, window[gruppen[i] + '_felder'].rows);
-				//die verarbeitete Gruppe aus export_gruppen entfernen
-				export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
-				//export_gruppen = _.without(export_gruppen, gruppen[i]);
-				if (export_gruppen.length === 0) {
-					//alle Gruppen sind verarbeitet
-					erstelleListeFuerFeldwahl_2();
-				}
-			} else {
-				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
-					success: function (data) {
-						console.log('5');
-						window[gruppen[i] + '_felder'] = data;
-						window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
-						//die verarbeitete Gruppe aus export_gruppen entfernen
-						export_gruppen.splice(export_gruppen.indexOf(gruppen[i],1));
-						//export_gruppen = _.without(export_gruppen, gruppen[i]);
-						if (export_gruppen.length === 0) {
-							//alle Gruppen sind verarbeitet
-							erstelleListeFuerFeldwahl_2();
-						}
+			$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
+				success: function (data) {
+					window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
+					//eine Gruppe aus export_gruppen entfernen
+					export_gruppen.splice(0,1);
+					if (export_gruppen.length === 0) {
+						//alle Gruppen sind verarbeitet
+						erstelleListeFuerFeldwahl_2();
 					}
-				});
-			}
+				}
+			});
 		}
 	} else {
 		//letzte Rückmeldung anpassen
@@ -2494,7 +2478,6 @@ function erstelleListeFuerFeldwahl_2() {
 		}
 	}
 	var hinweisTaxonomien;
-	console.log('10');
 	erstelleExportfelder(Taxonomien, Datensammlungen, Beziehungssammlungen);
 	//kontrollieren, ob Taxonomien zusammengefasst werden
 	if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
@@ -2516,44 +2499,46 @@ function erstelleListeFuerFeldwahl_2() {
 function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	var DsTyp, DsName, FeldName;
 	for (var i in FelderArray) {
-		//Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
-		DsTyp = FelderArray[i].key[0];
-		DsName = FelderArray[i].key[1];
-		FeldName = FelderArray[i].key[2];
-		if (DsTyp === "Objekt") {
-			//das ist eine Eigenschaft des Objekts
-			//FelderObjekt[FeldName] = null;	//NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
-		} else if (window.fasseTaxonomienZusammen && DsTyp === "Taxonomie") {
-			//Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
-			//Wenn Datensammlung noch nicht existiert, gründen
-			if (!FelderObjekt["Taxonomie(n)"]) {
-				FelderObjekt["Taxonomie(n)"] = {};
-				FelderObjekt["Taxonomie(n)"].Typ = DsTyp;
-				FelderObjekt["Taxonomie(n)"].Name = "Taxonomie(n)";
-				FelderObjekt["Taxonomie(n)"].Daten = {};
+		if (FelderArray[i].key) {
+			//Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
+			DsTyp = FelderArray[i].key[0];
+			DsName = FelderArray[i].key[1];
+			FeldName = FelderArray[i].key[2];
+			if (DsTyp === "Objekt") {
+				//das ist eine Eigenschaft des Objekts
+				//FelderObjekt[FeldName] = null;	//NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
+			} else if (window.fasseTaxonomienZusammen && DsTyp === "Taxonomie") {
+				//Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
+				//Wenn Datensammlung noch nicht existiert, gründen
+				if (!FelderObjekt["Taxonomie(n)"]) {
+					FelderObjekt["Taxonomie(n)"] = {};
+					FelderObjekt["Taxonomie(n)"].Typ = DsTyp;
+					FelderObjekt["Taxonomie(n)"].Name = "Taxonomie(n)";
+					FelderObjekt["Taxonomie(n)"].Daten = {};
+				}
+				//Feld ergänzen
+				FelderObjekt["Taxonomie(n)"].Daten[FeldName] = null;
+			} else if (DsTyp === "Datensammlung" || DsTyp === "Taxonomie") {
+				//Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
+				if (!FelderObjekt[DsName]) {
+					FelderObjekt[DsName] = {};
+					FelderObjekt[DsName].Typ = DsTyp;
+					FelderObjekt[DsName].Name = DsName;
+					FelderObjekt[DsName].Daten = {};
+				}
+				//Feld ergänzen
+				FelderObjekt[DsName].Daten[FeldName] = null;
+			} else if (DsTyp === "Beziehung") {
+				//Wenn Beziehungstyp noch nicht existiert, gründen
+				if (!FelderObjekt[DsName]) {
+					FelderObjekt[DsName] = {};
+					FelderObjekt[DsName].Typ = DsTyp;
+					FelderObjekt[DsName].Name = DsName;
+					FelderObjekt[DsName].Beziehungen = {};
+				}
+				//Feld ergänzen
+				FelderObjekt[DsName].Beziehungen[FeldName] = null;
 			}
-			//Feld ergänzen
-			FelderObjekt["Taxonomie(n)"].Daten[FeldName] = null;
-		} else if (DsTyp === "Datensammlung" || DsTyp === "Taxonomie") {
-			//Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
-			if (!FelderObjekt[DsName]) {
-				FelderObjekt[DsName] = {};
-				FelderObjekt[DsName].Typ = DsTyp;
-				FelderObjekt[DsName].Name = DsName;
-				FelderObjekt[DsName].Daten = {};
-			}
-			//Feld ergänzen
-			FelderObjekt[DsName].Daten[FeldName] = null;
-		} else if (DsTyp === "Beziehung") {
-			//Wenn Beziehungstyp noch nicht existiert, gründen
-			if (!FelderObjekt[DsName]) {
-				FelderObjekt[DsName] = {};
-				FelderObjekt[DsName].Typ = DsTyp;
-				FelderObjekt[DsName].Name = DsName;
-				FelderObjekt[DsName].Beziehungen = {};
-			}
-			//Feld ergänzen
-			FelderObjekt[DsName].Beziehungen[FeldName] = null;
 		}
 	}
 	return FelderObjekt;
