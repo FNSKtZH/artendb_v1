@@ -1099,7 +1099,8 @@ function setzeTreehoehe() {
 	} else {
 		//Spalten sind untereinander. Baum 41px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
 		//$("#menu").css("max-height", windowHeight - 74);
-		$(".baum").css("max-height", windowHeight - 202);
+		//$(".baum").css("max-height", windowHeight - 202);
+		$(".baum").css("max-height", windowHeight - 232);
 	}
 }
 
