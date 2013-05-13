@@ -243,7 +243,10 @@ function initiiereSuchfeld() {
 		if (window.filtere_lr) {
 			initiiereSuchfeld_2();
 		} else {
-			$db.view('artendb/filtere_lr?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'", {}, {}, {}, {}, {}]', {
+			var startkey = encodeURIComponent('["'+window.Gruppe+'"]');
+			var endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]');
+			var url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
+			$db.view(url, {
 				success: function (data) {
 					window.filtere_lr = data;
 					initiiereSuchfeld_2();
@@ -254,7 +257,7 @@ function initiiereSuchfeld() {
 		if (window["filtere_art_" + window.Gruppe.toLowerCase()]) {
 			initiiereSuchfeld_2();
 		} else {
-			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'", {}, {}]', {
+			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'",{}]', {
 				success: function (data) {
 					window["filtere_art_" + window.Gruppe.toLowerCase()] = data;
 					initiiereSuchfeld_2();
