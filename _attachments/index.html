@@ -787,19 +787,19 @@
 				BrowserDetect.init();
 				//zunächst mal den gröbsten Bock abfangen
 				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
-					$('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt:<br>Sie können weder importieren noch exportieren. Und die Daten werden mehr schlecht als recht angezeigt.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt.<br><br>Eine unvollständige Liste, was nicht funktioniert:<ul><li>importieren</li><li>exportieren</li><li>Lebensräume bearbeiten</li><li>Beim Anzeigen von Lebensräumen erscheint eine Fehlermeldung</li><li>Man kann zwar meistens filtern aber danach nicht immer eine Art aus der Ergebnisliste wählen</li><li>Daten werden nicht optimal angezeigt</li><li>...und die Anwendung ist teilweise sehr langsam</li></ul><br>Empfehlung: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen) oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.<br><a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer 10</a> funktioniert leider nur mit Einschränkungen.");
 					$('#meldung_individuell_label').html("inkompatibler Browser");
 					$('#meldung_individuell').modal();
 				//jetzt den nächstgrössten Bock
 				} else if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version === 9) {
-					$('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt:<ul><li>Sie können weder importieren noch exportieren</li><li>Sie können auch nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt.<br><br>Eine unvollständige Liste, was nicht funktioniert:<ul><li>importieren</li><li>exportieren</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li><li>Beim Anzeigen von Lebensräumen erscheint eine Fehlermeldung</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen) oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.<br><a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer 10</a> funktioniert leider nur mit Einschränkungen.");
 					$('#meldung_individuell_label').html("inkompatibler Browser");
 					$('#meldung_individuell').modal();
 				} else {
 					//jetzt weniger schlimme Inkompatibilitäten
 					//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
 					if (!Modernizr.mq('(min-width: 10px)')) {
-						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries.<br>ArtenDb wird nicht optimal funktionieren.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries.<br>ArtenDb wird nicht optimal funktionieren.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen) oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.<br><a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer 10</a> funktioniert leider nur mit Einschränkungen.");
 						$('#meldung_individuell_label').html("inkompatibler Browser");
 						$('#meldung_individuell').modal();
 					}
@@ -809,7 +809,7 @@
 					//aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
 					//zurück-Taste funktioniert dann auch nicht
 					if (!Modernizr.history) {
-						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history.<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen den Strukturbaum und das Menu.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history.<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen den Strukturbaum und das Menu.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen) oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.<br><a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer 10</a> funktioniert leider nur mit Einschränkungen.");
 						$('#meldung_individuell_label').html("inkompatibler Browser");
 						$('#meldung_individuell').modal();
 					}

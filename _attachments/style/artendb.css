@@ -39,16 +39,12 @@ body {
 	}
 
 	#forms {
-		/*position: absolute;
-		left: 399px;*/
 		width: -webkit-calc(100% - 391px);
 		width: -o-calc(100% - 391px);
 		width: calc(100% - 391px);
 	}
 
 	#forms {
-		/*position: absolute;
-		left: 399px;*/
 		-ms-transform: translate(391px,0px);
 		-webkit-transform: translate(391px,0px);
 		-o-transform: translate(391px,0px);
@@ -83,6 +79,7 @@ body {
 	
 	.typeahead {
 		/*verhindern, dass breiter angezeigt wird, als der Bildschirm*/
+		max-width: 1100px;
 		max-width: -webkit-calc(100% - 60px);
 		max-width: -o-calc(100% - 60px);
 		max-width: calc(100% - 60px);
@@ -164,6 +161,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #menu .suchfeld {
+	width: 321px;
 	width: -webkit-calc(100% + 125px);
 	width: -o-calc(100% + 125px);
 	width: calc(100% + 125px);
@@ -346,7 +344,6 @@ option {
 }
 
 #menu .typeahead {
-	/*max-height: 600px;*/
 	max-height: -webkit-calc(100% - 140px);
 	max-height: -o-calc(100% - 140px);
 	max-height: calc(100% - 140px);
