@@ -56,11 +56,11 @@
 					<div id="Gruppe_label">Gruppe wählen:</div>
 				</div>
 				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeFlora" value="Flora">Flora</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeMoose" value="Moose">Moose</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeMacromycetes" value="Macromycetes">Pilze</button>
-					<button class="btn btn-inverse" name="Gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
+					<button class="btn btn-inverse gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
+					<button class="btn btn-inverse gruppe" id="GruppeFlora" value="Flora">Flora</button>
+					<button class="btn btn-inverse gruppe" id="GruppeMoose" value="Moose">Moose</button>
+					<button class="btn btn-inverse gruppe" id="GruppeMacromycetes" value="Macromycetes">Pilze</button>
+					<button class="btn btn-inverse gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
 				</div>
 			</div>
 			<div id="suchenFauna" class="input-prepend suchen">
@@ -784,20 +784,21 @@
 				$("#forms").hide();
 				//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
 				if (!Modernizr.mq('(min-width: 10px)')) {
-					$('#meldung_kompatibilität').modal();
-					return;
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries<br>ArtenDb wird nicht optimal funktionieren");
+					$('#meldung_individuell_label').html("inkompatibler Browser");
+					$('#meldung_individuell').modal();
 				}
 
-				//prüfen, ob history unterstützt wird. Wenn nein, melden und Einsteigen verhindern
-				if (!Modernizr.history) {
-					$('#meldung_kompatibilität').modal();
-					return;
-				}
+				//prüfen, ob history unterstützt wird. Wenn nein, shim laden
+				Modernizr.load({
+					test: Modernizr.history,
+					nope: 'vendor/couchapp/history.js'
+				});
 
 				BrowserDetect.init();
-				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 10) {
+				//console.log('IE Version ' + BrowserDetect.version);
+				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
 					$('#meldung_kompatibilität').modal();
-					//return;
 				}
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
@@ -816,7 +817,7 @@
 				}
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
-				$("#menu").on("click", "[name='Gruppe']", function () {
+				$("#Gruppe").on("click", ".gruppe", function () {
 					oeffneGruppe(this.value);
 				});
 
