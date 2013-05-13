@@ -1162,7 +1162,13 @@ function zeigeFormular(Formularname) {
 	if (Formularname) {
 		if (Formularname !== "art") {
 			//Spuren des letzten Objekts entfernen
-			delete localStorage.art_id;
+			//IE8 kann nicht deleten
+			try {
+				delete localStorage.art_id;
+			}
+			catch (e) {
+				localStorage.art_id = undefined;
+			}
 			//URL anpassen, damit kein Objekt angezeigt wird
 			history.pushState({id: "id"}, "id", "index.html");
 			//alle Bäume ausblenden, suchfeld, Baumtitel
@@ -1356,7 +1362,13 @@ function meldeUserAn(woher) {
 }
 
 function meldeUserAb() {
-	delete localStorage.Email;
+	//IE8 kann nicht deleten
+	try {
+		delete localStorage.Email;
+	}
+	catch (e) {
+		localStorage.Email = undefined;
+	}
 	$(".art_anmelden_titel").text("Anmelden");
 	$(".importieren_anmelden_titel").text("1. Anmelden");
 	$(".alert").css("display", "none");
@@ -2387,6 +2399,7 @@ function erstelleListeFuerFeldwahl() {
 	$('html, body').animate({
 		scrollTop: $("#exportieren_objekte_waehlen_gruppen_hinweis_text").offset().top
 	}, 2000);
+	console.log('1');
 	//gewählte Gruppen ermitteln
 	//globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	var export_gruppen = [];
@@ -2399,6 +2412,7 @@ function erstelleListeFuerFeldwahl() {
 			export_gruppen.push($(this).val());
 		}
 	});
+	console.log('2');
 	if (export_gruppen.length > 0) {
 		gruppen = export_gruppen;
 		for (var i=0; i<gruppen.length; i++) {
@@ -2415,6 +2429,7 @@ function erstelleListeFuerFeldwahl() {
 			} else {
 				$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
 					success: function (data) {
+						console.log('5');
 						window[gruppen[i] + '_felder'] = data;
 						window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
 						//die verarbeitete Gruppe aus export_gruppen entfernen
@@ -2479,6 +2494,7 @@ function erstelleListeFuerFeldwahl_2() {
 		}
 	}
 	var hinweisTaxonomien;
+	console.log('10');
 	erstelleExportfelder(Taxonomien, Datensammlungen, Beziehungssammlungen);
 	//kontrollieren, ob Taxonomien zusammengefasst werden
 	if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
