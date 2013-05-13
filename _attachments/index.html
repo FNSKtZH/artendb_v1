@@ -829,12 +829,21 @@
 					nope: 'style/artendb_ohne_mq.css'
 				});
 
+				//IE8 kennt trim nicht!
 				if (!String.prototype.trim)  {
-					//in IE8 gibt es die Funktion trim nicht
-					//muss implementiert werden
 					String.prototype.trim = function () {
 						return this.replace(/^\s+|\s+$/g, '');
 					};
+				}
+
+				//IE8 kennt indexOf nicht!
+				if (!Array.prototype.indexOf) {
+					Array.prototype.indexOf = function(obj, start) {
+						for (var i = (start || 0), j = this.length; i < j; i++) {
+							if (this[i] === obj) { return i; }
+						}
+						return -1;
+					}
 				}
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
