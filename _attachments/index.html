@@ -14,8 +14,9 @@
 		<script src="vendor/couchapp/jquery.couch.js"></script>
 		<script src="vendor/couchapp/jquery.csv.js"></script>
 		<script src="vendor/couchapp/jsuri.js"></script>
-		<script src="vendor/couchapp/FileSaver.js"></script>
+		<script src="vendor/couchapp/FileSaver.js" defer></script>
 		<script src="vendor/couchapp/css3-mediaqueries.js"></script>
+		<script src="vendor/couchapp/history.js"></script>
 		<script src="vendor/couchapp/sha1.js"></script>
 		<script src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/bootstrap.css">
@@ -819,10 +820,17 @@
 					}
 				}
 
+				/*
+				DAS HAT ALLES NICHT GEKLAPPT
+				DARUM IN SCRIPTS GELADEN
 				Modernizr.load({
 					test: Modernizr.history,
 					nope: 'vendor/couchapp/history.js'
 				});
+
+				if (!window.history || !history.pushState) {
+					$.getScript('vendor/couchapp/history.js');
+				}*/
 
 				Modernizr.load({
 					test: Modernizr.csstransforms,
@@ -845,6 +853,13 @@
 						return -1;
 					}
 				}
+
+				//in IE8 funktioniert createElementNS nicht oder allenfalls ers mit Verzögerung
+				//das hier war der Versuch, es erst später aufzurufen (natürlich in script tag ausgeschaltet)
+				//hat aber nicht geklappt
+				/*setTimeout(function() {
+					$.getScript('vendor/couchapp/FileSaver.js');
+				}, 100);*/
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
