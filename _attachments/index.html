@@ -15,6 +15,7 @@
 		<script src="vendor/couchapp/jquery.csv.js"></script>
 		<script src="vendor/couchapp/jsuri.js"></script>
 		<script src="vendor/couchapp/FileSaver.js"></script>
+		<script src="vendor/couchapp/css3-mediaqueries.js"></script>
 		<script src="vendor/couchapp/sha1.js"></script>
 		<script src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/bootstrap.css">
@@ -782,33 +783,47 @@
 		<script>
 			$(document).ready(function () {
 				$("#forms").hide();
-				//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
-				if (!Modernizr.mq('(min-width: 10px)')) {
-					$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries<br>ArtenDb wird nicht optimal funktionieren");
+	
+				BrowserDetect.init();
+				//zunächst mal den gröbsten Bock abfangen
+				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt:<br>Sie können weder importieren noch exportieren. Und die Daten werden mehr schlecht als recht angezeigt.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
 					$('#meldung_individuell_label').html("inkompatibler Browser");
 					$('#meldung_individuell').modal();
+				//jetzt den nächstgrössten Bock
+				} else if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version === 9) {
+					$('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt:<ul><li>Sie können weder importieren noch exportieren</li><li>Sie können auch nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+					$('#meldung_individuell_label').html("inkompatibler Browser");
+					$('#meldung_individuell').modal();
+				} else {
+					//jetzt weniger schlimme Inkompatibilitäten
+					//prüfen, ob media queries unterstützt werden. Wenn nein, melden und Einsteigen verhindern
+					if (!Modernizr.mq('(min-width: 10px)')) {
+						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries.<br>ArtenDb wird nicht optimal funktionieren.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+						$('#meldung_individuell_label').html("inkompatibler Browser");
+						$('#meldung_individuell').modal();
+					}
+
+					//prüfen, ob history unterstützt wird. Wenn nein, shim laden
+					//achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
+					//aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
+					//zurück-Taste funktioniert dann auch nicht
+					if (!Modernizr.history) {
+						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history.<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen den Strukturbaum und das Menu.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
+						$('#meldung_individuell_label').html("inkompatibler Browser");
+						$('#meldung_individuell').modal();
+					}
 				}
 
-				//prüfen, ob history unterstützt wird. Wenn nein, shim laden
-				//achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
-				//aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
-				//zurück-Taste funktioniert dann auch nicht
 				Modernizr.load({
 					test: Modernizr.history,
 					nope: 'vendor/couchapp/history.js'
 				});
 
-				if (!Modernizr.history) {
-					$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen einfach den Strukturbaum und das Menu");
-					$('#meldung_individuell_label').html("inkompatibler Browser");
-					$('#meldung_individuell').modal();
-				}
-
-				BrowserDetect.init();
-				//console.log('IE Version ' + BrowserDetect.version);
-				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
-					$('#meldung_kompatibilität').modal();
-				}
+				Modernizr.load({
+					test: Modernizr.transform,
+					nope: 'style/artendb_ohne_mq.css'
+				});
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
@@ -1627,7 +1642,7 @@
 			<h3>inkompatibler Browser</h3>
 		</div>
 		<div class="modal-body">
-			<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Um mit ArtenDb zu arbeiten, verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> oder <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a>.</p>
+			<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder den <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer (ab Version 10)</a>.</p>
 		</div>
 	</div>
 

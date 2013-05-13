@@ -47,10 +47,12 @@ body {
 	}
 
 	#forms {
-		-ms-transform: translate(391px,0px); /* IE 9 */
-		-webkit-transform: translate(391px,0px); /* Safari and Chrome */
-		-o-transform: translate(391px,0px); /* Opera */
-		-moz-transform: translate(391px,0px); /* Firefox */
+		/*position: absolute;
+		left: 399px;*/
+		-ms-transform: translate(391px,0px);
+		-webkit-transform: translate(391px,0px);
+		-o-transform: translate(391px,0px);
+		-moz-transform: translate(391px,0px);
 		transform: translate(391px,0px);
 	}
 }
