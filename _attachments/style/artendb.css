@@ -227,6 +227,8 @@ a:hover {
 }
 
 .controls {
+	/*Breite fix setzen für Browser, die calc nicht unterstützen*/
+	width: 1000px;
 	width: -webkit-calc(100% - 210px);
 	width: -o-calc(100% - 210px);
 	width: calc(100% - 210px);

@@ -821,9 +821,17 @@
 				});
 
 				Modernizr.load({
-					test: Modernizr.transform,
+					test: Modernizr.csstransforms,
 					nope: 'style/artendb_ohne_mq.css'
 				});
+
+				if (!String.prototype.trim)  {
+					//in IE8 gibt es die Funktion trim nicht
+					//muss implementiert werden
+					String.prototype.trim = function () {
+						return this.replace(/^\s+|\s+$/g, '');
+					};
+				}
 
 				//falls URL übergeben wurde, das entsprechende Dokument öffnen
 				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
