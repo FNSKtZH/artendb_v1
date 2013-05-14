@@ -21,6 +21,7 @@ function(head, req) {
 		Beziehung,
 		dsExistiertSchon,
 		dsExistiert;
+	var _ = require("lists/lib/underscore");
 	// specify that we're providing a JSON response
 	provides('json', function() {
 		//übergebene Variabeln extrahieren
