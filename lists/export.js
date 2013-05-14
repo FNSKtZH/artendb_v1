@@ -67,6 +67,10 @@ function(head, req) {
 				Objekt.Beziehungssammlungen = [];
 			}
 
+			//TODO: Prüfen, ob Gruppen übergeben wurden
+			//ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
+			//ja: objektHinzufügen = true / nein: continue mit nächstem Dokument
+
 			//kein Filter aber nur Datensätze mit Infos aus DS/BS
 			if (filterkriterien.length === 0 && !nur_ds) {
 				objektHinzufügen = true;
