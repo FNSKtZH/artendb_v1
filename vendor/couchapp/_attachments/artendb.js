@@ -1129,7 +1129,6 @@ function FitToContent(id, maxHeight) {
 function setzteHöheTextareas() {
 	$('form').each(function() {
 		$('textarea').each(function () {
-			//$(this).trigger('focus');
 			FitToContent(this, document.documentElement.clientHeight);
 		});
 	});

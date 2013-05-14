@@ -837,6 +837,11 @@
 					nope: 'style/artendb_ohne_mq.css'
 				});
 
+				Modernizr.load({
+					test: Modernizr.csscolumns,
+					nope: 'vendor/couchapp/css3-multi-column.js'
+				});
+
 				//IE8 kennt trim nicht!
 				if (!String.prototype.trim)  {
 					String.prototype.trim = function () {
