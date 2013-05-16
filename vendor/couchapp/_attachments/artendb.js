@@ -2633,6 +2633,8 @@ function filtereFuerExport(direkt) {
 }
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
+	console.log('filterkriterienObjekt = ' + JSON.stringify(filterkriterienObjekt));
+	console.log('gewaehlte_felder_objekt = ' + JSON.stringify(gewaehlte_felder_objekt));
 	//Alle Felder abfragen
 	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -2663,7 +2665,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
-				//alle Objekte in exportieren_objekte_temp in window.exportieren_objekte anfügen
+				//alle Objekte in data in window.exportieren_objekte anfügen
 				window.exportieren_objekte = _.union(window.exportieren_objekte, data);
 				//speichern, dass eine Gruppe abgefragt wurde
 				anz_gruppen_abgefragt++;
@@ -2672,7 +2674,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 					//Ergebnis rückmelden
 					$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
-					baueTabelleFuerExportAuf();
+					baueTabelleFuerExportAuf(gewaehlte_felder_objekt);
 				}
 			},
 			error: function() {
@@ -2682,12 +2684,14 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 	}
 }
 
-function baueTabelleFuerExportAuf() {
+function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	//leeren Array für die Objekte gründen
 	var exportobjekte = [];
 	var len, len2;
-	var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
-	var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
+	var id_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"_id"});
+	//var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
+	var gruppe_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"Gruppe"});
+	//var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
 	//db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
 	//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
@@ -2719,13 +2723,15 @@ function baueTabelleFuerExportAuf() {
 		if (window.exportieren_objekte.hasOwnProperty(i)) {
 			var Objekt = {},
 			a, b;
-			//Alle Felder anfügen
+			//Dem objekt alle Felder anfügen, zunächst mal leer
+			//später werden sie mit allfälligen Werten überschrieben
 			//ist nötig, um eine Tabelle mit allen nötigen Felder zu bauen
 			for (var v in feldliste) {
 				if (feldliste.hasOwnProperty(v)) {
 					Objekt[feldliste[v]] = null;
 				}
 			}
+			//jetzt fangen wir an, Werte einzufügen
 			//id und gruppe
 			if (id_ist_gewaehlt) {
 				Objekt.GUID = window.exportieren_objekte[i]._id;
