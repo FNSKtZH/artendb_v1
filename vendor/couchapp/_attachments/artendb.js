@@ -2723,14 +2723,7 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 				}
 			}*/
 			//jetzt fangen wir an, Werte einzufügen
-			//id und gruppe
-			/*if (feldliste.indexOf("GUID") !== -1) {
-				Objekt.GUID = window.exportieren_objekte[i]._id;
-			}
-			if (feldliste.indexOf("Gruppe") !== -1) {
-				Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
-			}*/
-			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
+			//später unnötig - soll auf dem Server stattfinden
 			if (window.exportieren_objekte[i]) {
 				for (var q in window.exportieren_objekte[i]) {
 					Objekt[q] = window.exportieren_objekte[i][q];
