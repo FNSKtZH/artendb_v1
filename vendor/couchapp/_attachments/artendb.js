@@ -2713,21 +2713,6 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	}
 	//Beschäftigung melden
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
-	//durch alle Objekte gehen
-	objekte_loop:
-	/*for (var i in window.exportieren_objekte) {
-		if (window.exportieren_objekte.hasOwnProperty(i)) {
-			var Objekt = {};
-			//jetzt fangen wir an, Werte einzufügen
-			//später unnötig - soll auf dem Server stattfinden
-			if (window.exportieren_objekte[i]) {
-				for (var q in window.exportieren_objekte[i]) {
-					Objekt[q] = window.exportieren_objekte[i][q];
-				}
-			}
-			exportobjekte.push(Objekt);
-		}
-	}*/
 
 	if (window.exportieren_objekte.length > 0) {
 		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
