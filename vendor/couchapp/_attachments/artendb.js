@@ -2688,29 +2688,29 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	//leeren Array für die Objekte gründen
 	var exportobjekte = [];
 	var len, len2;
+	var feldobjekt;
 	var id_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"_id"});
-	//var id_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_id").prop('checked');
 	var gruppe_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"Gruppe"});
-	//var gruppe_ist_gewaehlt = $("#exportieren_felder_waehlen_objekt_gruppe").prop('checked');
 	//db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
 	//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
 	//später wird jedem Objekt jedes dieser Felder angefügt (mit Wert falls vorhanden)
 	var feldliste = [];
-	$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
-		if ($(this).prop('checked')) {
-			feldliste.push($(this).attr('feldname'));
-		}
-	});
-	$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
-		if ($(this).prop('checked')) {
-			feldliste.push($(this).attr('datensammlung') + ": " + $(this).attr('Feld'));
-			if ($(this).attr('Feld') === "Beziehungspartner") {
-				//Mit dem Beziehungspartner soll auch ein Feld mit allen GUIDs mit
-				feldliste.push($(this).attr('datensammlung') + ": Beziehungspartner GUID(s)");
+	for (i in gewaehlte_felder_objekt.rows) {
+		feldobjekt = gewaehlte_felder_objekt.rows[i];
+		if (feldobjekt.DsName === "Objekt") {
+			if (feldobjekt.Feldname === "_id") {
+				feldliste.push("GUID");
+			} else {
+				feldliste.push(feldobjekt.Feldname);
+			}
+		} else {
+			feldliste.push(feldobjekt.DsName + ": " + feldobjekt.Feldname);
+			if (feldobjekt.Feldname === "Beziehungspartner") {
+				feldliste.push(feldobjekt.DsName + ": Beziehungspartner GUID(s)");
 			}
 		}
-	});
+	}
 	if (feldliste.length === 0) {
 		$('#meldung_keine_ds').modal();
 		return;
