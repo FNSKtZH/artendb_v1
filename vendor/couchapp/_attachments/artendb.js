@@ -2689,8 +2689,6 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	var exportobjekte = [];
 	var len, len2;
 	var feldobjekt;
-	var id_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"_id"});
-	var gruppe_ist_gewaehlt = _.where(gewaehlte_felder_objekt.rows, {"DsName":"Objekt","Feldname":"Gruppe"});
 	//db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
 	//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
@@ -2733,10 +2731,10 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 			}
 			//jetzt fangen wir an, Werte einzufügen
 			//id und gruppe
-			if (id_ist_gewaehlt) {
+			if (feldliste.indexOf("GUID") !== -1) {
 				Objekt.GUID = window.exportieren_objekte[i]._id;
 			}
-			if (gruppe_ist_gewaehlt) {
+			if (feldliste.indexOf("Gruppe") !== -1) {
 				Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
 			}
 			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
