@@ -378,31 +378,26 @@ function(head, req) {
 					//durch alle Eigenschaften des Dokuments loopen
 					if (typeof Objekt[e] !== "object" && e !== "_rev") {
 						for (i=0; i<felder.length; i++) {
-							if (felder[i].DsName === "Objekt" && felder[i].Feldname === e) {
+							if (felder[i].DsName === "Objekt" && (felder[i].Feldname === e || e === "_id")) {
 								exportObjekt[e] = Objekt[e];
-							}
-							if (felder[i].DsName === "Objekt" && felder[i].Feldname === "GUID" && e === "_id") {
-								exportObjekt["GUID"] = Objekt[e];
 							}
 						}
 					}
 				}
-				for (var w in felder) {
-					if (felder[w].DsTyp === "Taxonomie" && (fasseTaxonomienZusammen || felder[w].DsName === Objekt.Taxonomie.Name)) {
-						//wenn im Objekt das zu exportierende Feld vorkommt, den Wert übernehmen
-						if (typeof Objekt.Taxonomie.Daten[felder[w].Feldname] !== "undefined") {
-						//if (Objekt.Taxonomie.Daten[felder[w].Feldname] || Objekt.Taxonomie.Daten[felder[w].Feldname] == 0 || Objekt.Taxonomie.Daten[felder[w].Feldname] == false) {
-							if (fasseTaxonomienZusammen) {
-								exportObjekt["Taxonomie(n): " + felder[w].Feldname] = Objekt.Taxonomie.Daten[felder[w].Feldname];
-							} else {
-								exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = Objekt.Taxonomie.Daten[felder[w].Feldname];
-							}
-						} else {
-							//sonst einen leerwert setzen
-							if (fasseTaxonomienZusammen) {
-								exportObjekt["Taxonomie(n): " + felder[w].Feldname] = "";
-							} else {
-								exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
+				if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
+					for (var a in Objekt.Taxonomie.Daten) {
+						for (var w in felder) {
+							if (felder[w].DsTyp === "Taxonomie" && (fasseTaxonomienZusammen || felder[w].DsName === Objekt.Taxonomie.Name)) {
+								if (felder[w].Feldname === a) {
+									if (typeof exportObjekt.Taxonomie === "undefined") {
+										exportObjekt.Taxonomie = {};
+										exportObjekt.Taxonomie.Name = felder[w].DsName;
+									}
+									if (typeof exportObjekt.Taxonomie.Daten === "undefined") {
+										exportObjekt.Taxonomie.Daten = {};
+									}
+									exportObjekt.Taxonomie.Daten[a] = Objekt.Taxonomie.Daten[a];
+								}
 							}
 						}
 					}

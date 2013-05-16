@@ -2717,11 +2717,11 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 			//Dem objekt alle Felder anfügen, zunächst mal leer
 			//später werden sie mit allfälligen Werten überschrieben
 			//ist nötig, um eine Tabelle mit allen nötigen Felder zu bauen
-			for (var v in feldliste) {
+			/*for (var v in feldliste) {
 				if (feldliste.hasOwnProperty(v)) {
 					Objekt[feldliste[v]] = null;
 				}
-			}
+			}*/
 			//jetzt fangen wir an, Werte einzufügen
 			//id und gruppe
 			if (feldliste.indexOf("GUID") !== -1) {
@@ -2731,16 +2731,9 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 				Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
 			}
 			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
-			if (window.exportieren_objekte[i].Taxonomie && window.exportieren_objekte[i].Taxonomie.Daten) {
-				for (var q in window.exportieren_objekte[i].Taxonomie.Daten) {
-					if ($('[datensammlung="' + window.exportieren_objekte[i].Taxonomie.Name + '"][feld="' + q + '"]').prop('checked')) {
-						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt[window.exportieren_objekte[i].Taxonomie.Name + ": " + q] = window.exportieren_objekte[i].Taxonomie.Daten[q];
-					}
-					if ($('[Datensammlung="Taxonomie(n)"][Feld="' + q + '"]').prop('checked')) {
-						//Lebensräume werden statt mit der Taxonomie mit "Taxonomie(n)" beschriftet, daher die Bedingung nach dem oder
-						Objekt["Taxonomie(n): " + q] = window.exportieren_objekte[i].Taxonomie.Daten[q];
-					}
+			if (window.exportieren_objekte[i]) {
+				for (var q in window.exportieren_objekte[i]) {
+					Objekt[q] = window.exportieren_objekte[i][q];
 				}
 			}
 			//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
