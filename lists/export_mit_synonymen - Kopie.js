@@ -38,7 +38,7 @@ function(head, req) {
 				//damit das später nicht dauern wiederholt werden muss
 				for (var x=0; x<filterkriterien.length; x++) {
 					//die id darf nicht in Kleinschrift verwandelt werden
-					if (filterkriterien[x].Feldname !== "GUID") {
+					if (filterkriterien[x].Feldname !== "_id") {
 						filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
 					}
 				}
@@ -181,20 +181,16 @@ function(head, req) {
 					DsTyp_z = filterkriterien[z].DsTyp;
 					DsName_z = filterkriterien[z].DsName;
 					Feldname_z = filterkriterien[z].Feldname;
-					if (Feldname_z === "GUID") {
+					if (Feldname_z !== "_id") {
+						Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
+					} else {
 						//die ID darf nicht in Kleinschrift verwandelt werden
 						Filterwert_z = filterkriterien[z].Filterwert;
-					} else {
-						Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
 					}
 					Vergleichsoperator_z = filterkriterien[z].Vergleichsoperator;
 					//Filterkriterien prüfen
 					if (DsName_z === "Objekt") {
-						if (Feldname_z === "GUID") {
-							feldwert = Objekt._id;
-						} else {
-							feldwert = Objekt[Feldname_z];
-						}
+						feldwert = Objekt[Feldname_z];
 						if (feldwert || feldwert === 0) {
 							//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
 							if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
@@ -441,7 +437,7 @@ function(head, req) {
 						//durch alle Eigenschaften des Dokuments loopen
 						if (typeof Objekt[e] !== "object" && e !== "_rev") {
 							for (i=0; i<felder.length; i++) {
-								if (felder[i].DsName === "Objekt" && (felder[i].Feldname === e || e === "_id")) {
+								if (felder[i].DsName === "Objekt" && felder[i].Feldname === e) {
 									exportObjekt[e] = Objekt[e];
 								}
 							}

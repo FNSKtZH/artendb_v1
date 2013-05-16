@@ -2602,9 +2602,9 @@ function filtereFuerExport(direkt) {
 			feldObjekt = {};
 			feldObjekt.DsName = "Objekt";
 			feldObjekt.Feldname = $(this).attr('feldname');
-			if (feldObjekt.Feldname === "GUID") {
+			/*if (feldObjekt.Feldname === "GUID") {
 				feldObjekt.Feldname = "_id";
-			}
+			}*/
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
@@ -2697,11 +2697,11 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	for (i in gewaehlte_felder_objekt.rows) {
 		feldobjekt = gewaehlte_felder_objekt.rows[i];
 		if (feldobjekt.DsName === "Objekt") {
-			if (feldobjekt.Feldname === "_id") {
+			/*if (feldobjekt.Feldname === "_id") {
 				feldliste.push("GUID");
-			} else {
+			} else {*/
 				feldliste.push(feldobjekt.Feldname);
-			}
+			//}
 		} else {
 			feldliste.push(feldobjekt.DsName + ": " + feldobjekt.Feldname);
 			if (feldobjekt.Feldname === "Beziehungspartner") {
