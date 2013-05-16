@@ -406,44 +406,19 @@ function(head, req) {
 							}
 						}
 					}
-				}
-				if (Objekt.Datensammlungen) {
-					for (i=0; i<Objekt.Datensammlungen.length; i++) {
-						if (Objekt.Datensammlungen[i].Daten) {
-							for (var aa in Objekt.Datensammlungen[i].Daten) {
-								for (var u=0; u<felder.length; u++) {
-									if (felder[u].DsTyp === "Datensammlung" && felder[u].DsName === Objekt.Datensammlungen[i].Name) {
-										if (felder[u].Feldname === aa) {
-											if (typeof exportObjekt.Datensammlungen === "undefined") {
-												Datensammlung = {};
-												Datensammlung.Name = felder[u].DsName;
-												Datensammlung.Daten = {};
-												Datensammlung.Daten[aa] = Objekt.Datensammlungen[i].Daten[aa];
-												exportObjekt.Datensammlungen = [];
-												exportObjekt.Datensammlungen.push(Datensammlung);
-											} else {
-												dsExistiertSchon = false;
-												//durch alle Datensammlungen loopen und die richtige suchen
-												for (var b=0; b<exportObjekt.Datensammlungen.length; b++) {
-													if (exportObjekt.Datensammlungen[b].Name === felder[u].DsName) {
-														dsExistiertSchon = true;
-														if (typeof exportObjekt.Datensammlungen[b] === "undefined") {
-															exportObjekt.Datensammlungen[b].Daten = {};
-														}
-														exportObjekt.Datensammlungen[b].Daten[aa] = Objekt.Datensammlungen[i].Daten[aa];
-													}
-												}
-												if (!dsExistiertSchon) {
-													Datensammlung = {};
-													Datensammlung.Name = felder[u].DsName;
-													Datensammlung.Daten = {};
-													Datensammlung.Daten[aa] = Objekt.Datensammlungen[i].Daten[aa];
-													exportObjekt.Datensammlungen.push(Datensammlung);
-												}
 
-											}
-										}
+					if (felder[w].DsTyp === "Datensammlung") {
+						//das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
+						exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
+						if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
+							//suchen, ob das Objekt diese Datensammlung hat
+							loop_ds:
+							for (var ii in Objekt.Datensammlungen) {
+								if (Objekt.Datensammlungen[ii].Name && Objekt.Datensammlungen[ii].Name === felder[w].DsName) {
+									if (typeof Objekt.Datensammlungen[ii].Daten[felder[w].Feldname] !== "undefined") {
+										exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = Objekt.Datensammlungen[ii].Daten[felder[w].Feldname];
 									}
+									break loop_ds;
 								}
 							}
 						}
