@@ -2724,28 +2724,16 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 			}*/
 			//jetzt fangen wir an, Werte einzufügen
 			//id und gruppe
-			if (feldliste.indexOf("GUID") !== -1) {
+			/*if (feldliste.indexOf("GUID") !== -1) {
 				Objekt.GUID = window.exportieren_objekte[i]._id;
 			}
 			if (feldliste.indexOf("Gruppe") !== -1) {
 				Objekt.Gruppe = window.exportieren_objekte[i].Gruppe;
-			}
+			}*/
 			//Innerhalb der Taxonomie alle gewählten Felder ergänzen - falls ein Feld aus der Taxonomie mitgeliefert wurde
 			if (window.exportieren_objekte[i]) {
 				for (var q in window.exportieren_objekte[i]) {
 					Objekt[q] = window.exportieren_objekte[i][q];
-				}
-			}
-			//Innerhalb der Datensammlungen alle gewählten Felder ergänzen
-			if (window.exportieren_objekte[i].Datensammlungen) {
-				for (a=0, len=window.exportieren_objekte[i].Datensammlungen.length; a<len; a++) {
-					if (window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-						for (var r in window.exportieren_objekte[i].Datensammlungen[a].Daten) {
-							if ($('[Datensammlung="' + window.exportieren_objekte[i].Datensammlungen[a].Name + '"][Feld="' + r + '"]').prop('checked')) {
-								Objekt[window.exportieren_objekte[i].Datensammlungen[a].Name + ": " + r] = window.exportieren_objekte[i].Datensammlungen[a].Daten[r];
-							}
-						}
-					}
 				}
 			}
 			if ($("#export_bez_in_feldern").prop('checked')) {
