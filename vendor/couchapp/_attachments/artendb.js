@@ -2659,6 +2659,11 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		} else {
 			queryParam += "&nur_ds=false";
 		}
+		if ($("#export_bez_in_zeilen").prop('checked')) {
+			queryParam += "&bez_in_zeilen=true";
+		} else {
+			queryParam += "&bez_in_zeilen=false";
+		}
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
@@ -2775,53 +2780,7 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 					}
 				}
 			}
-			if ($("#export_bez_in_zeilen").prop('checked')) {
-				//Das ist die Variante mit einer Zeile pro Beziehung
-				//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
-				var schonKopiert = false;
-				if (window.exportieren_objekte[i].Beziehungssammlungen) {
-					for (b=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; b<len2; b++) {
-						//durch Beziehungssammlungen loopen
-						var zähler = 0;
-						for (var s in window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen) {
-							//durch Beziehungen loopen
-							zähler++;
-							var objektKopiert = jQuery.extend(true, {}, Objekt);
-							for (var y in window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s]) {
-								//durch die Felder der Beziehung loopen
-								if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[b].Name + '"][feld="' + y + '"]').prop('checked')) {
-									//Variante kommagetrennt
-									if (y === "Beziehungspartner") {
-										//zuerst die Beziehungspartner in JSON hinzufügen
-										if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y]) {
-											objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] = [];
-										}
-										objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y]);
-										//Reines GUID-Feld ergänzen
-										if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"]) {
-											objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y][0].GUID;
-										} else {
-											objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y][0].GUID;
-										}
-									} else {
-										//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-										if (!objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y]) {
-											objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y];
-										} else {
-											objektKopiert[window.exportieren_objekte[i].Beziehungssammlungen[b].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[b].Beziehungen[s][y];
-										}
-									}
-								}
-							}
-							exportobjekte.push(objektKopiert);
-							schonKopiert = true;
-						}
-					}
-				}
-			}
-			if (!schonKopiert) {
-				exportobjekte.push(Objekt);
-			}
+			exportobjekte.push(Objekt);
 		}
 	}
 
