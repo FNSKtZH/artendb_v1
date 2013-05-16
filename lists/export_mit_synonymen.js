@@ -620,7 +620,11 @@ function(head, req) {
 				datensammlungen_aus_synonymen = [];
 			}
 		}
-		send(JSON.stringify(exportObjekte));
+		//leere Objekte entfernen
+		var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
+			return _.isEmpty(object);
+		});
+		send(JSON.stringify(exportObjekte_ohne_leere));
 	});
 }
 

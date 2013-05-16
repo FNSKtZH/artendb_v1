@@ -2542,7 +2542,9 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	return FelderObjekt;
 }
 
-function filtereFuerExport() {
+//wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
+//direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
+function filtereFuerExport(direkt) {
 	//kontrollieren, ob eine Gruppe gewählt wurde
 	if (fuerExportGewaehlteGruppen().length === 0) {
 		$('#meldung_keine_gruppen').modal();
@@ -2621,7 +2623,16 @@ function filtereFuerExport() {
 	});
 	//den array dem objekt zuweisen
 	gewaehlte_felder_objekt.rows = gewaehlte_felder;
+
 	//jetzt das filterObjekt übergeben
+	if (direkt) {
+		uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt);
+	} else {
+		uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt);
+	}
+}
+
+function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
 	//Alle Felder abfragen
 	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -2652,12 +2663,8 @@ function filtereFuerExport() {
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
-				//leere Objekte entfernen
-				var exportieren_objekte_temp = _.reject(data, function(object) {
-					return _.isEmpty(object);
-				});
 				//alle Objekte in exportieren_objekte_temp in window.exportieren_objekte anfügen
-				window.exportieren_objekte = _.union(window.exportieren_objekte, exportieren_objekte_temp);
+				window.exportieren_objekte = _.union(window.exportieren_objekte, data);
 				//speichern, dass eine Gruppe abgefragt wurde
 				anz_gruppen_abgefragt++;
 				if (anz_gruppen_abgefragt === gruppen_array.length) {
