@@ -496,6 +496,13 @@ function(head, req) {
 						if (felder[w].DsTyp === "Beziehung") {
 							//das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
 							exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
+							//wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
+
+							if (felder[w].Feldname === "Beziehungspartner") {
+								//noch ein Feld hinzufügen
+								exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] = "";
+							}
+
 							if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 								//suchen, ob das Objekt diese Beziehungssammlungen hat
 								loop_bs:
@@ -519,7 +526,7 @@ function(head, req) {
 														if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[w].Feldname) {
 															//Beziehungspartner sind Objekte und müssen separat gefiltert werden
 															if (Feldname === "Beziehungspartner") {
-																var bezPartner = filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
+																bezPartner = filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
 																if (bezPartner.length > 0) {
 																	Objekt.Beziehungssammlungen[i].Beziehungen[aaa].Beziehungspartner = bezPartner;
 																	exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
@@ -559,7 +566,6 @@ function(head, req) {
 													for (var s in exportBeziehungen) {
 														//exportObjekt kopieren
 														var objektKopiert = _.clone(exportObjekt);
-														//var objektKopiert = $.extend(true, {}, exportObjekt);
 														//durch die Felder der Beziehung loopen
 														for (var y in exportBeziehungen[s]) {
 															if (y === "Beziehungspartner") {
@@ -588,7 +594,40 @@ function(head, req) {
 													}
 												} else {
 													//jeden Treffer kommagetrennt in dasselbe Feld einfügen
-													
+													//durch Beziehungen loopen
+													for (var qq=0; qq<exportBeziehungen.length; qq++) {
+														//durch die Felder der Beziehung loopen
+														for (var yy in exportBeziehungen[qq]) {
+															if (yy === "Beziehungspartner") {
+																//zuerst die Beziehungspartner in JSON hinzufügen
+																if (!exportObjekt[felder[w].DsName + ": " + yy]) {
+																	exportObjekt[felder[w].DsName + ": " + yy] = [];
+																}
+																exportObjekt[felder[w].DsName + ": " + yy].push(exportBeziehungen[qq][yy]);
+																//Reines GUID-Feld ergänzen
+																if (!exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"]) {
+																	exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungen[qq][yy][0].GUID;
+																} else {
+																	exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungen[qq][yy][0].GUID;
+																}
+															//es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
+															} else if (typeof exportBeziehungen[qq][yy] === "number") {
+																//Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
+																if (!exportObjekt[felder[w].DsName + ": " + yy]) {
+																	exportObjekt[felder[w].DsName + ": " + yy] = exportBeziehungen[qq][yy];
+																} else {
+																	exportObjekt[felder[w].DsName + ": " + yy] += ", " + exportBeziehungen[qq][yy];
+																}
+															} else {
+																//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
+																if (!exportObjekt[felder[w].DsName + ": " + yy]) {
+																	exportObjekt[felder[w].DsName + ": " + yy] = exportBeziehungen[qq][yy].replace(/,/g,'\(Komma\)');
+																} else {
+																	exportObjekt[felder[w].DsName + ": " + yy] += ", " + exportBeziehungen[qq][yy].replace(/,/g,'\(Komma\)');
+																}
+															}
+														}
+													}
 												}
 											}
 										}

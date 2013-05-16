@@ -2715,18 +2715,9 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 	//durch alle Objekte gehen
 	objekte_loop:
-	for (var i in window.exportieren_objekte) {
+	/*for (var i in window.exportieren_objekte) {
 		if (window.exportieren_objekte.hasOwnProperty(i)) {
-			var Objekt = {},
-			a, b;
-			//Dem objekt alle Felder anfügen, zunächst mal leer
-			//später werden sie mit allfälligen Werten überschrieben
-			//ist nötig, um eine Tabelle mit allen nötigen Felder zu bauen
-			/*for (var v in feldliste) {
-				if (feldliste.hasOwnProperty(v)) {
-					Objekt[feldliste[v]] = null;
-				}
-			}*/
+			var Objekt = {};
 			//jetzt fangen wir an, Werte einzufügen
 			//später unnötig - soll auf dem Server stattfinden
 			if (window.exportieren_objekte[i]) {
@@ -2734,65 +2725,19 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 					Objekt[q] = window.exportieren_objekte[i][q];
 				}
 			}
-			if ($("#export_bez_in_feldern").prop('checked')) {
-				//DAS IST VARIANTE MIT JSON IN EINER ZEILE. FUNKTIONIERT NICHT, WENN MEHR ALS EIN FELD AUS BEZIEHUNGEN GEFILTERT WIRD
-				//Innerhalb der Beziehungssammlungen alle gewählten Felder ergänzen
-				if (window.exportieren_objekte[i].Beziehungssammlungen) {
-					for (var aa=0, len2=window.exportieren_objekte[i].Beziehungssammlungen.length; aa<len2; aa++) {
-						//durch Beziehungssammlungen loopen
-						for (var qq=0; qq<window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen.length; qq++) {
-							//durch Beziehungen loopen
-							for (var y in window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq]) {
-								//durch die Felder der Beziehung loopen
-								if ($('[datensammlung="' + window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + '"][feld="' + y + '"]').prop('checked')) {
-									//Variante kommagetrennt
-									if (y === "Beziehungspartner") {
-										//zuerst die Beziehungspartner in JSON hinzufügen
-										if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y]) {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y] = [];
-										}
-										Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y].push(window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y]);
-										//Reines GUID-Feld ergänzen
-										if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": Beziehungspartner GUID(s)"]) {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": Beziehungspartner GUID(s)"] = window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y][0].GUID;
-										} else {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": Beziehungspartner GUID(s)"] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y][0].GUID;
-										}
-									//es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
-									} else if (typeof window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y] === "number") {
-										//Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
-										if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y]) {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y];
-										} else {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y];
-										}
-									} else {
-										//Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-										if (!Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y]) {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y] = window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y].replace(/,/g,'\(Komma\)');
-										} else {
-											Objekt[window.exportieren_objekte[i].Beziehungssammlungen[aa].Name + ": " + y] += ", " + window.exportieren_objekte[i].Beziehungssammlungen[aa].Beziehungen[qq][y].replace(/,/g,'\(Komma\)');
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
 			exportobjekte.push(Objekt);
 		}
-	}
+	}*/
 
-	if (exportobjekte.length > 0) {
-		erstelleTabelle(exportobjekte, "", "exportieren_exportieren_tabelle");
-		window.exportstring = erstelleExportString(exportobjekte);
+	if (window.exportieren_objekte.length > 0) {
+		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
+		window.exportstring = erstelleExportString(window.exportieren_objekte);
 		$("#exportieren_exportieren_exportieren").show();
 		//zur Tabelle scrollen
 		$('html, body').animate({
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
 		}, 2000);
-	} else if (exportobjekte && exportobjekte.length === 0) {
+	} else if (window.exportieren_objekte && window.exportieren_objekte.length === 0) {
 		$('#meldung_keine_exportdaten').modal();
 	}
 	//Beschäftigungsmeldung verstecken
