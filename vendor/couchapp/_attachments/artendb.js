@@ -2552,8 +2552,11 @@ function filtereFuerExport(direkt) {
 	}
 
 	//Beschäftigung melden
-	$("#exportieren_exportieren_hinweis").alert().css("display", "block");
-	$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
+	if (!direkt) {
+		$("#exportieren_exportieren_hinweis").alert().css("display", "block");
+		$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
+	}
+
 	//zum Hinweistext scrollen
 	$('html, body').animate({
 		scrollTop: $("#exportieren_exportieren_hinweis_text").offset().top
@@ -2627,7 +2630,6 @@ function filtereFuerExport(direkt) {
 		$("#exportieren_exportieren_hinweis").alert().css("display", "none");
 		$("#exportieren_exportieren_error").alert().css("display", "block");
 		$("#exportieren_exportieren_error_text").html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
-		//$('#meldung_keine_ds').modal();
 		return;
 	}
 
@@ -2637,6 +2639,43 @@ function filtereFuerExport(direkt) {
 	} else {
 		uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt);
 	}
+}
+
+function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
+	//Alle Felder abfragen
+	var fTz = "false";
+	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	if (window.fasseTaxonomienZusammen) {
+		fTz = "true";
+	}
+	var dbParam, queryParam;
+	if ($("#exportieren_synonym_infos").prop('checked')) {
+		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+	} else {
+		queryParam = "export_direkt/all_docs?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+	}
+	if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
+		//prüfen, ob mindestens ein Feld aus ds gewählt ist
+		//wenn ja: true, sonst false
+		queryParam += "&nur_ds=true";
+	} else {
+		queryParam += "&nur_ds=false";
+	}
+	if ($("#export_bez_in_zeilen").prop('checked')) {
+		queryParam += "&bez_in_zeilen=true";
+	} else {
+		queryParam += "&bez_in_zeilen=false";
+	}
+	window.open('_list/' + queryParam);
+	/*$db = $.couch.db("artendb");
+	$db.list(dbParam, queryParam, {
+		success: function (data) {
+			//muss man wohl nichts machen
+		},
+		error: function() {
+			console.log('error in $db.list');
+		}
+	});*/
 }
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
@@ -2684,7 +2723,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 					//Ergebnis rückmelden
 					$("#exportieren_exportieren_hinweis").alert().css("display", "block");
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
-					baueTabelleFuerExportAuf(gewaehlte_felder_objekt);
+					baueTabelleFuerExportAuf();
 				}
 			},
 			error: function() {
@@ -2694,7 +2733,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 	}
 }
 
-function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
+function baueTabelleFuerExportAuf() {
 	//leeren Array für die Objekte gründen
 	var exportobjekte = [];
 	var len, len2;
@@ -2706,7 +2745,6 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 
 	if (window.exportieren_objekte.length > 0) {
 		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
-		window.exportstring = erstelleExportString(window.exportieren_objekte);
 		$(".exportieren_exportieren_exportieren").show();
 		//zur Tabelle scrollen
 		$('html, body').animate({

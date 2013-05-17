@@ -766,8 +766,8 @@
 									</ul>
 								</div>
 								<button id="exportieren_exportieren_tabelle_aufbauen" class="btn">Vorschau anzeigen</button>
-								<button id="exportieren_exportieren_exportieren" class="btn exportieren_exportieren_exportieren" style="display:none;">herunterladen (schneller)</button>
-								<button id="exportieren_exportieren_exportieren_direkt" class="btn exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (zuverlässiger)</button>
+								<button id="exportieren_exportieren_exportieren" class="btn exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
+								<button id="exportieren_exportieren_exportieren_direkt" class="btn exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (zuverlässiger aber viel langsamer)</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
 								<div id="exportieren_exportieren_hinweis" class="alert alert-info" style="margin-top:7px;">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -1633,6 +1633,7 @@
 					//iOs: Fehlermeldung
 					//Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt
 					//soll besser werden, sobald Standards umgesetzt werden
+					window.exportstring = erstelleExportString(window.exportieren_objekte);
 					var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
 					//var blob = new Blob([window.exportstring], {type: "application/octet-stream;charset=utf-8;"});
 					var d = new Date();
@@ -1640,6 +1641,12 @@
 					var day = d.getDate();
 					var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 					saveAs(blob, output + "_export.csv");
+				});
+
+				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
+					//verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();	
+					filtereFuerExport("direkt");
 				});
 
 				$("#export").on("click", ".accordion-heading a", function(event) {
