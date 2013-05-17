@@ -2621,6 +2621,16 @@ function filtereFuerExport(direkt) {
 	//den array dem objekt zuweisen
 	gewaehlte_felder_objekt.rows = gewaehlte_felder;
 
+	//Wenn keine Felder gewählt sind: Melden und aufhören
+	if (gewaehlte_felder_objekt.rows.length === 0) {
+		//Beschäftigungsmeldung verstecken
+		$("#exportieren_exportieren_hinweis").alert().css("display", "none");
+		$("#exportieren_exportieren_error").alert().css("display", "block");
+		$("#exportieren_exportieren_error_text").html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
+		//$('#meldung_keine_ds').modal();
+		return;
+	}
+
 	//jetzt das filterObjekt übergeben
 	if (direkt) {
 		uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt);
@@ -2691,24 +2701,6 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	var feldobjekt;
 	//db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
-	//Zuerst durch alle gewählten Felder gehen und eine Feldliste erstellen
-	//später wird jedem Objekt jedes dieser Felder angefügt (mit Wert falls vorhanden)
-	var feldliste = [];
-	for (i in gewaehlte_felder_objekt.rows) {
-		feldobjekt = gewaehlte_felder_objekt.rows[i];
-		if (feldobjekt.DsName === "Objekt") {
-			feldliste.push(feldobjekt.Feldname);
-		} else {
-			feldliste.push(feldobjekt.DsName + ": " + feldobjekt.Feldname);
-			if (feldobjekt.Feldname === "Beziehungspartner") {
-				feldliste.push(feldobjekt.DsName + ": Beziehungspartner GUID(s)");
-			}
-		}
-	}
-	if (feldliste.length === 0) {
-		$('#meldung_keine_ds').modal();
-		return;
-	}
 	//Beschäftigung melden
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 
@@ -2948,6 +2940,7 @@ function exportZuruecksetzen() {
 	//Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").hide();
 	$(".exportieren_exportieren_exportieren").hide();
+	$("#exportieren_exportieren_error").alert().css("display", "none");
 }
 
 function oeffneGruppe(Gruppe) {
