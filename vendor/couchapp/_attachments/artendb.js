@@ -2630,8 +2630,6 @@ function filtereFuerExport(direkt) {
 }
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
-	console.log('filterkriterienObjekt = ' + JSON.stringify(filterkriterienObjekt));
-	console.log('gewaehlte_felder_objekt = ' + JSON.stringify(gewaehlte_felder_objekt));
 	//Alle Felder abfragen
 	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -2717,7 +2715,7 @@ function baueTabelleFuerExportAuf(gewaehlte_felder_objekt) {
 	if (window.exportieren_objekte.length > 0) {
 		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
 		window.exportstring = erstelleExportString(window.exportieren_objekte);
-		$("#exportieren_exportieren_exportieren").show();
+		$(".exportieren_exportieren_exportieren").show();
 		//zur Tabelle scrollen
 		$('html, body').animate({
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
@@ -2949,7 +2947,7 @@ function sortKeysOfObject(o) {
 function exportZuruecksetzen() {
 	//Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").hide();
-	$("#exportieren_exportieren_exportieren").hide();
+	$(".exportieren_exportieren_exportieren").hide();
 }
 
 function oeffneGruppe(Gruppe) {
