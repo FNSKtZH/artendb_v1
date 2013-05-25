@@ -70,10 +70,6 @@ function(head, req) {
 		while (row = getRow()) {
 			Objekt = row.doc;
 
-			//TODO: Prüfen, ob Gruppen übergeben wurden
-			//ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
-			//ja: objektHinzufügen = true / nein: continue mit nächstem Dokument
-
 			//row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 			if (row.key[1] === 0) {
 				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
