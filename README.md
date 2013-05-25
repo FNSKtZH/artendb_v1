@@ -686,8 +686,8 @@ Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von Cou
 
 Bisher realisierte Schnittstellen:
 
-- [Artenlisten](https://barbalex.cloudant.com/artendb/_design/artendb/_list/export_evm_arten/objekte?include_docs=true) für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
-- [Artgruppen](https://barbalex.cloudant.com/artendb/_design/artendb/_list/export_evm_artgruppen/artgruppen?group=true) für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
+- Artenlisten für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
+- Artgruppen für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
 
