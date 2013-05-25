@@ -3,7 +3,7 @@ function(head, req) {
 	start({
 		"headers": {
 			"Content-Type": "text/csv",
-			"Content-disposition": "attachment;filename=arten_fuer_evab_mobile.json",
+			"Content-disposition": "attachment;filename=Arten.json",
 			"Accept-Charset": "utf-8"
 		}
 	});
@@ -14,7 +14,7 @@ function(head, req) {
 		art,
 		i, j, k;
 
-	export_json.rows = [];
+	export_json.docs = [];
 
 	// specify that we're providing a JSON response
 	provides('json', function() {
@@ -56,7 +56,7 @@ function(head, req) {
 					}
 				}
 			}
-			export_json.rows.push(art);
+			export_json.docs.push(art);
 		}
 		send(JSON.stringify(export_json));
 	});
