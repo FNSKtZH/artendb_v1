@@ -3,12 +3,18 @@ function(head, req) {
 	start({
 		"headers": {
 			"Content-Type": "text/csv",
-			"Content-disposition": "attachment;filename=Arteigenschaften.csv",
+			"Content-disposition": "attachment;filename=arten_fuer_evab_mobile.json",
 			"Accept-Charset": "utf-8"
 		}
 	});
 
-	var row, doc, art, i, j, k;
+	var row,
+		doc,
+		export_json = {},
+		art,
+		i, j, k;
+
+	export_json.rows = [];
 
 	// specify that we're providing a JSON response
 	provides('json', function() {
@@ -18,8 +24,6 @@ function(head, req) {
 			art = {};
 			art._id = doc._id;
 			art.Typ = "Arteigenschaft";
-			art["Taxonomie ID"] = doc.Taxonomie.Daten["Taxonomie ID"];
-			art.Artname = doc.Taxonomie.Daten["Artname vollständig"];
 			ds_loop:
 			for (i=0; i<doc.Datensammlungen.length; i++) {
 				if (doc.Datensammlungen[i].Name === "ZH Artengruppen") {
@@ -27,6 +31,8 @@ function(head, req) {
 					break ds_loop;
 				}
 			}
+			art["Taxonomie ID"] = doc.Taxonomie.Daten["Taxonomie ID"];
+			art.Artname = doc.Taxonomie.Daten["Artname vollständig"];
 			//Hinweis Verwandschaft
 			if (doc.Gruppe === "Flora" && doc.Beziehungssammlungen) {
 				bs_loop:
@@ -44,13 +50,14 @@ function(head, req) {
 				for (k=0; k<doc.Beziehungssammlungen.length; k++) {
 					if (doc.Beziehungssammlungen[k].Name === "NISM (2010): akzeptierte Referenz") {
 						if (doc.Beziehungssammlungen[k].Beziehungen && doc.Beziehungssammlungen[k].Beziehungen[0] && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0] && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0].Name) {
-							art.HinweisVerwandschaft = "Achtung: Synonym von " + doc.Beziehungssammlungen[j].Beziehungen[0].Beziehungspartner[0].Name;
+							art.HinweisVerwandschaft = "Achtung: Synonym von " + doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0].Name;
 						}
 						break bs_loop_2;
 					}
 				}
 			}
+			export_json.rows.push(art);
 		}
-		send(JSON.stringify(exportObjekte));
+		send(JSON.stringify(export_json));
 	});
 }
