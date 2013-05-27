@@ -4,7 +4,7 @@
 		ds_loop:
 		for (i=0; i<doc.Datensammlungen.length; i++) {
 			if (doc.Datensammlungen[i].Name === "ZH Artengruppen" && doc.Datensammlungen[i].Daten && doc.Datensammlungen[i].Daten["GIS-Layer"]) {
-				artengruppe = doc.Datensammlungen[i].Daten["GIS-Layer"].replace('ue', 'ü').replace('ae', 'ä').replace('oe', 'ö');
+				artengruppe = doc.Datensammlungen[i].Daten["GIS-Layer"];
 				emit (artengruppe, null);
 				break ds_loop;
 			}

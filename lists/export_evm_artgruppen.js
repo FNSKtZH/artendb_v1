@@ -12,7 +12,8 @@ function(head, req) {
 		doc,
 		export_json = {},
 		artgruppe,
-		id_vorlage = "00005A48-816B-4A30-842F-3B1A5DAAA000";
+		id_vorlage = "00005A48-816B-4A30-842F-3B1A5DAAA000",
+		unbekannt;
 
 	export_json.docs = [];
 
@@ -23,13 +24,16 @@ function(head, req) {
 			doc = row.doc;
 			artgruppe = {};
 			artgruppe.Typ = "ArtGruppe";
-			artgruppe.ArtGruppe = row.key;
+			artgruppe.ArtGruppe = row.key.replace('ue', 'ü').replace('ae', 'ä').replace('oe', 'ö');
 			//id zusammensetzen aus der GUID der id_vorlage und dem Namen der artgruppe
 			artgruppe._id = id_vorlage.substring(0, id_vorlage.length - artgruppe.ArtGruppe.length) + artgruppe.ArtGruppe;
 			artgruppe.AnzArten = row.value;
 
 			export_json.docs.push(artgruppe);
 		}
+		//jetzt noch die Artgruppe unbekannt anfügen
+		unbekannt = {"Typ": "ArtGruppe", "ArtGruppe": "Unbekannt", "_id" : "00005A48-816B-4A30-842F-3B1unbekannt", "AnzArten": 1};
+		export_json.docs.push(unbekannt);
 		send(JSON.stringify(export_json));
 	});
 }
