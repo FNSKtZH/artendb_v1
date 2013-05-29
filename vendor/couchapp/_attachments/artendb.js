@@ -381,6 +381,7 @@ function oeffneBaumZuId(id) {
 						},true);
 					},true);
 				},true);
+				$("#art_anmelden").hide();
 				break;
 			case "Flora":
 				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -390,6 +391,7 @@ function oeffneBaumZuId(id) {
 						$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
 					}, true);
 				}, true);
+				$("#art_anmelden").hide();
 				break;
 			case "Moose":
 				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -401,6 +403,7 @@ function oeffneBaumZuId(id) {
 						}, true);
 					}, true);
 				}, true);
+				$("#art_anmelden").hide();
 				break;
 			case "Macromycetes":
 				//von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -408,6 +411,7 @@ function oeffneBaumZuId(id) {
 				$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
 					$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
 				}, true);
+				$("#art_anmelden").hide();
 				break;
 			case "Lebensräume":
 				var idArray = [];
@@ -616,13 +620,12 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	setzteHöheTextareas();
 	//richtiges Formular anzeigen
 	zeigeFormular("art");
+	//Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
+	$("#art_anmelden").hide();
 	//Bei Lebensräumen die Taxonomie öffnen
 	//accordion initiieren
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-		if (localStorage.Email) {
-			$("#art_anmelden").show();
-		}
 		$('.accordion-body').each(function() {
 			if ($(this).attr('id') !== "art_anmelden_collapse") {
 				$(this).collapse('show');
@@ -1346,7 +1349,7 @@ function meldeUserAb() {
 		delete localStorage.Email;
 	}
 	catch (e) {
-		localS
+		localStorage.Email = undefined;
 	}
 	$(".art_anmelden_titel").text("Anmelden");
 	$(".importieren_anmelden_titel").text("1. Anmelden");
@@ -1368,10 +1371,12 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	if (woher === "art") {
 		praefix = "";
 	}
-	$(".art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
+	$("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 	$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-	$("#"+praefix+woher+"_anmelden_collapse").collapse('hide');
-	$("#importieren_"+woher+"_ds_beschreiben_collapse").collapse('show');
+	if (woher !== "art") {
+		$("#"+praefix+woher+"_anmelden_collapse").collapse('hide');
+		$("#importieren_"+woher+"_ds_beschreiben_collapse").collapse('show');
+	}
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
 	$(".well.anmelden").hide();
@@ -1381,6 +1386,9 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$(".abmelden_btn").show();
 	$(".konto_erstellen_btn").hide();
 	$(".konto_speichern_btn").hide();
+	console.log('jetzt wird dann art_anmelden versteckt');
+	//in LR soll Anmelde-Accordion nicht sichtbar sein
+	$("#art_anmelden").hide();
 }
 
 function zurueckZurAnmeldung(woher) {
@@ -3090,12 +3098,11 @@ function bearbeiteLrTaxonomie() {
 		$("#art_anmelden").show();
 		$("#art_anmelden_collapse").collapse('show');
 		$("#Email_art").focus();
-		return;
+		return false;
 	}
 	//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 	window.lr_bearb = true;
 	$("#art_anmelden_collapse").collapse('hide');
-	$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 
 	//alle Felder schreibbar setzen
 	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {

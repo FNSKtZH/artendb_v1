@@ -102,11 +102,11 @@
 				<div id="accordion_art" class="accordion">
 					<div id="art_anmelden" class="accordion-group" style="display:none;">
 						<div class="accordion-heading accordion-group_gradient">
-							<a id="art_anmelden_titel" class="accordion-toggle importieren_anmelden_titel" data-toggle="collapse" data-parent="accordion_art" href="#art_anmelden_collapse">Anmelden</a>
+							<a id="art_anmelden_titel" class="accordion-toggle art_anmelden_titel" data-toggle="collapse" data-parent="accordion_art" href="#art_anmelden_collapse">Anmelden</a>
 						</div>
 						<div id="art_anmelden_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br>Oder <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
+								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br><a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
 								<div class="control-group">
 									<label class="control-label Email" for="Email_art">Email</label>
 									<div class="controls">
@@ -161,7 +161,7 @@
 						</div>
 						<div id="importieren_ds_anmelden_collapse" class="accordion-body collapse importieren_anmelden_collapse">
 							<div class="accordion-inner">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br>Oder <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
+								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br><a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
 								<div class="control-group">
 									<label class="control-label Email" for="Email_ds">Email</label>
 									<div class="controls">
@@ -393,7 +393,7 @@
 						</div>
 						<div id="importieren_bs_anmelden_collapse" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br>Oder <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
+								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein.<br><a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, um ein eigenes Login zu erhalten.<br>Während der Testphase können Sie zum testen das folgende Login benutzen: Email = "z@z.ch", Passwort = "z".</div>
 								<div class="control-group">
 									<label class="control-label Email" for="Email_bs">Email</label>
 									<div class="controls">
@@ -926,6 +926,7 @@
 
 				//wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
+					$("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 					$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
 					$(".anmelden_btn").hide();
 					$(".abmelden_btn").show();
@@ -1449,22 +1450,28 @@
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_bearb", function() {
-					bearbeiteLrTaxonomie();
+					if (!$(this).hasClass('disabled')) {
+						bearbeiteLrTaxonomie();
+					}
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_schuetzen", function() {
-					schuetzeLrTaxonomie();
-					//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-					try {
-						delete window.lr_bearb;
-					}
-					catch (e) {
-						window.lr_bearb = undefined;
+					if (!$(this).hasClass('disabled')) {
+						schuetzeLrTaxonomie();
+						//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+						try {
+							delete window.lr_bearb;
+						}
+						catch (e) {
+							window.lr_bearb = undefined;
+						}
 					}
 				});
 
 				$("#art").on("click", ".btn.lr_bearb_neu", function() {
-					initiiereLrParentAuswahlliste($("#Taxonomie").val());
+					if (!$(this).hasClass('disabled')) {
+						initiiereLrParentAuswahlliste($("#Taxonomie").val());
+					}
 				});
 
 				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', function() {
