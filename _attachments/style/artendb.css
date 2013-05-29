@@ -77,13 +77,13 @@ body {
 		width: 100%;
 	}
 	
-	.typeahead {
+	/*.typeahead {*/
 		/*verhindern, dass breiter angezeigt wird, als der Bildschirm*/
-		max-width: 1100px;
+		/*max-width: 1100px;
 		max-width: -webkit-calc(100% - 60px);
 		max-width: -o-calc(100% - 60px);
 		max-width: calc(100% - 60px);
-	}
+	}*/
 }
 
 .baum {
@@ -162,9 +162,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 
 #menu .suchfeld {
 	width: 321px;
-	width: -webkit-calc(100% + 125px);
-	width: -o-calc(100% + 125px);
-	width: calc(100% + 125px);
+	width: -webkit-calc(100% + 151px);
+	width: -o-calc(100% + 151px);
+	width: calc(100% + 151px);
 	max-width: 321px;
 }
 
@@ -343,14 +343,6 @@ option {
 	right: 23px;
 }
 
-#menu .typeahead {
-	max-height: -webkit-calc(100% - 140px);
-	max-height: -o-calc(100% - 140px);
-	max-height: calc(100% - 140px);
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
 #lr_parent_waehlen {
 	background-color: #FFFFF0;
 	max-width: -webkit-calc(100% - 20px);
@@ -401,8 +393,13 @@ option {
 	background-color: #FBFCF7;
 }
 
+
+/*
+ * Bootstrap file uploader
+ * Quelle: http://jasny.github.io/bootstrap/javascript.html#fileupload
+ */
 /*!
- * Bootstrap v2.2.2-j4
+ * Bootstrap v2.3.1-j6
  *
  * Copyright 2012 Twitter, Inc
  * Licensed under the Apache License v2.0
@@ -415,7 +412,7 @@ option {
 .hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;}
 .input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .btn-file{overflow:hidden;position:relative;vertical-align:middle;}.btn-file>input{position:absolute;top:0;right:0;margin:0;opacity:0;filter:alpha(opacity=0);transform:translate(-300px, 0) scale(4);font-size:23px;direction:ltr;cursor:pointer;}
-.fileupload{margin-bottom:9px;}.fileupload .uneditable-input{display:inline-block;margin-bottom:0;vertical-align:middle;cursor:text;}
+.fileupload{margin-bottom:9px;}.fileupload .uneditable-input{display:inline-block;margin-bottom:0px;vertical-align:middle;cursor:text;}
 .fileupload .thumbnail{overflow:hidden;display:inline-block;margin-bottom:5px;vertical-align:middle;text-align:center;}.fileupload .thumbnail>img{display:inline-block;vertical-align:middle;max-height:100%;}
 .fileupload .btn{vertical-align:middle;}
 .fileupload-exists .fileupload-new,.fileupload-new .fileupload-exists{display:none;}
@@ -432,3 +429,121 @@ option {
 .control-group.success .fileupload .uneditable-input{color:#468847;border-color:#468847;}
 .control-group.success .fileupload .fileupload-preview{color:#468847;}
 .control-group.success .fileupload .thumbnail{border-color:#468847;}
+
+/*twitter typeahead stylen*/
+.twitter-typeahead {
+	background-color: #FFF !important;
+	font-size: 14px !important;
+	/*min-width: 335px !important;*/
+	min-width: 335px !important;
+	/*width: -webkit-calc(100% + 151px) !important;
+	width: -o-calc(100% + 151px) !important;
+	width: calc(100% + 151px) !important;*/
+	max-width: 1100px !important;
+	max-width: -webkit-calc(100% - 60px) !important;
+	max-width: -o-calc(100% - 60px) !important;
+	max-width: calc(100% - 60px) !important;
+	/*max-height: -webkit-calc(100% - 140px) !important;
+	max-height: -o-calc(100% - 140px) !important;
+	max-height: calc(100% - 140px) !important;*/
+	/*max-height: 200px !important;*/
+	white-space:nowrap !important;
+}
+
+.tt-dropdown-menu {
+	min-width: 535px !important;
+	/*width: -webkit-calc(100% + 151px) !important;
+	width: -o-calc(100% + 151px) !important;
+	width: calc(100% + 151px) !important;*/
+	max-width: 1100px !important;
+	max-width: -webkit-calc(100% - 60px) !important;
+	max-width: -o-calc(100% - 60px) !important;
+	max-width: calc(100% - 60px) !important;
+	white-space:nowrap !important;
+}
+
+.tt-dataset-filtern {
+	min-width: 535px !important;
+	/*width: -webkit-calc(100% + 151px) !important;
+	width: -o-calc(100% + 151px) !important;
+	width: calc(100% + 151px) !important;*/
+	max-width: 1100px !important;
+	max-width: -webkit-calc(100% - 60px) !important;
+	max-width: -o-calc(100% - 60px) !important;
+	max-width: calc(100% - 60px) !important;
+	white-space: nowrap !important;
+}
+
+.tt-suggestion {
+	white-space: nowrap !important;
+}
+
+/*#menu .twitter-typeahead {
+	max-height: -webkit-calc(100% - 140px);
+	max-height: -o-calc(100% - 140px);
+	max-height: calc(100% - 140px);
+	overflow-y: auto;
+	overflow-x: hidden;
+}*/
+
+/*.typeahead {*/
+		/*verhindern, dass breiter angezeigt wird, als der Bildschirm*/
+		/*max-width: 1100px;
+		max-width: -webkit-calc(100% - 60px);
+		max-width: -o-calc(100% - 60px);
+		max-width: calc(100% - 60px);
+}*/
+
+/*nötig, damit twitter typeahead in bootstrap korrekt dargestellt wird*/
+/*twitter typeahead css
+ * from: https://github.com/jharding/typeahead.js-bootstrap.css
+ */
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+}
+
+.tt-dropdown-menu {
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+  color: #fff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}

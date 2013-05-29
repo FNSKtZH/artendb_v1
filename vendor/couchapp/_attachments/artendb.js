@@ -274,6 +274,28 @@ function initiiereSuchfeld_2() {
 	} else if (window.Gruppe) {
 		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
 	}
+	suchObjekte = _.map(suchObjekte, function (objekt) {
+		return objekt.value;
+	});
+	$('#suchfeld' + window.Gruppe).typeahead({
+		name: window.Gruppe,
+		valueKey: 'Name',
+		local: suchObjekte,
+		limit: 20
+	})
+	.on('typeahead:selected', function(e, datum) {
+		oeffneBaumZuId(datum.id);
+	});
+}
+
+//variante mit typeahead von bootstrap. Wird aber in nächster Version von Bootstrap abgeschafft
+/*function initiiereSuchfeld_2() {
+	var suchObjekte;
+	if (window.Gruppe && window.Gruppe === "Lebensräume") {
+		suchObjekte = window.filtere_lr.rows;
+	} else if (window.Gruppe) {
+		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
+	}
 	$('#suchfeld' + window.Gruppe).typeahead({
 		items: 20,
 		minLength: 1,
@@ -305,7 +327,7 @@ function initiiereSuchfeld_2() {
 			return item.replace( regex, "<strong>$1</strong>" );
 		}
 	});
-}
+}*/
 
 //baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
 //bekommt die id des LR, von dem aus ein neuer LR erstellt werden soll
@@ -3514,176 +3536,17 @@ var BrowserDetect =
 
 };
 
-
-/* ===========================================================
- * bootstrap-fileupload.js j2
- * http://jasny.github.com/bootstrap/javascript.html#fileupload
- * ===========================================================
- * Copyright 2012 Jasny BV, Netherlands.
- *
- * Licensed under the Apache License, Version 2.0 (the "License")
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ========================================================== */
-
-!function ($) {
-
-	"use strict";
-
-	/* FILEUPLOAD PUBLIC CLASS DEFINITION
-	* ================================= */
-
-	var Fileupload = function (element, options) {
-		this.$element = $(element);
-		this.type = this.$element.data('uploadtype') || (this.$element.find('.thumbnail').length > 0 ? "image" : "file");
-
-		this.$input = this.$element.find(':file');
-		if (this.$input.length === 0) return;
-
-		this.name = this.$input.attr('name') || options.name;
-
-		this.$hidden = this.$element.find('input[type=hidden][name="'+this.name+'"]');
-		if (this.$hidden.length === 0) {
-			this.$hidden = $('<input type="hidden" />');
-			this.$element.prepend(this.$hidden);
-		}
-
-		this.$preview = this.$element.find('.fileupload-preview');
-		var height = this.$preview.css('height');
-		if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height);
-
-		this.original = {
-			'exists': this.$element.hasClass('fileupload-exists'),
-			'preview': this.$preview.html(),
-			'hiddenVal': this.$hidden.val()
-		};
-
-		this.$remove = this.$element.find('[data-dismiss="fileupload"]');
-
-		this.$element.find('[data-trigger="fileupload"]').on('click.fileupload', $.proxy(this.trigger, this));
-
-		this.listen();
-	};
-
-	Fileupload.prototype = {
-
-		listen: function() {
-			this.$input.on('change.fileupload', $.proxy(this.change, this));
-			$(this.$input[0].form).on('reset.fileupload', $.proxy(this.reset, this));
-			if (this.$remove) this.$remove.on('click.fileupload', $.proxy(this.clear, this));
-		},
-
-		change: function(e, invoked) {
-			if (invoked === 'clear') return;
-
-			var file = e.target.files !== undefined ? e.target.files[0] : (e.target.value ? { name: e.target.value.replace(/^.+\\/, '') } : null);
-
-			if (!file) {
-				this.clear();
-				return;
-			}
-
-			this.$hidden.val('');
-			this.$hidden.attr('name', '');
-			this.$input.attr('name', this.name);
-
-			if (this.type === "image" && this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match('image.*') : file.name.match('\\.(gif|png|jpe?g)$')) && typeof FileReader !== "undefined") {
-				var reader = new FileReader();
-				var preview = this.$preview;
-				var element = this.$element;
-
-				reader.onload = function(e) {
-					preview.html('<img src="' + e.target.result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />');
-					element.addClass('fileupload-exists').removeClass('fileupload-new');
-				};
-
-				reader.readAsDataURL(file);
-			} else {
-				this.$preview.text(file.name);
-				this.$element.addClass('fileupload-exists').removeClass('fileupload-new');
-			}
-		},
-
-		clear: function(e) {
-			this.$hidden.val('');
-			this.$hidden.attr('name', this.name);
-			this.$input.attr('name', '');
-
-			//ie8+ doesn't support changing the value of input with type=file so clone instead
-			if (navigator.userAgent.match(/msie/i)){
-				var inputClone = this.$input.clone(true);
-				this.$input.after(inputClone);
-				this.$input.remove();
-				this.$input = inputClone;
-			} else {
-				this.$input.val('');
-			}
-
-			this.$preview.html('');
-			this.$element.addClass('fileupload-new').removeClass('fileupload-exists');
-
-			if (e) {
-				this.$input.trigger('change', [ 'clear' ]);
-				e.preventDefault();
-			}
-		},
-
-		reset: function(e) {
-			this.clear();
-
-			this.$hidden.val(this.original.hiddenVal);
-			this.$preview.html(this.original.preview);
-
-			if (this.original.exists) this.$element.addClass('fileupload-exists').removeClass('fileupload-new');
-			else this.$element.addClass('fileupload-new').removeClass('fileupload-exists');
-		},
-
-		trigger: function(e) {
-			this.$input.trigger('click');
-			e.preventDefault();
-		}
-	};
-
-
-	/* FILEUPLOAD PLUGIN DEFINITION
-	* =========================== */
-
-	$.fn.fileupload = function (options) {
-		return this.each(function () {
-			var $this = $(this),
-				data = $this.data('fileupload');
-			if (!data) $this.data('fileupload', (data = new Fileupload(this, options)));
-			if (typeof options == 'string') data[options]();
-		});
-	};
-
-	$.fn.fileupload.Constructor = Fileupload;
-
-
-	/* FILEUPLOAD DATA-API
-	* ================== */
-
-	$(document).on('click.fileupload.data-api', '[data-provides="fileupload"]', function (e) {
-		var $this = $(this);
-		if ($this.data('fileupload')) return;
-		$this.fileupload($this.data());
-
-		var $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
-		if ($target.length > 0) {
-			$target.trigger('click.fileupload');
-			e.preventDefault();
-		}
-	});
-
-}(window.jQuery);
+/*
+* Bootstrap file uploader
+* Quelle: http://jasny.github.io/bootstrap/javascript.html#fileupload
+*/
+/**
+* Bootstrap.js by @mdo and @fat, extended by @ArnoldDaniels.
+* plugins: bootstrap-fileupload.js
+* Copyright 2012 Twitter, Inc.
+* http://www.apache.org/licenses/LICENSE-2.0.txt
+*/
+!function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault())},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault()}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery)
 
 
 /**
