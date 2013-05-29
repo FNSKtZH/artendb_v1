@@ -288,47 +288,6 @@ function initiiereSuchfeld_2() {
 	});
 }
 
-//variante mit typeahead von bootstrap. Wird aber in nächster Version von Bootstrap abgeschafft
-/*function initiiereSuchfeld_2() {
-	var suchObjekte;
-	if (window.Gruppe && window.Gruppe === "Lebensräume") {
-		suchObjekte = window.filtere_lr.rows;
-	} else if (window.Gruppe) {
-		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
-	}
-	$('#suchfeld' + window.Gruppe).typeahead({
-		items: 20,
-		minLength: 1,
-		source: function (query, process) {
-			window.namen = [];
-			window.map = {};
-			$.each(suchObjekte, function(i, suchObjekt) {
-				window.map[suchObjekt.value.Name] = suchObjekt.value;
-				window.namen.push(suchObjekt.value.Name);
-			});
-			process(window.namen);
-		},
-		updater: function (item) {
-			selectedState = window.map[item].Name;
-			oeffneBaumZuId(window.map[item].id);
-			return item;
-		},
-		matcher: function (item) {
-			//this.query enthält den im Filterfeld eingegebenen Text
-			if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
-				return true;
-			}
-		},
-		sorter: function (items) {
-			return items.sort();
-		},
-		highlighter: function (item) {
-			var regex = new RegExp( '(' + this.query + ')', 'gi' );
-			return item.replace( regex, "<strong>$1</strong>" );
-		}
-	});
-}*/
-
 //baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
 //bekommt die id des LR, von dem aus ein neuer LR erstellt werden soll
 //In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
