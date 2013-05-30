@@ -1454,7 +1454,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 		}
 	}
 	var html_ds_felder_div = "";
-	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit ID der Art / des Lebensraums</label>';
+	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
 	html_ds_felder_div += '<select type="text" class="controls" id="'+Feldname+'" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
 	//durch die Felder zirkeln
