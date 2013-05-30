@@ -1386,7 +1386,6 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$(".abmelden_btn").show();
 	$(".konto_erstellen_btn").hide();
 	$(".konto_speichern_btn").hide();
-	console.log('jetzt wird dann art_anmelden versteckt');
 	//in LR soll Anmelde-Accordion nicht sichtbar sein
 	$("#art_anmelden").hide();
 }
@@ -1521,7 +1520,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		//das hier wird später noch für den Inmport gebraucht > globale Variable machen
 		window.ZuordbareDatensätze = [];
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Bitte warten, die Daten werden analysiert...");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...");
 		//Dokumente aus der Gruppe der Datensätze holen
 		//durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
 		//kontrollieren, ob eine id mehr als einmal vorkommt

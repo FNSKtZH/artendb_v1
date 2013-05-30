@@ -702,7 +702,7 @@ Aktueller Stand:
 - ArtenDb ist entworfen und in der Testphase: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
  - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
  - Die Anwendung ist aber noch kaum getestet
-- Ich gehe davon aus, dass ArtenDb noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablöst
+- ArtenDb wird noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
 
 ###Was kann man mit der aktuellen Version machen?
 
@@ -750,6 +750,7 @@ Lebensräume in der Anwendung bearbeiten:
 **To do**
 
 - Schnittstellen bedürfnisgerecht beschreiben und erweitern
+- Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
