@@ -171,9 +171,9 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 
 Mit den schwarzen Schaltflächen wird die Gruppe gewählt. Danach erscheinen darunter ein Suchfeld und ein Hierarchiebaum. Rechts werden die Informationen zum Objekt angezeigt. Navigiert werden kann mit dem Hierarchiebaum und mit dem Suchfeld. Zusätzlich sind alle Verweise zu Objekten verlinkt.
 
-**Suchfeld**
+**Filterfeld**
 
-Gesucht werden kann nach dem vollständigen Namen (lateinisch und deutsch).
+Gefiltert werden kann nach dem vollständigen Namen (Lateinisch und Deutsch) bzw. Teilen davon.
 
 **Hierarchiebaum**
 
@@ -181,7 +181,7 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 
 **Formular**
 
-Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts oder der Beziehung.<br>Hier ein Beispiel einer Datensammlung:
+Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts.<br>Hier ein Beispiel einer Datensammlung:
 <img src="http://www.barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
 
 ...und eine Beziehungssammlung:
@@ -257,7 +257,7 @@ ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf 
 ###Dokumenten-Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
-Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was die meisten Datensammlungen brauchen.
+Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Datensammlungen geschieht.
 
 Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
@@ -719,7 +719,7 @@ Arten suchen:
 
 Eigenschaften anzeigen:
 
-- Für alle in der bisherigen ArtenDb enthaltenen Arten aus den Gruppen Fauna, Flora, Moose, Pilze und Lebensräume
+- Für über 40'000 Arten (aus den Gruppen Fauna, Flora, Moose, Pilze) und Lebensräume
 - Auch Daten- und Beziehungssammlungen von synonymen Objekten werden angezeigt
 - Daten- und Beziehungssammlungen sind beschrieben
 - Beziehungen zwischen Objekten sind verlinkt
@@ -729,7 +729,7 @@ Daten importieren:
 
 - Datensammlungen (auch zusammenfassende)
 - Beziehungssammlungen (auch zusammenfassende)
-- Eine Anleitung hilft
+- mit Unterstützung einer Anleitung und eines Screencasts
 
 Daten exportieren:
 
@@ -739,6 +739,7 @@ Daten exportieren:
 - Dabei können Vergleichsoperatoren verwendet werden (=, >, >=, <, <=)
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Informationen von synonymen Arten können mit exportiert werden
+- Wenn gewünscht, werden nur Datensätze geliefert, für die Informationen in den gewählten Datensammlungen existieren
 - Bei Beziehungssammlungen kann man wahlweise:
  - pro Beziehung eine Zeile erstellen
  - pro Objekt eine Zeile erstellen und die Informationen aller Beziehungen kommagetrennt hintereinander ins entsprechende Feld schreiben
@@ -750,7 +751,7 @@ Lebensräume in der Anwendung bearbeiten:
 
 **To do**
 
-- Schnittstellen bedürfnisgerecht beschreiben und erweitern
+- Schnittstellen bedürfnisgerecht beschreiben und erweitern (auf Anfrage nach Bedarf)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
