@@ -100,6 +100,27 @@ body {
 	padding: 4px 1px;
 }
 
+/*In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div!*/
+#menu [level="1"] {
+	width: 320px;
+}
+
+#menu [level="2"] {
+	width: 302px;
+}
+
+#menu [level="3"] {
+	width: 284px;
+}
+
+#menu [level="4"] {
+	width: 266px;
+}
+
+#menu [level="5"] {
+	width: 248px;
+}
+
 .baum li > ins {
 	vertical-align: top;
 }
