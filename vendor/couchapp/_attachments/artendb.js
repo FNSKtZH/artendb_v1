@@ -3524,3 +3524,11 @@ String.prototype.format = function() {
 		return typeof args[number] != 'undefined' ? args[number] : '{' + number + '}';
 	});
 };
+
+function wirTestenDasTesten(aha) {
+	if (aha) {
+		return "in";
+	} else {
+		return "out";
+	}
+}
