@@ -3453,12 +3453,6 @@ function normalisiereForms() {
 	*/
 }
 
-
-
-
-
-
-
 //kontrolliert den verwendeten Browser
 //Quelle: http://stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 var BrowserDetect = 
