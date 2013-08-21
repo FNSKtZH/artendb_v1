@@ -181,12 +181,39 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	display: none;
 }
 
+.btn-primary {
+	background-color: #414141 !important;
+	border-color: #222 !important;
+}
+
+.btn-primary:hover {
+	background-color: #222 !important;
+}
+
+#Gruppe .active {
+	background-color: #222 !important;
+}
+/*
+**Breite und Eckrundungen einstellen
+**weil twitter typeahead sie sonst verändert
+*/
 #menu .suchfeld {
-	width: 321px;
+	/*width: 321px;
 	width: -webkit-calc(100% + 151px);
 	width: -o-calc(100% + 151px);
-	width: calc(100% + 151px);
-	max-width: 321px;
+	width: calc(100% + 151px);*/
+	max-width: 311px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+/*
+**bootstrap verschiebt den Text
+**darum den hint auch verschieben
+*/
+#menu .twitter-typeahead .tt-hint {
+	top: 5px !important;
+	left: 11px !important;
 }
 
 .treeBeschriftung {

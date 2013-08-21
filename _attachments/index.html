@@ -24,6 +24,7 @@
 		<script src="vendor/couchapp/artendb.js"></script>
 		<link rel="stylesheet" href="style/bootstrap.css">
 		<link rel="stylesheet" href="style/artendb.css">
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 		<script src="vendor/couchapp/modernizr.js"></script>
 		<title>ArtenDb</title>
 	</head>
@@ -54,28 +55,43 @@
 				<div id="menu-div">
 					<div id="Gruppe_label">Gruppe wählen:</div>
 				</div>
-				<div id="Gruppe" class="btn-group" data-toggle="buttons-radio">
-					<button class="btn btn-inverse gruppe" id="GruppeFauna" value="Fauna">Fauna</button>
-					<button class="btn btn-inverse gruppe" id="GruppeFlora" value="Flora">Flora</button>
-					<button class="btn btn-inverse gruppe" id="GruppeMoose" value="Moose">Moose</button>
-					<button class="btn btn-inverse gruppe" id="GruppeMacromycetes" value="Macromycetes">Pilze</button>
-					<button class="btn btn-inverse gruppe" id="GruppeLebensräume" value="Lebensräume">Lebensräume</button>
+				<div id="Gruppe" class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary gruppe" Gruppe="Fauna">
+						<input type="radio">Fauna
+					</label>
+					<label class="btn btn-primary gruppe" Gruppe="Flora">
+						<input type="radio">Flora
+					</label>
+					<label class="btn btn-primary gruppe" Gruppe="Moose">
+						<input type="radio">Moose
+					</label>
+					<label class="btn btn-primary gruppe" Gruppe="Macromycetes">
+						<input type="radio">Pilze
+					</label>
+					<label class="btn btn-primary gruppe" Gruppe="Lebensräume">
+						<input type="radio">Lebensräume
+					</label>
 				</div>
 			</div>
-			<div id="suchenFauna" class="input-prepend suchen">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldFauna" class="span2 suchfeld" type="search" placeholder="filtern">
+			<div id="suchenFauna" class="input-group input-group-xs suchen">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input id="suchfeldFauna" class="form-control suchfeld" type="text" placeholder="filtern">
 			</div>
-			<div id="suchenFlora" class="input-prepend suchen">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldFlora" class="span2 suchfeld" type="search" placeholder="filtern">
+			<div id="suchenFlora" class="input-group input-group-xs suchen">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input id="suchfeldFlora" class="form-control suchfeld" type="text" placeholder="filtern">
 			</div>
-			<div id="suchenMoose" class="input-prepend suchen">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldMoose" class="span2 suchfeld" type="search" placeholder="filtern">
+			<div id="suchenMoose" class="input-group input-group-xs suchen">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input id="suchfeldMoose" class="form-control suchfeld" type="text" placeholder="filtern">
 			</div>
-			<div id="suchenMacromycetes" class="input-prepend suchen">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldMacromycetes" class="span2 suchfeld" type="search" placeholder="filtern">
+			<div id="suchenMacromycetes" class="input-group input-group-xs suchen">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input id="suchfeldMacromycetes" class="form-control suchfeld" type="text" placeholder="filtern">
 			</div>
-			<div id="suchenLebensräume" class="input-prepend suchen">
-				<span class="add-on"><i id="suchfeld_icon" class="icon-search"></i></span><input id="suchfeldLebensräume" class="span2 suchfeld" type="search" placeholder="filtern">
+			<div id="suchenLebensräume" class="input-group input-group-xs suchen">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input id="suchfeldLebensräume" class="form-control suchfeld" type="text" placeholder="filtern">
 			</div>
 			<div id="treeMitteilung" style="display:none;">hole Daten...</div>
 			<div id="treeFaunaBeschriftung" class="treeBeschriftung"></div>
@@ -316,7 +332,7 @@
 								<div class="form-actions">
 									<div class="fileupload fileupload-new" data-provides="fileupload">
 										<div class="input-append">
-											<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="DsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
+											<div class="uneditable-input span3"><i class="glyphicon glyphicon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="DsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
 										</div>
 									</div>
 								</div>
@@ -551,7 +567,7 @@
 								<div class="form-actions">
 									<div class="fileupload fileupload-new" data-provides="fileupload">
 										<div class="input-append">
-											<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="BsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
+											<div class="uneditable-input span3"><i class="glyphicon glyphicon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="BsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
 										</div>
 									</div>
 								</div>
@@ -931,9 +947,15 @@
 					$(".konto_speichern_btn").hide();
 				}
 
-				//Baum aufbauen, wenn Gruppe gewählt wird
+				/*//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#Gruppe").on("click", ".gruppe", function () {
 					oeffneGruppe(this.value);
+				});*/
+
+				//Baum aufbauen, wenn Gruppe gewählt wird
+				$("#menu").on("click", ".gruppe", function () {
+					oeffneGruppe($(this).attr("Gruppe"));
+					console.log($(this).attr("Gruppe"));
 				});
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird

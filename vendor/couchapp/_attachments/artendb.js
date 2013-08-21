@@ -110,7 +110,7 @@ function erstelleTree() {
 	})
 	.bind("loaded.jstree", function (event, data) {
 		jstree_erstellt.resolve();
-		$("#suchen"+window.Gruppe).show();
+		$("#suchen"+window.Gruppe).css("display", "table");
 		$("#suchfeld"+window.Gruppe).focus();
 		initiiereSuchfeld();
 		$("#treeMitteilung").hide();
