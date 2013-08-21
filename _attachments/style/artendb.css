@@ -1,11 +1,11 @@
 
 body {
-	margin: 8px 8px 8px 7px;
+	margin: 8px 8px 8px 7px !important;
 }
 
 #menu_btn {
 	top: 18px;
-	left: 16px;
+	left: 18px;
 	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
 	z-index: 5;
 }
@@ -24,13 +24,17 @@ body {
 
 #forms {
 	/*wenn forms unter menu kommt muss ein margin vorhanden sein*/
-	margin-bottom:7px;
+	margin:0px 0px 7px 0px;
+	/*bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren*/
+	border: none;
+	padding: 0 0 0 0;
 }
 
 /*über 1000px nebeneinander*/
 @media screen and (min-width: 1001px) {
 	#menu {
-		width:365px;
+		/*width:365px;*/
+		width: 383px;
 		position:fixed;
 	}
 
@@ -132,19 +136,40 @@ body {
 	color: #CC012A !important;
 }
 
-.accordion-heading a {
+.panel {
+	margin-bottom: 2px;
+}
+
+.panel-heading {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	border: none;
+}
+
+.panel-heading a {
 	font-size: 17px;
 	color: #944600;
 	font-weight: bold;
 }
 
-.accordion-inner {
+/*Gradient, um die panels zu stylen*/
+.panel-heading-gradient {
+	background-color: #FFFFD8; 
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
+	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
+	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
+}
+
+.panel-body {
 	background-color: #FFFFF0;
+	border-top: 1px solid #e5e5e5;
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
     /*background-color: transparent;*/
-    background-color: #ffffff;
+    background-color: #ffffff !important;
 }
 
 #menu-div {
@@ -160,7 +185,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 
 #Gruppe_label {
 	position: relative;
-	left: 78px;
+	left: 68px;
 	top: 8px;
 	/*sonst überlappt es das Formular rechts davon!*/
 	width: 250px;
@@ -190,12 +215,12 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 **weil twitter typeahead sie sonst verändert
 */
 #menu .suchfeld {
-	/*width: 321px;
+	/*
 	width: -webkit-calc(100% + 151px);
 	width: -o-calc(100% + 151px);
 	width: calc(100% + 151px);*/
-	width: 304px;
-	max-width: 311px;
+	width: 319px;
+	/*max-width: 311px;*/
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
@@ -210,14 +235,14 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	column-width: 450px;
 }
 
-#art label, #importieren_ds label, #importieren_bs label, #export .control-group label {
+#art label, #importieren_ds label, #importieren_bs label, #export .form-group label {
 	width: 180px;
 	color: #555555;
 	margin-right: 7px;
+	/*bootstrap.css macht font-weight bold*/
+	font-weight: normal;
 	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
 	margin-bottom: 0;
-	/*Label immer in die control-group zwingen, sonst kommt sie gelegentlich auf andere Zeile*/
-	/*position: absolute;*/
 }
 
 #art .feldtext, #importieren_ds .feldtext, #importieren_bs .feldtext, #export .feldtext {
@@ -235,7 +260,8 @@ a {
 }
 
 input[type="radio"], input[type="checkbox"] {
-	margin-top: 1px !important;
+	margin-top: 8px !important;
+	margin-left: 4px !important;
 }
 
 label+input[type="radio"], label+input[type="checkbox"] {
@@ -262,6 +288,7 @@ a:hover {
 	width: -webkit-calc(100% - 210px);
 	width: -o-calc(100% - 210px);
 	width: calc(100% - 210px);
+	font-size: 14px;
 }
 
 .feld {
@@ -304,20 +331,27 @@ a:hover {
 	padding-left: 190px;
 }
 
-.accordion-inner hr {
+
+.form-control {
+	display: inline-block !important;
+}
+
+.panel-body hr {
 	margin: 11px 0;
 }
 
-#export .accordion-inner hr {
+#export .panel-body hr {
 	margin-bottom: 0;
 	margin-top: 16px;
 }
 
 /*Titel für Eigenschaften und Beziehungen stylen*/
-.accordion h4 {
+.form h4 {
 	padding-left: 15px;
 	margin-bottom: 3px;
 	color: #424242;
+	font-size: 17.5px;
+	font-weight: bold;
 }
 
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
@@ -331,7 +365,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
-#art .control-group, #importieren_ds .control-group, #importieren_bs .control-group, #export .control-group {
+#art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
 	margin-bottom: 5px;
 	/*position: relative;*/
 	-webkit-column-break-inside:avoid;
@@ -345,8 +379,13 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100px;
 }
 
-#art input, #art select, #art textarea, #importieren_ds input, #importieren_ds select, #importieren_ds textarea, #importieren_bs input, #importieren_bs select, #importieren_bs textarea, #export .controls input, #export select, #export textarea {
+#art input, #art select, #importieren_ds input, #importieren_ds select, #importieren_bs input, #importieren_bs select, #export .controls input, #export select {
 	/*alle inputs genau links ausrichten*/
+	margin-left: 2px;
+}
+
+#art textarea, #importieren_ds textarea, #importieren_bs textarea, #export textarea {
+	/*textinputs muss man weiter nach rechts schieben, unklar wieso*/
 	margin-left: 2px;
 }
 
@@ -359,6 +398,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .form-horizontal .control-label {
 	/*padding-top: 3px;*/
 	padding-top: 8px;
+	float: left;
 }
 
 label {
@@ -386,16 +426,6 @@ option {
 
 #vakata-contextmenu {
 	width: 230px;
-}
-
-/*Gradient, um die Accordions zu stylen*/
-.accordion-group_gradient {
-	background-color: #FFFFD8; 
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
-	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
-	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
 }
 
 .hinweis {
@@ -452,15 +482,15 @@ option {
 .fileupload-new .input-append .btn-file{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
 .thumbnail-borderless .thumbnail{border:none;padding:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
 .fileupload-new.thumbnail-borderless .thumbnail{border:1px solid #ddd;}
-.control-group.warning .fileupload .uneditable-input{color:#a47e3c;border-color:#a47e3c;}
-.control-group.warning .fileupload .fileupload-preview{color:#a47e3c;}
-.control-group.warning .fileupload .thumbnail{border-color:#a47e3c;}
-.control-group.error .fileupload .uneditable-input{color:#b94a48;border-color:#b94a48;}
-.control-group.error .fileupload .fileupload-preview{color:#b94a48;}
-.control-group.error .fileupload .thumbnail{border-color:#b94a48;}
-.control-group.success .fileupload .uneditable-input{color:#468847;border-color:#468847;}
-.control-group.success .fileupload .fileupload-preview{color:#468847;}
-.control-group.success .fileupload .thumbnail{border-color:#468847;}
+.form-group.warning .fileupload .uneditable-input{color:#a47e3c;border-color:#a47e3c;}
+.form-group.warning .fileupload .fileupload-preview{color:#a47e3c;}
+.form-group.warning .fileupload .thumbnail{border-color:#a47e3c;}
+.form-group.error .fileupload .uneditable-input{color:#b94a48;border-color:#b94a48;}
+.form-group.error .fileupload .fileupload-preview{color:#b94a48;}
+.form-group.error .fileupload .thumbnail{border-color:#b94a48;}
+.form-group.success .fileupload .uneditable-input{color:#468847;border-color:#468847;}
+.form-group.success .fileupload .fileupload-preview{color:#468847;}
+.form-group.success .fileupload .thumbnail{border-color:#468847;}
 
 /*twitter typeahead stylen*/
 .twitter-typeahead {

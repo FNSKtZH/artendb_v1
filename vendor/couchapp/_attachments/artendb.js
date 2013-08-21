@@ -455,7 +455,7 @@ function initiiere_art(id) {
 			a, f, h, i, k, x, q,
 			dsNamen = [],
 			bezNamen = [];
-			//accordion beginnen
+			//panel beginnen
 			htmlArt = '<h4>Taxonomie:</h4>';
 			//zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			//gleichzeitig die Taxonomie suchen und gleich erstellen lassen
@@ -615,7 +615,7 @@ function initiiere_art(id) {
 }
 
 function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
-	//accordion beenden
+	//panel beenden
 	$("#art_inhalt").html(htmlArt);
 	setzteHöheTextareas();
 	//richtiges Formular anzeigen
@@ -623,10 +623,10 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	//Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
 	$("#art_anmelden").hide();
 	//Bei Lebensräumen die Taxonomie öffnen
-	//accordion initiieren
+	//panel initiieren
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-		$('.accordion-body').each(function() {
+		$('.panel-body').each(function() {
 			if ($(this).attr('id') !== "art_anmelden_collapse") {
 				$(this).collapse('show');
 			}
@@ -647,15 +647,15 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		art_i_name;
 	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName;
 	//Accordion-Gruppe und -heading anfügen
-	html = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i_name + '">';
+	html += '<a class="Datensammlung" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
 	html += '</a></div>';
 	//body beginnen
-	html += '<div id="collapse' + art_i_name + '" class="accordion-body collapse"><div class="accordion-inner">';
+	html += '<div id="collapse' + art_i_name + '" class="panel-body collapse">';
 	//Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -714,7 +714,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		}
 	}
 	//body und Accordion-Gruppe abschliessen
-	html += '</div></div></div>';
+	html += '</div></div>';
 	return html;
 }
 
@@ -726,19 +726,19 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		art_i_name;
 	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 	//Accordion-Gruppe und -heading anfügen
-	htmlDatensammlung = '<div class="accordion-group"><div class="accordion-heading accordion-group_gradient">';
+	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	//bei LR: Symbolleiste einfügen
 	if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
 		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group"><a class="btn lr_bearb lr_bearb_bearb" href="#" title="bearbeiten"><i class="icon-pencil"></i></a><a class="btn lr_bearb lr_bearb_schuetzen disabled" href="#" title="schützen"><i class="icon-ban-circle"></i></a><a class="btn lr_bearb lr_bearb_neu disabled" href="#" title="neuer Lebensraum"><i class="icon-plus"></i></a><a class="btn lr_bearb lr_bearb_loeschen disabled" href="#" title="Lebensraum löschen"><i class="icon-trash"></i></a></div></div>';
 	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="accordion-toggle Datensammlung" data-toggle="collapse" data-parent="#accordion_art" href="#collapse' + art_i_name + '">';
+	htmlDatensammlung += '<a class="Datensammlung" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
 	//header abschliessen
 	htmlDatensammlung += '</a></div>';
 	//body beginnen
-	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="accordion-body collapse ' + art.Gruppe + ' ' + dsTyp + '"><div class="accordion-inner">';
+	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="panel-body collapse ' + art.Gruppe + ' ' + dsTyp + '">';
 	//Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -788,7 +788,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		}
 	}
 	//body und Accordion-Gruppe abschliessen
-	htmlDatensammlung += '</div></div></div>';
+	htmlDatensammlung += '</div></div>';
 	return htmlDatensammlung;
 }
 
@@ -896,9 +896,9 @@ function setzteLinksZuBilderUndWikipedia(art) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
+	HtmlContainer = '<div class="form-group"><label class="control-label"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
@@ -914,9 +914,9 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 //generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
+	HtmlContainer = '<div class="form-group"><label class="control-label"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
@@ -939,9 +939,9 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 //generiert den html-Inhalt für einzelne Links in Flora
 /*function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
+	HtmlContainer = '<div class="form-group"><label class="control-label"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
@@ -957,11 +957,11 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
@@ -970,7 +970,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	//jetzt Link beginnen, damit das Feld klickbar wird
 	HtmlContainer += '<a href="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '"><input class="controls" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
+	HtmlContainer += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -986,9 +986,9 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
+	HtmlContainer = '<div class="form-group"><label class="control-label"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
@@ -1006,16 +1006,16 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 //generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label>\n\t<input class="controls" id="';
+	HtmlContainer += ':</label>\n\t<input class="controls form-control input-sm" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -1030,16 +1030,16 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 //generiert den html-Inhalt für Textarea
 function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><textarea class="controls" id="';
+	HtmlContainer += ':</label><textarea class="controls form-control input-sm" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -1053,16 +1053,17 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 //generiert den html-Inhalt für ja/nein-Felder
 function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
 	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 28) {
+	if (FeldName.length > 24) {
 		HtmlContainer += ' style="padding-top:0px"';
 	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><input class="controls" type="checkbox" id="';
+	//HtmlContainer += ':</label><input class="controls" type="checkbox" id="';
+	HtmlContainer += ':</label><input type="checkbox" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -1454,7 +1455,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	}
 	var html_ds_felder_div = "";
 	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
-	html_ds_felder_div += '<select type="text" class="controls" id="'+Feldname+'" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
+	html_ds_felder_div += '<select type="text" class="controls form-control input-sm" id="'+Feldname+'" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
 	//durch die Felder zirkeln
 	for (var x in Datensätze[0]) {
@@ -2300,7 +2301,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</label>';
 			//filtern
-			html_filtern += '<div class="control-group">';
+			html_filtern += '<div class="form-group">';
 			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
 			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
@@ -2308,7 +2309,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			}
 			html_filtern += '>'+ x +'</label>';
 			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="export_feld_filtern" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 			html_filtern += '</div>';
 		}
@@ -3104,7 +3105,7 @@ function bearbeiteLrTaxonomie() {
 	$("#art_anmelden_collapse").collapse('hide');
 
 	//alle Felder schreibbar setzen
-	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
 		//einige Felder nicht bearbeiten
 		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
 			$(this).attr('readonly', false);
@@ -3123,7 +3124,7 @@ function bearbeiteLrTaxonomie() {
 
 function schuetzeLrTaxonomie() {
 	//alle Felder schreibbar setzen
-	$(".accordion-body.Lebensräume.Taxonomie .controls").each(function() {
+	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
 		if ($(this).parent().attr('href')) {
 			var feldWert = $(this).val();
