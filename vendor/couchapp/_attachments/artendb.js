@@ -621,10 +621,8 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	zeigeFormular("art");
 	//Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
 	$("#art_anmelden").hide();
-	//Bei Lebensräumen die Taxonomie öffnen
-	//panel initiieren
+	//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
-		//Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 		$('.panel-body').each(function() {
 			if ($(this).attr('id') !== "art_anmelden_collapse") {
 				$(this).collapse('show');
@@ -632,6 +630,7 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 		});
 	}
 	//jetzt die Links im Menu setzen
+	//TODO: unklar, wieso dies nochmals nötig ist, da von zeigeFormular schon gemacht
 	setzteLinksZuBilderUndWikipedia(art);
 	//und die URL anpassen
 	history.pushState({id: "id"}, "id", "index.html?id=" + art._id);
@@ -1152,8 +1151,6 @@ function zeigeFormular(Formularname) {
 			$(".treeBeschriftung").css("display", "none");
 			//Gruppe Schaltfläche deaktivieren
 			$('#Gruppe .active').removeClass('active');
-			//jetzt die Links im Menu deaktivieren
-			setzteLinksZuBilderUndWikipedia();
 		}
 		$('form').each(function() {
 			var that = $(this);
@@ -1163,6 +1160,8 @@ function zeigeFormular(Formularname) {
 			}
 		});
 		$(window).scrollTop(0);
+		//jetzt die Links im Menu (de)aktivieren
+		setzteLinksZuBilderUndWikipedia();
 		formular_angezeigt.resolve();
 	}
 	return formular_angezeigt.promise();

@@ -1660,13 +1660,10 @@
 					FitToContent(this.id);
 				});
 
-				//TODO: Nicht auf Ebene form sondern Collapse/Panel auslösen
-				//hat aber nicht geklappt!
-				$(".form").on("shown.bs.collapse", function() {
-					//textareas dieses Formulars: Grösse an Text anpassen
+				//Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
+				$(".form").on("shown.bs.collapse", ".panel", function() {
 					$(this).find('textarea').each(function() {
 						FitToContent(this.id);
-						console.log(this.id + " on show collapse");
 					});
 				});
 
