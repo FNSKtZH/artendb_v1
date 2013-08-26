@@ -617,7 +617,6 @@ function initiiere_art(id) {
 function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
 	//panel beenden
 	$("#art_inhalt").html(htmlArt);
-	setzteHöheTextareas();
 	//richtiges Formular anzeigen
 	zeigeFormular("art");
 	//Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
@@ -1039,7 +1038,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><textarea class="controls form-control input-sm" id="';
+	HtmlContainer += ':</label><textarea class="controls form-control" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
@@ -1090,6 +1089,7 @@ function setzeTreehoehe() {
 //setzt die Höhe von textareas so, dass der Text genau rein passt
 function FitToContent(id, maxHeight) {
 	var text = id && id.style ? id : document.getElementById(id);
+	maxHeight = maxHeight || document.documentElement.clientHeight;
 	if (!text) {
 		return;
 	}
@@ -1109,14 +1109,6 @@ function FitToContent(id, maxHeight) {
 	if (adjustedHeight > text.clientHeight) {
 		text.style.height = adjustedHeight + "px";
 	}
-}
-
-function setzteHöheTextareas() {
-	$('form').each(function() {
-		$('textarea').each(function () {
-			FitToContent(this, document.documentElement.clientHeight);
-		});
-	});
 }
 
 function öffneMarkiertenNode() {
@@ -1164,12 +1156,10 @@ function zeigeFormular(Formularname) {
 			setzteLinksZuBilderUndWikipedia();
 		}
 		$('form').each(function() {
-			if ($(this).attr("id") === Formularname) {
+			var that = $(this);
+			if (that.attr("id") === Formularname) {
 				$("#forms").show();
-				$(this).show();
-				$('textarea').each(function () {
-					$(this).trigger('focus');
-				});
+				that.show();
 			}
 		});
 		$(window).scrollTop(0);

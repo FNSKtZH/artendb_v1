@@ -108,7 +108,7 @@
 
 		<fieldset id="forms">
 
-			<form id="art" class="form form-horizontal" action="#" method="get" autocomplete="off">
+			<form id="art" class="form_art form form-horizontal" action="#" method="get" autocomplete="off">
 				<div id="panel_art">
 					<div id="art_anmelden" class="panel panel-default" style="display:none;">
 						<div class="panel-heading panel-heading-gradient">
@@ -161,7 +161,7 @@
 				</div>
 			</form>
 			
-			<form id="importieren_ds" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+			<form id="importieren_ds" class="form_importieren_ds form form-horizontal import" action="#" method="get" autocomplete="off">
 				<div id="importieren_ds_panel">
 					<div id="importieren_ds_anmelden" class="panel panel-default importieren_anmelden">
 						<div class="panel-heading panel-heading-gradient">
@@ -385,7 +385,7 @@
 				</div>		
 			</form>
 
-			<form id="importieren_bs" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+			<form id="importieren_bs" class="form_importieren_bs form form-horizontal import" action="#" method="get" autocomplete="off">
 				<div id="importieren_bs_panel">
 					<div id="importieren_bs_anmelden" class="panel panel-default">
 						<div class="panel-heading panel-heading-gradient">
@@ -610,7 +610,7 @@
 				</div>		
 			</form>
 
-			<form id="export" class="form form-horizontal" action="#" method="get" autocomplete="off">
+			<form id="export" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
 				<div id="exportieren_panel">
 					<div class="panel panel-default" id="exportieren_objekte_waehlen_gruppen">
 						<div class="panel-heading panel-heading-gradient">
@@ -1657,7 +1657,17 @@
 				});
 
 				$(".form").on("keyup focus", "textarea", function() {
-					FitToContent(this, document.documentElement.clientHeight);
+					FitToContent(this.id);
+				});
+
+				//TODO: Nicht auf Ebene form sondern Collapse/Panel auslösen
+				//hat aber nicht geklappt!
+				$(".form").on("shown.bs.collapse", function() {
+					//textareas dieses Formulars: Grösse an Text anpassen
+					$(this).find('textarea').each(function() {
+						FitToContent(this.id);
+						console.log(this.id + " on show collapse");
+					});
 				});
 
 				//Klick auf Link zu Art steuern
@@ -1675,7 +1685,12 @@
 
 			$(window).resize(function () {
 				setzeTreehoehe();
-				setzteHöheTextareas();
+				//Höhe der Textareas korrigieren
+				$('form').each(function() {
+					$('textarea').each(function() {
+						FitToContent(this.id);
+					});
+				});
 			});
 
 			$(document).on("click", ".anmelden_btn", function(event) {
