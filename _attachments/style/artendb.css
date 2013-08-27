@@ -501,12 +501,10 @@ option {
 }
 
 /*
-**bootstrap verschiebt den Text
-**darum den hint auch verschieben
+**der hint darf nicht sichtbar sein
 */
 #menu .twitter-typeahead .tt-hint {
-	top: 5px !important;
-	left: 11px !important;
+	opacity: 0;
 }
 
 .tt-dropdown-menu {
