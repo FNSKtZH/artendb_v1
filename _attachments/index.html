@@ -917,11 +917,6 @@
 					$(".konto_speichern_btn").hide();
 				}
 
-				/*//Baum aufbauen, wenn Gruppe gewählt wird
-				$("#Gruppe").on("click", ".gruppe", function () {
-					oeffneGruppe(this.value);
-				});*/
-
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
 					oeffneGruppe($(this).attr("Gruppe"));
@@ -1861,16 +1856,20 @@
 	</div>
 
 	<div id="rueckfrage_lr_loeschen" class="modal hide fade">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3 id="rueckfrage_lr_loeschen_label">Sicher?</h3>
-		</div>
-		<div class="modal-body">
-			<p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</a>
-			<a href="#" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</a>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3 id="rueckfrage_lr_loeschen_label">Sicher?</h3>
+				</div>
+				<div class="modal-body">
+					<p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</a>
+					<a href="#" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</a>
+				</div>
+			</div>
 		</div>
 	</div>
 
