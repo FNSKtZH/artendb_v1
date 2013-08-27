@@ -411,7 +411,7 @@ option {
 
 .bearb_toolbar {
 	position: absolute;
-	margin-top: 3px;
+	margin-top: -3px;
 	right: 23px;
 }
 

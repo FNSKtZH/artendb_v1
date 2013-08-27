@@ -1574,14 +1574,14 @@
 					speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
 				});
 
-				$('#art').on('shown', '.panel-body.Lebensräume.Taxonomie', function () {
+				$('#art').on('shown.bs.collapse', '.panel-body.Lebensräume.Taxonomie', function () {
 					if (window.lr_bearb) {
 						bearbeiteLrTaxonomie();
 					}
 					$(".bearb_toolbar").show();
 				});
 
-				$('#art').on('hidden', '.panel-body.Lebensräume.Taxonomie', function () {
+				$('#art').on('hidden.bs.collapse', '.panel-body.Lebensräume.Taxonomie', function () {
 					$(".bearb_toolbar").hide();
 				});
 
