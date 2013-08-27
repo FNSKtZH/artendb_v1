@@ -111,12 +111,11 @@ function erstelleTree() {
 	.bind("loaded.jstree", function (event, data) {
 		jstree_erstellt.resolve();
 		$("#suchen"+window.Gruppe).css("display", "table");
-		$("#suchfeld"+window.Gruppe).focus();
-		initiiereSuchfeld();
 		$("#treeMitteilung").hide();
 		$("#tree" + window.Gruppe).css("display", "block");
 		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
 		setzeTreehoehe();
+		initiiereSuchfeld();
 	})
 	.bind("after_open.jstree", function (e, data) {
 		setzeTreehoehe();
@@ -286,6 +285,7 @@ function initiiereSuchfeld_2() {
 	.on('typeahead:selected', function(e, datum) {
 		oeffneBaumZuId(datum.id);
 	});
+	$("#suchfeld"+window.Gruppe).focus();
 }
 
 //baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
