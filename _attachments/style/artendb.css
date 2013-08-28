@@ -313,6 +313,10 @@ a:hover {
 	display: none;
 }
 
+.modal-backdrop.fade.in {
+	opacity: 0.8;
+}
+
 .BeschreibungDatensammlung {
 	/*font-size:80%;*/
 	padding-bottom: 0.5em;
