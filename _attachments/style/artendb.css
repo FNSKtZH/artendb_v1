@@ -223,6 +223,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	/*max-width: 311px;*/
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
+	text-overflow: ellipsis;
 }
 
 .treeBeschriftung {
@@ -314,7 +315,13 @@ a:hover {
 }
 
 .modal-backdrop.fade.in {
+	/*bootstrap macht schwarz, das ist hässlich*/
 	opacity: 0.8;
+}
+
+.btn.disabled {
+	/*bootstrap macht 0.85, das ist nur schwer sichtbar*/
+	opacity: 0.5;
 }
 
 .BeschreibungDatensammlung {

@@ -35,7 +35,7 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
-				<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Bilder suchen</a></li>
+				<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Mit Google Bilder suchen</a></li>
 				<li id="WikipediaLink_li" class="disabled"><a id="WikipediaLink" href="" target="_blank">In Wikipedia suchen</a></li>
 				<li role="presentation" class="divider"></li>				
 				<li><a id="ds_importieren" href="#">Eigenschaften importieren / löschen</a></li>
@@ -920,7 +920,6 @@
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
 					oeffneGruppe($(this).attr("Gruppe"));
-					console.log($(this).attr("Gruppe"));
 				});
 
 				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird

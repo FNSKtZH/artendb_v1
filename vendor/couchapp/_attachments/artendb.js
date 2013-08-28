@@ -887,7 +887,9 @@ function setzteLinksZuBilderUndWikipedia(art) {
 		$("#WikipediaLink_li").removeClass("disabled");
 	} else {
 		$("#WikipediaLink").attr("href", "#");
+		$("#WikipediaLink_li").addClass("disabled");
 		$("#GoogleBilderLink").attr("href", "#");
+		$("#GoogleBilderLink_li").addClass("disabled");
 	}
 }
 
@@ -2969,6 +2971,8 @@ function oeffneGruppe(Gruppe) {
 	$(".suchen").val("");
 	$("#treeMitteilung").show();
 	erstelleBaum();
+	//keine Art mehr aktiv
+	delete localStorage.art_id;
 }
 
 //schreibt Änderungen in Feldern in die Datenbank
