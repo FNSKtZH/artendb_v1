@@ -1525,7 +1525,7 @@
 				$("#art").on("click", ".btn.lr_bearb_loeschen", function() {
 					if (!$(this).hasClass('disabled')) {
 						//rückfragen
-						$('#rueckfrage_lr_loeschen').modal();
+						$('#rueckfrage_lr_loeschen').modal('show');
 					}
 				});
 
@@ -1753,7 +1753,7 @@
 	</body>
 	<div id="Meldung"></div>
 	
-	<div id="meldung_kompatibilität" class="modal hide fade">
+	<div id="meldung_kompatibilität" class="modal fade">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3>inkompatibler Browser</h3>
@@ -1764,7 +1764,7 @@
 	</div>
 
 	<!-- Modal -->
-	<div id="fileApiMeldung" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="fileApiMeldung" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">inkompatibler Browser</h3>
@@ -1777,7 +1777,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_zuviele_bs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_zuviele_bs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">Zuviele Beziehungssammlungen gewählt</h3>
@@ -1790,7 +1790,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_keine_exportdaten" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_keine_exportdaten" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">Keine Daten gewählt</h3>
@@ -1803,7 +1803,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_ds_nicht_bearbeitbar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_ds_nicht_bearbeitbar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3>leider nein...</h3>
@@ -1816,7 +1816,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_bs_nicht_bearbeitbar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_bs_nicht_bearbeitbar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3>leider nein...</h3>
@@ -1829,7 +1829,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_keine_gruppen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_keine_gruppen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">Keine Gruppe gewählt</h3>
@@ -1842,7 +1842,7 @@
 		</div>
 	</div>
 
-	<div id="meldung_individuell" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="meldung_individuell" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="meldung_individuell_label">Beispielstext</h3>
@@ -1855,7 +1855,7 @@
 		</div>
 	</div>
 
-	<div id="rueckfrage_lr_loeschen" class="modal hide fade">
+	<div id="rueckfrage_lr_loeschen" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1866,14 +1866,14 @@
 					<p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p>
 				</div>
 				<div class="modal-footer">
-					<a href="#" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</a>
-					<a href="#" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</a>
+					<button type="button" class="btn" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</button>
+					<button type="button" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="lr_parent_waehlen" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="lr_parent_waehlen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3>Hierarchie</h3>
