@@ -344,23 +344,21 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 				if (i === 1) {
 					object_html += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
 				}
-				object_html += '<label class="radio">';
+				object_html += '<div class="radio"><label>';
 				object_html += '<input type="radio" name="parent_optionen" id="';
 				object_html += taxonomie_objekte[i].id;
 				object_html += '" value="';
 				object_html += taxonomie_objekte[i].Name;
 				object_html += '">';
 				object_html += taxonomie_objekte[i].Name;
-				object_html += '</label>';
+				object_html += '</label></div>';
 				html += object_html;
 			}
 			$("#lr_parent_waehlen_optionen").html(html);
 			//jetzt das modal aufrufen
 			//höhe Anpassen funktioniert leider nicht über css mit calc
 			$('#lr_parent_waehlen').modal();
-			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()*0.9-88);
-			var width = $('#lr_parent_waehlen').css("width");
-			$('#lr_parent_waehlen').css('margin-left', -parseFloat(width)/2);
+			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()-100);
 		}
 	});
 }

@@ -260,7 +260,7 @@ a {
 	margin-left: 0;
 }
 
-input[type="radio"], input[type="checkbox"] {
+.form input[type="radio"], .form input[type="checkbox"] {
 	margin-top: 8px !important;
 	margin-left: 4px !important;
 }
@@ -465,13 +465,29 @@ option {
 	right: 23px;
 }
 
-#lr_parent_waehlen {
+#lr_parent_waehlen .modal-content {
 	background-color: #FFFFF0;
-	max-width: -webkit-calc(100% - 20px);
+}
+
+#lr_parent_waehlen .modal-dialog {
+	display: block;
+	/*max-width: -webkit-calc(100% - 20px);
 	max-width: -o-calc(100% - 20px);
-	max-width: calc(100% - 20px);
-	width: auto;
-	top: 5%;
+	max-width: calc(100% - 20px);*/
+}
+
+#lr_parent_waehlen .modal-body {
+	overflow-y: auto !important;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#lr_parent_waehlen .modal-header {
+	padding: 0px 15px 0px 15px;
+}
+
+#lr_parent_waehlen h3 {
+	margin-top: 10px;
 }
 
 #vakata-contextmenu {
