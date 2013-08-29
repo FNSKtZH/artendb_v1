@@ -546,20 +546,6 @@
 							</div>
 							<label class="sr-only" for="BsFile">Datei wählen</label>
 							<input type="file" class="form-control" id="BsFile">
-							<!--div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="input-append">
-									<div class="uneditable-input span3 form-control">
-										<i class="glyphicon glyphicon-file fileupload-exists"></i> 
-										<span class="fileupload-preview"></span>
-									</div>
-									<span class="btn btn-default btn-file">
-										<span class="fileupload-new">Datei wählen</span>
-										<span class="fileupload-exists">neue Datei wählen</span>
-										<input class="form-control" type="file" class="" id="BsFile" />
-									</span>
-									<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
-								</div>
-							</div-->
 							<div id="BsTabelleEigenschaften" class="tabelle">
 							</div>
 						</div>
@@ -1755,104 +1741,136 @@
 	<div id="Meldung"></div>
 	
 	<div id="meldung_kompatibilität" class="modal fade">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>inkompatibler Browser</h3>
-		</div>
-		<div class="modal-body">
-			<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder den <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer (ab Version 10)</a>.</p>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3>inkompatibler Browser</h3>
+				</div>
+				<div class="modal-body">
+					<p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a>, <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder den <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer (ab Version 10)</a>.</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<!-- Modal -->
 	<div id="fileApiMeldung" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">inkompatibler Browser</h3>
-		</div>
-		<div class="modal-body">
-			<p id="fileApiMeldungText">One fine body…</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">inkompatibler Browser</h3>
+				</div>
+				<div class="modal-body">
+					<p id="fileApiMeldungText">One fine body…</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_zuviele_bs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Zuviele Beziehungssammlungen gewählt</h3>
-		</div>
-		<div class="modal-body">
-			<p id="fileApiMeldungText">Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">Zuviele Beziehungssammlungen gewählt</h3>
+				</div>
+				<div class="modal-body">
+					<p id="fileApiMeldungText">Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_keine_exportdaten" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Keine Daten gewählt</h3>
-		</div>
-		<div class="modal-body">
-			<p id="fileApiMeldungText">Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">Keine Daten gewählt</h3>
+				</div>
+				<div class="modal-body">
+					<p id="fileApiMeldungText">Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_ds_nicht_bearbeitbar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>leider nein...</h3>
-		</div>
-		<div class="modal-body">
-			<p>Sie können nur Datensammlungen verändern, die Sie selber importiert haben<br>Ausnahme: Zusammenfassende Datensammlungen</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3>leider nein...</h3>
+				</div>
+				<div class="modal-body">
+					<p>Sie können nur Datensammlungen verändern, die Sie selber importiert haben<br>Ausnahme: Zusammenfassende Datensammlungen</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_bs_nicht_bearbeitbar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>leider nein...</h3>
-		</div>
-		<div class="modal-body">
-			<p>Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben<br>Ausnahme: Zusammenfassende Beziehungssammlungen</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3>leider nein...</h3>
+				</div>
+				<div class="modal-body">
+					<p>Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben<br>Ausnahme: Zusammenfassende Beziehungssammlungen</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_keine_gruppen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Keine Gruppe gewählt</h3>
-		</div>
-		<div class="modal-body">
-			<p id="fileApiMeldungText">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">Keine Gruppe gewählt</h3>
+				</div>
+				<div class="modal-body">
+					<p id="fileApiMeldungText">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div id="meldung_individuell" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="meldung_individuell_label">Beispielstext</h3>
-		</div>
-		<div class="modal-body">
-			<p id="meldung_individuell_text">Beispielstext</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="meldung_individuell_schliessen">schliessen</button>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="meldung_individuell_label">Beispielstext</h3>
+				</div>
+				<div class="modal-body">
+					<p id="meldung_individuell_text">Beispielstext</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="meldung_individuell_schliessen">schliessen</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -1875,11 +1893,15 @@
 	</div>
 
 	<div id="lr_parent_waehlen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>Hierarchie</h3>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3>Hierarchie</h3>
+				</div>
+				<div id="lr_parent_waehlen_optionen" class="modal-body" style="margin-bottom:5px;">
+				</div>
+			</div>
+			</div>
 		</div>
-		<div id="lr_parent_waehlen_optionen" class="modal-body" style="margin-bottom:5px;">
-		</div>
-	</div>
 </html>
