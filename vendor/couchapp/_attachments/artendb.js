@@ -1495,6 +1495,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	html += '</tbody></table></div>';
 	//html in div einfügen
 	$("#"+tabellen_div).html(html);
+	$("#"+tabellen_div).css("margin-top", "20px");
 	//sichtbar stellen
 	$("#"+tabellen_div).css("display", "block");
 }

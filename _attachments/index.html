@@ -309,6 +309,7 @@
 									<li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
 									<li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Artwert"</li>
 									<li>Ausnahmen: Zahlen und true/false-Werte brauchen keine Anführungs- und Schlusszeichen (es macht aber nichts, wenn sie sie haben)</li>
+									<li>Felder sind mit Komma getrennt</li>
 									<li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
 									<li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
 								</ul>
@@ -322,13 +323,8 @@
 									<li>ArtenDb setzt beim Export von Daten den Namen der Datensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
 								</ul>
 							</div>
-							<div class="form-actions">
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-									<div class="input-append">
-										<div class="uneditable-input span3"><i class="glyphicon glyphicon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="DsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
-									</div>
-								</div>
-							</div>
+							<label class="sr-only" for="DsFile">Datei wählen</label>
+							<input type="file" class="form-control" id="DsFile">
 							<div id="DsTabelleEigenschaften" class="tabelle">
 							</div>
 						</div>
@@ -532,6 +528,7 @@
 									<li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
 									<li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Beziehungspartner"</li>
 									<li>Ausnahmen: Zahlen und true/false-Werte brauchen keine Anführungs- und Schlusszeichen (es macht aber nichts, wenn sie sie haben)</li>
+									<li>Felder sind mit Komma getrennt</li>
 									<li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
 									<li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
 								</ul>
@@ -547,13 +544,22 @@
 									<li>ArtenDb setzt beim Export von Daten den Namen der Datensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
 								</ul>
 							</div>
-							<div class="form-actions">
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-									<div class="input-append">
-										<div class="uneditable-input span3"><i class="glyphicon glyphicon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Datei wählen</span><span class="fileupload-exists">neue Datei wählen</span><input type="file" id="BsFile" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
+							<label class="sr-only" for="BsFile">Datei wählen</label>
+							<input type="file" class="form-control" id="BsFile">
+							<!--div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="input-append">
+									<div class="uneditable-input span3 form-control">
+										<i class="glyphicon glyphicon-file fileupload-exists"></i> 
+										<span class="fileupload-preview"></span>
 									</div>
+									<span class="btn btn-default btn-file">
+										<span class="fileupload-new">Datei wählen</span>
+										<span class="fileupload-exists">neue Datei wählen</span>
+										<input class="form-control" type="file" class="" id="BsFile" />
+									</span>
+									<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Datei entfernen</a>
 								</div>
-							</div>
+							</div-->
 							<div id="BsTabelleEigenschaften" class="tabelle">
 							</div>
 						</div>
