@@ -486,6 +486,14 @@ option {
 	padding: 0px 15px 0px 15px;
 }
 
+.modal-header {
+	padding: 5px 20px 5px 20px;
+}
+
+.modal-footer {
+	padding: 10px 15px 10px 15px;
+}
+
 #lr_parent_waehlen h3 {
 	margin-top: 10px;
 }
