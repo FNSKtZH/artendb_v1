@@ -265,8 +265,38 @@ input[type="radio"], input[type="checkbox"] {
 	margin-left: 4px !important;
 }
 
+#export input[type="radio"], input[type="checkbox"] {
+	margin-top: 3px !important;
+	margin-left: -20px !important;
+}
+
 label+input[type="radio"], label+input[type="checkbox"] {
 	margin-bottom: -5px !important;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	/*wird von bootstrap auf 500 gesetzt, was nicht fett ist*/
+	font-weight: bold;
+}
+
+.felderspalte .form-group {
+	/*bootstrap setzt -15px*/
+	margin-left: 0px;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+#export .checkbox {
+	padding-top: 0px;
+	margin-bottom: 5px;
+}
+
+#export .label {
+	/*font-weight: normal;*/
 }
 
 .export_zum_titel_gehoerig {
@@ -293,7 +323,7 @@ a:hover {
 }
 
 .feld {
-	margin-left: 189px;
+	margin-left: 173px;
 }
 
 .Datensammlung {
@@ -390,7 +420,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100px;
 }
 
-#art input, #art select, #importieren_ds input, #importieren_ds select, #importieren_bs input, #importieren_bs select, #export .controls input, #export select {
+#art input, #art select, #importieren_ds input, #importieren_ds select, #importieren_bs input, #importieren_bs select, #export .controls input, #export select, div.Passwort, .form-group div {
 	/*alle inputs genau links ausrichten*/
 	margin-left: 2px;
 }
@@ -464,6 +494,7 @@ option {
 
 .well {
 	background-color: #FBFCF7;
+	padding: 9px 9px 4px 9px;
 }
 
 
