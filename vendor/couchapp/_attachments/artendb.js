@@ -643,13 +643,13 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		art_i_name;
 	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName;
 	//Accordion-Gruppe und -heading anfügen
-	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
+	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	html += '<a class="Datensammlung" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
 	//header abschliessen
-	html += '</a></div>';
+	html += '</a></h4></div>';
 	//body beginnen
 	html += '<div id="collapse' + art_i_name + '" class="panel-body collapse">';
 	//Datensammlung beschreiben
@@ -728,11 +728,11 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 	}
 	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<a class="Datensammlung" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
+	htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
 	//Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
 	//header abschliessen
-	htmlDatensammlung += '</a></div>';
+	htmlDatensammlung += '</a></h4></div>';
 	//body beginnen
 	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="panel-body collapse ' + art.Gruppe + ' ' + dsTyp + '">';
 	//Datensammlung beschreiben

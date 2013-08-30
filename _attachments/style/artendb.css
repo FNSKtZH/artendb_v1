@@ -152,6 +152,16 @@ body {
 	font-weight: bold;
 }
 
+.panel-heading h4.panel-title {
+	font-size: 17px;
+	color: #944600;
+	font-weight: bold;
+	padding-left: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-bottom: 0px;
+}
+
 /*Gradient, um die panels zu stylen*/
 .panel-heading-gradient {
 	background-color: #FFFFD8; 
@@ -528,6 +538,12 @@ option {
 .well {
 	background-color: #FBFCF7;
 	padding: 9px 9px 4px 9px;
+	margin-bottom: 10px;
+}
+
+.well a {
+	display: inline-block;
+	margin-bottom: 5px;
 }
 
 /*twitter typeahead stylen*/
