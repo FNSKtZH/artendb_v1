@@ -1004,7 +1004,6 @@
 				});
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', function() {
-					console.log('importieren_ds_ds_beschreiben_collapse shown');
 					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 					bereiteImportieren_ds_beschreibenVor("_ds");
 					$("#DsImportiertVon").val(localStorage.Email);
@@ -1611,11 +1610,15 @@
 				});
 
 				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', function() {
-					//Tabelle und Herunterladen-Schaltfläche ausblenden
-					$("#exportieren_exportieren_tabelle").css("display", "none");
-					$(".exportieren_exportieren_exportieren").css("display", "none");
-					//filtert und baut danach die Vorschautabelle auf
-					filtereFuerExport();
+					//nur ausführen, wenn exportieren_exportieren_collapse offen ist
+					//komischerweise wurde dieser Code immer ausglöst, wenn bei Lebensräumen F5 gedrückt wurde!
+					if ($("#exportieren_exportieren_collapse").css("display") === "block") {
+						//Tabelle und Herunterladen-Schaltfläche ausblenden
+						$("#exportieren_exportieren_tabelle").css("display", "none");
+						$(".exportieren_exportieren_exportieren").css("display", "none");
+						//filtert und baut danach die Vorschautabelle auf
+						filtereFuerExport();
+					}
 				});
 
 				$('#art').on('hidden.bs.collapse', '.panel-body.Lebensräume.Taxonomie', function() {
@@ -1890,10 +1893,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">Keine Gruppe gewählt</h3>
+					<h3 id="meldung_keine_gruppen_label">Keine Gruppe gewählt</h3>
 				</div>
 				<div class="modal-body">
-					<p id="fileApiMeldungText">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
+					<p id="meldung_keine_gruppen_text">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
