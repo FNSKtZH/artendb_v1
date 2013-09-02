@@ -52,12 +52,41 @@ function erstelleTree() {
 		jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
-			"ajax": {
-				"type": 'GET',
-				"url": function(node) {
-					//wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
+			/*data: function(node) {
+				//var daten_geholt = $.Deferred();
+				console.log('node = ' + node);
+				if (node == -1) {
+					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeOberstesLevel()))
+						.then(function(data) {
+							console.log("tree_data = " + JSON.stringify(data));
+							//daten_geholt.resolve(data);
+							return data;
+					});
+				} else {
+					level = parseInt(node.attr('level'), 10) + 1;
+					gruppe = node.attr('gruppe');
+					if (node.attr('filter')) {
+						filter = node.attr('filter').split(",");
+						id = "";
+					} else {
+						filter = "";
+						id = node.attr('id');
+					}
+					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id)))
+						.then(function(data) {
+							console.log("tree_data = " + JSON.stringify(data));
+							//daten_geholt.resolve(data);
+							return data;
+					});
+				}
+				//daten_geholt.promise();
+			}*/
+			ajax: {
+				type: 'GET',
+				url: function(node) {
+					console.log("node = " + node);
 					if (node == -1) {
-						return holeDatenFuerTreeOberstesLevel();
+						return holeDatenUrlFuerTreeOberstesLevel();
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -68,11 +97,15 @@ function erstelleTree() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return holeDatenFuerTreeUntereLevel(level, filter, gruppe, id);
+						return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
-				"success": function(data) {
+				success: function(data) {
+					console.log("erstelleTree meldet: ajax success");
 					return data;
+				},
+				error: function(data) {
+					console.log("erstelleTree meldet: ajax failure. data = " + JSON.stringify(data));
 				}
 			}
 		},
@@ -83,7 +116,7 @@ function erstelleTree() {
 		},
 		"core": {
 			"open_parents": true,	//wird ein node programmatisch geöffnet, öffnen sich alle parents
-			"strings": {	//Deutsche Übersetzungen
+			"strings": {
 				"loading": "hole Daten..."
 			}
 		},
@@ -126,7 +159,22 @@ function erstelleTree() {
 	return jstree_erstellt.promise();
 }
 
-function holeDatenFuerTreeOberstesLevel() {
+function holeDatenFuerTree(url) {
+	var daten_geholt = $.Deferred();
+	console.log("function holeDatenFuerTree called with url = " + url);
+	$.ajax({
+		type: "GET",
+		url: url,
+		success: function(data) {
+			console.log("function holeDatenFuerTree retourniert data: " + JSON.stringify(data));
+			return daten_geholt.resolve(data);
+			//return data;
+		}
+	});
+	return daten_geholt.promise();
+}
+
+function holeDatenUrlFuerTreeOberstesLevel() {
 	var gruppe;
 	//wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.Gruppe) {
@@ -151,10 +199,11 @@ function holeDatenFuerTreeOberstesLevel() {
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
 	}
+	console.log("function holeDatenUrlFuerTreeOberstesLevel gibt diese URL zurück: " + url);
 	return url;
 }
 
-function holeDatenFuerTreeUntereLevel(level, filter, gruppe, id) {
+function holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id) {
 	var startkey,
 		id2,
 		endkey = [];
@@ -2975,6 +3024,11 @@ function oeffneGruppe(Gruppe) {
 	$(".suchen").hide();
 	$("#forms").hide();
 	$(".suchen").val("");
+	var treeMitteilung = "hole Daten...";
+	if (window.Gruppe === "Macromycetes") {
+		treeMitteilung = "hole Daten (das dauert bei Pilzen länger...)";
+	}
+	$("#treeMitteilung").html(treeMitteilung);
 	$("#treeMitteilung").show();
 	erstelleBaum();
 	//keine Art mehr aktiv
