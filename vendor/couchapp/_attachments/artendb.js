@@ -2222,6 +2222,7 @@ function entferneBeziehungssammlungAusDokument(id, BsName) {
 
 //prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
 function oeffneUri() {
+	//parameter der uri holen
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
 	//wenn browser history nicht unterstützt, erstellt history.js eine hash
@@ -2240,7 +2241,8 @@ function oeffneUri() {
 				window.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
 				//den richtigen Button aktivieren
-				$("#Gruppe" + objekt.Gruppe).button('toggle');
+				//$("#Gruppe" + objekt.Gruppe).button('toggle');
+				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				//tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum()).then(function() {
