@@ -1,6 +1,6 @@
 /*!
  * typeahead.js 0.9.3
- * https://github.com/twitter/typeahead
+ * http://twitter.github.io/typeahead.js/
  * Copyright 2013 Twitter, Inc. and other contributors; Licensed MIT
  */
 

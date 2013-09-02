@@ -531,6 +531,7 @@
           }
           ajax({
               type: type,
+              //contentType: "application/json; charset=utf-8",
               data: data,
               url: this.uri + "_design/" + name[0] +
                    "/_view/" + name[1] + encodeOptions(options)

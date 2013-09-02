@@ -273,9 +273,10 @@ function initiiereSuchfeld_2() {
 	} else if (window.Gruppe) {
 		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
 	}
-	suchObjekte = _.map(suchObjekte, function (objekt) {
+	suchObjekte = _.map(suchObjekte, function(objekt) {
 		return objekt.value;
 	});
+
 	$('#suchfeld' + window.Gruppe).typeahead({
 		name: window.Gruppe,
 		valueKey: 'Name',
