@@ -52,13 +52,15 @@ function erstelleTree() {
 		jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
-			/*data: function(node) {
+			/*
+			**habe hier versucht, die Daten anderst zu holen, weil die Methode mit ajax
+			**eine Weile lang bei der Fauna scheiterte
+			**das gab sich aber plötzlich wieder...
+			**data: function(node) {
 				//var daten_geholt = $.Deferred();
-				console.log('node = ' + node);
 				if (node == -1) {
 					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeOberstesLevel()))
 						.then(function(data) {
-							console.log("tree_data = " + JSON.stringify(data));
 							//daten_geholt.resolve(data);
 							return data;
 					});
@@ -74,7 +76,6 @@ function erstelleTree() {
 					}
 					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id)))
 						.then(function(data) {
-							console.log("tree_data = " + JSON.stringify(data));
 							//daten_geholt.resolve(data);
 							return data;
 					});
@@ -84,7 +85,6 @@ function erstelleTree() {
 			ajax: {
 				type: 'GET',
 				url: function(node) {
-					console.log("node = " + node);
 					if (node == -1) {
 						return holeDatenUrlFuerTreeOberstesLevel();
 					} else {
@@ -101,11 +101,11 @@ function erstelleTree() {
 					}
 				},
 				success: function(data) {
-					console.log("erstelleTree meldet: ajax success");
+					//console.log("erstelleTree meldet: ajax success");
 					return data;
 				},
 				error: function(data) {
-					console.log("erstelleTree meldet: ajax failure. data = " + JSON.stringify(data));
+					//console.log("erstelleTree meldet: ajax failure");
 				}
 			}
 		},
@@ -159,20 +159,21 @@ function erstelleTree() {
 	return jstree_erstellt.promise();
 }
 
+/*
+**nicht im Gebrauch
+**siehe Bemerkungen, wo es aufgerufen wird
 function holeDatenFuerTree(url) {
 	var daten_geholt = $.Deferred();
-	console.log("function holeDatenFuerTree called with url = " + url);
 	$.ajax({
 		type: "GET",
 		url: url,
 		success: function(data) {
-			console.log("function holeDatenFuerTree retourniert data: " + JSON.stringify(data));
 			return daten_geholt.resolve(data);
 			//return data;
 		}
 	});
 	return daten_geholt.promise();
-}
+}*/
 
 function holeDatenUrlFuerTreeOberstesLevel() {
 	var gruppe;
@@ -199,7 +200,6 @@ function holeDatenUrlFuerTreeOberstesLevel() {
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
 	}
-	console.log("function holeDatenUrlFuerTreeOberstesLevel gibt diese URL zurück: " + url);
 	return url;
 }
 
@@ -1836,7 +1836,6 @@ function importiereBeziehungssammlung() {
 					anzBs += 1;
 					//Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
 					Beziehungssammlung = jQuery.extend(true, {}, Beziehungssammlung_vorlage);
-					//console.log('value = ' + JSON.stringify(value));
 					for (var x = 0; x<value.length; x++) {
 						//durch die Beziehungen loopen
 						anzFelder = 0;
@@ -1846,7 +1845,6 @@ function importiereBeziehungssammlung() {
 							//durch die Felder der Beziehung loopen
 							//nicht importiert wird die GUID und leere Felder
 							if (y !== "GUID" && value[x][y] !== "" && value[x][y] !== null) {
-								//console.log('y = ' + y);
 								if (value[x][y] === -1) {
 									//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
 									Beziehung[y] = true;
@@ -1864,10 +1862,8 @@ function importiereBeziehungssammlung() {
 								} else if (y == "Beziehungspartner") {
 									Beziehung[y] = [];
 									//durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
-									//console.log('value[x][y].length = ' + value[x][y].length);
 									for (var i=0; i<value[x][y].length; i++) {
 										Beziehung[y].push(window.bezPartner_objekt[value[x][y][i]]);
-										//console.log('window.bezPartner_objekt[value[x][y][i] = ' + JSON.stringify(window.bezPartner_objekt[value[x][y][i]]));
 									}
 								} else {
 									//Normalfall
@@ -1876,11 +1872,8 @@ function importiereBeziehungssammlung() {
 								anzFelder++;
 							}
 						}
-						//console.log('anzFelder = ' + anzFelder);
 						if (anzFelder > 0) {
-							//console.log('Beziehung = ' + JSON.stringify(Beziehung));
 							Beziehungen.push(Beziehung);
-							//console.log('Beziehungen = ' + JSON.stringify(Beziehungen));
 						}
 					}
 					//entsprechenden Index öffnen
@@ -2699,15 +2692,6 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 		queryParam += "&bez_in_zeilen=false";
 	}
 	window.open('_list/' + queryParam);
-	/*$db = $.couch.db("artendb");
-	$db.list(dbParam, queryParam, {
-		success: function (data) {
-			//muss man wohl nichts machen
-		},
-		error: function() {
-			console.log('error in $db.list');
-		}
-	});*/
 }
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
