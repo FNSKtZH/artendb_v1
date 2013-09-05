@@ -19,7 +19,7 @@ function(doc) {
 				value.tokens.push(doc.Taxonomie.Daten.Gattung);
 				value.tokens.push(doc.Taxonomie.Daten.Art);
 				value.tokens.push(doc.Taxonomie.Daten.Autor);
-				var namen_deutsch_worte = doc.Taxonomie.Daten["Deutsche Namen"].split(" ");
+				var namen_deutsch_worte = doc.Taxonomie.Daten["Name Deutsch"].split(" ");
 				for (i=0; i<namen_deutsch_worte.length; i++) {
 					value.tokens.push(namen_deutsch_worte[i]);
 				}

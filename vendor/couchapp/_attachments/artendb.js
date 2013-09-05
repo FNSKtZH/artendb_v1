@@ -885,8 +885,8 @@ function setzteLinksZuBilderUndWikipedia(art) {
 		switch (art.Gruppe) {
 		case "Flora":
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-			if (art.Taxonomie.Daten['Deutsche Namen']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Deutsche Namen'] + '"';
+			if (art.Taxonomie.Daten['Name Deutsch']) {
+				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Französisch']) {
 				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
@@ -894,8 +894,8 @@ function setzteLinksZuBilderUndWikipedia(art) {
 			if (art.Taxonomie.Daten['Name Italienisch']) {
 				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Deutsche Namen']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Deutsche Namen'];
+			if (art.Taxonomie.Daten['Name Deutsch']) {
+				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
 			} else {
 				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
 			}

@@ -37,7 +37,7 @@ Man könnte dem Dokument auch eine Liste (Array) von Taxonomien verpassen. Darin
 			"Artname": "Thlaspi rotundifolium (L.) Gaudin s.str.",
 			"Artname vollständig": "Thlaspi rotundifolium (L.) Gaudin s.str. (Rundblättriges Täschelkraut)",
 			"Status": "akzeptierter Name",
-			"Deutsche Namen": "Rundblättriges Täschelkraut",
+			"Name Deutsch": "Rundblättriges Täschelkraut",
 			"Referenzwerke": "Binz, A. & Ch. Heitz (1990). Schul- und Exkursionsflora für die Schweiz. Ed. 19  /  Lauber, K. & G. Wagner (2001). Flora Helvetica  /  Hess, H. & al. (1976-1980). Flora der Schweiz. Ed. 2  /  Welten, M. & R. Sutter (1982). Verbreitungsatlas der Farn- und Blütenpflanzen der Schweiz  /  Landolt, E. (1977). Ökologische Zeigerwerte zur Schweizer Flora  /  Landolt, E. (1991). Gefährdung der Farn- und Blütenpflanzen in der Schweiz mit gesamtschweizerischen und regionalen roten Listen"
 	}
 ]
