@@ -69,10 +69,9 @@ function(head, req) {
 
 		while (row = getRow()) {
 			Objekt = row.doc;
-
 			//row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 			if (row.key[1] === 0) {
-				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
+				if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
 					var ds_aus_syn_namen = [];
 					if (datensammlungen_aus_synonymen.length > 0) {
 						for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
@@ -92,7 +91,8 @@ function(head, req) {
 							}
 						}
 					}
-
+				}
+				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 					var bs_aus_syn_namen = [];
 					if (beziehungssammlungen_aus_synonymen.length > 0) {
 						for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {

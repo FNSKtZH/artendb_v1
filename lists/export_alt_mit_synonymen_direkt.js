@@ -16,7 +16,6 @@ function(head, req) {
 		felder = [],
 		feldwert,
 		gruppen,
-		bez_in_zeilen,
 		felderObjekt,
 		schonKopiert,
 		objektKopiert,
@@ -80,11 +79,15 @@ function(head, req) {
 		}
 	]
 	
+	//gruppen ist vorgegeben
+	gruppen = ["Fauna", "Flora"];
+
 	//übergebene Variabeln extrahieren
 	for (var i in req.query) {
 
 		//für alt keine Filter nötig, daher alles damit zusammenhängende gelöscht
 
+		//Felder: Damit später allenfalls weitere Felder dynamisch gewählt werden können, diesen Code belassen
 		if (i === "felder") {
 			felderObjekt = JSON.parse(req.query[i]);
 			//mitgelieferte Felder anhängen
@@ -93,18 +96,9 @@ function(head, req) {
 			}
 		}
 
-		if (i === "gruppen") {
-			gruppen = req.query[i].split(",");
-		}
-
 		//nur_ds ist immer false und wird daher nicht benötigt
 
-		//bez sind nie in Zeilen
-		bez_in_zeilen = false;
-		/*if (i === "bez_in_zeilen") {
-			//true oder false wird als String übergeben > umwandeln
-			bez_in_zeilen = (req.query[i] === 'true');
-		}*/
+		//bez sind nie in Zeilen, daher entfernt
 	}
 
 	//arrays für sammlungen aus synonymen gründen

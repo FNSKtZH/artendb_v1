@@ -2694,6 +2694,10 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 	window.open('_list/' + queryParam);
 }
 
+function exportiereFuerArtenlistentool() {
+	window.open('_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true');
+}
+
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
 	//Alle Felder abfragen
 	var fTz = "false";
