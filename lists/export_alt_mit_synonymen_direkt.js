@@ -34,47 +34,47 @@ function(head, req) {
 		//row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 		if (row.key[1] === 0) {
 			if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
-					var ds_aus_syn_namen = [];
-					if (datensammlungen_aus_synonymen.length > 0) {
-						for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-							if (datensammlungen_aus_synonymen[i].Name) {
-								ds_aus_syn_namen.push(datensammlungen_aus_synonymen[i].Name);
-							}
-						}
-					}
-					var ds_aus_syn_name;
-					if (Objekt.Datensammlungen.length > 0) {
-						for (i=0; i<Objekt.Datensammlungen.length; i++) {
-							ds_aus_syn_name = Objekt.Datensammlungen[i].Name;
-							if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
-								datensammlungen_aus_synonymen.push(Objekt.Datensammlungen[i]);
-								//sicherstellen, dass diese ds nicht nochmals gepuscht wird
-								ds_aus_syn_namen.push(ds_aus_syn_name);
-							}
+				var ds_aus_syn_namen = [];
+				if (datensammlungen_aus_synonymen.length > 0) {
+					for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
+						if (datensammlungen_aus_synonymen[i].Name) {
+							ds_aus_syn_namen.push(datensammlungen_aus_synonymen[i].Name);
 						}
 					}
 				}
-				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
-					var bs_aus_syn_namen = [];
-					if (beziehungssammlungen_aus_synonymen.length > 0) {
-						for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-							if (beziehungssammlungen_aus_synonymen[i].Name) {
-								bs_aus_syn_namen.push(beziehungssammlungen_aus_synonymen[i].Name);
-							}
-						}
-					}
-					var bs_aus_syn_name;
-					if (Objekt.Beziehungssammlungen.length > 0) {
-						for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
-							bs_aus_syn_name = Objekt.Beziehungssammlungen[i].Name;
-							if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
-								beziehungssammlungen_aus_synonymen.push(Objekt.Beziehungssammlungen[i]);
-								//sicherstellen, dass diese bs nicht nochmals gepuscht wird
-								bs_aus_syn_namen.push(bs_aus_syn_name);
-							}
+				var ds_aus_syn_name;
+				if (Objekt.Datensammlungen.length > 0) {
+					for (i=0; i<Objekt.Datensammlungen.length; i++) {
+						ds_aus_syn_name = Objekt.Datensammlungen[i].Name;
+						if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
+							datensammlungen_aus_synonymen.push(Objekt.Datensammlungen[i]);
+							//sicherstellen, dass diese ds nicht nochmals gepuscht wird
+							ds_aus_syn_namen.push(ds_aus_syn_name);
 						}
 					}
 				}
+			}
+			if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
+				var bs_aus_syn_namen = [];
+				if (beziehungssammlungen_aus_synonymen.length > 0) {
+					for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
+						if (beziehungssammlungen_aus_synonymen[i].Name) {
+							bs_aus_syn_namen.push(beziehungssammlungen_aus_synonymen[i].Name);
+						}
+					}
+				}
+				var bs_aus_syn_name;
+				if (Objekt.Beziehungssammlungen.length > 0) {
+					for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
+						bs_aus_syn_name = Objekt.Beziehungssammlungen[i].Name;
+						if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
+							beziehungssammlungen_aus_synonymen.push(Objekt.Beziehungssammlungen[i]);
+							//sicherstellen, dass diese bs nicht nochmals gepuscht wird
+							bs_aus_syn_namen.push(bs_aus_syn_name);
+						}
+					}
+				}
+			}
 			//das war ein Synonym. Hier aufhören
 		} else if (row.key[1] === 1) {
 			//wir sind jetzt im Originalobjekt
@@ -133,6 +133,8 @@ function(head, req) {
 
 			//exportobjekt gründen bzw. zurücksetzen
 			exportObjekt = {};
+
+			//Felder hinzufügen
 			exportObjekt.Gruppe = Objekt.Gruppe;
 			exportObjekt.Ref = Objekt.Taxonomie.Daten["Taxonomie ID"];
 
@@ -211,6 +213,7 @@ function(head, req) {
 	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
 		return _.isEmpty(object);
 	});
+
 	send(erstelleExportString(exportObjekte_ohne_leere));
 }
 
@@ -233,7 +236,6 @@ function erstelleExportString(exportobjekte) {
 		var stringZeile = "";
 		//durch die Felder loopen
 		for (var x in exportobjekte[i]) {
-		//for (var x = 0; x < exportobjekte[i].length; x++) {
 			if (stringZeile !== "") {
 				stringZeile += ',';
 			}

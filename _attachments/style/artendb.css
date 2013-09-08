@@ -1,6 +1,7 @@
 
 body {
-	margin: 8px 8px 8px 7px !important;
+	/*margin: 8px 8px 8px 7px !important;*/
+	padding: 8px 8px 8px 7px !important;
 }
 
 #menu_btn {
@@ -66,9 +67,9 @@ body {
 	#menu {
 		right: 0;
 		float: left;
-		width: -webkit-calc(100% - 18px);
-		width: -o-calc(100% - 18px);
-		width: calc(100% - 18px);
+		width: -webkit-calc(100% - 2px);
+		width: -o-calc(100% - 2px);
+		width: calc(100% - 2px);
 		margin-bottom: 10px;
 	}
 
@@ -427,6 +428,10 @@ a:hover {
 	color: #424242;
 	font-size: 17.5px;
 	font-weight: bold;
+}
+
+.form h4:first-child {
+	margin-top: 3px;
 }
 
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
