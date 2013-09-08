@@ -40,6 +40,7 @@
 				<li role="presentation" class="divider"></li>
 				<li><a id="exportieren" href="#">Daten frei exportieren</a></li>
 				<li><a id="exportieren_alt" href="#">Daten für Artenlistentool exportieren</a></li>
+				<li><a id="exportieren_evab_fauna" href="#">Fauna für EvAB exportieren</a></li>
 				<li role="presentation" class="divider"></li>				
 				<li><a id="ds_importieren" href="#">Eigenschaften importieren / löschen</a></li>
 				<li><a id="bs_importieren" href="#">Beziehungen importieren / löschen</a></li>
@@ -1398,9 +1399,12 @@
 					}
 				});
 
-
 				$("#menu_btn").on("click", "#exportieren_alt", function() {
 					window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true");
+				});
+
+				$("#menu_btn").on("click", "#exportieren_evab_fauna", function() {
+					window.open("_list/export_evab_fauna/fauna?include_docs=true");
 				});
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
