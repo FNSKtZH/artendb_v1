@@ -37,11 +37,12 @@
 			<ul class="dropdown-menu" role="menu">
 				<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Mit Google Bilder suchen</a></li>
 				<li id="WikipediaLink_li" class="disabled"><a id="WikipediaLink" href="" target="_blank">In Wikipedia suchen</a></li>
+				<li role="presentation" class="divider"></li>
+				<li><a id="exportieren" href="#">Daten frei exportieren</a></li>
+				<li><a id="exportieren_alt" href="#">Daten für Artenlistentool exportieren</a></li>
 				<li role="presentation" class="divider"></li>				
 				<li><a id="ds_importieren" href="#">Eigenschaften importieren / löschen</a></li>
 				<li><a id="bs_importieren" href="#">Beziehungen importieren / löschen</a></li>
-				<li role="presentation" class="divider"></li>
-				<li><a id="exportieren" href="#">Daten exportieren</a></li>
 				<li role="presentation" class="divider"></li>
 				<li><a href="https://github.com/barbalex/artendb/blob/master/README.md" target="_blank">Projektbeschreibung anzeigen</a></li>
 				<li><a href="https://github.com/barbalex/artendb" target="_blank">Code auf GitHub anzeigen</a></li>
@@ -1395,6 +1396,11 @@
 					catch (e) {
 						window.exportieren_objekte_sik = undefined;
 					}
+				});
+
+
+				$("#menu_btn").on("click", "#exportieren_alt", function() {
+					window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true");
 				});
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
