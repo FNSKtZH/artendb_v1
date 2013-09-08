@@ -3,7 +3,7 @@ function(head, req) {
 	start({
 		"headers": {
 			"Content-Type": "text/csv",
-			"Content-disposition": "attachment;filename=Fauna_Eigenschaften_fuer_EvAB.csv",
+			"Content-disposition": "attachment;filename=Flora_Eigenschaften_fuer_EvAB.csv",
 			"Accept-Charset": "utf-8"
 		}
 	});
@@ -24,11 +24,8 @@ function(head, req) {
 		//zunächst leere
 		exportObjekt.Nummer = "";
 		exportObjekt.DeutscherArtname = "";
-		exportObjekt.Gattung = "";
-		exportObjekt.Untergattung = "";
-		exportObjekt.Art = "";
-		exportObjekt.Unterart = "";
-		exportObjekt.GISLayer = "";
+		exportObjekt.Artname = "";
+		exportObjekt.Status = "";
 		//jetzt Leerwerte mit echten ersetzen, wo vorhanden
 		if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
 			dsTaxonomie = Objekt.Taxonomie.Daten;
@@ -38,26 +35,12 @@ function(head, req) {
 			if (dsTaxonomie["Name Deutsch"]) {
 				exportObjekt.DeutscherArtname = dsTaxonomie["Name Deutsch"];
 			}
-			if (dsTaxonomie.Gattung) {
-				exportObjekt.Gattung = dsTaxonomie.Gattung;
+			if (dsTaxonomie.Artname) {
+				exportObjekt.Artname = dsTaxonomie.Artname;
 			}
-			if (dsTaxonomie.Untergattung) {
-				exportObjekt.Untergattung = dsTaxonomie.Untergattung;
+			if (dsTaxonomie.Status) {
+				exportObjekt.Status = dsTaxonomie.Status;
 			}
-			if (dsTaxonomie.Art) {
-				exportObjekt.Art = dsTaxonomie.Art;
-			}
-			if (dsTaxonomie.Unterart) {
-				exportObjekt.Unterart = dsTaxonomie.Unterart;
-			}
-		}
-		//Datensammlung "ZH GIS" holen
-		var ds_zh_gis = _.find(Objekt.Datensammlungen, function(ds) {
-			return ds.Name === "ZH GIS";
-		}) || {};
-		
-		if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
-			exportObjekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
 		}
 
 		exportObjekt.idArt = "{" + Objekt._id + "}";
