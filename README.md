@@ -687,8 +687,9 @@ Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von Cou
 
 Bisher realisierte Schnittstellen:
 
-- Artenlisten für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
-- Artgruppen für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
+- Artenlisten und Artgruppen für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
+- Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
+- Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
 
