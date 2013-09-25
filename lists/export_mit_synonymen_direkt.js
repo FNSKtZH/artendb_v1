@@ -13,7 +13,7 @@ function(head, req) {
 		exportObjekte = [],
 		exportObjekt,
 		filterkriterien = [],
-		filterkriterienObjekt = {"rows": []},
+		filterkriterienObjekt = {"filterkriterien": []},
 		felder = [],
 		feldwert,
 		gruppen,
@@ -44,7 +44,7 @@ function(head, req) {
 		}
 		if (i === "filter") {
 			filterkriterienObjekt = JSON.parse(req.query[i]);
-			filterkriterien = filterkriterienObjekt.rows;
+			filterkriterien = filterkriterienObjekt.filterkriterien;
 			//jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
 			//damit das später nicht dauern wiederholt werden muss
 			for (var x=0; x<filterkriterien.length; x++) {
@@ -56,7 +56,7 @@ function(head, req) {
 		}
 		if (i === "felder") {
 			felderObjekt = JSON.parse(req.query[i]);
-			felder = felderObjekt.rows;
+			felder = felderObjekt.felder;
 		}
 		if (i === "gruppen") {
 			gruppen = req.query[i].split(",");

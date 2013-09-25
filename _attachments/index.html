@@ -39,12 +39,13 @@
 				<li id="GoogleBilderLink_li" class="disabled"><a id="GoogleBilderLink" href="" target="_blank">Auf google.ch Bilder suchen</a></li>
 				<li id="WikipediaLink_li" class="disabled"><a id="WikipediaLink" href="" target="_blank">Auf wikipedia.org suchen</a></li>
 				<li role="presentation" class="divider"></li>
-				<li role="presentation" class="dropdown-header">Exportieren:</li>
-				<li><a id="exportieren" href="#">Daten nach freier Wahl</a></li>
-				<li><a id="exportieren_alt" href="#">Daten für das Artenlistentool</a></li>
-				<li><a id="exportieren_evab_fauna" href="#">Fauna für EvAB</a></li>
-				<li><a id="exportieren_evab_flora" href="#">Flora für EvAB</a></li>
-				<li role="presentation" class="divider"></li>	
+				<li role="presentation" class="dropdown-header">Frei exportieren:</li>
+				<li><a id="exportieren" href="#">Daten für Export wählen</a></li>
+				<li role="presentation" class="divider"></li>
+				<li role="presentation" class="dropdown-header">Vordefiniert exportieren:</li>
+				<li><a id="exportieren_alt" href="#">Export für Artenlistentool</a></li>
+				<li><a id="exportieren_evab" href="#">Export für EvAB</a></li>
+				<li role="presentation" class="divider"></li>
 				<li role="presentation" class="dropdown-header">Importieren oder löschen:</li>		
 				<li><a id="ds_importieren" href="#">Eigenschaften</a></li>
 				<li><a id="bs_importieren" href="#">Beziehungen</a></li>
@@ -963,6 +964,17 @@
 					$(".konto_speichern_btn").hide();
 				}
 
+				/*console.log('encodeURIComponent("ä") = ' + encodeURIComponent("ä"));
+				console.log('encodeURIComponent("Artname vollständig") = ' + encodeURIComponent("Artname vollständig"));
+				console.log('decodeURIComponent(encodeURIComponent("ä")) = ' + decodeURIComponent(encodeURIComponent("ä")));
+				console.log('decodeURIComponent(encodeURIComponent("Artname vollständig")) = ' + decodeURIComponent(encodeURIComponent("Artname vollständig")));
+				console.log('decodeURIComponent("%C3%A4") = "' + decodeURIComponent("%C3%A4") + '"');
+				console.log('decodeURIComponent("a%CC%88") = "' + decodeURIComponent("a%CC%88") + '"');
+				var feldnameObjekt = {"Feldname":"Artname vollständig"};
+				console.log('encodeURIComponent(JSON.stringify(feldnameObjekt)) = ' + encodeURIComponent(JSON.stringify(feldnameObjekt)));
+				var meinObjekt = {"felder":[{"DsTyp":"Taxonomie","DsName":"SISF Index 2 (2005)","Feldname":"Artname vollständig"}]};
+				console.log('encodeURIComponent(JSON.stringify(meinObjekt)) = ' + encodeURIComponent(JSON.stringify(meinObjekt)));*/
+
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
 					oeffneGruppe($(this).attr("Gruppe"));
@@ -1407,12 +1419,8 @@
 					window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true");
 				});
 
-				$("#menu_btn").on("click", "#exportieren_evab_fauna", function() {
-					window.open("_list/export_evab_fauna/fauna?include_docs=true");
-				});
-
-				$("#menu_btn").on("click", "#exportieren_evab_flora", function() {
-					window.open("_list/export_evab_flora/flora?include_docs=true");
+				$("#menu_btn").on("click", "#exportieren_evab", function() {
+					window.open("_list/export_evab/evab_arten?include_docs=true");
 				});
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {

@@ -2619,7 +2619,7 @@ function filtereFuerExport(direkt) {
 		}
 	});
 	//den array dem objekt zuweisen
-	filterkriterienObjekt.rows = filterkriterien;
+	filterkriterienObjekt.filterkriterien = filterkriterien;
 	//gewählte Felder ermitteln
 	var gewaehlte_felder = [];
 	var gewaehlte_felder_objekt = {};
@@ -2642,15 +2642,20 @@ function filtereFuerExport(direkt) {
 				anz_ds_gewaehlt++;
 			}
 			feldObjekt.DsName = $(this).attr('datensammlung');
-			feldObjekt.Feldname = $(this).attr('feld');
+			//TODO: Nach dieser Zuweisung stimmt das encoding nicht mehr!
+			console.log('encodeURIComponent("Artname vollständig") = ' + encodeURIComponent("Artname vollständig"));
+			//feldObjekt.Feldname = $(this).attr('feld');
+			feldObjekt.Feldname = this.getAttribute('feld');
+			console.log("this.getAttribute('feld') = " + this.getAttribute('feld'));
+			console.log("encodeURIComponent(this.getAttribute('feld')) = " + encodeURIComponent(this.getAttribute('feld')));
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
 	//den array dem objekt zuweisen
-	gewaehlte_felder_objekt.rows = gewaehlte_felder;
+	gewaehlte_felder_objekt.felder = gewaehlte_felder;
 
 	//Wenn keine Felder gewählt sind: Melden und aufhören
-	if (gewaehlte_felder_objekt.rows.length === 0) {
+	if (gewaehlte_felder_objekt.felder.length === 0) {
 		//Beschäftigungsmeldung verstecken
 		$("#exportieren_exportieren_hinweis").alert().css("display", "none");
 		$("#exportieren_exportieren_error").alert().css("display", "block");
@@ -2674,6 +2679,7 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 		fTz = "true";
 	}
 	var dbParam, queryParam;
+	console.log('JSON.stringify(gewaehlte_felder_objekt) = ' + JSON.stringify(gewaehlte_felder_objekt));
 	if ($("#exportieren_synonym_infos").prop('checked')) {
 		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	} else {
@@ -2699,6 +2705,7 @@ function exportiereFuerArtenlistentool() {
 }
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
+	
 	//Alle Felder abfragen
 	var fTz = "false";
 	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -2715,6 +2722,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		if ($("#exportieren_synonym_infos").prop('checked')) {
 			dbParam = "artendb/export_mit_synonymen";
 			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+			//console.log('queryParam kurz nach Definition = ' + queryParam);
 		} else {
 			dbParam = "artendb/export";
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
@@ -2732,6 +2740,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 			queryParam += "&bez_in_zeilen=false";
 		}
 		$db = $.couch.db("artendb");
+		//console.log('queryParam vor $db.list = ' + queryParam);
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
 				//alle Objekte in data in window.exportieren_objekte anfügen
