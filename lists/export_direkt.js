@@ -34,6 +34,9 @@ function(head, req) {
 		dsExistiertSchon,
 		dsExistiert;
 	var _ = require("lists/lib/underscore");
+	//Versuch, jQuery zu referenzieren. Hat nicht funktioniert
+	//var jQuery = require("lists/lib/jquery");
+	var _a = require("lists/lib/artendb_listfunctions");
 	// specify that we're providing a JSON response
 	provides('json', function() {
 		//übergebene Variabeln extrahieren
@@ -44,18 +47,21 @@ function(head, req) {
 			}
 			if (i === "filter") {
 				filterkriterienObjekt = JSON.parse(req.query[i]);
+				//mit jQuery.parseJSON versuchen, weil JSON.parse in der FNS in IE9 einen Fehler produziert
+				//filterkriterienObjekt = jQuery.parseJSON(req.query[i]);
 				filterkriterien = filterkriterienObjekt.filterkriterien;
 				//jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
 				//damit das später nicht dauern wiederholt werden muss
 				for (var x=0; x<filterkriterien.length; x++) {
 					//die id darf nicht in Kleinschrift verwandelt werden
 					if (filterkriterien[x].Feldname !== "GUID") {
-						filterkriterien[x].Filterwert = convertToCorrectType(filterkriterien[x].Filterwert);
+						filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
 					}
 				}
 			}
 			if (i === "felder") {
 				felderObjekt = JSON.parse(req.query[i]);
+				//felderObjekt = jQuery.parseJSON(req.query[i]);
 				felder = felderObjekt.felder;
 			}
 			if (i === "gruppen") {
@@ -111,7 +117,7 @@ function(head, req) {
 					//die ID darf nicht in Kleinschrift verwandelt werden
 					Filterwert_z = filterkriterien[z].Filterwert;
 				} else {
-					Filterwert_z = convertToCorrectType(filterkriterien[z].Filterwert);
+					Filterwert_z = _a.convertToCorrectType(filterkriterien[z].Filterwert);
 				}
 				Vergleichsoperator_z = filterkriterien[z].Vergleichsoperator;
 				if (DsName_z === "Objekt") {
@@ -124,7 +130,7 @@ function(head, req) {
 						//Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
 						if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
 							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+						} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 							objektHinzufügen = true;
 						} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
 							objektHinzufügen = true;
@@ -142,13 +148,13 @@ function(head, req) {
 						}
 					}
 				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
-					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
+					feldwert = _a.convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
 					//das Feld ist aus Taxonomie und die werden zusammengefasst
 					//daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 					if (feldwert || feldwert === 0) {
 						if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
 							objektHinzufügen = true;
-						} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+						} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 							objektHinzufügen = true;
 						} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
 							objektHinzufügen = true;
@@ -171,13 +177,13 @@ function(head, req) {
 						break loop_filterkriterien;
 					}
 				} else if (DsTyp_z === "Taxonomie") {
-					feldwert = convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
+					feldwert = _a.convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
 					//das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 					if (feldwert || feldwert === 0) {
 						if (Objekt.Taxonomie.Name === DsName_z) {
 							if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
 								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+							} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 								objektHinzufügen = true;
 							} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
 								objektHinzufügen = true;
@@ -217,7 +223,7 @@ function(head, req) {
 										feldExistiert = true;
 										//Beziehungspartner sind Objekte und müssen separat gefiltert werden
 										if (Feldname_z === "Beziehungspartner") {
-											var bezPartner = filtereBeziehungspartner(feldwert, Filterwert_z, Vergleichsoperator_z);
+											var bezPartner = _a.filtereBeziehungspartner(feldwert, Filterwert_z, Vergleichsoperator_z);
 											if (bezPartner.length > 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
@@ -226,7 +232,7 @@ function(head, req) {
 											if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
-											} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+											} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 												objektHinzufügen = true;
 												feldHinzugefügt = true;
 											} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
@@ -273,7 +279,7 @@ function(head, req) {
 							dsExistiert = true;
 							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
 								//wir haben das gesuchte Feld gefunden!
-								feldwert = convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
+								feldwert = _a.convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
 								//in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
 								if (Vergleichsoperator_z == ">" && feldwert > Filterwert_z) {
 									objektHinzufügen = true;
@@ -287,7 +293,7 @@ function(head, req) {
 									objektHinzufügen = true;
 								} else if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
 									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "kein" && myTypeOf(feldwert) === "string" && myTypeOf(Filterwert_z) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+								} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && _a.myTypeOf(Filterwert_z) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
 									objektHinzufügen = true;
 								} else {
 									//Feld existiert aber Kriterium ist nicht erfüllt
@@ -311,7 +317,7 @@ function(head, req) {
 			}
 
 			if (filterkriterien.length === 0 && nur_ds) {
-				//hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+				//hoppl_a. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
 				//wenn ja und Feld aus DS/BS: objektHinzufügen = true;
 				//wenn nein, soll der Datensatz ja nicht exportiert werden
 				for (var zz=0; zz<felder.length; zz++) {
@@ -349,7 +355,7 @@ function(head, req) {
 			}
 
 			if (nur_ds) {
-				//hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+				//hoppl_a. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
 				//wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
 				//wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
 				var hinzufuegen = false;
@@ -466,7 +472,7 @@ function(head, req) {
 									//durch Beziehungen loopen
 									for (var aaa=0; aaa<Objekt.Beziehungssammlungen[i].Beziehungen.length; aaa++) {
 										if (typeof Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[w].Feldname] !== "undefined") {
-											feldwert = convertToCorrectType(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[w].Feldname]);
+											feldwert = _a.convertToCorrectType(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[w].Feldname]);
 											//in der Beziehung gibt es das gesuchte Feld
 											//Beziehungen in der Variablen "exportBeziehungen" sammeln
 											//durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
@@ -476,12 +482,12 @@ function(head, req) {
 													var DsTyp = filterkriterien[l].DsTyp;
 													var DsName = filterkriterien[l].DsName;
 													var Feldname = filterkriterien[l].Feldname;
-													var Filterwert = convertToCorrectType(filterkriterien[l].Filterwert);
+													var Filterwert = _a.convertToCorrectType(filterkriterien[l].Filterwert);
 													var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
 													if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[w].Feldname) {
 														//Beziehungspartner sind Objekte und müssen separat gefiltert werden
 														if (Feldname === "Beziehungspartner") {
-															var bezPartner2 = filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
+															var bezPartner2 = _a.filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
 															if (bezPartner2.length > 0) {
 																Objekt.Beziehungssammlungen[i].Beziehungen[aaa].Beziehungspartner = bezPartner2;
 																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
@@ -509,7 +515,7 @@ function(head, req) {
 											} else {
 												//kein Filter auf Feldern - Beziehung hinzufügen
 												//aber sicherstellen, dass sie nicht schon drin ist
-												if (!containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[aaa], exportBeziehungen)) {
+												if (!_a.containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[aaa], exportBeziehungen)) {
 													exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
 												}
 											}
@@ -602,123 +608,6 @@ function(head, req) {
 		var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
 			return _.isEmpty(object);
 		});
-		send(erstelleExportString(exportObjekte_ohne_leere));
+		send(_a.erstelleExportString(exportObjekte_ohne_leere));
 	});
-}
-
-function erstelleExportString(exportobjekte) {
-	var stringTitelzeile = "";
-	var stringZeilen = "";
-	//titelzeile erstellen
-	//durch Spalten loopen
-	for (var a in exportobjekte[1]) {
-		if (stringTitelzeile !== "") {
-			stringTitelzeile += ',';
-		}
-		stringTitelzeile += '"' + a + '"';
-	}
-	//Datenzeilen erstellen
-	for (var i in exportobjekte) {
-		if (stringZeilen !== "") {
-			stringZeilen += '\n';
-		}
-		var stringZeile = "";
-		//durch die Felder loopen
-		for (var x in exportobjekte[i]) {
-		//for (var x = 0; x < exportobjekte[i].length; x++) {
-			if (stringZeile !== "") {
-				stringZeile += ',';
-			}
-			//null-Werte als leere Werte
-			if (exportobjekte[i][x] === null) {
-				stringZeile += "";
-			} else if (typeof exportobjekte[i][x] === "number") {
-				//Zahlen ohne Anführungs- und Schlusszeichen exportieren
-				stringZeile += exportobjekte[i][x];
-			} else if (typeof exportobjekte[i][x] === "object") {
-				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
-				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
-			} else {
-				stringZeile += '"' + exportobjekte[i][x] + '"';
-			}
-		}
-		stringZeilen += stringZeile;
-	}
-	return stringTitelzeile + "\n" + stringZeilen;
-}
-
-function filtereBeziehungspartner(beziehungspartner, Filterwert, Vergleichsoperator) {
-	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wessen Name die Bedingung erfüllt
-	var bezPartner = [];
-	for (var m=0; m<beziehungspartner.length; m++) {
-		var feldwert = beziehungspartner[m].Name.toLowerCase();
-		if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
-			bezPartner.push(beziehungspartner[m]);
-		}
-	}
-	return bezPartner;
-}
-
-function containsObject(obj, list) {
-	var i;
-	for (i = 0; i < list.length; i++) {
-		if (list[i] === obj) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function convertToCorrectType(feldWert) {
-	var type = myTypeOf(feldWert);
-	if (type === "boolean") {
-		return Boolean(feldWert);
-	} else if (type === "float") {
-		return parseFloat(feldWert);
-	} else if (type === "integer") {
-		return parseInt(feldWert, 10);
-	} else if (type === "string") {
-		//string jetzt kleinschreiben, damit das nicht später erfolgen muss
-		return feldWert.toLowerCase();
-	} else {
-		//object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
-		return feldWert;
-	}
-}
-
-//Hilfsfunktion, die typeof ersetzt und ergänzt
-//typeof gibt bei input-Feldern immer String zurück!
-function myTypeOf(Wert) {
-	if (typeof Wert === "boolean") {
-		return "boolean";
-	} else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
-		//es ist eine Float
-		return "float";
-	//verhindern, dass führende Nullen abgeschnitten werden
-	} else if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") {
-		//es ist eine Integer
-		return "integer";
-	} else if (typeof Wert === "object") {
-		//es ist ein Objekt
-		return "object";
-	} else if (typeof Wert === "string") {
-		//als String behandeln
-		return "string";
-	} else if (typeof Wert === "undefined") {
-		return "undefined";
-	} else if (typeof Wert === "function") {
-		return "function";
-	}
 }

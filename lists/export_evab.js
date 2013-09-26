@@ -13,6 +13,7 @@ function(head, req) {
 		exportObjekt,
 		dsTaxonomie;
 	var _ = require("lists/lib/underscore");
+	var _a = require("lists/lib/artendb_listfunctions");
 
 	objekt_loop:
 	while (row = getRow()) {
@@ -115,45 +116,5 @@ function(head, req) {
 		return _.isEmpty(object);
 	});
 
-	send(erstelleExportString(exportObjekte_ohne_leere));
-}
-
-function erstelleExportString(exportobjekte) {
-	var stringTitelzeile = "";
-	var stringZeilen = "";
-	//titelzeile erstellen
-	//durch Spalten loopen
-	for (var a in exportobjekte[1]) {
-		if (stringTitelzeile !== "") {
-			stringTitelzeile += ',';
-		}
-		stringTitelzeile += '"' + a + '"';
-	}
-	//Datenzeilen erstellen
-	for (var i in exportobjekte) {
-		if (stringZeilen !== "") {
-			stringZeilen += '\n';
-		}
-		var stringZeile = "";
-		//durch die Felder loopen
-		for (var x in exportobjekte[i]) {
-			if (stringZeile !== "") {
-				stringZeile += ',';
-			}
-			//null-Werte als leere Werte
-			if (exportobjekte[i][x] === null) {
-				stringZeile += "";
-			} else if (typeof exportobjekte[i][x] === "number") {
-				//Zahlen ohne Anführungs- und Schlusszeichen exportieren
-				stringZeile += exportobjekte[i][x];
-			} else if (typeof exportobjekte[i][x] === "object") {
-				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
-				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
-			} else {
-				stringZeile += '"' + exportobjekte[i][x] + '"';
-			}
-		}
-		stringZeilen += stringZeile;
-	}
-	return stringTitelzeile + "\n" + stringZeilen;
+	send(_a.erstelleExportString(exportObjekte_ohne_leere));
 }
