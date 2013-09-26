@@ -877,7 +877,7 @@
 
 				Modernizr.load({
 					test: Modernizr.csscolumns,
-					nope: 'vendor/couchapp/css3-multi-column.js'	//scheint nicht zu funktionieren, auf IE8
+					nope: 'vendor/couchapp/css3-multi-column.js'	//scheint nicht zu funktionieren, auf IE8 und IE9
 				});
 
 				//IE8 kennt trim nicht!
@@ -963,17 +963,6 @@
 					$(".konto_erstellen_btn").hide();
 					$(".konto_speichern_btn").hide();
 				}
-
-				/*console.log('encodeURIComponent("ä") = ' + encodeURIComponent("ä"));
-				console.log('encodeURIComponent("Artname vollständig") = ' + encodeURIComponent("Artname vollständig"));
-				console.log('decodeURIComponent(encodeURIComponent("ä")) = ' + decodeURIComponent(encodeURIComponent("ä")));
-				console.log('decodeURIComponent(encodeURIComponent("Artname vollständig")) = ' + decodeURIComponent(encodeURIComponent("Artname vollständig")));
-				console.log('decodeURIComponent("%C3%A4") = "' + decodeURIComponent("%C3%A4") + '"');
-				console.log('decodeURIComponent("a%CC%88") = "' + decodeURIComponent("a%CC%88") + '"');
-				var feldnameObjekt = {"Feldname":"Artname vollständig"};
-				console.log('encodeURIComponent(JSON.stringify(feldnameObjekt)) = ' + encodeURIComponent(JSON.stringify(feldnameObjekt)));
-				var meinObjekt = {"felder":[{"DsTyp":"Taxonomie","DsName":"SISF Index 2 (2005)","Feldname":"Artname vollständig"}]};
-				console.log('encodeURIComponent(JSON.stringify(meinObjekt)) = ' + encodeURIComponent(JSON.stringify(meinObjekt)));*/
 
 				//Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
@@ -1812,7 +1801,7 @@
 		</script>
 	</body>
 	<div id="Meldung"></div>
-	
+
 	<div id="meldung_kompatibilität" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
