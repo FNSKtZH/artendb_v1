@@ -1434,7 +1434,11 @@
 					if (window.File && window.FileReader && window.FileList && window.Blob) {
 						// Great success! All the File APIs are supported
 					} else {
-						alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+						$("#meldung_individuell_label").html("Importieren nicht möglich");
+						$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
+						$("#meldung_individuell_schliessen").html("schliessen");
+						$('#meldung_individuell').modal();
+						//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
 						return;
 					}
 					var file = e.target.files[0],
@@ -1460,7 +1464,11 @@
 					if (window.File && window.FileReader && window.FileList && window.Blob) {
 						// Great success! All the File APIs are supported
 					} else {
-						alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+						$("#meldung_individuell_label").html("Importieren nicht möglich");
+						$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
+						$("#meldung_individuell_schliessen").html("schliessen");
+						$('#meldung_individuell').modal();
+						//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
 						return;
 					}
 					var file = e.target.files[0],
