@@ -679,17 +679,18 @@ Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie 
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
-CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. Gibt es für die gewünschten Daten einen "view" und kennt man seine URL, kann man die Daten entsprechend einfach abholen. Damit "views" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben werden.
+CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. 
 
-Genau wie die "views" funktionieren auch die Exporte über die URL: Die Exportfuntion übermittelt die im Formular erfassten Optionen mit der URL an die Datenbank, welche daraufhin kommagetrennte tabellarische Daten liefert. Es kann praktisch jedes gewünschte Format erstellt werden. Um von einer anderen Anwendung direkt auf diese Daten zu greifen, muss man nur die Struktur der übermittelten URL studieren und die Daten auf die gleiche Art anfordern.
+Wie Views werden auch "lists" über die URL aufgerufen. "Lists" sind "views", deren Daten durch Code auf dem Server manipuliert wird. Im Gegensatz zu "views" kann so praktisch jedes denkbare Datenformat erstellt werden. 
 
-Mit Hilfe der ["view API"](http://wiki.apache.org/couchdb/HTTP_view_API) von CouchDb kann man bei beiden oben beschriebenen Varianten die Auswahl durch weitere Kriterien beeinflussen, wenn man die zugrunde liegenden Indexe kennt. Grundsätzlich werden in ArtenDb möglichst wenige "views" verwendet. Je nach Abfrage wird die URL mit weiteren Kriterien ergänzt. Der externe Zugriff kann gleich erfolgen.
+Gibt es für die gewünschten Daten einen "view" oder eine "list" und kennt man deren URL, kann man die Daten entsprechend einfach abholen. Damit "views" und "lists" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben und fixiert werden.
 
 Bisher realisierte Schnittstellen:
 
 - Artenlisten und Artgruppen für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
 - Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
 - Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
+- Arteigenschaften für [ApFloraDb](https://github.com/barbalex/apflora)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
 
