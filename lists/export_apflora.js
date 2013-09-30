@@ -23,9 +23,13 @@ function(head, req) {
 		//exportobjekt gründen bzw. zurücksetzen
 		exportObjekt = {};
 
+		//GUID wird gebraucht, um beim Export nach EVAB dem Projekt zuzuweisen
+		exportObjekt.GUID = Objekt._id;
+
 		//zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
 		exportObjekt.TaxonomieId = null;
 		exportObjekt.Artname = null;
+		exportObjekt.NameDeutsch = null;
 		exportObjekt.Status = null;
 		exportObjekt.Artwert = null;
 		exportObjekt.KefArt = null;
@@ -38,6 +42,10 @@ function(head, req) {
 			exportObjekt.TaxonomieId = dsTaxonomie["Taxonomie ID"];
 			if (dsTaxonomie["Artname vollständig"]) {
 				exportObjekt.Artname = dsTaxonomie["Artname vollständig"];
+			}
+			//wird beim Export nach EvAB benutzt
+			if (dsTaxonomie["Name Deutsch"]) {
+				exportObjekt.NameDeutsch = dsTaxonomie["Name Deutsch"];
 			}
 			if (dsTaxonomie.Status) {
 				exportObjekt.Status = dsTaxonomie.Status;
