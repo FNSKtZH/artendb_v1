@@ -945,8 +945,7 @@ function setzteLinksZuBilderUndWikipedia(art) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
-	HtmlContainer += '>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls form-control-static" ArtId="';
 	HtmlContainer += id;
@@ -959,8 +958,7 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 //generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
-	HtmlContainer += '>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><span class="feldtext controls">';
 	for (var a in Objektliste) {
@@ -982,8 +980,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '"';
-	HtmlContainer += '>';
+	HtmlContainer += '">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t';
 	//jetzt Link beginnen, damit das Feld klickbar wird
@@ -995,8 +992,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += FeldName;
 	HtmlContainer += '" type="text" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" style="cursor:pointer;"';
-	HtmlContainer += '>';
+	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
 	//Link abschliessen
 	HtmlContainer += '</a>';
 	HtmlContainer += '\n</div>';
@@ -1006,15 +1002,13 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label"';
-	HtmlContainer += '>';
+	HtmlContainer = '<div class="control-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':';
 	HtmlContainer += '</label>';
 	HtmlContainer += '<a href="';
 	HtmlContainer += Url;
-	HtmlContainer += '" class="feldtext controls form-control-static" target="_blank"';
-	HtmlContainer += '>';
+	HtmlContainer += '" class="feldtext controls form-control-static" target="_blank">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
 	return HtmlContainer;
@@ -1025,8 +1019,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '"';
-	HtmlContainer += '>';
+	HtmlContainer += '">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t<input class="controls form-control input-sm" id="';
 	HtmlContainer += FeldName;
@@ -1036,8 +1029,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 	HtmlContainer += InputTyp;
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"';
-	HtmlContainer += '>\n</div>';
+	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
 	return HtmlContainer;
 }
 
@@ -1046,15 +1038,13 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '"';
-	HtmlContainer += '>';
+	HtmlContainer += '">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><textarea class="controls form-control" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"';
-	HtmlContainer += '>';
+	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</textarea></div>';
 	return HtmlContainer;
@@ -1065,15 +1055,17 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
-	HtmlContainer += '"';
-	HtmlContainer += '>';
+	HtmlContainer += '">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><input type="checkbox" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	HtmlContainer += ' readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
+	if (FeldWert === true) {
+		HtmlContainer += ' checked="true"';
+	}
+	HtmlContainer += '" readonly="readonly" disabled="disabled" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
 	return HtmlContainer;
 }
 
