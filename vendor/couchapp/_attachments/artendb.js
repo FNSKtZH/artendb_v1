@@ -945,14 +945,10 @@ function setzteLinksZuBilderUndWikipedia(art) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
+	HtmlContainer = '<div class="control-group"><label class="control-label"';
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls" ArtId="';
+	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls form-control-static" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
@@ -963,11 +959,7 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 //generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
+	HtmlContainer = '<div class="control-group"><label class="control-label"';
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><span class="feldtext controls">';
@@ -975,7 +967,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 		if (a > 0) {
 			HtmlContainer += ', ';
 		}
-		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe controls" ArtId="';
+		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe controls form-control-static" ArtId="';
 		HtmlContainer += Objektliste[a].GUID;
 		HtmlContainer += '">';
 		HtmlContainer += Objektliste[a].Name;
@@ -986,33 +978,11 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 }
 
 //generiert den html-Inhalt für einzelne Links in Flora
-/*function generiereHtmlFuerWwwlink(FeldName, FeldWert) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
-	HtmlContainer += '>';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '" class="feldtext controls ">';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '</a></div>';
-	return HtmlContainer;
-}*/
-
-//generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t';
@@ -1025,7 +995,8 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += FeldName;
 	HtmlContainer += '" type="text" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
+	HtmlContainer += '" readonly="readonly" style="cursor:pointer;"';
+	HtmlContainer += '>';
 	//Link abschliessen
 	HtmlContainer += '</a>';
 	HtmlContainer += '\n</div>';
@@ -1035,18 +1006,15 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 //generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
+	HtmlContainer = '<div class="control-group"><label class="control-label"';
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':';
 	HtmlContainer += '</label>';
 	HtmlContainer += '<a href="';
 	HtmlContainer += Url;
-	HtmlContainer += '" class="feldtext controls" target="_blank">';
+	HtmlContainer += '" class="feldtext controls form-control-static" target="_blank"';
+	HtmlContainer += '>';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></div>';
 	return HtmlContainer;
@@ -1055,13 +1023,9 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 //generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t<input class="controls form-control input-sm" id="';
@@ -1072,20 +1036,17 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 	HtmlContainer += InputTyp;
 	HtmlContainer += '" value="';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
+	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"';
+	HtmlContainer += '>\n</div>';
 	return HtmlContainer;
 }
 
 //generiert den html-Inhalt für Textarea
 function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><textarea class="controls form-control" id="';
@@ -1102,24 +1063,16 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 //generiert den html-Inhalt für ja/nein-Felder
 function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-	if (FeldName.length > 24) {
-		HtmlContainer += ' style="padding-top:0px"';
-	}
 	HtmlContainer += '>';
 	HtmlContainer += FeldName;
-	//HtmlContainer += ':</label><input class="controls" type="checkbox" id="';
 	HtmlContainer += ':</label><input type="checkbox" id="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '" name="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '"';
-	if (FeldWert === true) {
-		HtmlContainer += ' checked="true"';
-	}
 	HtmlContainer += ' readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
 	return HtmlContainer;
 }
@@ -2337,16 +2290,14 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</div></label>';
 			//filtern
-			html_filtern += '<div class="form-group">';
+			html_filtern += '<div class="control-group">';
 			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
 			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
 				html_filtern += ' style="padding-top:0px"';
 			}
 			html_filtern += '>'+ x +'</label>';
-			html_filtern += '<div class="controls">';
-			html_filtern += '<input class="form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
-			html_filtern += '</div>';
+			html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 		}
 		//Spalten abschliessen

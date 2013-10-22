@@ -1,6 +1,5 @@
 
 body {
-	/*margin: 8px 8px 8px 7px !important;*/
 	padding: 8px 8px 8px 7px !important;
 }
 
@@ -34,7 +33,6 @@ body {
 /*über 1000px nebeneinander*/
 @media screen and (min-width: 1001px) {
 	#menu {
-		/*width:365px;*/
 		width: 383px;
 		position:fixed;
 	}
@@ -179,7 +177,6 @@ body {
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
-    /*background-color: transparent;*/
     background-color: #ffffff !important;
 }
 
@@ -203,8 +200,6 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #menu .suchen {
-	/*relative setzen, damit suche_leeren_btn im Verhältnis dazu absolute gesetzt werden kann*/
-	/*position: relative;*/
 	margin-bottom: 2px;
 	display: none;
 }
@@ -226,12 +221,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 **weil twitter typeahead sie sonst verändert
 */
 #menu .suchfeld {
-	/*
-	width: -webkit-calc(100% + 151px);
-	width: -o-calc(100% + 151px);
-	width: calc(100% + 151px);*/
 	width: 319px;
-	/*max-width: 311px;*/
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 	text-overflow: ellipsis;
@@ -247,8 +237,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	column-width: 450px;
 }
 
-#art label, #importieren_ds label, #importieren_bs label, #export .form-group label {
-	width: 180px;
+#art label, #importieren_ds label, #importieren_bs label, #export .control-group label {
+	width: 200px;
 	color: #555555;
 	margin-right: 7px;
 	/*bootstrap.css macht font-weight bold*/
@@ -257,18 +247,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	margin-bottom: 0;
 }
 
-#art .feldtext, #importieren_ds .feldtext, #importieren_bs .feldtext, #export .feldtext {
-	margin-left: 192px;
-	display: block;
-	padding-top: 4px;
-}
-
 a {
 	color: #016ca2;
-}
-
-#art .feldtext a, #importieren_ds .feldtext a, #importieren_bs .feldtext a, #export .feldtext a {
-	margin-left: 0;
 }
 
 .form input[type="radio"], .form input[type="checkbox"] {
@@ -296,7 +276,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
-.felderspalte .form-group {
+.felderspalte .control-group {
 	/*bootstrap setzt -15px*/
 	margin-left: 0px;
 	-webkit-column-break-inside:avoid;
@@ -330,10 +310,6 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 5px;
 }
 
-#export .label {
-	/*font-weight: normal;*/
-}
-
 .export_zum_titel_gehoerig {
 	margin-bottom: 15px;
 }
@@ -351,9 +327,9 @@ a:hover {
 .controls {
 	/*Breite fix setzen für Browser, die calc nicht unterstützen*/
 	width: 1000px;
-	width: -webkit-calc(100% - 210px);
-	width: -o-calc(100% - 210px);
-	width: calc(100% - 210px);
+	width: -webkit-calc(100% - 230px);
+	width: -o-calc(100% - 230px);
+	width: calc(100% - 230px);
 	font-size: 14px;
 }
 
@@ -445,9 +421,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /*vertikalen Abstand zwischen Feldern verkleinern*/
-#art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
+#art .control-group, #importieren_ds .control-group, #importieren_bs .control-group, #export .control-group {
 	margin-bottom: 5px;
-	/*position: relative;*/
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
 	-o-column-break-inside:avoid;
@@ -459,9 +434,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100px;
 }
 
-#art input, #art select, #importieren_ds input, #importieren_ds select, #importieren_bs input, #importieren_bs select, #export .controls input, #export select, div.Passwort, .form-group div {
-	/*alle inputs genau links ausrichten*/
-	margin-left: 2px;
+.form-control-static {
+	margin-left: 15px;
 }
 
 input[type=file] {
@@ -470,19 +444,7 @@ input[type=file] {
 
 #art textarea, #importieren_ds textarea, #importieren_bs textarea, #export textarea {
 	/*textinputs muss man weiter nach rechts schieben, unklar wieso*/
-	margin-left: 2px;
-}
-
-/*alle Felder ausrichten*/
-.form-horizontal .controls {
-	margin-left: 187px;
-}
-
-/*erste Zeile des Labels vertikal ausrichten*/
-.form-horizontal .control-label {
-	/*padding-top: 3px;*/
-	padding-top: 8px;
-	float: left;
+	margin-left: 4px;
 }
 
 label {
