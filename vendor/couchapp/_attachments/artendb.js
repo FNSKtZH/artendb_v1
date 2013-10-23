@@ -1321,9 +1321,11 @@ function meldeUserAn(woher) {
 				if (woher === "art") {
 					praefix = "";
 				}
+				//zuerst allfällige bestehende Hinweise ausblenden
+				$(".hinweis").css("display", "none");
 				$("#"+praefix+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
-				$("#"+praefix+woher+"_anmelden_fehler").alert();
-				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+				$("#"+praefix+woher+"_anmelden_fehler_text").alert();
+				$("#"+praefix+woher+"_anmelden_fehler_text").css("display", "block");
 			}
 		});
 	}
@@ -2359,7 +2361,7 @@ function erstelleExportString(exportobjekte) {
 //bekommt den Namen der Gruppe
 function erstelleListeFuerFeldwahl() {
 	//Beschäftigung melden
-	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
 	//scrollen, damit Hinweis sicher ganz sichtbar ist
 	$('html, body').animate({
@@ -2452,7 +2454,7 @@ function erstelleListeFuerFeldwahl_2() {
 		hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
 	}
 	//Ergebnis rückmelden
-	$("#exportieren_objekte_waehlen_gruppen_hinweis").alert().css("display", "block");
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(hinweisTaxonomien);
 }
 
@@ -2521,7 +2523,7 @@ function filtereFuerExport(direkt) {
 
 	//Beschäftigung melden
 	if (!direkt) {
-		$("#exportieren_exportieren_hinweis").alert().css("display", "block");
+		$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
 		$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
 	}
 
@@ -2600,8 +2602,8 @@ function filtereFuerExport(direkt) {
 	//Wenn keine Felder gewählt sind: Melden und aufhören
 	if (gewaehlte_felder_objekt.felder.length === 0) {
 		//Beschäftigungsmeldung verstecken
-		$("#exportieren_exportieren_hinweis").alert().css("display", "none");
-		$("#exportieren_exportieren_error").alert().css("display", "block");
+		$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
+		$("#exportieren_exportieren_error_text").alert().css("display", "block");
 		$("#exportieren_exportieren_error_text").html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
 		return;
 	}
@@ -2693,7 +2695,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 				if (anz_gruppen_abgefragt === gruppen_array.length) {
 					//alle Gruppen wurden abgefragt, jetzt kann es weitergehen
 					//Ergebnis rückmelden
-					$("#exportieren_exportieren_hinweis").alert().css("display", "block");
+					$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
 					baueTabelleFuerExportAuf();
 				}
@@ -2726,7 +2728,7 @@ function baueTabelleFuerExportAuf() {
 		$('#meldung_keine_exportdaten').modal();
 	}
 	//Beschäftigungsmeldung verstecken
-	$("#exportieren_exportieren_hinweis").alert().css("display", "none");
+	$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
 }
 
 function fuerExportGewaehlteGruppen() {
@@ -2953,7 +2955,7 @@ function exportZuruecksetzen() {
 	}
 	$("#exportieren_exportieren_tabelle").hide();
 	$(".exportieren_exportieren_exportieren").hide();
-	$("#exportieren_exportieren_error").alert().css("display", "none");
+	$("#exportieren_exportieren_error_text").alert().css("display", "none");
 }
 
 function oeffneGruppe(Gruppe) {

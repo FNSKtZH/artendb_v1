@@ -500,6 +500,11 @@ option {
 .hinweis {
 	/*wird erst eingeblendet, wenn ein Anliegen besteht*/
 	display: none;
+	margin-left: 210px;
+	margin-top: 7px;
+	margin-bottom: 7px !important;
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
 
 .alert {
