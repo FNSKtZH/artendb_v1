@@ -334,7 +334,7 @@ a:hover {
 }
 
 .feld {
-	margin-left: 173px;
+	margin-left: 210px;
 }
 
 .Datensammlung {
@@ -383,9 +383,8 @@ a:hover {
 	padding-left: 190px;
 }
 
-
 .form-control {
-	display: inline-block !important;
+	display: inline-block;
 }
 
 .panel-body hr {
