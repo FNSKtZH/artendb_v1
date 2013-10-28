@@ -58,7 +58,7 @@ ArtenDb ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwe
 - gut verfügbar:
  - von jedem Gerät im Internet
  - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
- - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
+ - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/FNSKtZH/EvabMobile), beliebige Apps
 - ...und kann ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
@@ -690,7 +690,7 @@ Bisher realisierte Schnittstellen:
 - Artenlisten und Artgruppen für [_evab mobile_](https://barbalex.cloudant.com/evab/_design/evab/index.html)
 - Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
 - Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
-- Arteigenschaften für [ApFloraDb](https://github.com/barbalex/apflora)
+- Arteigenschaften für [ApFloraDb](https://github.com/FNSKtZH/apflora)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
 
@@ -701,7 +701,7 @@ Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailt
 ###Zeitplan
 Aktueller Stand:
 
-- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/barbalex/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
+- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/FNSKtZH/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
 - ArtenDb ist entworfen und in der Testphase: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
  - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
  - Die Anwendung ist aber noch kaum getestet
@@ -762,6 +762,6 @@ Lebensräume in der Anwendung bearbeiten:
 
 <a name="OpenSource"></a>
 #Open source
-Die für die Anwendung verwendete [Lizenz](https://github.com/barbalex/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten(sammlungen) ist aber nur mit Einverständnis der Autoren zulässig.
+Die für die Anwendung verwendete [Lizenz](https://github.com/FNSKtZH/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten(sammlungen) ist aber nur mit Einverständnis der Autoren zulässig.
 
 <a href="#top">&#8593; top</a>
