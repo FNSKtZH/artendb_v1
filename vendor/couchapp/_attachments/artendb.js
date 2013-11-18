@@ -2587,12 +2587,7 @@ function filtereFuerExport(direkt) {
 				anz_ds_gewaehlt++;
 			}
 			feldObjekt.DsName = $(this).attr('datensammlung');
-			//TODO: Nach dieser Zuweisung stimmt das encoding nicht mehr!
-			console.log('encodeURIComponent("Artname vollständig") = ' + encodeURIComponent("Artname vollständig"));
-			//feldObjekt.Feldname = $(this).attr('feld');
-			feldObjekt.Feldname = this.getAttribute('feld');
-			console.log("this.getAttribute('feld') = " + this.getAttribute('feld'));
-			console.log("encodeURIComponent(this.getAttribute('feld')) = " + encodeURIComponent(this.getAttribute('feld')));
+			feldObjekt.Feldname = $(this).attr('feld');
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
@@ -2624,7 +2619,6 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 		fTz = "true";
 	}
 	var dbParam, queryParam;
-	console.log('JSON.stringify(gewaehlte_felder_objekt) = ' + JSON.stringify(gewaehlte_felder_objekt));
 	if ($("#exportieren_synonym_infos").prop('checked')) {
 		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	} else {
@@ -2667,7 +2661,6 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		if ($("#exportieren_synonym_infos").prop('checked')) {
 			dbParam = "artendb/export_mit_synonymen";
 			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
-			//console.log('queryParam kurz nach Definition = ' + queryParam);
 		} else {
 			dbParam = "artendb/export";
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
@@ -2685,7 +2678,6 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 			queryParam += "&bez_in_zeilen=false";
 		}
 		$db = $.couch.db("artendb");
-		//console.log('queryParam vor $db.list = ' + queryParam);
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
 				//alle Objekte in data in window.exportieren_objekte anfügen

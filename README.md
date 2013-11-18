@@ -702,7 +702,7 @@ Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailt
 Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/FNSKtZH/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
-- ArtenDb ist entworfen und in der Testphase: [https://barbalex.cloudant.com/artendb/_design/artendb/index.html](https://barbalex.cloudant.com/artendb/_design/artendb/index.html)
+- ArtenDb ist entworfen und in der Testphase: [http://arteigenschaften.ch/artendb/_design/artendb/index.html](http://arteigenschaften.ch/artendb/_design/artendb/index.html)
  - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
  - Die Anwendung ist aber noch kaum getestet
 - ArtenDb wird noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
@@ -711,7 +711,7 @@ Aktueller Stand:
 
 Achtung:
 
-- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](https://barbalex.cloudant.com/artendb/_design/artendb/index.html) noch fehlen
+- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://arteigenschaften.ch/artendb/_design/artendb/index.html) noch fehlen
 - Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:

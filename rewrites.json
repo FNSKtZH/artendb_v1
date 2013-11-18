@@ -1,0 +1,12 @@
+[
+	{
+		"method": "*",
+		"from": "/artendb/_design/artendb",
+		"to": ""
+	},
+	{
+		"method": "*",
+		"from": "",
+		"to": "/artendb/_design/artendb/index.html"
+	}
+]

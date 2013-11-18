@@ -1791,12 +1791,12 @@
 						var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 						saveAs(blob, output + "_export.csv");
 					} else {
-						/*$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");
+						$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");
 						$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht.<br>Sie können die Datei vom Server herunterladen.");
 						$("#meldung_individuell_schliessen").html("schliessen");
 						$('#meldung_individuell').modal();
-						return;*/
-						//cookie setzen, damit fileDonwnload.js arbeiten kann
+						return;
+						/*//cookie setzen, damit fileDonwnload.js arbeiten kann
 						$.cookie('fileDownload', 'fileDownload=true', {
 							path: '/'
 						});
@@ -1807,7 +1807,7 @@
 						var month = d.getMonth()+1;
 						var day = d.getDate();
 						var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-						saveAs(blob, output + "_export.csv");
+						saveAs(blob, output + "_export.csv");*/
 					}
 						
 				});
