@@ -1,4 +1,4 @@
-function erstelleBaum() { 
+function erstelleBaum() {
 	var baum,
 		gruppe, gruppenbezeichung,
 		anzahl_objekte,
