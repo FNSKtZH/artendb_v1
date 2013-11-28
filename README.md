@@ -692,7 +692,7 @@ Bisher realisierte Schnittstellen:
 - Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
 - Arteigenschaften für [ApFloraDb](https://github.com/FNSKtZH/apflora)
 
-Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alexander.gabriel@bd.zh.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
+Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
 
 <a href="#top">&#8593; top</a>
 
