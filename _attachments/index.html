@@ -44,7 +44,6 @@
 				<li role="presentation" class="divider"></li>
 				<li role="presentation" class="dropdown-header">Vordefiniert exportieren:</li>
 				<li><a id="exportieren_alt" href="#">Export für Artenlistentool</a></li>
-				<li><a id="exportieren_evab" href="#">Export für EvAB</a></li>
 				<li role="presentation" class="divider"></li>
 				<li role="presentation" class="dropdown-header">Importieren oder löschen:</li>		
 				<li><a id="ds_importieren" href="#">Eigenschaften</a></li>
@@ -1510,10 +1509,6 @@
 
 				$("#menu_btn").on("click", "#exportieren_alt", function() {
 					window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true");
-				});
-
-				$("#menu_btn").on("click", "#exportieren_evab", function() {
-					window.open("_list/export_evab/evab_arten?include_docs=true");
 				});
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
