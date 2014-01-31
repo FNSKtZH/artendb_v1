@@ -751,21 +751,21 @@
 				$("#forms").hide();
 	
 				BrowserDetect.init();
-				//zunächst mal den gröbsten Bock abfangen
+				// zunächst mal den gröbsten Bock abfangen
 				if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
 					$('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>viele Felder exportieren</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren</li><li>Daten werden nicht optimal angezeigt</li><li>die Anwendung ist teilweise extrem langsam</li><li>...und dauernd erscheinen Fenster mit der Frage 'Ausführung des Skripts abbrechen?'</li></ul><br>Empfehlung: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
 					$("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
 					$('#meldung_individuell_label').html("inkompatibler Browser");
 					$('#meldung_individuell').modal();
-				//jetzt den nächstgrössten Bock
+				// jetzt den nächstgrössten Bock
 				} else if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version === 9) {
 					$('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
 					$("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
 					$('#meldung_individuell_label').html("ungeeigneter Browser");
 					$('#meldung_individuell').modal();
 				} else {
-					//jetzt weniger schlimme Inkompatibilitäten
-					//prüfen, ob media queries unterstützt werden. Wenn nein, melden
+					// jetzt weniger schlimme Inkompatibilitäten
+					// prüfen, ob media queries unterstützt werden. Wenn nein, melden
 					if (!Modernizr.mq('(min-width: 10px)')) {
 						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine media queries.<br>ArtenDb wird nicht optimal funktionieren.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
 						$("#meldung_individuell_schliessen").html("schliessen");
@@ -773,10 +773,10 @@
 						$('#meldung_individuell').modal();
 					}
 
-					//prüfen, ob history unterstützt wird. Wenn nein, shim laden
-					//achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
-					//aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
-					//zurück-Taste funktioniert dann auch nicht
+					// prüfen, ob history unterstützt wird. Wenn nein, shim laden
+					// achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
+					// aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
+					// zurück-Taste funktioniert dann auch nicht
 					if (!Modernizr.history) {
 						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history.<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen den Strukturbaum und das Menu.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='http://www.google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='http://www.mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
 						$("#meldung_individuell_schliessen").html("schliessen");
@@ -804,17 +804,17 @@
 
 				Modernizr.load({
 					test: Modernizr.csscolumns,
-					nope: 'vendor/couchapp/css3-multi-column.js'	//scheint nicht zu funktionieren, auf IE8 und IE9
+					nope: 'vendor/couchapp/css3-multi-column.js'	// scheint nicht zu funktionieren, auf IE8 und IE9
 				});
 
-				//IE8 kennt trim nicht!
+				// IE8 kennt trim nicht!
 				if (!String.prototype.trim)  {
 					String.prototype.trim = function () {
 						return this.replace(/^\s+|\s+$/g, '');
 					};
 				}
 
-				//IE8 kennt indexOf nicht!
+				// IE8 kennt indexOf nicht!
 				if (!Array.prototype.indexOf) {
 					Array.prototype.indexOf = function(obj, start) {
 						for (var i = (start || 0), j = this.length; i < j; i++) {
@@ -824,23 +824,23 @@
 					}
 				}
 
-				//in IE8 funktioniert createElementNS nicht oder allenfalls erst mit Verzögerung
-				//das hier war der Versuch, es erst später aufzurufen (natürlich in script tag ausgeschaltet)
-				//hat aber nicht geklappt
+				// in IE8 funktioniert createElementNS nicht oder allenfalls erst mit Verzögerung
+				// das hier war der Versuch, es erst später aufzurufen (natürlich in script tag ausgeschaltet)
+				// hat aber nicht geklappt
 				/*setTimeout(function() {
 					$.getScript('vendor/couchapp/FileSaver.js');
 				}, 100);*/
 
-				//falls URL übergeben wurde, das entsprechende Dokument öffnen
-				//soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
-				//Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
+				// falls URL übergeben wurde, das entsprechende Dokument öffnen
+				// soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
+				// Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
 				if (window.addEventListener) {
 					window.addEventListener('popstate', function(event) {
 						oeffneUri();
 					});
 				}
 
-				//IE8 kennt Object.keys nicht
+				// IE8 kennt Object.keys nicht
 				if (!Object.keys) {
 					Object.keys = (function () {
 						var hasOwnProperty = Object.prototype.hasOwnProperty,
@@ -875,7 +875,7 @@
 					})()
 				};
 
-				//IE8 und IE9 kennen Blob nicht > direkter Download nicht möglich
+				// IE8 und IE9 kennen Blob nicht > direkter Download nicht möglich
 				/* Blob.js
 				 * A Blob implementation.
 				 * 2013-06-20
@@ -1043,13 +1043,13 @@
 					};
 				}(self));
 
-				//Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
-				//daher oeffneUri nochmals auslösen
+				// Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
+				// daher oeffneUri nochmals auslösen
 				window.onload = function() {
 					oeffneUri();
 				}
 
-				//wenn User noch angemeldet ist, UI anpassen
+				// wenn User noch angemeldet ist, UI anpassen
 				if (localStorage.Email) {
 					$("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 					$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
@@ -1059,12 +1059,12 @@
 					$(".konto_speichern_btn").hide();
 				}
 
-				//Baum aufbauen, wenn Gruppe gewählt wird
+				// Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
 					oeffneGruppe($(this).attr("Gruppe"));
 				});
 
-				//Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
+				// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
 				$("body").on("click", "#menu_btn", function() {
 					if (localStorage.art_id) {
 						$("#GoogleBilderLink_li").removeClass("disabled");
@@ -1076,11 +1076,11 @@
 				});
 
 				$("#menu_btn").on("click", "#ds_importieren", function() {
-					//testen, ob der Browser das Importieren unterstützt
-					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+					// testen, ob der Browser das Importieren unterstützt
+					// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 					if(isFileAPIAvailable()) {
 						zeigeFormular("importieren_ds");
-						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
 							$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 						} else {
@@ -1091,11 +1091,11 @@
 				});
 
 				$("#menu_btn").on("click", "#bs_importieren", function() {
-					//testen, ob der Browser das Importieren unterstützt
-					//wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+					// testen, ob der Browser das Importieren unterstützt
+					// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 					if(isFileAPIAvailable()) {
 						zeigeFormular("importieren_bs");
-						//Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 						if (localStorage.Email) {
 							$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 						} else {
@@ -1106,13 +1106,13 @@
 				});
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', function() {
-					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 					bereiteImportieren_ds_beschreibenVor("_ds");
 					$("#DsImportiertVon").val(localStorage.Email);
 				});
 
 				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', function() {
-					//mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 					bereiteImportieren_bs_beschreibenVor("_bs");
 					$("#BsImportiertVon").val(localStorage.Email);
 				});
@@ -1167,7 +1167,7 @@
 					var DsName = this.value;
 					var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
 					if (waehlbar === "true") {
-						//zuerst alle Felder leeren
+						// zuerst alle Felder leeren
 						$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
 							$(this).val('');
 						});
@@ -1186,16 +1186,16 @@
 									}
 									if (window.ds_von_objekten.rows[i].key[2] === true) {
 										$("#DsZusammenfassend").prop('checked', true);
-										//Feld für Ursprungs-DS anzeigen
+										// Feld für Ursprungs-DS anzeigen
 										$("#DsUrsprungsDs_div").show();
 									} else {
-										//sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
+										// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
 										$("#DsZusammenfassend").prop('checked', false);
-										//und Feld für Ursprungs-DS verstecken
+										// und Feld für Ursprungs-DS verstecken
 										$("#DsUrsprungsDs_div").hide();
 									}
-									//wenn die ds/bs kein "importiert von" hat ist der Wert null
-									//verhindern, dass null angezeigt wird
+									// wenn die ds/bs kein "importiert von" hat ist der Wert null
+									// verhindern, dass null angezeigt wird
 									if (window.ds_von_objekten.rows[i].key[3]) {
 										$("#DsImportiertVon").val(window.ds_von_objekten.rows[i].key[3]);
 									} else {
@@ -1203,30 +1203,30 @@
 									}
 									$("#DsAnzDs_label").html("Anzahl Arten/Lebensräume");
 									$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
-									//dafür sorgen, dass textareas genug gross sind
+									// dafür sorgen, dass textareas genug gross sind
 									$('#importieren_ds textarea').each(function () {
 										FitToContent(this, document.documentElement.clientHeight);
 									});
 									$("#DsName").focus();
 								}
-								//löschen-Schaltfläche einblenden
+								// löschen-Schaltfläche einblenden
 								$("#DsLoeschen").css("display", "block");
 							}
 						} else {
-							//löschen-Schaltfläche ausblenden
+							// löschen-Schaltfläche ausblenden
 							$("#DsLoeschen").css("display", "none");
 						}
 					} else {
-						//melden, dass diese DS nicht bearbeitet werden kann
+						// melden, dass diese DS nicht bearbeitet werden kann
 						$('#meldung_ds_nicht_bearbeitbar').modal();
 					}
 				});
 
 				$("#importieren_ds").on("change", "#DsName", function() {
 					var that = this;
-					//suchen, ob schon eine Datensammlung mit diesem Namen existiert
-					//und sie von jemand anderem importiert wurde
-					//und sie nicht zusammenfassend ist
+					// suchen, ob schon eine Datensammlung mit diesem Namen existiert
+					// und sie von jemand anderem importiert wurde
+					// und sie nicht zusammenfassend ist
 					var DsKey = _.find(window.DsKeys, function(key) {
 						return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
 					});
@@ -1245,9 +1245,9 @@
 
 				$("#importieren_bs").on("change", "#BsName", function() {
 					var that = this;
-					//suchen, ob schon eine Datensammlung mit diesem Namen existiert
-					//und sie von jemand anderem importiert wurde
-					//und sie nicht zusammenfassend ist
+					// suchen, ob schon eine Datensammlung mit diesem Namen existiert
+					// und sie von jemand anderem importiert wurde
+					// und sie nicht zusammenfassend ist
 					var BsKey = _.find(window.BsKeys, function(key) {
 						return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
 					});
@@ -1302,7 +1302,7 @@
 					var BsName = this.value;
 					var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
 					if (waehlbar === "true") {
-						//zuerst alle Felder leeren
+						// zuerst alle Felder leeren
 						$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
 							$(this).val('');
 						});
@@ -1323,12 +1323,12 @@
 										$("#BsZusammenfassend").prop('checked', true);
 										$("#BsUrsprungsBs_div").show();
 									} else {
-										//sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
+										// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
 										$("#BsZusammenfassend").prop('checked', false);
 										$("#BsUrsprungsBs_div").hide();
 									}
-									//wenn die ds/bs kein "importiert von" hat ist der Wert null
-									//verhindern, dass null angezeigt wird
+									// wenn die ds/bs kein "importiert von" hat ist der Wert null
+									// verhindern, dass null angezeigt wird
 									if (window.bs_von_objekten.rows[i].key[3]) {
 										$("#BsImportiertVon").val(window.bs_von_objekten.rows[i].key[3]);
 									} else {
@@ -1336,21 +1336,21 @@
 									}
 									$("#BsAnzDs_label").html("Anzahl Arten/Lebensräume");
 									$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
-									//dafür sorgen, dass textareas genug gross sind
+									// dafür sorgen, dass textareas genug gross sind
 									$('#importieren_bs textarea').each(function () {
 										FitToContent(this, document.documentElement.clientHeight);
 									});
 									$("#BsName").focus();
 								}
-								//löschen-Schaltfläche einblenden
+								// löschen-Schaltfläche einblenden
 								$("#BsLoeschen").css("display", "block");
 							}
 						} else {
-							//löschen-Schaltfläche ausblenden
+							// löschen-Schaltfläche ausblenden
 							$("#BsLoeschen").css("display", "none");
 						}
 					} else {
-						//melden, dass diese BS nicht bearbeitet werden kann
+						// melden, dass diese BS nicht bearbeitet werden kann
 						$('#meldung_bs_nicht_bearbeitbar').modal();
 					}
 				});
@@ -1371,7 +1371,7 @@
 					var file = e.target.files[0],
 					reader = new FileReader();
 					if (typeof e.target.files[0] === "undefined") {
-						//vorhandene Datei wurde entfernt
+						// vorhandene Datei wurde entfernt
 						$("#DsTabelleEigenschaften").css("display", "none");
 						$("#importieren_ds_ids_identifizieren_fehler_text").css("display", "none");
 						$("#importieren_ds_ids_identifizieren_erfolg_text").css("display", "none");
@@ -1401,7 +1401,7 @@
 					var file = e.target.files[0],
 					reader = new FileReader();
 					if (typeof e.target.files[0] === "undefined") {
-						//vorhandene Datei wurde entfernt
+						// vorhandene Datei wurde entfernt
 						$("#BsTabelleEigenschaften").css("display", "none");
 						$("#importieren_bs_ids_identifizieren_fehler_text").css("display", "none");
 						$("#importieren_bs_ids_identifizieren_erfolg_text").css("display", "none");
@@ -1433,11 +1433,11 @@
 
 				$("#importieren_ds").on("click", "#DsLoeschen", function(e) {
 					e.preventDefault();
-					//Rückmeldung anzeigen
+					// Rückmeldung anzeigen
 					$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
 					$("#importieren_ds_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
 					$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
 						$("#importieren_ds_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
 					});
@@ -1445,11 +1445,11 @@
 
 				$("#importieren_bs").on("click", "#BsLoeschen", function(e) {
 					e.preventDefault();
-					//Rückmeldung anzeigen
+					// Rückmeldung anzeigen
 					$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
 					$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
 					$.when(entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
 						$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");
 					});
@@ -1458,7 +1458,7 @@
 				$("#importieren_ds").on("click", "#DsImportieren", function(e) {
 					e.preventDefault();
 					$.when(importiereDatensammlung()).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						console.log("Datensammlung importiert");
 					});
 				});
@@ -1466,7 +1466,7 @@
 				$("#importieren_bs").on("click", "#BsImportieren", function(e) {
 					e.preventDefault();
 					$.when(importiereBeziehungssammlung()).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						console.log("Beziehungssammlung importiert");
 					});
 				});
@@ -1474,7 +1474,7 @@
 				$("#importieren_ds").on("click", "#DsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneDatensammlung()).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						console.log("Datensammlung entfernt");
 					});
 				});
@@ -1482,23 +1482,23 @@
 				$("#importieren_bs").on("click", "#BsEntfernen", function(e) {
 					e.preventDefault();
 					$.when(entferneBeziehungssammlung()).then(function() {
-						//jetzt Ergebnisse anzeigen
+						// jetzt Ergebnisse anzeigen
 						console.log("Beziehungssammlung entfernt");
 					});
 				});
 
 				$("#menu_btn").on("click", "#exportieren", function() {
 					zeigeFormular("export");
-					//Exportieren-Guids schaffen, damit kein altes existiert
+					// Exportieren-Guids schaffen, damit kein altes existiert
 					window.exportieren_guids = [];
-					//IE8 kann globale Variabeln nicht löschen!
+					// IE8 kann globale Variabeln nicht löschen!
 					try {
 						delete window.exportieren_objekte;
 					}
 					catch (e) {
 						window.exportieren_objekte = undefined;
 					}
-					//Exportsicherung entfernen
+					// Exportsicherung entfernen
 					try {
 						delete window.exportieren_objekte_sik;
 					}
@@ -1513,13 +1513,13 @@
 
 				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", function() {
 					erstelleListeFuerFeldwahl();
-					//Tabelle ausblenden, falls sie eingeblendet war
+					// Tabelle ausblenden, falls sie eingeblendet war
 					$("#exportieren_exportieren_tabelle").css("display", "none");
 				});
 
-				//kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
-				//und pro Beziehung eine Zeile ausgegeben wird. 
-				//Wenn ja: reklamieren und rückgängig machen
+				// kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
+				// und pro Beziehung eine Zeile ausgegeben wird. 
+				// Wenn ja: reklamieren und rückgängig machen
 				$("#export").on("change", ".feld_waehlen", function() {
 					if ($("#export_bez_in_zeilen").prop('checked')) {
 						var bezDsChecked = [];
@@ -1529,7 +1529,7 @@
 								bezDsChecked.push($(this).attr('datensammlung'));
 							}
 						});
-						//eindeutige Liste der dsTypen erstellen
+						// eindeutige Liste der dsTypen erstellen
 						bezDsChecked = _.union(bezDsChecked);
 						if (bezDsChecked && bezDsChecked.length > 1) {
 							$('#meldung_zuviele_bs').modal();
@@ -1541,7 +1541,7 @@
 				});
 
 				$("#export").on("change", ".feld_waehlen_alle_von_ds", function() {
-					//wenn checked: alle unchecken, sonst alle checken
+					// wenn checked: alle unchecken, sonst alle checken
 					var ds = $(this).attr('datensammlung');
 					var status = false;
 					if ($(this).prop('checked')) {
@@ -1553,7 +1553,7 @@
 				});
 
 				$("#export").on("change", ".export_feld_filtern", function(event) {
-					//kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
+					// kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
 					var bezDsFiltered = [];
 					var that = this;
 					$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
@@ -1561,7 +1561,7 @@
 							bezDsFiltered.push($(this).attr('eigenschaft'));
 						}
 					});
-					//eindeutige Liste der dsTypen erstellen
+					// eindeutige Liste der dsTypen erstellen
 					bezDsFiltered = _.union(bezDsFiltered);
 					if (bezDsFiltered && bezDsFiltered.length > 1) {
 						$('#meldung_zuviele_bs').modal();
@@ -1576,7 +1576,7 @@
 				});
 
 				$("#exportieren_exportieren").on("show", function() {
-					//zur Schaltfläche Vorschau scrollen
+					// zur Schaltfläche Vorschau scrollen
 					$('html, body').animate({
 						scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
 					}, 2000);
@@ -1595,7 +1595,7 @@
 				$("#art").on("click", ".btn.lr_bearb_schuetzen", function() {
 					if (!$(this).hasClass('disabled')) {
 						schuetzeLrTaxonomie();
-						//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+						// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 						try {
 							delete window.lr_bearb;
 						}
@@ -1612,21 +1612,21 @@
 				});
 
 				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', function() {
-					//prüfen, ob oberster Node gewählt wurde
+					// prüfen, ob oberster Node gewählt wurde
 					var parent_name = $(this).val(),
 						parent_id = this.id,
 						parent_row, 
 						parent = {}, 
 						object = {};
-					//zuerst eine id holen
+					// zuerst eine id holen
 					object._id = $.couch.newUUID(1);
 					object.Gruppe = "Lebensräume";
 					object.Typ = "Objekt";
 					object.Taxonomie = {};
-					object.Taxonomie.Name = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+					object.Taxonomie.Name = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
 					object.Taxonomie.Daten = {};
-					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	//wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-					//wenn keine Wurzel: Label anzeigen
+					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+					// wenn keine Wurzel: Label anzeigen
 					if (parent_id !== "0") {
 						object.Taxonomie.Daten.Label = "";
 					}
@@ -1643,13 +1643,13 @@
 					object.Taxonomie.Daten["Beschreibung"] = "";
 					object.Datensammlungen = [];
 					object.Beziehungssammlungen = [];
-					//jetzt den parent erstellen
-					//geht nicht vorher, weil die id bekannt sein muss
+					// jetzt den parent erstellen
+					// geht nicht vorher, weil die id bekannt sein muss
 					if (parent_id === "0") {
-						//das ist die Wurzel der Taxonomie
+						// das ist die Wurzel der Taxonomie
 						parent.Name = "neue Taxonomie";
 						parent.GUID = object._id;
-						//bei der Wurzel ist Hierarchie gleich parent
+						// bei der Wurzel ist Hierarchie gleich parent
 						object.Taxonomie.Daten.Hierarchie = [];
 						object.Taxonomie.Daten.Hierarchie.push(parent);
 					} else {
@@ -1662,8 +1662,8 @@
 						success: function (data2) {
 							object._rev = data2.rev;
 							if (parent_id !== "0") {
-								//die Hierarchie aufbauen und setzen
-								//bei der Wurzel ist sie schon gesetzt
+								// die Hierarchie aufbauen und setzen
+								// bei der Wurzel ist sie schon gesetzt
 								aktualisiereHierarchieEinesNeuenLr(null, object, true);
 							} else {
 								$.when(erstelleBaum()).then(function() {
@@ -1677,31 +1677,31 @@
 
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
 					event.preventDefault();
-					//zuerst die id des Objekts holen
+					// zuerst die id des Objekts holen
 					var uri = new Uri($(location).attr('href'));
 					var id = uri.getQueryParamValue('id');
-					//wenn browser history nicht unterstützt, erstellt history.js eine hash
-					//dann muss die id durch die id in der hash ersetzt werden
+					// wenn browser history nicht unterstützt, erstellt history.js eine hash
+					// dann muss die id durch die id in der hash ersetzt werden
 					var hash = uri.anchor();
 					if (hash) {
 						var uri2 = new Uri(hash);
 						id = uri2.getQueryParamValue('id');
 					}
-					//Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
+					// Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
 					$db = $.couch.db("artendb");
 					$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
 						success: function (data) {
-							//daraus einen Array von docs machen
+							// daraus einen Array von docs machen
 							var doc_array = _.map(data.rows, function(row) {
 								return row.doc;
 							});
-							//und diese Dokumente nun löschen
+							// und diese Dokumente nun löschen
 							loescheMassenMitObjektArray(doc_array);
-							//vorigen node ermitteln
+							// vorigen node ermitteln
 							var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
-							//node des gelöschten LR entfernen
+							// node des gelöschten LR entfernen
 							jQuery.jstree._reference("#" + id).delete_node("#" + id);
-							//vorigen node öffnen
+							// vorigen node öffnen
 							if (voriger_node) {
 								$.jstree._reference(voriger_node).select_node(voriger_node);
 							} else {
@@ -1723,13 +1723,13 @@
 				});
 
 				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', function() {
-					//nur ausführen, wenn exportieren_exportieren_collapse offen ist
-					//komischerweise wurde dieser Code immer ausglöst, wenn bei Lebensräumen F5 gedrückt wurde!
+					// nur ausführen, wenn exportieren_exportieren_collapse offen ist
+					// komischerweise wurde dieser Code immer ausglöst, wenn bei Lebensräumen F5 gedrückt wurde!
 					if ($("#exportieren_exportieren_collapse").css("display") === "block") {
-						//Tabelle und Herunterladen-Schaltfläche ausblenden
+						// Tabelle und Herunterladen-Schaltfläche ausblenden
 						$("#exportieren_exportieren_tabelle").css("display", "none");
 						$(".exportieren_exportieren_exportieren").css("display", "none");
-						//filtert und baut danach die Vorschautabelle auf
+						// filtert und baut danach die Vorschautabelle auf
 						filtereFuerExport();
 					}
 				});
@@ -1739,7 +1739,7 @@
 				});
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
+					// verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					var hinweisNeu;
 					if ($(this).hasClass("active")) {
@@ -1751,7 +1751,7 @@
 						$(this).html("Taxonomien einzeln behandeln");
 						hinweisNeu = "<br>Alle Taxonomien werden einzeln dargestellt";
 					}
-					//Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
+					// Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
 					var gruppeIstGewählt = false;
 					$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_ds_objekte_waehlen_gruppe").each(function() {
 						if ($(this).prop('checked')) {
@@ -1764,19 +1764,19 @@
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
+					// verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 					if (window.File && window.FileReader && window.FileList && window.Blob) {
 						// Great success! All the File APIs are supported
-						//das funktioniert nicht so super:
-						//Chrome: super
-						//Firefox: funktioniert, aber Fehlermeldung in Konsole ([Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIAnnotationService.setPageAnnotation]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: resource://app/modules/DownloadsCommon.jsm :: DD_onDownloadStateChange :: line 1021"  data: no])
-						//Safari auf MacOs: Fehlermeldung
-						//iOs: perfekt
-						//Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt (wenn sie dann endlich auftaucht)
-						//IE9: Windows fragt, ob man das Öffnen einer App gestatten will, dann scheitert es
-						//IE10: funktioniert
-						//soll besser werden, sobald Standards umgesetzt werden
+						// das funktioniert nicht so super:
+						// Chrome: super
+						// Firefox: funktioniert, aber Fehlermeldung in Konsole ([Exception... "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIAnnotationService.setPageAnnotation]"  nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"  location: "JS frame :: resource://app/modules/DownloadsCommon.jsm :: DD_onDownloadStateChange :: line 1021"  data: no])
+						// Safari auf MacOs: Fehlermeldung
+						// iOs: perfekt
+						// Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt (wenn sie dann endlich auftaucht)
+						// IE9: Windows fragt, ob man das Öffnen einer App gestatten will, dann scheitert es
+						// IE10: funktioniert
+						// soll besser werden, sobald Standards umgesetzt werden
 						window.exportstring = erstelleExportString(window.exportieren_objekte);
 						var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
 						//var blob = new Blob([window.exportstring], {type: "application/octet-stream;charset=utf-8;"});
@@ -1808,18 +1808,18 @@
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
+					// verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();	
 					filtereFuerExport("direkt");
 				});
 
 				$("#export").on("click", ".panel-heading a", function(event) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
+					// verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 				});
 
 				$("#importieren_ds").on("click", ".panel-heading a", function(event) {
-					//verhindern, dass bootstrap ganz nach oben scrollt
+					// verhindern, dass bootstrap ganz nach oben scrollt
 					event.preventDefault();
 				});
 
@@ -1827,14 +1827,14 @@
 					FitToContent(this.id);
 				});
 
-				//Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
+				// Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
 				$(".form").on("shown.bs.collapse", ".panel", function() {
 					$(this).find('textarea').each(function() {
 						FitToContent(this.id);
 					});
 				});
 
-				//Klick auf Link zu Art steuern
+				// Klick auf Link zu Art steuern
 				$(".form").on("click", ".LinkZuArtGleicherGruppe", function(event) {
 					var id;
 					event.preventDefault();
@@ -1849,7 +1849,7 @@
 
 			$(window).resize(function () {
 				setzeTreehoehe();
-				//Höhe der Textareas korrigieren
+				// Höhe der Textareas korrigieren
 				$('form').each(function() {
 					$('textarea').each(function() {
 						FitToContent(this.id);
@@ -1859,7 +1859,7 @@
 
 			$(document).on("click", ".anmelden_btn", function(event) {
 				event.preventDefault();
-				//es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
+				// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
 				var bs_ds = this.id.substring(this.id.length-2);
 				if (bs_ds === "rt") {
 					bs_ds = "art";
@@ -1901,7 +1901,7 @@
 				$(".importieren_anmelden_fehler").hide();
 				setTimeout(function() {
 					$("#Email_" + bs_ds).focus();
-				}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+				}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 			});
 
 			$(document).on("click", ".konto_speichern_btn", function(event) {
@@ -1912,7 +1912,7 @@
 				}
 				if (validiereSignup(bs_ds)) {
 					erstelleKonto(bs_ds);
-					//Anmeldefenster zurücksetzen
+					// Anmeldefenster zurücksetzen
 					$(".signup").css("display", "none");
 					$(".anmelden_btn").hide();
 					$(".abmelden_btn").show();

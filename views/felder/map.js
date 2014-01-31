@@ -20,8 +20,8 @@ function(doc) {
 					for (y=0; y<doc.Beziehungssammlungen[x].Beziehungen.length; y++) {
 						for (z in doc.Beziehungssammlungen[x].Beziehungen[y]) {
 							if (isNaN(parseInt(z))) {
-								//irgendwie liefert dieser Loop auch Zahlen, die aussehen als wären sie die keys eines Arrays. Ausschliessen
-								//jetzt loopen wir durch die Daten der Beziehung
+								// irgendwie liefert dieser Loop auch Zahlen, die aussehen als wären sie die keys eines Arrays. Ausschliessen
+								// jetzt loopen wir durch die Daten der Beziehung
 								emit ([doc.Gruppe, "Beziehung", doc.Beziehungssammlungen[x].Name, z, typeof doc.Beziehungssammlungen[x].Beziehungen[y][z]], doc._id);
 							}
 						}

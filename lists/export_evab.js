@@ -19,13 +19,13 @@ function(head, req) {
 	while (row = getRow()) {
 		Objekt = row.doc;
 
-		//exportobjekt gründen bzw. zurücksetzen
+		// exportobjekt gründen bzw. zurücksetzen
 		exportObjekt = {};
 
-		//Gruppe setzen
+		// Gruppe setzen
 		exportObjekt.Gruppe = Objekt.Gruppe;
 
-		//zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
+		// zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
 		exportObjekt.Nummer = null;
 		exportObjekt.DeutscherArtname = null;
 		exportObjekt.Gattung = null;
@@ -37,7 +37,7 @@ function(head, req) {
 
 		switch(exportObjekt.Gruppe) {
 		case "Fauna":
-			//Felder aktualisieren, wo Daten vorhanden
+			// Felder aktualisieren, wo Daten vorhanden
 			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
 				dsTaxonomie = Objekt.Taxonomie.Daten;
 				if (dsTaxonomie["Taxonomie ID"]) {
@@ -59,7 +59,7 @@ function(head, req) {
 					exportObjekt.Unterart = dsTaxonomie.Unterart;
 				}
 			}
-			//Datensammlung "ZH GIS" holen
+			// Datensammlung "ZH GIS" holen
 			var ds_zh_gis = _.find(Objekt.Datensammlungen, function(ds) {
 				return ds.Name === "ZH GIS";
 			}) || {};
@@ -69,7 +69,7 @@ function(head, req) {
 			}
 			break;
 		case "Flora":
-			//Felder aktualisieren, wo Daten vorhanden
+			// Felder aktualisieren, wo Daten vorhanden
 			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
 				dsTaxonomie = Objekt.Taxonomie.Daten;
 				if (dsTaxonomie["Taxonomie ID"]) {
@@ -88,7 +88,7 @@ function(head, req) {
 			}
 			break;
 		case "Moose":
-			//Felder aktualisieren, wo Daten vorhanden
+			// Felder aktualisieren, wo Daten vorhanden
 			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
 				dsTaxonomie = Objekt.Taxonomie.Daten;
 				if (dsTaxonomie["Taxonomie ID"]) {
@@ -102,16 +102,16 @@ function(head, req) {
 			}
 			break;
 		default:
-			//zum nächsten row
+			// zum nächsten row
 			continue objekt_loop;
 		}
 
 		exportObjekt.idArt = "{" + Objekt._id + "}";
 		
-		//Objekt zu Exportobjekten hinzufügen
+		// Objekt zu Exportobjekten hinzufügen
 		exportObjekte.push(exportObjekt);
 	}
-	//leere Objekte entfernen
+	// leere Objekte entfernen
 	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
 		return _.isEmpty(object);
 	});

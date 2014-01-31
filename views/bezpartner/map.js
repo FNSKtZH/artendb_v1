@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	//dieser View wird benutzt, wenn ein Objekt aktualisiert wird, um die entsprechenden Informationen (Name und ev. Taxonomie) allen Beziehungen weiterzuleiten
+	// dieser View wird benutzt, wenn ein Objekt aktualisiert wird, um die entsprechenden Informationen (Name und ev. Taxonomie) allen Beziehungen weiterzuleiten
 	if (doc.Beziehungssammlungen) {
 		for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
 			if (doc.Beziehungssammlungen[i].Beziehungen && doc.Beziehungssammlungen[i].Beziehungen.length>0) {

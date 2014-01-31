@@ -15,18 +15,18 @@ function(head, req) {
 	var _ = require("lists/lib/underscore");
 	var _a = require("lists/lib/artendb_listfunctions");
 
-	//list wird mit view flora abgerufen
+	// list wird mit view flora abgerufen
 	objekt_loop:
 	while (row = getRow()) {
 		Objekt = row.doc;
 
-		//exportobjekt gründen bzw. zurücksetzen
+		// exportobjekt gründen bzw. zurücksetzen
 		exportObjekt = {};
 
-		//GUID wird gebraucht, um beim Export nach EVAB dem Projekt zuzuweisen
+		// GUID wird gebraucht, um beim Export nach EVAB dem Projekt zuzuweisen
 		exportObjekt.GUID = Objekt._id;
 
-		//zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
+		// zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
 		exportObjekt.TaxonomieId = null;
 		exportObjekt.Artname = null;
 		exportObjekt.NameDeutsch = null;
@@ -36,14 +36,14 @@ function(head, req) {
 		exportObjekt.KefKontrolljahr = null;
 		exportObjekt.FnsJahresartJahr = null;
 
-		//Felder aktualisieren, wo Daten vorhanden
+		// Felder aktualisieren, wo Daten vorhanden
 		if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
 			dsTaxonomie = Objekt.Taxonomie.Daten;
 			exportObjekt.TaxonomieId = dsTaxonomie["Taxonomie ID"];
 			if (dsTaxonomie["Artname vollständig"]) {
 				exportObjekt.Artname = dsTaxonomie["Artname vollständig"];
 			}
-			//wird beim Export nach EvAB benutzt
+			// wird beim Export nach EvAB benutzt
 			if (dsTaxonomie["Name Deutsch"]) {
 				exportObjekt.NameDeutsch = dsTaxonomie["Name Deutsch"];
 			}
@@ -65,11 +65,11 @@ function(head, req) {
 				return ds.Name === "ZH KEF";
 			});
 			if (dsKef && dsKef.Daten && dsKef.Daten["Art ist KEF-Kontrollindikator"]) {
-				//MySQL erwartet für true eine -1
+				// MySQL erwartet für true eine -1
 				exportObjekt.KefArt = -1;
 			}
 			if (dsKef && dsKef.Daten && dsKef.Daten["Erstes Kontrolljahr"]) {
-				//MySQL erwartet für true eine 1
+				// MySQL erwartet für true eine 1
 				exportObjekt.KefKontrolljahr = dsKef.Daten["Erstes Kontrolljahr"];
 			}
 
@@ -81,10 +81,10 @@ function(head, req) {
 			}
 		}
 		
-		//Objekt zu Exportobjekten hinzufügen
+		// Objekt zu Exportobjekten hinzufügen
 		exportObjekte.push(exportObjekt);
 	}
-	//leere Objekte entfernen
+	// leere Objekte entfernen
 	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
 		return _.isEmpty(object);
 	});

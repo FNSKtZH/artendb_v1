@@ -34,7 +34,7 @@ function(head, req) {
 			}
 			art["Taxonomie ID"] = doc.Taxonomie.Daten["Taxonomie ID"];
 			art.Artname = doc.Taxonomie.Daten["Artname vollständig"];
-			//Hinweis Verwandschaft
+			// Hinweis Verwandschaft
 			if (doc.Gruppe === "Flora" && doc.Beziehungssammlungen) {
 				bs_loop:
 				for (j=0; j<doc.Beziehungssammlungen.length; j++) {

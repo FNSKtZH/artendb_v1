@@ -1,34 +1,34 @@
 exports.erstelleExportString = function(exportobjekte) {
 	var stringTitelzeile = "";
 	var stringZeilen = "";
-	//titelzeile erstellen
-	//durch Spalten loopen
+	// titelzeile erstellen
+	// durch Spalten loopen
 	for (var a in exportobjekte[1]) {
 		if (stringTitelzeile !== "") {
 			stringTitelzeile += ',';
 		}
 		stringTitelzeile += '"' + a + '"';
 	}
-	//Datenzeilen erstellen
+	// Datenzeilen erstellen
 	for (var i in exportobjekte) {
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}
 		var stringZeile = "";
-		//durch die Felder loopen
+		// durch die Felder loopen
 		for (var x in exportobjekte[i]) {
 		//for (var x = 0; x < exportobjekte[i].length; x++) {
 			if (stringZeile !== "") {
 				stringZeile += ',';
 			}
-			//null-Werte als leere Werte
+			// null-Werte als leere Werte
 			if (exportobjekte[i][x] === null) {
 				stringZeile += "";
 			} else if (typeof exportobjekte[i][x] === "number") {
-				//Zahlen ohne Anführungs- und Schlusszeichen exportieren
+				// Zahlen ohne Anführungs- und Schlusszeichen exportieren
 				stringZeile += exportobjekte[i][x];
 			} else if (typeof exportobjekte[i][x] === "object") {
-				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
+				// Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
 				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
 			} else {
 				stringZeile += '"' + exportobjekte[i][x] + '"';
@@ -40,7 +40,7 @@ exports.erstelleExportString = function(exportobjekte) {
 };
 
 exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergleichsoperator) {
-	//Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wessen Name die Bedingung erfüllt
+	// Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen, wessen Name die Bedingung erfüllt
 	var bezPartner = [];
 	for (var m=0; m<beziehungspartner.length; m++) {
 		var feldwert = beziehungspartner[m].Name.toLowerCase();
@@ -82,31 +82,31 @@ exports.convertToCorrectType = function(feldWert) {
 	} else if (type === "integer") {
 		return parseInt(feldWert, 10);
 	} else if (type === "string") {
-		//string jetzt kleinschreiben, damit das nicht später erfolgen muss
+		// string jetzt kleinschreiben, damit das nicht später erfolgen muss
 		return feldWert.toLowerCase();
 	} else {
-		//object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
+		// object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
 		return feldWert;
 	}
 };
 
-//Hilfsfunktion, die typeof ersetzt und ergänzt
-//typeof gibt bei input-Feldern immer String zurück!
+// Hilfsfunktion, die typeof ersetzt und ergänzt
+// typeof gibt bei input-Feldern immer String zurück!
 exports.myTypeOf = function(Wert) {
 	if (typeof Wert === "boolean") {
 		return "boolean";
 	} else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
-		//es ist eine Float
+		// es ist eine Float
 		return "float";
-	//verhindern, dass führende Nullen abgeschnitten werden
+	// verhindern, dass führende Nullen abgeschnitten werden
 	} else if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") {
-		//es ist eine Integer
+		// es ist eine Integer
 		return "integer";
 	} else if (typeof Wert === "object") {
-		//es ist ein Objekt
+		// es ist ein Objekt
 		return "object";
 	} else if (typeof Wert === "string") {
-		//als String behandeln
+		// als String behandeln
 		return "string";
 	} else if (typeof Wert === "undefined") {
 		return "undefined";

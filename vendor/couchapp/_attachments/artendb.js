@@ -771,22 +771,22 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		hierarchie_string,
 		art_i_name;
 	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
-	//Accordion-Gruppe und -heading anfügen
+	// Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
-	//bei LR: Symbolleiste einfügen
+	// bei LR: Symbolleiste einfügen
 	if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
 		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 		//htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 	}
-	//die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
-	//Titel für die Datensammlung einfügen
+	// Titel für die Datensammlung einfügen
 	htmlDatensammlung += art_i.Name;
-	//header abschliessen
+	// header abschliessen
 	htmlDatensammlung += '</a></h4></div>';
-	//body beginnen
+	// body beginnen
 	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + dsTyp + '"><div class="panel-body">';
-	//Datensammlung beschreiben
+	// Datensammlung beschreiben
 	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
 		htmlDatensammlung += art_i.Beschreibung;
@@ -807,34 +807,34 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
 		htmlDatensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben';
 	}
-	//Beschreibung der Datensammlung abschliessen
+	// Beschreibung der Datensammlung abschliessen
 	htmlDatensammlung += '</div>';
-	//Felder anzeigen
-	//zuerst die GUID, aber nur bei der Taxonomie
+	// Felder anzeigen
+	// zuerst die GUID, aber nur bei der Taxonomie
 	if (dsTyp === "Taxonomie") {
 		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
 	}
 	for (var y in art_i.Daten) {
 		if (y === "GUID") {
-			//dieses Feld nicht anzeigen. Es wird _id verwendet
-			//dieses Feld wird künftig nicht mehr importiert
+			// dieses Feld nicht anzeigen. Es wird _id verwendet
+			// dieses Feld wird künftig nicht mehr importiert
 		} else if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
-			//dann den Link aufbauen lassen
+			// dann den Link aufbauen lassen
 			htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art._id, art_i.Daten[y].Name);
 		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
-			//das ist ein Array von Objekten
+			// das ist ein Array von Objekten
 			htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Daten[y]);
 		} else if ((y === "Artname" && art.Gruppe === "Flora") || (y === "Parent" && art.Gruppe === "Lebensräume")) {
-			//dieses Feld nicht anzeigen
+			// dieses Feld nicht anzeigen
 		} else if (y === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(art_i.Daten[y])) {
-			//Namen kommagetrennt anzeigen
+			// Namen kommagetrennt anzeigen
 			hierarchie_string = erstelleHierarchieFuerFeldAusHierarchieobjekteArray(art_i.Daten[y]);
 			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
 		} else {
 			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
 		}
 	}
-	//body und Accordion-Gruppe abschliessen
+	// body und Accordion-Gruppe abschliessen
 	htmlDatensammlung += '</div></div></div>';
 	return htmlDatensammlung;
 }
@@ -843,7 +843,7 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 	if (!_.isArray(hierarchie_array)) {
 		return "";
 	}
-	//Namen kommagetrennt anzeigen
+	// Namen kommagetrennt anzeigen
 	var hierarchie_string = "";
 	for (var g=0; g<hierarchie_array.length; g++) {
 		if (g > 0) {
@@ -854,12 +854,12 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 	return hierarchie_string;
 }
 
-//übernimmt Feldname und Feldwert
-//generiert daraus und retourniert html für die Darstellung im passenden Feld
+// übernimmt Feldname und Feldwert
+// generiert daraus und retourniert html für die Darstellung im passenden Feld
 function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp, dsName) {
 	var htmlDatensammlung = "";
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "http://") {
-		//www-Links als Link darstellen
+		// www-Links als Link darstellen
 		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
 		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
@@ -875,10 +875,10 @@ function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp, dsName) {
 	return htmlDatensammlung;
 }
 
-//managt die Links zu Google Bilder und Wikipedia
-//erwartet das Objekt mit der Art
+// managt die Links zu Google Bilder und Wikipedia
+// erwartet das Objekt mit der Art
 function setzteLinksZuBilderUndWikipedia(art) {
-	//jetzt die Links im Menu setzen
+	// jetzt die Links im Menu setzen
 	if (art) {
 		var googleBilderLink = "";
 		var wikipediaLink = "";
@@ -929,7 +929,7 @@ function setzteLinksZuBilderUndWikipedia(art) {
 			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
 			break;
 		}
-		//mit replace Hochkommata ' ersetzen, sonst klappt url nicht
+		// mit replace Hochkommata ' ersetzen, sonst klappt url nicht
 		$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
 		$("#GoogleBilderLink_li").removeClass("disabled");
 		$("#WikipediaLink").attr("href", wikipediaLink);
@@ -942,7 +942,7 @@ function setzteLinksZuBilderUndWikipedia(art) {
 	}
 }
 
-//generiert den html-Inhalt für einzelne Links in Flora
+// generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label">';
@@ -955,7 +955,7 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für Serien von Links in Flora
+// generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label">';
@@ -975,7 +975,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für einzelne Links in Flora
+// generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
@@ -983,7 +983,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t';
-	//jetzt Link beginnen, damit das Feld klickbar wird
+	// jetzt Link beginnen, damit das Feld klickbar wird
 	HtmlContainer += '<a href="';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
@@ -993,13 +993,13 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += '" type="text" value="';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
-	//Link abschliessen
+	// Link abschliessen
 	HtmlContainer += '</a>';
 	HtmlContainer += '\n</div>';
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für einzelne Links in Flora
+// generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label">';
@@ -1014,7 +1014,7 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für Textinputs
+// generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
@@ -1033,7 +1033,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für Textarea
+// generiert den html-Inhalt für Textarea
 function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
@@ -1050,7 +1050,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	return HtmlContainer;
 }
 
-//generiert den html-Inhalt für ja/nein-Felder
+// generiert den html-Inhalt für ja/nein-Felder
 function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
@@ -1069,19 +1069,19 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	return HtmlContainer;
 }
 
-//begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
+// begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 function setzeTreehoehe() {
 	var windowHeight = $(window).height();
 	if ($(window).width() > 1000) {
 		//$("#menu").css("max-height", windowHeight - 33);
 		$(".baum").css("max-height", windowHeight - 161);
 	} else {
-		//Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
+		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
 		$(".baum").css("max-height", windowHeight - 252);
 	}
 }
 
-//setzt die Höhe von textareas so, dass der Text genau rein passt
+// setzt die Höhe von textareas so, dass der Text genau rein passt
 function FitToContent(id, maxHeight) {
 	var text = id && id.style ? id : document.getElementById(id);
 	maxHeight = maxHeight || document.documentElement.clientHeight;
@@ -1110,20 +1110,20 @@ function öffneMarkiertenNode() {
 	var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
 	$("#tree" + window.Gruppe).jstree("close_all", -1);
 	$("#tree" + window.Gruppe).jstree("deselect_all", -1);
-	//wenn eine Art gewählt war, diese wieder wählen
+	// wenn eine Art gewählt war, diese wieder wählen
 	if (selected_nodes.length === 1) {
 		$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
 	}
 }
 
-//managed die Sichtbarkeit von Formularen
-//wird von allen initiiere_-Funktionen verwendet
-//wird ein Formularname übergeben, wird dieses Formular gezeigt
-//und alle anderen ausgeblendet
-//zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
+// managed die Sichtbarkeit von Formularen
+// wird von allen initiiere_-Funktionen verwendet
+// wird ein Formularname übergeben, wird dieses Formular gezeigt
+// und alle anderen ausgeblendet
+// zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 function zeigeFormular(Formularname) {
 	var formular_angezeigt = $.Deferred();
-	//zuerst alle Formulare ausblenden
+	// zuerst alle Formulare ausblenden
 	$("#forms").hide();
 	$('form').each(function() {
 		$(this).hide();
@@ -1131,21 +1131,21 @@ function zeigeFormular(Formularname) {
 
 	if (Formularname) {
 		if (Formularname !== "art") {
-			//Spuren des letzten Objekts entfernen
-			//IE8 kann nicht deleten
+			// Spuren des letzten Objekts entfernen
+			// IE8 kann nicht deleten
 			try {
 				delete localStorage.art_id;
 			}
 			catch (e) {
 				localStorage.art_id = undefined;
 			}
-			//URL anpassen, damit kein Objekt angezeigt wird
+			// URL anpassen, damit kein Objekt angezeigt wird
 			history.pushState({id: "id"}, "id", "index.html");
-			//alle Bäume ausblenden, suchfeld, Baumtitel
+			// alle Bäume ausblenden, suchfeld, Baumtitel
 			$(".suchen").hide();
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
-			//Gruppe Schaltfläche deaktivieren
+			// Gruppe Schaltfläche deaktivieren
 			$('#Gruppe .active').removeClass('active');
 		}
 		$('form').each(function() {
@@ -1156,57 +1156,57 @@ function zeigeFormular(Formularname) {
 			}
 		});
 		$(window).scrollTop(0);
-		//jetzt die Links im Menu (de)aktivieren
+		// jetzt die Links im Menu (de)aktivieren
 		setzteLinksZuBilderUndWikipedia();
 		formular_angezeigt.resolve();
 	}
 	return formular_angezeigt.promise();
 }
 
-//kontrollierren, ob die erforderlichen Felder etwas enthalten
-//wenn ja wird true retourniert, sonst false
+// kontrollieren, ob die erforderlichen Felder etwas enthalten
+// wenn ja wird true retourniert, sonst false
 function validiereSignup(woher) {
 	var Email, Passwort, Passwort2;
-	//zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
+	// zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
 	$(".hinweis").css("display", "none");
-	//erfasste Werte holen
+	// erfasste Werte holen
 	Email = $("#Email_"+woher).val();
 	Passwort = $("#Passwort_"+woher).val();
 	Passwort2 = $("#Passwort2_"+woher).val();
-	//prüfen
+	// prüfen
 	if (!Email) {
 		$("#Emailhinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Email_"+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort) {
 		$("#Passworthinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort_"+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!Passwort2) {
 		$("#Passwort2hinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (Passwort !== Passwort2) {
 		$("#Passwort2hinweisFalsch_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	}
 	return true;
 }
 
 function erstelleKonto(woher) {
-	//zuerst den User in cloudant freischeffeln
+	// zuerst den User in cloudant freischeffeln
 	var uri = new Uri($(location).attr('href'));
 	if (uri.host().indexOf("cloudant__t") >= 0) {
-		//wenn mit cloudant verbunden wird, anderst authentifizieren
+		// wenn mit cloudant verbunden wird, anderst authentifizieren
 		$.ajax({
 			//type: "POST",
 			type: "PUT",
@@ -1230,7 +1230,7 @@ function erstelleKonto(woher) {
 			//contentType: "text/plain; charset=UTF-8",
 			//contentType: "multipart/form-data",
 			success: function() {
-				//User in _user eintragen
+				// User in _user eintragen
 				$.couch.signup(
 					{name: $('#Email_'+woher).val()},
 					$('#Passwort_'+woher).val(), 
@@ -1241,7 +1241,7 @@ function erstelleKonto(woher) {
 								bearbeiteLrTaxonomie();
 							}
 							passeUiFuerAngemeldetenUserAn(woher);
-							//Werte aus Feldern entfernen
+							// Werte aus Feldern entfernen
 							$("#Email_"+woher).val("");
 							$("#Passwort_"+woher).val("");
 							$("#Passwort2_"+woher).val("");
@@ -1268,7 +1268,7 @@ function erstelleKonto(woher) {
 			}
 		});
 	} else {
-		//User in _user eintragen
+		// User in _user eintragen
 		$.couch.signup({
 			name: $('#Email_'+woher).val()
 		},
@@ -1279,7 +1279,7 @@ function erstelleKonto(woher) {
 					bearbeiteLrTaxonomie();
 				}
 				passeUiFuerAngemeldetenUserAn(woher);
-				//Werte aus Feldern entfernen
+				// Werte aus Feldern entfernen
 				$("#Email_"+woher).val("");
 				$("#Passwort_"+woher).val("");
 				$("#Passwort2_"+woher).val("");
@@ -1311,7 +1311,7 @@ function meldeUserAn(woher) {
 					bearbeiteLrTaxonomie();
 				}
 				passeUiFuerAngemeldetenUserAn(woher);
-				//Werte aus Feldern entfernen
+				// Werte aus Feldern entfernen
 				$("#Email_"+woher).val("");
 				$("#Passwort_"+woher).val("");
 				$("#art_anmelden").show();
@@ -1321,7 +1321,7 @@ function meldeUserAn(woher) {
 				if (woher === "art") {
 					praefix = "";
 				}
-				//zuerst allfällige bestehende Hinweise ausblenden
+				// zuerst allfällige bestehende Hinweise ausblenden
 				$(".hinweis").css("display", "none");
 				$("#"+praefix+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
 				$("#"+praefix+woher+"_anmelden_fehler_text").alert();
@@ -1332,7 +1332,7 @@ function meldeUserAn(woher) {
 }
 
 function meldeUserAb() {
-	//IE8 kann nicht deleten
+	// IE8 kann nicht deleten
 	try {
 		delete localStorage.Email;
 	}
@@ -1374,12 +1374,12 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$(".abmelden_btn").show();
 	$(".konto_erstellen_btn").hide();
 	$(".konto_speichern_btn").hide();
-	//in LR soll Anmelde-Accordion nicht sichtbar sein
+	// in LR soll Anmelde-Accordion nicht sichtbar sein
 	$("#art_anmelden").hide();
 }
 
 function zurueckZurAnmeldung(woher) {
-	//Mitteilen, dass Anmeldung nötig ist
+	// Mitteilen, dass Anmeldung nötig ist
 	var praefix = "importieren_";
 	if (woher === "art") {
 		praefix = "";
@@ -1401,23 +1401,23 @@ function validiereUserAnmeldung(woher) {
 	if (!Email) {
 		setTimeout(function () {
 			$('#Email_'+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		$("#Emailhinweis_"+woher).css("display", "block");
 		return false;
 	} else if (!Passwort) {
 		setTimeout(function () {
 			$('#Passwort_'+woher).focus();
-		}, 50);  //need to use a timer so that .blur() can finish before you do .focus()
+		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		$("#Passworthinweis_"+woher).css("display", "block");
 		return false;
 	}
 	return true;
 }
 
-//übernimmt eine Array mit Objekten
-//und den div, in dem die Tabelle eingefügt werden soll
-//plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
-//baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
+// übernimmt eine Array mit Objekten
+// und den div, in dem die Tabelle eingefügt werden soll
+// plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
+// baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	var html = "";
 	if (Datensätze.length > 10) {
@@ -1427,11 +1427,11 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	} else {
 		html += "Vorschau des einzigen Datensatzes:";
 	}
-	//Tabelle initiieren
+	// Tabelle initiieren
 	html += '<div class="table-responsive"><table class="table table-bordered table-striped table-condensed table-hover">';
-	//Titelzeile aufbauen
-	//Zeile anlegen
-	//gleichzeitig Feldliste für Formular anlegen
+	// Titelzeile aufbauen
+	// Zeile anlegen
+	// gleichzeitig Feldliste für Formular anlegen
 	var Feldname = "";
 	if (felder_div) {
 		if (felder_div === "DsFelder_div") {
@@ -1444,97 +1444,97 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
 	html_ds_felder_div += '<select type="text" class="controls form-control input-sm" id="'+Feldname+'" multiple="multiple" style="height:' + ((Object.keys(Datensätze[0]).length*18)+7)  + 'px">';
 	html += "<thead><tr>";
-	//durch die Felder zirkeln
+	// durch die Felder zirkeln
 	for (var x in Datensätze[0]) {
-		//Spalte anlegen
+		// Spalte anlegen
 		html += "<th>" + x + "</th>";
-		//Option für Feldliste anfügen
+		// Option für Feldliste anfügen
 		html_ds_felder_div += '<option value="' + x + '">' + x + '</option>';
 	}
-	//Titelzeile abschliessen
+	// Titelzeile abschliessen
 	html += "</tr></thead><tbody>";
-	//Feldliste abschliessen
+	// Feldliste abschliessen
 	html_ds_felder_div += '</select>';
 	if (felder_div) {
-		//nur, wenn ein felder_div übergeben wurde
+		// nur, wenn ein felder_div übergeben wurde
 		$("#"+felder_div).html(html_ds_felder_div);
 	}
 
-	//durch die Datensätze zirkeln
-	//nur die ersten 20 anzeigen
+	// durch die Datensätze zirkeln
+	// nur die ersten 20 anzeigen
 	for (var i = 0; i < 10; i++) {
-		//Datenzeilen aufbauen
-		//Zeile anlegen
+		// Datenzeilen aufbauen
+		// Zeile anlegen
 		html += "<tr>";
-		//durch die Felder zirkeln
+		// durch die Felder zirkeln
 		for (x in Datensätze[i]) {
-			//Spalte anlegen
+			// Spalte anlegen
 			html += "<td>";
 			if (Datensätze[i][x] === null) {
-				//Null-Werte als leer anzeigen
+				// Null-Werte als leer anzeigen
 				html += "";
 			} else if (typeof Datensätze[i][x] === "object") {
 				html += JSON.stringify(Datensätze[i][x]);
 			} else if (Datensätze[i][x] || Datensätze[i][x] === 0) {
 				html += Datensätze[i][x];
 			} else {
-				//nullwerte als leerwerte (nicht) anzeigen
+				// nullwerte als leerwerte (nicht) anzeigen
 				html += "";
 			}
-			//Spalte abschliessen
+			// Spalte abschliessen
 			html += "</td>";
 		}
-		//Zeile abschliessen
+		// Zeile abschliessen
 		html += "</tr>";
 	}
-	//Tabelle abschliessen
+	// Tabelle abschliessen
 	html += '</tbody></table></div>';
-	//html in div einfügen
+	// html in div einfügen
 	$("#"+tabellen_div).html(html);
 	$("#"+tabellen_div).css("margin-top", "20px");
-	//sichtbar stellen
+	// sichtbar stellen
 	$("#"+tabellen_div).css("display", "block");
 }
 
-//erhält dbs = "Ds" oder "Bs"
+// erhält dbs = "Ds" oder "Bs"
 function meldeErfolgVonIdIdentifikation(dbs) {
 	if ($("#"+dbs+"Felder option:selected").length && $("#"+dbs+"Id option:selected").length) {
-		//beide ID's sind gewählt
+		// beide ID's sind gewählt
 		window[dbs+"FelderId"] = $("#"+dbs+"Felder option:selected").val();
 		window.DsId = $("#"+dbs+"Id option:selected").val();
 		window[dbs+"Id"] = $("#"+dbs+"Id option:selected").val();
 		var IdsVonDatensätzen = [];
 		var MehrfachVorkommendeIds = [];
 		var IdsVonNichtImportierbarenDatensätzen = [];
-		//das hier wird später noch für den Inmport gebraucht > globale Variable machen
+		// das hier wird später noch für den Inmport gebraucht > globale Variable machen
 		window.ZuordbareDatensätze = [];
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...");
-		//Dokumente aus der Gruppe der Datensätze holen
-		//durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
-		//kontrollieren, ob eine id mehr als einmal vorkommt
+		// Dokumente aus der Gruppe der Datensätze holen
+		// durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
+		// kontrollieren, ob eine id mehr als einmal vorkommt
 		$db = $.couch.db("artendb");
 		if (window.DsId === "guid") {
 			$db.view('artendb/all_docs', {
 				success: function (data) {
 					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
-						//durch die importierten Datensätze loopen
+						// durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
-							//diese ID wurde noch nicht hinzugefügt > hinzufügen
+							// diese ID wurde noch nicht hinzugefügt > hinzufügen
 							IdsVonDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
-							//prüfen, ob die ID zugeordnet werden kann
+							// prüfen, ob die ID zugeordnet werden kann
 							for (var x = 0; x < data.rows.length; x++) {
 								if (data.rows[x].key === window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) {
 									window.ZuordbareDatensätze.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 									break;
 								}
 								if (x === (data.rows.length-1)) {
-									//diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
+									// diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
 									IdsVonNichtImportierbarenDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 								}
 							}
 						} else {
-							//diese ID wurden schon hinzugefügt > mehrfach!
+							// diese ID wurden schon hinzugefügt > mehrfach!
 							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
@@ -1545,13 +1545,13 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.DsId + '"]&endkey=["' + window.DsId + '",{},{}]', {
 				success: function (data) {
 					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
-						//durch die importierten Datensätze loopen
+						// durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
-							//diese ID wurde noch nicht hinzugefügt > hinzufügen
+							// diese ID wurde noch nicht hinzugefügt > hinzufügen
 							IdsVonDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
-							//prüfen, ob die ID zugeordnet werden kann
+							// prüfen, ob die ID zugeordnet werden kann
 							for (var x = 0; x < data.rows.length; x++) {
-								//Vorsicht: window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]] kann Zahlen als string zurückgeben, nicht === verwenden
+								// Vorsicht: window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]] kann Zahlen als string zurückgeben, nicht === verwenden
 								if (data.rows[x].key[2] == window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) {
 									var Objekt = {};
 									Objekt.Id = parseInt(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]], 10);
@@ -1560,12 +1560,12 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 									break;
 								}
 								if (x === (data.rows.length-1)) {
-									//diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
+									// diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
 									IdsVonNichtImportierbarenDatensätzen.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 								}
 							}
 						} else {
-							//diese ID wurden schon hinzugefügt > mehrfach!
+							// diese ID wurden schon hinzugefügt > mehrfach!
 							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
@@ -1578,13 +1578,13 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 
 function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
 	$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "none");
-	//rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
+	// rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
 	if (MehrfachVorkommendeIds.length && dbs !== "Bs") {
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
 	} else if (window.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
-		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
-		//es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
+		// rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
+		// es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis").alert().css("display", "block");
 		if (dbs === "Bs") {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + IdsVonNichtImportierbarenDatensätzen.length + " Arten mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
@@ -1594,7 +1594,7 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		$("#"+dbs+"Importieren").css("display", "block");
 		$("#"+dbs+"Entfernen").css("display", "block");
 	} else {
-		//rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
+		// rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg").alert().css("display", "block");
 		if (dbs === "Bs") {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>Beziehungen von " + window.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
@@ -1606,12 +1606,12 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 	}
 }
 
-//bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
-//holt sich selber die in den Feldern erfassten Infos der Datensammlung
+// bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+// holt sich selber die in den Feldern erfassten Infos der Datensammlung
 function importiereDatensammlung() {
 	var Datensammlung, anzFelder, anzDs;
 	var DsImportiert = $.Deferred();
-	//prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
+	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$("#DsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
 		$("#meldung_individuell_text").html("Bitte geben Sie der Datensammlung einen Namen");
@@ -1620,13 +1620,13 @@ function importiereDatensammlung() {
 		$("#DsName").focus();
 		return false;
 	}
-	//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
+	// für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
 	var Zähler = 0;
 	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 	anzDs = 0;
 	for (var x in window.dsDatensätze) {
 		anzDs += 1;
-		//Datensammlung als Objekt gründen
+		// Datensammlung als Objekt gründen
 		Datensammlung = {};
 		Datensammlung.Name = $("#DsName").val();
 		if ($("#DsBeschreibung").val()) {
@@ -1638,7 +1638,7 @@ function importiereDatensammlung() {
 		if ($("#DsLink").val()) {
 			Datensammlung["Link"] = $("#DsLink").val();
 		}
-		//falls die Datensammlung zusammenfassend ist
+		// falls die Datensammlung zusammenfassend ist
 		if ($("#DsZusammenfassend").prop('checked')) {
 			Datensammlung.zusammenfassend = true;
 		}
@@ -1646,60 +1646,60 @@ function importiereDatensammlung() {
 			Datensammlung.Ursprungsdatensammlung = $("#DsUrsprungsDs").val();
 		}
 		Datensammlung["importiert von"] = localStorage.Email;
-		//Felder der Datensammlung als Objekt gründen
+		// Felder der Datensammlung als Objekt gründen
 		Datensammlung.Daten = {};
-		//Felder anfügen, wenn sie Werte enthalten
+		// Felder anfügen, wenn sie Werte enthalten
 		anzFelder = 0;
 		for (var y in window.dsDatensätze[x]) {
-			//nicht importiert wird die ID und leere Felder
+			// nicht importiert wird die ID und leere Felder
 			if (y !== window.DsFelderId && window.dsDatensätze[x][y] !== "" && window.dsDatensätze[x][y] !== null) {
 				if (window.dsDatensätze[x][y] === -1) {
-					//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
+					// Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
 					Datensammlung.Daten[y] = true;
 				} else if (window.dsDatensätze[x][y] == "true") {
-					//true/false nicht als string importieren
+					// true/false nicht als string importieren
 					Datensammlung.Daten[y] = true;
 				} else if (window.dsDatensätze[x][y] == "false") {
 					Datensammlung.Daten[y] = false;
 				} else if (window.dsDatensätze[x][y] == parseInt(window.dsDatensätze[x][y], 10)) {
-					//Ganzzahlen als Zahlen importieren
+					// Ganzzahlen als Zahlen importieren
 					Datensammlung.Daten[y] = parseInt(window.dsDatensätze[x][y], 10);
 				} else if (window.dsDatensätze[x][y] == parseFloat(window.dsDatensätze[x][y])) {
-					//Bruchzahlen als Zahlen importieren
+					// Bruchzahlen als Zahlen importieren
 					Datensammlung.Daten[y] = parseFloat(window.dsDatensätze[x][y]);
 				} else {
-					//Normalfall
+					// Normalfall
 					Datensammlung.Daten[y] = window.dsDatensätze[x][y];
 				}
 				anzFelder += 1;
 			}
 		}
-		//entsprechenden Index öffnen
-		//sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
+		// entsprechenden Index öffnen
+		// sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
 		if (anzFelder > 0) {
-			//Datenbankabfrage ist langsam. Extern aufrufen, 
-			//sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
+			// Datenbankabfrage ist langsam. Extern aufrufen, 
+			// sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
 			var guid;
 			if (window.DsId === "guid") {
-				//die in der Tabelle mitgelieferte id ist die guid
+				// die in der Tabelle mitgelieferte id ist die guid
 				guid = window.dsDatensätze[x][window.DsFelderId];
 			} else {
 				for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
-					//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+					// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 					if (window.ZuordbareDatensätze[q].Id == window.dsDatensätze[x][window.DsFelderId]) {
-						//und die guid auslesen
+						// und die guid auslesen
 						guid = window.ZuordbareDatensätze[q].Guid;
 						break;
 					}
 				}
 			}
-			//kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
+			// kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
 				fuegeDatensammlungZuObjekt(guid, Datensammlung);
-				//Für 10 Kontrollbeispiele die Links aufbauen
+				// Für 10 Kontrollbeispiele die Links aufbauen
 				if (Zähler < 10) {
 					Zähler += 1;
-					//Rückmeldungslink aufbauen. Hat die Form:
+					// Rückmeldungslink aufbauen. Hat die Form:
 					//<a href="url">Link text</a>
 					//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
 					RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + window.dsDatensätze[x][window.DsFelderId] + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
@@ -1707,19 +1707,19 @@ function importiereDatensammlung() {
 			}
 		}
 	}
-	//RückmeldungsLinks in Feld anzeigen:
+	// RückmeldungsLinks in Feld anzeigen:
 	$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
 	$("#importieren_ds_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 	DsImportiert.resolve();
 	return DsImportiert.promise();
 }
 
-//bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
-//holt sich selber die in den Feldern erfassten Infos der Datensammlung
+// bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+// holt sich selber die in den Feldern erfassten Infos der Datensammlung
 function importiereBeziehungssammlung() {
 	var Beziehungssammlung, anzFelder, anzBs;
 	var BsImportiert = $.Deferred();
-	//prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
+	// prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
 	if (!$("#BsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
 		$("#meldung_individuell_text").html("Bitte geben Sie der Beziehungssammlung einen Namen");
@@ -1728,11 +1728,11 @@ function importiereBeziehungssammlung() {
 		$("#BsName").focus();
 		return false;
 	}
-	//zuerst: Veranlassen, dass die Beziehungspartner in window.bsDatensätze in einen Array der richtigen Form umgewandelt werden
+	// zuerst: Veranlassen, dass die Beziehungspartner in window.bsDatensätze in einen Array der richtigen Form umgewandelt werden
 	$.when(bereiteBeziehungspartnerFuerImportVor())
 		.then(function() {
 			setTimeout(function() {
-				//für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
+				// für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
 				var Zähler = 0;
 				var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 				anzBs = 0;
@@ -1748,7 +1748,7 @@ function importiereBeziehungssammlung() {
 				if ($("#BsLink").val()) {
 					Beziehungssammlung_vorlage["Link"] = $("#BsLink").val();
 				}
-				//falls die Datensammlung zusammenfassend ist
+				// falls die Datensammlung zusammenfassend ist
 				if ($("#BsZusammenfassend").prop('checked')) {
 					Beziehungssammlung_vorlage.zusammenfassend = true;
 				}
@@ -1757,18 +1757,18 @@ function importiereBeziehungssammlung() {
 				}
 				Beziehungssammlung_vorlage["importiert von"] = localStorage.Email;
 				Beziehungssammlung_vorlage.Beziehungen = [];
-				//zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
+				// zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
 				window.bsDatensätze_objekt = _.groupBy(window.bsDatensätze, function(objekt) {
-					//id in guid umwandeln
+					// id in guid umwandeln
 					var guid;
 					if (window.BsId === "guid") {
-						//die in der Tabelle mitgelieferte id ist die guid
+						// die in der Tabelle mitgelieferte id ist die guid
 						guid = objekt[window.BsFelderId];
 					} else {
 						for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
-							//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+							// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 							if (window.ZuordbareDatensätze[q].Id == objekt[window.BsFelderId]) {
-								//und die guid auslesen
+								// und die guid auslesen
 								guid = window.ZuordbareDatensätze[q].Guid;
 								break;
 							}
@@ -1777,43 +1777,43 @@ function importiereBeziehungssammlung() {
 					objekt.GUID = guid;
 					return objekt.GUID;
 				});
-				//jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
+				// jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
 				$.each(bsDatensätze_objekt, function(key, value) {
 					var Beziehungen = [];
 					anzBs += 1;
-					//Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
+					// Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
 					Beziehungssammlung = jQuery.extend(true, {}, Beziehungssammlung_vorlage);
 					for (var x = 0; x<value.length; x++) {
-						//durch die Beziehungen loopen
+						// durch die Beziehungen loopen
 						anzFelder = 0;
-						//Felder der Beziehungssammlung als Objekt gründen
+						// Felder der Beziehungssammlung als Objekt gründen
 						var Beziehung = {};
 						for (var y in value[x]) {
-							//durch die Felder der Beziehung loopen
-							//nicht importiert wird die GUID und leere Felder
+							// durch die Felder der Beziehung loopen
+							// nicht importiert wird die GUID und leere Felder
 							if (y !== "GUID" && value[x][y] !== "" && value[x][y] !== null) {
 								if (value[x][y] === -1) {
-									//Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
+									// Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
 									Beziehung[y] = true;
 								} else if (value[x][y] == "true") {
-									//true/false nicht als string importieren
+									// true/false nicht als string importieren
 									Beziehung[y] = true;
 								} else if (value[x][y] == "false") {
 									Beziehung[y] = false;
 								} else if (value[x][y] == parseInt(value[x][y], 10)) {
-									//Ganzzahlen als Zahlen importieren
+									// Ganzzahlen als Zahlen importieren
 									Beziehung[y] = parseInt(value[x][y], 10);
 								} else if (value[x][y] == parseFloat(value[x][y])) {
-									//Bruchzahlen als Zahlen importieren
+									// Bruchzahlen als Zahlen importieren
 									Beziehung[y] = parseFloat(value[x][y]);
 								} else if (y == "Beziehungspartner") {
 									Beziehung[y] = [];
-									//durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
+									// durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
 									for (var i=0; i<value[x][y].length; i++) {
 										Beziehung[y].push(window.bezPartner_objekt[value[x][y][i]]);
 									}
 								} else {
-									//Normalfall
+									// Normalfall
 									Beziehung[y] = value[x][y];
 								}
 								anzFelder++;
@@ -1823,23 +1823,23 @@ function importiereBeziehungssammlung() {
 							Beziehungen.push(Beziehung);
 						}
 					}
-					//entsprechenden Index öffnen
-					//sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
+					// entsprechenden Index öffnen
+					// sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
 					if (Beziehungen.length > 0) {
-						//Datenbankabfrage ist langsam. Extern aufrufen, 
-						//sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
+						// Datenbankabfrage ist langsam. Extern aufrufen, 
+						// sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
 						fuegeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
-						//Für 10 Kontrollbeispiele die Links aufbauen
+						// Für 10 Kontrollbeispiele die Links aufbauen
 						if (Zähler < 10) {
 							Zähler++;
-							//Rückmeldungslink aufbauen. Hat die Form:
+							// Rückmeldungslink aufbauen. Hat die Form:
 							//<a href="url">Link text</a>
 							//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
 							RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + key + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
 						}
 					}
 				});
-				//RückmeldungsLinks in Feld anzeigen:
+				// RückmeldungsLinks in Feld anzeigen:
 				$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 				$("#importieren_bs_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 				BsImportiert.resolve();
@@ -1856,17 +1856,17 @@ function bereiteBeziehungspartnerFuerImportVor() {
 
 	for (var x in window.bsDatensätze) {
 		if (window.bsDatensätze[x].Beziehungspartner) {
-			//window.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
-			//diese Liste in Array verwandeln
+			// window.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
+			// diese Liste in Array verwandeln
 			bezPartner_array = window.bsDatensätze[x].Beziehungspartner.split(", ");
-			//und in window.bsDatensätze nachführen
+			// und in window.bsDatensätze nachführen
 			window.bsDatensätze[x].Beziehungspartner = bezPartner_array;
-			//und vollständige Liste aller Beziehungspartner nachführen
+			// und vollständige Liste aller Beziehungspartner nachführen
 			alleBezPartner_array = _.union(alleBezPartner_array, bezPartner_array);
 		}
 	}
-	//jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
-	//danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
+	// jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
+	// danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
 	$db = $.couch.db("artendb");
 	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alleBezPartner_array)) + '&include_docs=true', {
 		success: function (data) {
@@ -1895,35 +1895,35 @@ function bereiteBeziehungspartnerFuerImportVor() {
 	return bpVorbereitet.promise();
 }
 
-//bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
-//holt sich selber den in den Feldern erfassten Namen der Datensammlung
+// bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+// holt sich selber den in den Feldern erfassten Namen der Datensammlung
 function entferneDatensammlung() {
 	var guid_array = [];
 	var guidArray = [];
 	var guid;
 	var DsEntfernt = $.Deferred();
 	for (x=0; x<window.dsDatensätze.length; x++) {
-		//zuerst die id in guid übersetzen
+		// zuerst die id in guid übersetzen
 		if (window.DsId === "guid") {
-			//die in der Tabelle mitgelieferte id ist die guid
+			// die in der Tabelle mitgelieferte id ist die guid
 			guid = window.dsDatensätze[x].GUID;
 		} else {
 			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
-				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+				// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 				if (window.ZuordbareDatensätze[q].Id == window.dsDatensätze[x][window.DsFelderId]) {
-					//und die guid auslesen
+					// und die guid auslesen
 					guid = window.ZuordbareDatensätze[q].Guid;
 					break;
 				}
 			}
 		}
-		//Einen Array der id's erstellen
+		// Einen Array der id's erstellen
 		guid_array.push(guid);
 	}
-	//globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfernt. Am Ende verbleiben keine oder die nicht entfernten
+	// globale Variable erstellen. Enthält alle guids. Beim Entfernen wird guid entfernt. Am Ende verbleiben keine oder die nicht entfernten
 	window.aktualisierte_objekte = guid_array.slice();
-	//alle docs gleichzeitig holen
-	//aber batchweise
+	// alle docs gleichzeitig holen
+	// aber batchweise
 	var a = 0;
 	var batch = 150;
 	var batchGrösse = 150;
@@ -1937,7 +1937,7 @@ function entferneDatensammlung() {
 			}
 		} else {
 			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
-			//RückmeldungsLinks in Feld anzeigen:
+			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
 			DsEntfernt.resolve();
@@ -1948,7 +1948,7 @@ function entferneDatensammlung() {
 }
 
 function entferneDatensammlung_2(DsName, guidArray, a) {
-	//alle docs holen
+	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
@@ -1976,8 +1976,8 @@ function entferneDatensammlungAusObjekt(DsName, Objekt) {
 	}
 }
 
-//bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
-//holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
+// bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
+// holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
 function entferneBeziehungssammlung() {
 	var guid_array = [];
 	var guidArray = [];
@@ -1985,29 +1985,29 @@ function entferneBeziehungssammlung() {
 	var BsName = $("#BsName").val();
 	var BsEntfernt = $.Deferred();
 	for (x=0; x<window.bsDatensätze.length; x++) {
-		//zuerst die id in guid übersetzen
+		// zuerst die id in guid übersetzen
 		if (window.BsId === "guid") {
-			//die in der Tabelle mitgelieferte id ist die guid
+			// die in der Tabelle mitgelieferte id ist die guid
 			guid = window.bsDatensätze[x].GUID;
 		} else {
 			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
-				//in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+				// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 				if (window.ZuordbareDatensätze[q].Id == window.bsDatensätze[x][window.BsFelderId]) {
-					//und die guid auslesen
+					// und die guid auslesen
 					guid = window.ZuordbareDatensätze[q].Guid;
 					break;
 				}
 			}
 		}
-		//Einen Array der id's erstellen
+		// Einen Array der id's erstellen
 		guid_array.push(guid);
 	}
 
-	//guid_array auf die eindeutigen guids reduzieren
+	// guid_array auf die eindeutigen guids reduzieren
 	guid_array = _.union(guid_array);
 
-	//alle docs gleichzeitig holen
-	//aber batchweise
+	// alle docs gleichzeitig holen
+	// aber batchweise
 	var a = 0;
 	var batch = 150;
 	var batchGrösse = 150;
@@ -2021,7 +2021,7 @@ function entferneBeziehungssammlung() {
 			}
 		} else {
 			entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
-			//RückmeldungsLinks in Feld anzeigen:
+			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
 			BsEntfernt.resolve();
@@ -2032,7 +2032,7 @@ function entferneBeziehungssammlung() {
 }
 
 function entferneBeziehungssammlung_2(BsName, guidArray, a) {
-	//alle docs holen
+	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
@@ -2060,30 +2060,30 @@ function entferneBeziehungssammlungAusObjekt(BsName, Objekt) {
 	}
 }
 
-//fügt der Art eine Datensammlung hinzu
-//wenn dieselbe schon vorkommt, wird sie überschrieben
+// fügt der Art eine Datensammlung hinzu
+// wenn dieselbe schon vorkommt, wird sie überschrieben
 function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function (doc) {
-			//Datensammlung anfügen
+			// Datensammlung anfügen
 			doc.Datensammlungen.push(Datensammlung);
-			//sortieren
-			//Datensammlungen nach Name sortieren
+			// sortieren
+			// Datensammlungen nach Name sortieren
 			doc.Datensammlungen = sortiereObjektarrayNachName(doc.Datensammlungen);
-			//in artendb speichern
+			// in artendb speichern
 			$db.saveDoc(doc);
 		}
 	});
 }
 
-//fügt der Art eine Datensammlung hinzu
-//wenn dieselbe schon vorkommt, wird sie überschrieben
+// fügt der Art eine Datensammlung hinzu
+// wenn dieselbe schon vorkommt, wird sie überschrieben
 function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function (doc) {
-			//prüfen, ob die Beziehung schon existiert
+			// prüfen, ob die Beziehung schon existiert
 			if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
 				var hinzugefügt = false;
 				for (var i in doc.Beziehungssammlungen) {
@@ -2096,50 +2096,50 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
 							}*/
 						}
-						//Beziehungen nach Name sortieren
+						// Beziehungen nach Name sortieren
 						doc.Beziehungssammlungen[i].Beziehungen = sortiereBeziehungenNachName(doc.Beziehungssammlungen[i].Beziehungen);
 						hinzugefügt = true;
 						break;
 					}
 				}
 				if (!hinzugefügt) {
-					//die Beziehungssammlung existiert noch nicht
+					// die Beziehungssammlung existiert noch nicht
 					Beziehungssammlung.Beziehungen = [];
 					for (var a=0; a<Beziehungen.length; a++) {
 						Beziehungssammlung.Beziehungen.push(Beziehungen[a]);
 					}
-					//Beziehungen nach Name sortieren
+					// Beziehungen nach Name sortieren
 					Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 					doc.Beziehungssammlungen.push(Beziehungssammlung);
 				}
 			} else {
-				//Beziehungssammlung anfügen
+				// Beziehungssammlung anfügen
 				Beziehungssammlung.Beziehungen = [];
 				for (var b=0; b<Beziehungen.length; b++) {
 					Beziehungssammlung.Beziehungen.push(Beziehungen[b]);
 				}
-				//Beziehungen nach Name sortieren
+				// Beziehungen nach Name sortieren
 				Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 				doc.Beziehungssammlungen = [];
 				doc.Beziehungssammlungen.push(Beziehungssammlung);
 			}
-			//Beziehungssammlungen nach Name sortieren
+			// Beziehungssammlungen nach Name sortieren
 			doc.Beziehungssammlungen = sortiereObjektarrayNachName(doc.Beziehungssammlungen);
-			//in artendb speichern
+			// in artendb speichern
 			$db.saveDoc(doc);
 		}
 	});
 }
 
-//übernimmt den Namen einer Datensammlung
-//öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
+// übernimmt den Namen einer Datensammlung
+// öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
 function entferneDatensammlungAusAllenObjekten(DsName) {
 	var DsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + DsName + '"]&endkey=["' + DsName + '",{}]', {
 		success: function (data) {
 			for (var i in data.rows) {
-				//guid und DsName übergeben
+				// guid und DsName übergeben
 				entferneDatensammlungAusDokument(data.rows[i].key[1], DsName);
 			}
 			DsEntfernt.resolve();
@@ -2148,15 +2148,15 @@ function entferneDatensammlungAusAllenObjekten(DsName) {
 	return DsEntfernt.promise();
 }
 
-//übernimmt den Namen einer Beziehungssammlung
-//öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
+// übernimmt den Namen einer Beziehungssammlung
+// öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
 function entferneBeziehungssammlungAusAllenObjekten(BsName) {
 	var BsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/bs_guid?startkey=["' + BsName + '"]&endkey=["' + BsName + '",{}]', {
 		success: function (data) {
 			for (var i in data.rows) {
-				//guid und DsName übergeben
+				// guid und DsName übergeben
 				entferneBeziehungssammlungAusDokument(data.rows[i].key[1], BsName);
 			}
 			BsEntfernt.resolve();
@@ -2165,20 +2165,20 @@ function entferneBeziehungssammlungAusAllenObjekten(BsName) {
 	return BsEntfernt.promise();
 }
 
-//übernimmt die id des zu verändernden Dokuments
-//und den Namen der Datensammlung, die zu entfernen ist
-//entfernt die Datensammlung
+// übernimmt die id des zu verändernden Dokuments
+// und den Namen der Datensammlung, die zu entfernen ist
+// entfernt die Datensammlung
 function entferneDatensammlungAusDokument(id, DsName) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
-			//Datensammlung entfernen
+			// Datensammlung entfernen
 			for (var i=0; i<doc.Datensammlungen.length; i++) {
 				if (doc.Datensammlungen[i].Name === DsName) {
 					doc.Datensammlungen.splice(i,1);
 				}
 			}
-			//in artendb speichern
+			// in artendb speichern
 			$db.saveDoc(doc, {
 				success: function() {
 				}
@@ -2187,20 +2187,20 @@ function entferneDatensammlungAusDokument(id, DsName) {
 	});
 }
 
-//übernimmt die id des zu verändernden Dokuments
-//und den Namen der Beziehungssammlung, die zu entfernen ist
-//entfernt die Beziehungssammlung
+// übernimmt die id des zu verändernden Dokuments
+// und den Namen der Beziehungssammlung, die zu entfernen ist
+// entfernt die Beziehungssammlung
 function entferneBeziehungssammlungAusDokument(id, BsName) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
-			//Beziehungssammlung entfernen
+			// Beziehungssammlung entfernen
 			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
 				if (doc.Beziehungssammlungen[i].Name === BsName) {
 					doc.Beziehungssammlungen.splice(i,1);
 				}
 			}
-			//in artendb speichern
+			// in artendb speichern
 			$db.saveDoc(doc, {
 				success: function() {
 				}
@@ -2209,31 +2209,31 @@ function entferneBeziehungssammlungAusDokument(id, BsName) {
 	});
 }
 
-//prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
+// prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
 function oeffneUri() {
-	//parameter der uri holen
+	// parameter der uri holen
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
-	//wenn browser history nicht unterstützt, erstellt history.js eine hash
-	//dann muss die id durch die id in der hash ersetzt werden
+	// wenn browser history nicht unterstützt, erstellt history.js eine hash
+	// dann muss die id durch die id in der hash ersetzt werden
 	var hash = uri.anchor();
 	if (hash) {
 		var uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
 	}
 	if (id) {
-		//Gruppe ermitteln
+		// Gruppe ermitteln
 		$db = $.couch.db("artendb");
 		$db.openDoc(id, {
 			success: function (objekt) {
-				//window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
+				// window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
 				window.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
-				//den richtigen Button aktivieren
+				// den richtigen Button aktivieren
 				//$("#Gruppe" + objekt.Gruppe).button('toggle');
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
-				//tree aufbauen, danach Datensatz initiieren
+				// tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum()).then(function() {
 					oeffneBaumZuId(id);
 				});
@@ -2241,8 +2241,8 @@ function oeffneUri() {
 		});
 	}
 }
-//übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
-//verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
+// übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
+// verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen) {
 	var html_felder_waehlen = '';
 	var html_filtern = '';
@@ -2257,8 +2257,8 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 		html_filtern += '<h3>Datensammlungen</h3>';
 	} else {
 		dsTyp = "Beziehung";
-		//bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
-		//das muss auch erklärt sein
+		// bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
+		// das muss auch erklärt sein
 		html_felder_waehlen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="radio"><label><input type="radio" id="export_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div><div class="well well-small" style="margin-top:9px;">Sie können aus zwei Varianten wählen:<ol><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Datensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div></div>';
 		html_filtern += '<h3>Beziehungssammlungen</h3>';
 	}
@@ -2268,8 +2268,8 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_filtern += '<hr>';
 		}
 		html_felder_waehlen += '<h5>' + taxonomien[i].Name + '</h5>';
-		//jetzt die checkbox um alle auswählen zu können
-		//aber nur, wenn mehr als 1 Feld existieren
+		// jetzt die checkbox um alle auswählen zu können
+		// aber nur, wenn mehr als 1 Feld existieren
 		if ((taxonomien[i].Daten && _.size(taxonomien[i].Daten) > 1) || (taxonomien[i].Beziehungen && _.size(taxonomien[i].Beziehungen) > 1)) {
 			html_felder_waehlen += '<div class="checkbox"><label>';
 			html_felder_waehlen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '"><em>alle</em>';
@@ -2279,14 +2279,14 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 		html_filtern += '<h5>' + taxonomien[i].Name + '</h5>';
 		html_filtern += '<div class="felderspalte">';
 		for (var x in (taxonomien[i].Daten || taxonomien[i].Beziehungen)) {
-			//felder wählen
+			// felder wählen
 			html_felder_waehlen += '<div class="checkbox"><label>';
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</div></label>';
-			//filtern
+			// filtern
 			html_filtern += '<div class="control-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
-			//Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\// g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+			// Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
 				html_filtern += ' style="padding-top:0px"';
 			}
@@ -2294,11 +2294,11 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 		}
-		//Spalten abschliessen
+		// Spalten abschliessen
 		html_felder_waehlen += '</div>';
 		html_filtern += '</div>';
 	}
-	//linie voranstellen
+	// linie voranstellen
 	html_felder_waehlen = '<hr>' + html_felder_waehlen;
 	html_filtern = '<hr>' + html_filtern;
 	if (beziehungssammlungen) {
@@ -2318,34 +2318,34 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 function erstelleExportString(exportobjekte) {
 	var stringTitelzeile = "";
 	var stringZeilen = "";
-	//titelzeile erstellen
-	//durch Spalten loopen
+	// titelzeile erstellen
+	// durch Spalten loopen
 	for (var a in exportobjekte[1]) {
 		if (stringTitelzeile !== "") {
 			stringTitelzeile += ',';
 		}
 		stringTitelzeile += '"' + a + '"';
 	}
-	//Datenzeilen erstellen
+	// Datenzeilen erstellen
 	for (var i in exportobjekte) {
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}
 		var stringZeile = "";
-		//durch die Felder loopen
+		// durch die Felder loopen
 		for (var x in exportobjekte[i]) {
 		//for (var x = 0; x < exportobjekte[i].length; x++) {
 			if (stringZeile !== "") {
 				stringZeile += ',';
 			}
-			//null-Werte als leere Werte
+			// null-Werte als leere Werte
 			if (exportobjekte[i][x] === null) {
 				stringZeile += "";
 			} else if (typeof exportobjekte[i][x] === "number") {
-				//Zahlen ohne Anführungs- und Schlusszeichen exportieren
+				// Zahlen ohne Anführungs- und Schlusszeichen exportieren
 				stringZeile += exportobjekte[i][x];
 			} else if (typeof exportobjekte[i][x] === "object") {
-				//Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
+				// Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
 				stringZeile += '"' + JSON.stringify(exportobjekte[i][x]).replace(/"/g, "'") + '"';
 			} else {
 				stringZeile += '"' + exportobjekte[i][x] + '"';
@@ -2356,22 +2356,22 @@ function erstelleExportString(exportobjekte) {
 	return stringTitelzeile + "\n" + stringZeilen;
 }
 
-//baut im Formular "export" die Liste aller Eigenschaften auf
-//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-//bekommt den Namen der Gruppe
+// baut im Formular "export" die Liste aller Eigenschaften auf
+// window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+// bekommt den Namen der Gruppe
 function erstelleListeFuerFeldwahl() {
-	//Beschäftigung melden
+	// Beschäftigung melden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("Eigenschaften werden ermittelt...");
-	//scrollen, damit Hinweis sicher ganz sichtbar ist
+	// scrollen, damit Hinweis sicher ganz sichtbar ist
 	$('html, body').animate({
 		scrollTop: $("#exportieren_objekte_waehlen_gruppen_hinweis_text").offset().top
 	}, 2000);
-	//gewählte Gruppen ermitteln
-	//globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
+	// gewählte Gruppen ermitteln
+	// globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	var export_gruppen = [];
 	var gruppen = [];
-	//globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
+	// globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
 	window.export_felder_arrays = [];
 	$db = $.couch.db("artendb");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
@@ -2382,60 +2382,60 @@ function erstelleListeFuerFeldwahl() {
 	if (export_gruppen.length > 0) {
 		gruppen = export_gruppen;
 		for (var i=0; i<gruppen.length; i++) {
-			//Felder abfragen
+			// Felder abfragen
 			$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
 				success: function (data) {
 					window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
-					//eine Gruppe aus export_gruppen entfernen
+					// eine Gruppe aus export_gruppen entfernen
 					export_gruppen.splice(0,1);
 					if (export_gruppen.length === 0) {
-						//alle Gruppen sind verarbeitet
+						// alle Gruppen sind verarbeitet
 						erstelleListeFuerFeldwahl_2();
 					}
 				}
 			});
 		}
 	} else {
-		//letzte Rückmeldung anpassen
+		// letzte Rückmeldung anpassen
 		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("keine Gruppe gewählt");
-		//Felder entfernen
+		// Felder entfernen
 		$("#exportieren_felder_waehlen_felderliste").html("");
 		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
 	}
 }
 
 function erstelleListeFuerFeldwahl_2() {
-	//in window.export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
-	//sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
-	//Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
-	//Mehrfacheinträge sollen entfernt werden
-	//dazu muss zuerst die Gruppe entfernt werden
+	// in window.export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+	// sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
+	// Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
+	// Mehrfacheinträge sollen entfernt werden
+	// dazu muss zuerst die Gruppe entfernt werden
 	for (var i=0; i<window.export_felder_arrays.length; i++) {
 		window.export_felder_arrays[i].key.splice(0,1);
 	}
-	//jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
+	// jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
 	window.export_felder_arrays = _.union(window.export_felder_arrays);
-	//jetzt den Array von Objekten nach key sortieren
+	// jetzt den Array von Objekten nach key sortieren
 	window.export_felder_arrays = _.sortBy(window.export_felder_arrays, function(object) {
 		return object.key;
 	});
 
-	//Objekt "FelderObjekt" schaffen. Darin werden die Felder aller gewählten Gruppen gesammelt
+	// Objekt "FelderObjekt" schaffen. Darin werden die Felder aller gewählten Gruppen gesammelt
 	var FelderObjekt = {};
 	FelderObjekt = ergaenzeFelderObjekt(FelderObjekt, window.export_felder_arrays);
 
-	//bei allfälligen "Taxonomie(n)" Feldnamen sortieren
+	// bei allfälligen "Taxonomie(n)" Feldnamen sortieren
 	if (FelderObjekt["Taxonomie(n)"] && FelderObjekt["Taxonomie(n)"].Daten) {
 		FelderObjekt["Taxonomie(n)"].Daten = sortKeysOfObject(FelderObjekt["Taxonomie(n)"].Daten);
 	}
 
-	//Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
+	// Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
 	Taxonomien = [];
 	Datensammlungen = [];
 	Beziehungssammlungen = [];
 	for (var x in FelderObjekt) {
 		if (typeof FelderObjekt[x] === "object" && FelderObjekt[x].Typ) {
-			//das ist Datensammlung oder Taxonomie
+			// das ist Datensammlung oder Taxonomie
 			if (FelderObjekt[x].Typ === "Datensammlung") {
 				Datensammlungen.push(FelderObjekt[x]);
 			} else if (FelderObjekt[x].Typ === "Taxonomie") {
@@ -2447,64 +2447,64 @@ function erstelleListeFuerFeldwahl_2() {
 	}
 	var hinweisTaxonomien;
 	erstelleExportfelder(Taxonomien, Datensammlungen, Beziehungssammlungen);
-	//kontrollieren, ob Taxonomien zusammengefasst werden
+	// kontrollieren, ob Taxonomien zusammengefasst werden
 	if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
 		hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
 	} else {
 		hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
 	}
-	//Ergebnis rückmelden
+	// Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").alert().css("display", "block");
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(hinweisTaxonomien);
 }
 
-//Nimmt ein FelderObjekt entgegen. Das ist entweder leer (erste Gruppe) oder enthält schon Felder (ab der zweiten Gruppe)
-//Nimmt ein Array mit Feldern entgegen
-//mit der Struktur: {"key":["Flora","Datensammlung","Blaue Liste (1998)","Anwendungshäufigkeit zur Erhaltung"],"value":null}
-//ergänzt das FelderObjekt um diese Felder
-//retourniert das ergänzte FelderObjekt
-//das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
+// Nimmt ein FelderObjekt entgegen. Das ist entweder leer (erste Gruppe) oder enthält schon Felder (ab der zweiten Gruppe)
+// Nimmt ein Array mit Feldern entgegen
+// mit der Struktur: {"key":["Flora","Datensammlung","Blaue Liste (1998)","Anwendungshäufigkeit zur Erhaltung"],"value":null}
+// ergänzt das FelderObjekt um diese Felder
+// retourniert das ergänzte FelderObjekt
+// das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	var DsTyp, DsName, FeldName;
 	for (var i in FelderArray) {
 		if (FelderArray[i].key) {
-			//Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
+			// Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
 			DsTyp = FelderArray[i].key[0];
 			DsName = FelderArray[i].key[1];
 			FeldName = FelderArray[i].key[2];
 			if (DsTyp === "Objekt") {
-				//das ist eine Eigenschaft des Objekts
-				//FelderObjekt[FeldName] = null;	//NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
+				// das ist eine Eigenschaft des Objekts
+				//FelderObjekt[FeldName] = null;	// NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
 			} else if (window.fasseTaxonomienZusammen && DsTyp === "Taxonomie") {
-				//Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
-				//Wenn Datensammlung noch nicht existiert, gründen
+				// Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
+				// Wenn Datensammlung noch nicht existiert, gründen
 				if (!FelderObjekt["Taxonomie(n)"]) {
 					FelderObjekt["Taxonomie(n)"] = {};
 					FelderObjekt["Taxonomie(n)"].Typ = DsTyp;
 					FelderObjekt["Taxonomie(n)"].Name = "Taxonomie(n)";
 					FelderObjekt["Taxonomie(n)"].Daten = {};
 				}
-				//Feld ergänzen
+				// Feld ergänzen
 				FelderObjekt["Taxonomie(n)"].Daten[FeldName] = null;
 			} else if (DsTyp === "Datensammlung" || DsTyp === "Taxonomie") {
-				//Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
+				// Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
 				if (!FelderObjekt[DsName]) {
 					FelderObjekt[DsName] = {};
 					FelderObjekt[DsName].Typ = DsTyp;
 					FelderObjekt[DsName].Name = DsName;
 					FelderObjekt[DsName].Daten = {};
 				}
-				//Feld ergänzen
+				// Feld ergänzen
 				FelderObjekt[DsName].Daten[FeldName] = null;
 			} else if (DsTyp === "Beziehung") {
-				//Wenn Beziehungstyp noch nicht existiert, gründen
+				// Wenn Beziehungstyp noch nicht existiert, gründen
 				if (!FelderObjekt[DsName]) {
 					FelderObjekt[DsName] = {};
 					FelderObjekt[DsName].Typ = DsTyp;
 					FelderObjekt[DsName].Name = DsName;
 					FelderObjekt[DsName].Beziehungen = {};
 				}
-				//Feld ergänzen
+				// Feld ergänzen
 				FelderObjekt[DsName].Beziehungen[FeldName] = null;
 			}
 		}
@@ -2512,31 +2512,31 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 	return FelderObjekt;
 }
 
-//wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
-//direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
+// wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
+// direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 function filtereFuerExport(direkt) {
-	//kontrollieren, ob eine Gruppe gewählt wurde
+	// kontrollieren, ob eine Gruppe gewählt wurde
 	if (fuerExportGewaehlteGruppen().length === 0) {
 		$('#meldung_keine_gruppen').modal();
 		return;
 	}
 
-	//Beschäftigung melden
+	// Beschäftigung melden
 	if (!direkt) {
 		$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
 		$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
 	}
 
-	//zum Hinweistext scrollen
+	// zum Hinweistext scrollen
 	$('html, body').animate({
 		scrollTop: $("#exportieren_exportieren_hinweis_text").offset().top
 	}, 2000);
-	//Array von Filterobjekten bilden
+	// Array von Filterobjekten bilden
 	var filterkriterien = [];
-	//Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
+	// Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
 	var filterkriterienObjekt = {};
 	var filterObjekt;
-	//gewählte Gruppen ermitteln
+	// gewählte Gruppen ermitteln
 	var gruppen_array = [];
 	var gruppen = "";
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
@@ -2548,30 +2548,30 @@ function filtereFuerExport(direkt) {
 			gruppen += $(this).val();
 		}
 	});
-	//durch alle Filterfelder loopen
-	//wenn ein Feld einen Wert enthält, danach filtern
+	// durch alle Filterfelder loopen
+	// wenn ein Feld einen Wert enthält, danach filtern
 	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
 		if (this.value || this.value === 0) {
-			//Filterobjekt zurücksetzen
+			// Filterobjekt zurücksetzen
 			filterObjekt = {};
 			filterObjekt.DsTyp = $(this).attr('dstyp');
 			filterObjekt.DsName = $(this).attr('eigenschaft');
 			filterObjekt.Feldname = $(this).attr('feld');
-			//Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
+			// Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
 			filterObjekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
 			filterObjekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
 			filterkriterien.push(filterObjekt);
 		}
 	});
-	//den array dem objekt zuweisen
+	// den array dem objekt zuweisen
 	filterkriterienObjekt.filterkriterien = filterkriterien;
-	//gewählte Felder ermitteln
+	// gewählte Felder ermitteln
 	var gewaehlte_felder = [];
 	var gewaehlte_felder_objekt = {};
 	var anz_ds_gewaehlt = 0;
 	$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
-			//feldObjekt erstellen
+			// feldObjekt erstellen
 			feldObjekt = {};
 			feldObjekt.DsName = "Objekt";
 			feldObjekt.Feldname = $(this).attr('feldname');
@@ -2580,7 +2580,7 @@ function filtereFuerExport(direkt) {
 	});
 	$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
-			//feldObjekt erstellen
+			// feldObjekt erstellen
 			feldObjekt = {};
 			feldObjekt.DsTyp = $(this).attr('dstyp');
 			if (feldObjekt.DsTyp !== "Taxonomie") {
@@ -2591,19 +2591,19 @@ function filtereFuerExport(direkt) {
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
-	//den array dem objekt zuweisen
+	// den array dem objekt zuweisen
 	gewaehlte_felder_objekt.felder = gewaehlte_felder;
 
-	//Wenn keine Felder gewählt sind: Melden und aufhören
+	// Wenn keine Felder gewählt sind: Melden und aufhören
 	if (gewaehlte_felder_objekt.felder.length === 0) {
-		//Beschäftigungsmeldung verstecken
+		// Beschäftigungsmeldung verstecken
 		$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
 		$("#exportieren_exportieren_error_text").alert().css("display", "block");
 		$("#exportieren_exportieren_error_text").html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
 		return;
 	}
 
-	//jetzt das filterObjekt übergeben
+	// jetzt das filterObjekt übergeben
 	if (direkt) {
 		uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt);
 	} else {
@@ -2612,9 +2612,9 @@ function filtereFuerExport(direkt) {
 }
 
 function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
-	//Alle Felder abfragen
+	// Alle Felder abfragen
 	var fTz = "false";
-	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	// window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 	if (window.fasseTaxonomienZusammen) {
 		fTz = "true";
 	}
@@ -2625,8 +2625,8 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 		queryParam = "export_direkt/all_docs?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	}
 	if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
-		//prüfen, ob mindestens ein Feld aus ds gewählt ist
-		//wenn ja: true, sonst false
+		// prüfen, ob mindestens ein Feld aus ds gewählt ist
+		// wenn ja: true, sonst false
 		queryParam += "&nur_ds=true";
 	} else {
 		queryParam += "&nur_ds=false";
@@ -2641,16 +2641,16 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 
 function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
 	
-	//Alle Felder abfragen
+	// Alle Felder abfragen
 	var fTz = "false";
-	//window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+	// window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 	if (window.fasseTaxonomienZusammen) {
 		fTz = "true";
 	}
-	//globale Variable vorbereiten
+	// globale Variable vorbereiten
 	window.exportieren_objekte = [];
-	//in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
-	//jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
+	// in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
+	// jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
 	var anz_gruppen_abgefragt = 0;
 	for (var i=0; i<gruppen_array.length; i++) {
 		var dbParam, queryParam;
@@ -2662,8 +2662,8 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 		}
 		if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
-			//prüfen, ob mindestens ein Feld aus ds gewählt ist
-			//wenn ja: true, sonst false
+			// prüfen, ob mindestens ein Feld aus ds gewählt ist
+			// wenn ja: true, sonst false
 			queryParam += "&nur_ds=true";
 		} else {
 			queryParam += "&nur_ds=false";
@@ -2676,13 +2676,13 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
 			success: function (data) {
-				//alle Objekte in data in window.exportieren_objekte anfügen
+				// alle Objekte in data in window.exportieren_objekte anfügen
 				window.exportieren_objekte = _.union(window.exportieren_objekte, data);
-				//speichern, dass eine Gruppe abgefragt wurde
+				// speichern, dass eine Gruppe abgefragt wurde
 				anz_gruppen_abgefragt++;
 				if (anz_gruppen_abgefragt === gruppen_array.length) {
-					//alle Gruppen wurden abgefragt, jetzt kann es weitergehen
-					//Ergebnis rückmelden
+					// alle Gruppen wurden abgefragt, jetzt kann es weitergehen
+					// Ergebnis rückmelden
 					$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
 					baueTabelleFuerExportAuf();
@@ -2696,26 +2696,26 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 }
 
 function baueTabelleFuerExportAuf() {
-	//leeren Array für die Objekte gründen
+	// leeren Array für die Objekte gründen
 	var exportobjekte = [];
 	var len, len2;
 	var feldobjekt;
-	//db aufrufen, wird unten in einer Schlaufe benutzt
+	// db aufrufen, wird unten in einer Schlaufe benutzt
 	$db = $.couch.db("artendb");
-	//Beschäftigung melden
+	// Beschäftigung melden
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 
 	if (window.exportieren_objekte.length > 0) {
 		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
 		$(".exportieren_exportieren_exportieren").show();
-		//zur Tabelle scrollen
+		// zur Tabelle scrollen
 		$('html, body').animate({
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
 		}, 2000);
 	} else if (window.exportieren_objekte && window.exportieren_objekte.length === 0) {
 		$('#meldung_keine_exportdaten').modal();
 	}
-	//Beschäftigungsmeldung verstecken
+	// Beschäftigungsmeldung verstecken
 	$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
 }
 
@@ -2729,7 +2729,7 @@ function fuerExportGewaehlteGruppen() {
 	return gruppen;
 }
 
-//woher wird bloss benötigt, wenn angemeldet werden muss
+// woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_ds_beschreibenVor(woher) {
 	if (!localStorage.Email) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
@@ -2738,14 +2738,14 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 		}, 600);
 	} else {
 		$("#DsName").focus();
-		//Daten holen, wenn nötig
+		// Daten holen, wenn nötig
 		if (window.ds_von_objekten) {
 			bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
 				success: function (data) {
-					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
 					bereiteImportieren_ds_beschreibenVor_02();
 				}
@@ -2754,29 +2754,29 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 	}
 }
 
-//DsNamen in Auswahlliste stellen
-//veränderbare sind normal, übrige grau
+// DsNamen in Auswahlliste stellen
+// veränderbare sind normal, übrige grau
 function bereiteImportieren_ds_beschreibenVor_02() {
-	//in diesem Array werden alle keys gesammelt
-	//diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
+	// in diesem Array werden alle keys gesammelt
+	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.DsKeys = [];
 	for (var i=0; i< window.ds_von_objekten.rows.length; i++) {
 		DsKeys.push(window.ds_von_objekten.rows[i].key);
 	}
-	//nach DsNamen sortieren
+	// nach DsNamen sortieren
 	DsKeys = _.sortBy(DsKeys, function(key) {
 		return key[1];
 	});
-	//mit leerer Zeile beginnen
+	// mit leerer Zeile beginnen
 	var html = "<option value=''></option>";
-	//Namen der Datensammlungen als Optionen anfügen
+	// Namen der Datensammlungen als Optionen anfügen
 	for (var z in DsKeys) {
-		//veränderbar sind nur selbst importierte und zusammenfassende
+		// veränderbar sind nur selbst importierte und zusammenfassende
 		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
-			//veränderbare sind normal = schwarz
+			// veränderbare sind normal = schwarz
 			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
 		} else {
-			//nicht veränderbare sind grau
+			// nicht veränderbare sind grau
 			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + DsKeys[z][1] + "</option>";
 		}
 	}
@@ -2784,7 +2784,7 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	$("#DsUrsprungsDs").html(html);
 }
 
-//woher wird bloss benötigt, wenn angemeldet werden muss
+// woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_bs_beschreibenVor(woher) {
 	if (!localStorage.Email) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
@@ -2793,16 +2793,16 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 		}, 600);
 	} else {
 		$("#BsName").focus();
-		//anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
+		// anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
 		//$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
-		//Daten holen, wenn nötig
+		// Daten holen, wenn nötig
 		if (window.bs_von_objekten) {
 			bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
 				success: function (data) {
-					//Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;
 					bereiteImportieren_bs_beschreibenVor_02();
 				}
@@ -2812,26 +2812,26 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 }
 
 function bereiteImportieren_bs_beschreibenVor_02() {
-	//in diesem Array werden alle keys gesammelt
-	//diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
+	// in diesem Array werden alle keys gesammelt
+	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.BsKeys = [];
 	for (var i=0; i< window.bs_von_objekten.rows.length; i++) {
 		BsKeys.push(window.bs_von_objekten.rows[i].key);
 	}
-	//nach DsNamen sortieren
+	// nach DsNamen sortieren
 	BsKeys = _.sortBy(BsKeys, function(key) {
 		return key[1];
 	});
-	//mit leerer Zeile beginnen
+	// mit leerer Zeile beginnen
 	var html = "<option value=''></option>";
-	//Namen der Datensammlungen als Optionen anfügen
+	// Namen der Datensammlungen als Optionen anfügen
 	for (var z in BsKeys) {
-		//veränderbar sind nur selbst importierte und zusammenfassende
+		// veränderbar sind nur selbst importierte und zusammenfassende
 		if (BsKeys[z][3] === localStorage.Email || BsKeys[z][2]) {
-			//veränderbare sind normal = schwarz
+			// veränderbare sind normal = schwarz
 			html += "<option value='" + BsKeys[z][1] + "' waehlbar=true>" + BsKeys[z][1] + "</option>";
 		} else {
-			//nicht veränderbare sind grau
+			// nicht veränderbare sind grau
 			html += "<option value='" + BsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + BsKeys[z][1] + "</option>";
 		}
 	}
@@ -2860,8 +2860,8 @@ function isFileAPIAvailable() {
 	}
 }
 
-//übernimmt ein Objekt und einen Array
-//prüft, ob das Objekt im Array enthalten ist
+// übernimmt ein Objekt und einen Array
+// prüft, ob das Objekt im Array enthalten ist
 function containsObject(obj, list) {
 	var i;
 	for (i = 0; i < list.length; i++) {
@@ -2873,7 +2873,7 @@ function containsObject(obj, list) {
 }
 
 function sortiereObjektarrayNachName(objektarray) {
-	//Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
+	// Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
 	objektarray.sort(function(a, b) {
 		var aName = a.Name;
 		var bName = b.Name;
@@ -2886,15 +2886,15 @@ function sortiereObjektarrayNachName(objektarray) {
 	return objektarray;
 }
 
-//übernimmt einen Array mit den Beziehungen
-//gibt diesen sortiert zurück
+// übernimmt einen Array mit den Beziehungen
+// gibt diesen sortiert zurück
 function sortiereBeziehungenNachName(beziehungen) {
-//Beziehungen nach Name sortieren
+// Beziehungen nach Name sortieren
 	beziehungen.sort(function(a, b) {
 		var aName, bName;
 		for (var c in a.Beziehungspartner) {
 			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-				//sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+				// sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
 			} else {
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
@@ -2916,8 +2916,8 @@ function sortiereBeziehungenNachName(beziehungen) {
 	return beziehungen;
 }
 
-//sortiert nach den keys des Objekts
-//resultat nicht garantiert!
+// sortiert nach den keys des Objekts
+// resultat nicht garantiert!
 function sortKeysOfObject(o) {
 	var sorted = {},
 	key, a = [];
@@ -2937,7 +2937,7 @@ function sortKeysOfObject(o) {
 }
 
 function exportZuruecksetzen() {
-	//Export ausblenden, falls sie eingeblendet war
+	// Export ausblenden, falls sie eingeblendet war
 	if ($("#exportieren_exportieren_collapse").css("display") !== "none") {
 		$("#exportieren_exportieren_collapse").collapse('hide');
 	}
@@ -2947,7 +2947,7 @@ function exportZuruecksetzen() {
 }
 
 function oeffneGruppe(Gruppe) {
-	//Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
+	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.Gruppe = Gruppe;
 	$(".suchfeld").val("");
 	$("#Gruppe_label").html("Gruppe:");
@@ -2961,67 +2961,67 @@ function oeffneGruppe(Gruppe) {
 	$("#treeMitteilung").html(treeMitteilung);
 	$("#treeMitteilung").show();
 	erstelleBaum();
-	//keine Art mehr aktiv
+	// keine Art mehr aktiv
 	delete localStorage.art_id;
 }
 
-//schreibt Änderungen in Feldern in die Datenbank
-//wird vorläufig nur für LR Taxonomie verwendet
+// schreibt Änderungen in Feldern in die Datenbank
+// wird vorläufig nur für LR Taxonomie verwendet
 function speichern(feldWert, feldName, dsName, dsTyp) {
-	//zuerst die id des Objekts holen
+	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href'));
 	var id = uri.getQueryParamValue('id');
-	//wenn browser history nicht unterstützt, erstellt history.js eine hash
-	//dann muss die id durch die id in der hash ersetzt werden
+	// wenn browser history nicht unterstützt, erstellt history.js eine hash
+	// dann muss die id durch die id in der hash ersetzt werden
 	var hash = uri.anchor();
 	if (hash) {
 		var uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
 	}
-	//sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
+	// sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
 	feldWert = convertToCorrectType(feldWert);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
-			//prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
+			// prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
 			if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
-				//das ist die Wurzel der Taxonomie
-				//somit ändert auch der Taxonomiename
-				//diesen mitgeben
-				//Einheit ändert und Taxonomiename muss auch angepasst werden
+				// das ist die Wurzel der Taxonomie
+				// somit ändert auch der Taxonomiename
+				// diesen mitgeben
+				// Einheit ändert und Taxonomiename muss auch angepasst werden
 				object.Taxonomie.Name = feldWert;
 				object.Taxonomie.Daten.Taxonomie = feldWert;
-				//TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
-				//TODO: allfällige Beziehungen anpassen
+				// TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
+				// TODO: allfällige Beziehungen anpassen
 			}
-			//den übergebenen Wert im übergebenen Feldnamen speichern
+			// den übergebenen Wert im übergebenen Feldnamen speichern
 			object.Taxonomie.Daten[feldName] = feldWert;
 			$db.saveDoc(object, {
 				success: function(data) {
 					object._rev = data.rev;
-					//prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
+					// prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
 					if (feldName === "Label" || feldName === "Einheit") {
 						if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
-							//das ist die Wurzel der Taxonomie
-							//somit ändert auch der Taxonomiename
-							//diesen mitgeben
-							//Einheit ändert und Taxonomiename muss auch angepasst werden
+							// das ist die Wurzel der Taxonomie
+							// somit ändert auch der Taxonomiename
+							// diesen mitgeben
+							// Einheit ändert und Taxonomiename muss auch angepasst werden
 							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
-							//Feld Taxonomie und Beschriftung des Accordions aktualisiern
-							//dazu neu initiieren, weil sonst das Accordion nicht verändert wird
+							// Feld Taxonomie und Beschriftung des Accordions aktualisiern
+							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							initiiere_art(id);
-							//Taxonomie anzeigen
+							// Taxonomie anzeigen
 							$('#' + feldWert.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'')).collapse('show');
 						} else {
 							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
-						//node umbenennen
+						// node umbenennen
 						var neuerNodetext;
 						if (feldName === "Label") {
-							//object hat noch den alten Wert für Label, neuen verwenden
+							// object hat noch den alten Wert für Label, neuen verwenden
 							neuerNodetext = erstelleLrLabelName(feldWert, object.Taxonomie.Daten.Einheit);
 						} else {
-							//object hat noch den alten Wert für Einheit, neuen verwenden
+							// object hat noch den alten Wert für Einheit, neuen verwenden
 							neuerNodetext = erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
 						}
 						$("#tree" + window.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
@@ -3057,46 +3057,46 @@ function convertToCorrectType(feldWert) {
 	}
 }
 
-//Hilfsfunktion, die typeof ersetzt und ergänzt
-//typeof gibt bei input-Feldern immer String zurück!
+// Hilfsfunktion, die typeof ersetzt und ergänzt
+// typeof gibt bei input-Feldern immer String zurück!
 function myTypeOf(Wert) {
 	if (typeof Wert === "boolean") {
 		return "boolean";
 	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert) && parseInt(Wert) == Wert) {
-		//es ist eine Float
+		// es ist eine Float
 		return "float";
-	//verhindern, dass führende Nullen abgeschnitten werden
+	// verhindern, dass führende Nullen abgeschnitten werden
 	} else if (parseInt(Wert) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert)/10)) {
-		//es ist eine Integer
+		// es ist eine Integer
 		return "integer";
 	} else {
-		//als String behandeln
+		// als String behandeln
 		return "string";
 	}
 }
 
 function bearbeiteLrTaxonomie() {
-	//Benutzer muss anmelden
+	// Benutzer muss anmelden
 	if (!localStorage.Email) {
 		$("#art_anmelden").show();
 		$("#art_anmelden_collapse").collapse('show');
 		$("#Email_art").focus();
 		return false;
 	}
-	//Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+	// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 	window.lr_bearb = true;
 	$("#art_anmelden_collapse").collapse('hide');
 
-	//alle Felder schreibbar setzen
+	// alle Felder schreibbar setzen
 	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
-		//einige Felder nicht bearbeiten
+		// einige Felder nicht bearbeiten
 		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
 			$(this).attr('readonly', false);
 			if ($(this).parent().attr('href')) {
 				$(this).parent().attr('href', '#');
-				//Standardverhalten beim Klicken von Links verhindern
+				// Standardverhalten beim Klicken von Links verhindern
 				$(this).parent().attr('onclick', 'return false;');
-				//Mauspointer nicht mehr als Finger
+				// Mauspointer nicht mehr als Finger
 				this.style.cursor = '';
 			}
 		}
@@ -3106,16 +3106,16 @@ function bearbeiteLrTaxonomie() {
 }
 
 function schuetzeLrTaxonomie() {
-	//alle Felder schreibbar setzen
+	// alle Felder schreibbar setzen
 	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
 		if ($(this).parent().attr('href')) {
 			var feldWert = $(this).val();
 			if (typeof feldWert === "string" && feldWert.slice(0, 7) === "http://") {
 				$(this).parent().attr('href', feldWert);
-				//falls onclick besteht, entfernen
+				// falls onclick besteht, entfernen
 				$(this).parent().removeAttr("onclick");
-				//Mauspointer nicht mehr als Finger
+				// Mauspointer nicht mehr als Finger
 				this.style.cursor = 'pointer';
 			}
 		}
@@ -3125,16 +3125,16 @@ function schuetzeLrTaxonomie() {
 	$("#art_anmelden").hide();
 }
 
-//aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)
-//der Array kann das Resultat einer Abfrage aus der DB sein (object[i] = dara.rows[i].doc)
-//oder aus dem Import einer Taxonomie stammen
-//diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
+// aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)
+// der Array kann das Resultat einer Abfrage aus der DB sein (object[i] = dara.rows[i].doc)
+// oder aus dem Import einer Taxonomie stammen
+// diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
 function aktualisiereHierarchieEinerLrTaxonomie(objekt_array) {
 	for (var i=0; i<objekt_array.length; i++) {
 		var object,
 			hierarchie = [],
 			parent = object.Taxonomie.Daten.Parent;
-		//als Start sich selben zur Hierarchie hinzufügen
+		// als Start sich selben zur Hierarchie hinzufügen
 		hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt_array[i]));
 		if (parent) {
 			object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(objekt_array, object._id, hierarchie);
@@ -3143,12 +3143,12 @@ function aktualisiereHierarchieEinerLrTaxonomie(objekt_array) {
 	}
 }
 
-//aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
-//ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
-//diese Funktion wird benötigt, wenn ein neuer LR erstellt wird
-//LR kann mitgegeben werden, muss aber nicht
-//wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedesmal die LR aus der DB neu abgerufen werden sollen
-//manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
+// aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
+// ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
+// diese Funktion wird benötigt, wenn ein neuer LR erstellt wird
+// LR kann mitgegeben werden, muss aber nicht
+// wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedesmal die LR aus der DB neu abgerufen werden sollen
+// manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
 function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefeld) {
 	if (LR) {
 		aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
@@ -3177,14 +3177,14 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	var parent_object = _.find(object_array, function(obj) {
 		return obj._id === object.Taxonomie.Daten.Parent.GUID;
 	});
-	//object.Name setzen
+	// object.Name setzen
 	object.Taxonomie.Name = parent_object.Taxonomie.Name;
-	//object.Taxonomie.Daten.Taxonomie setzen
+	// object.Taxonomie.Daten.Taxonomie setzen
 	object.Taxonomie.Daten.Taxonomie = parent_object.Taxonomie.Daten.Taxonomie;
-	//als Start sich selben zur Hierarchie hinzufügen
+	// als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
 	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
-	//save ohne open: _rev wurde zuvor übernommen
+	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function (doc) {
 			$.when(erstelleBaum()).then(function() {
@@ -3202,13 +3202,13 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	});
 }
 
-//aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
-//und auch den parent
-//prüft, ob dieses Objekt children hat
-//wenn ja, wird deren Hierarchie auch aktualisiert
-//ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
-//wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
-//diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
+// aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
+// und auch den parent
+// prüft, ob dieses Objekt children hat
+// wenn ja, wird deren Hierarchie auch aktualisiert
+// ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
+// wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
+// diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
 	var hierarchie = [];
 	if (lr) {
@@ -3235,41 +3235,41 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 	if (!objekt.Taxonomie.Daten) {
 		objekt.Taxonomie.Daten = {};
 	}
-	//als Start sich selben zur Hierarchie hinzufügen
+	// als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
 	if (parent.GUID !== objekt._id) {
 		objekt.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
 	} else {
-		//aha, das ist die Wurzel des Baums
+		// aha, das ist die Wurzel des Baums
 		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
 	}
 	if (aktualisiereHierarchiefeld) {
 		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
 	}
-	//jetzt den parent aktualisieren
+	// jetzt den parent aktualisieren
 	if (objekt.Taxonomie.Daten.Hierarchie.length > 1) {
-		//es gibt höhere Ebenen
-		//das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
+		// es gibt höhere Ebenen
+		// das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
 		objekt.Taxonomie.Daten.Parent = objekt.Taxonomie.Daten.Hierarchie[objekt.Taxonomie.Daten.Hierarchie.length-2];
 	} else if (objekt.Taxonomie.Daten.Hierarchie.length === 1) {
-		//das ist die oberste Ebene
+		// das ist die oberste Ebene
 		objekt.Taxonomie.Daten.Parent = objekt.Taxonomie.Daten.Hierarchie[0];
 	}
 	if (einheit_ist_taxonomiename) {
-		//Einheit ändert und Taxonomiename muss auch angepasst werden
+		// Einheit ändert und Taxonomiename muss auch angepasst werden
 		objekt.Taxonomie.Name = einheit_ist_taxonomiename;
 		objekt.Taxonomie.Daten.Taxonomie = einheit_ist_taxonomiename;
 	}
 	$db.saveDoc(objekt, {
 		success: function (data) {
 			var doc;
-			//TODO: kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
+			// kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
 			for (var i=0; i<lr.rows.length; i++) {
 				doc = lr.rows[i].doc;
 				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
-					//das ist ein child
-					//auch aktualisieren
-					//lr mitgeben, damit die Abfrage nicht wiederholt werden muss
+					// das ist ein child
+					// auch aktualisieren
+					// lr mitgeben, damit die Abfrage nicht wiederholt werden muss
 					aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
 				}
 			}
@@ -3277,9 +3277,9 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 	});
 }
 
-//Baut den Hierarchiepfad für einen Lebensraum auf
-//das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
-//ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
+// Baut den Hierarchiepfad für einen Lebensraum auf
+// das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
+// ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
 function ergänzeParentZuLrHierarchie(objekt_array, parentGUID, Hierarchie) {
 	for (var i=0; i<objekt_array.length; i++) {
 		var parentObjekt, hierarchieErgänzt;
@@ -3287,12 +3287,12 @@ function ergänzeParentZuLrHierarchie(objekt_array, parentGUID, Hierarchie) {
 			parentObjekt = erstelleHierarchieobjektAusObjekt(objekt_array[i]);
 			Hierarchie.push(parentObjekt);
 			if (objekt_array[i].Taxonomie.Daten.Parent.GUID !== objekt_array[i]._id) {
-				//die Hierarchie ist noch nicht zu Ende - weitermachen
+				// die Hierarchie ist noch nicht zu Ende - weitermachen
 				hierarchieErgänzt = ergänzeParentZuLrHierarchie(objekt_array, objekt_array[i].Taxonomie.Daten.Parent.GUID, Hierarchie);
 				return Hierarchie;
 			} else {
-				//jetzt ist die Hierarchie vollständig
-				//sie ist aber verkehrt - umkehren
+				// jetzt ist die Hierarchie vollständig
+				// sie ist aber verkehrt - umkehren
 				return Hierarchie.reverse();
 			}
 		}
@@ -3318,15 +3318,15 @@ function erstelleLrLabelName(Label, Einheit) {
 	} else if (Einheit) {
 		return Einheit;
 	} else {
-		//aha, ein neues Objekt, noch ohne Label und Einheit
+		// aha, ein neues Objekt, noch ohne Label und Einheit
 		return "unbenannte Einheit";
 	}
 }
 
-//löscht Datensätze in Massen
-//nimmt einen Array von Objekten entgegen
-//baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
-//aktualisiert die Objekte mit einer einzigen Operation
+// löscht Datensätze in Massen
+// nimmt einen Array von Objekten entgegen
+// baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
+// aktualisiert die Objekte mit einer einzigen Operation
 function loescheMassenMitObjektArray(objekt_array) {
 	var objekte_mit_objekte, objekte, objekt;
 	objekte = [];
@@ -3347,9 +3347,9 @@ function loescheMassenMitObjektArray(objekt_array) {
 	});
 }
 
-//erhält einen filterwert
-//dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
-//retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
+// erhält einen filterwert
+// dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
+// retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
 function ermittleVergleichsoperator(filterwert) {
 	var vergleichsoperator;
 	if (filterwert.indexOf(">=") === 0) {
@@ -3381,7 +3381,7 @@ function ermittleVergleichsoperator(filterwert) {
 			filterwert = filterwert.slice(1);
 		}
 	} else if (filterwert.indexOf("=") === 0) {
-		//abfangen, falls jemand "=" eingibt
+		// abfangen, falls jemand "=" eingibt
 		vergleichsoperator = "=";
 		if (filterwert.indexOf(" ") === 1) {
 			filterwert = filterwert.slice(2);
@@ -3437,8 +3437,8 @@ function normalisiereForms() {
 	*/
 }
 
-//kontrolliert den verwendeten Browser
-//Quelle: http://stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
+// kontrolliert den verwendeten Browser
+// Quelle: http://stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 var BrowserDetect = 
 {
 	init: function () 

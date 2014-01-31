@@ -3,7 +3,7 @@
 	var ds_zusammenfassend, bs_zusammenfassend;
 	if (doc.Datensammlungen) {
 		for (var i=0; i<doc.Datensammlungen.length; i++) {
-			//ds_zusammenfassend ergänzen
+			// ds_zusammenfassend ergänzen
 			if (doc.Datensammlungen[i].zusammenfassend) {
 				ds_zusammenfassend = true;
 			} else {
@@ -20,7 +20,7 @@
 	}
 	if (doc.Beziehungssammlungen) {
 		for (var h=0; h<doc.Beziehungssammlungen.length; h++) {
-			//bs_zusammenfassend ergänzen
+			// bs_zusammenfassend ergänzen
 			if (doc.Beziehungssammlungen[h].zusammenfassend) {
 				bs_zusammenfassend = true;
 			} else {

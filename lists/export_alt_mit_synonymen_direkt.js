@@ -16,10 +16,10 @@ function(head, req) {
 	var _ = require("lists/lib/underscore");
 	var _a = require("lists/lib/artendb_listfunctions");
 
-	//gruppen ist vorgegeben
+	// gruppen ist vorgegeben
 	gruppen = ["Fauna", "Flora"];
 
-	//arrays für sammlungen aus synonymen gründen
+	// arrays für sammlungen aus synonymen gründen
 	beziehungssammlungen_aus_synonymen = [];
 	datensammlungen_aus_synonymen = [];
 
@@ -28,11 +28,11 @@ function(head, req) {
 		Objekt = row.doc;
 
 		if (gruppen.indexOf(Objekt.Gruppe) === -1) {
-			//diese Gruppe wollen wir nicht > weiter mit nächstem Objekt
+			// diese Gruppe wollen wir nicht > weiter mit nächstem Objekt
 			continue objekt_loop;
 		}
 
-		//row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
+		// row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 		if (row.key[1] === 0) {
 			if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
 				var ds_aus_syn_namen = [];
@@ -49,7 +49,7 @@ function(head, req) {
 						ds_aus_syn_name = Objekt.Datensammlungen[i].Name;
 						if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
 							datensammlungen_aus_synonymen.push(Objekt.Datensammlungen[i]);
-							//sicherstellen, dass diese ds nicht nochmals gepuscht wird
+							// sicherstellen, dass diese ds nicht nochmals gepuscht wird
 							ds_aus_syn_namen.push(ds_aus_syn_name);
 						}
 					}
@@ -70,25 +70,25 @@ function(head, req) {
 						bs_aus_syn_name = Objekt.Beziehungssammlungen[i].Name;
 						if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
 							beziehungssammlungen_aus_synonymen.push(Objekt.Beziehungssammlungen[i]);
-							//sicherstellen, dass diese bs nicht nochmals gepuscht wird
+							// sicherstellen, dass diese bs nicht nochmals gepuscht wird
 							bs_aus_syn_namen.push(bs_aus_syn_name);
 						}
 					}
 				}
 			}
-			//das war ein Synonym. Hier aufhören
+			// das war ein Synonym. Hier aufhören
 		} else if (row.key[1] === 1) {
-			//wir sind jetzt im Originalobjekt
-			//sicherstellen, dass DS und BS existieren
+			// wir sind jetzt im Originalobjekt
+			// sicherstellen, dass DS und BS existieren
 			if (!Objekt.Datensammlungen) {
 				Objekt.Datensammlungen = [];
 			}
 			if (!Objekt.Beziehungssammlungen) {
 				Objekt.Beziehungssammlungen = [];
 			}
-			//allfällige DS und BS aus Synonymen anhängen
-			//zuerst DS
-			//eine Liste der im Objekt enthaltenen DsNamen erstellen
+			// allfällige DS und BS aus Synonymen anhängen
+			// zuerst DS
+			// eine Liste der im Objekt enthaltenen DsNamen erstellen
 			var dsNamen = [];
 			if (Objekt.Datensammlungen.length > 0) {
 				for (i=0; i<Objekt.Datensammlungen.length; i++) {
@@ -97,20 +97,20 @@ function(head, req) {
 					}
 				}
 			}
-			//nicht enthaltene Datensammlungen ergänzen
+			// nicht enthaltene Datensammlungen ergänzen
 			var ds_aus_syn_name2;
 			if (datensammlungen_aus_synonymen.length > 0) {
 				for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
 					ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
 					if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
 						Objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
-						//den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+						// den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						dsNamen.push(ds_aus_syn_name2);
 					}
 				}
 			}
-			//jetzt BS aus Synonymen anhängen
-			//eine Liste der im Objekt enthaltenen BsNamen erstellen
+			// jetzt BS aus Synonymen anhängen
+			// eine Liste der im Objekt enthaltenen BsNamen erstellen
 			var bsNamen = [];
 			if (Objekt.Beziehungssammlungen.length > 0) {
 				for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
@@ -119,23 +119,23 @@ function(head, req) {
 					}
 				}
 			}
-			//nicht enthaltene Beziehungssammlungen ergänzen
+			// nicht enthaltene Beziehungssammlungen ergänzen
 			var bs_aus_syn_name2;
 			if (beziehungssammlungen_aus_synonymen.length > 0) {
 				for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
 					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
 					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
 						Objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
-						//den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						bsNamen.push(bs_aus_syn_name2);
 					}
 				}
 			}
 
-			//exportobjekt gründen bzw. zurücksetzen
+			// exportobjekt gründen bzw. zurücksetzen
 			exportObjekt = {};
 
-			//Felder hinzufügen
+			// Felder hinzufügen
 			exportObjekt.Gruppe = Objekt.Gruppe;
 			exportObjekt.Ref = Objekt.Taxonomie.Daten["Taxonomie ID"];
 
@@ -203,14 +203,14 @@ function(head, req) {
 
 			exportObjekt["GUID_FNS"] = Objekt._id;
 			
-			//Objekt zu Exportobjekten hinzufügen
+			// Objekt zu Exportobjekten hinzufügen
 			exportObjekte.push(exportObjekt);
-			//arrays für sammlungen aus synonymen zurücksetzen
+			// arrays für sammlungen aus synonymen zurücksetzen
 			beziehungssammlungen_aus_synonymen = [];
 			datensammlungen_aus_synonymen = [];
 		}
 	}
-	//leere Objekte entfernen
+	// leere Objekte entfernen
 	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
 		return _.isEmpty(object);
 	});
