@@ -4,7 +4,7 @@ body {
 
 #menu_btn {
 	top: 18px;
-	left: 18px;
+	left: 16px;
 	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
 	z-index: 5;
 }
@@ -229,6 +229,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	width: 360px;
 	border-radius: 3px;
 	background-color: #FFFFFF !important;
+	font-size: 14px !important;
 
 	text-overflow: ellipsis;
 }
