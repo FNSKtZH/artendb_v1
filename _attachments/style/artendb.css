@@ -221,9 +221,15 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 **weil twitter typeahead sie sonst verändert
 */
 #menu .suchfeld {
-	width: 319px;
+	/*width: 319px;
 	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;*/
+
+	/*Styling ohne Lupe links*/
+	width: 360px;
+	border-radius: 3px;
+	background-color: #FFFFFF !important;
+
 	text-overflow: ellipsis;
 }
 
@@ -439,6 +445,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 input[type=file] {
 	margin-left: 0px !important;
+}
+
+.input-group-xs > .input-group-addon {
+	/*aus unbekanntem Grund stimmt die Höhe nicht*/
+	height: 20px;
 }
 
 #art textarea {
