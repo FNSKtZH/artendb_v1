@@ -333,10 +333,11 @@ a:hover {
 .controls {
 	/*Breite fix setzen für Browser, die calc nicht unterstützen*/
 	width: 1000px;
-	width: -webkit-calc(100% - 230px);
-	width: -o-calc(100% - 230px);
-	width: calc(100% - 230px);
-	font-size: 14px;
+	/*Breite fix setzen für Browser, die calc unterstützen*/
+	width: -webkit-calc(100% - 230px) !important;
+	width: -o-calc(100% - 230px) !important;
+	width: calc(100% - 230px) !important;
+	font-size: 14px !important;
 }
 
 .feld {
