@@ -945,7 +945,7 @@ function setzteLinksZuBilderUndWikipedia(art) {
 // generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label">';
+	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls form-control-static" ArtId="';
 	HtmlContainer += id;
@@ -958,7 +958,7 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 // generiert den html-Inhalt für Serien von Links in Flora
 function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label">';
+	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label><span class="feldtext controls">';
 	for (var a in Objektliste) {
@@ -978,7 +978,7 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 // generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
@@ -1002,7 +1002,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 // generiert den html-Inhalt für einzelne Links in Flora
 function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label">';
+	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
 	HtmlContainer += ':';
 	HtmlContainer += '</label>';
@@ -1017,7 +1017,7 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 // generiert den html-Inhalt für Textinputs
 function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group">\n\t<label class="control-label" for="';
+	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
@@ -1036,7 +1036,7 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 // generiert den html-Inhalt für Textarea
 function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
@@ -1053,7 +1053,7 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 // generiert den html-Inhalt für ja/nein-Felder
 function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
-	HtmlContainer = '<div class="control-group"><label class="control-label" for="';
+	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
 	HtmlContainer += '">';
 	HtmlContainer += FeldName;
@@ -2284,7 +2284,7 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 			html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomien[i].Name + '" Feld="' + x + '">' + x;
 			html_felder_waehlen += '</div></label>';
 			// filtern
-			html_filtern += '<div class="control-group">';
+			html_filtern += '<div class="form-group">';
 			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
 			// Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
