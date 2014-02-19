@@ -947,11 +947,11 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><a href="#" class="LinkZuArtGleicherGruppe feldtext controls form-control-static" ArtId="';
+	HtmlContainer += ':</label><p class="form-control-static controls feldtext"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
 	HtmlContainer += id;
 	HtmlContainer += '">';
 	HtmlContainer += Artname;
-	HtmlContainer += '</a></div>';
+	HtmlContainer += '</a></p></div>';
 	return HtmlContainer;
 }
 
@@ -965,11 +965,11 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 		if (a > 0) {
 			HtmlContainer += ', ';
 		}
-		HtmlContainer += '<a href="#" class="LinkZuArtGleicherGruppe controls form-control-static" ArtId="';
+		HtmlContainer += '<p class="form-control-static controls"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
 		HtmlContainer += Objektliste[a].GUID;
 		HtmlContainer += '">';
 		HtmlContainer += Objektliste[a].Name;
-		HtmlContainer += '</a>';
+		HtmlContainer += '</a></p>';
 	}
 	HtmlContainer += '</span></div>';
 	return HtmlContainer;
@@ -984,7 +984,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += FeldName;
 	HtmlContainer += ':</label>\n\t';
 	// jetzt Link beginnen, damit das Feld klickbar wird
-	HtmlContainer += '<a href="';
+	HtmlContainer += '<p><a href="';
 	HtmlContainer += FeldWert;
 	HtmlContainer += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
 	HtmlContainer += FeldName;
@@ -994,7 +994,7 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += FeldWert;
 	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
 	// Link abschliessen
-	HtmlContainer += '</a>';
+	HtmlContainer += '</a></p>';
 	HtmlContainer += '\n</div>';
 	return HtmlContainer;
 }
@@ -1006,11 +1006,11 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	HtmlContainer += FeldName;
 	HtmlContainer += ':';
 	HtmlContainer += '</label>';
-	HtmlContainer += '<a href="';
+	HtmlContainer += '<p class="form-control-static feldtext controls"><a href="';
 	HtmlContainer += Url;
-	HtmlContainer += '" class="feldtext controls form-control-static" target="_blank">';
+	HtmlContainer += '" target="_blank">';
 	HtmlContainer += FeldWert;
-	HtmlContainer += '</a></div>';
+	HtmlContainer += '</a></p></div>';
 	return HtmlContainer;
 }
 

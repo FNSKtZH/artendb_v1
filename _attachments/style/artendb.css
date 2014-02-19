@@ -440,7 +440,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .form-control-static {
-	margin-left: 15px;
+	margin-left: 207px;
+	padding-top: 4px !important;
 }
 
 input[type=file] {
@@ -459,6 +460,7 @@ input[type=file] {
 
 label {
 	line-height: 15px !important;
+	float: left !important;
 }
 
 option {
