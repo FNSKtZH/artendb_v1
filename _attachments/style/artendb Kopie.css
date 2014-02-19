@@ -29,49 +29,24 @@ body {
 	padding: 0 0 0 0;
 }
 
-/*
-* unter 1000px beide Spalten übereinander setzen
-* 855px ist auf PC's optimal. Mein Handy hat 1280px, reagiert aber auf handheld
-* iPhone ignoriert handheld leider
-*/
-#menu {
-	right: 0;
-	float: left;
-	width: -webkit-calc(100% - 2px);
-	width: -o-calc(100% - 2px);
-	width: calc(100% - 2px);
-	margin-bottom: 10px;
-}
-
-#menu_btn {
-	position: absolute;
-}
-
-#forms {
-	position: relative;
-	width: 100%;
-}
-
-/*über 1000px nebeneinander
-  force-mobile: damit kann die Mobil-Sicht manuell gewählt werden*/
+/*über 1000px nebeneinander*/
 @media screen and (min-width: 1001px) {
-
-	body:not(.force-mobile) #menu {
+	#menu {
 		width: 383px;
 		position:fixed;
 	}
 
-	body:not(.force-mobile) #menu_btn {
+	#menu_btn {
 		position: fixed;
 	}
 
-	body:not(.force-mobile) #forms {
+	#forms {
 		width: -webkit-calc(100% - 391px);
 		width: -o-calc(100% - 391px);
 		width: calc(100% - 391px);
 	}
 
-	body:not(.force-mobile) #forms {
+	#forms {
 		-ms-transform: translate(391px,0px);
 		-webkit-transform: translate(391px,0px);
 		-o-transform: translate(391px,0px);
@@ -80,24 +55,49 @@ body {
 	}
 
 	/*In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div!*/
-	body:not(.force-mobile) #menu [level="1"] {
+	#menu [level="1"] {
 		width: 320px;
 	}
 
-	body:not(.force-mobile) #menu [level="2"] {
+	#menu [level="2"] {
 		width: 302px;
 	}
 
-	body:not(.force-mobile) #menu [level="3"] {
+	#menu [level="3"] {
 		width: 284px;
 	}
 
-	body:not(.force-mobile) #menu [level="4"] {
+	#menu [level="4"] {
 		width: 266px;
 	}
 
-	body:not(.force-mobile) #menu [level="5"] {
+	#menu [level="5"] {
 		width: 248px;
+	}
+}
+
+/*
+* unter 1000px beide Spalten übereinander setzen
+* 855px ist auf PC's optimal. Mein Handy hat 1280px, reagiert aber auf handheld
+* iPhone ignoriert handheld leider
+*/
+@media handheld, only screen and (max-width: 1000px) {
+	#menu {
+		right: 0;
+		float: left;
+		width: -webkit-calc(100% - 2px);
+		width: -o-calc(100% - 2px);
+		width: calc(100% - 2px);
+		margin-bottom: 10px;
+	}
+
+	#menu_btn {
+		position: absolute;
+	}
+
+	#forms {
+		position: relative;
+		width: 100%;
 	}
 }
 
@@ -113,21 +113,6 @@ body {
 	white-space: normal;
 	height: auto;
 	padding: 4px 1px;
-}
-
-/*Symbol auffälliger machen
-  und zentrieren*/
-#menu .glyphicon {
-	font-weight: 800;
-	top: 2px;
-}
-
-#menu button {
-	margin-right: 6px;
-}
-
-#menu button:focus {
-  outline: none;
 }
 
 .baum li > ins {
@@ -241,7 +226,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	border-bottom-right-radius: 3px;*/
 
 	/*Styling ohne Lupe links im Suchfeld*/
-	width: 359px;
+	width: 360px;
 	border-radius: 3px;
 	background-color: #FFFFFF !important;
 	font-size: 14px !important;

@@ -1072,8 +1072,7 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 function setzeTreehoehe() {
 	var windowHeight = $(window).height();
-	if ($(window).width() > 1000) {
-		//$("#menu").css("max-height", windowHeight - 33);
+	if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
 		$(".baum").css("max-height", windowHeight - 161);
 	} else {
 		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
@@ -3392,49 +3391,6 @@ function ermittleVergleichsoperator(filterwert) {
 		vergleichsoperator = "kein";
 	}
 	return [vergleichsoperator, filterwert];
-}
-
-function maximiereForms() {
-	/*
-	@media screen and (min-width: 1001px)
-	#forms {
-		transform: translate(0px,0px);
-		-ms-transform: translate(0px,0px);
-		-webkit-transform: translate(0px,0px);
-		-o-transform: translate(0px,0px);
-		-moz-transform: translate(0px,0px);
-	}
-	#forms {
-		width: 100%;
-	}
-	#menu. #menu_btn {
-		display: none;
-	}
-	*/
-}
-
-function normalisiereForms() {
-	/*
-	@media screen and (min-width: 1001px)
-	#forms {
-		transform: translate(391px,0px);
-		-ms-transform: translate(391px,0px);
-		-webkit-transform: translate(391px,0px);
-		-o-transform: translate(391px,0px);
-		-moz-transform: translate(391px,0px);
-	}
-
-	@media screen and (min-width: 1001px)
-	#forms {
-		width: -webkit-calc(100% - 391px);
-		width: -o-calc(100% - 391px);
-		width: calc(100% - 391px);
-	}
-
-	#menu, #menu_btn {
-		display: block;
-	}
-	*/
 }
 
 // kontrolliert den verwendeten Browser

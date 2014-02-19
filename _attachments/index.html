@@ -58,6 +58,7 @@
 		</div>
 		<fieldset id="menu">
 			<div>
+				<button id="btn_resize" type="button" class="btn btn-sm btn-default pull-right"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
 				<div id="menu-div">
 					<div id="Gruppe_label">Gruppe wählen:</div>
 				</div>
@@ -1062,6 +1063,22 @@
 				// Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function () {
 					oeffneGruppe($(this).attr("Gruppe"));
+				});
+
+				// zwischen Mobil- und Desktopsicht wechseln
+				$("#menu").on("click", "#btn_resize", function () {
+					var windowHeight = $(window).height();
+					$("body").toggleClass("force-mobile");
+					if ($("body").hasClass("force-mobile")) {
+						// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
+						$(".baum").css("max-height", windowHeight - 252);
+						// button rechts ausrichten
+						$("#btn_resize").css("margin-right", "0px");
+					} else {
+						$(".baum").css("max-height", windowHeight - 161);
+						// button an anderen Schaltflächen ausrichten
+						$("#btn_resize").css("margin-right", "6px");
+					}
 				});
 
 				// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
