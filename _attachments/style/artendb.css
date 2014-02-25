@@ -278,11 +278,13 @@ a {
 	margin-left: 4px !important;
 }
 
-/*
-*TODO: Sind diese noch nötig?
-*/
 #export input[type="radio"], #export input[type="checkbox"] {
-	margin-top: 3px !important;
+	margin-top: 4px !important;
+	margin-left: -20px !important;
+}
+
+#exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
+	margin-top: 1px !important;
 	margin-left: -20px !important;
 }
 
