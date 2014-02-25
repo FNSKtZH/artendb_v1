@@ -295,7 +295,7 @@ label+input[type="radio"], label+input[type="checkbox"] {
 
 h1, h2, h3, h4, h5, h6 {
 	/*wird von bootstrap auf 500 gesetzt, was nicht fett ist*/
-	font-weight: bold;
+	font-weight: bold !important;
 }
 
 .felderspalte .form-group {
@@ -356,8 +356,25 @@ a:hover {
 	font-size: 14px !important;
 }
 
-.feld {
+/*buttons sind ganz weiss
+  so sehen sie aus, wie Felder und fallen gar nicht auf*/
+/*.btn-default {
+	background-color: #EBEBEB !important;
+}
+.btn-default:hover {
+	background-color: #E0E0E0 !important;
+}*/
+
+.feld_in_formgroup {
 	margin-left: 210px;
+}
+
+.feld {
+	margin-left: 192px;
+}
+
+.feldtext {
+	margin-top: 4px;
 }
 
 .Datensammlung {
@@ -407,7 +424,7 @@ a:hover {
 }
 
 .form-control {
-	display: inline-block;
+	display: inline-block !important;
 }
 
 .panel-body hr {
@@ -539,6 +556,12 @@ option {
 
 .alert {
 	margin-bottom: 0;
+}
+
+#importieren_ds_ids_identifizieren .alert {
+	margin-left: 192px;
+	margin-right: 7px;
+	margin-top: 6px;
 }
 
 .signup {

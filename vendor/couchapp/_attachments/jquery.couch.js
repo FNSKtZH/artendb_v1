@@ -635,7 +635,9 @@
     ajaxOptions = $.extend(defaultAjaxOpts, ajaxOptions);
     errorMessage = errorMessage || "Unknown error";
     $.ajax($.extend($.extend({
-      type: "GET", dataType: "json", cache : !$.browser.msie,
+      // aus msie false gemacht, damit mit modernen jquery kompatibel
+      type: "GET", dataType: "json", cache : false,
+      //type: "GET", dataType: "json", cache : !$.browser.msie,
       beforeSend: function(xhr){
         if(ajaxOptions && ajaxOptions.headers){
           for (var header in ajaxOptions.headers){
