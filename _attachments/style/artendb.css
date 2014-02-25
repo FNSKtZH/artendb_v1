@@ -477,7 +477,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .form-control-static {
 	margin-left: 207px;
-	padding-top: 4px !important;
+	padding-top: 0px !important;
 }
 
 input[type=file] {
@@ -491,7 +491,7 @@ input[type=file] {
 
 #art textarea {
 	/*textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso*/
-	margin-left: 4px;
+	/*margin-left: 4px;*/
 }
 
 label {
