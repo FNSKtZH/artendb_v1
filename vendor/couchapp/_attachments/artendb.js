@@ -1509,6 +1509,10 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		window.ZuordbareDatensätze = [];
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...");
+		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").alert().css("display", "none");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").alert().css("display", "none");
+
 		// Dokumente aus der Gruppe der Datensätze holen
 		// durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
 		// kontrollieren, ob eine id mehr als einmal vorkommt
@@ -1581,6 +1585,9 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 	if (MehrfachVorkommendeIds.length && dbs !== "Bs") {
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").alert().css("display", "block");
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
+		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").alert().css("display", "none");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").alert().css("display", "none");
 	} else if (window.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
 		// rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
 		// es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
@@ -1590,6 +1597,9 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		} else {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
 		}
+		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").alert().css("display", "none");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").alert().css("display", "none");
 		$("#"+dbs+"Importieren").css("display", "block");
 		$("#"+dbs+"Entfernen").css("display", "block");
 	} else {
@@ -1600,6 +1610,9 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		} else {
 			$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text").html("Die Importtabelle enthält " + window[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window[dbs+"FelderId"] + "\"<br>" + window.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
 		}
+		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text").alert().css("display", "none");
+		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").alert().css("display", "none");
 		$("#"+dbs+"Importieren").css("display", "block");
 		$("#"+dbs+"Entfernen").css("display", "block");
 	}
