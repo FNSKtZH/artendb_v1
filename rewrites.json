@@ -1,12 +1,42 @@
 [
 	{
-		"method": "*",
-		"from": "/artendb/_design/artendb",
-		"to": ""
+		"from": "",
+		"to": "index.html"
 	},
 	{
-		"method": "*",
-		"from": "",
-		"to": "/artendb/_design/artendb/index.html"
+		"from": "index.html",
+		"to": "index.html"
+	},
+	{
+		"from": "favicon.ico",
+		"to": "favicon.ico"
+	},
+	{
+		"from": "style/*",
+		"to": "style/*"
+	},
+	{
+		"from": "images/*",
+		"to": "images/*"
+	},
+	{
+		"from": "vendor/*",
+		"to": "vendor/*"
+	},
+	{
+		"from": "fonts/*",
+		"to": "fonts/*"
+	},
+	{
+		"from": "_view/*",
+		"to": "_view/*"
+	},
+	{
+		"from": "_list/*",
+		"to": "_list/*"
+	},
+	{
+		"from" : ":db/*",
+		"to" : "../../*"
 	}
 ]
