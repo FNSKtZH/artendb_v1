@@ -683,7 +683,7 @@ Einzelne Datensätze können direkt über die URL mit ihrer GUID angesprochen we
 
 CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. [Hier als Beispiel die ganze Floraliste](http://arteigenschaften.ch/artendb/_design/artendb/_view/filtere_art?startkey=[%22Flora%22]&endkey=[%22Flora%22,{}]).
 
-Wie Views werden auch "lists" über die URL aufgerufen. "Lists" sind "views", deren Daten durch Code auf dem Server umgewandelt wird. Im Gegensatz zu "views" kann so praktisch jedes denkbare Datenformat erstellt werden. Listen müssen vom Server verarbeitet werden und dauern daher etwas lange.
+Wie Views werden auch "lists" über die URL aufgerufen. "Lists" sind "views", deren Daten durch Code auf dem Server umgewandelt wird. Im Gegensatz zu "views" kann so praktisch jedes denkbare Datenformat erstellt werden. Dafür muss man auf sie warten.
 
 [Hier als Beispiel ein Export für das Artenlistentool](http://arteigenschaften.ch/_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true) als Download - der Direktzugriff unterscheidet sich technisch nur geringfügig.
 
