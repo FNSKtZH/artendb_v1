@@ -679,11 +679,13 @@ Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie 
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
-CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. 
+CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. [Hier als Beispiel die ganze Floraliste](http://arteigenschaften.ch/artendb/_design/artendb/_view/filtere_art?startkey=[%22Flora%22]&endkey=[%22Flora%22,{}]) 
 
-Wie Views werden auch "lists" über die URL aufgerufen. "Lists" sind "views", deren Daten durch Code auf dem Server manipuliert wird. Im Gegensatz zu "views" kann so praktisch jedes denkbare Datenformat erstellt werden. 
+Wie Views werden auch "lists" über die URL aufgerufen. "Lists" sind "views", deren Daten durch Code auf dem Server manipuliert wird. Im Gegensatz zu "views" kann so praktisch jedes denkbare Datenformat erstellt werden. [Hier als Beispiel ein Export für das Artenlistentool](http://arteigenschaften.ch/_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true) (als Download - der Direktzugriff unterscheidet sich nur durch einen anderen header in der Anfrage).
 
 Gibt es für die gewünschten Daten einen "view" oder eine "list" und kennt man deren URL, kann man die Daten entsprechend einfach abholen. Damit "views" und "lists" als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben und fixiert werden.
+
+[Hier als weiteres Beispiel die Daten der Erdkröte](http://arteigenschaften.ch/artendb/979233B6-9013-4820-9F7D-8ED9D826C2D3)
 
 Bisher realisierte Schnittstellen:
 
