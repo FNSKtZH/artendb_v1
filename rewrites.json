@@ -36,7 +36,15 @@
 		"to": "_list/*"
 	},
 	{
-		"from" : ":db/*",
+		"from": "_users/*",
+		"to": "_users/*"
+	},
+	{
+		"from": "_session/*",
+		"to": "_session/*"
+	},
+	{
+		"from" : "artendb/*",
 		"to" : "../../*"
 	}
 ]
