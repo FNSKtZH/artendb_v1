@@ -1,4 +1,4 @@
-Copyright (c) 2012, Alexander Gabriel
+Copyright (c) 2014, Amt für Landschaft und Natur Kanton Zürich
 
 Alle Rechte vorbehalten.
 
