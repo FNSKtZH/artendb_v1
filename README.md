@@ -712,7 +712,7 @@ Aktueller Stand:
 - ArtenDb ist entworfen und in der Testphase: [http://arteigenschaften.ch](http://arteigenschaften.ch)
  - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
  - Die Anwendung ist aber noch kaum getestet
-- ArtenDb wird noch im Jahr 2013 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
+- ArtenDb wird noch im Jahr 2014 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
 
 ###Was kann man mit der aktuellen Version machen?
 
@@ -760,7 +760,6 @@ Lebensräume in der Anwendung bearbeiten:
 
 **To do**
 
-- Schnittstellen bedürfnisgerecht beschreiben und erweitern (auf Anfrage nach Bedarf)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
