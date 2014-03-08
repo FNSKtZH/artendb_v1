@@ -227,10 +227,10 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 ###Daten exportieren
 
 1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern und dazu Vergleichsoperatoren verwenden.<br>Standardmässig werden auch Informationen von synonymen Objekten exportiert. Diese Option kann ausgeschaltet werden
-2. Sie wählt die gewünschten Eigenschaften<br>Standardmässig werden nur Datensätze exportiert, die Informationen zu den gewählten Eigenschaften enthalten. Diese Option kann ausgeschaltet werden
+2. Sie wählt die gewünschten Eigenschaften.<br>Standardmässig werden nur Datensätze exportiert, die Informationen zu den gewählten Eigenschaften enthalten. Diese Option kann ausgeschaltet werden
 4. Die Datei wird generiert und im .csv-Format heruntergeladen
 
-Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). In jedem Fall können beliebige Informationen aus Taxonomie und Datensammlungen kombiniert werden.
+Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). Es können beliebige Informationen aus Taxonomie und Datensammlungen hinzugefügt werden.
 
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert.
@@ -274,7 +274,7 @@ Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 }
 ```
 - _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
-- Gruppe ist Fauna, Flora, Moose, Macromycetes oder Lebensräume
+- Gruppe ist "Fauna", "Flora", "Moose", "Macromycetes" oder "Lebensräume"
 
 ####Taxonomie
 Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
@@ -378,7 +378,7 @@ Beziehungssammlungen werden ähnlich aufgebaut wie Datensammlungen. Hier ein Aus
 Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 
 - Anstatt "Daten" enthält sie "Beziehungen"
-- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung aussagekräftiger ist
+- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung verständlicher ist
 - Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
 - Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen werden, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung auf dem Bildschirm
 
@@ -640,7 +640,7 @@ Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. M
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
-Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt (die Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben).
+Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt (Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben; Beziehungen werden in allen beteiligten Objekten beschrieben).
 
 ###Hierarchien
 Die Hierarchien werden momentan folgendermassen aufgebaut:
