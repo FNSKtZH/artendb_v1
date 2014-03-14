@@ -2381,8 +2381,8 @@ function erstelleListeFuerFeldwahl() {
 	}, 2000);
 	// gewählte Gruppen ermitteln
 	// globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
-	var export_gruppen = [];
-	var gruppen = [];
+	var export_gruppen = [],
+		gruppen = [];
 	// globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
 	window.export_felder_arrays = [];
 	$db = $.couch.db("artendb");
