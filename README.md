@@ -14,7 +14,7 @@ Ihre Stärke ist der einfache Import und Export von Daten. Die Absicht dahinter:
 <a name="Ziele"></a>
 #Ziele
 ###Ausgangspunkt
-...sind Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
+...sind Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](//aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
 
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
 - Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können
@@ -57,8 +57,8 @@ ArtenDb ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwe
 - möglichst selbsterklärend,
 - gut verfügbar:
  - von jedem Gerät im Internet
- - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
- - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/FNSKtZH/EvabMobile), beliebige Apps
+ - als Export im <a href="//de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
+ - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](//aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](//aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/FNSKtZH/EvabMobile), beliebige Apps
 - ...und kann ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
@@ -79,7 +79,7 @@ Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nüt
 Der Grundgedanke hinter ArtenDb ist daher: Komplexität minimieren. Es gibt ein paar (nachfolgend erklärte) Grundbegriffe. Daraus leiten sich lediglich drei Grundstrukturen ab: Objekte, ihre Daten- und Beziehungssammlungen.
 
 ###Taxonomien
-[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
+[Taxonomien](//de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="//de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in ArtenDb: Arten und Lebensräume) mit einer [Hierarchie](//de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](//de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebensraumschlüssel. 
 
@@ -90,7 +90,7 @@ Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxo
 Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie nur "offizielle" Arten und z.B. keine Synonyme. Stattdessen würden Beziehungen zwischen offiziellen Arten und Arten anderer Taxonomien beschrieben. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in ArtenDb nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
 ###Objekte
-<a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
+<a href="//de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In ArtenDb sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
 ###Gruppen
 Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert. Es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
@@ -165,7 +165,7 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 #Benutzeroberfläche
 ###Erscheinungsbild
 
-<img src="http://www.barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
+<img src="//barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
 
 **Hauptelemente**
 
@@ -182,12 +182,12 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 **Formular**
 
 Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts.<br>Hier ein Beispiel einer Datensammlung:
-<img src="http://www.barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
+<img src="//barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
 
 ...und eine Beziehungssammlung:
-<img src="http://www.barbalex.ch/artendb/beziehungssammlung_.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
+<img src="//barbalex.ch/artendb/beziehungssammlung_.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
 
-Aus der [JSON-Struktur](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea" (ein Feld, das mit dem Text wächst), Zahlen in einem Zahlenfeld.
+Aus der [JSON-Struktur](//de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea" (ein Feld, das mit dem Text wächst), Zahlen in einem Zahlenfeld.
 
 **Menu**
 
@@ -243,21 +243,21 @@ Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz
 #Technische Umsetzung
 ###Verwendete Technologien
 Eingesetzt werden:
-- Die Datenbank [CouchDb](http://couchdb.apache.org/)...
-- ...in Form einer [CouchApp](http://couchapp.org/page/index). So kann die Anwendung:
+- Die Datenbank [CouchDb](//couchdb.apache.org/)...
+- ...in Form einer [CouchApp](//couchapp.org/page/index). So kann die Anwendung:
  - lokal installiert...
  - und mit anderen ArtenDb's synchronisiert werden
  - und sie ist ihr eigener Webserver: die lokale, synchronisierte Version kann genau so wie diejenige im Web verwendet werden, bloss ist sie leistungsfähiger und netzunabhängig
  - dies ermöglicht es auch, Daten zu integrieren, die man nicht oder nur selektiv teilen möchte
-- [JavaScript](http://de.wikipedia.org/wiki/JavaScript) und [jQuery](http://jquery.com/) für die Programmierung
-- [HTML5](http://de.wikipedia.org/wiki/HTML5), [CSS](http://de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](http://twitter.github.com/bootstrap/) und [jsTree](http://www.jstree.com/) für die Benutzeroberfläche
+- [JavaScript](//de.wikipedia.org/wiki/JavaScript) und [jQuery](//jquery.com/) für die Programmierung
+- [HTML5](//de.wikipedia.org/wiki/HTML5), [CSS](//de.wikipedia.org/wiki/Cascading_Style_Sheets), [Bootstrap](//twitter.github.com/bootstrap/) und [jsTree](//jstree.com/) für die Benutzeroberfläche
 
 ArtenDb wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Importe und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Für die Exporte wurde zusätzlich eine zuverlässige aber langsame Variante implementiert. Auf dem Internet Explorer funktioniert ArtenDb erst ab Version 9 leidlich.
 
 ###Dokumenten-Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
-Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Datensammlungen geschieht.
+Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="//de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Datensammlungen geschieht.
 
 Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
@@ -266,14 +266,14 @@ Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email a
 ###Datenstruktur
 ####Objekte
 
-Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
+Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](//de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](//de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
 {
 	"_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
 	"Gruppe": "Fauna"
 }
 ```
-- _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
+- _id ist die id, eine [GUID](//de.wikipedia.org/wiki/Globally_Unique_Identifier)
 - Gruppe ist "Fauna", "Flora", "Moose", "Macromycetes" oder "Lebensräume"
 
 ####Taxonomie
@@ -682,21 +682,21 @@ Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie 
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
-Einzelne Datensätze können direkt über die URL mit ihrer GUID angesprochen werden, [hier zum Beispiel die Daten der Erdkröte](http://arteigenschaften.ch/artendb/979233B6-9013-4820-9F7D-8ED9D826C2D3).
+Einzelne Datensätze können direkt über die URL mit ihrer GUID angesprochen werden, [hier zum Beispiel die Daten der Erdkröte](//arteigenschaften.ch/artendb/979233B6-9013-4820-9F7D-8ED9D826C2D3).
 
-CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. [Hier als Beispiel die ganze Floraliste](http://arteigenschaften.ch/artendb/_design/artendb/_view/filtere_art?startkey=[%22Flora%22]&endkey=[%22Flora%22,{}]).
+CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. [Hier als Beispiel die ganze Floraliste](//arteigenschaften.ch/artendb/_design/artendb/_view/filtere_art?startkey=[%22Flora%22]&endkey=[%22Flora%22,{}]).
 
 Wie views werden auch "lists" über die URL aufgerufen. Lists sind views, deren Daten durch Code auf dem Server umgewandelt wird. Im Gegensatz zu views kann so praktisch jedes denkbare Datenformat erstellt werden. Dafür muss man auf sie warten, da die Umwandlung Zeit braucht.
 
-[Hier als Beispiel ein Export für das Artenlistentool](http://arteigenschaften.ch/_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true) als Download (der sich technisch nur geringfügig vom Direktzugriff unterscheidet).
+[Hier als Beispiel ein Export für das Artenlistentool](//arteigenschaften.ch/_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true) als Download (der sich technisch nur geringfügig vom Direktzugriff unterscheidet).
 
 Gibt es für die gewünschten Daten einen GUID, einen view oder eine list und kennt man deren URL, kann man die Daten entsprechend einfach abholen. Damit views und lists als öffentliche Schnittstellen benutzt werden können, müssen sie daher bloss beschrieben und fixiert werden.
 
 Bisher realisierte Schnittstellen:
 
-- Artenlisten und Artgruppen für [_evab mobile_](http://artbeobachtungen.ch/index.html)
-- Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
-- Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
+- Artenlisten und Artgruppen für [_evab mobile_](//artbeobachtungen.ch/index.html)
+- Arteigenschaften für das [Artenlistentool](//aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
+- Taxonomien für [EvAB](//aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
 - Arteigenschaften für [ApFloraDb](https://github.com/FNSKtZH/apflora)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
@@ -709,16 +709,16 @@ Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailt
 Aktueller Stand:
 
 - Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/FNSKtZH/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
-- ArtenDb ist entworfen und in der Testphase: [http://arteigenschaften.ch](http://arteigenschaften.ch)
+- ArtenDb ist entworfen und in der Testphase: [http://arteigenschaften.ch](//arteigenschaften.ch)
  - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
  - Die Anwendung ist aber noch kaum getestet
-- ArtenDb wird noch im Jahr 2014 in der [Fachstelle Naturschutz des Kantons Zürich](http://www.naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
+- ArtenDb wird noch im Jahr 2014 in der [Fachstelle Naturschutz des Kantons Zürich](//naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
 
 ###Was kann man mit der aktuellen Version machen?
 
 Achtung:
 
-- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://arteigenschaften.ch) noch fehlen
+- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](//arteigenschaften.ch) noch fehlen
 - Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden)
 
 Arten suchen:

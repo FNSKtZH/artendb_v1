@@ -858,7 +858,7 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
 function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp, dsName) {
 	var htmlDatensammlung = "";
-	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "http://") {
+	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "//") {
 		// www-Links als Link darstellen
 		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
@@ -895,9 +895,9 @@ function setzteLinksZuBilderUndWikipedia(art) {
 				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Deutsch']) {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
+				wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
 			} else {
-				wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
+				wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
 			}
 			break;
 		case "Fauna":
@@ -911,22 +911,22 @@ function setzteLinksZuBilderUndWikipedia(art) {
 			if (art.Taxonomie.Daten['Name Italienisch']) {
 				googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
 			break;
 		case 'Moose':
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
 			break;
 		case 'Macromycetes':
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
 			if (art.Taxonomie.Daten['Name Deutsch']) {
 				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
 			}
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
+			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
 			break;
 		case 'Lebensräume':
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
-			wikipediaLink = 'http://de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
+			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
 			break;
 		}
 		// mit replace Hochkommata ' ersetzen, sonst klappt url nicht
@@ -1713,7 +1713,7 @@ function importiereDatensammlung() {
 					Zähler += 1;
 					// Rückmeldungslink aufbauen. Hat die Form:
 					//<a href="url">Link text</a>
-					//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
+					////127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
 					RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + window.dsDatensätze[x][window.DsFelderId] + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
 				}
 			}
@@ -1846,7 +1846,7 @@ function importiereBeziehungssammlung() {
 							Zähler++;
 							// Rückmeldungslink aufbauen. Hat die Form:
 							//<a href="url">Link text</a>
-							//http://127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
+							////127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
 							RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + key + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
 						}
 					}
@@ -2857,8 +2857,8 @@ function isFileAPIAvailable() {
 		// Great success! All the File APIs are supported.
 		return true;
 	} else {
-		// source: File API availability - http://caniuse.com/#feat=fileapi
-		// source: <output> availability - http://html5doctor.com/the-output-element/
+		// source: File API availability - //caniuse.com/#feat=fileapi
+		// source: <output> availability - //html5doctor.com/the-output-element/
 		var html = "Für den Datenimport benötigen Sie mindestens einen der folgenden Browser:<br>";
 		html += "(Stand Februar 2013)<br>";
 		html += "- Google Chrome: 23.0 oder neuer<br>";
@@ -3123,7 +3123,7 @@ function schuetzeLrTaxonomie() {
 		$(this).attr('readonly', true);
 		if ($(this).parent().attr('href')) {
 			var feldWert = $(this).val();
-			if (typeof feldWert === "string" && feldWert.slice(0, 7) === "http://") {
+			if (typeof feldWert === "string" && feldWert.slice(0, 7) === "//") {
 				$(this).parent().attr('href', feldWert);
 				// falls onclick besteht, entfernen
 				$(this).parent().removeAttr("onclick");
@@ -3407,7 +3407,7 @@ function ermittleVergleichsoperator(filterwert) {
 }
 
 // kontrolliert den verwendeten Browser
-// Quelle: http://stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
+// Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 var BrowserDetect = 
 {
 	init: function () 
@@ -3450,13 +3450,13 @@ var BrowserDetect =
 
 /*
 * Bootstrap file uploader
-* Quelle: http://jasny.github.io/bootstrap/javascript.html#fileupload
+* Quelle: //jasny.github.io/bootstrap/javascript.html#fileupload
 */
 /**
 * Bootstrap.js by @mdo and @fat, extended by @ArnoldDaniels.
 * plugins: bootstrap-fileupload.js
 * Copyright 2012 Twitter, Inc.
-* http://www.apache.org/licenses/LICENSE-2.0.txt
+* //apache.org/licenses/LICENSE-2.0.txt
 */
 !function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault())},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault()}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery)
 
