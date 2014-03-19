@@ -27,6 +27,10 @@ body {
 	/*bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren*/
 	border: none;
 	padding: 0 0 0 0;
+	position: relative;
+	width: 100%;
+	/*zu Beginn nicht anzeigen*/
+	display: none;
 }
 
 /*
@@ -45,11 +49,6 @@ body {
 
 #menu_btn {
 	position: absolute;
-}
-
-#forms {
-	position: relative;
-	width: 100%;
 }
 
 /*über 1000px nebeneinander

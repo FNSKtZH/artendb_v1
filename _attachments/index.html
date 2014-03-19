@@ -749,7 +749,6 @@
 
 		<script>
 			$(document).ready(function () {
-				$("#forms").hide();
 	
 				BrowserDetect.init();
 				// zunächst mal den gröbsten Bock abfangen
@@ -776,7 +775,7 @@
 
 					// prüfen, ob history unterstützt wird. Wenn nein, shim laden
 					// achtung: der shim ermöglicht zwar, Links zu Arten zu laden (mit nachfolgendem window.onload)
-					// aber er hänt einen # an die url und erzeugt daher müll, was komisch aussieht
+					// aber er hängt einen # an die url und erzeugt daher müll, was komisch aussieht
 					// zurück-Taste funktioniert dann auch nicht
 					if (!Modernizr.history) {
 						$('#meldung_individuell_text').html("Ihr Browser unterstützt keine history.<br>Daher können Sie nicht mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>Benützen Sie stattdessen den Strukturbaum und das Menu.<br><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='//windows.microsoft.com/de-DE/internet-explorer/downloads/ie-10/worldwide-languages'>Internet Explorer</a>.");
