@@ -769,6 +769,7 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	var htmlDatensammlung,
 		hierarchie_string,
+		array_string,
 		art_i_name;
 	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 	// Accordion-Gruppe und -heading anfügen
@@ -830,6 +831,10 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 			// Namen kommagetrennt anzeigen
 			hierarchie_string = erstelleHierarchieFuerFeldAusHierarchieobjekteArray(art_i.Daten[y]);
 			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
+		} else if (_.isArray(art_i.Daten[y])) {
+			// dieses Feld enthält einen Array von Werten
+			array_string = erstelleArraystringFuerFeldMitArrayVonDaten(art_i.Daten[y]);
+			htmlDatensammlung += generiereHtmlFuerTextarea(y, array_string, dsTyp, art_i.Name.replace(/"/g, "'"));
 		} else {
 			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
 		}
@@ -852,6 +857,26 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 		hierarchie_string += hierarchie_array[g].Name;
 	}
 	return hierarchie_string;
+}
+
+function erstelleArraystringFuerFeldMitArrayVonDaten(array) {
+	if (!_.isArray(array)) {
+		return "";
+	}
+	// Werte kommagetrennt anzeigen
+	var array_string = "",
+		array_object;
+	for (var g=0; g<array.length; g++) {
+		if (g > 0) {
+			array_string += ", ";
+		}
+		// Falls die Werte Kommas enthalten, mit Strichpunkt ersetzen
+		array_object = JSON.stringify(array[g]);
+		// allenfalls vorhandene Kommas NICHT ersetzen
+		// Beim Import muss Text in Hochzeichen stehen
+		array_string += array_object;
+	}
+	return array_string;
 }
 
 // übernimmt Feldname und Feldwert
