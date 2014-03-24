@@ -1,16 +1,21 @@
 exports.erstelleExportString = function(exportobjekte) {
-	var stringTitelzeile = "";
-	var stringZeilen = "";
-	// titelzeile erstellen
-	// durch Spalten loopen
-	for (var a in exportobjekte[1]) {
-		if (stringTitelzeile !== "") {
-			stringTitelzeile += ',';
-		}
-		stringTitelzeile += '"' + a + '"';
-	}
-	// Datenzeilen erstellen
+	var stringTitelzeile = "",
+		stringZeilen = "",
+		stringZeile;
 	for (var i in exportobjekte) {
+		// aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
+		// daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
+		if (stringTitelzeile === "" || stringTitelzeile === ",") {
+			stringTitelzeile = "";
+			// durch Spalten loopen
+			for (var a in exportobjekte[i]) {
+				if (stringTitelzeile !== "") {
+					stringTitelzeile += ',';
+				}
+				stringTitelzeile += '"' + a + '"';
+			}
+		}
+
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}

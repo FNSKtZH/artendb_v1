@@ -1800,7 +1800,7 @@
 						var month = d.getMonth()+1;
 						var day = d.getDate();
 						var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-						console.log("Blob erstellt, jetzt folgt saveAs");
+						//console.log("Blob erstellt, jetzt folgt saveAs");
 						saveAs(blob, output + "_export.csv");
 					} else {
 						$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");

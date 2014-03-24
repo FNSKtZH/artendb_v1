@@ -2353,22 +2353,27 @@ function erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen)
 }
 
 function erstelleExportString(exportobjekte) {
-	var stringTitelzeile = "";
-	var stringZeilen = "";
-	// titelzeile erstellen
-	// durch Spalten loopen
-	for (var a in exportobjekte[1]) {
-		if (stringTitelzeile !== "") {
-			stringTitelzeile += ',';
-		}
-		stringTitelzeile += '"' + a + '"';
-	}
-	// Datenzeilen erstellen
+	var stringTitelzeile = "",
+		stringZeilen = "",
+		stringZeile;
 	for (var i in exportobjekte) {
+		// aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
+		// daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
+		if (stringTitelzeile === "" || stringTitelzeile === ",") {
+			stringTitelzeile = "";
+			// durch Spalten loopen
+			for (var a in exportobjekte[i]) {
+				if (stringTitelzeile !== "") {
+					stringTitelzeile += ',';
+				}
+				stringTitelzeile += '"' + a + '"';
+			}
+		}
+
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}
-		var stringZeile = "";
+		stringZeile = "";
 		// durch die Felder loopen
 		for (var x in exportobjekte[i]) {
 		//for (var x = 0; x < exportobjekte[i].length; x++) {
@@ -2655,7 +2660,7 @@ function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt
 	if (window.fasseTaxonomienZusammen) {
 		fTz = "true";
 	}
-	var dbParam, queryParam;
+	var queryParam;
 	if ($("#exportieren_synonym_infos").prop('checked')) {
 		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	} else {
@@ -2733,12 +2738,6 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 }
 
 function baueTabelleFuerExportAuf() {
-	// leeren Array für die Objekte gründen
-	var exportobjekte = [];
-	var len, len2;
-	var feldobjekt;
-	// db aufrufen, wird unten in einer Schlaufe benutzt
-	$db = $.couch.db("artendb");
 	// Beschäftigung melden
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 
