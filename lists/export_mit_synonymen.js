@@ -210,20 +210,7 @@ function(head, req) {
 							feldwert = Objekt[Feldname_z];
 						}
 						if (feldwert || feldwert === 0) {
-							// Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
-							if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+							if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
 								objektHinzufügen = true;
 							} else {
 								objektNichtHinzufügen = true;
@@ -235,22 +222,9 @@ function(head, req) {
 						// das Feld ist aus Taxonomie und die werden zusammengefasst
 						// daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
 						if (feldwert || feldwert === 0) {
-							if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-								objektHinzufügen = true;
-							} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+							if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
 								objektHinzufügen = true;
 							} else {
-								// Bedingung nicht erfüllt
 								objektNichtHinzufügen = true;
 								break loop_filterkriterien;
 							}
@@ -264,22 +238,9 @@ function(head, req) {
 						// das Feld ist aus Taxonomie und die werden nicht zusammengefasst
 						if (feldwert || feldwert === 0) {
 							if (Objekt.Taxonomie.Name === DsName_z) {
-								if (Vergleichsoperator_z === "kein" && feldwert === Filterwert_z) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-									objektHinzufügen = true;
-								} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+								if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
 									objektHinzufügen = true;
 								} else {
-									// Bedingung nicht erfüllt
 									objektNichtHinzufügen = true;
 									break loop_filterkriterien;
 								}
@@ -313,25 +274,7 @@ function(head, req) {
 													feldHinzugefügt = true;
 												}
 											} else {
-												if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-													objektHinzufügen = true;
-													feldHinzugefügt = true;
-												} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
+												if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
 													objektHinzufügen = true;
 													feldHinzugefügt = true;
 												}
@@ -365,22 +308,9 @@ function(head, req) {
 									// wir haben das gesuchte Feld gefunden!
 									feldwert = _a.convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
 									// in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
-									if (Vergleichsoperator_z === ">" && feldwert > Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === ">=" && feldwert >= Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === "<" && feldwert < Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === "<=" && feldwert <= Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === "=" && feldwert == Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === "kein" && feldwert == Filterwert_z) {
-										objektHinzufügen = true;
-									} else if (Vergleichsoperator_z === "kein" && _a.myTypeOf(feldwert) === "string" && _a.myTypeOf(Filterwert_z) === "string" && feldwert.indexOf(Filterwert_z) >= 0) {
+									if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
 										objektHinzufügen = true;
 									} else {
-										// Feld existiert aber Kriterium ist nicht erfüllt
 										objektNichtHinzufügen = true;
 										break loop_filterkriterien;
 									}

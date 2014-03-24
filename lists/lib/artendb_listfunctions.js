@@ -19,7 +19,7 @@ exports.erstelleExportString = function(exportobjekte) {
 		if (stringZeilen !== "") {
 			stringZeilen += '\n';
 		}
-		var stringZeile = "";
+		stringZeile = "";
 		// durch die Felder loopen
 		for (var x in exportobjekte[i]) {
 		//for (var x = 0; x < exportobjekte[i].length; x++) {
@@ -118,4 +118,26 @@ exports.myTypeOf = function(Wert) {
 	} else if (typeof Wert === "function") {
 		return "function";
 	}
+};
+
+// beurteilt, ob ein Objekt exportiert werden soll
+// indem er Feldwerte mit Filterkriterien vergleicht
+// das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
+exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoperator) {
+	if (vergleichsoperator === "kein" && feldwert == filterwert) {
+		return true;
+	} else if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) {
+		return true;
+	} else if (vergleichsoperator === "=" && feldwert == filterwert) {
+		return true;
+	} else if (vergleichsoperator === ">" && feldwert > filterwert) {
+		return true;
+	} else if (vergleichsoperator === ">=" && feldwert >= filterwert) {
+		return true;
+	} else if (vergleichsoperator === "<" && feldwert < filterwert) {
+		return true;
+	} else if (vergleichsoperator === "<=" && feldwert <= filterwert) {
+		return true;
+	}
+	return false;
 };
