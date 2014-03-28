@@ -1,5 +1,7 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Macromycetes" && doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Gattung && doc.Taxonomie.Daten["Artname vollständig"]) {
-		emit ([doc.Taxonomie.Daten.Gattung, doc.Taxonomie.Daten["Artname vollständig"], doc._id], null);
+	var gattung = doc.Taxonomie.Daten.Gattung || "(unbekannte Gattung)",
+		artname_vollstaendig = doc.Taxonomie.Daten["Artname vollständig"] || "(unbekannter Artname vollständig)";
+	if (doc.Gruppe && doc.Gruppe === "Macromycetes" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		emit ([gattung, artname_vollstaendig, doc._id], null);
 	}
 }
