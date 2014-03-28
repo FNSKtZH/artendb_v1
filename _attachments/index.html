@@ -1097,11 +1097,8 @@
 					if(isFileAPIAvailable()) {
 						zeigeFormular("importieren_ds");
 						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-						if (localStorage.Email) {
+						if (pruefeAnmeldung("ds")) {
 							$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
-						} else {
-							$("#importieren_ds_anmelden_collapse").collapse('show');
-							$("#Email_ds").focus();
 						}
 					}
 				});
@@ -1112,70 +1109,61 @@
 					if(isFileAPIAvailable()) {
 						zeigeFormular("importieren_bs");
 						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-						if (localStorage.Email) {
+						if (pruefeAnmeldung("bs")) {
 							$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
-						} else {
-							$("#importieren_bs_anmelden_collapse").collapse('show');
-							$("#Email_bs").focus();
 						}
 					}
 				});
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', function() {
 					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-					bereiteImportieren_ds_beschreibenVor("_ds");
+					bereiteImportieren_ds_beschreibenVor("ds");
 					$("#DsImportiertVon").val(localStorage.Email);
 				});
 
 				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', function() {
 					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-					bereiteImportieren_bs_beschreibenVor("_bs");
+					bereiteImportieren_bs_beschreibenVor("bs");
 					$("#BsImportiertVon").val(localStorage.Email);
 				});
 
 				$('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("ds")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_ds");
 					} else {
 						$('#DsFile').fileupload();
 					}
 				});
 
 				$('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("bs")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_bs");
 					} else {
 						$('#BsFile').fileupload();
 					}
 				});
 
 				$('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("ds")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_ds");
 					}
 				});
 
 				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("bs")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_bs");
 					}
 				});
 
 				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("ds")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_ds");
 					}
 				});
 
 				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', function (event) {
-					if (!localStorage.Email) {
+					if (!pruefeAnmeldung("bs")) {
 						$(this).collapse('hide');
-						zurueckZurAnmeldung("_bs");
 					}
 				});
 

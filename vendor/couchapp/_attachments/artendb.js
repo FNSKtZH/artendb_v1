@@ -1382,6 +1382,21 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$("#art_anmelden").hide();
 }
 
+// prüft, ob der Benutzer angemeldet ist
+// ja: retourniert true
+// nein: retourniert false und öffnet die Anmeldung
+// welche anmeldung hängt ab, woher die Prüfung angefordert wurde
+// darum erwartet die Funktion den parameter woher
+function pruefeAnmeldung(woher) {
+	if (!localStorage.Email) {
+		setTimeout(function() {
+			zurueckZurAnmeldung(woher);
+		}, 600);
+		return false;
+	}
+	return true;
+}
+
 function zurueckZurAnmeldung(woher) {
 	// Mitteilen, dass Anmeldung nötig ist
 	var praefix = "importieren_";
@@ -2747,11 +2762,8 @@ function fuerExportGewaehlteGruppen() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_ds_beschreibenVor(woher) {
-	if (!localStorage.Email) {
+	if (!pruefeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
-		setTimeout(function() {
-			zurueckZurAnmeldung(woher);
-		}, 600);
 	} else {
 		$("#DsName").focus();
 		// Daten holen, wenn nötig
@@ -2802,11 +2814,8 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_bs_beschreibenVor(woher) {
-	if (!localStorage.Email) {
+	if (!pruefeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
-		setTimeout(function() {
-			zurueckZurAnmeldung(woher);
-		}, 600);
 	} else {
 		$("#BsName").focus();
 		// anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
@@ -3093,10 +3102,13 @@ function myTypeOf(Wert) {
 
 function bearbeiteLrTaxonomie() {
 	// Benutzer muss anmelden
-	if (!localStorage.Email) {
+	/*if (!localStorage.Email) {
 		$("#art_anmelden").show();
 		$("#art_anmelden_collapse").collapse('show');
 		$("#Email_art").focus();
+		return false;
+	}*/
+	if (!pruefeAnmeldung("art")) {
 		return false;
 	}
 	// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
