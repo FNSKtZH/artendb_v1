@@ -26,7 +26,7 @@ function(head, req) {
 			art.Typ = "Arteigenschaft";
 			ds_loop:
 			for (i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name === "ZH Artengruppen") {
+				if (doc.Datensammlungen[i].Name === "ZH GIS") {
 					art.ArtGruppe = doc.Datensammlungen[i].Daten["GIS-Layer"];
 					art.ArtGruppe = art.ArtGruppe.replace('ae', 'ä').replace('oe', 'ö').replace('ue', 'ü');
 					break ds_loop;
