@@ -1,5 +1,9 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Gruppe === "Fauna" && doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Klasse && doc.Taxonomie.Daten.Ordnung && doc.Taxonomie.Daten.Familie && doc.Taxonomie.Daten["Artname vollständig"]) {
-		emit ([doc.Taxonomie.Daten.Klasse, doc.Taxonomie.Daten.Ordnung, doc.Taxonomie.Daten.Familie, doc.Taxonomie.Daten["Artname vollständig"], doc._id], null);
+	var klasse = doc.Taxonomie.Daten.Klasse || "(unbekannte Klasse)",
+		ordnung = doc.Taxonomie.Daten.Ordnung || "(unbekannte Ordnung)",
+		familie = doc.Taxonomie.Daten.Familie || "(unbekannte Familie)",
+		artname_vollstaendig = doc.Taxonomie.Daten["Artname vollständig"] || "(unbekannter Artname vollständig)";
+	if (doc.Gruppe && doc.Gruppe === "Fauna" && doc.Taxonomie && doc.Taxonomie.Daten) {
+		emit ([klasse, ordnung, familie, artname_vollstaendig, doc._id], null);
 	}
 }
