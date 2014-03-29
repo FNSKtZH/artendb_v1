@@ -1455,6 +1455,50 @@ function handleBsNameChange() {
 	}
 }
 
+// Wenn DsImportiertVon geändert wird
+// kontrollieren, dass es die email der angemeldeten Person ist
+function handleDsImportiertVonChange() {
+	$("#DsImportiertVon").val(localStorage.Email);
+	$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
+	$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+	setTimeout(function() {
+		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
+	}, 10000);
+}
+
+// Wenn BsImportiertVon geändert wird
+// Kontrollieren, dass es die email der angemeldeten Person ist
+function handleBsImportiertVonChange() {
+	$("#BsImportiertVon").val(localStorage.Email);
+	$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
+	$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+	setTimeout(function() {
+		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+	}, 10000);
+}
+
+// wenn BsZusammenfassend geändert wird
+// BsUrsprungsBs_div zeigen oder verstecken
+function handleBsZusammenfassendChange() {
+	var that = this;
+	if ($(this).prop('checked')) {
+		$("#BsUrsprungsBs_div").show();
+	} else {
+		$("#BsUrsprungsBs_div").hide();
+	}
+}
+
+// wenn DsZusammenfassend geändert wird
+// DsUrsprungsDs zeigen oder verstecken
+function handleDsZusammenfassendChange() {
+	var that = this;
+	if ($(this).prop('checked')) {
+		$("#DsUrsprungsDs_div").show();
+	} else {
+		$("#DsUrsprungsDs_div").hide();
+	}
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
@@ -2883,7 +2927,7 @@ function bereiteImportieren_bs_beschreibenVor_02() {
 		}
 	}
 	$("#BsWaehlen").html(html);
-	$("#BsUrsprungsDs").html(html);
+	$("#BsUrsprungsBs").html(html);
 }
 
 function isFileAPIAvailable() {

@@ -1249,39 +1249,13 @@
 
 				$("#importieren_bs").on("change", "#BsName", handleBsNameChange);
 
-				$("#importieren_ds").on("change", "#DsImportiertVon", function() {
-					$("#DsImportiertVon").val(localStorage.Email);
-					$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
-					$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-					setTimeout(function() {
-						$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
-					}, 10000);
-				});
+				$("#importieren_ds").on("change", "#DsImportiertVon", handleDsImportiertVonChange);
 
-				$("#importieren_bs").on("change", "#BsImportiertVon", function() {
-					$("#BsImportiertVon").val(localStorage.Email);
-					$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
-					$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-					setTimeout(function() {
-						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
-					}, 10000);
-				});
+				$("#importieren_bs").on("change", "#BsImportiertVon", handleBsImportiertVonChange);
 
-				$("#importieren_ds").on("change", "#DsZusammenfassend", function() {
-					if ($(this).prop('checked')) {
-						$(".DsUrsprungsDs").show();
-					} else {
-						$(".DsUrsprungsDs").hide();
-					}
-				});
+				$("#importieren_ds").on("change", "#DsZusammenfassend", handleDsZusammenfassendChange);
 
-				$("#importieren_bs").on("change", "#BsZusammenfassend", function() {
-					if ($(this).prop('checked')) {
-						$("#BsUrsprungsBs_div").show();
-					} else {
-						$("#BsUrsprungsBs_div").hide();
-					}
-				});
+				$("#importieren_bs").on("change", "#BsZusammenfassend", handleBsZusammenfassendChange);
 
 				$("#importieren_bs").on("change", "#BsWaehlen", function() {
 					var BsName = this.value;
