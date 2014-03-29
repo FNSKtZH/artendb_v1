@@ -1433,6 +1433,28 @@ function validiereUserAnmeldung(woher) {
 	return true;
 }
 
+// wenn BsName geändert wird
+// suchen, ob schon eine Datensammlung mit diesem Namen existiert
+// und sie von jemand anderem importiert wurde
+// und sie nicht zusammenfassend ist
+function handleBsNameChange() {
+	var that = this;
+	var BsKey = _.find(window.BsKeys, function(key) {
+		return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+	});
+	if (BsKey) {
+		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
+		$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+		setTimeout(function() {
+			$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+		}, 30000);
+		$("#BsName").val("");
+		$("#BsName").focus();
+	} else {
+		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
+	}
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
@@ -3102,6 +3124,9 @@ function myTypeOf(Wert) {
 
 function bearbeiteLrTaxonomie() {
 	// Benutzer muss anmelden
+	// der alte Code wurde verbessert
+	// konnte aber noch nicht getestet werden, weil Schaltflächen nicht sichtbar sind
+	// daher alte Version noch behalten
 	/*if (!localStorage.Email) {
 		$("#art_anmelden").show();
 		$("#art_anmelden_collapse").collapse('show');

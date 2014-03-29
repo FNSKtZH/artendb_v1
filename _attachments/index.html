@@ -1247,26 +1247,7 @@
 					}
 				});
 
-				$("#importieren_bs").on("change", "#BsName", function() {
-					var that = this;
-					// suchen, ob schon eine Datensammlung mit diesem Namen existiert
-					// und sie von jemand anderem importiert wurde
-					// und sie nicht zusammenfassend ist
-					var BsKey = _.find(window.BsKeys, function(key) {
-						return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
-					});
-					if (BsKey) {
-						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
-						$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-						setTimeout(function() {
-							$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
-						}, 30000);
-						$("#BsName").val("");
-						$("#BsName").focus();
-					} else {
-						$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
-					}
-				});
+				$("#importieren_bs").on("change", "#BsName", handleBsNameChange);
 
 				$("#importieren_ds").on("change", "#DsImportiertVon", function() {
 					$("#DsImportiertVon").val(localStorage.Email);
