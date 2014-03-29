@@ -1735,7 +1735,62 @@ function handleImportierenBsImportAusfuehrenCollapseShown() {
 
 // wenn DsWaehlen geändert wird
 function handleDsWaehlenChange() {
-	
+	var DsName = this.value;
+	var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
+	if (waehlbar === "true") {
+		// zuerst alle Felder leeren
+		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
+			$(this).val('');
+		});
+		$("#DsAnzDs").html("");
+		$("#DsAnzDs_label").html("");
+		if (DsName) {
+			for (i in window.ds_von_objekten.rows) {
+				if (window.ds_von_objekten.rows[i].key[1] === DsName) {
+					$("#DsName").val(DsName);
+					for (x in window.ds_von_objekten.rows[i].key[4]) {
+						if (x === "Ursprungsdatensammlung") {
+							$("#DsUrsprungsDs").val(window.ds_von_objekten.rows[i].key[4][x]);
+						} else if (x !== "importiert von") {
+							$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[4][x]);
+						}
+					}
+					if (window.ds_von_objekten.rows[i].key[2] === true) {
+						$("#DsZusammenfassend").prop('checked', true);
+						// Feld für Ursprungs-DS anzeigen
+						$("#DsUrsprungsDs_div").show();
+					} else {
+						// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
+						$("#DsZusammenfassend").prop('checked', false);
+						// und Feld für Ursprungs-DS verstecken
+						$("#DsUrsprungsDs_div").hide();
+					}
+					// wenn die ds/bs kein "importiert von" hat ist der Wert null
+					// verhindern, dass null angezeigt wird
+					if (window.ds_von_objekten.rows[i].key[3]) {
+						$("#DsImportiertVon").val(window.ds_von_objekten.rows[i].key[3]);
+					} else {
+						$("#DsImportiertVon").val("");
+					}
+					$("#DsAnzDs_label").html("Anzahl Arten/Lebensräume");
+					$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
+					// dafür sorgen, dass textareas genug gross sind
+					$('#importieren_ds textarea').each(function() {
+						FitToContent(this, document.documentElement.clientHeight);
+					});
+					$("#DsName").focus();
+				}
+				// löschen-Schaltfläche einblenden
+				$("#DsLoeschen").css("display", "block");
+			}
+		} else {
+			// löschen-Schaltfläche ausblenden
+			$("#DsLoeschen").css("display", "none");
+		}
+	} else {
+		// melden, dass diese DS nicht bearbeitet werden kann
+		$('#meldung_ds_nicht_bearbeitbar').modal();
+	}
 }
 
 // übernimmt eine Array mit Objekten
