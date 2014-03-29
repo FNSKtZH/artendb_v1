@@ -32,7 +32,7 @@ function erstelleBaum() {
 	}
 	$db = $.couch.db("artendb");
 	$db.view('artendb/' + gruppe + "_gruppiert", {
-		success: function (data) {
+		success: function(data) {
 			anzahl_objekte = data.rows[0].value;
 			$("#tree" + window.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
 			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
@@ -120,7 +120,7 @@ function erstelleTree() {
 				"loading": "hole Daten..."
 			}
 		},
-		"sort": function (a, b) {
+		"sort": function(a, b) {
 			return this.get_text(a) > this.get_text(b) ? 1 : -1;
 		},
 		"themes": {
@@ -128,7 +128,7 @@ function erstelleTree() {
 		},
 		"plugins" : ["ui", "themes", "json_data", "sort"]
 	})
-	.bind("select_node.jstree", function (e, data) {
+	.bind("select_node.jstree", function(e, data) {
 		var node;
 		node = data.rslt.obj;
 		jQuery.jstree._reference(node).open_node(node);
@@ -141,7 +141,7 @@ function erstelleTree() {
 			}
 		}
 	})
-	.bind("loaded.jstree", function (event, data) {
+	.bind("loaded.jstree", function(event, data) {
 		jstree_erstellt.resolve();
 		$("#suchen"+window.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
@@ -150,10 +150,10 @@ function erstelleTree() {
 		setzeTreehoehe();
 		initiiereSuchfeld();
 	})
-	.bind("after_open.jstree", function (e, data) {
+	.bind("after_open.jstree", function(e, data) {
 		setzeTreehoehe();
 	})
-	.bind("after_close.jstree", function (e, data) {
+	.bind("after_close.jstree", function(e, data) {
 		setzeTreehoehe();
 	});
 	return jstree_erstellt.promise();
@@ -295,7 +295,7 @@ function initiiereSuchfeld() {
 			var endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]');
 			var url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
 			$db.view(url, {
-				success: function (data) {
+				success: function(data) {
 					window.filtere_lr = data;
 					initiiereSuchfeld_2();
 				}
@@ -306,7 +306,7 @@ function initiiereSuchfeld() {
 			initiiereSuchfeld_2();
 		} else {
 			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'",{}]', {
-				success: function (data) {
+				success: function(data) {
 					window["filtere_art_" + window.Gruppe.toLowerCase()] = data;
 					initiiereSuchfeld_2();
 				}
@@ -346,7 +346,7 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 	// lr holen
 	$db = $.couch.db("artendb");
 	$db.view('artendb/lr?include_docs=true', {
-		success: function (lr) {
+		success: function(lr) {
 			var taxonomie_objekte, 
 				object,
 				neueTaxonomie,
@@ -417,7 +417,7 @@ function oeffneBaumZuId(id) {
 	// Hierarchie der id holen
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
-		success: function (objekt) {
+		success: function(objekt) {
 			switch (objekt.Gruppe) {
 			case "Fauna":
 				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -490,7 +490,7 @@ function oeffneNodeNachIdArray(idArray) {
 function initiiere_art(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
-		success: function (art) {
+		success: function(art) {
 			var htmlArt,
 			Datensammlungen = art.Datensammlungen,
 			Beziehungssammlungen = [],
@@ -571,7 +571,7 @@ function initiiere_art(id) {
 			if (guidsVonSynonymen.length > 0) {
 				$db = $.couch.db("artendb");
 				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidsVonSynonymen)) + '&include_docs=true', {
-					success: function (data) {
+					success: function(data) {
 						var synonymeArt;
 						for (f=0; f<data.rows.length; f++) {
 							synonymeArt = data.rows[f].doc;
@@ -656,7 +656,7 @@ function initiiere_art(id) {
 				initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
 			}
 		},
-		error: function () {
+		error: function() {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
@@ -1250,7 +1250,7 @@ function erstelleKonto(woher) {
 							$("#Passwort_"+woher).val("");
 							$("#Passwort2_"+woher).val("");
 						},
-						error : function () {
+						error : function() {
 							var praefix = "importieren_";
 							if (woher === "art") {
 								praefix = "";
@@ -1288,7 +1288,7 @@ function erstelleKonto(woher) {
 				$("#Passwort_"+woher).val("");
 				$("#Passwort2_"+woher).val("");
 			},
-			error : function () {
+			error : function() {
 				var praefix = "importieren_";
 				if (woher === "art") {
 					praefix = "";
@@ -1320,7 +1320,7 @@ function meldeUserAn(woher) {
 				$("#Passwort_"+woher).val("");
 				$("#art_anmelden").show();
 			},
-			error: function () {
+			error: function() {
 				var praefix = "importieren_";
 				if (woher === "art") {
 					praefix = "";
@@ -1418,13 +1418,13 @@ function validiereUserAnmeldung(woher) {
 	Email = $('#Email_'+woher).val();
 	Passwort = $('#Passwort_'+woher).val();
 	if (!Email) {
-		setTimeout(function () {
+		setTimeout(function() {
 			$('#Email_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		$("#Emailhinweis_"+woher).css("display", "block");
 		return false;
 	} else if (!Passwort) {
-		setTimeout(function () {
+		setTimeout(function() {
 			$('#Passwort_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		$("#Passworthinweis_"+woher).css("display", "block");
@@ -1505,7 +1505,7 @@ function handleBsWaehlenChange() {
 	var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
 	if (waehlbar === "true") {
 		// zuerst alle Felder leeren
-		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
+		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function() {
 			$(this).val('');
 		});
 		$("#BsAnzDs").html("");
@@ -1539,7 +1539,7 @@ function handleBsWaehlenChange() {
 					$("#BsAnzDs_label").html("Anzahl Arten/Lebensräume");
 					$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
 					// dafür sorgen, dass textareas genug gross sind
-					$('#importieren_bs textarea').each(function () {
+					$('#importieren_bs textarea').each(function() {
 						FitToContent(this, document.documentElement.clientHeight);
 					});
 					$("#BsName").focus();
@@ -1581,7 +1581,7 @@ function handleDsFileChange() {
 		$("#DsImportieren").css("display", "none");
 		$("#DsEntfernen").css("display", "none");
 	}
-	reader.onload = function (event) {
+	reader.onload = function(event) {
 		window.dsDatensätze = $.csv.toObjects(event.target.result);
 		erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
 	};
@@ -1612,11 +1612,130 @@ function handleBsFileChange() {
 		$("#BsImportieren").css("display", "none");
 		$("#BsEntfernen").css("display", "none");
 	}
-	reader.onload = function (event) {
+	reader.onload = function(event) {
 		window.bsDatensätze = $.csv.toObjects(event.target.result);
 		erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
 	};
 	reader.readAsText(file);
+}
+
+// wenn btn_resize geklickt wird
+function handleBtnResizeClick() {
+	var windowHeight = $(window).height();
+	$("body").toggleClass("force-mobile");
+	if ($("body").hasClass("force-mobile")) {
+		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
+		$(".baum").css("max-height", windowHeight - 252);
+		// button rechts ausrichten
+		$("#btn_resize").css("margin-right", "0px");
+	} else {
+		$(".baum").css("max-height", windowHeight - 161);
+		// button an anderen Schaltflächen ausrichten
+		$("#btn_resize").css("margin-right", "6px");
+	}
+}
+
+// wenn menu_btn geklickt wird
+// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
+function handleMenuBtnClick() {
+	if (localStorage.art_id) {
+		$("#GoogleBilderLink_li").removeClass("disabled");
+		$("#WikipediaLink_li").removeClass("disabled");
+	} else {
+		$("#GoogleBilderLink_li").addClass("disabled");
+		$("#WikipediaLink_li").addClass("disabled");
+	}
+}
+
+// wenn ds_importieren geklickt wird
+// testen, ob der Browser das Importieren unterstützt
+// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+function handleDsImportierenClick() {
+	if(isFileAPIAvailable()) {
+		zeigeFormular("importieren_ds");
+		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+		if (pruefeAnmeldung("ds")) {
+			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
+		}
+	}
+}
+
+// wenn bs_importieren geklickt wird
+// testen, ob der Browser das Importieren unterstützt
+// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+function handleBsImportierenClick() {
+	if(isFileAPIAvailable()) {
+		zeigeFormular("importieren_bs");
+		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
+		if (pruefeAnmeldung("bs")) {
+			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
+		}
+	}
+}
+
+// wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
+function handleImportierenDsDsBeschreibenCollapseShown() {
+	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+	bereiteImportieren_ds_beschreibenVor("ds");
+	$("#DsImportiertVon").val(localStorage.Email);
+}
+
+// wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
+function handleImportierenBsDsBeschreibenCollapseShown() {
+	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
+	bereiteImportieren_bs_beschreibenVor("bs");
+	$("#BsImportiertVon").val(localStorage.Email);
+}
+
+// wenn importieren_ds_daten_uploaden_collapse geöffnet wird
+function handleImportierenDsDatenUploadenCollapseShown() {
+	if (!pruefeAnmeldung("ds")) {
+		$(this).collapse('hide');
+	} else {
+		$('#DsFile').fileupload();
+	}
+}
+
+// wenn importieren_bs_daten_uploaden_collapse geöffnet wird
+function handleImportierenBsDatenUpladenCollapseShown() {
+	if (!pruefeAnmeldung("bs")) {
+		$(this).collapse('hide');
+	} else {
+		$('#BsFile').fileupload();
+	}
+}
+
+// wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
+function handleImportierenDsIdsIdentifizierenCollapseShown() {
+	if (!pruefeAnmeldung("ds")) {
+		$(this).collapse('hide');
+	}
+}
+
+// wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
+function handleImportierenBsIdsIdentifizierenCollapseShown() {
+	if (!pruefeAnmeldung("bs")) {
+		$(this).collapse('hide');
+	}
+}
+
+// wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
+function handleImportierenDsImportAusfuehrenCollapseShown() {
+	if (!pruefeAnmeldung("ds")) {
+		$(this).collapse('hide');
+	}
+}
+
+// wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
+function handleImportierenBsImportAusfuehrenCollapseShown() {
+	if (!pruefeAnmeldung("bs")) {
+		$(this).collapse('hide');
+	}
+}
+
+// wenn DsWaehlen geändert wird
+function handleDsWaehlenChange() {
+	
 }
 
 // übernimmt eine Array mit Objekten
@@ -1725,7 +1844,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 		$db = $.couch.db("artendb");
 		if (window.DsId === "guid") {
 			$db.view('artendb/all_docs', {
-				success: function (data) {
+				success: function(data) {
 					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
 						// durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
@@ -1752,7 +1871,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 			});
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.DsId + '"]&endkey=["' + window.DsId + '",{},{}]', {
-				success: function (data) {
+				success: function(data) {
 					for (var i in window[dbs.toLowerCase()+"Datensätze"]) {
 						// durch die importierten Datensätze loopen
 						if (IdsVonDatensätzen.indexOf(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]) === -1) {
@@ -2087,7 +2206,7 @@ function bereiteBeziehungspartnerFuerImportVor() {
 	// danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
 	$db = $.couch.db("artendb");
 	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alleBezPartner_array)) + '&include_docs=true', {
-		success: function (data) {
+		success: function(data) {
 			var objekt;
 			var bezPartner;
 			for (var f = 0; f<data.rows.length; f++) {
@@ -2170,7 +2289,7 @@ function entferneDatensammlung_2(DsName, guidArray, a) {
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
-			success: function (data) {
+			success: function(data) {
 				var Objekt;
 				for (var f=0; f<data.rows.length; f++) {
 					Objekt = data.rows[f].doc;
@@ -2254,7 +2373,7 @@ function entferneBeziehungssammlung_2(BsName, guidArray, a) {
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
-			success: function (data) {
+			success: function(data) {
 				var Objekt;
 				for (var f=0; f<data.rows.length; f++) {
 					Objekt = data.rows[f].doc;
@@ -2283,7 +2402,7 @@ function entferneBeziehungssammlungAusObjekt(BsName, Objekt) {
 function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
-		success: function (doc) {
+		success: function(doc) {
 			// Datensammlung anfügen
 			doc.Datensammlungen.push(Datensammlung);
 			// sortieren
@@ -2300,7 +2419,7 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
-		success: function (doc) {
+		success: function(doc) {
 			// prüfen, ob die Beziehung schon existiert
 			if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
 				var hinzugefügt = false;
@@ -2355,7 +2474,7 @@ function entferneDatensammlungAusAllenObjekten(DsName) {
 	var DsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + DsName + '"]&endkey=["' + DsName + '",{}]', {
-		success: function (data) {
+		success: function(data) {
 			for (var i in data.rows) {
 				// guid und DsName übergeben
 				entferneDatensammlungAusDokument(data.rows[i].key[1], DsName);
@@ -2372,7 +2491,7 @@ function entferneBeziehungssammlungAusAllenObjekten(BsName) {
 	var BsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/bs_guid?startkey=["' + BsName + '"]&endkey=["' + BsName + '",{}]', {
-		success: function (data) {
+		success: function(data) {
 			for (var i in data.rows) {
 				// guid und DsName übergeben
 				entferneBeziehungssammlungAusDokument(data.rows[i].key[1], BsName);
@@ -2443,7 +2562,7 @@ function oeffneUri() {
 		// Gruppe ermitteln
 		$db = $.couch.db("artendb");
 		$db.openDoc(id, {
-			success: function (objekt) {
+			success: function(objekt) {
 				// window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
 				window.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
@@ -2607,7 +2726,7 @@ function erstelleListeFuerFeldwahl() {
 		for (var i=0; i<gruppen.length; i++) {
 			// Felder abfragen
 			$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
-				success: function (data) {
+				success: function(data) {
 					window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
 					// eine Gruppe aus export_gruppen entfernen
 					export_gruppen.splice(0,1);
@@ -2898,7 +3017,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 		}
 		$db = $.couch.db("artendb");
 		$db.list(dbParam, queryParam, {
-			success: function (data) {
+			success: function(data) {
 				// alle Objekte in data in window.exportieren_objekte anfügen
 				window.exportieren_objekte = _.union(window.exportieren_objekte, data);
 				// speichern, dass eine Gruppe abgefragt wurde
@@ -2958,7 +3077,7 @@ function bereiteImportieren_ds_beschreibenVor(woher) {
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
-				success: function (data) {
+				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
 					bereiteImportieren_ds_beschreibenVor_02();
@@ -3012,7 +3131,7 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
-				success: function (data) {
+				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;
 					bereiteImportieren_bs_beschreibenVor_02();
@@ -3059,12 +3178,17 @@ function isFileAPIAvailable() {
 		// source: File API availability - //caniuse.com/#feat=fileapi
 		// source: <output> availability - //html5doctor.com/the-output-element/
 		var html = "Für den Datenimport benötigen Sie mindestens einen der folgenden Browser:<br>";
-		html += "(Stand Februar 2013)<br>";
-		html += "- Google Chrome: 23.0 oder neuer<br>";
-		html += "- Mozilla Firefox: 16.0 oder neuer<br>";
+		html += "(Stand März 2014)<br>";
+		html += "- Google Chrome: 13 oder neuer<br>";
+		html += "- Chrome auf Android: 33 oder neuer<br>";
+		html += "- Mozilla Firefox: 3.6 oder neuer<br>";
+		html += "- Firefox auf Android: 26 oder neuer<br>";
 		html += "- Safari: 6.0 oder neuer<br>";
-		html += "- Opera: 12.1 oder neuer<br>";
-		html += "- eventuell mittlerweile weitere";
+		html += "- iOs Safari: 6.0 oder neuer<br>";
+		html += "- Opera: 11.1 oder neuer<br>";
+		html += "- Internet Explorer: 10 oder neuer<br>";
+		html += "- Internet Explorer mobile: bis Version 10 nicht<br>";
+		html += "- Android Standardbrowser: Android 4.4 oder neuer<br>";
 		$("#fileApiMeldungText").html(html);
 		$('#fileApiMeldung').modal();
 		return false;
@@ -3246,7 +3370,7 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 				}
 			});
 		},
-		error: function () {
+		error: function() {
 			$("#meldung_individuell_label").html("Fehler");
 			$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
 			$("#meldung_individuell_schliessen").html("schliessen");
@@ -3372,7 +3496,7 @@ function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefe
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
-			success: function (data) {
+			success: function(data) {
 				aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
 			}
 		});
@@ -3403,7 +3527,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
-		success: function (doc) {
+		success: function(doc) {
 			$.when(erstelleBaum()).then(function() {
 				oeffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
@@ -3433,7 +3557,7 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktual
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
-			success: function (lr) {
+			success: function(lr) {
 				aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 			}
 		});
@@ -3478,7 +3602,7 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 		objekt.Taxonomie.Daten.Taxonomie = einheit_ist_taxonomiename;
 	}
 	$db.saveDoc(objekt, {
-		success: function (data) {
+		success: function(data) {
 			var doc;
 			// kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
 			for (var i=0; i<lr.rows.length; i++) {
@@ -3615,13 +3739,13 @@ function ermittleVergleichsoperator(filterwert) {
 // Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 var BrowserDetect = 
 {
-	init: function () 
+	init: function() 
 	{
 		this.browser = this.searchString(this.dataBrowser) || "Other";
 		this.version = this.searchVersion(navigator.userAgent) ||	   this.searchVersion(navigator.appVersion) || "Unknown";
 	},
 
-	searchString: function (data) 
+	searchString: function(data) 
 	{
 		for (var i=0 ; i < data.length ; i++)   
 		{
@@ -3635,7 +3759,7 @@ var BrowserDetect =
 		}
 	},
 
-	searchVersion: function (dataString) 
+	searchVersion: function(dataString) 
 	{
 		var index = dataString.indexOf(this.versionSearchString);
 		if (index == -1) return;

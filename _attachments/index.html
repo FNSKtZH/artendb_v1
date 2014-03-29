@@ -748,7 +748,7 @@
 		<script src="vendor/couchapp/artendb.js"></script>
 
 		<script>
-			$(document).ready(function () {
+			$(document).ready(function() {
 	
 				BrowserDetect.init();
 				// zunächst mal den gröbsten Bock abfangen
@@ -809,7 +809,7 @@
 
 				// IE8 kennt trim nicht!
 				if (!String.prototype.trim)  {
-					String.prototype.trim = function () {
+					String.prototype.trim = function() {
 						return this.replace(/^\s+|\s+$/g, '');
 					};
 				}
@@ -842,7 +842,7 @@
 
 				// IE8 kennt Object.keys nicht
 				if (!Object.keys) {
-					Object.keys = (function () {
+					Object.keys = (function() {
 						var hasOwnProperty = Object.prototype.hasOwnProperty,
 								hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
 								dontEnums = [
@@ -856,7 +856,7 @@
 								],
 								dontEnumsLength = dontEnums.length;
 				 
-						return function (obj) {
+						return function(obj) {
 							if (typeof obj !== 'object' && typeof obj !== 'function' || obj === null) throw new TypeError('Object.keys called on non-object');
 				 
 							var result = [];
@@ -894,7 +894,7 @@
 
 				if (!(typeof Blob === "function" || typeof Blob === "object") || typeof URL === "undefined")
 				if ((typeof Blob === "function" || typeof Blob === "object") && typeof webkitURL !== "undefined") self.URL = webkitURL;
-				else var Blob = (function (view) {
+				else var Blob = (function(view) {
 					"use strict";
 
 					var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || view.MSBlobBuilder || (function(view) {
@@ -1060,171 +1060,41 @@
 				}
 
 				// Baum aufbauen, wenn Gruppe gewählt wird
-				$("#menu").on("click", ".gruppe", function () {
+				$("#menu").on("click", ".gruppe", function() {
 					oeffneGruppe($(this).attr("Gruppe"));
 				});
 
 				// zwischen Mobil- und Desktopsicht wechseln
-				$("#menu").on("click", "#btn_resize", function () {
-					var windowHeight = $(window).height();
-					$("body").toggleClass("force-mobile");
-					if ($("body").hasClass("force-mobile")) {
-						// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
-						$(".baum").css("max-height", windowHeight - 252);
-						// button rechts ausrichten
-						$("#btn_resize").css("margin-right", "0px");
-					} else {
-						$(".baum").css("max-height", windowHeight - 161);
-						// button an anderen Schaltflächen ausrichten
-						$("#btn_resize").css("margin-right", "6px");
-					}
-				});
+				$("#menu").on("click", "#btn_resize", handleBtnResizeClick);
 
 				// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-				$("body").on("click", "#menu_btn", function() {
-					if (localStorage.art_id) {
-						$("#GoogleBilderLink_li").removeClass("disabled");
-						$("#WikipediaLink_li").removeClass("disabled");
-					} else {
-						$("#GoogleBilderLink_li").addClass("disabled");
-						$("#WikipediaLink_li").addClass("disabled");
-					}
-				});
+				$("body").on("click", "#menu_btn", handleMenuBtnClick);
 
-				$("#menu_btn").on("click", "#ds_importieren", function() {
-					// testen, ob der Browser das Importieren unterstützt
-					// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-					if(isFileAPIAvailable()) {
-						zeigeFormular("importieren_ds");
-						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-						if (pruefeAnmeldung("ds")) {
-							$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
-						}
-					}
-				});
+				// testen, ob der Browser das Importieren unterstützt
+				// wenn nein, Meldung bringen
+				$("#menu_btn").on("click", "#ds_importieren", handleDsImportierenClick);
 
-				$("#menu_btn").on("click", "#bs_importieren", function() {
-					// testen, ob der Browser das Importieren unterstützt
-					// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-					if(isFileAPIAvailable()) {
-						zeigeFormular("importieren_bs");
-						// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-						if (pruefeAnmeldung("bs")) {
-							$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
-						}
-					}
-				});
+				// testen, ob der Browser das Importieren unterstützt
+				// wenn nein, Meldung bringen
+				$("#menu_btn").on("click", "#bs_importieren", handleBsImportierenClick);
 
-				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', function() {
-					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-					bereiteImportieren_ds_beschreibenVor("ds");
-					$("#DsImportiertVon").val(localStorage.Email);
-				});
+				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', handleImportierenDsDsBeschreibenCollapseShown);
 
-				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', function() {
-					// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-					bereiteImportieren_bs_beschreibenVor("bs");
-					$("#BsImportiertVon").val(localStorage.Email);
-				});
+				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', handleImportierenBsDsBeschreibenCollapseShown);
 
-				$('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("ds")) {
-						$(this).collapse('hide');
-					} else {
-						$('#DsFile').fileupload();
-					}
-				});
+				$('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', handleImportierenDsDatenUploadenCollapseShown);
 
-				$('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("bs")) {
-						$(this).collapse('hide');
-					} else {
-						$('#BsFile').fileupload();
-					}
-				});
+				$('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', handleImportierenBsDatenUpladenCollapseShown);
 
-				$('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("ds")) {
-						$(this).collapse('hide');
-					}
-				});
+				$('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', handleImportierenDsIdsIdentifizierenCollapseShown);
 
-				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("bs")) {
-						$(this).collapse('hide');
-					}
-				});
+				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', handleImportierenBsIdsIdentifizierenCollapseShown);
 
-				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("ds")) {
-						$(this).collapse('hide');
-					}
-				});
+				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', handleImportierenDsImportAusfuehrenCollapseShown);
 
-				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', function (event) {
-					if (!pruefeAnmeldung("bs")) {
-						$(this).collapse('hide');
-					}
-				});
+				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', handleImportierenBsImportAusfuehrenCollapseShown);
 
-				$("#importieren_ds").on("change", "#DsWaehlen", function() {
-					var DsName = this.value;
-					var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
-					if (waehlbar === "true") {
-						// zuerst alle Felder leeren
-						$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
-							$(this).val('');
-						});
-						$("#DsAnzDs").html("");
-						$("#DsAnzDs_label").html("");
-						if (DsName) {
-							for (i in window.ds_von_objekten.rows) {
-								if (window.ds_von_objekten.rows[i].key[1] === DsName) {
-									$("#DsName").val(DsName);
-									for (x in window.ds_von_objekten.rows[i].key[4]) {
-										if (x === "Ursprungsdatensammlung") {
-											$("#DsUrsprungsDs").val(window.ds_von_objekten.rows[i].key[4][x]);
-										} else if (x !== "importiert von") {
-											$("#Ds" + x).val(window.ds_von_objekten.rows[i].key[4][x]);
-										}
-									}
-									if (window.ds_von_objekten.rows[i].key[2] === true) {
-										$("#DsZusammenfassend").prop('checked', true);
-										// Feld für Ursprungs-DS anzeigen
-										$("#DsUrsprungsDs_div").show();
-									} else {
-										// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
-										$("#DsZusammenfassend").prop('checked', false);
-										// und Feld für Ursprungs-DS verstecken
-										$("#DsUrsprungsDs_div").hide();
-									}
-									// wenn die ds/bs kein "importiert von" hat ist der Wert null
-									// verhindern, dass null angezeigt wird
-									if (window.ds_von_objekten.rows[i].key[3]) {
-										$("#DsImportiertVon").val(window.ds_von_objekten.rows[i].key[3]);
-									} else {
-										$("#DsImportiertVon").val("");
-									}
-									$("#DsAnzDs_label").html("Anzahl Arten/Lebensräume");
-									$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
-									// dafür sorgen, dass textareas genug gross sind
-									$('#importieren_ds textarea').each(function () {
-										FitToContent(this, document.documentElement.clientHeight);
-									});
-									$("#DsName").focus();
-								}
-								// löschen-Schaltfläche einblenden
-								$("#DsLoeschen").css("display", "block");
-							}
-						} else {
-							// löschen-Schaltfläche ausblenden
-							$("#DsLoeschen").css("display", "none");
-						}
-					} else {
-						// melden, dass diese DS nicht bearbeitet werden kann
-						$('#meldung_ds_nicht_bearbeitbar').modal();
-					}
-				});
+				$("#importieren_ds").on("change", "#DsWaehlen", handleDsWaehlenChange);
 
 				$("#importieren_ds").on("change", "#DsName", function() {
 					var that = this;
@@ -1507,7 +1377,7 @@
 					object.Taxonomie.Daten.Parent = parent;
 					$db = $.couch.db("artendb");
 					$db.saveDoc(object, {
-						success: function (data2) {
+						success: function(data2) {
 							object._rev = data2.rev;
 							if (parent_id !== "0") {
 								// die Hierarchie aufbauen und setzen
@@ -1538,7 +1408,7 @@
 					// Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
 					$db = $.couch.db("artendb");
 					$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
-						success: function (data) {
+						success: function(data) {
 							// daraus einen Array von docs machen
 							var doc_array = _.map(data.rows, function(row) {
 								return row.doc;
@@ -1684,7 +1554,7 @@
 				});
 			});
 
-			$(window).resize(function () {
+			$(window).resize(function() {
 				setzeTreehoehe();
 				// Höhe der Textareas korrigieren
 				$('form').each(function() {
