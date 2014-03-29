@@ -1499,6 +1499,126 @@ function handleDsZusammenfassendChange() {
 	}
 }
 
+// Wenn BsWaehlen geändert wird
+function handleBsWaehlenChange() {
+	var BsName = this.value;
+	var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
+	if (waehlbar === "true") {
+		// zuerst alle Felder leeren
+		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
+			$(this).val('');
+		});
+		$("#BsAnzDs").html("");
+		$("#BsAnzDs_label").html("");
+		if (BsName) {
+			for (i in window.bs_von_objekten.rows) {
+				if (window.bs_von_objekten.rows[i].key[1] === BsName) {
+					$("#BsName").val(BsName);
+					for (x in window.bs_von_objekten.rows[i].key[4]) {
+						if (x === "Ursprungsdatensammlung") {
+							$("#BsUrsprungsBs").val(window.bs_von_objekten.rows[i].key[4][x]);
+						} else if (x !== "importiert von") {
+							$("#Bs" + x).val(window.bs_von_objekten.rows[i].key[4][x]);
+						}
+					}
+					if (window.bs_von_objekten.rows[i].key[2] === true) {
+						$("#BsZusammenfassend").prop('checked', true);
+						$("#BsUrsprungsBs_div").show();
+					} else {
+						// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
+						$("#BsZusammenfassend").prop('checked', false);
+						$("#BsUrsprungsBs_div").hide();
+					}
+					// wenn die ds/bs kein "importiert von" hat ist der Wert null
+					// verhindern, dass null angezeigt wird
+					if (window.bs_von_objekten.rows[i].key[3]) {
+						$("#BsImportiertVon").val(window.bs_von_objekten.rows[i].key[3]);
+					} else {
+						$("#BsImportiertVon").val("");
+					}
+					$("#BsAnzDs_label").html("Anzahl Arten/Lebensräume");
+					$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
+					// dafür sorgen, dass textareas genug gross sind
+					$('#importieren_bs textarea').each(function () {
+						FitToContent(this, document.documentElement.clientHeight);
+					});
+					$("#BsName").focus();
+				}
+				// löschen-Schaltfläche einblenden
+				$("#BsLoeschen").css("display", "block");
+			}
+		} else {
+			// löschen-Schaltfläche ausblenden
+			$("#BsLoeschen").css("display", "none");
+		}
+	} else {
+		// melden, dass diese BS nicht bearbeitet werden kann
+		$('#meldung_bs_nicht_bearbeitbar').modal();
+	}
+}
+
+// wenn DsFile geändert wird
+function handleDsFileChange() {
+	event.preventDefault();
+	// Check for the various File API support
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		// Great success! All the File APIs are supported
+	} else {
+		$("#meldung_individuell_label").html("Importieren nicht möglich");
+		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
+		$("#meldung_individuell_schliessen").html("schliessen");
+		$('#meldung_individuell').modal();
+		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+		return;
+	}
+	var file = event.target.files[0],
+	reader = new FileReader();
+	if (typeof event.target.files[0] === "undefined") {
+		// vorhandene Datei wurde entfernt
+		$("#DsTabelleEigenschaften").css("display", "none");
+		$("#importieren_ds_ids_identifizieren_fehler_text").css("display", "none");
+		$("#importieren_ds_ids_identifizieren_erfolg_text").css("display", "none");
+		$("#DsImportieren").css("display", "none");
+		$("#DsEntfernen").css("display", "none");
+	}
+	reader.onload = function (event) {
+		window.dsDatensätze = $.csv.toObjects(event.target.result);
+		erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
+	};
+	reader.readAsText(file);
+}
+
+// wenn BsFile geändert wird
+function handleBsFileChange() {
+	event.preventDefault();
+	// Check for the various File API support
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		// Great success! All the File APIs are supported
+	} else {
+		$("#meldung_individuell_label").html("Importieren nicht möglich");
+		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
+		$("#meldung_individuell_schliessen").html("schliessen");
+		$('#meldung_individuell').modal();
+		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+		return;
+	}
+	var file = event.target.files[0],
+	reader = new FileReader();
+	if (typeof event.target.files[0] === "undefined") {
+		// vorhandene Datei wurde entfernt
+		$("#BsTabelleEigenschaften").css("display", "none");
+		$("#importieren_bs_ids_identifizieren_fehler_text").css("display", "none");
+		$("#importieren_bs_ids_identifizieren_erfolg_text").css("display", "none");
+		$("#BsImportieren").css("display", "none");
+		$("#BsEntfernen").css("display", "none");
+	}
+	reader.onload = function (event) {
+		window.bsDatensätze = $.csv.toObjects(event.target.result);
+		erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
+	};
+	reader.readAsText(file);
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
