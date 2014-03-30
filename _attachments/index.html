@@ -1152,249 +1152,37 @@
 
 				$("#export").on("change", ".feld_waehlen_alle_von_ds", handleFeldWaehlenAlleVonDs);
 
-				$("#export").on("change", ".export_feld_filtern", function(event) {
-					// kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
-					var bezDsFiltered = [];
-					var that = this;
-					$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
-						if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
-							bezDsFiltered.push($(this).attr('eigenschaft'));
-						}
-					});
-					// eindeutige Liste der dsTypen erstellen
-					bezDsFiltered = _.union(bezDsFiltered);
-					if (bezDsFiltered && bezDsFiltered.length > 1) {
-						$('#meldung_zuviele_bs').modal();
-						$(this).val("");
-					} else {
-						exportZuruecksetzen();
-					}
-				});
+				$("#export").on("change", ".export_feld_filtern", handleExportFeldFilternChange);
 
-				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", function() {
-					exportZuruecksetzen();
-				});
+				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", exportZuruecksetzen);
 
-				$("#exportieren_exportieren").on("show", function() {
-					// zur Schaltfläche Vorschau scrollen
-					$('html, body').animate({
-						scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
-					}, 2000);
-				});
+				$("#exportieren_exportieren").on("show", handleExportierenExportierenShow);
 
 				$("#art").on("click", ".btn.lr_bearb", function(event) {
 					event.preventDefault();
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_bearb", function() {
-					if (!$(this).hasClass('disabled')) {
-						bearbeiteLrTaxonomie();
-					}
-				});
+				$("#art").on("click", ".btn.lr_bearb_bearb", handleBtnLrBearbBearbKlick);
 
-				$("#art").on("click", ".btn.lr_bearb_schuetzen", function() {
-					if (!$(this).hasClass('disabled')) {
-						schuetzeLrTaxonomie();
-						// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-						try {
-							delete window.lr_bearb;
-						}
-						catch (e) {
-							window.lr_bearb = undefined;
-						}
-					}
-				});
+				$("#art").on("click", ".btn.lr_bearb_schuetzen", handleBtnLrBearbSchuetzenClick);
 
-				$("#art").on("click", ".btn.lr_bearb_neu", function() {
-					if (!$(this).hasClass('disabled')) {
-						initiiereLrParentAuswahlliste($("#Taxonomie").val());
-					}
-				});
+				$("#art").on("click", ".btn.lr_bearb_neu", handleBtnLrBearbNeuClick);
 
-				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', function() {
-					// prüfen, ob oberster Node gewählt wurde
-					var parent_name = $(this).val(),
-						parent_id = this.id,
-						parent_row, 
-						parent = {}, 
-						object = {};
-					// zuerst eine id holen
-					object._id = $.couch.newUUID(1);
-					object.Gruppe = "Lebensräume";
-					object.Typ = "Objekt";
-					object.Taxonomie = {};
-					object.Taxonomie.Name = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-					object.Taxonomie.Daten = {};
-					object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-					// wenn keine Wurzel: Label anzeigen
-					if (parent_id !== "0") {
-						object.Taxonomie.Daten.Label = "";
-					}
-					object.Taxonomie.Daten.Einheit = "unbeschriebener Lebensraum";
-					if (parent_id === "0") {
-						object.Taxonomie.Daten.Einheit = "neue Taxonomie";
-					}
-					/*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
-					object.Taxonomie.Daten["Einheit-Nr FNS"] = "";
-					if (parent_id === "0") {
-						object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
-						object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
-					}*/
-					object.Taxonomie.Daten["Beschreibung"] = "";
-					object.Datensammlungen = [];
-					object.Beziehungssammlungen = [];
-					// jetzt den parent erstellen
-					// geht nicht vorher, weil die id bekannt sein muss
-					if (parent_id === "0") {
-						// das ist die Wurzel der Taxonomie
-						parent.Name = "neue Taxonomie";
-						parent.GUID = object._id;
-						// bei der Wurzel ist Hierarchie gleich parent
-						object.Taxonomie.Daten.Hierarchie = [];
-						object.Taxonomie.Daten.Hierarchie.push(parent);
-					} else {
-						parent.Name = parent_name;
-						parent.GUID = parent_id;
-					}
-					object.Taxonomie.Daten.Parent = parent;
-					$db = $.couch.db("artendb");
-					$db.saveDoc(object, {
-						success: function(data2) {
-							object._rev = data2.rev;
-							if (parent_id !== "0") {
-								// die Hierarchie aufbauen und setzen
-								// bei der Wurzel ist sie schon gesetzt
-								aktualisiereHierarchieEinesNeuenLr(null, object, true);
-							} else {
-								$.when(erstelleBaum()).then(function() {
-									oeffneBaumZuId(object._id);
-									$('#lr_parent_waehlen').modal('hide');
-								});
-							}
-						}
-					});
-				});
+				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', handleLrParentOptionenChange);
 
-				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
-					event.preventDefault();
-					// zuerst die id des Objekts holen
-					var uri = new Uri($(location).attr('href'));
-					var id = uri.getQueryParamValue('id');
-					// wenn browser history nicht unterstützt, erstellt history.js eine hash
-					// dann muss die id durch die id in der hash ersetzt werden
-					var hash = uri.anchor();
-					if (hash) {
-						var uri2 = new Uri(hash);
-						id = uri2.getQueryParamValue('id');
-					}
-					// Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
-					$db = $.couch.db("artendb");
-					$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
-						success: function(data) {
-							// daraus einen Array von docs machen
-							var doc_array = _.map(data.rows, function(row) {
-								return row.doc;
-							});
-							// und diese Dokumente nun löschen
-							loescheMassenMitObjektArray(doc_array);
-							// vorigen node ermitteln
-							var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
-							// node des gelöschten LR entfernen
-							jQuery.jstree._reference("#" + id).delete_node("#" + id);
-							// vorigen node öffnen
-							if (voriger_node) {
-								$.jstree._reference(voriger_node).select_node(voriger_node);
-							} else {
-								oeffneGruppe("Lebensräume");
-							}
-						}
-					});
-				});
+				$(document).on("click", "#rueckfrage_lr_loeschen_ja", handleRueckfrageLrLoeschenJaClick);
 
-				$("#art").on("change", ".panel-body.Lebensräume.Taxonomie .controls", function() {
-					speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'))
-				});
+				$("#art").on("change", ".panel-body.Lebensräume.Taxonomie .controls", handleLrTaxonomieControlsChange);
 
-				$('#art').on('shown.bs.collapse', '.panel-body.Lebensräume.Taxonomie', function() {
-					if (window.lr_bearb) {
-						bearbeiteLrTaxonomie();
-					}
-					$(".bearb_toolbar").show();
-				});
+				$('#art').on('shown.bs.collapse', '.panel-body.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieShown);
 
-				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', function() {
-					// nur ausführen, wenn exportieren_exportieren_collapse offen ist
-					// komischerweise wurde dieser Code immer ausglöst, wenn bei Lebensräumen F5 gedrückt wurde!
-					if ($("#exportieren_exportieren_collapse").css("display") === "block") {
-						// Tabelle und Herunterladen-Schaltfläche ausblenden
-						$("#exportieren_exportieren_tabelle").css("display", "none");
-						$(".exportieren_exportieren_exportieren").css("display", "none");
-						// filtert und baut danach die Vorschautabelle auf
-						filtereFuerExport();
-					}
-				});
+				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', handleExportierenExportierenCollapseShown);
 
-				$('#art').on('hidden.bs.collapse', '.panel-body.Lebensräume.Taxonomie', function() {
-					$(".bearb_toolbar").hide();
-				});
+				$('#art').on('hidden.bs.collapse', '.panel-body.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieHidden);
 
-				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();
-					var hinweisNeu;
-					if ($(this).hasClass("active")) {
-						window.fasseTaxonomienZusammen = false;
-						$(this).html("Alle Taxonomien zusammenfassen");
-						hinweisNeu = "<br>Alle Taxonomien sind zusammengefasst";
-					} else {
-						window.fasseTaxonomienZusammen = true;
-						$(this).html("Taxonomien einzeln behandeln");
-						hinweisNeu = "<br>Alle Taxonomien werden einzeln dargestellt";
-					}
-					// Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-					var gruppeIstGewählt = false;
-					$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_ds_objekte_waehlen_gruppe").each(function() {
-						if ($(this).prop('checked')) {
-							gruppeIstGewählt = true;
-						}
-					});
-					if (gruppeIstGewählt) {
-						erstelleListeFuerFeldwahl();
-					}
-				});
+				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", handleExportierenObjekteTaxonomienZusammenfassenClick);
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();
-					if (window.File && window.FileReader && window.FileList && window.Blob) {
-						// Great success! All the File APIs are supported
-						// das funktioniert nicht so super:
-						// Chrome: super. Aber manchmal Absturz!
-						// Firefox: super
-						// Safari auf MacOs: Fehlermeldung
-						// iOs: perfekt
-						// Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt (wenn sie dann endlich auftaucht)
-						// IE9: Windows fragt, ob man das Öffnen einer App gestatten will, dann scheitert es
-						// IE10: funktioniert
-						// soll besser werden, sobald Standards umgesetzt werden
-						window.exportstring = erstelleExportString(window.exportieren_objekte);
-						var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
-						//var blob = new Blob([window.exportstring], {type: "application/octet-stream;charset=utf-8;"});
-						var d = new Date();
-						var month = d.getMonth()+1;
-						var day = d.getDate();
-						var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-						//console.log("Blob erstellt, jetzt folgt saveAs");
-						saveAs(blob, output + "_export.csv");
-					} else {
-						$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");
-						$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht.<br>Sie können die Datei vom Server herunterladen.");
-						$("#meldung_individuell_schliessen").html("schliessen");
-						$('#meldung_individuell').modal();
-						return;
-					}
-						
-				});
+				$("#export").on("click", "#exportieren_exportieren_exportieren", handleExportierenExportierenExportierenClick);
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
 					// verhindern, dass bootstrap ganz nach oben scrollt

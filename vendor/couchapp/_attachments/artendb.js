@@ -1935,6 +1935,249 @@ function handleExportierenDsObjekteWaehlenGruppeChange() {
 	$("#exportieren_exportieren_tabelle").css("display", "none");
 }
 
+// wenn export_feld_filtern geändert wird
+// kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
+function handleExportFeldFilternChange() {
+	var bezDsFiltered = [],
+		that = this;
+	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
+		if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
+			bezDsFiltered.push($(this).attr('eigenschaft'));
+		}
+	});
+	// eindeutige Liste der dsTypen erstellen
+	bezDsFiltered = _.union(bezDsFiltered);
+	if (bezDsFiltered && bezDsFiltered.length > 1) {
+		$('#meldung_zuviele_bs').modal();
+		$(this).val("");
+	} else {
+		exportZuruecksetzen();
+	}
+}
+
+// wenn exportieren_exportieren angezeigt wird
+// zur Schaltfläche Vorschau scrollen
+function handleExportierenExportierenShow() {
+	$('html, body').animate({
+		scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
+	}, 2000);
+}
+
+// wenn .btn.lr_bearb_bearb geklickt wird
+function handleBtnLrBearbBearbKlick() {
+	if (!$(this).hasClass('disabled')) {
+		bearbeiteLrTaxonomie();
+	}
+}
+
+// wenn .btn.lr_bearb_schuetzen geklickt wird
+function handleBtnLrBearbSchuetzenClick() {
+	if (!$(this).hasClass('disabled')) {
+		schuetzeLrTaxonomie();
+		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
+		delete window.lr_bearb;
+	}
+}
+
+// wenn .btn.lr_bearb_neu geklickt wird
+function handleBtnLrBearbNeuClick() {
+	if (!$(this).hasClass('disabled')) {
+		initiiereLrParentAuswahlliste($("#Taxonomie").val());
+	}
+}
+
+// wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
+function handleLrParentOptionenChange() {
+	// prüfen, ob oberster Node gewählt wurde
+	var parent_name = $(this).val(),
+		parent_id = this.id,
+		parent_row, 
+		parent = {}, 
+		object = {};
+	// zuerst eine id holen
+	object._id = $.couch.newUUID(1);
+	object.Gruppe = "Lebensräume";
+	object.Typ = "Objekt";
+	object.Taxonomie = {};
+	object.Taxonomie.Name = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+	object.Taxonomie.Daten = {};
+	object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+	// wenn keine Wurzel: Label anzeigen
+	if (parent_id !== "0") {
+		object.Taxonomie.Daten.Label = "";
+	}
+	object.Taxonomie.Daten.Einheit = "unbeschriebener Lebensraum";
+	if (parent_id === "0") {
+		object.Taxonomie.Daten.Einheit = "neue Taxonomie";
+	}
+	/*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
+	object.Taxonomie.Daten["Einheit-Nr FNS"] = "";
+	if (parent_id === "0") {
+		object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
+		object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
+	}*/
+	object.Taxonomie.Daten["Beschreibung"] = "";
+	object.Datensammlungen = [];
+	object.Beziehungssammlungen = [];
+	// jetzt den parent erstellen
+	// geht nicht vorher, weil die id bekannt sein muss
+	if (parent_id === "0") {
+		// das ist die Wurzel der Taxonomie
+		parent.Name = "neue Taxonomie";
+		parent.GUID = object._id;
+		// bei der Wurzel ist Hierarchie gleich parent
+		object.Taxonomie.Daten.Hierarchie = [];
+		object.Taxonomie.Daten.Hierarchie.push(parent);
+	} else {
+		parent.Name = parent_name;
+		parent.GUID = parent_id;
+	}
+	object.Taxonomie.Daten.Parent = parent;
+	$db = $.couch.db("artendb");
+	$db.saveDoc(object, {
+		success: function(data2) {
+			object._rev = data2.rev;
+			if (parent_id !== "0") {
+				// die Hierarchie aufbauen und setzen
+				// bei der Wurzel ist sie schon gesetzt
+				aktualisiereHierarchieEinesNeuenLr(null, object, true);
+			} else {
+				$.when(erstelleBaum()).then(function() {
+					oeffneBaumZuId(object._id);
+					$('#lr_parent_waehlen').modal('hide');
+				});
+			}
+		}
+	});
+}
+
+// wenn rueckfrage_lr_loeschen_ja geklickt wird
+function handleRueckfrageLrLoeschenJaClick() {
+	event.preventDefault();
+	// zuerst die id des Objekts holen
+	var uri = new Uri($(location).attr('href')),
+		id = uri.getQueryParamValue('id'),
+		hash = uri.anchor();
+	// wenn browser history nicht unterstützt, erstellt history.js eine hash
+	// dann muss die id durch die id in der hash ersetzt werden
+	if (hash) {
+		var uri2 = new Uri(hash);
+		id = uri2.getQueryParamValue('id');
+	}
+	// Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
+	$db = $.couch.db("artendb");
+	$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
+		success: function(data) {
+			// daraus einen Array von docs machen
+			var doc_array = _.map(data.rows, function(row) {
+				return row.doc;
+			});
+			// und diese Dokumente nun löschen
+			loescheMassenMitObjektArray(doc_array);
+			// vorigen node ermitteln
+			var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+			// node des gelöschten LR entfernen
+			jQuery.jstree._reference("#" + id).delete_node("#" + id);
+			// vorigen node öffnen
+			if (voriger_node) {
+				$.jstree._reference(voriger_node).select_node(voriger_node);
+			} else {
+				oeffneGruppe("Lebensräume");
+			}
+		}
+	});
+}
+
+// Wenn #art .panel-body.Lebensräume.Taxonomie .controls geändert wird
+function handleLrTaxonomieControlsChange() {
+	speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
+}
+
+// wenn .panel-body.Lebensräume.Taxonomie geöffnet wird
+function handlePanelbodyLrTaxonomieShown() {
+	if (window.lr_bearb) {
+		bearbeiteLrTaxonomie();
+	}
+	$(".bearb_toolbar").show();
+}
+
+// wenn #exportieren_exportieren_collapse geöffnet wird
+function handleExportierenExportierenCollapseShown() {
+	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
+	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
+	if ($("#exportieren_exportieren_collapse").css("display") === "block") {
+		// Tabelle und Herunterladen-Schaltfläche ausblenden
+		$("#exportieren_exportieren_tabelle").css("display", "none");
+		$(".exportieren_exportieren_exportieren").css("display", "none");
+		// filtert und baut danach die Vorschautabelle auf
+		filtereFuerExport();
+	}
+}
+
+// wenn .panel-body.Lebensräume.Taxonomie geschlossen wird
+function handlePanelbodyLrTaxonomieHidden() {
+	$(".bearb_toolbar").hide();
+}
+
+// wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
+function handleExportierenObjekteTaxonomienZusammenfassenClick() {
+	// verhindern, dass bootstrap ganz nach oben scrollt
+	event.preventDefault();
+	var hinweisNeu;
+	if ($(this).hasClass("active")) {
+		window.fasseTaxonomienZusammen = false;
+		$(this).html("Alle Taxonomien zusammenfassen");
+		hinweisNeu = "<br>Alle Taxonomien sind zusammengefasst";
+	} else {
+		window.fasseTaxonomienZusammen = true;
+		$(this).html("Taxonomien einzeln behandeln");
+		hinweisNeu = "<br>Alle Taxonomien werden einzeln dargestellt";
+	}
+	// Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
+	var gruppeIstGewählt = false;
+	$("#exportieren_objekte_waehlen_gruppen_collapse .exportieren_ds_objekte_waehlen_gruppe").each(function() {
+		if ($(this).prop('checked')) {
+			gruppeIstGewählt = true;
+		}
+	});
+	if (gruppeIstGewählt) {
+		erstelleListeFuerFeldwahl();
+	}
+}
+
+// wenn #exportieren_exportieren_exportieren geklickt wird
+function handleExportierenExportierenExportierenClick() {
+	// verhindern, dass bootstrap ganz nach oben scrollt
+	event.preventDefault();
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		// Great success! All the File APIs are supported
+		// das funktioniert nicht so super:
+		// Chrome: super. Aber manchmal Absturz!
+		// Firefox: super
+		// Safari auf MacOs: Fehlermeldung
+		// iOs: perfekt
+		// Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt (wenn sie dann endlich auftaucht)
+		// IE9: Windows fragt, ob man das Öffnen einer App gestatten will, dann scheitert es
+		// IE10: funktioniert
+		// soll besser werden, sobald Standards umgesetzt werden
+		window.exportstring = erstelleExportString(window.exportieren_objekte);
+		var blob = new Blob([window.exportstring], {type: "text/csv;charset=utf-8;"});
+		//var blob = new Blob([window.exportstring], {type: "application/octet-stream;charset=utf-8;"});
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+		//console.log("Blob erstellt, jetzt folgt saveAs");
+		saveAs(blob, output + "_export.csv");
+	} else {
+		$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");
+		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht.<br>Sie können die Datei vom Server herunterladen.");
+		$("#meldung_individuell_schliessen").html("schliessen");
+		$('#meldung_individuell').modal();
+		return;
+	}
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
