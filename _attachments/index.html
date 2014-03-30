@@ -1072,7 +1072,7 @@
 
 				// testen, ob der Browser das Importieren unterstützt
 				// wenn nein, Meldung bringen
-				$("#menu_btn").on("click", "#ds_importieren", handleDsImportierenClick);
+				$("#menu_btn").on("click", "#ds_importieren", handleDs_ImportierenClick);
 
 				// testen, ob der Browser das Importieren unterstützt
 				// wenn nein, Meldung bringen
@@ -1184,16 +1184,9 @@
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", handleExportierenExportierenExportierenClick);
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();	
-					filtereFuerExport("direkt");
-				});
+				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", handleExportierenExportierenExportierenDirektClick);
 
-				$("#export").on("click", ".panel-heading a", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();
-				});
+				$("#export").on("click", ".panel-heading a", handleExportierenExportierenExportierenDirektClick);
 
 				$("#importieren_ds").on("click", ".panel-heading a", function(event) {
 					// verhindern, dass bootstrap ganz nach oben scrollt
@@ -1205,98 +1198,27 @@
 				});
 
 				// Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
-				$(".form").on("shown.bs.collapse", ".panel", function() {
-					$(this).find('textarea').each(function() {
-						FitToContent(this.id);
-					});
-				});
+				$(".form").on("shown.bs.collapse", ".panel", handlePanelShown);
 
 				// Klick auf Link zu Art steuern
-				$(".form").on("click", ".LinkZuArtGleicherGruppe", function(event) {
-					var id;
-					event.preventDefault();
-					id = $(this).attr("artid");
-					$("#tree" + window.Gruppe).jstree("clear_search");
-					$(".suchen").val("");
-					jQuery("#tree" + window.Gruppe).jstree("deselect_all");
-					jQuery("#tree" + window.Gruppe).jstree("close_all", -1);
-					jQuery("#tree" + window.Gruppe).jstree("select_node", "#" + id);
-				});
+				$(".form").on("click", ".LinkZuArtGleicherGruppe", handleLinkZuArtGleicherGruppeClick);
 			});
 
-			$(window).resize(function() {
-				setzeTreehoehe();
-				// Höhe der Textareas korrigieren
-				$('form').each(function() {
-					$('textarea').each(function() {
-						FitToContent(this.id);
-					});
-				});
-			});
+			$(window).resize(handleResize);
 
-			$(document).on("click", ".anmelden_btn", function(event) {
-				event.preventDefault();
-				// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
-				var bs_ds = this.id.substring(this.id.length-2);
-				if (bs_ds === "rt") {
-					bs_ds = "art";
-				}
-				meldeUserAn(bs_ds);
-			});
+			$(document).on("click", ".anmelden_btn", handleAnmeldenBtnClick);
 
-			$(document).on("click", ".abmelden_btn", function(event) {
-				event.preventDefault();
-				meldeUserAb();
-			});
+			$(document).on("click", ".abmelden_btn", handleAbmeldenBtnClick);
 
-			$(document).on("keyup", ".Email", function(event) {
-				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$(".Emailhinweis").css("display", "none");
-			});
+			$(document).on("keyup", ".Email", handleEmailKeyup);
 
-			$(document).on("keyup", ".Passwort", function(event) {
-				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$(".Passworthinweis").css("display", "none");
-			});
+			$(document).on("keyup", ".Passwort", handlePasswortKeyup);
 
-			$(document).on("keyup", ".Passwort2", function(event) {
-				/*allfällig noch vorhandenen Hinweis ausblenden*/
-				$(".Passworthinweis2").css("display", "none");
-			});
+			$(document).on("keyup", ".Passwort2", handlePasswort2Keyup);
 
-			$(document).on("click", ".konto_erstellen_btn", function(event) {
-				event.preventDefault();
-				var bs_ds = this.id.substring(this.id.length-2);
-				if (bs_ds === "rt") {
-					bs_ds = "art";
-				}
-				$(".signup").css("display", "block");
-				$(".anmelden_btn").hide();
-				$(".abmelden_btn").hide();
-				$(".konto_erstellen_btn").hide();
-				$(".konto_speichern_btn").show();
-				$(".importieren_anmelden_fehler").hide();
-				setTimeout(function() {
-					$("#Email_" + bs_ds).focus();
-				}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-			});
+			$(document).on("click", ".konto_erstellen_btn", handleKontoErstellenBtnClick);
 
-			$(document).on("click", ".konto_speichern_btn", function(event) {
-				event.preventDefault();
-				var bs_ds = this.id.substring(this.id.length-2);
-				if (bs_ds === "rt") {
-					bs_ds = "art";
-				}
-				if (validiereSignup(bs_ds)) {
-					erstelleKonto(bs_ds);
-					// Anmeldefenster zurücksetzen
-					$(".signup").css("display", "none");
-					$(".anmelden_btn").hide();
-					$(".abmelden_btn").show();
-					$(".konto_erstellen_btn").hide();
-					$(".konto_speichern_btn").hide();
-				}
-			});
+			$(document).on("click", ".konto_speichern_btn", handleKontoSpeichernBtnClick);
 
 		</script>
 	</body>

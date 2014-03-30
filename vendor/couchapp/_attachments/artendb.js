@@ -1650,7 +1650,7 @@ function handleMenuBtnClick() {
 // wenn ds_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-function handleDsImportierenClick() {
+function handleDs_ImportierenClick() {
 	if(isFileAPIAvailable()) {
 		zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -2175,6 +2175,112 @@ function handleExportierenExportierenExportierenClick() {
 		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
 		return;
+	}
+}
+
+// wenn #exportieren_exportieren_exportieren_direkt geklickt wird
+function handleExportierenExportierenExportierenDirektClick() {
+	// verhindern, dass bootstrap ganz nach oben scrollt
+	event.preventDefault();	
+	filtereFuerExport("direkt");
+}
+
+// wenn .panel geöffnet wird
+// Höhe der textareas an Textgrösse anpassen
+function handlePanelShown() {
+	$(this).find('textarea').each(function() {
+		FitToContent(this.id);
+	});
+}
+
+// wenn .LinkZuArtGleicherGruppe geklickt wird
+function handleLinkZuArtGleicherGruppeClick() {
+	event.preventDefault();
+	var id = $(this).attr("artid");
+	$("#tree" + window.Gruppe).jstree("clear_search");
+	$(".suchen").val("");
+	$("#tree" + window.Gruppe).jstree("deselect_all");
+	$("#tree" + window.Gruppe).jstree("close_all", -1);
+	$("#tree" + window.Gruppe).jstree("select_node", "#" + id);
+}
+
+// wenn Fenstergrösse verändert wird
+function handleResize() {
+	setzeTreehoehe();
+	// Höhe der Textareas korrigieren
+	$('#forms').find('textarea').each(function() {
+		FitToContent(this.id);
+	});
+}
+
+// wenn .anmelden_btn geklickt wird
+function handleAnmeldenBtnClick() {
+	event.preventDefault();
+	// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
+	var bs_ds = this.id.substring(this.id.length-2);
+	if (bs_ds === "rt") {
+		bs_ds = "art";
+	}
+	meldeUserAn(bs_ds);
+}
+
+// wenn .abmelden_btn geklickt wird
+function handleAbmeldenBtnClick() {
+	event.preventDefault();
+	meldeUserAb();
+}
+
+// wenn .Email keyup
+function handleEmailKeyup() {
+	//allfällig noch vorhandenen Hinweis ausblenden
+	$(".Emailhinweis").css("display", "none");
+}
+
+// wenn .Passwort keyup
+function handlePasswortKeyup() {
+	//allfällig noch vorhandenen Hinweis ausblenden
+	$(".Passworthinweis").css("display", "none");
+}
+
+// wenn .Passwort2 keyup
+function handlePasswort2Keyup() {
+	//allfällig noch vorhandenen Hinweis ausblenden
+	$(".Passworthinweis2").css("display", "none");
+}
+
+// wenn .konto_erstellen_btn geklickt wird
+function handleKontoErstellenBtnClick() {
+	event.preventDefault();
+	var bs_ds = this.id.substring(this.id.length-2);
+	if (bs_ds === "rt") {
+		bs_ds = "art";
+	}
+	$(".signup").css("display", "block");
+	$(".anmelden_btn").hide();
+	$(".abmelden_btn").hide();
+	$(".konto_erstellen_btn").hide();
+	$(".konto_speichern_btn").show();
+	$(".importieren_anmelden_fehler").hide();
+	setTimeout(function() {
+		$("#Email_" + bs_ds).focus();
+	}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+}
+
+// wenn .konto_speichern_btn geklickt wird
+function handleKontoSpeichernBtnClick() {
+	event.preventDefault();
+	var bs_ds = this.id.substring(this.id.length-2);
+	if (bs_ds === "rt") {
+		bs_ds = "art";
+	}
+	if (validiereSignup(bs_ds)) {
+		erstelleKonto(bs_ds);
+		// Anmeldefenster zurücksetzen
+		$(".signup").css("display", "none");
+		$(".anmelden_btn").hide();
+		$(".abmelden_btn").show();
+		$(".konto_erstellen_btn").hide();
+		$(".konto_speichern_btn").hide();
 	}
 }
 
