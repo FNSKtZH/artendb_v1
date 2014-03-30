@@ -1793,6 +1793,148 @@ function handleDsWaehlenChange() {
 	}
 }
 
+// wenn DsName geändert wird
+// suchen, ob schon eine Datensammlung mit diesem Namen existiert
+// und sie von jemand anderem importiert wurde
+// und sie nicht zusammenfassend ist
+function handleDsNameChange() {
+	var that = this;
+	var DsKey = _.find(window.DsKeys, function(key) {
+		return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+	});
+	if (DsKey) {
+		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
+		$("#importieren_ds_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+		setTimeout(function() {
+			$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
+		}, 30000);
+		$("#DsName").val("");
+		$("#DsName").focus();
+	} else {
+		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
+	}
+}
+
+// wenn DsLoeschen geklickt wird
+function handleDsLoeschenClick() {
+	event.preventDefault();
+	// Rückmeldung anzeigen
+	$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
+	$("#importieren_ds_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
+	$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
+		// jetzt Ergebnisse anzeigen
+		$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
+		$("#importieren_ds_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
+	});
+}
+
+// wenn BsLoeschen geklickt wird
+function handleBsLoeschenClick() {
+	event.preventDefault();
+	// Rückmeldung anzeigen
+	$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
+	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
+	$.when(entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
+		// jetzt Ergebnisse anzeigen
+		$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
+		$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");
+	});
+}
+
+// wenn DsImportieren geklickt wird
+function handleDsImportierenClick() {
+	event.preventDefault();
+	$.when(importiereDatensammlung()).then(function() {
+		// jetzt Ergebnisse anzeigen
+		console.log("Datensammlung importiert");
+	});
+}
+
+// wenn BsImportieren geklickt wird
+function handleBsImportierenClick() {
+	event.preventDefault();
+	$.when(importiereBeziehungssammlung()).then(function() {
+		// jetzt Ergebnisse anzeigen
+		console.log("Beziehungssammlung importiert");
+	});
+}
+
+// wenn DsEntfernen geklickt wird
+function handleDsEntfernenClick() {
+	event.preventDefault();
+	$.when(entferneDatensammlung()).then(function() {
+		// jetzt Ergebnisse anzeigen
+		console.log("Datensammlung entfernt");
+	});
+}
+
+// wenn BsEntfernen geklickt wird
+function handleBsEntfernenClick() {
+	event.preventDefault();
+	$.when(entferneBeziehungssammlung()).then(function() {
+		// jetzt Ergebnisse anzeigen
+		console.log("Beziehungssammlung entfernt");
+	});
+}
+
+// wenn exportieren geklickt wird
+function handleExportierenClick() {
+	zeigeFormular("export");
+	// Exportieren-Guids schaffen, damit kein altes existiert
+	window.exportieren_guids = [];
+	delete window.exportieren_objekte;
+	delete window.exportieren_objekte_sik;
+}
+
+// wenn exportieren_alt geklickt wird
+function handleExportierenAltClick() {
+	window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true");
+}
+
+// wenn .feld_waehlen geändert wird
+// kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
+// und pro Beziehung eine Zeile ausgegeben wird. 
+// Wenn ja: reklamieren und rückgängig machen
+function handleFeldWaehlenChange() {
+	if ($("#export_bez_in_zeilen").prop('checked')) {
+		var bezDsChecked = [];
+		var that = this;
+		$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
+			if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
+				bezDsChecked.push($(this).attr('datensammlung'));
+			}
+		});
+		// eindeutige Liste der dsTypen erstellen
+		bezDsChecked = _.union(bezDsChecked);
+		if (bezDsChecked && bezDsChecked.length > 1) {
+			$('#meldung_zuviele_bs').modal();
+			$(that).prop('checked', false);
+		} else {
+			exportZuruecksetzen();
+		}
+	}
+}
+
+// wenn .feld_waehlen_alle_von_ds geändert wird
+// wenn checked: alle unchecken, sonst alle checken
+function handleFeldWaehlenAlleVonDs() {
+	var ds = $(this).attr('datensammlung'),
+		status = false;
+	if ($(this).prop('checked')) {
+		status = true;
+	}
+	$('[datensammlung="'+ds+'"]').each(function() {
+		$(this).prop('checked', status);
+	});
+}
+
+// wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
+function handleExportierenDsObjekteWaehlenGruppeChange() {
+	erstelleListeFuerFeldwahl();
+	// Tabelle ausblenden, falls sie eingeblendet war
+	$("#exportieren_exportieren_tabelle").css("display", "none");
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
