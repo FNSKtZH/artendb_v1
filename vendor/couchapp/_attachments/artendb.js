@@ -2348,6 +2348,8 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 			} else if (Datensätze[i][x] || Datensätze[i][x] === 0) {
 				html += Datensätze[i][x];
 			} else if (Datensätze[i][x] === false) {
+				// dafür sogen, dass false auch angezeigt wird
+				// ohne diese Zeile bleibt das Feld sonst leer
 				html += Datensätze[i][x];
 			} else {
 				// nullwerte als leerwerte (nicht) anzeigen
