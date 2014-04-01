@@ -2347,6 +2347,8 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 				html += JSON.stringify(Datensätze[i][x]);
 			} else if (Datensätze[i][x] || Datensätze[i][x] === 0) {
 				html += Datensätze[i][x];
+			} else if (Datensätze[i][x] === false) {
+				html += Datensätze[i][x];
 			} else {
 				// nullwerte als leerwerte (nicht) anzeigen
 				html += "";
