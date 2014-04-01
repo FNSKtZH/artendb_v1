@@ -1186,7 +1186,10 @@
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", handleExportierenExportierenExportierenDirektClick);
 
-				$("#export").on("click", ".panel-heading a", handleExportierenExportierenExportierenDirektClick);
+				$("#export").on("click", ".panel-heading a", function(event) {
+					// verhindern, dass bootstrap ganz nach oben scrollt
+					event.preventDefault();
+				});
 
 				$("#importieren_ds").on("click", ".panel-heading a", function(event) {
 					// verhindern, dass bootstrap ganz nach oben scrollt

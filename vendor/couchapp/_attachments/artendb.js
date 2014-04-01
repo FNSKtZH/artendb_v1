@@ -3403,6 +3403,7 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 // wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
 // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 function filtereFuerExport(direkt) {
+
 	// kontrollieren, ob eine Gruppe gewählt wurde
 	if (fuerExportGewaehlteGruppen().length === 0) {
 		$('#meldung_keine_gruppen').modal();
@@ -3502,6 +3503,7 @@ function filtereFuerExport(direkt) {
 function uebergebeFilterFuerDirektExport(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
 	// Alle Felder abfragen
 	var fTz = "false";
+
 	// window.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 	if (window.fasseTaxonomienZusammen) {
 		fTz = "true";
