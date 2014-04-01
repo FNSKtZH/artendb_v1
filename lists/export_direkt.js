@@ -55,7 +55,16 @@ function(head, req) {
 				for (var x=0; x<filterkriterien.length; x++) {
 					// die id darf nicht in Kleinschrift verwandelt werden
 					if (filterkriterien[x].Feldname !== "GUID") {
-						filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
+						// true wurde offenbar irgendwie umgewandelt
+						// jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
+						// leider kann true oder false nicht wie gewollt von _a.convertToCorrectType zurückgegeben werden
+						if (filterkriterien[x].Filterwert === "true") {
+							filterkriterien[x].Filterwert = true;
+						} else if (filterkriterien[x].Filterwert === "false") {
+							filterkriterien[x].Filterwert = false;
+						} else {
+							filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
+						}
 					}
 				}
 			}
