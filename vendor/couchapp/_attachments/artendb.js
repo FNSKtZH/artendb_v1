@@ -1343,7 +1343,8 @@ function meldeUserAb() {
 	$(".Passwort").show();
 	$(".anmelden_btn").show();
 	$(".abmelden_btn").hide();
-	$(".konto_erstellen_btn").show();
+	// ausschalten, soll später bei Organisation möglich werden
+	// $(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
 	schuetzeLrTaxonomie();
@@ -1403,7 +1404,8 @@ function zurueckZurAnmeldung(woher) {
 	$("#"+praefix+woher+"_anmelden_collapse").collapse('show');
 	$(".anmelden_btn").show();
 	$(".abmelden_btn").hide();
-	$(".konto_erstellen_btn").show();
+	// ausschalten, soll später bei Organisationen möglich werden
+	//$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#Email_"+woher).focus();
 }
