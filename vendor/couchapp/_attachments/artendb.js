@@ -1397,15 +1397,15 @@ function pruefeAnmeldung(woher) {
 }
 
 function zurueckZurAnmeldung(woher) {
-	// Mitteilen, dass Anmeldung nötig ist
 	var praefix = "importieren_";
+
+	// Bei LR muss der Anmeldungsabschnitt eingeblendet werden
 	if (woher === "art") {
 		praefix = "";
 		$("#art_anmelden").show();
 	}
 
-	console.log("zurueckZurAnmeldung. woher = " + woher);
-
+	// Mitteilen, dass Anmeldung nötig ist
 	$("#"+praefix+woher+"_anmelden_hinweis").alert().css("display", "block");
 	$("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
 	$("#"+praefix+woher+"_anmelden_collapse").collapse('show');
@@ -1978,7 +1978,7 @@ function handleBtnLrBearbSchuetzenClick() {
 	if (!$(this).hasClass('disabled')) {
 		schuetzeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-		delete window.lr_bearb;
+		delete localStorage.lr_bearb;
 	}
 }
 
@@ -2098,7 +2098,7 @@ function handleLrTaxonomieControlsChange() {
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
 function handlePanelbodyLrTaxonomieShown() {
-	if (window.lr_bearb) {
+	if (localStorage.lr_bearb == "true") {
 		bearbeiteLrTaxonomie();
 	}
 }
@@ -3966,8 +3966,11 @@ function bearbeiteLrTaxonomie() {
 	}
 
 	// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-	window.lr_bearb = true;
+	localStorage.lr_bearb = true;
+
+	// Anmeldung: zeigen, aber geschlossen
 	$("#art_anmelden_collapse").collapse('hide');
+	$("#art_anmelden").show();
 
 	// alle Felder schreibbar setzen
 	//$(".Lebensräume.Taxonomie .controls").each(function() {
