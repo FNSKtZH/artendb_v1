@@ -1172,13 +1172,11 @@
 
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", handleRueckfrageLrLoeschenJaClick);
 
-				$("#art").on("change", ".panel-body.Lebensräume.Taxonomie .controls", handleLrTaxonomieControlsChange);
+				$("#art").on("change", ".Lebensräume.Taxonomie .controls", handleLrTaxonomieControlsChange);
 
-				$('#art').on('shown.bs.collapse', '.panel-body.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieShown);
+				$('#art').on('shown.bs.collapse', '.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieShown);
 
 				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', handleExportierenExportierenCollapseShown);
-
-				$('#art').on('hidden.bs.collapse', '.panel-body.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieHidden);
 
 				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", handleExportierenObjekteTaxonomienZusammenfassenClick);
 

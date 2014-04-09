@@ -776,8 +776,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
 	if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
-		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
-		//htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar" style="display:none;"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
+		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 	}
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
 	htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
@@ -1402,7 +1401,11 @@ function zurueckZurAnmeldung(woher) {
 	var praefix = "importieren_";
 	if (woher === "art") {
 		praefix = "";
+		$("#art_anmelden").show();
 	}
+
+	console.log("zurueckZurAnmeldung. woher = " + woher);
+
 	$("#"+praefix+woher+"_anmelden_hinweis").alert().css("display", "block");
 	$("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
 	$("#"+praefix+woher+"_anmelden_collapse").collapse('show');
@@ -2088,17 +2091,16 @@ function handleRueckfrageLrLoeschenJaClick() {
 	});
 }
 
-// Wenn #art .panel-body.Lebensräume.Taxonomie .controls geändert wird
+// Wenn #art .Lebensräume.Taxonomie .controls geändert wird
 function handleLrTaxonomieControlsChange() {
 	speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
 }
 
-// wenn .panel-body.Lebensräume.Taxonomie geöffnet wird
+// wenn .Lebensräume.Taxonomie geöffnet wird
 function handlePanelbodyLrTaxonomieShown() {
 	if (window.lr_bearb) {
 		bearbeiteLrTaxonomie();
 	}
-	$(".bearb_toolbar").show();
 }
 
 // wenn #exportieren_exportieren_collapse geöffnet wird
@@ -2112,11 +2114,6 @@ function handleExportierenExportierenCollapseShown() {
 		// filtert und baut danach die Vorschautabelle auf
 		filtereFuerExport();
 	}
-}
-
-// wenn .panel-body.Lebensräume.Taxonomie geschlossen wird
-function handlePanelbodyLrTaxonomieHidden() {
-	$(".bearb_toolbar").hide();
 }
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
@@ -3964,24 +3961,17 @@ function myTypeOf(Wert) {
 
 function bearbeiteLrTaxonomie() {
 	// Benutzer muss anmelden
-	// der alte Code wurde verbessert
-	// konnte aber noch nicht getestet werden, weil Schaltflächen nicht sichtbar sind
-	// daher alte Version noch behalten
-	/*if (!localStorage.Email) {
-		$("#art_anmelden").show();
-		$("#art_anmelden_collapse").collapse('show');
-		$("#Email_art").focus();
-		return false;
-	}*/
 	if (!pruefeAnmeldung("art")) {
 		return false;
 	}
+
 	// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 	window.lr_bearb = true;
 	$("#art_anmelden_collapse").collapse('hide');
 
 	// alle Felder schreibbar setzen
-	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
+	//$(".Lebensräume.Taxonomie .controls").each(function() {
+	$(".Lebensräume.Taxonomie .controls").each(function() {
 		// einige Felder nicht bearbeiten
 		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
 			$(this).attr('readonly', false);
@@ -3994,13 +3984,15 @@ function bearbeiteLrTaxonomie() {
 			}
 		}
 	});
+
+	// Schreibbarkeit in den Symbolen anzeigen
 	$('.lr_bearb').removeClass('disabled');
 	$(".lr_bearb_bearb").addClass('disabled');
 }
 
 function schuetzeLrTaxonomie() {
 	// alle Felder schreibbar setzen
-	$(".panel-body.Lebensräume.Taxonomie .controls").each(function() {
+	$(".Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
 		if ($(this).parent().attr('href')) {
 			var feldWert = $(this).val();
