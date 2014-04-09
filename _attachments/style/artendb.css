@@ -5,31 +5,30 @@ body {
 #menu_btn {
 	top: 18px;
 	left: 16px;
-	/*vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken*/
+	/* vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken */
 	z-index: 5;
 }
 
 #menu {
 	left: 7px;
-	/*overflow: hidden;*/
 	overflow: visible;
 	border: 1px solid #e5e5e5;
 	border-radius: 6px;
 	padding: 8px 8px 8px 8px;
 	background-color: #FFFFF0;
-	/*auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht)*/
+	/* auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht) */
 	z-index: 1;
 }
 
 #forms {
-	/*wenn forms unter menu kommt muss ein margin vorhanden sein*/
+	/* wenn forms unter menu kommt muss ein margin vorhanden sein */
 	margin:0px 0px 7px 0px;
-	/*bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren*/
+	/* bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren */
 	border: none;
 	padding: 0 0 0 0;
 	position: relative;
 	width: 100%;
-	/*zu Beginn nicht anzeigen*/
+	/* zu Beginn nicht anzeigen */
 	display: none;
 }
 
@@ -51,8 +50,8 @@ body {
 	position: absolute;
 }
 
-/*über 1000px nebeneinander
-  force-mobile: damit kann die Mobil-Sicht manuell gewählt werden*/
+/* über 1000px nebeneinander
+  force-mobile: damit kann die Mobil-Sicht manuell gewählt werden */
 @media screen and (min-width: 1001px) {
 
 	body:not(.force-mobile) #menu {
@@ -78,7 +77,7 @@ body {
 		transform: translate(391px,0px);
 	}
 
-	/*In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div!*/
+	/* In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div! */
 	body:not(.force-mobile) #menu [level="1"] {
 		width: 320px;
 	}
@@ -103,19 +102,19 @@ body {
 .baum {
 	overflow: auto;
 	overflow-x: hidden;
-	/*verhindern, das Text hinter dem Scrollbalken verschwindet*/
+	/* verhindern, das Text hinter dem Scrollbalken verschwindet */
 	padding-right: 15px;
 }
 
-/*Text umbrechen lassen*/
+/* Text umbrechen lassen */
 #menu .jstree a {
 	white-space: normal;
 	height: auto;
 	padding: 4px 1px;
 }
 
-/*Symbol auffälliger machen
-  und zentrieren*/
+/* Symbol auffälliger machen
+  und zentrieren */
 #menu .glyphicon {
 	font-weight: 800;
 	top: 2px;
@@ -143,7 +142,7 @@ body {
 	background-position: -56px -17px;
 }
 
-/*gesuchte Einträge formattieren*/
+/* gesuchte Einträge formattieren */
 .jstree-search {
 	color: #CC012A !important;
 }
@@ -174,7 +173,7 @@ body {
 	margin-bottom: 0px;
 }
 
-/*Gradient, um die panels zu stylen*/
+/* Gradient, um die panels zu stylen */
 .panel-heading-gradient {
 	background-color: #FFFFD8; 
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
@@ -208,7 +207,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	position: relative;
 	left: 68px;
 	top: 8px;
-	/*sonst überlappt es das Formular rechts davon!*/
+	/* sonst überlappt es das Formular rechts davon! */
 	width: 250px;
 }
 
@@ -234,12 +233,12 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 **weil twitter typeahead sie sonst verändert
 */
 #menu .suchfeld {
-	/*Styling mit Lupe links im Suchfeld
+	/* Styling mit Lupe links im Suchfeld
 	width: 319px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;*/
 
-	/*Styling ohne Lupe links im Suchfeld*/
+	/* Styling ohne Lupe links im Suchfeld */
 	width: 358px;
 	border-radius: 3px;
 	background-color: #FFFFFF !important;
@@ -262,9 +261,9 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	width: 200px;
 	color: #555555;
 	margin-right: 7px;
-	/*bootstrap.css macht font-weight bold*/
+	/* bootstrap.css macht font-weight bold */
 	font-weight: normal;
-	/*vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist*/
+	/* vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist */
 	margin-bottom: 0;
 }
 
@@ -295,12 +294,12 @@ label+input[type="radio"], label+input[type="checkbox"] {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	/*wird von bootstrap auf 500 gesetzt, was nicht fett ist*/
+	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
 	font-weight: bold !important;
 }
 
 .felderspalte .form-group {
-	/*bootstrap setzt -15px*/
+	/* bootstrap setzt -15px */
 	margin-left: 0px;
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
@@ -310,7 +309,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .felderspalte {
-	/*bootstrap setzt -15px*/
+	/* bootstrap setzt -15px */
 	margin-left: 0px;
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
@@ -319,7 +318,7 @@ h1, h2, h3, h4, h5, h6 {
 	column-break-inside:avoid;
 }
 
-/*ohne das werden checkboxen z.T. von ihrem Label getrennt, in Chrome*/
+/* ohne das werden checkboxen z.T. von ihrem Label getrennt, in Chrome */
 .felderspalte .checkbox {
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
@@ -348,17 +347,17 @@ a:hover {
 }
 
 .controls {
-	/*Breite fix setzen für Browser, die calc nicht unterstützen*/
+	/* Breite fix setzen für Browser, die calc nicht unterstützen */
 	width: 1000px;
-	/*Breite fix setzen für Browser, die calc unterstützen*/
+	/* Breite fix setzen für Browser, die calc unterstützen */
 	width: -webkit-calc(100% - 230px) !important;
 	width: -o-calc(100% - 230px) !important;
 	width: calc(100% - 230px) !important;
 	font-size: 14px !important;
 }
 
-/*buttons sind ganz weiss
-  so sehen sie aus, wie Felder und fallen gar nicht auf*/
+/* buttons sind ganz weiss
+  so sehen sie aus, wie Felder und fallen gar nicht auf */
 /*.btn-default {
 	background-color: #EBEBEB !important;
 }
@@ -392,34 +391,34 @@ a:hover {
 }
 
 .alert {
-	/*wird erst sichtbar geschaltet, wenn benötigt*/
+	/* wird erst sichtbar geschaltet, wenn benötigt */
 	display: none;
 }
 
 .modal-backdrop.fade.in {
-	/*bootstrap macht schwarz, das ist hässlich*/
+	/* bootstrap macht schwarz, das ist hässlich */
 	opacity: 0.8;
 }
 
 .btn.disabled {
-	/*bootstrap macht 0.85, das ist nur schwer sichtbar*/
+	/* bootstrap macht 0.85, das ist nur schwer sichtbar */
 	opacity: 0.5;
 }
 
 .BeschreibungDatensammlung {
 	font-size:17px;
 	padding-bottom: 0.9em;
-	/*sehr lange links müssen im Wort umbrechen können*/
+	/* sehr lange links müssen im Wort umbrechen können */
 	word-wrap: break-word;
 }
 
-/*alle Datenfelder links ausrichten*/
+/* alle Datenfelder links ausrichten */
 .Datenfelder {
 	float: left;
 	margin: 0 5px 10px 0;
 }
 
-/*ausrichten wie die Felder*/
+/* ausrichten wie die Felder */
 .form-horizontal .form-actions {
 	padding-left: 190px;
 }
@@ -437,7 +436,7 @@ a:hover {
 	margin-top: 16px;
 }
 
-/*Titel für Eigenschaften und Beziehungen stylen*/
+/* Titel für Eigenschaften und Beziehungen stylen */
 .form h4 {
 	padding-left: 15px;
 	margin-bottom: 3px;
@@ -456,11 +455,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .form {
 	margin-left: auto;
-	/*verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt*/
+	/* verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt */
 	display: none;
 }
 
-/*vertikalen Abstand zwischen Feldern verkleinern*/
+/* vertikalen Abstand zwischen Feldern verkleinern */
 #art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
 	margin-bottom: 5px;
 	-webkit-column-break-inside:avoid;
@@ -484,12 +483,12 @@ input[type=file] {
 }
 
 .input-group-xs > .input-group-addon {
-	/*aus unbekanntem Grund stimmt die Höhe nicht*/
+	/* aus unbekanntem Grund stimmt die Höhe nicht */
 	height: 20px;
 }
 
 #art textarea {
-	/*textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso*/
+	/* textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso */
 	/*margin-left: 4px;*/
 }
 
@@ -546,7 +545,7 @@ option {
 }
 
 .hinweis {
-	/*wird erst eingeblendet, wenn ein Anliegen besteht*/
+	/* wird erst eingeblendet, wenn ein Anliegen besteht */
 	display: none;
 	margin-left: 210px;
 	margin-top: 7px;
@@ -566,11 +565,11 @@ option {
 }
 
 .signup {
-	/*wird erst bei signup eingeblendet*/
+	/* wird erst bei signup eingeblendet */
 	display: none;
 }
 
-/*Bootstrap übersteuern*/
+/* Bootstrap übersteuern */
 .form-actions {
 	background-color: transparent;
 	border-top: none;
@@ -590,7 +589,7 @@ option {
 	margin-bottom: 5px;
 }
 
-/*twitter typeahead stylen*/
+/* twitter typeahead stylen */
 .twitter-typeahead {
 	background-color: #FFF !important;
 	font-size: 14px !important;
@@ -619,7 +618,7 @@ option {
 	white-space: nowrap !important;
 }
 
-/*nötig, damit twitter typeahead in bootstrap korrekt dargestellt wird*/
+/* nötig, damit twitter typeahead in bootstrap korrekt dargestellt wird */
 /*twitter typeahead css
  * from: https://github.com/jharding/typeahead.js-bootstrap.css
  */
