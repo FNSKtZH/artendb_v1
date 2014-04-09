@@ -426,11 +426,9 @@ function oeffneBaumZuId(id) {
 					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
 						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
 							$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
-						},true);
-					},true);
-				},true);
-				$("#art_anmelden").hide();
-				break;
+						}, true);
+					}, true);
+				}, true);
 			case "Flora":
 				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 				// oberste Ebene aufbauen nicht nötig, die gibt es schon
@@ -439,8 +437,6 @@ function oeffneBaumZuId(id) {
 						$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
 					}, true);
 				}, true);
-				$("#art_anmelden").hide();
-				break;
 			case "Moose":
 				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 				// oberste Ebene aufbauen nicht nötig, die gibt es schon
@@ -451,16 +447,12 @@ function oeffneBaumZuId(id) {
 						}, true);
 					}, true);
 				}, true);
-				$("#art_anmelden").hide();
-				break;
 			case "Macromycetes":
 				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 				// oberste Ebene aufbauen nicht nötig, die gibt es schon
 				$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
 					$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
 				}, true);
-				$("#art_anmelden").hide();
-				break;
 			case "Lebensräume":
 				var idArray = [];
 				for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
@@ -469,6 +461,8 @@ function oeffneBaumZuId(id) {
 				oeffneNodeNachIdArray(idArray);
 				break;
 			}
+			// Anmeldung verstecken, wenn nicht Lebensräume
+			$("#art_anmelden").hide();
 		}
 	});
 }
@@ -671,10 +665,8 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	$("#art_anmelden").hide();
 	// Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
 	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
-		$('.panel-body').each(function() {
-			if ($(this).attr('id') !== "art_anmelden_collapse") {
-				$(this).collapse('show');
-			}
+		$('.panel-collapse.Taxonomie').each(function() {
+			$(this).collapse('show');
 		});
 	}
 	// jetzt die Links im Menu setzen
