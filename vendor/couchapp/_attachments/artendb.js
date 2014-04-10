@@ -534,7 +534,7 @@ function initiiere_art(id) {
 							}
 							if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
 								for (a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
-									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym"/* && synonymeArt.Beziehungssammlungen[a].Typ !== "taxonomisch"*/) {
+									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym" && synonymeArt.Beziehungssammlungen[a].Typ !== "taxonomisch") {
 										// diese Beziehungssammlung wird noch nicht dargestellt
 										// und sie ist nicht taxonomisch
 										BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
