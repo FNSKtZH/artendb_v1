@@ -1,7 +1,5 @@
 function erstelleBaum() {
-	var baum,
-		gruppe, gruppenbezeichung,
-		anzahl_objekte,
+	var gruppe, gruppenbezeichung,
 		baum_erstellt = $.Deferred();
 	// alle Bäume ausblenden
 	$(".baum").css("display", "none");
@@ -9,31 +7,31 @@ function erstelleBaum() {
 	$(".treeBeschriftung").css("display", "none");
 	// gewollte beschriften und sichtbar schalten
 	switch (window.Gruppe) {
-	case "Fauna":
-		gruppe = "fauna";
-		gruppenbezeichung = "Tiere";
-		break;
-	case "Flora":
-		gruppe = "flora";
-		gruppenbezeichung = "Pflanzen";
-		break;
-	case "Moose":
-		gruppe = "moose";
-		gruppenbezeichung = "Moose";
-		break;
-	case "Macromycetes":
-		gruppe = "macromycetes";
-		gruppenbezeichung = "Pilze";
-		break;
-	case "Lebensräume":
-		gruppe = "lr";
-		gruppenbezeichung = "Lebensräume";
-		break;
+		case "Fauna":
+			gruppe = "fauna";
+			gruppenbezeichung = "Tiere";
+			break;
+		case "Flora":
+			gruppe = "flora";
+			gruppenbezeichung = "Pflanzen";
+			break;
+		case "Moose":
+			gruppe = "moose";
+			gruppenbezeichung = "Moose";
+			break;
+		case "Macromycetes":
+			gruppe = "macromycetes";
+			gruppenbezeichung = "Pilze";
+			break;
+		case "Lebensräume":
+			gruppe = "lr";
+			gruppenbezeichung = "Lebensräume";
+			break;
 	}
 	$db = $.couch.db("artendb");
 	$db.view('artendb/' + gruppe + "_gruppiert", {
 		success: function(data) {
-			anzahl_objekte = data.rows[0].value;
+			var anzahl_objekte = data.rows[0].value;
 			$("#tree" + window.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
 			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
 		}
@@ -52,36 +50,6 @@ function erstelleTree() {
 		jstree_erstellt = $.Deferred();
 	$("#tree" + window.Gruppe).jstree({
 		"json_data": {
-			/*
-			**habe hier versucht, die Daten anders zu holen, weil die Methode mit ajax
-			**eine Weile lang bei der Fauna scheiterte
-			**das gab sich aber plötzlich wieder...
-			**data: function(node) {
-				//var daten_geholt = $.Deferred();
-				if (node == -1) {
-					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeOberstesLevel()))
-						.then(function(data) {
-							//daten_geholt.resolve(data);
-							return data;
-					});
-				} else {
-					level = parseInt(node.attr('level'), 10) + 1;
-					gruppe = node.attr('gruppe');
-					if (node.attr('filter')) {
-						filter = node.attr('filter').split(",");
-						id = "";
-					} else {
-						filter = "";
-						id = node.attr('id');
-					}
-					$.when(holeDatenFuerTree(holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id)))
-						.then(function(data) {
-							//daten_geholt.resolve(data);
-							return data;
-					});
-				}
-				//daten_geholt.promise();
-			}*/
 			ajax: {
 				type: 'GET',
 				url: function(node) {
@@ -129,8 +97,7 @@ function erstelleTree() {
 		"plugins" : ["ui", "themes", "json_data", "sort"]
 	})
 	.bind("select_node.jstree", function(e, data) {
-		var node;
-		node = data.rslt.obj;
+		var node = data.rslt.obj;
 		jQuery.jstree._reference(node).open_node(node);
 		if (node.attr("id")) {
 			// verhindern, dass bereits offene Seiten nochmals geöffnet werden
@@ -159,41 +126,25 @@ function erstelleTree() {
 	return jstree_erstellt.promise();
 }
 
-/*
-**nicht im Gebrauch
-**siehe Bemerkungen, wo es aufgerufen wird
-function holeDatenFuerTree(url) {
-	var daten_geholt = $.Deferred();
-	$.ajax({
-		type: "GET",
-		url: url,
-		success: function(data) {
-			return daten_geholt.resolve(data);
-			//return data;
-		}
-	});
-	return daten_geholt.promise();
-}*/
-
 function holeDatenUrlFuerTreeOberstesLevel() {
 	var gruppe;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.Gruppe) {
-	case "Fauna":
-		gruppe = "fauna";
-		break;
-	case "Flora":
-		gruppe = "flora";
-		break;
-	case "Moose":
-		gruppe = "moose";
-		break;
-	case "Macromycetes":
-		gruppe = "macromycetes";
-		break;
-	case "Lebensräume":
-		gruppe = "lr";
-		break;
+		case "Fauna":
+			gruppe = "fauna";
+			break;
+		case "Flora":
+			gruppe = "flora";
+			break;
+		case "Moose":
+			gruppe = "moose";
+			break;
+		case "Macromycetes":
+			gruppe = "macromycetes";
+			break;
+		case "Lebensräume":
+			gruppe = "lr";
+			break;
 	}
 	if (window.Gruppe === "Lebensräume") {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
@@ -205,75 +156,74 @@ function holeDatenUrlFuerTreeOberstesLevel() {
 
 function holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id) {
 	var startkey,
-		id2,
-		endkey = [];
+		// flag, um mitzuliefern, ob die id angezeigt werden soll
+		id2 = false,
+		endkey = [],
+		a;
 	if (filter) {
 		// bei lr gibt es keinen filter und das erzeugt einen fehler
 		startkey = filter.slice();
 		endkey = filter.slice();
 	}
-	// flag, um mitzuliefern, ob die id angezeigt werden soll
-	id2 = false;
 	switch (gruppe) {
-	case "fauna":
-		if (level > 4) {
-			return null;
-		}
-		for (a=5; a>=level; a--) {
-			endkey.push({});
-		}
-		// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-		if (level === 4) {
-			// das ist die Art-Ebene
-			// hier soll die id angezeigt werden
-			// dazu muss der nächste level abgerufen werden
-			// damit die list den zu hohen level korrigieren kann, id mitgeben
-			id2 = true;
-			level++;
-		}
-		break;
-	case "flora":
-		if (level > 3) {
-			return null;
-		}
-		for (a=4; a>=level; a--) {
-			endkey.push({});
-		}
-		// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-		if (level === 3) {
-			id2 = true;
-			level++;
-		}
-		break;
-	case "moose":
-		if (level > 4) {
-			return null;
-		}
-		for (a=5; a>=level; a--) {
-			endkey.push({});
-		}
-		// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-		if (level === 4) {
-			id2 = true;
-			level++;
-		}
-		break;
-	case "macromycetes":
-		if (level > 2) {
-			return null;
-		}
-		for (a=3; a>=level; a--) {
-			endkey.push({});
-		}
-		// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-		if (level === 2) {
-			id2 = true;
-			level++;
-		}
-		break;
+		case "fauna":
+			if (level > 4) {
+				return null;
+			}
+			for (a=5; a>=level; a--) {
+				endkey.push({});
+			}
+			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
+			if (level === 4) {
+				// das ist die Art-Ebene
+				// hier soll die id angezeigt werden
+				// dazu muss der nächste level abgerufen werden
+				// damit die list den zu hohen level korrigieren kann, id mitgeben
+				id2 = true;
+				level++;
+			}
+			break;
+		case "flora":
+			if (level > 3) {
+				return null;
+			}
+			for (a=4; a>=level; a--) {
+				endkey.push({});
+			}
+			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
+			if (level === 3) {
+				id2 = true;
+				level++;
+			}
+			break;
+		case "moose":
+			if (level > 4) {
+				return null;
+			}
+			for (a=5; a>=level; a--) {
+				endkey.push({});
+			}
+			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
+			if (level === 4) {
+				id2 = true;
+				level++;
+			}
+			break;
+		case "macromycetes":
+			if (level > 2) {
+				return null;
+			}
+			for (a=3; a>=level; a--) {
+				endkey.push({});
+			}
+			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
+			if (level === 2) {
+				id2 = true;
+				level++;
+			}
+			break;
 	}
 	if (gruppe === "lr") {
-		//level++;
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=['+level+', "'+id+'"]&endkey=['+level+', "'+id+'",{},{},{},{}]&group_level=6';
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?startkey="+JSON.stringify(startkey)+"&endkey="+JSON.stringify(endkey)+"&group_level="+level;
@@ -291,9 +241,9 @@ function initiiereSuchfeld() {
 		if (window.filtere_lr) {
 			initiiereSuchfeld_2();
 		} else {
-			var startkey = encodeURIComponent('["'+window.Gruppe+'"]');
-			var endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]');
-			var url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
+			var startkey = encodeURIComponent('["'+window.Gruppe+'"]'),
+				endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]'),
+				url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
 			$db.view(url, {
 				success: function(data) {
 					window.filtere_lr = data;
@@ -351,7 +301,8 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 				object,
 				neueTaxonomie,
 				object_html,
-				html;
+				html = ""
+				i;
 			// reduzieren auf die LR der Taxonomie
 			taxonomie_objekte = _.filter(lr.rows, function(row) {
 				return row.doc.Taxonomie.Name === taxonomie_name;
@@ -388,8 +339,7 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 			taxonomie_objekte.unshift(neueTaxonomie);
 
 			// jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
-			html = "";
-			for (var i=0; i<taxonomie_objekte.length; i++) {
+			for (i=0; i<taxonomie_objekte.length; i++) {
 				object_html = '';
 				if (i === 1) {
 					object_html += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
@@ -419,47 +369,47 @@ function oeffneBaumZuId(id) {
 	$db.openDoc(id, {
 		success: function(objekt) {
 			switch (objekt.Gruppe) {
-			case "Fauna":
-				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-				// oberste Ebene aufbauen nicht nötig, die gibt es schon
-				$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
-					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
-						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-							$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
+				case "Fauna":
+					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					// oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
+							$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+								$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
+							}, true);
 						}, true);
 					}, true);
-				}, true);
-			case "Flora":
-				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-				// oberste Ebene aufbauen nicht nötig, die gibt es schon
-				$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
-					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-						$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
-					}, true);
-				}, true);
-			case "Moose":
-				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-				// oberste Ebene aufbauen nicht nötig, die gibt es schon
-				$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
-					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-							$.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
+				case "Flora":
+					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					// oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
+						$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+							$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
 						}, true);
 					}, true);
-				}, true);
-			case "Macromycetes":
-				// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-				// oberste Ebene aufbauen nicht nötig, die gibt es schon
-				$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-					$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
-				}, true);
-			case "Lebensräume":
-				var idArray = [];
-				for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
-					idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
-				}
-				oeffneNodeNachIdArray(idArray);
-				break;
+				case "Moose":
+					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					// oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+							$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+								$.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
+							}, true);
+						}, true);
+					}, true);
+				case "Macromycetes":
+					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+					// oberste Ebene aufbauen nicht nötig, die gibt es schon
+					$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
+					}, true);
+				case "Lebensräume":
+					var idArray = [];
+					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
+						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
+					}
+					oeffneNodeNachIdArray(idArray);
+					break;
 			}
 			// Anmeldung verstecken, wenn nicht Lebensräume
 			$("#art_anmelden").hide();
@@ -475,9 +425,9 @@ function oeffneNodeNachIdArray(idArray) {
 		$.jstree._reference("#tree" + window.Gruppe).open_node($("#"+idArray[0]), function() {
 			idArray.splice(0,1);
 			oeffneNodeNachIdArray(idArray);
-		},false);
+		}, false);
 	} else if (idArray.length === 1) {
-		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function(){},true);
+		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
 	}
 }
 
@@ -486,17 +436,17 @@ function initiiere_art(id) {
 	$db.openDoc(id, {
 		success: function(art) {
 			var htmlArt,
-			Datensammlungen = art.Datensammlungen,
-			Beziehungssammlungen = [],
-			taxonomischeBeziehungssammlungen = [],
-			len,
-			guidsVonSynonymen = [],
-			DatensammlungenVonSynonymen = [],
-			BeziehungssammlungenVonSynonymen = [],
-			ds, bez,
-			a, f, h, i, k, x, q,
-			dsNamen = [],
-			bezNamen = [];
+				Datensammlungen = art.Datensammlungen,
+				Beziehungssammlungen = [],
+				taxonomischeBeziehungssammlungen = [],
+				len,
+				guidsVonSynonymen = [],
+				DatensammlungenVonSynonymen = [],
+				BeziehungssammlungenVonSynonymen = [],
+				ds, bez,
+				a, f, h, i, k, x, q,
+				dsNamen = [],
+				bezNamen = [];
 			// panel beginnen
 			htmlArt = '<h4>Taxonomie:</h4>';
 			// zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
@@ -584,8 +534,9 @@ function initiiere_art(id) {
 							}
 							if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
 								for (a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
-									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
-										// diese Datensammlung wird noch nicht dargestellt
+									if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym"/* && synonymeArt.Beziehungssammlungen[a].Typ !== "taxonomisch"*/) {
+										// diese Beziehungssammlung wird noch nicht dargestellt
+										// und sie ist nicht taxonomisch
 										BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
 										// auch in bezNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
 										bezNamen.push(synonymeArt.Beziehungssammlungen[a].Name);
