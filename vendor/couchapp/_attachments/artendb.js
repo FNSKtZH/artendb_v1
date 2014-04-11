@@ -664,11 +664,11 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 		html += '. Stand: ';
 		html += art_i.Datenstand;
 	}
-	if (art_i["Link"]) {
+	if (art_i.Link) {
 		html += '. <a href="';
-		html += art_i["Link"];
+		html += art_i.Link;
 		html += '">';
-		html += art_i["Link"];
+		html += art_i.Link;
 		html += '</a>';
 	}
 	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
@@ -748,11 +748,11 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 		htmlDatensammlung += '. Stand: ';
 		htmlDatensammlung += art_i.Datenstand;
 	}
-	if (art_i["Link"]) {
+	if (art_i.Link) {
 		htmlDatensammlung += '. <a href="';
-		htmlDatensammlung += art_i["Link"];
+		htmlDatensammlung += art_i.Link;
 		htmlDatensammlung += '">';
-		htmlDatensammlung += art_i["Link"];
+		htmlDatensammlung += art_i.Link;
 		htmlDatensammlung += '</a>';
 	}
 	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
