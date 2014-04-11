@@ -1557,67 +1557,67 @@ window.adb.handleBs_ImportierenClick = function() {
 };
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
-function handleImportierenDsDsBeschreibenCollapseShown() {
+window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 	bereiteImportieren_ds_beschreibenVor("ds");
 	$("#DsImportiertVon").val(localStorage.Email);
-}
+};
 
 // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
-function handleImportierenBsDsBeschreibenCollapseShown() {
+window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 	bereiteImportieren_bs_beschreibenVor("bs");
 	$("#BsImportiertVon").val(localStorage.Email);
-}
+};
 
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
-function handleImportierenDsDatenUploadenCollapseShown() {
+window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	} else {
 		$('#DsFile').fileupload();
 	}
-}
+};
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
-function handleImportierenBsDatenUpladenCollapseShown() {
+window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	} else {
 		$('#BsFile').fileupload();
 	}
-}
+};
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
-function handleImportierenDsIdsIdentifizierenCollapseShown() {
+window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
-}
+};
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
-function handleImportierenBsIdsIdentifizierenCollapseShown() {
+window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
-}
+};
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
-function handleImportierenDsImportAusfuehrenCollapseShown() {
+window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
-}
+};
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
-function handleImportierenBsImportAusfuehrenCollapseShown() {
+window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
-}
+};
 
 // wenn DsWaehlen geändert wird
-function handleDsWaehlenChange() {
+window.adb.handleDsWaehlenChange = function() {
 	var DsName = this.value,
 		waehlbar = $("#"+this.id+" option:selected").attr("waehlbar"),
 		i,
@@ -1676,17 +1676,17 @@ function handleDsWaehlenChange() {
 		// melden, dass diese DS nicht bearbeitet werden kann
 		$('#meldung_ds_nicht_bearbeitbar').modal();
 	}
-}
+};
 
 // wenn DsName geändert wird
 // suchen, ob schon eine Datensammlung mit diesem Namen existiert
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
-function handleDsNameChange() {
-	var that = this;
-	var DsKey = _.find(window.DsKeys, function(key) {
-		return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
-	});
+window.adb.handleDsNameChange = function() {
+	var that = this,
+		DsKey = _.find(window.DsKeys, function(key) {
+			return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+		});
 	if (DsKey) {
 		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
 		$("#importieren_ds_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
@@ -1698,10 +1698,10 @@ function handleDsNameChange() {
 	} else {
 		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
 	}
-}
+};
 
 // wenn DsLoeschen geklickt wird
-function handleDsLoeschenClick() {
+window.adb.handleDsLoeschenClick = function() {
 	event.preventDefault();
 	// Rückmeldung anzeigen
 	$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
@@ -1711,10 +1711,10 @@ function handleDsLoeschenClick() {
 		$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
 		$("#importieren_ds_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
 	});
-}
+};
 
 // wenn BsLoeschen geklickt wird
-function handleBsLoeschenClick() {
+window.adb.handleBsLoeschenClick = function() {
 	event.preventDefault();
 	// Rückmeldung anzeigen
 	$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
@@ -1724,7 +1724,7 @@ function handleBsLoeschenClick() {
 		$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
 		$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");
 	});
-}
+};
 
 // wenn DsImportieren geklickt wird
 function handleDsImportierenClick() {

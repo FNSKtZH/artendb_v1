@@ -1071,25 +1071,25 @@
 				// wenn nein, Meldung bringen
 				$("#menu_btn").on("click", "#bs_importieren", window.adb.handleBs_ImportierenClick);
 
-				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', handleImportierenDsDsBeschreibenCollapseShown);
+				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
-				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', handleImportierenBsDsBeschreibenCollapseShown);
+				$('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsDsBeschreibenCollapseShown);
 
-				$('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', handleImportierenDsDatenUploadenCollapseShown);
+				$('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsDatenUploadenCollapseShown);
 
-				$('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', handleImportierenBsDatenUpladenCollapseShown);
+				$('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsDatenUpladenCollapseShown);
 
-				$('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', handleImportierenDsIdsIdentifizierenCollapseShown);
+				$('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsIdsIdentifizierenCollapseShown);
 
-				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', handleImportierenBsIdsIdentifizierenCollapseShown);
+				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
 
-				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', handleImportierenDsImportAusfuehrenCollapseShown);
+				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
 
-				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', handleImportierenBsImportAusfuehrenCollapseShown);
+				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
 
-				$("#importieren_ds").on("change", "#DsWaehlen", handleDsWaehlenChange);
+				$("#importieren_ds").on("change", "#DsWaehlen", window.adb.handleDsWaehlenChange);
 
-				$("#importieren_ds").on("change", "#DsName", handleDsNameChange);
+				$("#importieren_ds").on("change", "#DsName", window.adb.handleDsNameChange);
 
 				$("#importieren_bs").on("change", "#BsName", window.adb.handleBsNameChange);
 
@@ -1123,9 +1123,9 @@
 					meldeErfolgVonIdIdentifikation("Bs");
 				});
 
-				$("#importieren_ds").on("click", "#DsLoeschen", handleDsLoeschenClick);
+				$("#importieren_ds").on("click", "#DsLoeschen", window.adb.handleDsLoeschenClick);
 
-				$("#importieren_bs").on("click", "#BsLoeschen", handleBsLoeschenClick);
+				$("#importieren_bs").on("click", "#BsLoeschen", window.adb.handleBsLoeschenClick);
 
 				$("#importieren_ds").on("click", "#DsImportieren", handleDsImportierenClick);
 
