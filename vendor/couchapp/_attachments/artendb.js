@@ -1,5 +1,8 @@
-function erstelleBaum() {
-	var gruppe, gruppenbezeichung,
+window.adb = window.adb || {};
+
+window.adb.erstelleBaum = function() {
+	var gruppe,
+		gruppenbezeichung,
 		baum_erstellt = $.Deferred();
 	// alle Bäume ausblenden
 	$(".baum").css("display", "none");
@@ -36,13 +39,13 @@ function erstelleBaum() {
 			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
 		}
 	});
-	$.when(erstelleTree()).then(function() {
+	$.when(window.adb.erstelleTree()).then(function() {
 		baum_erstellt.resolve();
 	});
 	return baum_erstellt.promise();
-}
+};
 
-function erstelleTree() {
+window.adb.erstelleTree = function() {
 	var level,
 		gruppe,
 		filter,
@@ -54,7 +57,7 @@ function erstelleTree() {
 				type: 'GET',
 				url: function(node) {
 					if (node == -1) {
-						return holeDatenUrlFuerTreeOberstesLevel();
+						return window.adb.holeDatenUrlFuerTreeOberstesLevel();
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -65,7 +68,7 @@ function erstelleTree() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
+						return window.adb.holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
@@ -115,7 +118,7 @@ function erstelleTree() {
 		$("#tree" + window.Gruppe).css("display", "block");
 		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
 		setzeTreehoehe();
-		initiiereSuchfeld();
+		window.adb.initiiereSuchfeld();
 	})
 	.bind("after_open.jstree", function(e, data) {
 		setzeTreehoehe();
@@ -124,9 +127,9 @@ function erstelleTree() {
 		setzeTreehoehe();
 	});
 	return jstree_erstellt.promise();
-}
+};
 
-function holeDatenUrlFuerTreeOberstesLevel() {
+window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
 	var gruppe;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.Gruppe) {
@@ -152,9 +155,9 @@ function holeDatenUrlFuerTreeOberstesLevel() {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
 	}
 	return url;
-}
+};
 
-function holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id) {
+window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id) {
 	var startkey,
 		// flag, um mitzuliefern, ob die id angezeigt werden soll
 		id2 = false,
@@ -232,9 +235,10 @@ function holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id) {
 		url = url + "&id=true";
 	}
 	return url;
-}
+};
 
-function initiiereSuchfeld() {
+window.adb.initiiereSuchfeld = function() {
+//function initiiereSuchfeld() {
 	// zuerst mal die benötigten Daten holen
 	$db = $.couch.db("artendb");
 	if (window.Gruppe && window.Gruppe === "Lebensräume") {
@@ -263,7 +267,7 @@ function initiiereSuchfeld() {
 			});
 		}
 	}
-}
+};
 
 function initiiereSuchfeld_2() {
 	var suchObjekte;
@@ -2004,7 +2008,7 @@ function handleLrParentOptionenChange() {
 				// bei der Wurzel ist sie schon gesetzt
 				aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
-				$.when(erstelleBaum()).then(function() {
+				$.when(window.adb.erstelleBaum()).then(function() {
 					oeffneBaumZuId(object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
@@ -3077,7 +3081,7 @@ function oeffneUri() {
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
-				$.when(erstelleBaum()).then(function() {
+				$.when(window.adb.erstelleBaum()).then(function() {
 					oeffneBaumZuId(id);
 				});
 			}
@@ -3803,7 +3807,7 @@ function oeffneGruppe(Gruppe) {
 	}
 	$("#treeMitteilung").html(treeMitteilung);
 	$("#treeMitteilung").show();
-	erstelleBaum();
+	window.adb.erstelleBaum();
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
 }
@@ -4034,7 +4038,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function(doc) {
-			$.when(erstelleBaum()).then(function() {
+			$.when(window.adb.erstelleBaum()).then(function() {
 				oeffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
