@@ -1340,50 +1340,48 @@ window.adb.handleBsNameChange = function() {
 
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
-function handleDsImportiertVonChange() {
+window.adb.handleDsImportiertVonChange = function() {
 	$("#DsImportiertVon").val(localStorage.Email);
 	$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
 	$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
 		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
 	}, 10000);
-}
+};
 
 // Wenn BsImportiertVon geändert wird
 // Kontrollieren, dass es die email der angemeldeten Person ist
-function handleBsImportiertVonChange() {
+window.adb.handleBsImportiertVonChange = function() {
 	$("#BsImportiertVon").val(localStorage.Email);
 	$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
 	$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
 		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
 	}, 10000);
-}
+};
 
 // wenn BsZusammenfassend geändert wird
 // BsUrsprungsBs_div zeigen oder verstecken
-function handleBsZusammenfassendChange() {
-	var that = this;
+window.adb.handleBsZusammenfassendChange = function() {
 	if ($(this).prop('checked')) {
 		$("#BsUrsprungsBs_div").show();
 	} else {
 		$("#BsUrsprungsBs_div").hide();
 	}
-}
+};
 
 // wenn DsZusammenfassend geändert wird
 // DsUrsprungsDs zeigen oder verstecken
-function handleDsZusammenfassendChange() {
-	var that = this;
+window.adb.handleDsZusammenfassendChange = function() {
 	if ($(this).prop('checked')) {
 		$("#DsUrsprungsDs_div").show();
 	} else {
 		$("#DsUrsprungsDs_div").hide();
 	}
-}
+};
 
 // Wenn BsWaehlen geändert wird
-function handleBsWaehlenChange() {
+window.adb.handleBsWaehlenChange = function() {
 	var BsName = this.value,
 		waehlbar = $("#"+this.id+" option:selected").attr("waehlbar"),
 		i,
@@ -1440,10 +1438,10 @@ function handleBsWaehlenChange() {
 		// melden, dass diese BS nicht bearbeitet werden kann
 		$('#meldung_bs_nicht_bearbeitbar').modal();
 	}
-}
+};
 
 // wenn DsFile geändert wird
-function handleDsFileChange() {
+window.adb.handleDsFileChange = function() {
 	event.preventDefault();
 	// Check for the various File API support
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -1457,7 +1455,7 @@ function handleDsFileChange() {
 		return;
 	}
 	var file = event.target.files[0],
-	reader = new FileReader();
+		reader = new FileReader();
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#DsTabelleEigenschaften").css("display", "none");
@@ -1471,10 +1469,10 @@ function handleDsFileChange() {
 		erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
 	};
 	reader.readAsText(file);
-}
+};
 
 // wenn BsFile geändert wird
-function handleBsFileChange() {
+window.adb.handleBsFileChange = function() {
 	event.preventDefault();
 	// Check for the various File API support
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -1488,7 +1486,7 @@ function handleBsFileChange() {
 		return;
 	}
 	var file = event.target.files[0],
-	reader = new FileReader();
+		reader = new FileReader();
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#BsTabelleEigenschaften").css("display", "none");
@@ -1502,10 +1500,10 @@ function handleBsFileChange() {
 		erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
 	};
 	reader.readAsText(file);
-}
+};
 
 // wenn btn_resize geklickt wird
-function handleBtnResizeClick() {
+window.adb.handleBtnResizeClick = function() {
 	var windowHeight = $(window).height();
 	$("body").toggleClass("force-mobile");
 	if ($("body").hasClass("force-mobile")) {
@@ -1518,11 +1516,11 @@ function handleBtnResizeClick() {
 		// button an anderen Schaltflächen ausrichten
 		$("#btn_resize").css("margin-right", "6px");
 	}
-}
+};
 
 // wenn menu_btn geklickt wird
 // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-function handleMenuBtnClick() {
+window.adb.handleMenuBtnClick = function() {
 	if (localStorage.art_id) {
 		$("#GoogleBilderLink_li").removeClass("disabled");
 		$("#WikipediaLink_li").removeClass("disabled");
@@ -1530,12 +1528,12 @@ function handleMenuBtnClick() {
 		$("#GoogleBilderLink_li").addClass("disabled");
 		$("#WikipediaLink_li").addClass("disabled");
 	}
-}
+};
 
 // wenn ds_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-function handleDs_ImportierenClick() {
+window.adb.handleDs_ImportierenClick = function() {
 	if(isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -1543,12 +1541,12 @@ function handleDs_ImportierenClick() {
 			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 		}
 	}
-}
+};
 
 // wenn bs_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-function handleBsImportierenClick() {
+window.adb.handleBs_ImportierenClick = function() {
 	if(isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -1556,7 +1554,7 @@ function handleBsImportierenClick() {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 		}
 	}
-}
+};
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
 function handleImportierenDsDsBeschreibenCollapseShown() {

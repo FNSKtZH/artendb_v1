@@ -357,7 +357,7 @@
 								<a id="importieren_bs_anmelden_titel" class="importieren_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_anmelden_collapse">1. Anmelden</a>
 							</h4>
 						</div>
-						<div id="importieren_bs_anmelden_collapse" class="panel-body collapse anmelden">
+						<div id="importieren_bs_anmelden_collapse" class="collapse anmelden">
 							<div class="panel-body">
 								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
 								<div class="form-group">
@@ -1058,18 +1058,18 @@
 				});
 
 				// zwischen Mobil- und Desktopsicht wechseln
-				$("#menu").on("click", "#btn_resize", handleBtnResizeClick);
+				$("#menu").on("click", "#btn_resize", window.adb.handleBtnResizeClick);
 
 				// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-				$("body").on("click", "#menu_btn", handleMenuBtnClick);
+				$("body").on("click", "#menu_btn", window.adb.handleMenuBtnClick);
 
 				// testen, ob der Browser das Importieren unterstützt
 				// wenn nein, Meldung bringen
-				$("#menu_btn").on("click", "#ds_importieren", handleDs_ImportierenClick);
+				$("#menu_btn").on("click", "#ds_importieren", window.adb.handleDs_ImportierenClick);
 
 				// testen, ob der Browser das Importieren unterstützt
 				// wenn nein, Meldung bringen
-				$("#menu_btn").on("click", "#bs_importieren", handleBsImportierenClick);
+				$("#menu_btn").on("click", "#bs_importieren", window.adb.handleBs_ImportierenClick);
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', handleImportierenDsDsBeschreibenCollapseShown);
 
@@ -1093,19 +1093,19 @@
 
 				$("#importieren_bs").on("change", "#BsName", window.adb.handleBsNameChange);
 
-				$("#importieren_ds").on("change", "#DsImportiertVon", handleDsImportiertVonChange);
+				$("#importieren_ds").on("change", "#DsImportiertVon", window.adb.handleDsImportiertVonChange);
 
-				$("#importieren_bs").on("change", "#BsImportiertVon", handleBsImportiertVonChange);
+				$("#importieren_bs").on("change", "#BsImportiertVon", window.adb.handleBsImportiertVonChange);
 
-				$("#importieren_ds").on("change", "#DsZusammenfassend", handleDsZusammenfassendChange);
+				$("#importieren_ds").on("change", "#DsZusammenfassend", window.adb.handleDsZusammenfassendChange);
 
-				$("#importieren_bs").on("change", "#BsZusammenfassend", handleBsZusammenfassendChange);
+				$("#importieren_bs").on("change", "#BsZusammenfassend", window.adb.handleBsZusammenfassendChange);
 
-				$("#importieren_bs").on("change", "#BsWaehlen", handleBsWaehlenChange);
+				$("#importieren_bs").on("change", "#BsWaehlen", window.adb.handleBsWaehlenChange);
 
-				$("#importieren_ds").on("change", "#DsFile", handleDsFileChange);
+				$("#importieren_ds").on("change", "#DsFile", window.adb.handleDsFileChange);
 
-				$("#importieren_bs").on("change", "#BsFile", handleBsFileChange);
+				$("#importieren_bs").on("change", "#BsFile", window.adb.handleBsFileChange);
 
 				$("#importieren_ds").on("change", "#DsFelder", function() {
 					meldeErfolgVonIdIdentifikation("Ds");
