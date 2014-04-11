@@ -301,7 +301,7 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 				object,
 				neueTaxonomie,
 				object_html,
-				html = ""
+				html = "",
 				i;
 			// reduzieren auf die LR der Taxonomie
 			taxonomie_objekte = _.filter(lr.rows, function(row) {
@@ -379,6 +379,9 @@ function oeffneBaumZuId(id) {
 							}, true);
 						}, true);
 					}, true);
+					// Anmeldung verstecken, wenn nicht Lebensräume
+					$("#art_anmelden").hide();
+					break;
 				case "Flora":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 					// oberste Ebene aufbauen nicht nötig, die gibt es schon
@@ -387,6 +390,9 @@ function oeffneBaumZuId(id) {
 							$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
 						}, true);
 					}, true);
+					// Anmeldung verstecken, wenn nicht Lebensräume
+					$("#art_anmelden").hide();
+					break;
 				case "Moose":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 					// oberste Ebene aufbauen nicht nötig, die gibt es schon
@@ -397,12 +403,18 @@ function oeffneBaumZuId(id) {
 							}, true);
 						}, true);
 					}, true);
+					// Anmeldung verstecken, wenn nicht Lebensräume
+					$("#art_anmelden").hide();
+					break;
 				case "Macromycetes":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 					// oberste Ebene aufbauen nicht nötig, die gibt es schon
 					$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
 						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
 					}, true);
+					// Anmeldung verstecken, wenn nicht Lebensräume
+					$("#art_anmelden").hide();
+					break;
 				case "Lebensräume":
 					var idArray = [];
 					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
@@ -411,8 +423,6 @@ function oeffneBaumZuId(id) {
 					oeffneNodeNachIdArray(idArray);
 					break;
 			}
-			// Anmeldung verstecken, wenn nicht Lebensräume
-			$("#art_anmelden").hide();
 		}
 	});
 }
