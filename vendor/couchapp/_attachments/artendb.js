@@ -1183,7 +1183,7 @@ window.adb.erstelleKonto = function(woher) {
 window.adb.meldeUserAn = function(woher) {
 	var Email = $('#Email_'+woher).val(),
 		Passwort = $('#Passwort_'+woher).val();
-	if (validiereUserAnmeldung(woher)) {
+	if (window.adb.validiereUserAnmeldung(woher)) {
 		$.couch.login({
 			name : Email,
 			password : Passwort,
@@ -1269,14 +1269,14 @@ window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
 window.adb.pruefeAnmeldung = function(woher) {
 	if (!localStorage.Email) {
 		setTimeout(function() {
-			zurueckZurAnmeldung(woher);
+			window.adb.zurueckZurAnmeldung(woher);
 		}, 600);
 		return false;
 	}
 	return true;
 };
 
-function zurueckZurAnmeldung(woher) {
+window.adb.zurueckZurAnmeldung = function(woher) {
 	var praefix = "importieren_";
 
 	// Bei LR muss der Anmeldungsabschnitt eingeblendet werden
@@ -1295,12 +1295,11 @@ function zurueckZurAnmeldung(woher) {
 	//$(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#Email_"+woher).focus();
-}
+};
 
-function validiereUserAnmeldung(woher) {
-	var Email, Passwort;
-	Email = $('#Email_'+woher).val();
-	Passwort = $('#Passwort_'+woher).val();
+window.adb.validiereUserAnmeldung = function(woher) {
+	var Email = $('#Email_'+woher).val(),
+		Passwort = $('#Passwort_'+woher).val();
 	if (!Email) {
 		setTimeout(function() {
 			$('#Email_'+woher).focus();
@@ -1315,17 +1314,17 @@ function validiereUserAnmeldung(woher) {
 		return false;
 	}
 	return true;
-}
+};
 
 // wenn BsName geändert wird
 // suchen, ob schon eine Datensammlung mit diesem Namen existiert
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
-function handleBsNameChange() {
-	var that = this;
-	var BsKey = _.find(window.BsKeys, function(key) {
-		return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
-	});
+window.adb.handleBsNameChange = function() {
+	var that = this,
+		BsKey = _.find(window.BsKeys, function(key) {
+			return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+		});
 	if (BsKey) {
 		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "block");
 		$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
@@ -1337,7 +1336,7 @@ function handleBsNameChange() {
 	} else {
 		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
 	}
-}
+};
 
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
