@@ -1459,8 +1459,10 @@ function handleDsZusammenfassendChange() {
 
 // Wenn BsWaehlen geändert wird
 function handleBsWaehlenChange() {
-	var BsName = this.value;
-	var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
+	var BsName = this.value,
+		waehlbar = $("#"+this.id+" option:selected").attr("waehlbar"),
+		i,
+		x;
 	if (waehlbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function() {
@@ -1693,8 +1695,10 @@ function handleImportierenBsImportAusfuehrenCollapseShown() {
 
 // wenn DsWaehlen geändert wird
 function handleDsWaehlenChange() {
-	var DsName = this.value;
-	var waehlbar = $("#"+this.id+" option:selected").attr("waehlbar");
+	var DsName = this.value,
+		waehlbar = $("#"+this.id+" option:selected").attr("waehlbar"),
+		i,
+		x;
 	if (waehlbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
@@ -1974,7 +1978,7 @@ function handleLrParentOptionenChange() {
 		object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
 		object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
 	}*/
-	object.Taxonomie.Daten["Beschreibung"] = "";
+	object.Taxonomie.Daten.Beschreibung = "";
 	object.Datensammlungen = [];
 	object.Beziehungssammlungen = [];
 	// jetzt den parent erstellen
@@ -2475,7 +2479,7 @@ function importiereDatensammlung() {
 			Datensammlung.Datenstand = $("#DsDatenstand").val();
 		}
 		if ($("#DsLink").val()) {
-			Datensammlung["Link"] = $("#DsLink").val();
+			Datensammlung.Link = $("#DsLink").val();
 		}
 		// falls die Datensammlung zusammenfassend ist
 		if ($("#DsZusammenfassend").prop('checked')) {
@@ -2585,7 +2589,7 @@ function importiereBeziehungssammlung() {
 					Beziehungssammlung_vorlage.Datenstand = $("#BsDatenstand").val();
 				}
 				if ($("#BsLink").val()) {
-					Beziehungssammlung_vorlage["Link"] = $("#BsLink").val();
+					Beziehungssammlung_vorlage.Link = $("#BsLink").val();
 				}
 				// falls die Datensammlung zusammenfassend ist
 				if ($("#BsZusammenfassend").prop('checked')) {
