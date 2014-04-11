@@ -624,7 +624,7 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 	// panel beenden
 	$("#art_inhalt").html(htmlArt);
 	// richtiges Formular anzeigen
-	zeigeFormular("art");
+	window.adb.zeigeFormular("art");
 	// Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
 	$("#art_anmelden").hide();
 	// Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
@@ -1070,7 +1070,7 @@ window.adb.FitToContent = function(id, maxHeight) {
 // wird ein Formularname übergeben, wird dieses Formular gezeigt
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
-function zeigeFormular(Formularname) {
+window.adb.zeigeFormular = function(Formularname) {
 	var formular_angezeigt = $.Deferred();
 	// zuerst alle Formulare ausblenden
 	$("#forms").hide();
@@ -1110,11 +1110,11 @@ function zeigeFormular(Formularname) {
 		formular_angezeigt.resolve();
 	}
 	return formular_angezeigt.promise();
-}
+};
 
 // kontrollieren, ob die erforderlichen Felder etwas enthalten
 // wenn ja wird true retourniert, sonst false
-function validiereSignup(woher) {
+window.adb.validiereSignup = function(woher) {
 	var Email, Passwort, Passwort2;
 	// zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
 	$(".hinweis").css("display", "none");
@@ -1149,107 +1149,40 @@ function validiereSignup(woher) {
 		return false;
 	}
 	return true;
-}
+};
 
-function erstelleKonto(woher) {
-	// zuerst den User in cloudant freischeffeln
-	var uri = new Uri($(location).attr('href'));
-	if (uri.host().indexOf("cloudant__t") >= 0) {
-		// wenn mit cloudant verbunden wird, anderst authentifizieren
-		$.ajax({
-			//type: "POST",
-			type: "PUT",
-			//url: 'https://barbalex.cloudant.com/artendb/_session',
-			url: 'https://barbalex.cloudant.com/artendb/_security',
-			//url: 'https://cloudant.com/api/set_permissions',
-			data: {
-				"cloudant": {"nobody": ["_reader", "_writer"]},
-				//"readers": {"names":['"'+$('#Email_'+woher).val()+'"'],"roles":["_reader"]
-				//"readers": {"names":[$('#Email_'+woher).val()],"roles":["_reader"]
-				"members": {"names": ['"'+$('#Email_'+woher).val()+'"'],"roles":["cats"]},
-				username: "barbalex",
-				password: "pwd"
-				//database: "barbalex/artendb"
-			},
-			//username: "ndegiverialocieverimpled",
-			//password: "JL4Wej8QW5c4REMAyil5C5hK",
-			//database: "barbalex/artendb",
-			//contentType: "application/json",
-			contentType: "application/x-www-form-urlencoded",
-			//contentType: "text/plain; charset=UTF-8",
-			//contentType: "multipart/form-data",
-			success: function() {
-				// User in _user eintragen
-				$.couch.signup(
-					{name: $('#Email_'+woher).val()},
-					$('#Passwort_'+woher).val(), 
-					{
-						success : function() {
-							localStorage.Email = $('#Email_'+woher).val();
-							if (woher === "art") {
-								bearbeiteLrTaxonomie();
-							}
-							passeUiFuerAngemeldetenUserAn(woher);
-							// Werte aus Feldern entfernen
-							$("#Email_"+woher).val("");
-							$("#Passwort_"+woher).val("");
-							$("#Passwort2_"+woher).val("");
-						},
-						error : function() {
-							var praefix = "importieren_";
-							if (woher === "art") {
-								praefix = "";
-							}
-							$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt 2");
-							$("#"+praefix+woher+"_anmelden_fehler").alert();
-							$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
-						}
-				});
-			},
-			error: function() {
-				var praefix = "importieren_";
-				if (woher === "art") {
-					praefix = "";
-				}
-				$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-				$("#"+praefix+woher+"_anmelden_fehler").alert();
-				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+window.adb.erstelleKonto = function(woher) {
+	// User in _user eintragen
+	$.couch.signup({
+		name: $('#Email_'+woher).val()
+	},
+	$('#Passwort_'+woher).val(), {
+		success : function() {
+			localStorage.Email = $('#Email_'+woher).val();
+			if (woher === "art") {
+				bearbeiteLrTaxonomie();
 			}
-		});
-	} else {
-		// User in _user eintragen
-		$.couch.signup({
-			name: $('#Email_'+woher).val()
+			window.adb.passeUiFuerAngemeldetenUserAn(woher);
+			// Werte aus Feldern entfernen
+			$("#Email_"+woher).val("");
+			$("#Passwort_"+woher).val("");
+			$("#Passwort2_"+woher).val("");
 		},
-		$('#Passwort_'+woher).val(), {
-			success : function() {
-				localStorage.Email = $('#Email_'+woher).val();
-				if (woher === "art") {
-					bearbeiteLrTaxonomie();
-				}
-				passeUiFuerAngemeldetenUserAn(woher);
-				// Werte aus Feldern entfernen
-				$("#Email_"+woher).val("");
-				$("#Passwort_"+woher).val("");
-				$("#Passwort2_"+woher).val("");
-			},
-			error : function() {
-				var praefix = "importieren_";
-				if (woher === "art") {
-					praefix = "";
-				}
-				$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-				$("#"+praefix+woher+"_anmelden_fehler").alert();
-				$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+		error : function() {
+			var praefix = "importieren_";
+			if (woher === "art") {
+				praefix = "";
 			}
-		});
-	}
-}
+			$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+			$("#"+praefix+woher+"_anmelden_fehler").alert();
+			$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+		}
+	});
+};
 
-function meldeUserAn(woher) {
-	var Email, Passwort;
-	Email = $('#Email_'+woher).val();
-	Passwort = $('#Passwort_'+woher).val();
+window.adb.meldeUserAn = function(woher) {
+	var Email = $('#Email_'+woher).val(),
+		Passwort = $('#Passwort_'+woher).val();
 	if (validiereUserAnmeldung(woher)) {
 		$.couch.login({
 			name : Email,
@@ -1259,7 +1192,7 @@ function meldeUserAn(woher) {
 				if (woher === "art") {
 					bearbeiteLrTaxonomie();
 				}
-				passeUiFuerAngemeldetenUserAn(woher);
+				window.adb.passeUiFuerAngemeldetenUserAn(woher);
 				// Werte aus Feldern entfernen
 				$("#Email_"+woher).val("");
 				$("#Passwort_"+woher).val("");
@@ -1278,9 +1211,9 @@ function meldeUserAn(woher) {
 			}
 		});
 	}
-}
+};
 
-function meldeUserAb() {
+window.adb.meldeUserAb = function() {
 	// IE8 kann nicht deleten
 	try {
 		delete localStorage.Email;
@@ -1302,9 +1235,9 @@ function meldeUserAb() {
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
 	schuetzeLrTaxonomie();
-}
+};
 
-function passeUiFuerAngemeldetenUserAn(woher) {
+window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
 	var praefix = "importieren_";
 	if (woher === "art") {
 		praefix = "";
@@ -1326,14 +1259,14 @@ function passeUiFuerAngemeldetenUserAn(woher) {
 	$(".konto_speichern_btn").hide();
 	// in LR soll Anmelde-Accordion nicht sichtbar sein
 	$("#art_anmelden").hide();
-}
+};
 
 // prüft, ob der Benutzer angemeldet ist
 // ja: retourniert true
 // nein: retourniert false und öffnet die Anmeldung
 // welche anmeldung hängt ab, woher die Prüfung angefordert wurde
 // darum erwartet die Funktion den parameter woher
-function pruefeAnmeldung(woher) {
+window.adb.pruefeAnmeldung = function(woher) {
 	if (!localStorage.Email) {
 		setTimeout(function() {
 			zurueckZurAnmeldung(woher);
@@ -1341,7 +1274,7 @@ function pruefeAnmeldung(woher) {
 		return false;
 	}
 	return true;
-}
+};
 
 function zurueckZurAnmeldung(woher) {
 	var praefix = "importieren_";
@@ -1605,9 +1538,9 @@ function handleMenuBtnClick() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 function handleDs_ImportierenClick() {
 	if(isFileAPIAvailable()) {
-		zeigeFormular("importieren_ds");
+		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (pruefeAnmeldung("ds")) {
+		if (window.adb.pruefeAnmeldung("ds")) {
 			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1618,9 +1551,9 @@ function handleDs_ImportierenClick() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 function handleBsImportierenClick() {
 	if(isFileAPIAvailable()) {
-		zeigeFormular("importieren_bs");
+		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (pruefeAnmeldung("bs")) {
+		if (window.adb.pruefeAnmeldung("bs")) {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1642,7 +1575,7 @@ function handleImportierenBsDsBeschreibenCollapseShown() {
 
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
 function handleImportierenDsDatenUploadenCollapseShown() {
-	if (!pruefeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	} else {
 		$('#DsFile').fileupload();
@@ -1651,7 +1584,7 @@ function handleImportierenDsDatenUploadenCollapseShown() {
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
 function handleImportierenBsDatenUpladenCollapseShown() {
-	if (!pruefeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	} else {
 		$('#BsFile').fileupload();
@@ -1660,28 +1593,28 @@ function handleImportierenBsDatenUpladenCollapseShown() {
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
 function handleImportierenDsIdsIdentifizierenCollapseShown() {
-	if (!pruefeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
 }
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
 function handleImportierenBsIdsIdentifizierenCollapseShown() {
-	if (!pruefeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
 }
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
 function handleImportierenDsImportAusfuehrenCollapseShown() {
-	if (!pruefeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
 }
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
 function handleImportierenBsImportAusfuehrenCollapseShown() {
-	if (!pruefeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
 }
@@ -1834,7 +1767,7 @@ function handleBsEntfernenClick() {
 
 // wenn exportieren geklickt wird
 function handleExportierenClick() {
-	zeigeFormular("export");
+	window.adb.zeigeFormular("export");
 	// Exportieren-Guids schaffen, damit kein altes existiert
 	window.exportieren_guids = [];
 	delete window.exportieren_objekte;
@@ -2170,13 +2103,13 @@ function handleAnmeldenBtnClick() {
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
-	meldeUserAn(bs_ds);
+	window.adb.meldeUserAn(bs_ds);
 }
 
 // wenn .abmelden_btn geklickt wird
 function handleAbmeldenBtnClick() {
 	event.preventDefault();
-	meldeUserAb();
+	window.adb.meldeUserAb();
 }
 
 // wenn .Email keyup
@@ -2222,8 +2155,8 @@ function handleKontoSpeichernBtnClick() {
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
-	if (validiereSignup(bs_ds)) {
-		erstelleKonto(bs_ds);
+	if (window.adb.validiereSignup(bs_ds)) {
+		window.adb.erstelleKonto(bs_ds);
 		// Anmeldefenster zurücksetzen
 		$(".signup").css("display", "none");
 		$(".anmelden_btn").hide();
@@ -3568,7 +3501,7 @@ function fuerExportGewaehlteGruppen() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_ds_beschreibenVor(woher) {
-	if (!pruefeAnmeldung("woher")) {
+	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#DsName").focus();
@@ -3620,7 +3553,7 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_bs_beschreibenVor(woher) {
-	if (!pruefeAnmeldung("woher")) {
+	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#BsName").focus();
@@ -3913,7 +3846,7 @@ function myTypeOf(Wert) {
 
 function bearbeiteLrTaxonomie() {
 	// Benutzer muss anmelden
-	if (!pruefeAnmeldung("art")) {
+	if (!window.adb.pruefeAnmeldung("art")) {
 		return false;
 	}
 
