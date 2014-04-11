@@ -107,7 +107,7 @@ window.adb.erstelleTree = function() {
 			if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
 				localStorage.art_id = node.attr("id");
 				// Anzeige im Formular initiieren. ID und Datensammlung übergeben
-				initiiere_art(node.attr("id"));
+				window.adb.initiiere_art(node.attr("id"));
 			}
 		}
 	})
@@ -117,14 +117,14 @@ window.adb.erstelleTree = function() {
 		$("#treeMitteilung").hide();
 		$("#tree" + window.Gruppe).css("display", "block");
 		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
-		setzeTreehoehe();
+		window.adb.setzeTreehoehe();
 		window.adb.initiiereSuchfeld();
 	})
 	.bind("after_open.jstree", function(e, data) {
-		setzeTreehoehe();
+		window.adb.setzeTreehoehe();
 	})
 	.bind("after_close.jstree", function(e, data) {
-		setzeTreehoehe();
+		window.adb.setzeTreehoehe();
 	});
 	return jstree_erstellt.promise();
 };
@@ -238,12 +238,11 @@ window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id)
 };
 
 window.adb.initiiereSuchfeld = function() {
-//function initiiereSuchfeld() {
 	// zuerst mal die benötigten Daten holen
 	$db = $.couch.db("artendb");
 	if (window.Gruppe && window.Gruppe === "Lebensräume") {
 		if (window.filtere_lr) {
-			initiiereSuchfeld_2();
+			window.adb.initiiereSuchfeld_2();
 		} else {
 			var startkey = encodeURIComponent('["'+window.Gruppe+'"]'),
 				endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]'),
@@ -251,25 +250,25 @@ window.adb.initiiereSuchfeld = function() {
 			$db.view(url, {
 				success: function(data) {
 					window.filtere_lr = data;
-					initiiereSuchfeld_2();
+					window.adb.initiiereSuchfeld_2();
 				}
 			});
 		}
 	} else if (window.Gruppe) {
 		if (window["filtere_art_" + window.Gruppe.toLowerCase()]) {
-			initiiereSuchfeld_2();
+			window.adb.initiiereSuchfeld_2();
 		} else {
 			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'",{}]', {
 				success: function(data) {
 					window["filtere_art_" + window.Gruppe.toLowerCase()] = data;
-					initiiereSuchfeld_2();
+					window.adb.initiiereSuchfeld_2();
 				}
 			});
 		}
 	}
 };
 
-function initiiereSuchfeld_2() {
+window.adb.initiiereSuchfeld_2 = function() {
 	var suchObjekte;
 	if (window.Gruppe && window.Gruppe === "Lebensräume") {
 		suchObjekte = window.filtere_lr.rows;
@@ -287,16 +286,16 @@ function initiiereSuchfeld_2() {
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
-		oeffneBaumZuId(datum.id);
+		window.adb.oeffneBaumZuId(datum.id);
 	});
 	$("#suchfeld"+window.Gruppe).focus();
-}
+};
 
 // baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
 // bekommt die id des LR, von dem aus ein neuer LR erstellt werden soll
 // In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
 // plus man soll auch einen neue Taxonomie beginnen können
-function initiiereLrParentAuswahlliste(taxonomie_name) {
+window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 	// lr holen
 	$db = $.couch.db("artendb");
 	$db.view('artendb/lr?include_docs=true', {
@@ -365,9 +364,9 @@ function initiiereLrParentAuswahlliste(taxonomie_name) {
 			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()-100);
 		}
 	});
-}
+};
 
-function oeffneBaumZuId(id) {
+window.adb.oeffneBaumZuId = function(id) {
 	// Hierarchie der id holen
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
@@ -424,28 +423,28 @@ function oeffneBaumZuId(id) {
 					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
 						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
 					}
-					oeffneNodeNachIdArray(idArray);
+					window.adb.oeffneNodeNachIdArray(idArray);
 					break;
 			}
 		}
 	});
-}
+};
 
 // läuft von oben nach unten durch die Hierarchie der Lebensräume
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
-function oeffneNodeNachIdArray(idArray) {
+window.adb.oeffneNodeNachIdArray = function(idArray) {
 	if (idArray.length > 1) {
 		$.jstree._reference("#tree" + window.Gruppe).open_node($("#"+idArray[0]), function() {
 			idArray.splice(0,1);
-			oeffneNodeNachIdArray(idArray);
+			window.adb.oeffneNodeNachIdArray(idArray);
 		}, false);
 	} else if (idArray.length === 1) {
 		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
 	}
-}
+};
 
-function initiiere_art(id) {
+window.adb.initiiere_art = function(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(art) {
@@ -465,7 +464,7 @@ function initiiere_art(id) {
 			htmlArt = '<h4>Taxonomie:</h4>';
 			// zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			// gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-			htmlArt += erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
+			htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
 			// Datensammlungen muss nicht gepusht werden
 			// aber Beziehungssammlungen aufteilen
 			if (art.Beziehungssammlungen.length > 0) {
@@ -487,7 +486,7 @@ function initiiere_art(id) {
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
 				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
+					htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
 					if (taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[q].Beziehungen) {
 						for (h in taxonomischeBeziehungssammlungen[q].Beziehungen) {
 							if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
@@ -510,7 +509,7 @@ function initiiere_art(id) {
 				htmlArt += "<h4>Eigenschaften:</h4>";
 				for (x=0, len=Datensammlungen.length; x<len; x++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
+					htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
 					// dsNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
 					dsNamen.push(Datensammlungen[x].Name);
 
@@ -522,7 +521,7 @@ function initiiere_art(id) {
 				htmlArt += "<h4>Beziehungen:</h4>";
 				for (q=0; q<Beziehungssammlungen.length; q++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q], "");
+					htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q], "");
 				}
 			}
 			// Beziehungssammlungen von synonymen Arten
@@ -594,7 +593,7 @@ function initiiere_art(id) {
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
 							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
 								// HTML für Datensammlung erstellen lassen und hinzufügen
-								htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
+								htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
 							}
 						}
 						// bez von Synonymen darstellen
@@ -605,23 +604,23 @@ function initiiere_art(id) {
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
 							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
 								// HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-								htmlArt += erstelleHtmlFuerBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
+								htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
 							}
 						}
-						initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
+						window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
 					}
 				});
 			} else {
-				initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
+				window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
 			}
 		},
 		error: function() {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
-}
+};
 
-function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
+window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
 	// panel beenden
 	$("#art_inhalt").html(htmlArt);
 	// richtiges Formular anzeigen
@@ -636,15 +635,15 @@ function initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynony
 	}
 	// jetzt die Links im Menu setzen
 	// TODO: unklar, wieso dies nochmals nötig ist, da von zeigeFormular schon gemacht
-	setzteLinksZuBilderUndWikipedia(art);
+	window.adb.setzteLinksZuBilderUndWikipedia(art);
 	// und die URL anpassen
 	history.pushState({id: "id"}, "id", "index.html?id=" + art._id);
-}
+};
 
 // erstellt die HTML für eine Beziehung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
-function erstelleHtmlFuerBeziehung(art, art_i, altName) {
+window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 	var html,
 		Name,
 		art_i_name;
@@ -699,16 +698,16 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 				// Partner darstellen
 				if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
 					// Feld soll mit der Rolle beschriftet werden
-					html += generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					html += window.adb.generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				} else {
-					html += generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
+					html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
 				}
 			}
 		}
 		// Die Felder anzeigen
 		for (var x in art_i.Beziehungen[i]) {
 			if (x !== "Beziehungspartner") {
-				html += erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x], "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
+				html += window.adb.erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x], "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
 			}
 		}
 		// Am Schluss eine Linie, nicht aber bei der letzen Beziehung
@@ -719,11 +718,11 @@ function erstelleHtmlFuerBeziehung(art, art_i, altName) {
 	// body und Accordion-Gruppe abschliessen
 	html += '</div></div></div>';
 	return html;
-}
+};
 
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
+window.adb.erstelleHtmlFuerDatensammlung = function(dsTyp, art, art_i) {
 	var htmlDatensammlung,
 		hierarchie_string,
 		array_string,
@@ -769,7 +768,7 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 	// Felder anzeigen
 	// zuerst die GUID, aber nur bei der Taxonomie
 	if (dsTyp === "Taxonomie") {
-		htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
+		htmlDatensammlung += window.adb.erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
 	}
 	for (var y in art_i.Daten) {
 		if (y === "GUID") {
@@ -777,30 +776,30 @@ function erstelleHtmlFuerDatensammlung(dsTyp, art, art_i) {
 			// dieses Feld wird künftig nicht mehr importiert
 		} else if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
 			// dann den Link aufbauen lassen
-			htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(y, art._id, art_i.Daten[y].Name);
+			htmlDatensammlung += window.adb.generiereHtmlFuerLinkZuGleicherGruppe(y, art._id, art_i.Daten[y].Name);
 		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
 			// das ist ein Array von Objekten
-			htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Daten[y]);
+			htmlDatensammlung += window.adb.generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Daten[y]);
 		} else if ((y === "Artname" && art.Gruppe === "Flora") || (y === "Parent" && art.Gruppe === "Lebensräume")) {
 			// dieses Feld nicht anzeigen
 		} else if (y === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(art_i.Daten[y])) {
 			// Namen kommagetrennt anzeigen
-			hierarchie_string = erstelleHierarchieFuerFeldAusHierarchieobjekteArray(art_i.Daten[y]);
-			htmlDatensammlung += generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
+			hierarchie_string = window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(art_i.Daten[y]);
+			htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
 		} else if (_.isArray(art_i.Daten[y])) {
 			// dieses Feld enthält einen Array von Werten
 			array_string = art_i.Daten[y].toString();
-			htmlDatensammlung += generiereHtmlFuerTextarea(y, array_string, dsTyp, art_i.Name.replace(/"/g, "'"));
+			htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(y, array_string, dsTyp, art_i.Name.replace(/"/g, "'"));
 		} else {
-			htmlDatensammlung += erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
+			htmlDatensammlung += window.adb.erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
 		}
 	}
 	// body und Accordion-Gruppe abschliessen
 	htmlDatensammlung += '</div></div></div>';
 	return htmlDatensammlung;
-}
+};
 
-function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
+window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray = function(hierarchie_array) {
 	if (!_.isArray(hierarchie_array)) {
 		return "";
 	}
@@ -813,32 +812,32 @@ function erstelleHierarchieFuerFeldAusHierarchieobjekteArray(hierarchie_array) {
 		hierarchie_string += hierarchie_array[g].Name;
 	}
 	return hierarchie_string;
-}
+};
 
 // übernimmt Feldname und Feldwert
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
-function erstelleHtmlFuerFeld(Feldname, Feldwert, dsTyp, dsName) {
+window.adb.erstelleHtmlFuerFeld = function(Feldname, Feldwert, dsTyp, dsName) {
 	var htmlDatensammlung = "";
 	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "//") {
 		// www-Links als Link darstellen
-		htmlDatensammlung += generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
+		htmlDatensammlung += window.adb.generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
+		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
 	} else if (typeof Feldwert === "string" && Feldwert.length >= 45) {
-		htmlDatensammlung += generiereHtmlFuerTextarea(Feldname, Feldwert, dsTyp);
+		htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(Feldname, Feldwert, dsTyp);
 	} else if (typeof Feldwert === "number") {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp, dsName);
+		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp, dsName);
 	} else if (typeof Feldwert === "boolean") {
-		htmlDatensammlung += generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp, dsName);
+		htmlDatensammlung += window.adb.generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp, dsName);
 	} else {
-		htmlDatensammlung += generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
+		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
 	}
 	return htmlDatensammlung;
-}
+};
 
 // managt die Links zu Google Bilder und Wikipedia
 // erwartet das Objekt mit der Art
-function setzteLinksZuBilderUndWikipedia(art) {
+window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
 	// jetzt die Links im Menu setzen
 	if (art) {
 		var googleBilderLink = "";
@@ -901,10 +900,10 @@ function setzteLinksZuBilderUndWikipedia(art) {
 		$("#GoogleBilderLink").attr("href", "#");
 		$("#GoogleBilderLink_li").addClass("disabled");
 	}
-}
+};
 
 // generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
+window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function(FeldName, id, Artname) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
@@ -914,10 +913,10 @@ function generiereHtmlFuerLinkZuGleicherGruppe(FeldName, id, Artname) {
 	HtmlContainer += Artname;
 	HtmlContainer += '</a></p></div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für Serien von Links in Flora
-function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
+window.adb.generiereHtmlFuerLinksZuGleicherGruppe = function(FeldName, Objektliste) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
@@ -934,10 +933,10 @@ function generiereHtmlFuerLinksZuGleicherGruppe(FeldName, Objektliste) {
 	}
 	HtmlContainer += '</span></div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerWwwlink = function(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -958,10 +957,10 @@ function generiereHtmlFuerWwwlink(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += '</a></p>';
 	HtmlContainer += '\n</div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für einzelne Links in Flora
-function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
+window.adb.generiereHtmlFuerObjektlink = function(FeldName, FeldWert, Url) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label">';
 	HtmlContainer += FeldName;
@@ -973,10 +972,10 @@ function generiereHtmlFuerObjektlink(FeldName, FeldWert, Url) {
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</a></p></div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für Textinputs
-function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
+window.adb.generiereHtmlFuerTextinput = function(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -992,10 +991,10 @@ function generiereHtmlFuerTextinput(FeldName, FeldWert, InputTyp, dsTyp, dsName)
 	HtmlContainer += FeldWert;
 	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für Textarea
-function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerTextarea = function(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -1009,10 +1008,10 @@ function generiereHtmlFuerTextarea(FeldName, FeldWert, dsTyp, dsName) {
 	HtmlContainer += FeldWert;
 	HtmlContainer += '</textarea></div>';
 	return HtmlContainer;
-}
+};
 
 // generiert den html-Inhalt für ja/nein-Felder
-function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerBoolean = function(FeldName, FeldWert, dsTyp, dsName) {
 	var HtmlContainer;
 	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
 	HtmlContainer += FeldName;
@@ -1028,10 +1027,10 @@ function generiereHtmlFuerBoolean(FeldName, FeldWert, dsTyp, dsName) {
 	}
 	HtmlContainer += '" readonly="readonly" disabled="disabled" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
 	return HtmlContainer;
-}
+};
 
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
-function setzeTreehoehe() {
+window.adb.setzeTreehoehe = function() {
 	var windowHeight = $(window).height();
 	if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
 		$(".baum").css("max-height", windowHeight - 161);
@@ -1039,10 +1038,10 @@ function setzeTreehoehe() {
 		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
 		$(".baum").css("max-height", windowHeight - 252);
 	}
-}
+};
 
 // setzt die Höhe von textareas so, dass der Text genau rein passt
-function FitToContent(id, maxHeight) {
+window.adb.FitToContent = function(id, maxHeight) {
 	var text = id && id.style ? id : document.getElementById(id);
 	maxHeight = maxHeight || document.documentElement.clientHeight;
 	if (!text) {
@@ -1064,17 +1063,7 @@ function FitToContent(id, maxHeight) {
 	if (adjustedHeight > text.clientHeight) {
 		text.style.height = adjustedHeight + "px";
 	}
-}
-
-function öffneMarkiertenNode() {
-	var selected_nodes = $("#tree" + window.Gruppe).jstree("get_selected");
-	$("#tree" + window.Gruppe).jstree("close_all", -1);
-	$("#tree" + window.Gruppe).jstree("deselect_all", -1);
-	// wenn eine Art gewählt war, diese wieder wählen
-	if (selected_nodes.length === 1) {
-		$("#tree" + window.Gruppe).jstree("select_node", selected_nodes);
-	}
-}
+};
 
 // managed die Sichtbarkeit von Formularen
 // wird von allen initiiere_-Funktionen verwendet
@@ -1117,7 +1106,7 @@ function zeigeFormular(Formularname) {
 		});
 		$(window).scrollTop(0);
 		// jetzt die Links im Menu (de)aktivieren
-		setzteLinksZuBilderUndWikipedia();
+		window.adb.setzteLinksZuBilderUndWikipedia();
 		formular_angezeigt.resolve();
 	}
 	return formular_angezeigt.promise();
@@ -1504,7 +1493,7 @@ function handleBsWaehlenChange() {
 					$("#BsAnzDs").html(window.bs_von_objekten.rows[i].value);
 					// dafür sorgen, dass textareas genug gross sind
 					$('#importieren_bs textarea').each(function() {
-						FitToContent(this, document.documentElement.clientHeight);
+						window.adb.FitToContent(this, document.documentElement.clientHeight);
 					});
 					$("#BsName").focus();
 				}
@@ -1742,7 +1731,7 @@ function handleDsWaehlenChange() {
 					$("#DsAnzDs").html(window.ds_von_objekten.rows[i].value);
 					// dafür sorgen, dass textareas genug gross sind
 					$('#importieren_ds textarea').each(function() {
-						FitToContent(this, document.documentElement.clientHeight);
+						window.adb.FitToContent(this, document.documentElement.clientHeight);
 					});
 					$("#DsName").focus();
 				}
@@ -1948,7 +1937,7 @@ function handleBtnLrBearbSchuetzenClick() {
 // wenn .btn.lr_bearb_neu geklickt wird
 function handleBtnLrBearbNeuClick() {
 	if (!$(this).hasClass('disabled')) {
-		initiiereLrParentAuswahlliste($("#Taxonomie").val());
+		window.adb.initiiereLrParentAuswahlliste($("#Taxonomie").val());
 	}
 }
 
@@ -2009,7 +1998,7 @@ function handleLrParentOptionenChange() {
 				aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
 				$.when(window.adb.erstelleBaum()).then(function() {
-					oeffneBaumZuId(object._id);
+					window.adb.oeffneBaumZuId(object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
@@ -2149,7 +2138,7 @@ function handleExportierenExportierenExportierenDirektClick() {
 // Höhe der textareas an Textgrösse anpassen
 function handlePanelShown() {
 	$(this).find('textarea').each(function() {
-		FitToContent(this.id);
+		window.adb.FitToContent(this.id);
 	});
 }
 
@@ -2166,10 +2155,10 @@ function handleLinkZuArtGleicherGruppeClick() {
 
 // wenn Fenstergrösse verändert wird
 function handleResize() {
-	setzeTreehoehe();
+	window.adb.setzeTreehoehe();
 	// Höhe der Textareas korrigieren
 	$('#forms').find('textarea').each(function() {
-		FitToContent(this.id);
+		window.adb.FitToContent(this.id);
 	});
 }
 
@@ -3082,7 +3071,7 @@ function oeffneUri() {
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
 				$.when(window.adb.erstelleBaum()).then(function() {
-					oeffneBaumZuId(id);
+					window.adb.oeffneBaumZuId(id);
 				});
 			}
 		});
@@ -3856,7 +3845,7 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
 							// Feld Taxonomie und Beschriftung des Accordions aktualisiern
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
-							initiiere_art(id);
+							window.adb.initiiere_art(id);
 							// Taxonomie anzeigen
 							$('#' + feldWert.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'')).collapse('show');
 						} else {
@@ -4039,7 +4028,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	$db.saveDoc(object, {
 		success: function(doc) {
 			$.when(window.adb.erstelleBaum()).then(function() {
-				oeffneBaumZuId(object._id);
+				window.adb.oeffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},
@@ -4048,7 +4037,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 			$("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
 			$("#meldung_individuell_schliessen").html("schliessen");
 			$('#meldung_individuell').modal();
-			initiiere_art(object._id);
+			window.adb.initiiere_art(object._id);
 		}
 	});
 }
@@ -4095,7 +4084,7 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
 	}
 	if (aktualisiereHierarchiefeld) {
-		$("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
+		$("#Hierarchie").val(window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
 	}
 	// jetzt den parent aktualisieren
 	if (objekt.Taxonomie.Daten.Hierarchie.length > 1) {
