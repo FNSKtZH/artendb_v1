@@ -1957,7 +1957,7 @@ window.adb.handleRueckfrageLrLoeschenJaClick = function() {
 				return row.doc;
 			});
 			// und diese Dokumente nun löschen
-			loescheMassenMitObjektArray(doc_array);
+			window.adb.loescheMassenMitObjektArray(doc_array);
 			// vorigen node ermitteln
 			var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
 			// node des gelöschten LR entfernen
@@ -3331,8 +3331,8 @@ function filtereFuerExport(direkt) {
 			filterObjekt.DsName = $(this).attr('eigenschaft');
 			filterObjekt.Feldname = $(this).attr('feld');
 			// Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFuerExport später auch in Kleinschrift verwandelt)
-			filterObjekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
-			filterObjekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
+			filterObjekt.Filterwert = window.adb.ermittleVergleichsoperator(this.value)[1];
+			filterObjekt.Vergleichsoperator = window.adb.ermittleVergleichsoperator(this.value)[0];
 			filterkriterien.push(filterObjekt);
 		}
 	});
@@ -3797,10 +3797,10 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 						var neuerNodetext;
 						if (feldName === "Label") {
 							// object hat noch den alten Wert für Label, neuen verwenden
-							neuerNodetext = erstelleLrLabelName(feldWert, object.Taxonomie.Daten.Einheit);
+							neuerNodetext = window.adb.erstelleLrLabelName(feldWert, object.Taxonomie.Daten.Einheit);
 						} else {
 							// object hat noch den alten Wert für Einheit, neuen verwenden
-							neuerNodetext = erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
+							neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
 						}
 						$("#tree" + window.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
 					}
@@ -4092,18 +4092,18 @@ window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hie
 
 window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
 	var hierarchieobjekt = {};
-	hierarchieobjekt.Name = erstelleLrLabelNameAusObjekt(objekt);
+	hierarchieobjekt.Name = window.adb.erstelleLrLabelNameAusObjekt(objekt);
 	hierarchieobjekt.GUID = objekt._id;
 	return hierarchieobjekt;
 };
 
-function erstelleLrLabelNameAusObjekt(objekt) {
-	var Label = objekt.Taxonomie.Daten.Label || "";
-	var Einheit = objekt.Taxonomie.Daten.Einheit || "";
-	return erstelleLrLabelName(Label, Einheit);
-}
+window.adb.erstelleLrLabelNameAusObjekt = function(objekt) {
+	var Label = objekt.Taxonomie.Daten.Label || "",
+		Einheit = objekt.Taxonomie.Daten.Einheit || "";
+	return window.adb.erstelleLrLabelName(Label, Einheit);
+};
 
-function erstelleLrLabelName(Label, Einheit) {
+window.adb.erstelleLrLabelName = function(Label, Einheit) {
 	if (Label && Einheit) {
 		return Label + ": " + Einheit;
 	} else if (Einheit) {
@@ -4112,15 +4112,17 @@ function erstelleLrLabelName(Label, Einheit) {
 		// aha, ein neues Objekt, noch ohne Label und Einheit
 		return "unbenannte Einheit";
 	}
-}
+};
 
 // löscht Datensätze in Massen
 // nimmt einen Array von Objekten entgegen
 // baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
 // aktualisiert die Objekte mit einer einzigen Operation
-function loescheMassenMitObjektArray(objekt_array) {
-	var objekte_mit_objekte, objekte, objekt;
-	objekte = [];
+window.adb.loescheMassenMitObjektArray = function(objekt_array) {
+	var i,
+		objekte_mit_objekte,
+		objekte = [],
+		objekt;
 	for (i=0; i<objekt_array.length; i++) {
 		objekt = {};
 		objekt._id = objekt_array[i]._id;
@@ -4136,12 +4138,12 @@ function loescheMassenMitObjektArray(objekt_array) {
 		contentType: "application/json", 
 		data: JSON.stringify(objekte_mit_objekte)
 	});
-}
+};
 
 // erhält einen filterwert
 // dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
 // retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
-function ermittleVergleichsoperator(filterwert) {
+window.adb.ermittleVergleichsoperator = function(filterwert) {
 	var vergleichsoperator;
 	if (filterwert.indexOf(">=") === 0) {
 		vergleichsoperator = ">=";
@@ -4183,7 +4185,7 @@ function ermittleVergleichsoperator(filterwert) {
 		vergleichsoperator = "kein";
 	}
 	return [vergleichsoperator, filterwert];
-}
+};
 
 // kontrolliert den verwendeten Browser
 // Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
