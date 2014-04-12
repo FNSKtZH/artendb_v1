@@ -1727,63 +1727,63 @@ window.adb.handleBsLoeschenClick = function() {
 };
 
 // wenn DsImportieren geklickt wird
-function handleDsImportierenClick() {
+window.adb.handleDsImportierenClick = function() {
 	event.preventDefault();
 	$.when(importiereDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung importiert");
 	});
-}
+};
 
 // wenn BsImportieren geklickt wird
-function handleBsImportierenClick() {
+window.adb.handleBsImportierenClick = function() {
 	event.preventDefault();
 	$.when(importiereBeziehungssammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Beziehungssammlung importiert");
 	});
-}
+};
 
 // wenn DsEntfernen geklickt wird
-function handleDsEntfernenClick() {
+window.adb.handleDsEntfernenClick = function() {
 	event.preventDefault();
 	$.when(entferneDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung entfernt");
 	});
-}
+};
 
 // wenn BsEntfernen geklickt wird
-function handleBsEntfernenClick() {
+window.adb.handleBsEntfernenClick = function() {
 	event.preventDefault();
 	$.when(entferneBeziehungssammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Beziehungssammlung entfernt");
 	});
-}
+};
 
 // wenn exportieren geklickt wird
-function handleExportierenClick() {
+window.adb.handleExportierenClick = function() {
 	window.adb.zeigeFormular("export");
 	// Exportieren-Guids schaffen, damit kein altes existiert
 	window.exportieren_guids = [];
 	delete window.exportieren_objekte;
 	delete window.exportieren_objekte_sik;
-}
+};
 
 // wenn exportieren_alt geklickt wird
-function handleExportierenAltClick() {
+window.adb.handleExportierenAltClick = function() {
 	window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true");
-}
+};
 
 // wenn .feld_waehlen geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 // und pro Beziehung eine Zeile ausgegeben wird. 
 // Wenn ja: reklamieren und rückgängig machen
-function handleFeldWaehlenChange() {
+window.adb.handleFeldWaehlenChange = function() {
 	if ($("#export_bez_in_zeilen").prop('checked')) {
-		var bezDsChecked = [];
-		var that = this;
+		var bezDsChecked = [],
+			that = this;
 		$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
 			if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
 				bezDsChecked.push($(this).attr('datensammlung'));
@@ -1798,11 +1798,11 @@ function handleFeldWaehlenChange() {
 			exportZuruecksetzen();
 		}
 	}
-}
+};
 
 // wenn .feld_waehlen_alle_von_ds geändert wird
 // wenn checked: alle unchecken, sonst alle checken
-function handleFeldWaehlenAlleVonDs() {
+window.adb.handleFeldWaehlenAlleVonDs = function() {
 	var ds = $(this).attr('datensammlung'),
 		status = false;
 	if ($(this).prop('checked')) {
@@ -1811,20 +1811,19 @@ function handleFeldWaehlenAlleVonDs() {
 	$('[datensammlung="'+ds+'"]').each(function() {
 		$(this).prop('checked', status);
 	});
-}
+};
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
-function handleExportierenDsObjekteWaehlenGruppeChange() {
+window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function() {
 	erstelleListeFuerFeldwahl();
 	// Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").css("display", "none");
-}
+};
 
 // wenn export_feld_filtern geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
-function handleExportFeldFilternChange() {
-	var bezDsFiltered = [],
-		that = this;
+window.adb.handleExportFeldFilternChange = function() {
+	var bezDsFiltered = [];
 	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
 		if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
 			bezDsFiltered.push($(this).attr('eigenschaft'));
@@ -1838,31 +1837,31 @@ function handleExportFeldFilternChange() {
 	} else {
 		exportZuruecksetzen();
 	}
-}
+};
 
 // wenn exportieren_exportieren angezeigt wird
 // zur Schaltfläche Vorschau scrollen
-function handleExportierenExportierenShow() {
+window.adb.handleExportierenExportierenShow = function() {
 	$('html, body').animate({
 		scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
 	}, 2000);
-}
+};
 
 // wenn .btn.lr_bearb_bearb geklickt wird
-function handleBtnLrBearbBearbKlick() {
+window.adb.handleBtnLrBearbBearbKlick = function() {
 	if (!$(this).hasClass('disabled')) {
 		bearbeiteLrTaxonomie();
 	}
-}
+};
 
 // wenn .btn.lr_bearb_schuetzen geklickt wird
-function handleBtnLrBearbSchuetzenClick() {
+window.adb.handleBtnLrBearbSchuetzenClick = function() {
 	if (!$(this).hasClass('disabled')) {
 		schuetzeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 		delete localStorage.lr_bearb;
 	}
-}
+};
 
 // wenn .btn.lr_bearb_neu geklickt wird
 function handleBtnLrBearbNeuClick() {

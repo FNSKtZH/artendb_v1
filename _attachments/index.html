@@ -1127,37 +1127,37 @@
 
 				$("#importieren_bs").on("click", "#BsLoeschen", window.adb.handleBsLoeschenClick);
 
-				$("#importieren_ds").on("click", "#DsImportieren", handleDsImportierenClick);
+				$("#importieren_ds").on("click", "#DsImportieren", window.adb.handleDsImportierenClick);
 
-				$("#importieren_bs").on("click", "#BsImportieren", handleBsImportierenClick);
+				$("#importieren_bs").on("click", "#BsImportieren", window.adb.handleBsImportierenClick);
 
-				$("#importieren_ds").on("click", "#DsEntfernen", handleDsEntfernenClick);
+				$("#importieren_ds").on("click", "#DsEntfernen", window.adb.handleDsEntfernenClick);
 
-				$("#importieren_bs").on("click", "#BsEntfernen", handleBsEntfernenClick);
+				$("#importieren_bs").on("click", "#BsEntfernen", window.adb.handleBsEntfernenClick);
 
-				$("#menu_btn").on("click", "#exportieren", handleExportierenClick);
+				$("#menu_btn").on("click", "#exportieren", window.adb.handleExportierenClick);
 
-				$("#menu_btn").on("click", "#exportieren_alt", handleExportierenAltClick);
+				$("#menu_btn").on("click", "#exportieren_alt", window.adb.handleExportierenAltClick);
 
-				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", handleExportierenDsObjekteWaehlenGruppeChange);
+				$("#export").on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWaehlenGruppeChange);
 
-				$("#export").on("change", ".feld_waehlen", handleFeldWaehlenChange);
+				$("#export").on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange);
 
-				$("#export").on("change", ".feld_waehlen_alle_von_ds", handleFeldWaehlenAlleVonDs);
+				$("#export").on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs);
 
-				$("#export").on("change", ".export_feld_filtern", handleExportFeldFilternChange);
+				$("#export").on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange);
 
 				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", exportZuruecksetzen);
 
-				$("#exportieren_exportieren").on("show", handleExportierenExportierenShow);
+				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 
 				$("#art").on("click", ".btn.lr_bearb", function(event) {
 					event.preventDefault();
 				});
 
-				$("#art").on("click", ".btn.lr_bearb_bearb", handleBtnLrBearbBearbKlick);
+				$("#art").on("click", ".btn.lr_bearb_bearb", window.adb.handleBtnLrBearbBearbKlick);
 
-				$("#art").on("click", ".btn.lr_bearb_schuetzen", handleBtnLrBearbSchuetzenClick);
+				$("#art").on("click", ".btn.lr_bearb_schuetzen", window.adb.handleBtnLrBearbSchuetzenClick);
 
 				$("#art").on("click", ".btn.lr_bearb_neu", handleBtnLrBearbNeuClick);
 
