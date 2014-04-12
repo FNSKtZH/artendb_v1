@@ -504,7 +504,7 @@ window.adb.initiiere_art = function(id) {
 			if (Datensammlungen.length > 0) {
 				// Datensammlungen nach Name sortieren
 				/*ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
-				Datensammlungen = sortiereObjektarrayNachName(Datensammlungen);*/
+				Datensammlungen = window.adb.sortiereObjektarrayNachName(Datensammlungen);*/
 				// Titel hinzufügen
 				htmlArt += "<h4>Eigenschaften:</h4>";
 				for (x=0, len=Datensammlungen.length; x<len; x++) {
@@ -571,7 +571,7 @@ window.adb.initiiere_art = function(id) {
 													// diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
 													BsDerSynonymenArt.Beziehungen.splice(b);
 												}
-												/*if (containsObject(BsDerSynonymenArt.Beziehungen[b], BsDerSynonymenArt.Beziehungen)) {
+												/*if (window.adb.containsObject(BsDerSynonymenArt.Beziehungen[b], BsDerSynonymenArt.Beziehungen)) {
 													// diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
 													BsDerSynonymenArt.Beziehungen.splice(b);
 												}*/
@@ -588,7 +588,7 @@ window.adb.initiiere_art = function(id) {
 						// BS von Synonymen darstellen
 						if (DatensammlungenVonSynonymen.length > 0) {
 							// DatensammlungenVonSynonymen nach Name sortieren
-							DatensammlungenVonSynonymen = sortiereObjektarrayNachName(DatensammlungenVonSynonymen);
+							DatensammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(DatensammlungenVonSynonymen);
 							// Titel hinzufügen
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
 							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
@@ -599,7 +599,7 @@ window.adb.initiiere_art = function(id) {
 						// bez von Synonymen darstellen
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
 							// BeziehungssammlungenVonSynonymen sortieren
-							BeziehungssammlungenVonSynonymen = sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
+							BeziehungssammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
 							// Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
 							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
@@ -683,7 +683,7 @@ window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 	html += '</div>';
 
 	// die Beziehungen sortieren
-	art_i.Beziehungen = sortiereBeziehungenNachName(art_i.Beziehungen);
+	art_i.Beziehungen = window.adb.sortiereBeziehungenNachName(art_i.Beziehungen);
 
 	// jetzt für alle Beziehungen die Felder hinzufügen
 	for (var i=0; i<art_i.Beziehungen.length; i++) {
@@ -1160,7 +1160,7 @@ window.adb.erstelleKonto = function(woher) {
 		success : function() {
 			localStorage.Email = $('#Email_'+woher).val();
 			if (woher === "art") {
-				bearbeiteLrTaxonomie();
+				window.adb.bearbeiteLrTaxonomie();
 			}
 			window.adb.passeUiFuerAngemeldetenUserAn(woher);
 			// Werte aus Feldern entfernen
@@ -1190,7 +1190,7 @@ window.adb.meldeUserAn = function(woher) {
 			success : function() {
 				localStorage.Email = $('#Email_'+woher).val();
 				if (woher === "art") {
-					bearbeiteLrTaxonomie();
+					window.adb.bearbeiteLrTaxonomie();
 				}
 				window.adb.passeUiFuerAngemeldetenUserAn(woher);
 				// Werte aus Feldern entfernen
@@ -1234,7 +1234,7 @@ window.adb.meldeUserAb = function() {
 	// $(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
-	schuetzeLrTaxonomie();
+	window.adb.schuetzeLrTaxonomie();
 };
 
 window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
@@ -1534,7 +1534,7 @@ window.adb.handleMenuBtnClick = function() {
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function() {
-	if(isFileAPIAvailable()) {
+	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 		if (window.adb.pruefeAnmeldung("ds")) {
@@ -1547,7 +1547,7 @@ window.adb.handleDs_ImportierenClick = function() {
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function() {
-	if(isFileAPIAvailable()) {
+	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 		if (window.adb.pruefeAnmeldung("bs")) {
@@ -1559,14 +1559,14 @@ window.adb.handleBs_ImportierenClick = function() {
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-	bereiteImportieren_ds_beschreibenVor("ds");
+	window.adb.bereiteImportieren_ds_beschreibenVor("ds");
 	$("#DsImportiertVon").val(localStorage.Email);
 };
 
 // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-	bereiteImportieren_bs_beschreibenVor("bs");
+	window.adb.bereiteImportieren_bs_beschreibenVor("bs");
 	$("#BsImportiertVon").val(localStorage.Email);
 };
 
@@ -1795,7 +1795,7 @@ window.adb.handleFeldWaehlenChange = function() {
 			$('#meldung_zuviele_bs').modal();
 			$(that).prop('checked', false);
 		} else {
-			exportZuruecksetzen();
+			window.adb.exportZuruecksetzen();
 		}
 	}
 };
@@ -1835,7 +1835,7 @@ window.adb.handleExportFeldFilternChange = function() {
 		$('#meldung_zuviele_bs').modal();
 		$(this).val("");
 	} else {
-		exportZuruecksetzen();
+		window.adb.exportZuruecksetzen();
 	}
 };
 
@@ -1850,14 +1850,14 @@ window.adb.handleExportierenExportierenShow = function() {
 // wenn .btn.lr_bearb_bearb geklickt wird
 window.adb.handleBtnLrBearbBearbKlick = function() {
 	if (!$(this).hasClass('disabled')) {
-		bearbeiteLrTaxonomie();
+		window.adb.bearbeiteLrTaxonomie();
 	}
 };
 
 // wenn .btn.lr_bearb_schuetzen geklickt wird
 window.adb.handleBtnLrBearbSchuetzenClick = function() {
 	if (!$(this).hasClass('disabled')) {
-		schuetzeLrTaxonomie();
+		window.adb.schuetzeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 		delete localStorage.lr_bearb;
 	}
@@ -1924,7 +1924,7 @@ window.adb.handleLrParentOptionenChange = function() {
 			if (parent_id !== "0") {
 				// die Hierarchie aufbauen und setzen
 				// bei der Wurzel ist sie schon gesetzt
-				aktualisiereHierarchieEinesNeuenLr(null, object, true);
+				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
 				$.when(window.adb.erstelleBaum()).then(function() {
 					window.adb.oeffneBaumZuId(object._id);
@@ -1966,7 +1966,7 @@ window.adb.handleRueckfrageLrLoeschenJaClick = function() {
 			if (voriger_node) {
 				$.jstree._reference(voriger_node).select_node(voriger_node);
 			} else {
-				oeffneGruppe("Lebensräume");
+				window.adb.oeffneGruppe("Lebensräume");
 			}
 		}
 	});
@@ -1974,13 +1974,13 @@ window.adb.handleRueckfrageLrLoeschenJaClick = function() {
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
 window.adb.handleLrTaxonomieControlsChange = function() {
-	speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
+	window.adb.speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
 };
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
 window.adb.handlePanelbodyLrTaxonomieShown = function() {
 	if (localStorage.lr_bearb == "true") {
-		bearbeiteLrTaxonomie();
+		window.adb.bearbeiteLrTaxonomie();
 	}
 };
 
@@ -2837,7 +2837,7 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 			doc.Datensammlungen.push(Datensammlung);
 			// sortieren
 			// Datensammlungen nach Name sortieren
-			doc.Datensammlungen = sortiereObjektarrayNachName(doc.Datensammlungen);
+			doc.Datensammlungen = window.adb.sortiereObjektarrayNachName(doc.Datensammlungen);
 			// in artendb speichern
 			$db.saveDoc(doc);
 		}
@@ -2859,12 +2859,12 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 							if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, Beziehungen[h])) {
 								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
 							}
-							/*if (!containsObject(Beziehungen[h], doc.Beziehungssammlungen[i].Beziehungen)) {
+							/*if (!window.adb.containsObject(Beziehungen[h], doc.Beziehungssammlungen[i].Beziehungen)) {
 								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
 							}*/
 						}
 						// Beziehungen nach Name sortieren
-						doc.Beziehungssammlungen[i].Beziehungen = sortiereBeziehungenNachName(doc.Beziehungssammlungen[i].Beziehungen);
+						doc.Beziehungssammlungen[i].Beziehungen = window.adb.sortiereBeziehungenNachName(doc.Beziehungssammlungen[i].Beziehungen);
 						hinzugefügt = true;
 						break;
 					}
@@ -2876,7 +2876,7 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 						Beziehungssammlung.Beziehungen.push(Beziehungen[a]);
 					}
 					// Beziehungen nach Name sortieren
-					Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
+					Beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 					doc.Beziehungssammlungen.push(Beziehungssammlung);
 				}
 			} else {
@@ -2886,12 +2886,12 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 					Beziehungssammlung.Beziehungen.push(Beziehungen[b]);
 				}
 				// Beziehungen nach Name sortieren
-				Beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
+				Beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
 				doc.Beziehungssammlungen = [];
 				doc.Beziehungssammlungen.push(Beziehungssammlung);
 			}
 			// Beziehungssammlungen nach Name sortieren
-			doc.Beziehungssammlungen = sortiereObjektarrayNachName(doc.Beziehungssammlungen);
+			doc.Beziehungssammlungen = window.adb.sortiereObjektarrayNachName(doc.Beziehungssammlungen);
 			// in artendb speichern
 			$db.saveDoc(doc);
 		}
@@ -3198,7 +3198,7 @@ function erstelleListeFuerFeldwahl_2() {
 
 	// bei allfälligen "Taxonomie(n)" Feldnamen sortieren
 	if (FelderObjekt["Taxonomie(n)"] && FelderObjekt["Taxonomie(n)"].Daten) {
-		FelderObjekt["Taxonomie(n)"].Daten = sortKeysOfObject(FelderObjekt["Taxonomie(n)"].Daten);
+		FelderObjekt["Taxonomie(n)"].Daten = window.adb.sortKeysOfObject(FelderObjekt["Taxonomie(n)"].Daten);
 	}
 
 	// Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
@@ -3498,34 +3498,37 @@ window.adb.fuerExportGewaehlteGruppen = function() {
 };
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
-function bereiteImportieren_ds_beschreibenVor(woher) {
+window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
 	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#DsName").focus();
 		// Daten holen, wenn nötig
 		if (window.ds_von_objekten) {
-			bereiteImportieren_ds_beschreibenVor_02();
+			window.adb.bereiteImportieren_ds_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
 				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.ds_von_objekten = data;
-					bereiteImportieren_ds_beschreibenVor_02();
+					window.adb.bereiteImportieren_ds_beschreibenVor_02();
 				}
 			});
 		}
 	}
-}
+};
 
 // DsNamen in Auswahlliste stellen
 // veränderbare sind normal, übrige grau
-function bereiteImportieren_ds_beschreibenVor_02() {
+window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
+	var i,
+		html,
+		z;
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.DsKeys = [];
-	for (var i=0; i<window.ds_von_objekten.rows.length; i++) {
+	for (i=0; i<window.ds_von_objekten.rows.length; i++) {
 		DsKeys.push(window.ds_von_objekten.rows[i].key);
 	}
 	// nach DsNamen sortieren
@@ -3533,9 +3536,9 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 		return key[1];
 	});
 	// mit leerer Zeile beginnen
-	var html = "<option value=''></option>";
+	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (var z in DsKeys) {
+	for (z in DsKeys) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
 		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
 			// veränderbare sind normal = schwarz
@@ -3547,10 +3550,10 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	}
 	$("#DsWaehlen").html(html);
 	$("#DsUrsprungsDs").html(html);
-}
+};
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
-function bereiteImportieren_bs_beschreibenVor(woher) {
+window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
 	} else {
@@ -3559,25 +3562,28 @@ function bereiteImportieren_bs_beschreibenVor(woher) {
 		//$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
 		// Daten holen, wenn nötig
 		if (window.bs_von_objekten) {
-			bereiteImportieren_bs_beschreibenVor_02();
+			window.adb.bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
 				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
 					window.bs_von_objekten = data;
-					bereiteImportieren_bs_beschreibenVor_02();
+					window.adb.bereiteImportieren_bs_beschreibenVor_02();
 				}
 			});
 		}
 	}
-}
+};
 
-function bereiteImportieren_bs_beschreibenVor_02() {
+window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
+	var i,
+		html,
+		z;
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.BsKeys = [];
-	for (var i=0; i< window.bs_von_objekten.rows.length; i++) {
+	for (i=0; i< window.bs_von_objekten.rows.length; i++) {
 		BsKeys.push(window.bs_von_objekten.rows[i].key);
 	}
 	// nach DsNamen sortieren
@@ -3585,9 +3591,9 @@ function bereiteImportieren_bs_beschreibenVor_02() {
 		return key[1];
 	});
 	// mit leerer Zeile beginnen
-	var html = "<option value=''></option>";
+	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (var z in BsKeys) {
+	for (z in BsKeys) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
 		if (BsKeys[z][3] === localStorage.Email || BsKeys[z][2]) {
 			// veränderbare sind normal = schwarz
@@ -3599,9 +3605,9 @@ function bereiteImportieren_bs_beschreibenVor_02() {
 	}
 	$("#BsWaehlen").html(html);
 	$("#BsUrsprungsBs").html(html);
-}
+};
 
-function isFileAPIAvailable() {
+window.adb.isFileAPIAvailable = function() {
 	// Check for the various File API support.
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		// Great success! All the File APIs are supported.
@@ -3625,11 +3631,11 @@ function isFileAPIAvailable() {
 		$('#fileApiMeldung').modal();
 		return false;
 	}
-}
+};
 
 // übernimmt ein Objekt und einen Array
 // prüft, ob das Objekt im Array enthalten ist
-function containsObject(obj, list) {
+window.adb.containsObject = function(obj, list) {
 	var i;
 	for (i = 0; i < list.length; i++) {
 		if (list[i] === obj) {
@@ -3637,13 +3643,13 @@ function containsObject(obj, list) {
 		}
 	}
 	return false;
-}
+};
 
-function sortiereObjektarrayNachName(objektarray) {
+window.adb.sortiereObjektarrayNachName = function(objektarray) {
 	// Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
 	objektarray.sort(function(a, b) {
-		var aName = a.Name;
-		var bName = b.Name;
+		var aName = a.Name,
+			bName = b.Name;
 		if (aName && bName) {
 			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
 		} else {
@@ -3651,15 +3657,18 @@ function sortiereObjektarrayNachName(objektarray) {
 		}
 	});
 	return objektarray;
-}
+};
 
 // übernimmt einen Array mit den Beziehungen
 // gibt diesen sortiert zurück
-function sortiereBeziehungenNachName(beziehungen) {
+window.adb.sortiereBeziehungenNachName = function(beziehungen) {
 // Beziehungen nach Name sortieren
 	beziehungen.sort(function(a, b) {
-		var aName, bName;
-		for (var c in a.Beziehungspartner) {
+		var aName,
+			bName,
+			c,
+			d;
+		for (c in a.Beziehungspartner) {
 			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
 				// sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
@@ -3667,7 +3676,7 @@ function sortiereBeziehungenNachName(beziehungen) {
 				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
 			}
 		}
-		for (var d in b.Beziehungspartner) {
+		for (d in b.Beziehungspartner) {
 			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
 				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
 			} else {
@@ -3681,13 +3690,14 @@ function sortiereBeziehungenNachName(beziehungen) {
 		}
 	});
 	return beziehungen;
-}
+};
 
 // sortiert nach den keys des Objekts
 // resultat nicht garantiert!
-function sortKeysOfObject(o) {
+window.adb.sortKeysOfObject = function(o) {
 	var sorted = {},
-	key, a = [];
+		key,
+		a = [];
 
 	for (key in o) {
 		if (o.hasOwnProperty(key)) {
@@ -3701,9 +3711,9 @@ function sortKeysOfObject(o) {
 		sorted[a[key]] = o[a[key]];
 	}
 	return sorted;
-}
+};
 
-function exportZuruecksetzen() {
+window.adb.exportZuruecksetzen = function() {
 	// Export ausblenden, falls sie eingeblendet war
 	if ($("#exportieren_exportieren_collapse").css("display") !== "none") {
 		$("#exportieren_exportieren_collapse").collapse('hide');
@@ -3711,9 +3721,9 @@ function exportZuruecksetzen() {
 	$("#exportieren_exportieren_tabelle").hide();
 	$(".exportieren_exportieren_exportieren").hide();
 	$("#exportieren_exportieren_error_text").alert().css("display", "none");
-}
+};
 
-function oeffneGruppe(Gruppe) {
+window.adb.oeffneGruppe = function(Gruppe) {
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.Gruppe = Gruppe;
 	$(".suchfeld").val("");
@@ -3730,23 +3740,24 @@ function oeffneGruppe(Gruppe) {
 	window.adb.erstelleBaum();
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
-}
+};
 
 // schreibt Änderungen in Feldern in die Datenbank
 // wird vorläufig nur für LR Taxonomie verwendet
-function speichern(feldWert, feldName, dsName, dsTyp) {
+window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 	// zuerst die id des Objekts holen
-	var uri = new Uri($(location).attr('href'));
-	var id = uri.getQueryParamValue('id');
-	// wenn browser history nicht unterstützt, erstellt history.js eine hash
-	// dann muss die id durch die id in der hash ersetzt werden
-	var hash = uri.anchor();
+	var uri = new Uri($(location).attr('href')),
+		id = uri.getQueryParamValue('id'),
+		// wenn browser history nicht unterstützt, erstellt history.js eine hash
+		// dann muss die id durch die id in der hash ersetzt werden
+		hash = uri.anchor(),
+		uri2;
 	if (hash) {
-		var uri2 = new Uri(hash);
+		uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
 	}
 	// sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
-	feldWert = convertToCorrectType(feldWert);
+	feldWert = window.adb.convertToCorrectType(feldWert);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
@@ -3809,10 +3820,10 @@ function speichern(feldWert, feldName, dsName, dsTyp) {
 			$('#meldung_individuell').modal();
 		}
 	});
-}
+};
 
-function convertToCorrectType(feldWert) {
-	var type = myTypeOf(feldWert);
+window.adb.convertToCorrectType = function(feldWert) {
+	var type = window.adb.myTypeOf(feldWert);
 	if (type === "boolean") {
 		return Boolean(feldWert);
 	} else if (type === "float") {
@@ -3822,11 +3833,11 @@ function convertToCorrectType(feldWert) {
 	} else {
 		return feldWert;
 	}
-}
+};
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
-function myTypeOf(Wert) {
+window.adb.myTypeOf = function(Wert) {
 	if (typeof Wert === "boolean") {
 		return "boolean";
 	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert) && parseInt(Wert) == Wert) {
@@ -3840,9 +3851,9 @@ function myTypeOf(Wert) {
 		// als String behandeln
 		return "string";
 	}
-}
+};
 
-function bearbeiteLrTaxonomie() {
+window.adb.bearbeiteLrTaxonomie = function() {
 	// Benutzer muss anmelden
 	if (!window.adb.pruefeAnmeldung("art")) {
 		return false;
@@ -3874,9 +3885,9 @@ function bearbeiteLrTaxonomie() {
 	// Schreibbarkeit in den Symbolen anzeigen
 	$('.lr_bearb').removeClass('disabled');
 	$(".lr_bearb_bearb").addClass('disabled');
-}
+};
 
-function schuetzeLrTaxonomie() {
+window.adb.schuetzeLrTaxonomie = function() {
 	// alle Felder schreibbar setzen
 	$(".Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
@@ -3894,25 +3905,30 @@ function schuetzeLrTaxonomie() {
 	$('.lr_bearb').addClass('disabled');
 	$(".lr_bearb_bearb").removeClass('disabled');
 	$("#art_anmelden").hide();
-}
+};
 
 // aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)
 // der Array kann das Resultat einer Abfrage aus der DB sein (object[i] = dara.rows[i].doc)
 // oder aus dem Import einer Taxonomie stammen
 // diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
-function aktualisiereHierarchieEinerLrTaxonomie(objekt_array) {
-	for (var i=0; i<objekt_array.length; i++) {
-		var object,
-			hierarchie = [],
-			parent = object.Taxonomie.Daten.Parent;
+// Momentan nicht verwendet
+window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(objekt_array) {
+	var i,
+		object,
+		hierarchie,
+		parent;
+	for (i=0; i<objekt_array.length; i++) {
+		object = objekt_array[i];
+		hierarchie = [];
+		parent = object.Taxonomie.Daten.Parent;
 		// als Start sich selben zur Hierarchie hinzufügen
-		hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt_array[i]));
+		hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
 		if (parent) {
 			object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(objekt_array, object._id, hierarchie);
 			$db.saveDoc(object);
 		}
 	}
-}
+};
 
 // aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
 // ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
@@ -3920,7 +3936,7 @@ function aktualisiereHierarchieEinerLrTaxonomie(objekt_array) {
 // LR kann mitgegeben werden, muss aber nicht
 // wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedesmal die LR aus der DB neu abgerufen werden sollen
 // manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
-function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefeld) {
+window.adb.aktualisiereHierarchieEinesNeuenLr = function(LR, object, aktualisiereHierarchiefeld) {
 	if (LR) {
 		aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
 	} else {
@@ -3931,7 +3947,7 @@ function aktualisiereHierarchieEinesNeuenLr(LR, object, aktualisiereHierarchiefe
 			}
 		});
 	}
-}
+};
 
 function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchiefeld) {
 	var object_array,

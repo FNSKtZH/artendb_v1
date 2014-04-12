@@ -1054,7 +1054,7 @@
 
 				// Baum aufbauen, wenn Gruppe gewählt wird
 				$("#menu").on("click", ".gruppe", function() {
-					oeffneGruppe($(this).attr("Gruppe"));
+					window.adb.oeffneGruppe($(this).attr("Gruppe"));
 				});
 
 				// zwischen Mobil- und Desktopsicht wechseln
@@ -1147,7 +1147,7 @@
 
 				$("#export").on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange);
 
-				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", exportZuruecksetzen);
+				$("#export").on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen);
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 
