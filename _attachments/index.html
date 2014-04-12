@@ -1159,23 +1159,23 @@
 
 				$("#art").on("click", ".btn.lr_bearb_schuetzen", window.adb.handleBtnLrBearbSchuetzenClick);
 
-				$("#art").on("click", ".btn.lr_bearb_neu", handleBtnLrBearbNeuClick);
+				$("#art").on("click", ".btn.lr_bearb_neu", window.adb.handleBtnLrBearbNeuClick);
 
-				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', handleLrParentOptionenChange);
+				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', window.adb.handleLrParentOptionenChange);
 
-				$(document).on("click", "#rueckfrage_lr_loeschen_ja", handleRueckfrageLrLoeschenJaClick);
+				$(document).on("click", "#rueckfrage_lr_loeschen_ja", window.adb.handleRueckfrageLrLoeschenJaClick);
 
-				$("#art").on("change", ".Lebensräume.Taxonomie .controls", handleLrTaxonomieControlsChange);
+				$("#art").on("change", ".Lebensräume.Taxonomie .controls", window.adb.handleLrTaxonomieControlsChange);
 
-				$('#art').on('shown.bs.collapse', '.Lebensräume.Taxonomie', handlePanelbodyLrTaxonomieShown);
+				$('#art').on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
 
-				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', handleExportierenExportierenCollapseShown);
+				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown);
 
-				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", handleExportierenObjekteTaxonomienZusammenfassenClick);
+				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick);
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren", handleExportierenExportierenExportierenClick);
+				$("#export").on("click", "#exportieren_exportieren_exportieren", window.adb.handleExportierenExportierenExportierenClick);
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", handleExportierenExportierenExportierenDirektClick);
+				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", window.adb.handleExportierenExportierenExportierenDirektClick);
 
 				$("#export").on("click", ".panel-heading a", function(event) {
 					// verhindern, dass bootstrap ganz nach oben scrollt

@@ -1864,14 +1864,14 @@ window.adb.handleBtnLrBearbSchuetzenClick = function() {
 };
 
 // wenn .btn.lr_bearb_neu geklickt wird
-function handleBtnLrBearbNeuClick() {
+window.adb.handleBtnLrBearbNeuClick = function() {
 	if (!$(this).hasClass('disabled')) {
 		window.adb.initiiereLrParentAuswahlliste($("#Taxonomie").val());
 	}
-}
+};
 
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
-function handleLrParentOptionenChange() {
+window.adb.handleLrParentOptionenChange = function() {
 	// prüfen, ob oberster Node gewählt wurde
 	var parent_name = $(this).val(),
 		parent_id = this.id,
@@ -1933,10 +1933,10 @@ function handleLrParentOptionenChange() {
 			}
 		}
 	});
-}
+};
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
-function handleRueckfrageLrLoeschenJaClick() {
+window.adb.handleRueckfrageLrLoeschenJaClick = function() {
 	event.preventDefault();
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
@@ -1970,22 +1970,22 @@ function handleRueckfrageLrLoeschenJaClick() {
 			}
 		}
 	});
-}
+};
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
-function handleLrTaxonomieControlsChange() {
+window.adb.handleLrTaxonomieControlsChange = function() {
 	speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
-}
+};
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
-function handlePanelbodyLrTaxonomieShown() {
+window.adb.handlePanelbodyLrTaxonomieShown = function() {
 	if (localStorage.lr_bearb == "true") {
 		bearbeiteLrTaxonomie();
 	}
-}
+};
 
 // wenn #exportieren_exportieren_collapse geöffnet wird
-function handleExportierenExportierenCollapseShown() {
+window.adb.handleExportierenExportierenCollapseShown = function() {
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
 	if ($("#exportieren_exportieren_collapse").css("display") === "block") {
@@ -1995,10 +1995,10 @@ function handleExportierenExportierenCollapseShown() {
 		// filtert und baut danach die Vorschautabelle auf
 		filtereFuerExport();
 	}
-}
+};
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
-function handleExportierenObjekteTaxonomienZusammenfassenClick() {
+window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function() {
 	// verhindern, dass bootstrap ganz nach oben scrollt
 	event.preventDefault();
 	var hinweisNeu;
@@ -2021,10 +2021,10 @@ function handleExportierenObjekteTaxonomienZusammenfassenClick() {
 	if (gruppeIstGewählt) {
 		erstelleListeFuerFeldwahl();
 	}
-}
+};
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
-function handleExportierenExportierenExportierenClick() {
+window.adb.handleExportierenExportierenExportierenClick = function() {
 	// verhindern, dass bootstrap ganz nach oben scrollt
 	event.preventDefault();
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -2054,14 +2054,14 @@ function handleExportierenExportierenExportierenClick() {
 		$('#meldung_individuell').modal();
 		return;
 	}
-}
+};
 
 // wenn #exportieren_exportieren_exportieren_direkt geklickt wird
-function handleExportierenExportierenExportierenDirektClick() {
+window.adb.handleExportierenExportierenExportierenDirektClick = function() {
 	// verhindern, dass bootstrap ganz nach oben scrollt
 	event.preventDefault();	
 	filtereFuerExport("direkt");
-}
+};
 
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
