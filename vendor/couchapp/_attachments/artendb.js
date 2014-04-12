@@ -3784,14 +3784,14 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 							// somit ändert auch der Taxonomiename
 							// diesen mitgeben
 							// Einheit ändert und Taxonomiename muss auch angepasst werden
-							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
+							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
 							// Feld Taxonomie und Beschriftung des Accordions aktualisiern
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							window.adb.initiiere_art(id);
 							// Taxonomie anzeigen
 							$('#' + feldWert.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'')).collapse('show');
 						} else {
-							aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
+							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
 						// node umbenennen
 						var neuerNodetext;
@@ -3922,9 +3922,9 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(objekt_array) {
 		hierarchie = [];
 		parent = object.Taxonomie.Daten.Parent;
 		// als Start sich selben zur Hierarchie hinzufügen
-		hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
+		hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
 		if (parent) {
-			object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(objekt_array, object._id, hierarchie);
+			object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object._id, hierarchie);
 			$db.saveDoc(object);
 		}
 	}
@@ -3938,20 +3938,21 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(objekt_array) {
 // manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
 window.adb.aktualisiereHierarchieEinesNeuenLr = function(LR, object, aktualisiereHierarchiefeld) {
 	if (LR) {
-		aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
+		window.adb.aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function(data) {
-				aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
+				window.adb.aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
 			}
 		});
 	}
 };
 
-function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchiefeld) {
+window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object, aktualisiereHierarchiefeld) {
 	var object_array,
-		hierarchie = [];
+		hierarchie = [],
+		parent_object;
 	object_array = _.map(LR.rows, function(row) {
 		return row.doc;
 	});
@@ -3961,7 +3962,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	if (!object.Taxonomie.Daten) {
 		object.Taxonomie.Daten = {};
 	}
-	var parent_object = _.find(object_array, function(obj) {
+	parent_object = _.find(object_array, function(obj) {
 		return obj._id === object.Taxonomie.Daten.Parent.GUID;
 	});
 	// object.Name setzen
@@ -3969,8 +3970,8 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 	// object.Taxonomie.Daten.Taxonomie setzen
 	object.Taxonomie.Daten.Taxonomie = parent_object.Taxonomie.Daten.Taxonomie;
 	// als Start sich selben zur Hierarchie hinzufügen
-	hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
-	object.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
+	hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
+	object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function(doc) {
@@ -3987,7 +3988,7 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 			window.adb.initiiere_art(object._id);
 		}
 	});
-}
+};
 
 // aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
 // und auch den parent
@@ -3996,26 +3997,26 @@ function aktualisiereHierarchieEinesNeuenLr_2(LR, object, aktualisiereHierarchie
 // ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
 // wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
-function aktualisiereHierarchieEinesLrInklusiveSeinerChildren(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
 	var hierarchie = [];
 	if (lr) {
-		aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+		window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function(lr) {
-				aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+				window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 			}
 		});
 	}
-}
+};
 
-function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
 	var hierarchie = [],
-		parent = objekt.Taxonomie.Daten.Parent;
-	var object_array = _.map(lr.rows, function(row) {
-		return row.doc;
-	});
+		parent = objekt.Taxonomie.Daten.Parent,
+		object_array = _.map(lr.rows, function(row) {
+			return row.doc;
+		});
 	if (!objekt.Taxonomie) {
 		objekt.Taxonomie = {};
 	}
@@ -4023,9 +4024,9 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 		objekt.Taxonomie.Daten = {};
 	}
 	// als Start sich selben zur Hierarchie hinzufügen
-	hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
+	hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
 	if (parent.GUID !== objekt._id) {
-		objekt.Taxonomie.Daten.Hierarchie = ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
+		objekt.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
 	} else {
 		// aha, das ist die Wurzel des Baums
 		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
@@ -4049,33 +4050,36 @@ function aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, objekt, aktu
 	}
 	$db.saveDoc(objekt, {
 		success: function(data) {
-			var doc;
+			var doc,
+				i;
 			// kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-			for (var i=0; i<lr.rows.length; i++) {
+			for (i=0; i<lr.rows.length; i++) {
 				doc = lr.rows[i].doc;
 				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
 					// das ist ein child
 					// auch aktualisieren
 					// lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-					aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
+					window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
 				}
 			}
 		}
 	});
-}
+};
 
 // Baut den Hierarchiepfad für einen Lebensraum auf
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
-function ergänzeParentZuLrHierarchie(objekt_array, parentGUID, Hierarchie) {
-	for (var i=0; i<objekt_array.length; i++) {
-		var parentObjekt, hierarchieErgänzt;
+window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hierarchie) {
+	var i,
+		parentObjekt,
+		hierarchieErgänzt;
+	for (i=0; i<objekt_array.length; i++) {
 		if (objekt_array[i]._id === parentGUID) {
-			parentObjekt = erstelleHierarchieobjektAusObjekt(objekt_array[i]);
+			parentObjekt = window.adb.erstelleHierarchieobjektAusObjekt(objekt_array[i]);
 			Hierarchie.push(parentObjekt);
 			if (objekt_array[i].Taxonomie.Daten.Parent.GUID !== objekt_array[i]._id) {
 				// die Hierarchie ist noch nicht zu Ende - weitermachen
-				hierarchieErgänzt = ergänzeParentZuLrHierarchie(objekt_array, objekt_array[i].Taxonomie.Daten.Parent.GUID, Hierarchie);
+				hierarchieErgänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, objekt_array[i].Taxonomie.Daten.Parent.GUID, Hierarchie);
 				return Hierarchie;
 			} else {
 				// jetzt ist die Hierarchie vollständig
@@ -4084,14 +4088,14 @@ function ergänzeParentZuLrHierarchie(objekt_array, parentGUID, Hierarchie) {
 			}
 		}
 	}
-}
+};
 
-function erstelleHierarchieobjektAusObjekt(objekt) {
+window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
 	var hierarchieobjekt = {};
 	hierarchieobjekt.Name = erstelleLrLabelNameAusObjekt(objekt);
 	hierarchieobjekt.GUID = objekt._id;
 	return hierarchieobjekt;
-}
+};
 
 function erstelleLrLabelNameAusObjekt(objekt) {
 	var Label = objekt.Taxonomie.Daten.Label || "";
