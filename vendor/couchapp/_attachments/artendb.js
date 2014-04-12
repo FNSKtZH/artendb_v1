@@ -1466,7 +1466,7 @@ window.adb.handleDsFileChange = function() {
 	}
 	reader.onload = function(event) {
 		window.dsDatensätze = $.csv.toObjects(event.target.result);
-		erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
+		window.adb.erstelleTabelle(window.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
 	};
 	reader.readAsText(file);
 };
@@ -1497,7 +1497,7 @@ window.adb.handleBsFileChange = function() {
 	}
 	reader.onload = function(event) {
 		window.bsDatensätze = $.csv.toObjects(event.target.result);
-		erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
+		window.adb.erstelleTabelle(window.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
 	};
 	reader.readAsText(file);
 };
@@ -2166,8 +2166,12 @@ window.adb.handleKontoSpeichernBtnClick = function() {
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
-function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
-	var html = "";
+window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
+	var html = "",
+		Feldname = "",
+		html_ds_felder_div = "",
+		x,
+		i;
 	if (Datensätze.length > 10) {
 		html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
 	} else if (Datensätze.length > 1) {
@@ -2180,7 +2184,6 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	// Titelzeile aufbauen
 	// Zeile anlegen
 	// gleichzeitig Feldliste für Formular anlegen
-	var Feldname = "";
 	if (felder_div) {
 		if (felder_div === "DsFelder_div") {
 			Feldname = "DsFelder";
@@ -2188,12 +2191,11 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 			Feldname = "BsFelder";
 		}
 	}
-	var html_ds_felder_div = "";
 	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
 	html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="'+Feldname+'" style="height:' + ((Object.keys(Datensätze[0]).length*19)+9)  + 'px">';
 	html += "<thead><tr>";
 	// durch die Felder zirkeln
-	for (var x in Datensätze[0]) {
+	for (x in Datensätze[0]) {
 		// Spalte anlegen
 		html += "<th>" + x + "</th>";
 		// Option für Feldliste anfügen
@@ -2210,7 +2212,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 
 	// durch die Datensätze zirkeln
 	// nur die ersten 20 anzeigen
-	for (var i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		// Datenzeilen aufbauen
 		// Zeile anlegen
 		html += "<tr>";
@@ -2246,7 +2248,7 @@ function erstelleTabelle(Datensätze, felder_div, tabellen_div) {
 	$("#"+tabellen_div).css("margin-top", "20px");
 	// sichtbar stellen
 	$("#"+tabellen_div).css("display", "block");
-}
+};
 
 // erhält dbs = "Ds" oder "Bs"
 function meldeErfolgVonIdIdentifikation(dbs) {
@@ -3287,7 +3289,7 @@ function ergaenzeFelderObjekt(FelderObjekt, FelderArray) {
 function filtereFuerExport(direkt) {
 
 	// kontrollieren, ob eine Gruppe gewählt wurde
-	if (fuerExportGewaehlteGruppen().length === 0) {
+	if (window.adb.fuerExportGewaehlteGruppen().length === 0) {
 		$('#meldung_keine_gruppen').modal();
 		return;
 	}
@@ -3457,7 +3459,7 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 					// Ergebnis rückmelden
 					$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
 					$("#exportieren_exportieren_hinweis_text").html(window.exportieren_objekte.length + " Objekte sind gewählt");
-					baueTabelleFuerExportAuf();
+					window.adb.baueTabelleFuerExportAuf();
 				}
 			},
 			error: function() {
@@ -3467,12 +3469,12 @@ function uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gew
 	}
 }
 
-function baueTabelleFuerExportAuf() {
+window.adb.baueTabelleFuerExportAuf = function() {
 	// Beschäftigung melden
 	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
 
 	if (window.exportieren_objekte.length > 0) {
-		erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
+		window.adb.erstelleTabelle(window.exportieren_objekte, "", "exportieren_exportieren_tabelle");
 		$(".exportieren_exportieren_exportieren").show();
 		// zur Tabelle scrollen
 		$('html, body').animate({
@@ -3483,9 +3485,9 @@ function baueTabelleFuerExportAuf() {
 	}
 	// Beschäftigungsmeldung verstecken
 	$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
-}
+};
 
-function fuerExportGewaehlteGruppen() {
+window.adb.fuerExportGewaehlteGruppen = function() {
 	var gruppen = [];
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
@@ -3493,7 +3495,7 @@ function fuerExportGewaehlteGruppen() {
 		}
 	});
 	return gruppen;
-}
+};
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 function bereiteImportieren_ds_beschreibenVor(woher) {
@@ -3523,7 +3525,7 @@ function bereiteImportieren_ds_beschreibenVor_02() {
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.DsKeys = [];
-	for (var i=0; i< window.ds_von_objekten.rows.length; i++) {
+	for (var i=0; i<window.ds_von_objekten.rows.length; i++) {
 		DsKeys.push(window.ds_von_objekten.rows[i].key);
 	}
 	// nach DsNamen sortieren
