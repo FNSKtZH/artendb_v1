@@ -2065,14 +2065,14 @@ window.adb.handleExportierenExportierenExportierenDirektClick = function() {
 
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
-function handlePanelShown() {
+window.adb.handlePanelShown = function() {
 	$(this).find('textarea').each(function() {
 		window.adb.FitToContent(this.id);
 	});
-}
+};
 
 // wenn .LinkZuArtGleicherGruppe geklickt wird
-function handleLinkZuArtGleicherGruppeClick() {
+window.adb.handleLinkZuArtGleicherGruppeClick = function() {
 	event.preventDefault();
 	var id = $(this).attr("artid");
 	$("#tree" + window.Gruppe).jstree("clear_search");
@@ -2080,19 +2080,19 @@ function handleLinkZuArtGleicherGruppeClick() {
 	$("#tree" + window.Gruppe).jstree("deselect_all");
 	$("#tree" + window.Gruppe).jstree("close_all", -1);
 	$("#tree" + window.Gruppe).jstree("select_node", "#" + id);
-}
+};
 
 // wenn Fenstergrösse verändert wird
-function handleResize() {
+window.adb.handleResize = function() {
 	window.adb.setzeTreehoehe();
 	// Höhe der Textareas korrigieren
 	$('#forms').find('textarea').each(function() {
 		window.adb.FitToContent(this.id);
 	});
-}
+};
 
 // wenn .anmelden_btn geklickt wird
-function handleAnmeldenBtnClick() {
+window.adb.handleAnmeldenBtnClick = function() {
 	event.preventDefault();
 	// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
 	var bs_ds = this.id.substring(this.id.length-2);
@@ -2100,34 +2100,34 @@ function handleAnmeldenBtnClick() {
 		bs_ds = "art";
 	}
 	window.adb.meldeUserAn(bs_ds);
-}
+};
 
 // wenn .abmelden_btn geklickt wird
-function handleAbmeldenBtnClick() {
+window.adb.handleAbmeldenBtnClick = function() {
 	event.preventDefault();
 	window.adb.meldeUserAb();
-}
+};
 
 // wenn .Email keyup
-function handleEmailKeyup() {
+window.adb.handleEmailKeyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Emailhinweis").css("display", "none");
-}
+};
 
 // wenn .Passwort keyup
-function handlePasswortKeyup() {
+window.adb.handlePasswortKeyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Passworthinweis").css("display", "none");
-}
+};
 
 // wenn .Passwort2 keyup
-function handlePasswort2Keyup() {
+window.adb.handlePasswort2Keyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Passworthinweis2").css("display", "none");
-}
+};
 
 // wenn .konto_erstellen_btn geklickt wird
-function handleKontoErstellenBtnClick() {
+window.adb.handleKontoErstellenBtnClick = function() {
 	event.preventDefault();
 	var bs_ds = this.id.substring(this.id.length-2);
 	if (bs_ds === "rt") {
@@ -2142,10 +2142,10 @@ function handleKontoErstellenBtnClick() {
 	setTimeout(function() {
 		$("#Email_" + bs_ds).focus();
 	}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-}
+};
 
 // wenn .konto_speichern_btn geklickt wird
-function handleKontoSpeichernBtnClick() {
+window.adb.handleKontoSpeichernBtnClick = function() {
 	event.preventDefault();
 	var bs_ds = this.id.substring(this.id.length-2);
 	if (bs_ds === "rt") {
@@ -2160,7 +2160,7 @@ function handleKontoSpeichernBtnClick() {
 		$(".konto_erstellen_btn").hide();
 		$(".konto_speichern_btn").hide();
 	}
-}
+};
 
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll

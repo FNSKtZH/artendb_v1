@@ -1192,27 +1192,27 @@
 				});
 
 				// Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
-				$(".form").on("shown.bs.collapse", ".panel", handlePanelShown);
+				$(".form").on("shown.bs.collapse", ".panel", window.adb.handlePanelShown);
 
 				// Klick auf Link zu Art steuern
-				$(".form").on("click", ".LinkZuArtGleicherGruppe", handleLinkZuArtGleicherGruppeClick);
+				$(".form").on("click", ".LinkZuArtGleicherGruppe", window.adb.handleLinkZuArtGleicherGruppeClick);
 			});
 
-			$(window).resize(handleResize);
+			$(window).resize(window.adb.handleResize);
 
-			$(document).on("click", ".anmelden_btn", handleAnmeldenBtnClick);
+			$(document).on("click", ".anmelden_btn", window.adb.handleAnmeldenBtnClick);
 
-			$(document).on("click", ".abmelden_btn", handleAbmeldenBtnClick);
+			$(document).on("click", ".abmelden_btn", window.adb.handleAbmeldenBtnClick);
 
-			$(document).on("keyup", ".Email", handleEmailKeyup);
+			$(document).on("keyup", ".Email", window.adb.handleEmailKeyup);
 
-			$(document).on("keyup", ".Passwort", handlePasswortKeyup);
+			$(document).on("keyup", ".Passwort", window.adb.handlePasswortKeyup);
 
-			$(document).on("keyup", ".Passwort2", handlePasswort2Keyup);
+			$(document).on("keyup", ".Passwort2", window.adb.handlePasswort2Keyup);
 
-			$(document).on("click", ".konto_erstellen_btn", handleKontoErstellenBtnClick);
+			$(document).on("click", ".konto_erstellen_btn", window.adb.handleKontoErstellenBtnClick);
 
-			$(document).on("click", ".konto_speichern_btn", handleKontoSpeichernBtnClick);
+			$(document).on("click", ".konto_speichern_btn", window.adb.handleKontoSpeichernBtnClick);
 
 		</script>
 	</body>
