@@ -1053,9 +1053,7 @@
 				}
 
 				// Baum aufbauen, wenn Gruppe gewählt wird
-				$("#menu").on("click", ".gruppe", function() {
-					window.adb.oeffneGruppe($(this).attr("Gruppe"));
-				});
+				$("#menu").on("click", ".gruppe", window.adb.handleOeffneGruppeClick);
 
 				// zwischen Mobil- und Desktopsicht wechseln
 				$("#menu").on("click", "#btn_resize", window.adb.handleBtnResizeClick);
@@ -1107,21 +1105,13 @@
 
 				$("#importieren_bs").on("change", "#BsFile", window.adb.handleBsFileChange);
 
-				$("#importieren_ds").on("change", "#DsFelder", function() {
-					meldeErfolgVonIdIdentifikation("Ds");
-				});
+				$("#importieren_ds").on("change", "#DsFelder", window.adb.handleDsFelderChange);
 
-				$("#importieren_bs").on("change", "#BsFelder", function() {
-					meldeErfolgVonIdIdentifikation("Bs");
-				});
+				$("#importieren_bs").on("change", "#BsFelder", window.adb.handleBsFelderChange);
 
-				$("#importieren_ds").on("change", "#DsId", function() {
-					meldeErfolgVonIdIdentifikation("Ds");
-				});
+				$("#importieren_ds").on("change", "#DsId", window.adb.handleDsIdChange);
 
-				$("#importieren_bs").on("change", "#BsId", function() {
-					meldeErfolgVonIdIdentifikation("Bs");
-				});
+				$("#importieren_bs").on("change", "#BsId", window.adb.handleBsIdChange);
 
 				$("#importieren_ds").on("click", "#DsLoeschen", window.adb.handleDsLoeschenClick);
 
@@ -1151,9 +1141,7 @@
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 
-				$("#art").on("click", ".btn.lr_bearb", function(event) {
-					event.preventDefault();
-				});
+				$("#art").on("click", ".btn.lr_bearb", window.adb.handlePreventDefault);
 
 				$("#art").on("click", ".btn.lr_bearb_bearb", window.adb.handleBtnLrBearbBearbKlick);
 
@@ -1177,19 +1165,13 @@
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", window.adb.handleExportierenExportierenExportierenDirektClick);
 
-				$("#export").on("click", ".panel-heading a", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();
-				});
+				// verhindern, dass bootstrap ganz nach oben scrollt
+				$("#export").on("click", ".panel-heading a", window.adb.handlePreventDefault);
 
-				$("#importieren_ds").on("click", ".panel-heading a", function(event) {
-					// verhindern, dass bootstrap ganz nach oben scrollt
-					event.preventDefault();
-				});
+				// verhindern, dass bootstrap ganz nach oben scrollt
+				$("#importieren_ds").on("click", ".panel-heading a", window.adb.handlePreventDefault);
 
-				$(".form").on("keyup focus", "textarea", function() {
-					FitToContent(this.id);
-				});
+				$(".form").on("keyup focus", "textarea", window.adb.handleTextareaKeyupFocus);
 
 				// Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
 				$(".form").on("shown.bs.collapse", ".panel", window.adb.handlePanelShown);

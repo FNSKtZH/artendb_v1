@@ -2162,6 +2162,41 @@ window.adb.handleKontoSpeichernBtnClick = function() {
 	}
 };
 
+// wenn .gruppe geklickt wird
+window.adb.handleOeffneGruppeClick = function() {
+	window.adb.oeffneGruppe($(this).attr("Gruppe"));
+};
+
+// wenn #DsFelder geändert wird
+window.adb.handleDsFelderChange = function() {
+	meldeErfolgVonIdIdentifikation("Ds");
+};
+
+// wenn #BsFelder geändert wird
+window.adb.handleBsFelderChange = function() {
+	meldeErfolgVonIdIdentifikation("Bs");
+};
+
+// wenn #DsId geändert wird
+window.adb.handleDsIdChange = function() {
+	meldeErfolgVonIdIdentifikation("Ds");
+};
+
+// wenn #BsId geändert wird
+window.adb.handleBsIdChange = function() {
+	meldeErfolgVonIdIdentifikation("Bs");
+};
+
+// wenn nur event default verhindert werden soll
+window.adb.handlePreventDefault = function() {
+	event.preventDefault();
+};
+
+// wenn in textarea keyup oder focus
+window.adb.handleTextareaKeyupFocus = function() {
+	window.adb.FitToContent(this.id);
+}
+
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
