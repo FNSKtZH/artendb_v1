@@ -1729,7 +1729,7 @@ window.adb.handleBsLoeschenClick = function() {
 // wenn DsImportieren geklickt wird
 window.adb.handleDsImportierenClick = function() {
 	event.preventDefault();
-	$.when(importiereDatensammlung()).then(function() {
+	$.when(window.adb.importiereDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung importiert");
 	});
@@ -1738,7 +1738,7 @@ window.adb.handleDsImportierenClick = function() {
 // wenn BsImportieren geklickt wird
 window.adb.handleBsImportierenClick = function() {
 	event.preventDefault();
-	$.when(importiereBeziehungssammlung()).then(function() {
+	$.when(window.adb.importiereBeziehungssammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Beziehungssammlung importiert");
 	});
@@ -1747,7 +1747,7 @@ window.adb.handleBsImportierenClick = function() {
 // wenn DsEntfernen geklickt wird
 window.adb.handleDsEntfernenClick = function() {
 	event.preventDefault();
-	$.when(entferneDatensammlung()).then(function() {
+	$.when(window.adb.entferneDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung entfernt");
 	});
@@ -2169,22 +2169,22 @@ window.adb.handleOeffneGruppeClick = function() {
 
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function() {
-	meldeErfolgVonIdIdentifikation("Ds");
+	window.adb.meldeErfolgVonIdIdentifikation("Ds");
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function() {
-	meldeErfolgVonIdIdentifikation("Bs");
+	window.adb.meldeErfolgVonIdIdentifikation("Bs");
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function() {
-	meldeErfolgVonIdIdentifikation("Ds");
+	window.adb.meldeErfolgVonIdIdentifikation("Ds");
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function() {
-	meldeErfolgVonIdIdentifikation("Bs");
+	window.adb.meldeErfolgVonIdIdentifikation("Bs");
 };
 
 // wenn nur event default verhindert werden soll
@@ -2286,7 +2286,7 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 };
 
 // erhält dbs = "Ds" oder "Bs"
-function meldeErfolgVonIdIdentifikation(dbs) {
+window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 	if ($("#"+dbs+"Felder option:selected").length && $("#"+dbs+"Id option:selected").length) {
 		// beide ID's sind gewählt
 		window[dbs+"FelderId"] = $("#"+dbs+"Felder option:selected").val();
@@ -2331,7 +2331,7 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
-					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
+					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
 		} else {
@@ -2362,14 +2362,14 @@ function meldeErfolgVonIdIdentifikation(dbs) {
 							MehrfachVorkommendeIds.push(window[dbs.toLowerCase()+"Datensätze"][i][window[dbs+"FelderId"]]);
 						}
 					}
-					meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
+					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
 		}
 	}
-}
+};
 
-function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
+window.adb.meldeErfolgVonIdIdentifikation_02 = function(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
 	$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text").alert().css("display", "none");
 	// rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
 	if (MehrfachVorkommendeIds.length && dbs !== "Bs") {
@@ -2406,13 +2406,15 @@ function meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatens�
 		$("#"+dbs+"Importieren").css("display", "block");
 		$("#"+dbs+"Entfernen").css("display", "block");
 	}
-}
+};
 
 // bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
-function importiereDatensammlung() {
-	var Datensammlung, anzFelder, anzDs;
-	var DsImportiert = $.Deferred();
+window.adb.importiereDatensammlung = function() {
+	var Datensammlung,
+		anzFelder,
+		anzDs,
+		DsImportiert = $.Deferred();
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$("#DsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2514,13 +2516,15 @@ function importiereDatensammlung() {
 	$("#importieren_ds_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 	DsImportiert.resolve();
 	return DsImportiert.promise();
-}
+};
 
 // bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
-function importiereBeziehungssammlung() {
-	var Beziehungssammlung, anzFelder, anzBs;
-	var BsImportiert = $.Deferred();
+window.adb.importiereBeziehungssammlung = function() {
+	var Beziehungssammlung,
+		anzFelder,
+		anzBs,
+		BsImportiert = $.Deferred();
 	// prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
 	if (!$("#BsName").val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2531,7 +2535,7 @@ function importiereBeziehungssammlung() {
 		return false;
 	}
 	// zuerst: Veranlassen, dass die Beziehungspartner in window.bsDatensätze in einen Array der richtigen Form umgewandelt werden
-	$.when(bereiteBeziehungspartnerFuerImportVor())
+	$.when(window.adb.bereiteBeziehungspartnerFuerImportVor())
 		.then(function() {
 			setTimeout(function() {
 				// für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
@@ -2648,15 +2652,16 @@ function importiereBeziehungssammlung() {
 			}, 1000);
 		});
 	return BsImportiert.promise();
-}
+};
 
-function bereiteBeziehungspartnerFuerImportVor() {
-	var alleBezPartner_array = [];
-	var bezPartner_array;
+window.adb.bereiteBeziehungspartnerFuerImportVor = function() {
+	var alleBezPartner_array = [],
+		bezPartner_array,
+		bpVorbereitet = $.Deferred(),
+		x;
 	window.bezPartner_objekt = {};
-	var bpVorbereitet = $.Deferred();
 
-	for (var x in window.bsDatensätze) {
+	for (x in window.bsDatensätze) {
 		if (window.bsDatensätze[x].Beziehungspartner) {
 			// window.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
 			// diese Liste in Array verwandeln
@@ -2695,22 +2700,27 @@ function bereiteBeziehungspartnerFuerImportVor() {
 	});
 	bpVorbereitet.resolve();
 	return bpVorbereitet.promise();
-}
+};
 
 // bekommt das Objekt mit den Datensätzen (window.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
-function entferneDatensammlung() {
-	var guid_array = [];
-	var guidArray = [];
-	var guid;
-	var DsEntfernt = $.Deferred();
+window.adb.entferneDatensammlung = function() {
+	var guid_array = [],
+		guidArray = [],
+		guid,
+		DsEntfernt = $.Deferred(),
+		x,
+		q,
+		a,
+		batch,
+		batchGrösse;
 	for (x=0; x<window.dsDatensätze.length; x++) {
 		// zuerst die id in guid übersetzen
 		if (window.DsId === "guid") {
 			// die in der Tabelle mitgelieferte id ist die guid
 			guid = window.dsDatensätze[x].GUID;
 		} else {
-			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
+			for (q = 0; q < window.ZuordbareDatensätze.length; q++) {
 				// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 				if (window.ZuordbareDatensätze[q].Id == window.dsDatensätze[x][window.DsFelderId]) {
 					// und die guid auslesen
@@ -2726,10 +2736,9 @@ function entferneDatensammlung() {
 	window.aktualisierte_objekte = guid_array.slice();
 	// alle docs gleichzeitig holen
 	// aber batchweise
-	var a = 0;
-	var batch = 150;
-	var batchGrösse = 150;
-	for (a; a<batch; a++) {
+	batch = 150;
+	batchGrösse = 150;
+	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
 			guidArray.push(guid_array[a]);
 			if (a === (batch-1)) {
@@ -2747,7 +2756,7 @@ function entferneDatensammlung() {
 		}
 	}
 	return DsEntfernt.promise();
-}
+};
 
 function entferneDatensammlung_2(DsName, guidArray, a) {
 	// alle docs holen
