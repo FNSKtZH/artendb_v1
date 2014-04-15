@@ -637,7 +637,7 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 	// TODO: unklar, wieso dies nochmals nötig ist, da von zeigeFormular schon gemacht
 	window.adb.setzteLinksZuBilderUndWikipedia(art);
 	// und die URL anpassen
-	history.pushState({id: "id"}, "id", "index.html?id=" + art._id);
+	history.pushState(null, null, "index.html?id=" + art._id);
 };
 
 // erstellt die HTML für eine Beziehung
@@ -1089,7 +1089,8 @@ window.adb.zeigeFormular = function(Formularname) {
 				localStorage.art_id = undefined;
 			}
 			// URL anpassen, damit kein Objekt angezeigt wird
-			history.pushState({id: "id"}, "id", "index.html");
+			// TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
+			history.pushState(null, null, "index.html");
 			// alle Bäume ausblenden, suchfeld, Baumtitel
 			$(".suchen").hide();
 			$(".baum").css("display", "none");
@@ -1442,7 +1443,6 @@ window.adb.handleBsWaehlenChange = function() {
 
 // wenn DsFile geändert wird
 window.adb.handleDsFileChange = function() {
-	event.preventDefault();
 	// Check for the various File API support
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		// Great success! All the File APIs are supported
@@ -1473,7 +1473,6 @@ window.adb.handleDsFileChange = function() {
 
 // wenn BsFile geändert wird
 window.adb.handleBsFileChange = function() {
-	event.preventDefault();
 	// Check for the various File API support
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		// Great success! All the File APIs are supported
@@ -1702,11 +1701,10 @@ window.adb.handleDsNameChange = function() {
 
 // wenn DsLoeschen geklickt wird
 window.adb.handleDsLoeschenClick = function() {
-	event.preventDefault();
 	// Rückmeldung anzeigen
 	$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
 	$("#importieren_ds_ds_beschreiben_hinweis_text").html("Bitte warten: Die Datensammlung wird entfernt...");
-	$.when(entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
+	$.when(window.adb.entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
 		// jetzt Ergebnisse anzeigen
 		$("#importieren_ds_ds_beschreiben_hinweis_text").alert().css("display", "block");
 		$("#importieren_ds_ds_beschreiben_hinweis_text").html("Die Datensammlung wurde erfolgreich entfernt");
@@ -1715,11 +1713,10 @@ window.adb.handleDsLoeschenClick = function() {
 
 // wenn BsLoeschen geklickt wird
 window.adb.handleBsLoeschenClick = function() {
-	event.preventDefault();
 	// Rückmeldung anzeigen
 	$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
 	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
-	$.when(entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
+	$.when(window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
 		// jetzt Ergebnisse anzeigen
 		$("#importieren_bs_ds_beschreiben_hinweis").alert().css("display", "block");
 		$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");
@@ -1728,7 +1725,6 @@ window.adb.handleBsLoeschenClick = function() {
 
 // wenn DsImportieren geklickt wird
 window.adb.handleDsImportierenClick = function() {
-	event.preventDefault();
 	$.when(window.adb.importiereDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung importiert");
@@ -1737,7 +1733,6 @@ window.adb.handleDsImportierenClick = function() {
 
 // wenn BsImportieren geklickt wird
 window.adb.handleBsImportierenClick = function() {
-	event.preventDefault();
 	$.when(window.adb.importiereBeziehungssammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Beziehungssammlung importiert");
@@ -1746,7 +1741,6 @@ window.adb.handleBsImportierenClick = function() {
 
 // wenn DsEntfernen geklickt wird
 window.adb.handleDsEntfernenClick = function() {
-	event.preventDefault();
 	$.when(window.adb.entferneDatensammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Datensammlung entfernt");
@@ -1755,8 +1749,7 @@ window.adb.handleDsEntfernenClick = function() {
 
 // wenn BsEntfernen geklickt wird
 window.adb.handleBsEntfernenClick = function() {
-	event.preventDefault();
-	$.when(entferneBeziehungssammlung()).then(function() {
+	$.when(window.adb.entferneBeziehungssammlung()).then(function() {
 		// jetzt Ergebnisse anzeigen
 		console.log("Beziehungssammlung entfernt");
 	});
@@ -1937,7 +1930,6 @@ window.adb.handleLrParentOptionenChange = function() {
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
 window.adb.handleRueckfrageLrLoeschenJaClick = function() {
-	event.preventDefault();
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
@@ -1999,8 +1991,6 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function() {
-	// verhindern, dass bootstrap ganz nach oben scrollt
-	event.preventDefault();
 	var hinweisNeu;
 	if ($(this).hasClass("active")) {
 		window.fasseTaxonomienZusammen = false;
@@ -2025,8 +2015,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function() {
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function() {
-	// verhindern, dass bootstrap ganz nach oben scrollt
-	event.preventDefault();
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		// Great success! All the File APIs are supported
 		// das funktioniert nicht so super:
@@ -2056,13 +2044,6 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 	}
 };
 
-// wenn #exportieren_exportieren_exportieren_direkt geklickt wird
-window.adb.handleExportierenExportierenExportierenDirektClick = function() {
-	// verhindern, dass bootstrap ganz nach oben scrollt
-	event.preventDefault();	
-	filtereFuerExport("direkt");
-};
-
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
 window.adb.handlePanelShown = function() {
@@ -2073,7 +2054,6 @@ window.adb.handlePanelShown = function() {
 
 // wenn .LinkZuArtGleicherGruppe geklickt wird
 window.adb.handleLinkZuArtGleicherGruppeClick = function() {
-	event.preventDefault();
 	var id = $(this).attr("artid");
 	$("#tree" + window.Gruppe).jstree("clear_search");
 	$(".suchen").val("");
@@ -2093,19 +2073,12 @@ window.adb.handleResize = function() {
 
 // wenn .anmelden_btn geklickt wird
 window.adb.handleAnmeldenBtnClick = function() {
-	event.preventDefault();
 	// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
 	var bs_ds = this.id.substring(this.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
 	window.adb.meldeUserAn(bs_ds);
-};
-
-// wenn .abmelden_btn geklickt wird
-window.adb.handleAbmeldenBtnClick = function() {
-	event.preventDefault();
-	window.adb.meldeUserAb();
 };
 
 // wenn .Email keyup
@@ -2128,7 +2101,6 @@ window.adb.handlePasswort2Keyup = function() {
 
 // wenn .konto_erstellen_btn geklickt wird
 window.adb.handleKontoErstellenBtnClick = function() {
-	event.preventDefault();
 	var bs_ds = this.id.substring(this.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
@@ -2146,7 +2118,6 @@ window.adb.handleKontoErstellenBtnClick = function() {
 
 // wenn .konto_speichern_btn geklickt wird
 window.adb.handleKontoSpeichernBtnClick = function() {
-	event.preventDefault();
 	var bs_ds = this.id.substring(this.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
@@ -2185,11 +2156,6 @@ window.adb.handleDsIdChange = function() {
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function() {
 	window.adb.meldeErfolgVonIdIdentifikation("Bs");
-};
-
-// wenn nur event default verhindert werden soll
-window.adb.handlePreventDefault = function() {
-	event.preventDefault();
 };
 
 // wenn in textarea keyup oder focus
@@ -2499,7 +2465,7 @@ window.adb.importiereDatensammlung = function() {
 			}
 			// kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
-				fuegeDatensammlungZuObjekt(guid, Datensammlung);
+				window.adb.fuegeDatensammlungZuObjekt(guid, Datensammlung);
 				// Für 10 Kontrollbeispiele die Links aufbauen
 				if (Zähler < 10) {
 					Zähler += 1;
@@ -2634,7 +2600,7 @@ window.adb.importiereBeziehungssammlung = function() {
 					if (Beziehungen.length > 0) {
 						// Datenbankabfrage ist langsam. Extern aufrufen, 
 						// sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-						fuegeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
+						window.adb.fuegeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
 						// Für 10 Kontrollbeispiele die Links aufbauen
 						if (Zähler < 10) {
 							Zähler++;
@@ -2742,12 +2708,12 @@ window.adb.entferneDatensammlung = function() {
 		if (a < guid_array.length) {
 			guidArray.push(guid_array[a]);
 			if (a === (batch-1)) {
-				entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+				window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 				guidArray = [];
 				batch += batchGrösse;
 			}
 		} else {
-			entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+			window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
@@ -2758,7 +2724,7 @@ window.adb.entferneDatensammlung = function() {
 	return DsEntfernt.promise();
 };
 
-function entferneDatensammlung_2(DsName, guidArray, a) {
+window.adb.entferneDatensammlung_2 = function(DsName, guidArray, a) {
 	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
@@ -2767,14 +2733,14 @@ function entferneDatensammlung_2(DsName, guidArray, a) {
 				var Objekt;
 				for (var f=0; f<data.rows.length; f++) {
 					Objekt = data.rows[f].doc;
-					entferneDatensammlungAusObjekt(DsName, Objekt);
+					window.adb.entferneDatensammlungAusObjekt(DsName, Objekt);
 				}
 			}
 		});
 	}, a*40);
-}
+};
 
-function entferneDatensammlungAusObjekt(DsName, Objekt) {
+window.adb.entferneDatensammlungAusObjekt = function(DsName, Objekt) {
 	if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
 		for (var i=0; i<Objekt.Datensammlungen.length; i++) {
 			if (Objekt.Datensammlungen[i].Name === DsName) {
@@ -2785,23 +2751,28 @@ function entferneDatensammlungAusObjekt(DsName, Objekt) {
 			}
 		}
 	}
-}
+};
 
 // bekommt das Objekt mit den Datensätzen (window.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.ZuordbareDatensätze)
 // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
-function entferneBeziehungssammlung() {
-	var guid_array = [];
-	var guidArray = [];
-	var guid;
-	var BsName = $("#BsName").val();
-	var BsEntfernt = $.Deferred();
+window.adb.entferneBeziehungssammlung = function() {
+	var guid_array = [],
+		guidArray = [],
+		guid,
+		BsName = $("#BsName").val(),
+		BsEntfernt = $.Deferred()
+		x,
+		q,
+		a,
+		batch = 150,
+		batchGrösse = 150;
 	for (x=0; x<window.bsDatensätze.length; x++) {
 		// zuerst die id in guid übersetzen
 		if (window.BsId === "guid") {
 			// die in der Tabelle mitgelieferte id ist die guid
 			guid = window.bsDatensätze[x].GUID;
 		} else {
-			for (var q = 0; q < window.ZuordbareDatensätze.length; q++) {
+			for (q = 0; q < window.ZuordbareDatensätze.length; q++) {
 				// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
 				if (window.ZuordbareDatensätze[q].Id == window.bsDatensätze[x][window.BsFelderId]) {
 					// und die guid auslesen
@@ -2819,19 +2790,16 @@ function entferneBeziehungssammlung() {
 
 	// alle docs gleichzeitig holen
 	// aber batchweise
-	var a = 0;
-	var batch = 150;
-	var batchGrösse = 150;
-	for (a; a<batch; a++) {
+	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
 			guidArray.push(guid_array[a]);
 			if (a === (batch-1)) {
-				entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
+				window.adb.entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
 				guidArray = [];
 				batch += batchGrösse;
 			}
 		} else {
-			entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
+			window.adb.entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
@@ -2840,25 +2808,26 @@ function entferneBeziehungssammlung() {
 		}
 	}
 	return BsEntfernt.promise();
-}
+};
 
-function entferneBeziehungssammlung_2(BsName, guidArray, a) {
+window.adb.entferneBeziehungssammlung_2 = function(BsName, guidArray, a) {
 	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
 			success: function(data) {
-				var Objekt;
-				for (var f=0; f<data.rows.length; f++) {
+				var Objekt,
+					f;
+				for (f=0; f<data.rows.length; f++) {
 					Objekt = data.rows[f].doc;
-					entferneBeziehungssammlungAusObjekt(BsName, Objekt);
+					window.adb.entferneBeziehungssammlungAusObjekt(BsName, Objekt);
 				}
 			}
 		});
 	}, a*40);
-}
+};
 
-function entferneBeziehungssammlungAusObjekt(BsName, Objekt) {
+window.adb.entferneBeziehungssammlungAusObjekt = function(BsName, Objekt) {
 	if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 		for (var i=0; i<Objekt.Beziehungssammlungen.length; i++) {
 			if (Objekt.Beziehungssammlungen[i].Name === BsName) {
@@ -2869,11 +2838,11 @@ function entferneBeziehungssammlungAusObjekt(BsName, Objekt) {
 			}
 		}
 	}
-}
+};
 
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
-function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
+window.adb.fuegeDatensammlungZuObjekt = function(GUID, Datensammlung) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function(doc) {
@@ -2886,20 +2855,24 @@ function fuegeDatensammlungZuObjekt(GUID, Datensammlung) {
 			$db.saveDoc(doc);
 		}
 	});
-}
+};
 
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
-function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
+window.adb.fuegeBeziehungenZuObjekt = function(GUID, Beziehungssammlung, Beziehungen) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(GUID, {
 		success: function(doc) {
 			// prüfen, ob die Beziehung schon existiert
 			if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
-				var hinzugefügt = false;
-				for (var i in doc.Beziehungssammlungen) {
+				var hinzugefügt = false,
+					i,
+					h,
+					a,
+					b;
+				for (i in doc.Beziehungssammlungen) {
 					if (doc.Beziehungssammlungen[i].Name === Beziehungssammlung.Name) {
-						for (var h=0; h<Beziehungen.length; h++) {
+						for (h=0; h<Beziehungen.length; h++) {
 							if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, Beziehungen[h])) {
 								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
 							}
@@ -2916,7 +2889,7 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 				if (!hinzugefügt) {
 					// die Beziehungssammlung existiert noch nicht
 					Beziehungssammlung.Beziehungen = [];
-					for (var a=0; a<Beziehungen.length; a++) {
+					for (a=0; a<Beziehungen.length; a++) {
 						Beziehungssammlung.Beziehungen.push(Beziehungen[a]);
 					}
 					// Beziehungen nach Name sortieren
@@ -2926,7 +2899,7 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 			} else {
 				// Beziehungssammlung anfügen
 				Beziehungssammlung.Beziehungen = [];
-				for (var b=0; b<Beziehungen.length; b++) {
+				for (b=0; b<Beziehungen.length; b++) {
 					Beziehungssammlung.Beziehungen.push(Beziehungen[b]);
 				}
 				// Beziehungen nach Name sortieren
@@ -2940,28 +2913,28 @@ function fuegeBeziehungenZuObjekt(GUID, Beziehungssammlung, Beziehungen) {
 			$db.saveDoc(doc);
 		}
 	});
-}
+};
 
 // übernimmt den Namen einer Datensammlung
 // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
-function entferneDatensammlungAusAllenObjekten(DsName) {
+window.adb.entferneDatensammlungAusAllenObjekten = function(DsName) {
 	var DsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + DsName + '"]&endkey=["' + DsName + '",{}]', {
 		success: function(data) {
 			for (var i in data.rows) {
 				// guid und DsName übergeben
-				entferneDatensammlungAusDokument(data.rows[i].key[1], DsName);
+				window.adb.entferneDatensammlungAusDokument(data.rows[i].key[1], DsName);
 			}
 			DsEntfernt.resolve();
 		}
 	});
 	return DsEntfernt.promise();
-}
+};
 
 // übernimmt den Namen einer Beziehungssammlung
 // öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
-function entferneBeziehungssammlungAusAllenObjekten(BsName) {
+window.adb.entferneBeziehungssammlungAusAllenObjekten = function(BsName) {
 	var BsEntfernt = $.Deferred();
 	$db = $.couch.db("artendb");
 	$db.view('artendb/bs_guid?startkey=["' + BsName + '"]&endkey=["' + BsName + '",{}]', {
@@ -2974,12 +2947,12 @@ function entferneBeziehungssammlungAusAllenObjekten(BsName) {
 		}
 	});
 	return BsEntfernt.promise();
-}
+};
 
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
-function entferneDatensammlungAusDokument(id, DsName) {
+window.adb.entferneDatensammlungAusDokument = function(id, DsName) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
@@ -2990,13 +2963,10 @@ function entferneDatensammlungAusDokument(id, DsName) {
 				}
 			}
 			// in artendb speichern
-			$db.saveDoc(doc, {
-				success: function() {
-				}
-			});
+			$db.saveDoc(doc);
 		}
 	});
-}
+};
 
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Beziehungssammlung, die zu entfernen ist
@@ -4283,7 +4253,7 @@ var BrowserDetect =
 * Copyright 2012 Twitter, Inc.
 * //apache.org/licenses/LICENSE-2.0.txt
 */
-!function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault())},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault()}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery)
+!function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery)
 
 
 /**

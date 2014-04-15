@@ -1101,9 +1101,21 @@
 
 				$("#importieren_bs").on("change", "#BsWaehlen", window.adb.handleBsWaehlenChange);
 
-				$("#importieren_ds").on("change", "#DsFile", window.adb.handleDsFileChange);
+				$("#importieren_ds").on("change", "#DsFile", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleDsFileChange();
+				});
 
-				$("#importieren_bs").on("change", "#BsFile", window.adb.handleBsFileChange);
+				$("#importieren_bs").on("change", "#BsFile", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleBsFileChange();
+				});
 
 				$("#importieren_ds").on("change", "#DsFelder", window.adb.handleDsFelderChange);
 
@@ -1113,17 +1125,53 @@
 
 				$("#importieren_bs").on("change", "#BsId", window.adb.handleBsIdChange);
 
-				$("#importieren_ds").on("click", "#DsLoeschen", window.adb.handleDsLoeschenClick);
+				$("#importieren_ds").on("click", "#DsLoeschen", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleDsLoeschenClick();
+				});
 
-				$("#importieren_bs").on("click", "#BsLoeschen", window.adb.handleBsLoeschenClick);
+				$("#importieren_bs").on("click", "#BsLoeschen", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleBsLoeschenClick();
+				});
 
-				$("#importieren_ds").on("click", "#DsImportieren", window.adb.handleDsImportierenClick);
+				$("#importieren_ds").on("click", "#DsImportieren", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleDsImportierenClick();
+				});
 
-				$("#importieren_bs").on("click", "#BsImportieren", window.adb.handleBsImportierenClick);
+				$("#importieren_bs").on("click", "#BsImportieren", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleBsImportierenClick();
+				});
 
-				$("#importieren_ds").on("click", "#DsEntfernen", window.adb.handleDsEntfernenClick);
+				$("#importieren_ds").on("click", "#DsEntfernen", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleDsEntfernenClick();
+				});
 
-				$("#importieren_bs").on("click", "#BsEntfernen", window.adb.handleBsEntfernenClick);
+				$("#importieren_bs").on("click", "#BsEntfernen", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleBsEntfernenClick();
+				});
 
 				$("#menu_btn").on("click", "#exportieren", window.adb.handleExportierenClick);
 
@@ -1141,7 +1189,9 @@
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 
-				$("#art").on("click", ".btn.lr_bearb", window.adb.handlePreventDefault);
+				$("#art").on("click", ".btn.lr_bearb", function(event) {
+					event.preventDefault();
+				});
 
 				$("#art").on("click", ".btn.lr_bearb_bearb", window.adb.handleBtnLrBearbBearbKlick);
 
@@ -1151,7 +1201,13 @@
 
 				$("#lr_parent_waehlen_optionen").on("change", '[name="parent_optionen"]', window.adb.handleLrParentOptionenChange);
 
-				$(document).on("click", "#rueckfrage_lr_loeschen_ja", window.adb.handleRueckfrageLrLoeschenJaClick);
+				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleRueckfrageLrLoeschenJaClick();
+				});
 
 				$("#art").on("change", ".Lebensräume.Taxonomie .controls", window.adb.handleLrTaxonomieControlsChange);
 
@@ -1159,17 +1215,43 @@
 
 				$('#export').on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown);
 
-				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick);
+				$("#export").on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
+					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick();
+				});
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren", window.adb.handleExportierenExportierenExportierenClick);
+				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
+					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleExportierenExportierenExportierenClick();
+				});
 
-				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", window.adb.handleExportierenExportierenExportierenDirektClick);
+				$("#export").on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
+					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					// auf eigene Funktion verzichten, da nur ein Aufruf
+					filtereFuerExport("direkt");
+				});
 
 				// verhindern, dass bootstrap ganz nach oben scrollt
-				$("#export").on("click", ".panel-heading a", window.adb.handlePreventDefault);
+				$("#export").on("click", ".panel-heading a", function(event) {
+					event.preventDefault();
+				});
 
 				// verhindern, dass bootstrap ganz nach oben scrollt
-				$("#importieren_ds").on("click", ".panel-heading a", window.adb.handlePreventDefault);
+				$("#importieren_ds").on("click", ".panel-heading a", function(event) {
+					event.preventDefault();
+				});
 
 				$(".form").on("keyup focus", "textarea", window.adb.handleTextareaKeyupFocus);
 
@@ -1177,14 +1259,33 @@
 				$(".form").on("shown.bs.collapse", ".panel", window.adb.handlePanelShown);
 
 				// Klick auf Link zu Art steuern
-				$(".form").on("click", ".LinkZuArtGleicherGruppe", window.adb.handleLinkZuArtGleicherGruppeClick);
+				$(".form").on("click", ".LinkZuArtGleicherGruppe", function(event) {
+					// den event hier stoppen, nicht erst in der Funktion
+					// hier übernimmt jQuery das stoppen, in der Funktion nicht
+					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					event.preventDefault();
+					window.adb.handleLinkZuArtGleicherGruppeClick();
+				});
 			});
 
 			$(window).resize(window.adb.handleResize);
 
-			$(document).on("click", ".anmelden_btn", window.adb.handleAnmeldenBtnClick);
+			$(document).on("click", ".anmelden_btn", function(event) {
+				// den event hier stoppen, nicht erst in der Funktion
+				// hier übernimmt jQuery das stoppen, in der Funktion nicht
+				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				event.preventDefault();
+				window.adb.handleAnmeldenBtnClick();
+			});
 
-			$(document).on("click", ".abmelden_btn", window.adb.handleAbmeldenBtnClick);
+			$(document).on("click", ".abmelden_btn", function(event) {
+				// den event hier stoppen, nicht erst in der Funktion
+				// hier übernimmt jQuery das stoppen, in der Funktion nicht
+				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				event.preventDefault();
+				// auf eigene Funktion verzichten, da nur ein Aufruf
+				window.adb.meldeUserAb();
+			});
 
 			$(document).on("keyup", ".Email", window.adb.handleEmailKeyup);
 
@@ -1192,9 +1293,21 @@
 
 			$(document).on("keyup", ".Passwort2", window.adb.handlePasswort2Keyup);
 
-			$(document).on("click", ".konto_erstellen_btn", window.adb.handleKontoErstellenBtnClick);
+			$(document).on("click", ".konto_erstellen_btn", function(event) {
+				// den event hier stoppen, nicht erst in der Funktion
+				// hier übernimmt jQuery das stoppen, in der Funktion nicht
+				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				event.preventDefault();
+				window.adb.handleKontoErstellenBtnClick();
+			});
 
-			$(document).on("click", ".konto_speichern_btn", window.adb.handleKontoSpeichernBtnClick);
+			$(document).on("click", ".konto_speichern_btn", function(event) {
+				// den event hier stoppen, nicht erst in der Funktion
+				// hier übernimmt jQuery das stoppen, in der Funktion nicht
+				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				event.preventDefault();
+				window.adb.handleKontoSpeichernBtnClick();
+			});
 
 		</script>
 	</body>
