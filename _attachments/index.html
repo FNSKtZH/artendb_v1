@@ -1104,7 +1104,7 @@
 				$("#importieren_ds").on("change", "#DsFile", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleDsFileChange();
 				});
@@ -1112,7 +1112,7 @@
 				$("#importieren_bs").on("change", "#BsFile", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleBsFileChange();
 				});
@@ -1128,7 +1128,7 @@
 				$("#importieren_ds").on("click", "#DsLoeschen", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleDsLoeschenClick();
 				});
@@ -1136,7 +1136,7 @@
 				$("#importieren_bs").on("click", "#BsLoeschen", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleBsLoeschenClick();
 				});
@@ -1144,7 +1144,7 @@
 				$("#importieren_ds").on("click", "#DsImportieren", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleDsImportierenClick();
 				});
@@ -1152,7 +1152,7 @@
 				$("#importieren_bs").on("click", "#BsImportieren", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleBsImportierenClick();
 				});
@@ -1160,7 +1160,7 @@
 				$("#importieren_ds").on("click", "#DsEntfernen", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleDsEntfernenClick();
 				});
@@ -1168,7 +1168,7 @@
 				$("#importieren_bs").on("click", "#BsEntfernen", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleBsEntfernenClick();
 				});
@@ -1204,7 +1204,7 @@
 				$(document).on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleRueckfrageLrLoeschenJaClick();
 				});
@@ -1219,7 +1219,7 @@
 					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick();
 				});
@@ -1228,7 +1228,7 @@
 					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleExportierenExportierenExportierenClick();
 				});
@@ -1237,7 +1237,7 @@
 					// event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					// auf eigene Funktion verzichten, da nur ein Aufruf
 					filtereFuerExport("direkt");
@@ -1262,7 +1262,7 @@
 				$(".form").on("click", ".LinkZuArtGleicherGruppe", function(event) {
 					// den event hier stoppen, nicht erst in der Funktion
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
-					// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					window.adb.handleLinkZuArtGleicherGruppeClick();
 				});
@@ -1273,7 +1273,7 @@
 			$(document).on("click", ".anmelden_btn", function(event) {
 				// den event hier stoppen, nicht erst in der Funktion
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
-				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
 				window.adb.handleAnmeldenBtnClick();
 			});
@@ -1281,7 +1281,7 @@
 			$(document).on("click", ".abmelden_btn", function(event) {
 				// den event hier stoppen, nicht erst in der Funktion
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
-				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
 				// auf eigene Funktion verzichten, da nur ein Aufruf
 				window.adb.meldeUserAb();
@@ -1296,7 +1296,7 @@
 			$(document).on("click", ".konto_erstellen_btn", function(event) {
 				// den event hier stoppen, nicht erst in der Funktion
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
-				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
 				window.adb.handleKontoErstellenBtnClick();
 			});
@@ -1304,7 +1304,7 @@
 			$(document).on("click", ".konto_speichern_btn", function(event) {
 				// den event hier stoppen, nicht erst in der Funktion
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
-				// dort gibt es zwei Probleme: IE9 kennt preventDefault nicht. IE11 schon aber verändert die URL!
+				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
 				window.adb.handleKontoSpeichernBtnClick();
 			});
