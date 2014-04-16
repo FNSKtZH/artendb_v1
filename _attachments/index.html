@@ -1221,7 +1221,8 @@
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
 					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
-					window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick();
+					// this übergeben!
+					window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
 				});
 
 				$("#export").on("click", "#exportieren_exportieren_exportieren", function(event) {
@@ -1264,7 +1265,7 @@
 					// hier übernimmt jQuery das stoppen, in der Funktion nicht
 					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
-					window.adb.handleLinkZuArtGleicherGruppeClick();
+					window.adb.handleLinkZuArtGleicherGruppeClick($(this).attr("artid"));
 				});
 			});
 
@@ -1275,7 +1276,8 @@
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
 				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
-				window.adb.handleAnmeldenBtnClick();
+				// this übergeben, kommt sonst nicht mit!
+				window.adb.handleAnmeldenBtnClick(this);
 			});
 
 			$(document).on("click", ".abmelden_btn", function(event) {
@@ -1298,7 +1300,8 @@
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
 				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
-				window.adb.handleKontoErstellenBtnClick();
+				// this übergeben
+				window.adb.handleKontoErstellenBtnClick(this);
 			});
 
 			$(document).on("click", ".konto_speichern_btn", function(event) {
@@ -1306,7 +1309,7 @@
 				// hier übernimmt jQuery das stoppen, in der Funktion nicht
 				// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 				event.preventDefault();
-				window.adb.handleKontoSpeichernBtnClick();
+				window.adb.handleKontoSpeichernBtnClick(this);
 			});
 
 		</script>
