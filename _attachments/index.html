@@ -839,7 +839,7 @@
 				// Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
 				if (window.addEventListener) {
 					window.addEventListener('popstate', function(event) {
-						oeffneUri();
+						window.adb.oeffneUri();
 					});
 				}
 
@@ -1039,7 +1039,7 @@
 				// Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
 				// daher oeffneUri nochmals auslösen
 				window.onload = function() {
-					oeffneUri();
+					window.adb.oeffneUri();
 				};
 
 				// wenn User noch angemeldet ist, UI anpassen
@@ -1240,7 +1240,7 @@
 					// dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
 					event.preventDefault();
 					// auf eigene Funktion verzichten, da nur ein Aufruf
-					filtereFuerExport("direkt");
+					window.adb.filtereFuerExport("direkt");
 				});
 
 				// verhindern, dass bootstrap ganz nach oben scrollt
