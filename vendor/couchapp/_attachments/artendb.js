@@ -9,7 +9,7 @@ window.adb.erstelleBaum = function() {
 	// alle Beschriftungen ausblenden
 	$(".treeBeschriftung").css("display", "none");
 	// gewollte beschriften und sichtbar schalten
-	switch (window.Gruppe) {
+	switch (window.adb.Gruppe) {
 		case "Fauna":
 			gruppe = "fauna";
 			gruppenbezeichung = "Tiere";
@@ -35,7 +35,7 @@ window.adb.erstelleBaum = function() {
 	$db.view('artendb/' + gruppe + "_gruppiert", {
 		success: function(data) {
 			var anzahl_objekte = data.rows[0].value;
-			$("#tree" + window.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
+			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
 			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
 		}
 	});
@@ -51,7 +51,7 @@ window.adb.erstelleTree = function() {
 		filter,
 		id,
 		jstree_erstellt = $.Deferred();
-	$("#tree" + window.Gruppe).jstree({
+	$("#tree" + window.adb.Gruppe).jstree({
 		"json_data": {
 			ajax: {
 				type: 'GET',
@@ -113,10 +113,10 @@ window.adb.erstelleTree = function() {
 	})
 	.bind("loaded.jstree", function(event, data) {
 		jstree_erstellt.resolve();
-		$("#suchen"+window.Gruppe).css("display", "table");
+		$("#suchen"+window.adb.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
-		$("#tree" + window.Gruppe).css("display", "block");
-		$("#tree" + window.Gruppe + "Beschriftung").css("display", "block");
+		$("#tree" + window.adb.Gruppe).css("display", "block");
+		$("#tree" + window.adb.Gruppe + "Beschriftung").css("display", "block");
 		window.adb.setzeTreehoehe();
 		window.adb.initiiereSuchfeld();
 	})
@@ -132,7 +132,7 @@ window.adb.erstelleTree = function() {
 window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
 	var gruppe;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
-	switch (window.Gruppe) {
+	switch (window.adb.Gruppe) {
 		case "Fauna":
 			gruppe = "fauna";
 			break;
@@ -149,7 +149,7 @@ window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
 			gruppe = "lr";
 			break;
 	}
-	if (window.Gruppe === "Lebensräume") {
+	if (window.adb.Gruppe === "Lebensräume") {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
 	} else {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
@@ -240,12 +240,12 @@ window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id)
 window.adb.initiiereSuchfeld = function() {
 	// zuerst mal die benötigten Daten holen
 	$db = $.couch.db("artendb");
-	if (window.Gruppe && window.Gruppe === "Lebensräume") {
+	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
 		if (window.filtere_lr) {
 			window.adb.initiiereSuchfeld_2();
 		} else {
-			var startkey = encodeURIComponent('["'+window.Gruppe+'"]'),
-				endkey = encodeURIComponent('["'+window.Gruppe+'",{},{},{}]'),
+			var startkey = encodeURIComponent('["'+window.adb.Gruppe+'"]'),
+				endkey = encodeURIComponent('["'+window.adb.Gruppe+'",{},{},{}]'),
 				url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
 			$db.view(url, {
 				success: function(data) {
@@ -254,13 +254,13 @@ window.adb.initiiereSuchfeld = function() {
 				}
 			});
 		}
-	} else if (window.Gruppe) {
-		if (window["filtere_art_" + window.Gruppe.toLowerCase()]) {
+	} else if (window.adb.Gruppe) {
+		if (window["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
 			window.adb.initiiereSuchfeld_2();
 		} else {
-			$db.view('artendb/filtere_art?startkey=["'+window.Gruppe+'"]&endkey=["'+window.Gruppe+'",{}]', {
+			$db.view('artendb/filtere_art?startkey=["'+window.adb.Gruppe+'"]&endkey=["'+window.adb.Gruppe+'",{}]', {
 				success: function(data) {
-					window["filtere_art_" + window.Gruppe.toLowerCase()] = data;
+					window["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
 					window.adb.initiiereSuchfeld_2();
 				}
 			});
@@ -270,17 +270,17 @@ window.adb.initiiereSuchfeld = function() {
 
 window.adb.initiiereSuchfeld_2 = function() {
 	var suchObjekte;
-	if (window.Gruppe && window.Gruppe === "Lebensräume") {
+	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
 		suchObjekte = window.filtere_lr.rows;
-	} else if (window.Gruppe) {
-		suchObjekte = window["filtere_art_" + window.Gruppe.toLowerCase()].rows;
+	} else if (window.adb.Gruppe) {
+		suchObjekte = window["filtere_art_" + window.adb.Gruppe.toLowerCase()].rows;
 	}
 	suchObjekte = _.map(suchObjekte, function(objekt) {
 		return objekt.value;
 	});
 
-	$('#suchfeld' + window.Gruppe).typeahead({
-		name: window.Gruppe,
+	$('#suchfeld' + window.adb.Gruppe).typeahead({
+		name: window.adb.Gruppe,
 		valueKey: 'Name',
 		local: suchObjekte,
 		limit: 20
@@ -288,7 +288,7 @@ window.adb.initiiereSuchfeld_2 = function() {
 	.on('typeahead:selected', function(e, datum) {
 		window.adb.oeffneBaumZuId(datum.id);
 	});
-	$("#suchfeld"+window.Gruppe).focus();
+	$("#suchfeld"+window.adb.Gruppe).focus();
 };
 
 // baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
@@ -435,12 +435,12 @@ window.adb.oeffneBaumZuId = function(id) {
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 window.adb.oeffneNodeNachIdArray = function(idArray) {
 	if (idArray.length > 1) {
-		$.jstree._reference("#tree" + window.Gruppe).open_node($("#"+idArray[0]), function() {
+		$.jstree._reference("#tree" + window.adb.Gruppe).open_node($("#"+idArray[0]), function() {
 			idArray.splice(0,1);
 			window.adb.oeffneNodeNachIdArray(idArray);
 		}, false);
 	} else if (idArray.length === 1) {
-		$.jstree._reference("#tree" + window.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
+		$.jstree._reference("#tree" + window.adb.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
 	}
 };
 
@@ -2055,11 +2055,11 @@ window.adb.handlePanelShown = function() {
 // wenn .LinkZuArtGleicherGruppe geklickt wird
 window.adb.handleLinkZuArtGleicherGruppeClick = function() {
 	var id = $(this).attr("artid");
-	$("#tree" + window.Gruppe).jstree("clear_search");
+	$("#tree" + window.adb.Gruppe).jstree("clear_search");
 	$(".suchen").val("");
-	$("#tree" + window.Gruppe).jstree("deselect_all");
-	$("#tree" + window.Gruppe).jstree("close_all", -1);
-	$("#tree" + window.Gruppe).jstree("select_node", "#" + id);
+	$("#tree" + window.adb.Gruppe).jstree("deselect_all");
+	$("#tree" + window.adb.Gruppe).jstree("close_all", -1);
+	$("#tree" + window.adb.Gruppe).jstree("select_node", "#" + id);
 };
 
 // wenn Fenstergrösse verändert wird
@@ -3008,8 +3008,8 @@ window.adb.oeffneUri = function() {
 		$db = $.couch.db("artendb");
 		$db.openDoc(id, {
 			success: function(objekt) {
-				// window.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
-				window.Gruppe = objekt.Gruppe;
+				// window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
+				window.adb.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
 				// den richtigen Button aktivieren
 				//$("#Gruppe" + objekt.Gruppe).button('toggle');
@@ -3751,14 +3751,14 @@ window.adb.exportZuruecksetzen = function() {
 
 window.adb.oeffneGruppe = function(Gruppe) {
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
-	window.Gruppe = Gruppe;
+	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
 	$("#Gruppe_label").html("Gruppe:");
 	$(".suchen").hide();
 	$("#forms").hide();
 	$(".suchen").val("");
 	var treeMitteilung = "hole Daten...";
-	if (window.Gruppe === "Macromycetes") {
+	if (window.adb.Gruppe === "Macromycetes") {
 		treeMitteilung = "hole Daten (das dauert bei Pilzen länger...)";
 	}
 	$("#treeMitteilung").html(treeMitteilung);
@@ -3828,7 +3828,7 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 							// object hat noch den alten Wert für Einheit, neuen verwenden
 							neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
 						}
-						$("#tree" + window.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
+						$("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
 					}
 				},
 				error: function(data) {
