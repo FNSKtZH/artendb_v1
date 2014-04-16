@@ -1987,7 +1987,7 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 };
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
-window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(this) {
+window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that) {
 	var hinweisNeu;
 	if ($(that).hasClass("active")) {
 		window.adb.fasseTaxonomienZusammen = false;
@@ -3157,7 +3157,7 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 	// gewählte Gruppen ermitteln
 	// globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	// globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
-	window.export_felder_arrays = [];
+	var export_felder_arrays = [];
 	$db = $.couch.db("artendb");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
@@ -3170,12 +3170,12 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 			// Felder abfragen
 			$db.view('artendb/felder?group_level=4&startkey=["'+gruppen[i]+'"]&endkey=["'+gruppen[i]+'",{},{},{},{}]', {
 				success: function(data) {
-					window.export_felder_arrays = _.union(window.export_felder_arrays, data.rows);
+					export_felder_arrays = _.union(export_felder_arrays, data.rows);
 					// eine Gruppe aus export_gruppen entfernen
 					export_gruppen.splice(0,1);
 					if (export_gruppen.length === 0) {
 						// alle Gruppen sind verarbeitet
-						window.adb.erstelleListeFuerFeldwahl_2();
+						window.adb.erstelleListeFuerFeldwahl_2(export_felder_arrays);
 					}
 				}
 			});
@@ -3189,28 +3189,28 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 	}
 };
 
-window.adb.erstelleListeFuerFeldwahl_2 = function() {
+window.adb.erstelleListeFuerFeldwahl_2 = function(export_felder_arrays) {
 	var i,
 		FelderObjekt = {},
 		x,
 		hinweisTaxonomien;
-	// in window.export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+	// in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
 	// sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
 	// Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
 	// Mehrfacheinträge sollen entfernt werden
 	// dazu muss zuerst die Gruppe entfernt werden
-	for (var i=0; i<window.export_felder_arrays.length; i++) {
-		window.export_felder_arrays[i].key.splice(0,1);
+	for (var i=0; i<export_felder_arrays.length; i++) {
+		export_felder_arrays[i].key.splice(0,1);
 	}
 	// jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
-	window.export_felder_arrays = _.union(window.export_felder_arrays);
+	export_felder_arrays = _.union(export_felder_arrays);
 	// jetzt den Array von Objekten nach key sortieren
-	window.export_felder_arrays = _.sortBy(window.export_felder_arrays, function(object) {
+	export_felder_arrays = _.sortBy(export_felder_arrays, function(object) {
 		return object.key;
 	});
 
 	// Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
-	FelderObjekt = window.adb.ergaenzeFelderObjekt(FelderObjekt, window.export_felder_arrays);
+	FelderObjekt = window.adb.ergaenzeFelderObjekt(FelderObjekt, export_felder_arrays);
 
 	// bei allfälligen "Taxonomie(n)" Feldnamen sortieren
 	if (FelderObjekt["Taxonomie(n)"] && FelderObjekt["Taxonomie(n)"].Daten) {
@@ -3547,23 +3547,23 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.adb.DsKeys = [];
 	for (i=0; i<window.adb.ds_von_objekten.rows.length; i++) {
-		DsKeys.push(window.adb.ds_von_objekten.rows[i].key);
+		window.adb.DsKeys.push(window.adb.ds_von_objekten.rows[i].key);
 	}
 	// nach DsNamen sortieren
-	DsKeys = _.sortBy(DsKeys, function(key) {
+	window.adb.DsKeys = _.sortBy(window.adb.DsKeys, function(key) {
 		return key[1];
 	});
 	// mit leerer Zeile beginnen
 	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in DsKeys) {
+	for (z in window.adb.DsKeys) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (DsKeys[z][3] === localStorage.Email || DsKeys[z][2]) {
+		if (window.adb.DsKeys[z][3] === localStorage.Email || window.adb.DsKeys[z][2]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + DsKeys[z][1] + "' waehlbar=true>" + DsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.DsKeys[z][1] + "' waehlbar=true>" + window.adb.DsKeys[z][1] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + DsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.DsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + window.adb.DsKeys[z][1] + "</option>";
 		}
 	}
 	$("#DsWaehlen").html(html);
@@ -3602,23 +3602,23 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.adb.BsKeys = [];
 	for (i=0; i< window.adb.bs_von_objekten.rows.length; i++) {
-		BsKeys.push(window.adb.bs_von_objekten.rows[i].key);
+		window.adb.BsKeys.push(window.adb.bs_von_objekten.rows[i].key);
 	}
 	// nach DsNamen sortieren
-	BsKeys = _.sortBy(BsKeys, function(key) {
+	window.adb.BsKeys = _.sortBy(window.adb.BsKeys, function(key) {
 		return key[1];
 	});
 	// mit leerer Zeile beginnen
 	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in BsKeys) {
+	for (z in window.adb.BsKeys) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (BsKeys[z][3] === localStorage.Email || BsKeys[z][2]) {
+		if (window.adb.BsKeys[z][3] === localStorage.Email || window.adb.BsKeys[z][2]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + BsKeys[z][1] + "' waehlbar=true>" + BsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.BsKeys[z][1] + "' waehlbar=true>" + window.adb.BsKeys[z][1] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + BsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + BsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.BsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + window.adb.BsKeys[z][1] + "</option>";
 		}
 	}
 	$("#BsWaehlen").html(html);
