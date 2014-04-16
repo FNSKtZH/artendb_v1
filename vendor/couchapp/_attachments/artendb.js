@@ -647,8 +647,7 @@ window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 	var html,
 		Name,
 		art_i_name;
-	//art_i_name = ersetzeUngueltigeZeichenInIdNamen(art_i.Name) + altName;
-	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + altName;
+	art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name) + altName;
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
@@ -728,7 +727,7 @@ window.adb.erstelleHtmlFuerDatensammlung = function(dsTyp, art, art_i) {
 		hierarchie_string,
 		array_string,
 		art_i_name;
-	art_i_name = art_i.Name.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
+	art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name);
 	// Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
@@ -3070,13 +3069,13 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 			html_felder_waehlen += '</div></label>';
 			// filtern
 			html_filtern += '<div class="form-group">';
-			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '"';
+			html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngueltigeZeichenInIdNamen(x) + '"';
 			// Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
 			if (x.length > 28) {
 				html_filtern += ' style="padding-top:0px"';
 			}
 			html_filtern += '>'+ x +'</label>';
-			html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + x.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'') + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
+			html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngueltigeZeichenInIdNamen(x) + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomien[i].Name + '" Feld="' + x + '">';
 			html_filtern += '</div>';
 		}
 		// Spalten abschliessen
@@ -3816,7 +3815,7 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							window.adb.initiiere_art(id);
 							// Taxonomie anzeigen
-							$('#' + feldWert.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'')).collapse('show');
+							$('#' + window.adb.ersetzeUngueltigeZeichenInIdNamen(feldWert)).collapse('show');
 						} else {
 							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
@@ -4215,7 +4214,7 @@ window.adb.ermittleVergleichsoperator = function(filterwert) {
 };
 
 window.adb.ersetzeUngueltigeZeichenInIdNamen = function(idname) {
-	return idname.replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
+	return idname.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 };
 
 // kontrolliert den verwendeten Browser
