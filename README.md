@@ -165,7 +165,7 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 #Benutzeroberfläche
 ###Erscheinungsbild
 
-<img src="//barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
+<img src="http://barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
 
 **Hauptelemente**
 
@@ -182,10 +182,10 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 **Formular**
 
 Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts.<br>Hier ein Beispiel einer Datensammlung:
-<img src="//barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
+<img src="http://barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
 
 ...und eine Beziehungssammlung:
-<img src="//barbalex.ch/artendb/beziehungssammlung_.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
+<img src="http://barbalex.ch/artendb/beziehungssammlung_.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
 
 Aus der [JSON-Struktur](//de.wikipedia.org/wiki/JavaScript_Object_Notation) des Dokuments erzeugt ArtenDb dynamisch eine simple Liste aller Felder. true/false Werte werden mit einer Checkbox dargestellt. Text unter 50 Zeichen mit einem Textfeld, darüber mit einer "Textarea" (ein Feld, das mit dem Text wächst), Zahlen in einem Zahlenfeld.
 
