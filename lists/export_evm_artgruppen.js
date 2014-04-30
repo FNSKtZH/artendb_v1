@@ -13,7 +13,8 @@ function(head, req) {
 		export_json = {},
 		artgruppe,
 		id_vorlage = "00005A48-816B-4A30-842F-3B1A5DAAA000",
-		unbekannt = {"Typ": "ArtGruppe", "ArtGruppe": "Unbekannt", "_id" : "00005A48-816B-4A30-842F-3B1unbekannt", "AnzArten": 1};
+		unbekannt = {"Typ": "ArtGruppe", "ArtGruppe": "Unbekannt", "_id" : "00005A48-816B-4A30-842F-3B1unbekannt", "AnzArten": 1},
+		_ = require("lists/lib/underscore");
 
 	export_json.docs = [];
 
@@ -33,6 +34,10 @@ function(head, req) {
 		}
 		// jetzt noch die Artgruppe unbekannt anfügen
 		export_json.docs.push(unbekannt);
+		// sortieren, damit unbekannt ans richtige Ort kommt
+		export_json.docs = _.sortBy(export_json.docs, function(ag) {
+			return ag.ArtGruppe;
+		});
 		// Daten schicken
 		send(JSON.stringify(export_json));
 	});
