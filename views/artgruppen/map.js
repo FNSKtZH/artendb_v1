@@ -12,5 +12,11 @@
 				break ds_loop;
 			}
 		}
+		if (doc.Gruppe === "Macromycetes") {
+			// momentan fehlen bei Macromycetes die ZH GIS
+			// diese Info wird für evab mobile benutzt
+			gis_layer = "Pilze";
+			emit (gis_layer, null);
+		}
 	}
 }
