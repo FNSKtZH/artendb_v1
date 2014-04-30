@@ -57,6 +57,10 @@ function(head, req) {
 					}
 				}
 			}
+			if (doc.Gruppe === "Macromycetes") {
+				// bei Pilzen fehlt momentan in arteigenschaften.ch der GIS-Layer
+				art.ArtGruppe = "Pilze";
+			}
 			export_json.docs.push(art);
 		}
 		send(JSON.stringify(export_json));
