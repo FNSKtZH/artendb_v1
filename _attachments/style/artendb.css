@@ -286,6 +286,11 @@ a {
 	margin-left: -20px !important;
 }
 
+/*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
+.konto_erstellen_btn {
+	display: none !important;
+}
+
 /*
 *TODO: Sind diese noch nötig?
 */
