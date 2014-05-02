@@ -1577,7 +1577,6 @@ window.adb.handleMenuAdminClick = function() {
 }
 
 window.adb.ergänzePilzeZhgis = function() {
-	console.log("ergänzePilzeZhgis geklickt");
 	$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
 	$db = $.couch.db("artendb");
 	$db.view('artendb/macromycetes?include_docs=true', {
@@ -2166,7 +2165,7 @@ window.adb.handlePasswort2Keyup = function() {
 
 // wenn .konto_erstellen_btn geklickt wird
 window.adb.handleKontoErstellenBtnClick = function(that) {
-	var bs_ds = that.id.substring(this.id.length-2);
+	var bs_ds = that.id.substring(that.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
@@ -2183,7 +2182,7 @@ window.adb.handleKontoErstellenBtnClick = function(that) {
 
 // wenn .konto_speichern_btn geklickt wird
 window.adb.handleKontoSpeichernBtnClick = function(that) {
-	var bs_ds = that.id.substring(this.id.length-2);
+	var bs_ds = that.id.substring(that.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
