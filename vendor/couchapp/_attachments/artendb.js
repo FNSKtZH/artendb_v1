@@ -1188,7 +1188,7 @@ window.adb.meldeUserAn = function(woher) {
 		$.couch.login({
 			name : Email,
 			password : Passwort,
-			success : function() {
+			success : function(r) {
 				localStorage.Email = $('#Email_'+woher).val();
 				if (woher === "art") {
 					window.adb.bearbeiteLrTaxonomie();
@@ -1198,6 +1198,15 @@ window.adb.meldeUserAn = function(woher) {
 				$("#Email_"+woher).val("");
 				$("#Passwort_"+woher).val("");
 				$("#art_anmelden").show();
+				// admin-Funktionen
+				if (r.roles.indexOf("_admin") !== -1) {
+					// das ist ein admin
+					console.log("hallo admin");
+					localStorage.admin = true;
+				} else {
+					delete localStorage.admin;
+				}
+				window.adb.blendeMenus();
 			},
 			error: function() {
 				var praefix = "importieren_";
@@ -1211,6 +1220,14 @@ window.adb.meldeUserAn = function(woher) {
 				$("#"+praefix+woher+"_anmelden_fehler_text").css("display", "block");
 			}
 		});
+	}
+};
+
+window.adb.blendeMenus = function() {
+	if (localStorage.admin) {
+		$("#menu_btn").find(".admin").show();
+	} else {
+		$("#menu_btn").find(".admin").hide();
 	}
 };
 
@@ -1553,6 +1570,60 @@ window.adb.handleBs_ImportierenClick = function() {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 		}
 	}
+};
+
+window.adb.handleMenuAdminClick = function() {
+	window.adb.zeigeFormular("admin");
+}
+
+window.adb.ergänzePilzeZhgis = function() {
+	console.log("ergänzePilzeZhgis geklickt");
+	$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
+	$db = $.couch.db("artendb");
+	$db.view('artendb/macromycetes?include_docs=true', {
+		success: function(data) {
+			var ds_zhgis = {},
+				ergänzt = 0,
+				fehler = 0,
+				zhgis_schon_da = 0;
+			ds_zhgis.Name = "ZH GIS";
+			ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
+			ds_zhgis.Datenstand = "dauernd nachgeführt";
+			ds_zhgis.Link = "http://www.naturschutz.zh.ch";
+			ds_zhgis.Daten = {};
+			ds_zhgis.Daten["GIS-Layer"] = "Pilze";
+			_.each(data.rows, function(row) {
+				var pilz = row.doc,
+					zhgis_in_ds;
+				if (!pilz.Datensammlungen) {
+					pilz.Datensammlungen = [];
+				}
+				zhgis_in_ds = _.find(pilz.Datensammlungen, function(ds) {
+					return ds.Name === "ZH GIS";
+				});
+				// nur ergänzen, wenn ZH GIS noch nicht existiert
+				if (!zhgis_in_ds) {
+					pilz.Datensammlungen.push(ds_zhgis);
+					pilz.Datensammlungen = _.sortBy(pilz.Datensammlungen, function(ds) {
+						return ds.Name;
+					});
+					$db.saveDoc(pilz, {
+						success: function() {
+							ergänzt ++;
+							$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+						},
+						error: function() {
+							fehler ++;
+							$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+						}
+					});
+				} else {
+					zhgis_schon_da ++;
+					$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+				}
+			});
+		}
+	});
 };
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird

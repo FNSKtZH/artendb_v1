@@ -33,6 +33,8 @@
 				<li><a id="ds_importieren" href="#">Eigenschaften</a></li>
 				<li><a id="bs_importieren" href="#">Beziehungen</a></li>
 				<li role="presentation" class="divider"></li>
+				<li><a id="menu_admin" href="#" class="admin">Administration</a></li>
+				<li role="presentation" class="divider admin"></li>
 				<li role="presentation" class="dropdown-header">Über ArtenDb:</li>
 				<li><a href="//github.com/FNSKtZH/artendb/blob/master/README.md" target="_blank">Projektbeschreibung anzeigen</a></li>
 				<li><a href="//github.com/FNSKtZH/artendb" target="_blank">Code auf GitHub anzeigen</a></li>
@@ -728,6 +730,24 @@
 				</div><!--panel-group-->	
 			</form>
 
+			<form id="admin" class="form_admin form form-horizontal" action="#" method="get" autocomplete="off">
+				<div id="admin_panel" class="panel-group">
+					<div class="panel panel-default" id="exportieren_diverses">
+						<div class="panel-heading panel-heading-gradient">
+							<h4 class="panel-title">
+								<a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="exportieren_panel" href="#exportieren_diverses_collapse">Diverses</a>
+							</h4>
+						</div>
+						<div class="collapse in" id="exportieren_diverses_collapse">
+							<div class="panel-body">
+								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-default">Pilze: GIS-Layer "Pilze" in Datensammlung "ZH GIS" ergänzen</button>
+								<span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
+							</div>
+						</div>
+					</div>
+				</div><!--panel-group-->	
+			</form>
+
 		</fieldset>
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -1068,6 +1088,10 @@
 				// testen, ob der Browser das Importieren unterstützt
 				// wenn nein, Meldung bringen
 				$("#menu_btn").on("click", "#bs_importieren", window.adb.handleBs_ImportierenClick);
+
+				$("#menu_btn").on("click", "#menu_admin", window.adb.handleMenuAdminClick);
+
+				$("#exportieren_diverses").on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis);
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
