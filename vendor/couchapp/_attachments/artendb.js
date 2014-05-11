@@ -101,7 +101,7 @@ window.adb.erstelleTree = function() {
 	})
 	.bind("select_node.jstree", function(e, data) {
 		var node = data.rslt.obj;
-		jQuery.jstree._reference(node).open_node(node);
+		$.jstree._reference(node).open_node(node);
 		if (node.attr("id")) {
 			// verhindern, dass bereits offene Seiten nochmals geöffnet werden
 			if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
@@ -130,7 +130,8 @@ window.adb.erstelleTree = function() {
 };
 
 window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
-	var gruppe;
+	var gruppe,
+        url;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.adb.Gruppe) {
 		case "Fauna":
@@ -162,7 +163,8 @@ window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id)
 		// flag, um mitzuliefern, ob die id angezeigt werden soll
 		id2 = false,
 		endkey = [],
-		a;
+        a,
+        url;
 	if (filter) {
 		// bei lr gibt es keinen filter und das erzeugt einen fehler
 		startkey = filter.slice();
@@ -371,11 +373,13 @@ window.adb.oeffneBaumZuId = function(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(objekt) {
+            var $filter_klasse = $("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"),
+                $art_anmelden = $("#art_anmelden");
 			switch (objekt.Gruppe) {
 				case "Fauna":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+					$.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
 						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
 							$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
 								$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
@@ -383,7 +387,7 @@ window.adb.oeffneBaumZuId = function(id) {
 						}, true);
 					}, true);
 					// Anmeldung verstecken, wenn nicht Lebensräume
-					$("#art_anmelden").hide();
+					$art_anmelden.hide();
 					break;
 				case "Flora":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -394,12 +398,12 @@ window.adb.oeffneBaumZuId = function(id) {
 						}, true);
 					}, true);
 					// Anmeldung verstecken, wenn nicht Lebensräume
-					$("#art_anmelden").hide();
+					$art_anmelden.hide();
 					break;
 				case "Moose":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
 					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"), function() {
+					$.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
 						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
 							$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
 								$.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
@@ -407,7 +411,7 @@ window.adb.oeffneBaumZuId = function(id) {
 						}, true);
 					}, true);
 					// Anmeldung verstecken, wenn nicht Lebensräume
-					$("#art_anmelden").hide();
+					$art_anmelden.hide();
 					break;
 				case "Macromycetes":
 					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -416,11 +420,11 @@ window.adb.oeffneBaumZuId = function(id) {
 						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
 					}, true);
 					// Anmeldung verstecken, wenn nicht Lebensräume
-					$("#art_anmelden").hide();
+					$art_anmelden.hide();
 					break;
 				case "Lebensräume":
 					var idArray = [];
-					for (i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
+					for (var i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
 						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
 					}
 					window.adb.oeffneNodeNachIdArray(idArray);
@@ -558,14 +562,14 @@ window.adb.initiiere_art = function(id) {
 									} else if (synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
 										// diese Beziehungssammlung wird schon dargestellt. Kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
 										var BsDerSynonymenArt = synonymeArt.Beziehungssammlungen[a];
-										for (c=0; c<art.Beziehungssammlungen.length; c++) {
+										for (var c=0; c<art.Beziehungssammlungen.length; c++) {
 											if (art.Beziehungssammlungen[c].Name === BsDerSynonymenArt.Name) {
 												var BsDerOriginalart = art.Beziehungssammlungen[c];
 												break;
 											}
 										}
 										if (BsDerSynonymenArt.Beziehungen && BsDerSynonymenArt.Beziehungen.length > 0) {
-											for (b=0; b<BsDerSynonymenArt.Beziehungen.length; b++) {
+											for (var b=0; b<BsDerSynonymenArt.Beziehungen.length; b++) {
 												// durch alle Beziehungen von BsDerSynonymenArt loopen und prüfen, ob sie in den Beziehungen vorkommen
 												if (_.contains(BsDerSynonymenArt.Beziehungen, BsDerSynonymenArt.Beziehungen[b])) {
 													// diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
@@ -1071,10 +1075,11 @@ window.adb.FitToContent = function(id, maxHeight) {
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 window.adb.zeigeFormular = function(Formularname) {
-	var formular_angezeigt = $.Deferred();
+	var formular_angezeigt = $.Deferred(),
+        $form = $('form');
 	// zuerst alle Formulare ausblenden
 	$("#forms").hide();
-	$('form').each(function() {
+    $form.each(function() {
 		$(this).hide();
 	});
 
@@ -1096,7 +1101,7 @@ window.adb.zeigeFormular = function(Formularname) {
 			$(".baum").css("display", "none");
 			$(".treeBeschriftung").css("display", "none");
 			// Gruppe Schaltfläche deaktivieren
-			$('#Gruppe .active').removeClass('active');
+			$('#Gruppe').find('.active').removeClass('active');
 		}
 		$('form').each(function() {
 			var that = $(this);
@@ -1175,8 +1180,9 @@ window.adb.erstelleKonto = function(woher) {
 				praefix = "";
 			}
 			$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-			$("#"+praefix+woher+"_anmelden_fehler").alert();
-			$("#"+praefix+woher+"_anmelden_fehler").css("display", "block");
+			$("#"+praefix+woher+"_anmelden_fehler")
+                .alert()
+                .css("display", "block");
 		}
 	});
 };
@@ -1215,9 +1221,10 @@ window.adb.meldeUserAn = function(woher) {
 				}
 				// zuerst allfällige bestehende Hinweise ausblenden
 				$(".hinweis").css("display", "none");
-				$("#"+praefix+woher+"_anmelden_fehler_text").html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?");
-				$("#"+praefix+woher+"_anmelden_fehler_text").alert();
-				$("#"+praefix+woher+"_anmelden_fehler_text").css("display", "block");
+				$("#"+praefix+woher+"_anmelden_fehler_text")
+                    .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
+                    .alert()
+				    .css("display", "block");
 			}
 		});
 	}
@@ -1349,8 +1356,9 @@ window.adb.handleBsNameChange = function() {
 		setTimeout(function() {
 			$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
 		}, 30000);
-		$("#BsName").val("");
-		$("#BsName").focus();
+		$("#BsName")
+            .val("")
+		    .focus();
 	} else {
 		$("#importieren_bs_ds_beschreiben_hinweis2").alert().css("display", "none");
 	}
@@ -1360,8 +1368,9 @@ window.adb.handleBsNameChange = function() {
 // kontrollieren, dass es die email der angemeldeten Person ist
 window.adb.handleDsImportiertVonChange = function() {
 	$("#DsImportiertVon").val(localStorage.Email);
-	$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "block");
-	$("#importieren_ds_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+	$("#importieren_ds_ds_beschreiben_hinweis_text2")
+        .alert().css("display", "block")
+	    .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
 		$("#importieren_ds_ds_beschreiben_hinweis_text2").alert().css("display", "none");
 	}, 10000);
@@ -1574,7 +1583,7 @@ window.adb.handleBs_ImportierenClick = function() {
 
 window.adb.handleMenuAdminClick = function() {
 	window.adb.zeigeFormular("admin");
-}
+};
 
 window.adb.ergänzePilzeZhgis = function() {
 	$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
@@ -2105,7 +2114,6 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht.<br>Sie können die Datei vom Server herunterladen.");
 		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
-		return;
 	}
 };
 
@@ -2225,7 +2233,7 @@ window.adb.handleBsIdChange = function() {
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function() {
 	window.adb.FitToContent(this.id);
-}
+};
 
 // übernimmt eine Array mit Objekten
 // und den div, in dem die Tabelle eingefügt werden soll
@@ -2822,7 +2830,7 @@ window.adb.entferneBeziehungssammlung = function() {
 		guidArray = [],
 		guid,
 		BsName = $("#BsName").val(),
-		BsEntfernt = $.Deferred()
+		BsEntfernt = $.Deferred(),
 		x,
 		q,
 		a,
@@ -3263,7 +3271,10 @@ window.adb.erstelleListeFuerFeldwahl_2 = function(export_felder_arrays) {
 	var i,
 		FelderObjekt = {},
 		x,
-		hinweisTaxonomien;
+		hinweisTaxonomien,
+        Taxonomien,
+        Datensammlungen,
+        Beziehungssammlungen;
 	// in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
 	// sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
 	// Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
@@ -3433,16 +3444,16 @@ window.adb.filtereFuerExport = function(direkt) {
 	$(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
 			// feldObjekt erstellen
-			feldObjekt = {};
+			var feldObjekt = {};
 			feldObjekt.DsName = "Objekt";
 			feldObjekt.Feldname = $(this).attr('feldname');
 			gewaehlte_felder.push(feldObjekt);
 		}
 	});
-	$("#exportieren_felder_waehlen_felderliste .feld_waehlen").each(function() {
+	$("#exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
 		if ($(this).prop('checked')) {
 			// feldObjekt erstellen
-			feldObjekt = {};
+			var feldObjekt = {};
 			feldObjekt.DsTyp = $(this).attr('dstyp');
 			if (feldObjekt.DsTyp !== "Taxonomie") {
 				anz_ds_gewaehlt++;
@@ -3459,8 +3470,10 @@ window.adb.filtereFuerExport = function(direkt) {
 	if (gewaehlte_felder_objekt.felder.length === 0) {
 		// Beschäftigungsmeldung verstecken
 		$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
-		$("#exportieren_exportieren_error_text").alert().css("display", "block");
-		$("#exportieren_exportieren_error_text").html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
+		$("#exportieren_exportieren_error_text")
+            .alert()
+            .css("display", "block")
+		    .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
 		return;
 	}
 
@@ -4331,7 +4344,7 @@ var BrowserDetect =
 * Copyright 2012 Twitter, Inc.
 * //apache.org/licenses/LICENSE-2.0.txt
 */
-!function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery)
+!function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery);
 
 
 /**
