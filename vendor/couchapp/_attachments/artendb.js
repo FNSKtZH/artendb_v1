@@ -468,7 +468,7 @@ window.adb.initiiere_art = function(id) {
 			htmlArt = '<h4>Taxonomie:</h4>';
 			// zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			// gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-			htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
+			htmlArt += window.adb.erstelleHtmlFürDatensammlung("Taxonomie", art, art.Taxonomie);
 			// Datensammlungen muss nicht gepusht werden
 			// aber Beziehungssammlungen aufteilen
 			if (art.Beziehungssammlungen.length > 0) {
@@ -513,7 +513,7 @@ window.adb.initiiere_art = function(id) {
 				htmlArt += "<h4>Eigenschaften:</h4>";
 				for (x=0, len=Datensammlungen.length; x<len; x++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Datensammlung", art, Datensammlungen[x]);
+					htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, Datensammlungen[x]);
 					// dsNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
 					dsNamen.push(Datensammlungen[x].Name);
 
@@ -597,7 +597,7 @@ window.adb.initiiere_art = function(id) {
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
 							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
 								// HTML für Datensammlung erstellen lassen und hinzufügen
-								htmlArt += window.adb.erstelleHtmlFuerDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
+								htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
 							}
 						}
 						// bez von Synonymen darstellen
@@ -726,7 +726,7 @@ window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-window.adb.erstelleHtmlFuerDatensammlung = function(dsTyp, art, art_i) {
+window.adb.erstelleHtmlFürDatensammlung = function(dsTyp, art, art_i) {
 	var htmlDatensammlung,
 		hierarchie_string,
 		array_string,
@@ -1720,15 +1720,15 @@ window.adb.handleDsWaehlenChange = function() {
 		i,
         x,
         $DsAnzDs = $("#DsAnzDs"),
-        $DsAnzDs_label = $("#DsAnzDs_label");
+        $DsAnzDs_label = $("#DsAnzDs_label"),
+        $DsName = $("#DsName");
 	if (waehlbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
 			$(this).val('');
 		});
 		$DsAnzDs.html("");
-		$DsAnzDs_label.html(""),
-        $DsName = $("#DsName");
+		$DsAnzDs_label.html("");
 		if (DsName) {
 			for (i in window.adb.ds_von_objekten.rows) {
 				if (window.adb.ds_von_objekten.rows[i].key[1] === DsName) {
@@ -1760,9 +1760,11 @@ window.adb.handleDsWaehlenChange = function() {
 					$DsAnzDs_label.html("Anzahl Arten/Lebensräume");
 					$DsAnzDs.html(window.adb.ds_von_objekten.rows[i].value);
 					// dafür sorgen, dass textareas genug gross sind
-					$('#importieren_ds textarea').each(function() {
-						window.adb.FitToContent(this, document.documentElement.clientHeight);
-					});
+					$('#importieren_ds')
+                        .find('textarea')
+                        .each(function() {
+                            window.adb.FitToContent(this, document.documentElement.clientHeight);
+                        });
 					$DsName.focus();
 				}
 				// löschen-Schaltfläche einblenden
@@ -2529,40 +2531,45 @@ window.adb.importiereDatensammlung = function() {
 	var Datensammlung,
 		anzFelder,
 		anzDs,
-		DsImportiert = $.Deferred();
+		DsImportiert = $.Deferred(),
+        $DsName = $("#DsName"),
+        $DsBeschreibung = $("#DsBeschreibung"),
+        Zähler = 0,
+        RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>",
+        $DsDatenstand = $("#DsDatenstand"),
+        $DsLink = $("#DsLink"),
+        $DsUrsprungsDs = $("#DsUrsprungsDs");
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
-	if (!$("#DsName").val()) {
+	if (!$DsName.val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
 		$("#meldung_individuell_text").html("Bitte geben Sie der Datensammlung einen Namen");
 		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
-		$("#DsName").focus();
+		$DsName.focus();
 		return false;
 	}
 	// für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
-	var Zähler = 0;
-	var RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>";
 	anzDs = 0;
 	for (var x in window.adb.dsDatensätze) {
 		anzDs += 1;
 		// Datensammlung als Objekt gründen
 		Datensammlung = {};
-		Datensammlung.Name = $("#DsName").val();
-		if ($("#DsBeschreibung").val()) {
-			Datensammlung.Beschreibung = $("#DsBeschreibung").val();
+		Datensammlung.Name = $DsName.val();
+		if ($DsBeschreibung.val()) {
+			Datensammlung.Beschreibung = $DsBeschreibung.val();
 		}
-		if ($("#DsDatenstand").val()) {
-			Datensammlung.Datenstand = $("#DsDatenstand").val();
+		if ($DsDatenstand.val()) {
+			Datensammlung.Datenstand = $DsDatenstand.val();
 		}
-		if ($("#DsLink").val()) {
-			Datensammlung.Link = $("#DsLink").val();
+		if ($DsLink.val()) {
+			Datensammlung.Link = $DsLink.val();
 		}
 		// falls die Datensammlung zusammenfassend ist
 		if ($("#DsZusammenfassend").prop('checked')) {
 			Datensammlung.zusammenfassend = true;
 		}
-		if ($("#DsUrsprungsDs").val()) {
-			Datensammlung.Ursprungsdatensammlung = $("#DsUrsprungsDs").val();
+		if ($DsUrsprungsDs.val()) {
+			Datensammlung.Ursprungsdatensammlung = $DsUrsprungsDs.val();
 		}
 		Datensammlung["importiert von"] = localStorage.Email;
 		// Felder der Datensammlung als Objekt gründen

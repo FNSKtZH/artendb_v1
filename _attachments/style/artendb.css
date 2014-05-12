@@ -22,7 +22,7 @@ body {
 
 #forms {
 	/* wenn forms unter menu kommt muss ein margin vorhanden sein */
-	margin:0px 0px 7px 0px;
+	margin:0 0 7px 0;
 	/* bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren */
 	border: none;
 	padding: 0 0 0 0;
@@ -167,10 +167,10 @@ body {
 	font-size: 17px;
 	color: #944600;
 	font-weight: bold;
-	padding-left: 0px;
+	padding-left: 0;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 /* Gradient, um die panels zu stylen */
@@ -276,15 +276,19 @@ a {
 	margin-left: 4px !important;
 }
 
+label+input[type="radio"], label+input[type="checkbox"] {
+    margin-bottom: -5px !important;
+}
+
 #export input[type="radio"], #export input[type="checkbox"] {
 	margin-top: 4px !important;
 	margin-left: -20px !important;
 }
-
+/* scheint nicht mehr nötig zu sein
 #exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
 	margin-top: 1px !important;
 	margin-left: -20px !important;
-}
+}*/
 
 /*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
 .konto_erstellen_btn {
@@ -294,9 +298,6 @@ a {
 /*
 *TODO: Sind diese noch nötig?
 */
-label+input[type="radio"], label+input[type="checkbox"] {
-	margin-bottom: -5px !important;
-}
 
 h1, h2, h3, h4, h5, h6 {
 	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
@@ -305,7 +306,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .felderspalte .form-group {
 	/* bootstrap setzt -15px */
-	margin-left: 0px;
+	margin-left: 0;
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
 	-o-column-break-inside:avoid;
@@ -315,7 +316,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .felderspalte {
 	/* bootstrap setzt -15px */
-	margin-left: 0px;
+	margin-left: 0;
 	-webkit-column-break-inside:avoid;
 	-moz-column-break-inside:avoid;
 	-o-column-break-inside:avoid;
@@ -333,7 +334,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #export .checkbox {
-	padding-top: 0px;
+	padding-top: 0;
 	margin-bottom: 5px;
 }
 
@@ -446,7 +447,7 @@ a:hover {
 	padding-left: 15px;
 	margin-bottom: 3px;
 	color: #424242;
-	font-size: 17.5px;
+	font-size: 18px;
 	font-weight: bold;
 }
 
@@ -480,11 +481,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .form-control-static {
 	margin-left: 207px;
-	padding-top: 0px !important;
+	padding-top: 0 !important;
 }
 
 input[type=file] {
-	margin-left: 0px !important;
+	margin-left: 0 !important;
 }
 
 .input-group-xs > .input-group-addon {
@@ -498,8 +499,9 @@ input[type=file] {
 }
 
 label {
+	/* nicht nötig, wenn checkbox mit label beschrieben wird
 	line-height: 15px !important;
-	float: left !important;
+	float: left !important;*/
 }
 
 option {
@@ -525,12 +527,12 @@ option {
 
 #lr_parent_waehlen .modal-body {
 	overflow-y: auto !important;
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 
 #lr_parent_waehlen .modal-header {
-	padding: 0px 15px 0px 15px;
+	padding: 0 15px 0 15px;
 }
 
 .modal-header {
@@ -637,7 +639,6 @@ option {
   margin-top: 2px;
   padding: 5px 0;
   background-color: #fff;
-  border: 1px solid #ccc;
   border: 1px solid rgba(0,0,0,.2);
   *border-right-width: 2px;
   *border-bottom-width: 2px;

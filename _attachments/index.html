@@ -223,7 +223,7 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="DsWaehlen">Bestehende wählen</label>
-									<select type="text" class="form-control controls" id="DsWaehlen"></select>
+									<select class="form-control controls" id="DsWaehlen"></select>
 								</div>
 								<div class="controls feld">
 									<button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
@@ -256,7 +256,7 @@
 								</div>
 								<div class="form-group" id="DsUrsprungsDs_div" style="display:none;">
 									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Datensammlung</label>
-									<select type="text" class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
+									<select class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
@@ -427,7 +427,7 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="BsWaehlen">Bestehende wählen</label>
-									<select type="text" class="form-control controls" id="BsWaehlen"></select>
+									<select class="form-control controls" id="BsWaehlen"></select>
 								</div>
 								<div class="controls feld">
 									<button type="button" class="btn btn-primary" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
@@ -463,7 +463,7 @@
 								</div>
 								<div class="form-group" id="BsUrsprungsBs_div" style="display:none;">
 									<label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
-									<select type="text" class="form-control controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
+									<select class="form-control controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
@@ -587,20 +587,40 @@
 									</ul>
 								</div>
 								<div class="checkbox">
-									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="fauna" value="Fauna">Fauna
-								</div>
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="fauna" value="Fauna">
+                                        Fauna
+                                    </label>
+                                </div>
 								<div class="checkbox">
-									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="flora" value="Flora">Flora
-								</div>
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="flora" value="Flora">
+                                        Flora
+                                    </label>
+                                </div>
 								<div class="checkbox">
-									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="moose" value="Moose">Moose
-								</div>
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="moose" value="Moose">
+                                        Moose
+                                    </label>
+                                </div>
 								<div class="checkbox">
-									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="macromycetes" value="Macromycetes">Pilze
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="macromycetes" value="Macromycetes">
+                                        Pilze
+                                    </label>
 								</div>
 								<div class="checkbox" style="margin-bottom:5px;">
-									<input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="lr" value="Lebensräume">Lebensräume
-								</div>
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="lr"
+                                               value="Lebensräume">
+                                        Lebensräume
+                                    </label>
+                                </div>
 								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info"></div>
 							</div>
@@ -858,7 +878,7 @@
 				// soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
 				// Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
 				if (window.addEventListener) {
-					window.addEventListener('popstate', function(event) {
+					window.addEventListener('popstate', function() {
 						window.adb.oeffneUri();
 					});
 				}
@@ -1329,7 +1349,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">inkompatibler Browser</h3>
+					<h3>inkompatibler Browser</h3>
 				</div>
 				<div class="modal-body">
 					<p id="fileApiMeldungText">One fine body…</p>
@@ -1346,10 +1366,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">Zuviele Beziehungssammlungen gewählt</h3>
+					<h3>Zuviele Beziehungssammlungen gewählt</h3>
 				</div>
 				<div class="modal-body">
-					<p id="fileApiMeldungText">Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
+					<p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
@@ -1363,10 +1383,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">Keine Daten gewählt</h3>
+					<h3>Keine Daten gewählt</h3>
 				</div>
 				<div class="modal-body">
-					<p id="fileApiMeldungText">Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
+					<p>Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
