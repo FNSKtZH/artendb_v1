@@ -565,6 +565,10 @@ option {
 	margin-bottom: 0;
 }
 
+.progress {
+    /*display: none;*/  /*soll erst sichtbar werden, wenn vom Code eingeschaltet*/
+}
+
 #importieren_ds_ids_identifizieren .alert {
 	margin-left: 192px;
 	margin-right: 7px;

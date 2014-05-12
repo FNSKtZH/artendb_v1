@@ -2530,7 +2530,8 @@ window.adb.meldeErfolgVonIdIdentifikation_02 = function(MehrfachVorkommendeIds, 
 window.adb.importiereDatensammlung = function() {
 	var Datensammlung,
 		anzFelder,
-		anzDs,
+		anzDs = window.adb.dsDatensätze.length,
+        anzDsImportiert,
 		DsImportiert = $.Deferred(),
         $DsName = $("#DsName"),
         $DsBeschreibung = $("#DsBeschreibung"),
@@ -2538,7 +2539,8 @@ window.adb.importiereDatensammlung = function() {
         RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>",
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
-        $DsUrsprungsDs = $("#DsUrsprungsDs");
+        $DsUrsprungsDs = $("#DsUrsprungsDs"),
+        prozent_importiert;
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$DsName.val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2548,10 +2550,44 @@ window.adb.importiereDatensammlung = function() {
 		$DsName.focus();
 		return false;
 	}
-	// für die ersten 10 Datensätze sollen als Rückmeldung Links erstellt werden, daher braucht es einen zähler
-	anzDs = 0;
+	// Der Verlauf soll angezeigt werden, daher braucht es einen zähler
+    anzDsImportiert = 0;
+    //$("#DsImportierenProgressbar").show();
+
+    // changes feed einrichten
+    // versucht, view als Filter zu verwenden, oder besser, den expliziten Filter dsimport mit dsname als Kriterium
+    // Ergebnis: bei view kamen alle changes, auch design doc. Bei dsimport kam nichts.
+    /*var changes_options = {};
+    changes_options.dsname = $DsName.val();
+    changes_options.filter = "artendb/dsimport";
+    window.adb.queryChangesStartingNow();
+
+    // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
+    $(document).bind('longpoll-data', function(event, data) {
+        console.log("data.results = " + JSON.stringify(data.results));
+        anzDsImportiert = anzDsImportiert + data.results.length;
+        console.log(anzDsImportiert + " Datensätze importiert");
+        var prozent = Math.round(anzDsImportiert/anzDs*100);
+        $("#DsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
+        if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
+            // Rückmeldung in Feld anzeigen:
+            $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+        }
+    });*/
+
+    // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
+    // $(document).trigger('adb.ds_hinzugefügt');
+    $(document).bind('adb.ds_hinzugefügt', function() {
+        anzDsImportiert++;
+        var prozent = Math.round(anzDsImportiert/anzDs*100);
+        $("#DsImportierenProgressbar").css('width', prozent +'%;').attr('aria-valuenow', prozent).html(prozent + "%");
+        if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
+            // Rückmeldung in Feld anzeigen:
+            $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+        }
+    });
+
 	for (var x in window.adb.dsDatensätze) {
-		anzDs += 1;
 		// Datensammlung als Objekt gründen
 		Datensammlung = {};
 		Datensammlung.Name = $DsName.val();
@@ -2633,11 +2669,71 @@ window.adb.importiereDatensammlung = function() {
 			}
 		}
 	}
-	// RückmeldungsLinks in Feld anzeigen:
-	$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+
+    // Rückmeldung aufbauen
 	$("#importieren_ds_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
 	DsImportiert.resolve();
-	return DsImportiert.promise();
+};
+
+window.adb.queryChangesStartingNow = function(options) {
+    options = options || {};
+    options.since = "now";
+    if (options.filter) {
+        // der Filter bremst die Abfrage - das ist schlecht, weil dann bereits DS aktualisiert wurden!
+        // daher für die Erstabfrage entfernen
+        var filter = options.filter;
+        var dsname = options.dsname;
+        delete options.view;
+        delete options.dsname;
+    }
+    $.ajax({
+        type: "get",
+        url: "/artendb/_changes",
+        dataType: "json",
+        data: options
+    })
+    .done(function(data) {
+        $(document).trigger('longpoll-data', data, data.last_seq);
+        options.feed = "longpoll";
+        options.since = data.last_seq;
+        if (filter) {
+            options.filter = filter;
+            options.dsname = dsname;
+        }
+        $.ajax({
+            type: "get",
+            url: "/artendb/_changes",
+            dataType: "json",
+            data: options
+        })
+        .done(function(data2) {
+            if (data2.results.length > 0 ) {
+                $(document).trigger('longpoll-data2', data2);
+            }
+            options.since = data2.last_seq;
+            // dafür sorgen, dass weiter beobachtet wird
+            window.adb.queryChanges(options);
+        });
+    });
+};
+
+window.adb.queryChanges = function(options) {
+    options = options || {};
+    options.since = options.since || "now";
+    options.feed = options.feed || "longpoll";
+    $.ajax({
+        type: "get",
+        url: "/artendb/_changes",
+        dataType: "json",
+        data: options
+    })
+    .done(function(data) {
+        if (data.results.length > 0 ) {
+            $(document).trigger('longpoll-data', data);
+        }
+        options.since = data.last_seq;
+        window.adb.queryChanges(options);
+    });
 };
 
 // bekommt das Objekt mit den Datensätzen (window.adb.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
@@ -3007,6 +3103,8 @@ window.adb.fuegeDatensammlungZuObjekt = function(GUID, Datensammlung) {
 			doc.Datensammlungen = window.adb.sortiereObjektarrayNachName(doc.Datensammlungen);
 			// in artendb speichern
 			$db.saveDoc(doc);
+            // mitteilen, dass ein ds importiert wurde
+            $(document).trigger('adb.ds_hinzugefügt');
 		}
 	});
 };
