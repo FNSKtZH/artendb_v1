@@ -1496,6 +1496,9 @@ window.adb.handleDsFileChange = function() {
 		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
 		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+        $('html, body').animate({
+            scrollTop: $("#importieren_ds_daten_uploaden_collapse").offset().top
+        }, 2000);
 		return;
 	}
 	var file = event.target.files[0],
@@ -1526,6 +1529,9 @@ window.adb.handleBsFileChange = function() {
 		$("#meldung_individuell_schliessen").html("schliessen");
 		$('#meldung_individuell').modal();
 		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
+        $('html, body').animate({
+            scrollTop: $("#importieren_bs_daten_uploaden_collapse").offset().top
+        }, 2000);
 		return;
 	}
 	var file = event.target.files[0],
@@ -1674,6 +1680,9 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 	} else {
 		$('#DsFile').fileupload();
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_ds_daten_uploaden_collapse").offset().top
+    }, 2000);
 };
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
@@ -1683,6 +1692,9 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 	} else {
 		$('#BsFile').fileupload();
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_bs_daten_uploaden_collapse").offset().top
+    }, 2000);
 };
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
@@ -1690,6 +1702,9 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_ds_ids_identifizieren_collapse").offset().top
+    }, 2000);
 };
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
@@ -1697,6 +1712,9 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_bs_ids_identifizieren_collapse").offset().top
+    }, 2000);
 };
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
@@ -1704,6 +1722,9 @@ window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_ds_import_ausfuehren_collapse").offset().top
+    }, 2000);
 };
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
@@ -1711,6 +1732,9 @@ window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
 	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_bs_import_ausfuehren_collapse").offset().top
+    }, 2000);
 };
 
 // wenn DsWaehlen geändert wird
@@ -2292,7 +2316,8 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 		Feldname = "",
 		html_ds_felder_div = "",
 		x,
-		i;
+        i,
+        $tabellen_div = $("#"+tabellen_div);
 	if (Datensätze.length > 10) {
 		html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
 	} else if (Datensätze.length > 1) {
@@ -2365,11 +2390,15 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 	// Tabelle abschliessen
 	html += '</tbody></table></div>';
 	// html in div einfügen
-	$("#"+tabellen_div)
+	$tabellen_div
         .html(html)
 	    .css("margin-top", "20px")
         // sichtbar stellen
         .css("display", "block");
+    // fenster scrollen
+    $('html, body').animate({
+        scrollTop: $tabellen_div.offset().top
+    }, 2000);
 };
 
 // erhält dbs = "Ds" oder "Bs"
@@ -2397,6 +2426,9 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text")
             .alert()
             .css("display", "none");
+        $('html, body').animate({
+            scrollTop: $("#importieren_ds_ids_identifizieren_collapse").offset().top
+        }, 2000);
 
 		// Dokumente aus der Gruppe der Datensätze holen
 		// durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
@@ -2523,6 +2555,9 @@ window.adb.meldeErfolgVonIdIdentifikation_02 = function(MehrfachVorkommendeIds, 
 		$("#"+dbs+"Importieren").css("display", "block");
 		$("#"+dbs+"Entfernen").css("display", "block");
 	}
+    $('html, body').animate({
+        scrollTop: $("#importieren_ds_ids_identifizieren_collapse").offset().top
+    }, 2000);
 };
 
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
@@ -2535,8 +2570,9 @@ window.adb.importiereDatensammlung = function() {
 		DsImportiert = $.Deferred(),
         $DsName = $("#DsName"),
         $DsBeschreibung = $("#DsBeschreibung"),
-        Zähler = 0,
-        RückmeldungsLinks = "Der Import wurde ausgeführt.<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können.<br>Vorsicht: Wahrscheinlich dauert der nächste Seitenaufruf sehr lange, da nun ein Index neu aufgebaut werden muss.<br><br>",
+        nr,
+        rückmeldung_intro,
+        rückmeldung_links = "",
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
@@ -2576,7 +2612,6 @@ window.adb.importiereDatensammlung = function() {
     });*/
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    // $(document).trigger('adb.ds_hinzugefügt');
     $(document).bind('adb.ds_hinzugefügt', function() {
         anzDsImportiert++;
         var prozent = Math.round(anzDsImportiert/anzDs*100);
@@ -2584,9 +2619,25 @@ window.adb.importiereDatensammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
-        if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
-            // Rückmeldung in Feld anzeigen:
-            $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+        rückmeldung_intro = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
+        $('html, body').animate({
+            scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+        }, 2000);
+        if (anzDsImportiert === anzDs) {
+            // die Indexe
+            $db = $.couch.db("artendb");
+            $db.view('artendb/lr', {
+                success: function(data) {
+                    // melden, dass views aktualisiert wurden
+                    rückmeldung_intro = "Die Daten wurden importiert.<br>";
+                    rückmeldung_intro += "Die Indexe wurden neu aufgebaut.<br><br>";
+                    rückmeldung_intro += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro + rückmeldung_links);
+                    $('html, body').animate({
+                        scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+                    }, 2000);
+                }
+            });
         }
     });
 
@@ -2661,20 +2712,23 @@ window.adb.importiereDatensammlung = function() {
 			// kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
 				window.adb.fuegeDatensammlungZuObjekt(guid, Datensammlung);
-				// Für 10 Kontrollbeispiele die Links aufbauen
-				if (Zähler < 10) {
-					Zähler += 1;
-					// Rückmeldungslink aufbauen. Hat die Form:
-					//<a href="url">Link text</a>
-					////127.0.0.1:5984/artendb/_design/artendb/index.html?id=165507F2-67D6-44E2-A2BA-1A62AB3D1ACE
-					RückmeldungsLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + window.adb.dsDatensätze[x][window.adb.DsFelderId] + '"  target="_blank">Beispiel ' + Zähler + '</a><br>';
-				}
-			}
-		}
-	}
+            }
+        }
+    }
+    // Für 10 Kontrollbeispiele die Links aufbauen
+    var erste_10_ids = _.pluck(_.first(window.adb.dsDatensätze, 10), window.adb.DsFelderId);
+    _.each(erste_10_ids, function(id, index) {
+        nr = index ++;
+        rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
+    });
 
-    // Rückmeldung aufbauen
-	$("#importieren_ds_import_ausfuehren_hinweis_text").html(RückmeldungsLinks);
+    // Rückmeldung in Feld anzeigen
+    rückmeldung_intro = "Die Daten werden importiert...";
+	$("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro);
+    $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+    $('html, body').animate({
+        scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+    }, 2000);
 	DsImportiert.resolve();
 };
 
