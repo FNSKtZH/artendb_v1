@@ -567,6 +567,7 @@ option {
 
 .progress {
     /*display: none;*/  /*soll erst sichtbar werden, wenn vom Code eingeschaltet*/
+    margin-top: 18px;
 }
 
 #importieren_ds_ids_identifizieren .alert {

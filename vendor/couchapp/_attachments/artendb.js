@@ -2580,7 +2580,10 @@ window.adb.importiereDatensammlung = function() {
     $(document).bind('adb.ds_hinzugefügt', function() {
         anzDsImportiert++;
         var prozent = Math.round(anzDsImportiert/anzDs*100);
-        $("#DsImportierenProgressbar").css('width', prozent +'%;').attr('aria-valuenow', prozent).html(prozent + "%");
+        $("#DsImportierenProgressbar")
+            .css('width', prozent +'%')
+            .attr('aria-valuenow', prozent);
+        $("#DsImportierenProgressbarText").html(prozent + "%");
         if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
             // Rückmeldung in Feld anzeigen:
             $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
@@ -2966,7 +2969,7 @@ window.adb.entferneDatensammlung = function() {
 			window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
-			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
+			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun ein Index neu aufgebaut werden muss.");
 			DsEntfernt.resolve();
 			break;
 		}
