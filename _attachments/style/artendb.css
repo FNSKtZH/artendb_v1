@@ -281,14 +281,14 @@ label+input[type="radio"], label+input[type="checkbox"] {
 }
 
 #export input[type="radio"], #export input[type="checkbox"] {
-	margin-top: 4px !important;
-	margin-left: -20px !important;
+	margin-top: 1px !important;
+	margin-left: -19px !important;
 }
-/* scheint nicht mehr nötig zu sein
+
 #exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
 	margin-top: 1px !important;
-	margin-left: -20px !important;
-}*/
+	margin-left: -19px !important;
+}
 
 /*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
 .konto_erstellen_btn {
@@ -499,9 +499,9 @@ input[type=file] {
 }
 
 label {
-	/* nicht nötig, wenn checkbox mit label beschrieben wird
+	/* nicht nötig, wenn checkbox mit label beschrieben wird*/
 	line-height: 15px !important;
-	float: left !important;*/
+	float: left !important;
 }
 
 option {
