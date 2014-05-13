@@ -555,6 +555,11 @@
 							<div class="panel-body">
 								<button type="button" class="btn btn-primary" id="BsImportieren" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften importieren</button>
 								<button type="button" class="btn btn-primary" id="BsEntfernen" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+                                <div class="progress">
+                                    <div id="BsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <span id="BsImportierenProgressbarText"></span>
+                                    </div>
+                                </div>
 								<div id="importieren_bs_import_ausfuehren_hinweis" class="alert alert-info">
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 									<div id="importieren_bs_import_ausfuehren_hinweis_text"></div>
