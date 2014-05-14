@@ -594,39 +594,6 @@ window.adb.initiiere_art = function(id) {
                                         }
                                     }
                                 });
-                                /*for (a=0, len=synonymeArt.Beziehungssammlungen.length; a<len; a++) {
-                                    if (bezNamen.indexOf(synonymeArt.Beziehungssammlungen[a].Name) === -1 && synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym" && synonymeArt.Beziehungssammlungen[a].Typ !== "taxonomisch") {
-                                        // diese Beziehungssammlung wird noch nicht dargestellt
-                                        // und sie ist nicht taxonomisch
-                                        BeziehungssammlungenVonSynonymen.push(synonymeArt.Beziehungssammlungen[a]);
-                                        // auch in bezNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-                                        bezNamen.push(synonymeArt.Beziehungssammlungen[a].Name);
-                                        // auch in Beziehungssammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-                                        Beziehungssammlungen.push(synonymeArt.Beziehungssammlungen[a]);
-                                    } else if (synonymeArt.Beziehungssammlungen[a]["Art der Beziehungen"] !== "synonym") {
-                                        // diese Beziehungssammlung wird schon dargestellt. Kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
-                                        var BsDerSynonymenArt = synonymeArt.Beziehungssammlungen[a];
-                                        for (var c=0; c<art.Beziehungssammlungen.length; c++) {
-                                            if (art.Beziehungssammlungen[c].Name === BsDerSynonymenArt.Name) {
-                                                var BsDerOriginalart = art.Beziehungssammlungen[c];
-                                                break;
-                                            }
-                                        }
-                                        if (BsDerSynonymenArt.Beziehungen && BsDerSynonymenArt.Beziehungen.length > 0) {
-                                            for (var b=0; b<BsDerSynonymenArt.Beziehungen.length; b++) {
-                                                // durch alle Beziehungen von BsDerSynonymenArt loopen und prüfen, ob sie in den Beziehungen vorkommen
-                                                if (_.contains(BsDerSynonymenArt.Beziehungen, BsDerSynonymenArt.Beziehungen[b])) {
-                                                    // diese Beziehung kommt schon vor und wird angezeigt > entfernen, um sie nicht nochmals anzuzeigen
-                                                    BsDerSynonymenArt.Beziehungen.splice(b);
-                                                }
-                                            }
-                                        }
-                                        if (BsDerSynonymenArt.Beziehungen.length > 0) {
-                                            // falls noch darzustellende Beziehungen verbleiben, die DS pushen
-                                            BeziehungssammlungenVonSynonymen.push(BsDerSynonymenArt);
-                                        }
-                                    }
-                                }*/
                             }
                         });
 						// BS von Synonymen darstellen
@@ -635,10 +602,10 @@ window.adb.initiiere_art = function(id) {
 							DatensammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(DatensammlungenVonSynonymen);
 							// Titel hinzufügen
 							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
-							for (x=0, len=DatensammlungenVonSynonymen.length; x<len; x++) {
-								// HTML für Datensammlung erstellen lassen und hinzufügen
-								htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, DatensammlungenVonSynonymen[x]);
-							}
+                            _.each(DatensammlungenVonSynonymen, function(datesammlung) {
+                                // HTML für Datensammlung erstellen lassen und hinzufügen
+                                htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datesammlung);
+                            });
 						}
 						// bez von Synonymen darstellen
 						if (BeziehungssammlungenVonSynonymen.length > 0) {
@@ -646,10 +613,10 @@ window.adb.initiiere_art = function(id) {
 							BeziehungssammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
 							// Titel hinzufügen
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
-							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
-								// HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-								htmlArt += window.adb.erstelleHtmlFürBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
-							}
+                            _.each(BeziehungssammlungenVonSynonymen, function(beziehungssammlung) {
+                                // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
+                                htmlArt += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "2");
+                            });
 						}
 						window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
 					}
@@ -3066,24 +3033,31 @@ window.adb.entferneDatensammlung = function() {
 		a,
 		batch,
 		batchGrösse;
-	for (x=0; x<window.adb.dsDatensätze.length; x++) {
-		// zuerst die id in guid übersetzen
-		if (window.adb.DsId === "guid") {
-			// die in der Tabelle mitgelieferte id ist die guid
-			guid = window.adb.dsDatensätze[x].GUID;
-		} else {
-			for (q = 0; q < window.adb.ZuordbareDatensätze.length; q++) {
-				// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-				if (window.adb.ZuordbareDatensätze[q].Id == window.adb.dsDatensätze[x][window.adb.DsFelderId]) {
-					// und die guid auslesen
-					guid = window.adb.ZuordbareDatensätze[q].Guid;
-					break;
-				}
-			}
-		}
-		// Einen Array der id's erstellen
-		guid_array.push(guid);
-	}
+    _.each(window.adb.dsDatensätze, function(datensatz) {
+        // zuerst die id in guid übersetzen
+        if (window.adb.DsId === "guid") {
+            // die in der Tabelle mitgelieferte id ist die guid
+            guid = datensatz.GUID;
+        } else {
+            console.log("getroffen");
+            // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+            // und die guid auslesen
+            guid = _.find(window.adb.ZuordbareDatensätze, function(datensatz) {
+                return datensatz.Id == datensatz[window.adb.DsFelderId];
+            }).Guid;
+            /* TODO: löschen, wenn obiger Code getestet ist
+            for (q = 0; q < window.adb.ZuordbareDatensätze.length; q++) {
+                // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
+                if (window.adb.ZuordbareDatensätze[q].Id == datensatz[window.adb.DsFelderId]) {
+                    // und die guid auslesen
+                    guid = window.adb.ZuordbareDatensätze[q].Guid;
+                    break;
+                }
+            }*/
+        }
+        // Einen Array der id's erstellen
+        guid_array.push(guid);
+    });
 	// alle docs gleichzeitig holen
 	// aber batchweise
 	batch = 150;
@@ -3115,17 +3089,25 @@ window.adb.entferneDatensammlung_2 = function(DsName, guidArray, a) {
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
 			success: function(data) {
 				var Objekt;
-				for (var f=0; f<data.rows.length; f++) {
-					Objekt = data.rows[f].doc;
-					window.adb.entferneDatensammlungAusObjekt(DsName, Objekt);
-				}
+                _.each(data.rows, function(data_row) {
+                    Objekt = data_row.doc;
+                    window.adb.entferneDatensammlungAusObjekt(DsName, Objekt);
+                });
 			}
 		});
 	}, a*40);
 };
 
 window.adb.entferneDatensammlungAusObjekt = function(DsName, Objekt) {
+    console.log("entferneDatensammlungAusObjekt");
 	if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
+        /* hat nicht funktioniert
+        var datensammlung = _.find(Objekt.Datensammlungen, function(datensammlung) {
+            return datensammlung.Name === DsName;
+        });
+        Objekt.Datensammlungen = _.without(Objekt.Datensammlungen, datensammlung);
+        $db = $.couch.db("artendb");
+        $db.saveDoc(Objekt);*/
 		for (var i=0; i<Objekt.Datensammlungen.length; i++) {
 			if (Objekt.Datensammlungen[i].Name === DsName) {
 				Objekt.Datensammlungen.splice(i,1);
