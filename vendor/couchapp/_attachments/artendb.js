@@ -111,7 +111,7 @@ window.adb.erstelleTree = function() {
 			}
 		}
 	})
-	.bind("loaded.jstree", function(event, data) {
+	.bind("loaded.jstree", function() {
 		jstree_erstellt.resolve();
 		$("#suchen"+window.adb.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
@@ -460,7 +460,7 @@ window.adb.initiiere_art = function(id) {
 				guidsVonSynonymen = [],
 				DatensammlungenVonSynonymen = [],
 				BeziehungssammlungenVonSynonymen = [],
-				ds, bez,
+				bez,
 				a, f, h, i, k, x, q,
 				dsNamen = [],
 				bezNamen = [];
@@ -2014,8 +2014,7 @@ window.adb.handleLrParentOptionenChange = function() {
 	// prüfen, ob oberster Node gewählt wurde
 	var parent_name = $(this).val(),
 		parent_id = this.id,
-		parent_row, 
-		parent = {}, 
+		parent = {},
 		object = {};
 	// zuerst eine id holen
 	object._id = $.couch.newUUID(1);
@@ -2575,7 +2574,6 @@ window.adb.importiereDatensammlung = function() {
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
-        prozent_importiert,
         $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$DsName.val()) {
@@ -2624,7 +2622,7 @@ window.adb.importiereDatensammlung = function() {
             // die Indexe
             $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
-                success: function(data) {
+                success: function() {
                     // melden, dass views aktualisiert wurden
                     rückmeldung_intro = "Die Daten wurden importiert.<br>";
                     rückmeldung_intro += "Die Indexe wurden neu aufgebaut.<br><br>";
@@ -4204,7 +4202,7 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 						$("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
 					}
 				},
-				error: function(data) {
+				error: function() {
 					$("#meldung_individuell_label").html("Fehler");
 					$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
 					$("#meldung_individuell_schliessen").html("schliessen");
@@ -4373,7 +4371,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object, aktualisi
 	object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
-		success: function(doc) {
+		success: function() {
 			$.when(window.adb.erstelleBaum()).then(function() {
 				window.adb.oeffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
@@ -4448,19 +4446,18 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 		objekt.Taxonomie.Daten.Taxonomie = einheit_ist_taxonomiename;
 	}
 	$db.saveDoc(objekt, {
-		success: function(data) {
-			var doc,
-				i;
+		success: function() {
+			var doc;
 			// kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-			for (i=0; i<lr.rows.length; i++) {
-				doc = lr.rows[i].doc;
-				if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
-					// das ist ein child
-					// auch aktualisieren
-					// lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-					window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
-				}
-			}
+            _.each(lr.rows, function(lr_row) {
+                doc = lr_row.doc;
+                if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
+                    // das ist ein child
+                    // auch aktualisieren
+                    // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
+                    window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
+                }
+            });
 		}
 	});
 };
