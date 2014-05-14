@@ -460,8 +460,7 @@ window.adb.initiiere_art = function(id) {
 				guidsVonSynonymen = [],
 				DatensammlungenVonSynonymen = [],
 				BeziehungssammlungenVonSynonymen = [],
-				bez,
-				a, f, h, i, k, x, q,
+				a, f, h, i, k, x,
 				dsNamen = [],
 				bezNamen = [];
 			// panel beginnen
@@ -472,37 +471,37 @@ window.adb.initiiere_art = function(id) {
 			// Datensammlungen muss nicht gepusht werden
 			// aber Beziehungssammlungen aufteilen
 			if (art.Beziehungssammlungen.length > 0) {
-				for (i=0, len=art.Beziehungssammlungen.length; i<len; i++) {
-					if (typeof art.Beziehungssammlungen[i].Typ === "undefined") {
-						Beziehungssammlungen.push(art.Beziehungssammlungen[i]);
-						// bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
-						bezNamen.push(art.Beziehungssammlungen[i].Name);
-					} else if (art.Beziehungssammlungen[i].Typ === "taxonomisch") {
-						taxonomischeBeziehungssammlungen.push(art.Beziehungssammlungen[i]);
-						// bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
-						bezNamen.push(art.Beziehungssammlungen[i].Name);
-					}
-				}
+                _.each(art.Beziehungssammlungen, function(beziehungssammlung) {
+                    if (typeof beziehungssammlung.Typ === "undefined") {
+                        Beziehungssammlungen.push(beziehungssammlung);
+                        // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
+                        bezNamen.push(beziehungssammlung.Name);
+                    } else if (beziehungssammlung.Typ === "taxonomisch") {
+                        taxonomischeBeziehungssammlungen.push(beziehungssammlung);
+                        // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
+                        bezNamen.push(beziehungssammlung.Name);
+                    }
+                });
 			}
 			// taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
 			if (taxonomischeBeziehungssammlungen.length > 0) {
 				// Titel hinzufügen, falls Datensammlungen existieren
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
-				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
-					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += window.adb.erstelleHtmlFürBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
-					if (taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[q].Beziehungen) {
-						for (h in taxonomischeBeziehungssammlungen[q].Beziehungen) {
-							if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
-								for (k in taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
-									if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner[k].GUID) {
-										guidsVonSynonymen.push(taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner[k].GUID);
-									}
-								}
-							}
-						}
-					}
-				}
+                _.each(taxonomischeBeziehungssammlungen, function(beziehungssammlung) {
+                    // HTML für Datensammlung erstellen lassen und hinzufügen
+                    htmlArt += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
+                    if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
+                        _.each(beziehungssammlung.Beziehungen, function(beziehung) {
+                            if (beziehung.Beziehungspartner) {
+                                _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
+                                    if (beziehungspartner.GUID) {
+                                        guidsVonSynonymen.push(beziehungspartner.GUID);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
 			}
 			// Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (Datensammlungen.length > 0) {
@@ -2831,7 +2830,7 @@ window.adb.importiereBeziehungssammlung = function() {
             // Indices aktualisieren
             $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
-                success: function(data) {
+                success: function() {
                     // melden, dass Indexe aktualisiert wurden
                     rückmeldung_intro = "Die Daten wurden importiert.<br>";
                     rückmeldung_intro += "Die Indexe wurden neu aufgebaut.<br><br>";
@@ -4346,7 +4345,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr = function(LR, object, aktualisier
 	}
 };
 
-window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object, aktualisiereHierarchiefeld) {
+window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	var object_array,
 		hierarchie = [],
 		parent_object;
@@ -4395,7 +4394,6 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object, aktualisi
 // wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
-	var hierarchie = [];
 	if (lr) {
 		window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 	} else {
