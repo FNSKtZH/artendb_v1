@@ -120,10 +120,10 @@ window.adb.erstelleTree = function() {
 		window.adb.setzeTreehoehe();
 		window.adb.initiiereSuchfeld();
 	})
-	.bind("after_open.jstree", function(e, data) {
+	.bind("after_open.jstree", function() {
 		window.adb.setzeTreehoehe();
 	})
-	.bind("after_close.jstree", function(e, data) {
+	.bind("after_close.jstree", function() {
 		window.adb.setzeTreehoehe();
 	});
 	return jstree_erstellt.promise();
@@ -490,7 +490,7 @@ window.adb.initiiere_art = function(id) {
 				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
 				for (q=0, len=taxonomischeBeziehungssammlungen.length; q<len; q++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
+					htmlArt += window.adb.erstelleHtmlFürBeziehung(art, taxonomischeBeziehungssammlungen[q], "");
 					if (taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] && taxonomischeBeziehungssammlungen[q]["Art der Beziehungen"] === "synonym" && taxonomischeBeziehungssammlungen[q].Beziehungen) {
 						for (h in taxonomischeBeziehungssammlungen[q].Beziehungen) {
 							if (taxonomischeBeziehungssammlungen[q].Beziehungen[h].Beziehungspartner) {
@@ -525,7 +525,7 @@ window.adb.initiiere_art = function(id) {
 				htmlArt += "<h4>Beziehungen:</h4>";
 				for (q=0; q<Beziehungssammlungen.length; q++) {
 					// HTML für Datensammlung erstellen lassen und hinzufügen
-					htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, Beziehungssammlungen[q], "");
+					htmlArt += window.adb.erstelleHtmlFürBeziehung(art, Beziehungssammlungen[q], "");
 				}
 			}
 			// Beziehungssammlungen von synonymen Arten
@@ -608,7 +608,7 @@ window.adb.initiiere_art = function(id) {
 							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
 							for (x=0, len=BeziehungssammlungenVonSynonymen.length; x<len; x++) {
 								// HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-								htmlArt += window.adb.erstelleHtmlFuerBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
+								htmlArt += window.adb.erstelleHtmlFürBeziehung(art, BeziehungssammlungenVonSynonymen[x], "2");
 							}
 						}
 						window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
@@ -647,11 +647,11 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 // erstellt die HTML für eine Beziehung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
-window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
+window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
 	var html,
 		Name,
-		art_i_name;
-	art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name) + altName;
+		art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name) + altName;
+
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
@@ -662,6 +662,7 @@ window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 	html += '</a></h4></div>';
 	// body beginnen
 	html += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse"><div class="panel-body">';
+
 	// Datensammlung beschreiben
 	html += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
@@ -690,35 +691,35 @@ window.adb.erstelleHtmlFuerBeziehung = function(art, art_i, altName) {
 	art_i.Beziehungen = window.adb.sortiereBeziehungenNachName(art_i.Beziehungen);
 
 	// jetzt für alle Beziehungen die Felder hinzufügen
-	for (var i=0; i<art_i.Beziehungen.length; i++) {
-		if (art_i.Beziehungen[i].Beziehungspartner && art_i.Beziehungen[i].Beziehungspartner.length > 0) {
-			for (var y in art_i.Beziehungen[i].Beziehungspartner) {
-				//if (art_i.Beziehungen[i].Beziehungspartner[y].Gruppe === "Lebensräume") {
-				if (art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie) {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Taxonomie + " > " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
-				} else {
-					Name = art_i.Beziehungen[i].Beziehungspartner[y].Gruppe + ": " + art_i.Beziehungen[i].Beziehungspartner[y].Name;
-				}
-				// Partner darstellen
-				if (art_i.Beziehungen[i].Beziehungspartner[y].Rolle) {
-					// Feld soll mit der Rolle beschriftet werden
-					html += window.adb.generiereHtmlFuerObjektlink(art_i.Beziehungen[i].Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
-				} else {
-					html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + art_i.Beziehungen[i].Beziehungspartner[y].GUID);
-				}
-			}
-		}
-		// Die Felder anzeigen
-		for (var x in art_i.Beziehungen[i]) {
-			if (x !== "Beziehungspartner") {
-				html += window.adb.erstelleHtmlFuerFeld(x, art_i.Beziehungen[i][x], "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
-			}
-		}
-		// Am Schluss eine Linie, nicht aber bei der letzen Beziehung
-		if (i < (art_i.Beziehungen.length-1)) {
-			html += "<hr>";
-		}
-	}
+    _.each(art_i.Beziehungen, function(beziehung, index) {
+        if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
+            for (var y in beziehung.Beziehungspartner) {
+                //if (beziehung.Beziehungspartner[y].Gruppe === "Lebensräume") {
+                if (beziehung.Beziehungspartner[y].Taxonomie) {
+                    Name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Taxonomie + " > " + beziehung.Beziehungspartner[y].Name;
+                } else {
+                    Name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Name;
+                }
+                // Partner darstellen
+                if (beziehung.Beziehungspartner[y].Rolle) {
+                    // Feld soll mit der Rolle beschriftet werden
+                    html += window.adb.generiereHtmlFuerObjektlink(beziehung.Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                } else {
+                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                }
+            }
+        }
+        // Die Felder anzeigen
+        _.each(beziehung, function(feldwert, feldname) {
+            if (feldname !== "Beziehungspartner") {
+                html += window.adb.erstelleHtmlFuerFeld(feldname, feldwert, "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
+            }
+        });
+        // Am Schluss eine Linie, nicht aber bei der letzten Beziehung
+        if (index < (art_i.Beziehungen.length-1)) {
+            html += "<hr>";
+        }
+    });
 	// body und Accordion-Gruppe abschliessen
 	html += '</div></div></div>';
 	return html;
@@ -1951,7 +1952,7 @@ window.adb.handleFeldWaehlenAlleVonDs = function() {
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function() {
-	window.adb.erstelleListeFuerFeldwahl();
+	window.adb.erstelleListeFürFeldwahl();
 	// Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").css("display", "none");
 };
@@ -2153,7 +2154,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
             }
         });
 	if (gruppeIstGewählt) {
-		window.adb.erstelleListeFuerFeldwahl();
+		window.adb.erstelleListeFürFeldwahl();
 	}
 };
 
@@ -3502,7 +3503,7 @@ window.adb.erstelleExportString = function(exportobjekte) {
 // baut im Formular "export" die Liste aller Eigenschaften auf
 // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 // bekommt den Namen der Gruppe
-window.adb.erstelleListeFuerFeldwahl = function() {
+window.adb.erstelleListeFürFeldwahl = function() {
 	var export_gruppen = [],
 		gruppen = [],
         i,
@@ -3537,7 +3538,7 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 					export_gruppen.splice(0,1);
 					if (export_gruppen.length === 0) {
 						// alle Gruppen sind verarbeitet
-						window.adb.erstelleListeFuerFeldwahl_2(export_felder_arrays);
+						window.adb.erstelleListeFürFeldwahl_2(export_felder_arrays);
 					}
 				}
 			});
@@ -3551,22 +3552,23 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 	}
 };
 
-window.adb.erstelleListeFuerFeldwahl_2 = function(export_felder_arrays) {
-	var i,
-		FelderObjekt = {},
-		x,
+window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
+	var FelderObjekt = {},
 		hinweisTaxonomien,
         Taxonomien,
         Datensammlungen,
         Beziehungssammlungen;
+
 	// in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
 	// sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
 	// Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
 	// Mehrfacheinträge sollen entfernt werden
+
 	// dazu muss zuerst die Gruppe entfernt werden
-	for (var i=0; i<export_felder_arrays.length; i++) {
-		export_felder_arrays[i].key.splice(0,1);
-	}
+    _.each(export_felder_arrays, function(export_felder) {
+        export_felder.key.splice(0,1);
+    });
+
 	// jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
 	export_felder_arrays = _.union(export_felder_arrays);
 	// jetzt den Array von Objekten nach key sortieren
@@ -3586,19 +3588,22 @@ window.adb.erstelleListeFuerFeldwahl_2 = function(export_felder_arrays) {
 	Taxonomien = [];
 	Datensammlungen = [];
 	Beziehungssammlungen = [];
-	for (x in FelderObjekt) {
-		if (typeof FelderObjekt[x] === "object" && FelderObjekt[x].Typ) {
-			// das ist Datensammlung oder Taxonomie
-			if (FelderObjekt[x].Typ === "Datensammlung") {
-				Datensammlungen.push(FelderObjekt[x]);
-			} else if (FelderObjekt[x].Typ === "Taxonomie") {
-				Taxonomien.push(FelderObjekt[x]);
-			} else if (FelderObjekt[x].Typ === "Beziehung") {
-				Beziehungssammlungen.push(FelderObjekt[x]);
-			}
-		}
-	}
+
+    _.each(FelderObjekt, function(ds) {
+        if (typeof ds === "object" && ds.Typ) {
+            // das ist Datensammlung oder Taxonomie
+            if (ds.Typ === "Datensammlung") {
+                Datensammlungen.push(ds);
+            } else if (ds.Typ === "Taxonomie") {
+                Taxonomien.push(ds);
+            } else if (ds.Typ === "Beziehung") {
+                Beziehungssammlungen.push(ds);
+            }
+        }
+    });
+
 	window.adb.erstelleExportfelder(Taxonomien, Datensammlungen, Beziehungssammlungen);
+
 	// kontrollieren, ob Taxonomien zusammengefasst werden
 	if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
 		hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
@@ -4638,15 +4643,3 @@ var BrowserDetect =
 * //apache.org/licenses/LICENSE-2.0.txt
 */
 !function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery);
-
-
-/**
- * JavaScript format string function
- * 
- */
-String.prototype.format = function() {
-	var args = arguments;
-	return this.replace(/{(\d+)}/g, function(match, number) {
-		return typeof args[number] != 'undefined' ? args[number] : '{' + number + '}';
-	});
-};
