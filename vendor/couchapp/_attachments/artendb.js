@@ -1103,7 +1103,7 @@ window.adb.zeigeFormular = function(Formularname) {
 			// Gruppe Schaltfläche deaktivieren
 			$('#Gruppe').find('.active').removeClass('active');
 		}
-		$('form').each(function() {
+		$form.each(function() {
 			var that = $(this);
 			if (that.attr("id") === Formularname) {
 				$("#forms").show();
@@ -2136,15 +2136,12 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that) {
-	var hinweisNeu;
 	if ($(that).hasClass("active")) {
 		window.adb.fasseTaxonomienZusammen = false;
 		$(that).html("Alle Taxonomien zusammenfassen");
-		hinweisNeu = "<br>Alle Taxonomien sind zusammengefasst";
 	} else {
 		window.adb.fasseTaxonomienZusammen = true;
 		$(that).html("Taxonomien einzeln behandeln");
-		hinweisNeu = "<br>Alle Taxonomien werden einzeln dargestellt";
 	}
 	// Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
 	var gruppeIstGewählt = false;
@@ -2577,7 +2574,8 @@ window.adb.importiereDatensammlung = function() {
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
-        prozent_importiert;
+        prozent_importiert,
+        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$DsName.val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2605,7 +2603,7 @@ window.adb.importiereDatensammlung = function() {
         $("#DsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
         if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
             // Rückmeldung in Feld anzeigen:
-            $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+            $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
         }
     });*/
 
@@ -2619,7 +2617,7 @@ window.adb.importiereDatensammlung = function() {
         $("#DsImportierenProgressbarText").html(prozent + "%");
         rückmeldung_intro = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
         $('html, body').animate({
-            scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
         }, 2000);
         if (anzDsImportiert === anzDs) {
             // die Indexe
@@ -2632,7 +2630,7 @@ window.adb.importiereDatensammlung = function() {
                     rückmeldung_intro += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
                     $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro + rückmeldung_links);
                     $('html, body').animate({
-                        scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
                     }, 2000);
                 }
             });
@@ -2716,16 +2714,16 @@ window.adb.importiereDatensammlung = function() {
     // Für 10 Kontrollbeispiele die Links aufbauen
     var erste_10_ids = _.pluck(_.first(window.adb.dsDatensätze, 10), window.adb.DsFelderId);
     _.each(erste_10_ids, function(id, index) {
-        nr = index ++;
+        nr = index + 1;
         rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
     });
 
     // Rückmeldung in Feld anzeigen
     rückmeldung_intro = "Die Daten werden importiert...";
 	$("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro);
-    $("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
+    $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
     $('html, body').animate({
-        scrollTop: $("#importieren_ds_import_ausfuehren_hinweis").offset().top
+        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
     }, 2000);
 	DsImportiert.resolve();
 };
@@ -2806,7 +2804,8 @@ window.adb.importiereBeziehungssammlung = function() {
         $BsBeschreibung = $("#BsBeschreibung"),
         $BsDatenstand = $("#BsDatenstand"),
         $BsLink = $("#BsLink"),
-        $BsUrsprungsBs = $("#BsUrsprungsBs");
+        $BsUrsprungsBs = $("#BsUrsprungsBs"),
+        $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis");
 	// prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
 	if (!$BsName.val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2827,7 +2826,7 @@ window.adb.importiereBeziehungssammlung = function() {
         $("#BsImportierenProgressbarText").html(prozent + "%");
         rückmeldung_intro = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
         $('html, body').animate({
-            scrollTop: $("#importieren_bs_import_ausfuehren_hinweis").offset().top
+            scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
         }, 2000);
         if (anzBsImportiert === anzBs) {
             // Indices aktualisieren
@@ -2840,7 +2839,7 @@ window.adb.importiereBeziehungssammlung = function() {
                     rückmeldung_intro += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
                     $("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung_intro + rückmeldung_links);
                     $('html, body').animate({
-                        scrollTop: $("#importieren_bs_import_ausfuehren_hinweis").offset().top
+                        scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
                     }, 2000);
                 }
             });
@@ -2958,9 +2957,9 @@ window.adb.importiereBeziehungssammlung = function() {
 				// Rückmeldung in Feld anzeigen:
                 rückmeldung_intro = "Die Daten werden importiert...";
 				$("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung_intro);
-                $("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
+                $importieren_bs_import_ausfuehren_hinweis.css('display', 'block');
                 $('html, body').animate({
-                    scrollTop: $("#importieren_bs_import_ausfuehren_hinweis").offset().top
+                    scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
                 }, 2000);
 				BsImportiert.resolve();
 			}, 1000);
@@ -3506,15 +3505,16 @@ window.adb.erstelleExportString = function(exportobjekte) {
 window.adb.erstelleListeFuerFeldwahl = function() {
 	var export_gruppen = [],
 		gruppen = [],
-		i;
+        i,
+        $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text");
 	// Beschäftigung melden
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text")
+	$exportieren_objekte_waehlen_gruppen_hinweis_text
         .alert()
         .css("display", "block")
 	    .html("Eigenschaften werden ermittelt...");
 	// scrollen, damit Hinweis sicher ganz sichtbar ist
 	$('html, body').animate({
-		scrollTop: $("#exportieren_objekte_waehlen_gruppen_hinweis_text").offset().top
+		scrollTop: $exportieren_objekte_waehlen_gruppen_hinweis_text.offset().top
 	}, 2000);
 	// gewählte Gruppen ermitteln
 	// globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
@@ -3544,7 +3544,7 @@ window.adb.erstelleListeFuerFeldwahl = function() {
 		}
 	} else {
 		// letzte Rückmeldung anpassen
-		$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html("keine Gruppe gewählt");
+		$exportieren_objekte_waehlen_gruppen_hinweis_text.html("keine Gruppe gewählt");
 		// Felder entfernen
 		$("#exportieren_felder_waehlen_felderliste").html("");
 		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
@@ -3606,8 +3606,10 @@ window.adb.erstelleListeFuerFeldwahl_2 = function(export_felder_arrays) {
 		hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
 	}
 	// Ergebnis rückmelden
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").alert().css("display", "block");
-	$("#exportieren_objekte_waehlen_gruppen_hinweis_text").html(hinweisTaxonomien);
+	$("#exportieren_objekte_waehlen_gruppen_hinweis_text")
+        .alert()
+        .css("display", "block")
+        .html(hinweisTaxonomien);
 };
 
 // Nimmt ein FelderObjekt entgegen. Das ist entweder leer (erste Gruppe) oder enthält schon Felder (ab der zweiten Gruppe)
@@ -3679,7 +3681,8 @@ window.adb.filtereFuerExport = function(direkt) {
 		gruppen = "",
 		gewaehlte_felder = [],
 		gewaehlte_felder_objekt = {},
-		anz_ds_gewaehlt = 0;
+		anz_ds_gewaehlt = 0,
+        $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text");
 
 	// kontrollieren, ob eine Gruppe gewählt wurde
 	if (window.adb.fuerExportGewaehlteGruppen().length === 0) {
@@ -3689,13 +3692,15 @@ window.adb.filtereFuerExport = function(direkt) {
 
 	// Beschäftigung melden
 	if (!direkt) {
-		$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
-		$("#exportieren_exportieren_hinweis_text").html("Die Daten werden vorbereitet...");
+		$exportieren_exportieren_hinweis_text
+            .alert()
+            .css("display", "block")
+            .html("Die Daten werden vorbereitet...");
 	}
 
 	// zum Hinweistext scrollen
 	$('html, body').animate({
-		scrollTop: $("#exportieren_exportieren_hinweis_text").offset().top
+		scrollTop: $exportieren_exportieren_hinweis_text.offset().top
 	}, 2000);
 	// gewählte Gruppen ermitteln
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
@@ -3709,7 +3714,7 @@ window.adb.filtereFuerExport = function(direkt) {
 	});
 	// durch alle Filterfelder loopen
 	// wenn ein Feld einen Wert enthält, danach filtern
-	$("#exportieren_objekte_waehlen_ds_collapse .export_feld_filtern").each(function() {
+	$("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {
 		if (this.value || this.value === 0) {
 			// Filterobjekt zurücksetzen
 			filterObjekt = {};
@@ -3753,7 +3758,7 @@ window.adb.filtereFuerExport = function(direkt) {
 	// Wenn keine Felder gewählt sind: Melden und aufhören
 	if (gewaehlte_felder_objekt.felder.length === 0) {
 		// Beschäftigungsmeldung verstecken
-		$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
+		$exportieren_exportieren_hinweis_text.alert().css("display", "none");
 		$("#exportieren_exportieren_error_text")
             .alert()
             .css("display", "block")
@@ -3842,9 +3847,11 @@ window.adb.uebergebeFilterFuerExportMitVorschau = function(gruppen, gruppen_arra
 				if (anz_gruppen_abgefragt === gruppen_array.length) {
 					// alle Gruppen wurden abgefragt, jetzt kann es weitergehen
 					// Ergebnis rückmelden
-					$("#exportieren_exportieren_hinweis_text").alert().css("display", "block");
-					$("#exportieren_exportieren_hinweis_text").html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
-					window.adb.baueTabelleFuerExportAuf();
+					$("#exportieren_exportieren_hinweis_text")
+                        .alert()
+                        .css("display", "block")
+                        .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
+					window.adb.baueTabelleFürExportAuf();
 				}
 			},
 			error: function() {
@@ -3854,10 +3861,7 @@ window.adb.uebergebeFilterFuerExportMitVorschau = function(gruppen, gruppen_arra
 	}
 };
 
-window.adb.baueTabelleFuerExportAuf = function() {
-	// Beschäftigung melden
-	$("#exportieren_exportieren_hinweis_text").append("<br>Die Vorschau wird erstellt...");
-
+window.adb.baueTabelleFürExportAuf = function() {
 	if (window.adb.exportieren_objekte.length > 0) {
 		window.adb.erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle");
 		$(".exportieren_exportieren_exportieren").show();
@@ -3869,7 +3873,9 @@ window.adb.baueTabelleFuerExportAuf = function() {
 		$('#meldung_keine_exportdaten').modal();
 	}
 	// Beschäftigungsmeldung verstecken
-	$("#exportieren_exportieren_hinweis_text").alert().css("display", "none");
+	$("#exportieren_exportieren_hinweis_text")
+        .alert()
+        .css("display", "none");
 };
 
 window.adb.fuerExportGewaehlteGruppen = function() {
@@ -4099,9 +4105,10 @@ window.adb.sortKeysOfObject = function(o) {
 };
 
 window.adb.exportZuruecksetzen = function() {
+    var $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse");
 	// Export ausblenden, falls sie eingeblendet war
-	if ($("#exportieren_exportieren_collapse").css("display") !== "none") {
-		$("#exportieren_exportieren_collapse").collapse('hide');
+	if ($exportieren_exportieren_collapse.css("display") !== "none") {
+		$exportieren_exportieren_collapse.collapse('hide');
 	}
 	$("#exportieren_exportieren_tabelle").hide();
 	$(".exportieren_exportieren_exportieren").hide();
@@ -4113,15 +4120,17 @@ window.adb.oeffneGruppe = function(Gruppe) {
 	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
 	$("#Gruppe_label").html("Gruppe:");
-	$(".suchen").hide();
+	$(".suchen")
+        .hide()
+        .val("");
 	$("#forms").hide();
-	$(".suchen").val("");
 	var treeMitteilung = "hole Daten...";
 	if (window.adb.Gruppe === "Macromycetes") {
 		treeMitteilung = "hole Daten (das dauert bei Pilzen länger...)";
 	}
-	$("#treeMitteilung").html(treeMitteilung);
-	$("#treeMitteilung").show();
+	$("#treeMitteilung")
+        .html(treeMitteilung)
+        .show();
 	window.adb.erstelleBaum();
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
@@ -4641,11 +4650,3 @@ String.prototype.format = function() {
 		return typeof args[number] != 'undefined' ? args[number] : '{' + number + '}';
 	});
 };
-
-function wirTestenDasTesten(aha) {
-	if (aha) {
-		return "in";
-	} else {
-		return "out";
-	}
-}
