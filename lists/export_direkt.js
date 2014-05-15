@@ -424,7 +424,7 @@ function(head, req) {
 													var Feldname = filterkriterien[l].Feldname;
 													var Filterwert = _a.convertToCorrectType(filterkriterien[l].Filterwert);
 													var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
-													if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[w].Feldname) {
+													if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
 														// Beziehungspartner sind Objekte und müssen separat gefiltert werden
 														if (Feldname === "Beziehungspartner") {
 															var bezPartner2 = _a.filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);

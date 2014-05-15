@@ -23,9 +23,10 @@ function(head, req) {
 		Beziehungssammlung,
 		Beziehung,
 		dsExistiertSchon,
-		dsExistiert;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+		dsExistiert,
+        _ = require("lists/lib/underscore"),
+        _a = require("lists/lib/artendb_listfunctions");
+
 	// specify that we're providing a JSON response
 	provides('json', function() {
 		// übergebene Variabeln extrahieren

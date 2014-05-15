@@ -33,55 +33,56 @@ function(head, req) {
 		Beziehungssammlung,
 		Beziehung,
 		dsExistiertSchon,
-		dsExistiert;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+		dsExistiert,
+        _ = require("lists/lib/underscore"),
+        _a = require("lists/lib/artendb_listfunctions");
+
 	// specify that we're providing a JSON response
 	provides('json', function() {
 		// übergebene Variabeln extrahieren
-		for (var i in req.query) {
-			if (i === "fasseTaxonomienZusammen") {
-				// true oder false wird als String übergeben > umwandeln
-				fasseTaxonomienZusammen = (req.query[i] === 'true');
-			}
-			if (i === "filter") {
-				filterkriterienObjekt = JSON.parse(req.query[i]);
-				filterkriterien = filterkriterienObjekt.filterkriterien;
-				// jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
-				// damit das später nicht dauern wiederholt werden muss
-				for (var x=0; x<filterkriterien.length; x++) {
-					// die id darf nicht in Kleinschrift verwandelt werden
-					if (filterkriterien[x].Feldname !== "GUID") {
-						// true wurde offenbar irgendwie umgewandelt
-						// jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
-						// leider kann true oder false nicht wie gewollt von _a.convertToCorrectType zurückgegeben werden
-						if (filterkriterien[x].Filterwert === "true") {
-							filterkriterien[x].Filterwert = true;
-						} else if (filterkriterien[x].Filterwert === "false") {
-							filterkriterien[x].Filterwert = false;
-						} else {
-							filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
-						}
-					}
-				}
-			}
-			if (i === "felder") {
-				felderObjekt = JSON.parse(req.query[i]);
-				felder = felderObjekt.felder;
-				//send(JSON.stringify(felder)+ "   /   ");
-			}
-			if (i === "gruppen") {
-				gruppen = req.query[i].split(",");
-			}
-			if (i === "nur_ds") {
-				// true oder false wird als String übergeben > umwandeln
-				nur_ds = (req.query[i] === 'true');
-			}
-			if (i === "bez_in_zeilen") {
-				// true oder false wird als String übergeben > umwandeln
-				bez_in_zeilen = (req.query[i] === 'true');
-			}
-		}
+        _.each(req.query, function(value, key) {
+            if (key === "fasseTaxonomienZusammen") {
+                // true oder false wird als String übergeben > umwandeln
+                fasseTaxonomienZusammen = (value === 'true');
+            }
+            if (key === "filter") {
+                filterkriterienObjekt = JSON.parse(value);
+                filterkriterien = filterkriterienObjekt.filterkriterien;
+                // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
+                // damit das später nicht dauern wiederholt werden muss
+                for (var x=0; x<filterkriterien.length; x++) {
+                    // die id darf nicht in Kleinschrift verwandelt werden
+                    if (filterkriterien[x].Feldname !== "GUID") {
+                        // true wurde offenbar irgendwie umgewandelt
+                        // jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
+                        // leider kann true oder false nicht wie gewollt von _a.convertToCorrectType zurückgegeben werden
+                        if (filterkriterien[x].Filterwert === "true") {
+                            filterkriterien[x].Filterwert = true;
+                        } else if (filterkriterien[x].Filterwert === "false") {
+                            filterkriterien[x].Filterwert = false;
+                        } else {
+                            filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
+                        }
+                    }
+                }
+            }
+            if (key === "felder") {
+                felderObjekt = JSON.parse(value);
+                felder = felderObjekt.felder;
+                //send(JSON.stringify(felder)+ "   /   ");
+            }
+            if (key === "gruppen") {
+                gruppen = value.split(",");
+            }
+            if (key === "nur_ds") {
+                // true oder false wird als String übergeben > umwandeln
+                nur_ds = (value === 'true');
+            }
+            if (key === "bez_in_zeilen") {
+                // true oder false wird als String übergeben > umwandeln
+                bez_in_zeilen = (value === 'true');
+            }
+        });
 
 		// arrays für sammlungen aus synonymen gründen
 		beziehungssammlungen_aus_synonymen = [];
@@ -469,7 +470,7 @@ function(head, req) {
 														var Feldname = filterkriterien[l].Feldname;
 														var Filterwert = _a.convertToCorrectType(filterkriterien[l].Filterwert);
 														var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
-														if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === felder[w].Feldname) {
+														if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
 															// Beziehungspartner sind Objekte und müssen separat gefiltert werden
 															if (Feldname === "Beziehungspartner") {
 																bezPartner = _a.filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
