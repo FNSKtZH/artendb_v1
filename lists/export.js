@@ -39,21 +39,21 @@ function(head, req) {
                 filterkriterien = filterkriterienObjekt.filterkriterien;
                 // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
                 // damit das später nicht dauern wiederholt werden muss
-                for (var x=0; x<filterkriterien.length; x++) {
+                _.each(filterkriterien, function(filterkriterium) {
                     // die id darf nicht in Kleinschrift verwandelt werden
-                    if (filterkriterien[x].Feldname !== "GUID") {
+                    if (filterkriterium.Feldname !== "GUID") {
                         // true wurde offenbar irgendwie umgewandelt
                         // jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
                         // leider kann true oder false nicht wie gewollt von _a.convertToCorrectType zurückgegeben werden
-                        if (filterkriterien[x].Filterwert === "true") {
-                            filterkriterien[x].Filterwert = true;
-                        } else if (filterkriterien[x].Filterwert === "false") {
-                            filterkriterien[x].Filterwert = false;
+                        if (filterkriterium.Filterwert === "true") {
+                            filterkriterium.Filterwert = true;
+                        } else if (filterkriterium.Filterwert === "false") {
+                            filterkriterium.Filterwert = false;
                         } else {
-                            filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
+                            filterkriterium.Filterwert = _a.convertToCorrectType(filterkriterium.Filterwert);
                         }
                     }
-                }
+                });
             }
             if (key === "felder") {
                 felderObjekt = JSON.parse(value);
@@ -248,14 +248,10 @@ function(head, req) {
                         });
                         // Beziehung mit dem gesuchten Feld Feldname_z suchen
                         if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
-                            var bez_mit_feldname = _.find(beziehungssammlung.Beziehungen, function(beziehung) {
+                            var bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function(beziehung) {
                                 return !!beziehung[Feldname_z];
                             });
                             objektHinzufügen = !!bez_mit_feldname;
-                            /*if (bez_mit_feldname) {
-                                // ja, es gibt eine Beziehung mit diesem Feld > Objekt exportieren
-                                objektHinzufügen = true;
-                            }*/
                         }
                     } else if (DsTyp_z === "Datensammlung") {
                         // das ist ein Feld aus einer Datensammlung
@@ -265,10 +261,6 @@ function(head, req) {
                         });
                         // wenn das Feld vorkommt, exportieren
                         objektHinzufügen = !!ds_mit_feld;
-                        /*if (ds_mit_feld) {
-                            // ja, so ein Feld kommt vor > Objekt exportieren
-                            objektHinzufügen = true;
-                        }*/
                     }
                 });
 			}
@@ -294,9 +286,6 @@ function(head, req) {
                                 return beziehung[Feldname_z] || beziehung[Feldname_z] === 0;
                             });
                             hinzufügen = !!bez_mit_feldname;
-                            /*if (bez_mit_feldname) {
-                                hinzufügen = true;
-                            }*/
                         }
                     } else if (DsTyp_z === "Datensammlung") {
                         // das ist ein Feld aus einer Datensammlung
@@ -447,35 +436,35 @@ function(head, req) {
                                             // pro Treffer eine neue Zeile erstellen
                                             schonKopiert = false;
                                             // durch Beziehungen loopen
-                                            for (var s in exportBeziehungen) {
+                                            _.each(exportBeziehungen, function(exportBeziehung) {
                                                 // exportObjekt kopieren
                                                 var objektKopiert = _.clone(exportObjekt);
                                                 // durch die Felder der Beziehung loopen
-                                                for (var y in exportBeziehungen[s]) {
-                                                    if (y === "Beziehungspartner") {
+                                                _.each(exportBeziehung, function(exBez_feldwert, exBez_feldname) {
+                                                    if (exBez_feldname === "Beziehungspartner") {
                                                         // zuerst die Beziehungspartner in JSON hinzufügen
-                                                        if (!objektKopiert[feld.DsName + ": " + y]) {
-                                                            objektKopiert[feld.DsName + ": " + y] = [];
+                                                        if (!objektKopiert[feld.DsName + ": " + exBez_feldname]) {
+                                                            objektKopiert[feld.DsName + ": " + exBez_feldname] = [];
                                                         }
-                                                        objektKopiert[feld.DsName + ": " + y].push(exportBeziehungen[s][y]);
+                                                        objektKopiert[feld.DsName + ": " + exBez_feldname].push(exBez_feldwert);
                                                         // Reines GUID-Feld ergänzen
                                                         if (!objektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                                            objektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungen[s][y][0].GUID;
+                                                            objektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = exBez_feldwert[0].GUID;
                                                         } else {
-                                                            objektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungen[s][y][0].GUID;
+                                                            objektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + exBez_feldwert[0].GUID;
                                                         }
                                                     } else {
                                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                                        if (!objektKopiert[feld.DsName + ": " + y]) {
-                                                            objektKopiert[feld.DsName + ": " + y] = exportBeziehungen[s][y];
+                                                        if (!objektKopiert[feld.DsName + ": " + exBez_feldname]) {
+                                                            objektKopiert[feld.DsName + ": " + exBez_feldname] = exBez_feldwert;
                                                         } else {
-                                                            objektKopiert[feld.DsName + ": " + y] += ", " + exportBeziehungen[s][y];
+                                                            objektKopiert[feld.DsName + ": " + exBez_feldname] += ", " + exBez_feldwert;
                                                         }
                                                     }
-                                                }
+                                                });
                                                 exportObjekte.push(objektKopiert);
                                                 schonKopiert = true;
-                                            }
+                                            });
                                         } else {
                                             // jeden Treffer kommagetrennt in dasselbe Feld einfügen
                                             // durch Beziehungen loopen
