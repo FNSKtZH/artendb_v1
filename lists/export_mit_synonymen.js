@@ -95,44 +95,40 @@ function(head, req) {
 				if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
 					var ds_aus_syn_namen = [];
 					if (datensammlungen_aus_synonymen.length > 0) {
-						for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-							if (datensammlungen_aus_synonymen[i].Name) {
-								ds_aus_syn_namen.push(datensammlungen_aus_synonymen[i].Name);
-							}
-						}
+                        _.each(datensammlungen_aus_synonymen, function(datensammlung) {
+                            if (datensammlung.Name) {
+                                ds_aus_syn_namen.push(datensammlung.Name);
+                            }
+                        });
 					}
 					var ds_aus_syn_name;
 					if (Objekt.Datensammlungen.length > 0) {
-						for (i=0; i<Objekt.Datensammlungen.length; i++) {
-							ds_aus_syn_name = Objekt.Datensammlungen[i].Name;
-							if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
-								datensammlungen_aus_synonymen.push(Objekt.Datensammlungen[i]);
-								// sicherstellen, dass diese ds nicht nochmals gepuscht wird
-								ds_aus_syn_namen.push(ds_aus_syn_name);
-							}
-						}
+                        _.each(Objekt.Datensammlungen, function(datensammlung) {
+                            ds_aus_syn_name = datensammlung.Name;
+                            if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
+                                datensammlungen_aus_synonymen.push(datensammlung);
+                                // sicherstellen, dass diese ds nicht nochmals gepuscht wird
+                                ds_aus_syn_namen.push(ds_aus_syn_name);
+                            }
+                        });
 					}
 				}
 				if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
 					var bs_aus_syn_namen = [];
-					if (beziehungssammlungen_aus_synonymen.length > 0) {
-						for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-							if (beziehungssammlungen_aus_synonymen[i].Name) {
-								bs_aus_syn_namen.push(beziehungssammlungen_aus_synonymen[i].Name);
-							}
-						}
-					}
+                    _.each(beziehungssammlungen_aus_synonymen, function(beziehungssammlung) {
+                        if (beziehungssammlung.Name) {
+                            bs_aus_syn_namen.push(beziehungssammlung.Name);
+                        }
+                    });
 					var bs_aus_syn_name;
-					if (Objekt.Beziehungssammlungen.length > 0) {
-						for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
-							bs_aus_syn_name = Objekt.Beziehungssammlungen[i].Name;
-							if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
-								beziehungssammlungen_aus_synonymen.push(Objekt.Beziehungssammlungen[i]);
-								// sicherstellen, dass diese bs nicht nochmals gepuscht wird
-								bs_aus_syn_namen.push(bs_aus_syn_name);
-							}
-						}
-					}
+                    _.each(Objekt.Beziehungssammlungen, function(beziehungssammlung) {
+                        bs_aus_syn_name = beziehungssammlung.Name;
+                        if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
+                            beziehungssammlungen_aus_synonymen.push(beziehungssammlung);
+                            // sicherstellen, dass diese bs nicht nochmals gepuscht wird
+                            bs_aus_syn_namen.push(bs_aus_syn_name);
+                        }
+                    });
 				}
 				// das war ein Synonym. Hier aufhören
 			} else if (row.key[1] === 1) {
@@ -148,29 +144,28 @@ function(head, req) {
 				// zuerst DS
 				// eine Liste der im Objekt enthaltenen DsNamen erstellen
 				var dsNamen = [];
-				if (Objekt.Datensammlungen.length > 0) {
-					for (i=0; i<Objekt.Datensammlungen.length; i++) {
-						if (Objekt.Datensammlungen[i].Name) {
-							dsNamen.push(Objekt.Datensammlungen[i].Name);
-						}
-					}
-				}
+                _.each(Objekt.Datensammlungen, function(datensammlung) {
+                    if (datensammlung.Name) {
+                        dsNamen.push(datensammlung.Name);
+                    }
+                });
 				// nicht enthaltene Datensammlungen ergänzen
 				var ds_aus_syn_name2;
-				if (datensammlungen_aus_synonymen.length > 0) {
-					for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-						ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
-						if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-							Objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
-							// den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
-							dsNamen.push(ds_aus_syn_name2);
-						}
-					}
-				}
+                _.each(datensammlungen_aus_synonymen, function(datensammlung) {
+                    ds_aus_syn_name2 = datensammlung.Name;
+                    if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
+                        Objekt.Datensammlungen.push(datensammlung);
+                        // den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+                        dsNamen.push(ds_aus_syn_name2);
+                    }
+                });
 				// jetzt BS aus Synonymen anhängen
 				// eine Liste der im Objekt enthaltenen BsNamen erstellen
 				var bsNamen = [];
 				if (Objekt.Beziehungssammlungen.length > 0) {
+                    _.each(Objekt.Beziehungssammlungen, function(beziehungssammlung) {
+
+                    });
 					for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
 						if (Objekt.Beziehungssammlungen[i].Name) {
 							bsNamen.push(Objekt.Beziehungssammlungen[i].Name);
