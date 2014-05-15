@@ -396,7 +396,7 @@ function(head, req) {
                                                     Feldname = filterkriterium.Feldname,
                                                     Filterwert = _a.convertToCorrectType(filterkriterium.Filterwert),
                                                     Vergleichsoperator = filterkriterium.Vergleichsoperator;
-                                                if (DsTyp === "Beziehung" && DsName === felder[ww].DsName && Feldname === feld.Feldname) {
+                                                if (DsTyp === "Beziehung" && DsName === feld.DsName && Feldname === feld.Feldname) {
                                                     // Beziehungspartner sind Objekte und müssen separat gefiltert werden
                                                     if (Feldname === "Beziehungspartner") {
                                                         bezPartner = _a.filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
