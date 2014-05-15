@@ -117,7 +117,7 @@ function(head, req) {
 							objektHinzufügen = true;
 						} else {
 							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
+							break;
 						}
 					}
 				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
@@ -129,12 +129,12 @@ function(head, req) {
 							objektHinzufügen = true;
 						} else {
 							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
+							break;
 						}
 					} else {
 						// Bedingung nicht erfüllt
 						objektNichtHinzufügen = true;
-						break loop_filterkriterien;
+						break;
 					}
 				} else if (DsTyp_z === "Taxonomie") {
 					feldwert = _a.convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
@@ -145,12 +145,12 @@ function(head, req) {
 								objektHinzufügen = true;
 							} else {
 								objektNichtHinzufügen = true;
-								break loop_filterkriterien;
+								break;
 							}
 						} else {
 							// Bedingung nicht erfüllt
 							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
+							break;
 						}
 					}
 				} else if (DsTyp_z === "Beziehung") {

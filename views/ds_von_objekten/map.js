@@ -11,11 +11,7 @@
 	if (doc.Datensammlungen) {
 		for (i=0; i<doc.Datensammlungen.length; i++) {
 			// ds_zusammenfassend ergänzen
-			if (doc.Datensammlungen[i].zusammenfassend) {
-				ds_zusammenfassend = true;
-			} else {
-				ds_zusammenfassend = false;
-			}
+			ds_zusammenfassend = !!doc.Datensammlungen[i].zusammenfassend;
 			Felder = {};
 			for (x in doc.Datensammlungen[i]) {
 				if (x !== "Typ" && x !== "Name" && x !== "Daten" ) {
@@ -29,11 +25,7 @@
 	if (doc.Beziehungssammlungen) {
 		for (h=0; h<doc.Beziehungssammlungen.length; h++) {
 			// bs_zusammenfassend ergänzen
-			if (doc.Beziehungssammlungen[h].zusammenfassend) {
-				bs_zusammenfassend = true;
-			} else {
-				bs_zusammenfassend = false;
-			}
+			bs_zusammenfassend = !!doc.Beziehungssammlungen[h].zusammenfassend;
 			Felder = {};
 			for (y in doc.Beziehungssammlungen[h]) {
 				if (y !== "Typ" && y !== "Name" && y !== "Beziehungen") {

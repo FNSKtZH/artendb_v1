@@ -572,20 +572,12 @@ window.adb.initiiere_art = function(id) {
                                                 var beziehung_der_originalart = _.find(BsDerOriginalart.Beziehungen, function(beziehung_origart) {
                                                     //return _.isEqual(beziehung_des_synonyms, beziehung_origart);  Wieso funktioniert das nicht?
                                                     if (beziehung_des_synonyms.Beziehungspartner.length > 0 && beziehung_origart.Beziehungspartner.length > 0) {
-                                                        if (beziehung_des_synonyms.Beziehungspartner[0].GUID === beziehung_origart.Beziehungspartner[0].GUID) {
-                                                            return true;
-                                                        } else {
-                                                            return false;
-                                                        }
+                                                        return beziehung_des_synonyms.Beziehungspartner[0].GUID === beziehung_origart.Beziehungspartner[0].GUID;
                                                     } else {
                                                         return false;
                                                     }
                                                 });
-                                                if (beziehung_der_originalart) {
-                                                    return true;
-                                                } else {
-                                                    return false;
-                                                }
+                                                return !!beziehung_der_originalart;
                                             });
                                         }
                                         if (BsDerSynonymenArt.Beziehungen.length > 0) {
@@ -3885,48 +3877,6 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
             }
         });
     });
-	/*for (i=0; i<gruppen_array.length; i++) {
-		if ($("#exportieren_synonym_infos").prop('checked')) {
-			dbParam = "artendb/export_mit_synonymen";
-			queryParam = gruppen_array[i] + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
-		} else {
-			dbParam = "artendb/export";
-			queryParam = gruppen_array[i] + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
-		}
-		if ($("#exportieren_nur_ds").prop('checked') && anz_ds_gewaehlt > 0) {
-			// prüfen, ob mindestens ein Feld aus ds gewählt ist
-			// wenn ja: true, sonst false
-			queryParam += "&nur_ds=true";
-		} else {
-			queryParam += "&nur_ds=false";
-		}
-		if ($("#export_bez_in_zeilen").prop('checked')) {
-			queryParam += "&bez_in_zeilen=true";
-		} else {
-			queryParam += "&bez_in_zeilen=false";
-		}
-		$db = $.couch.db("artendb");
-		$db.list(dbParam, queryParam, {
-			success: function(data) {
-				// alle Objekte in data in window.adb.exportieren_objekte anfügen
-				window.adb.exportieren_objekte = _.union(window.adb.exportieren_objekte, data);
-				// speichern, dass eine Gruppe abgefragt wurde
-				anz_gruppen_abgefragt++;
-				if (anz_gruppen_abgefragt === gruppen_array.length) {
-					// alle Gruppen wurden abgefragt, jetzt kann es weitergehen
-					// Ergebnis rückmelden
-					$("#exportieren_exportieren_hinweis_text")
-                        .alert()
-                        .css("display", "block")
-                        .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
-					window.adb.baueTabelleFürExportAuf();
-				}
-			},
-			error: function() {
-				console.log('error in $db.list');
-			}
-		});
-	}*/
 };
 
 window.adb.baueTabelleFürExportAuf = function() {

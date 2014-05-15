@@ -6,11 +6,10 @@
 
 		// gis-layer bestimmen
 		if (doc.Datensammlungen) {
-			ds_loop:
 			for (i=0; i<doc.Datensammlungen.length; i++) {
 				if (doc.Datensammlungen[i].Name && doc.Datensammlungen[i].Name === "ZH GIS" && doc.Datensammlungen[i].Daten && doc.Datensammlungen[i].Daten["GIS-Layer"]) {
 					gis_layer = doc.Datensammlungen[i].Daten["GIS-Layer"];
-					break ds_loop;
+					break;
 				}
 			}
 		}

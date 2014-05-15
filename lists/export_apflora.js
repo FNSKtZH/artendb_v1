@@ -16,7 +16,6 @@ function(head, req) {
 	var _a = require("lists/lib/artendb_listfunctions");
 
 	// list wird mit view flora abgerufen
-	objekt_loop:
 	while (row = getRow()) {
 		Objekt = row.doc;
 
