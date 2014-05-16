@@ -8,34 +8,23 @@ function(head, req) {
 		}
 	});
 
-	var row, Objekt, total_rows,
-		rückgabeObjekt = {},
+	var row,
+        Objekt,
 		exportObjekte = [],
 		exportObjekt,
 		filterkriterien = [],
 		filterkriterienObjekt = {"filterkriterien": []},
 		felder = [],
-		feldwert,
 		gruppen,
 		nur_ds,
 		bez_in_zeilen,
 		felderObjekt,
 		schonKopiert,
-		objektKopiert,
 		objektHinzufügen,
-		DsName_z,
-		Feldname_z,
-		Filterwert_z,
-		Vergleichsoperator_z,
-		Datensammlung,
-		beziehungssammlungen, datensammlungen,
-		beziehungssammlungen_aus_synonymen, datensammlungen_aus_synonymen,
-		Beziehungssammlung,
-		Beziehung,
-		dsExistiertSchon,
-		dsExistiert;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+		beziehungssammlungen_aus_synonymen,
+        datensammlungen_aus_synonymen,
+	    _ = require("lists/lib/underscore"),
+        _adb = require("lists/lib/artendb_listfunctions");
 
 	// übergebene Variabeln extrahieren
 	for (var i in req.query) {
@@ -53,13 +42,13 @@ function(head, req) {
 				if (filterkriterien[x].Feldname !== "GUID") {
 					// true wurde offenbar irgendwie umgewandelt
 					// jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
-					// leider kann true oder false nicht wie gewollt von _a.convertToCorrectType zurückgegeben werden
+					// leider kann true oder false nicht wie gewollt von _adb.convertToCorrectType zurückgegeben werden
 					if (filterkriterien[x].Filterwert === "true") {
 						filterkriterien[x].Filterwert = true;
 					} else if (filterkriterien[x].Filterwert === "false") {
 						filterkriterien[x].Filterwert = false;
 					} else {
-						filterkriterien[x].Filterwert = _a.convertToCorrectType(filterkriterien[x].Filterwert);
+						filterkriterien[x].Filterwert = _adb.convertToCorrectType(filterkriterien[x].Filterwert);
 					}
 				}
 			}
@@ -85,7 +74,6 @@ function(head, req) {
 	beziehungssammlungen_aus_synonymen = [];
 	datensammlungen_aus_synonymen = [];
 
-	objekt_loop:
 	while (row = getRow()) {
 		Objekt = row.doc;
 
@@ -97,7 +85,7 @@ function(head, req) {
 				objektHinzufügen = true;
 			} else {
 				// Gruppen werden gefiltert und Filter ist nicht erfüllt > weiter mit nächstem Objekt
-				continue objekt_loop;
+				continue;
 			}
 		}
 
@@ -195,407 +183,34 @@ function(head, req) {
 					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
 					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
 						Objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
-						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird
+						// auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						bsNamen.push(bs_aus_syn_name2);
 					}
 				}
 			}
 
-			// wird true gesetzt, wenn in einem Feld ein Filterkriterium gesetzt und dieses erfüllt ist
-			objektHinzufügen = false;
-			// wird true gesetzt, wenn in einem Feld ein Filterkriterium gesetzt und dieses nicht erfüllt ist
-			objektNichtHinzufügen = false;
+            var obj_erfüllt_kriterien_returnvalue = _adb.prüfeObObjektKriterienErfüllt(Objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_ds);
+            objektHinzufügen = obj_erfüllt_kriterien_returnvalue.objektHinzufügen;
+            objektNichtHinzufügen = obj_erfüllt_kriterien_returnvalue.objektNichtHinzufügen;
 
-			// kein Filter aber nur Datensätze mit Infos aus DS/BS
-			if (filterkriterien.length === 0 && !nur_ds) {
-				objektHinzufügen = true;
-			}
-
-			loop_filterkriterien:
-			for (var z=0; z<filterkriterien.length; z++) {
-				DsTyp_z = filterkriterien[z].DsTyp;
-				DsName_z = filterkriterien[z].DsName;
-				Feldname_z = filterkriterien[z].Feldname;
-				if (Feldname_z === "GUID") {
-					// die ID darf nicht in Kleinschrift verwandelt werden
-					Filterwert_z = filterkriterien[z].Filterwert;
-				} else {
-					Filterwert_z = _a.convertToCorrectType(filterkriterien[z].Filterwert);
-				}
-				Vergleichsoperator_z = filterkriterien[z].Vergleichsoperator;
-				// Filterkriterien prüfen
-				if (DsName_z === "Objekt") {
-					if (Feldname_z === "GUID") {
-						feldwert = Objekt._id;
-					} else {
-						feldwert = Objekt[Feldname_z];
-					}
-					if (feldwert || feldwert === 0) {
-						// Das ist eine simple Eigenschaft des Objekts - der view liefert hier als DsName Objekt
-						if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
-							objektHinzufügen = true;
-						} else {
-							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
-						}
-					}
-				} else if (DsTyp_z === "Taxonomie" && fasseTaxonomienZusammen) {
-					feldwert = _a.convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
-					// das Feld ist aus Taxonomie und die werden zusammengefasst
-					// daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
-					if (feldwert || feldwert === 0) {
-						if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
-							objektHinzufügen = true;
-						} else {
-							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
-						}
-					} else {
-						// Bedingung nicht erfüllt
-						objektNichtHinzufügen = true;
-						break loop_filterkriterien;
-					}
-				} else if (DsTyp_z === "Taxonomie") {
-					feldwert = _a.convertToCorrectType(Objekt.Taxonomie.Daten[Feldname_z]);
-					// das Feld ist aus Taxonomie und die werden nicht zusammengefasst
-					if (feldwert || feldwert === 0) {
-						if (Objekt.Taxonomie.Name === DsName_z) {
-							if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
-								objektHinzufügen = true;
-							} else {
-								objektNichtHinzufügen = true;
-								break loop_filterkriterien;
-							}
-						} else {
-							// Bedingung nicht erfüllt
-							objektNichtHinzufügen = true;
-							break loop_filterkriterien;
-						}
-					}
-				} else if (DsTyp_z === "Beziehung") {
-					// durch alle Beziehungssammlungen loopen und suchen, ob Filter trifft
-					dsExistiert = false;
-					loop_beziehungssammlungen:
-					for (var g=0; g<Objekt.Beziehungssammlungen.length; g++) {
-						if (Objekt.Beziehungssammlungen[g].Name === DsName_z) {
-							dsExistiert = true;
-							// durch Beziehungssammlungen der Beziehung loopen
-							if (Objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
-								var feldExistiert = false;
-								var feldHinzugefügt = false;
-								for (var h=0; h<Objekt.Beziehungssammlungen[g].Beziehungen.length; h++) {
-									// durch die Felder der Beziehung loopen
-									if (Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] || Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z] === 0) {
-										feldExistiert = true;
-										feldwert = _a.convertToCorrectType(Objekt.Beziehungssammlungen[g].Beziehungen[h][Feldname_z]);
-										// Beziehungspartner sind Objekte und müssen separat gefiltert werden
-										if (Feldname_z === "Beziehungspartner") {
-											var bezPartner = _a.filtereBeziehungspartner(feldwert, Filterwert_z, Vergleichsoperator_z);
-											if (bezPartner.length > 0) {
-												objektHinzufügen = true;
-												feldHinzugefügt = true;
-											}
-										} else {
-											if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
-												objektHinzufügen = true;
-												feldHinzugefügt = true;
-											}
-										}
-									}
-								}
-								if (feldExistiert && !feldHinzugefügt) {
-									objektNichtHinzufügen = true;
-									break loop_filterkriterien;
-								}
-							} else {
-								// es gibt keine passende Beziehung, nicht hinzufügen
-								objektNichtHinzufügen = true;
-								break loop_filterkriterien;
-							}
-							break loop_beziehungssammlungen;
-						}
-					}
-					if (!dsExistiert) {
-						// es gibt keine passende Beziehung, nicht hinzufügen
-						objektNichtHinzufügen = true;
-					}
-				} else if (DsTyp_z === "Datensammlung") {
-					dsExistiert = false;
-					// das ist ein Feld aus einer Datensammlung
-					loop_datensammlungen:
-					for (var k=0; k<Objekt.Datensammlungen.length; k++) {
-						if (Objekt.Datensammlungen[k].Name === DsName_z) {
-							dsExistiert = true;
-							if (Objekt.Datensammlungen[k].Name === DsName_z && typeof Objekt.Datensammlungen[k].Daten !== "undefined" && typeof Objekt.Datensammlungen[k].Daten[Feldname_z] !== "undefined") {
-								// wir haben das gesuchte Feld gefunden!
-								feldwert = _a.convertToCorrectType(Objekt.Datensammlungen[k].Daten[Feldname_z]);
-								// in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
-								if (_a.beurteileFilterkriterien(feldwert, Filterwert_z, Vergleichsoperator_z)) {
-									objektHinzufügen = true;
-								} else {
-									objektNichtHinzufügen = true;
-									break loop_filterkriterien;
-								}
-							} else {
-								// das Feld existiert nicht, also Filterkriterium nicht erfüllt
-								objektNichtHinzufügen = true;
-								break loop_filterkriterien;
-							}
-							break loop_datensammlungen;
-						}
-					}
-					if (!dsExistiert) {
-						// es gibt keine passende Beziehung, nicht hinzufügen
-						objektNichtHinzufügen = true;
-						break loop_filterkriterien;
-					}
-				}
-			}
-
-			if (nur_ds) {
-				// hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
-				// wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
-				// wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
-				var hinzufuegen = false;
-				for (var zz=0; zz<felder.length; zz++) {
-					DsTyp_z = felder[zz].DsTyp;
-					DsName_z = felder[zz].DsName;
-					Feldname_z = felder[zz].Feldname;
-					if (DsTyp_z === "Beziehung") {
-						// durch alle Beziehungssammlungen loopen
-						for (var gg=0; gg<Objekt.Beziehungssammlungen.length; gg++) {
-							if (Objekt.Beziehungssammlungen[gg].Name === DsName_z) {
-								// durch Beziehungssammlungen der Beziehung loopen
-								if (Objekt.Beziehungssammlungen[gg].Beziehungen.length > 0) {
-									for (var hh=0; hh<Objekt.Beziehungssammlungen[gg].Beziehungen.length; hh++) {
-										// durch die Felder der Beziehung loopen
-										if (Objekt.Beziehungssammlungen[gg].Beziehungen[hh][Feldname_z] || Objekt.Beziehungssammlungen[gg].Beziehungen[hh][Feldname_z] === 0) {
-											hinzufuegen = true;
-										}
-									}
-								}
-							}
-						}
-					} else if (DsTyp_z === "Datensammlung") {
-						// das ist ein Feld aus einer Datensammlung
-						for (var kk=0; kk<Objekt.Datensammlungen.length; kk++) {
-							if (Objekt.Datensammlungen[kk].Name === DsName_z) {
-								if (Objekt.Datensammlungen[kk].Name === DsName_z && typeof Objekt.Datensammlungen[kk].Daten !== "undefined" && typeof Objekt.Datensammlungen[kk].Daten[Feldname_z] !== "undefined") {
-									hinzufuegen = true;
-								}
-							}
-						}
-					}
-				}
-				if (filterkriterien.length > 0 && !hinzufuegen) {
-					// ein Filter wurde gesetzt. Es sind keine Daten aus BS oder DS enthalten > nicht hinzufügen
-					objektNichtHinzufügen = true;
-				}
-				if (filterkriterien.length === 0 && hinzufuegen) {
-					// keine Filter, es gibt Daten aus BS oder DS > hinzufuegen
-					objektHinzufügen = true;
-				}
-			}
-
-			// exportobjekt gründen bzw. zurücksetzen
-			exportObjekt = {};
+            if (nur_ds) {
+                // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
+                // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+                // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
+                // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
+                var inf_enthalten_return_object = _adb.beurteileObInformationenEnthaltenSind(Objekt, felder, filterkriterien);
+                objektHinzufügen = inf_enthalten_return_object.objektHinzufügen;
+                objektNichtHinzufügen = inf_enthalten_return_object.objektNichtHinzufügen;
+            }
 
 			if (objektHinzufügen && !objektNichtHinzufügen) {
 				// alle Kriterien sind erfüllt
-				// Neues Objekt aufbauen, das nur die gewünschten Felder enthält
-				for (var e in Objekt) {
-					// durch alle Eigenschaften des Dokuments loopen
-					if (typeof Objekt[e] !== "object" && e !== "_rev") {
-						for (i=0; i<felder.length; i++) {
-							if (felder[i].DsName === "Objekt" && felder[i].Feldname === e) {
-								exportObjekt[e] = Objekt[e];
-							}
-							if (felder[i].DsName === "Objekt" && felder[i].Feldname === "GUID" && e === "_id") {
-								exportObjekt["GUID"] = Objekt[e];
-							}
-						}
-					}
-				}
-				for (var w in felder) {
-					if (felder[w].DsTyp === "Taxonomie" && (fasseTaxonomienZusammen || felder[w].DsName === Objekt.Taxonomie.Name)) {
-						// wenn im Objekt das zu exportierende Feld vorkommt, den Wert übernehmen
-						if (typeof Objekt.Taxonomie.Daten[felder[w].Feldname] !== "undefined") {
-							if (fasseTaxonomienZusammen) {
-								exportObjekt["Taxonomie(n): " + felder[w].Feldname] = Objekt.Taxonomie.Daten[felder[w].Feldname];
-							} else {
-								exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = Objekt.Taxonomie.Daten[felder[w].Feldname];
-							}
-						} else {
-							// sonst einen leerwert setzen
-							if (fasseTaxonomienZusammen) {
-								exportObjekt["Taxonomie(n): " + felder[w].Feldname] = "";
-							} else {
-								exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
-							}
-						}
-					}
+                var return_objekt = _adb.erstelleExportobjekt(Objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, exportObjekte);
+                schonKopiert = return_objekt.schonKopiert;
+                exportObjekt = return_objekt.exportObjekt;
+                exportObjekte = return_objekt.exportObjekte;
 
-					if (felder[w].DsTyp === "Datensammlung") {
-						// das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-						exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
-						if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
-							// suchen, ob das Objekt diese Datensammlung hat
-							loop_ds:
-							for (var ii in Objekt.Datensammlungen) {
-								if (Objekt.Datensammlungen[ii].Name && Objekt.Datensammlungen[ii].Name === felder[w].DsName) {
-									if (typeof Objekt.Datensammlungen[ii].Daten[felder[w].Feldname] !== "undefined") {
-										exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = Objekt.Datensammlungen[ii].Daten[felder[w].Feldname];
-									}
-									break loop_ds;
-								}
-							}
-						}
-					}
-
-					if (felder[w].DsTyp === "Beziehung") {
-						// das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-						exportObjekt[felder[w].DsName + ": " + felder[w].Feldname] = "";
-						// wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
-
-						if (felder[w].Feldname === "Beziehungspartner") {
-							// noch ein Feld hinzufügen
-							exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] = "";
-						}
-
-						if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
-							// suchen, ob das Objekt diese Beziehungssammlungen hat
-							loop_bs:
-							for (i in Objekt.Beziehungssammlungen) {
-								if (Objekt.Beziehungssammlungen[i].Name && Objekt.Beziehungssammlungen[i].Name === felder[w].DsName) {
-									// durch Beziehungen loopen
-									for (var aaa=0; aaa<Objekt.Beziehungssammlungen[i].Beziehungen.length; aaa++) {
-										if (typeof Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[w].Feldname] !== "undefined") {
-											feldwert = _a.convertToCorrectType(Objekt.Beziehungssammlungen[i].Beziehungen[aaa][felder[w].Feldname]);
-											// in der Beziehung gibt es das gesuchte Feld
-											// Beziehungen in der Variablen "exportBeziehungen" sammeln
-											// durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-											var exportBeziehungen = [];
-											if (filterkriterien && filterkriterien.length > 0) {
-												for (var l=0; l<filterkriterien.length; l++) {
-													var DsTyp = filterkriterien[l].DsTyp;
-													var DsName = filterkriterien[l].DsName;
-													var Feldname = filterkriterien[l].Feldname;
-													var Filterwert = _a.convertToCorrectType(filterkriterien[l].Filterwert);
-													var Vergleichsoperator = filterkriterien[l].Vergleichsoperator;
-													if (DsTyp === "Beziehung" && DsName === felder[w].DsName && Feldname === felder[w].Feldname) {
-														// Beziehungspartner sind Objekte und müssen separat gefiltert werden
-														if (Feldname === "Beziehungspartner") {
-															var bezPartner2 = _a.filtereBeziehungspartner(feldwert, Filterwert, Vergleichsoperator);
-															if (bezPartner2.length > 0) {
-																Objekt.Beziehungssammlungen[i].Beziehungen[aaa].Beziehungspartner = bezPartner2;
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															}
-														} else {
-															// jetzt müssen die verschiedenen möglichen Vergleichsoperatoren berücksichtigt werden
-															if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															} else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
-																exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-															}
-														}
-													}
-												}
-											} else {
-												// kein Filter auf Feldern - Beziehung hinzufügen
-												// aber sicherstellen, dass sie nicht schon drin ist
-												if (!_a.containsObject(Objekt.Beziehungssammlungen[i].Beziehungen[aaa], exportBeziehungen)) {
-													exportBeziehungen.push(Objekt.Beziehungssammlungen[i].Beziehungen[aaa]);
-												}
-											}
-											// jetzt unterscheiden, ob alle Treffer in einem Feld oder pro Treffer eine Zeile exportiert wird
-											if (bez_in_zeilen) {
-												// pro Treffer eine neue Zeile erstellen
-												schonKopiert = false;
-												// durch Beziehungen loopen
-												for (var s in exportBeziehungen) {
-													// exportObjekt kopieren
-													var objektKopiert = _.clone(exportObjekt);
-													// durch die Felder der Beziehung loopen
-													for (var y in exportBeziehungen[s]) {
-														if (y === "Beziehungspartner") {
-															// zuerst die Beziehungspartner in JSON hinzufügen
-															if (!objektKopiert[felder[w].DsName + ": " + y]) {
-																objektKopiert[felder[w].DsName + ": " + y] = [];
-															}
-															objektKopiert[felder[w].DsName + ": " + y].push(exportBeziehungen[s][y]);
-															// Reines GUID-Feld ergänzen
-															if (!objektKopiert[felder[w].DsName + ": Beziehungspartner GUID(s)"]) {
-																objektKopiert[felder[w].DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungen[s][y][0].GUID;
-															} else {
-																objektKopiert[felder[w].DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungen[s][y][0].GUID;
-															}
-														} else {
-															// Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-															if (!objektKopiert[felder[w].DsName + ": " + y]) {
-																objektKopiert[felder[w].DsName + ": " + y] = exportBeziehungen[s][y];
-															} else {
-																objektKopiert[felder[w].DsName + ": " + y] += ", " + exportBeziehungen[s][y];
-															}
-														}
-													}
-													exportObjekte.push(objektKopiert);
-													schonKopiert = true;
-												}
-											} else {
-												// jeden Treffer kommagetrennt in dasselbe Feld einfügen
-												// durch Beziehungen loopen
-												for (var qq=0; qq<exportBeziehungen.length; qq++) {
-													// durch die Felder der Beziehung loopen
-													for (var yy in exportBeziehungen[qq]) {
-														if (yy === "Beziehungspartner") {
-															// zuerst die Beziehungspartner in JSON hinzufügen
-															if (!exportObjekt[felder[w].DsName + ": " + yy]) {
-																exportObjekt[felder[w].DsName + ": " + yy] = [];
-															}
-															exportObjekt[felder[w].DsName + ": " + yy].push(exportBeziehungen[qq][yy]);
-															// Reines GUID-Feld ergänzen
-															if (!exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"]) {
-																exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungen[qq][yy][0].GUID;
-															} else {
-																exportObjekt[felder[w].DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungen[qq][yy][0].GUID;
-															}
-														// es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
-														} else if (typeof exportBeziehungen[qq][yy] === "number") {
-															// Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
-															if (!exportObjekt[felder[w].DsName + ": " + yy]) {
-																exportObjekt[felder[w].DsName + ": " + yy] = exportBeziehungen[qq][yy];
-															} else {
-																exportObjekt[felder[w].DsName + ": " + yy] += ", " + exportBeziehungen[qq][yy];
-															}
-														} else {
-															// Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-															if (!exportObjekt[felder[w].DsName + ": " + yy]) {
-																exportObjekt[felder[w].DsName + ": " + yy] = exportBeziehungen[qq][yy].replace(/,/g,'\(Komma\)');
-															} else {
-																exportObjekt[felder[w].DsName + ": " + yy] += ", " + exportBeziehungen[qq][yy].replace(/,/g,'\(Komma\)');
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-									break loop_bs;
-								}
-							}
-						}
-					}
-				}
 				// Objekt zu Exportobjekten hinzufügen - wenn nicht schon kopiert
 				if (!schonKopiert) {
 					exportObjekte.push(exportObjekt);
@@ -606,9 +221,5 @@ function(head, req) {
 			datensammlungen_aus_synonymen = [];
 		}
 	}
-	// leere Objekte entfernen
-	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
-		return _.isEmpty(object);
-	});
-	send(_a.erstelleExportString(exportObjekte_ohne_leere));
+	send(_adb.erstelleExportString(exportObjekte));
 }
