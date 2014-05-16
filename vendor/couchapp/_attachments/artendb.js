@@ -2437,58 +2437,57 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		if (window.adb.DsId === "guid") {
 			$db.view('artendb/all_docs', {
 				success: function(data) {
-					for (var i in window.adb[dbs.toLowerCase()+"Datensätze"]) {
-						// durch die importierten Datensätze loopen
-						if (IdsVonDatensätzen.indexOf(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]) === -1) {
-							// diese ID wurde noch nicht hinzugefügt > hinzufügen
-							IdsVonDatensätzen.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-							// prüfen, ob die ID zugeordnet werden kann
-							for (var x = 0; x < data.rows.length; x++) {
-								if (data.rows[x].key === window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]) {
-									window.adb.ZuordbareDatensätze.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-									break;
-								}
-								if (x === (data.rows.length-1)) {
-									// diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-									IdsVonNichtImportierbarenDatensätzen.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-								}
-							}
-						} else {
-							// diese ID wurden schon hinzugefügt > mehrfach!
-							MehrfachVorkommendeIds.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-						}
-					}
+                    // durch die importierten Datensätze loopen
+                    _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
+                        var name_des_id_felds = window.adb[dbs+"FelderId"];
+                        if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                            // diese ID wurde noch nicht hinzugefügt > hinzufügen
+                            IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            // prüfen, ob die ID zugeordnet werden kann
+                            var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
+                                return objekt_row.key === import_datensatz[name_des_id_felds];
+                            });
+                            if (zugehöriges_objekt) {
+                                window.adb.ZuordbareDatensätze.push(import_datensatz[name_des_id_felds]);
+                            } else {
+                                // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
+                                IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            }
+                        } else {
+                            // diese ID wurden schon hinzugefügt > mehrfach!
+                            MehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
+                        }
+                    });
 					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.DsId + '"]&endkey=["' + window.adb.DsId + '",{},{}]', {
 				success: function(data) {
-					for (var i in window.adb[dbs.toLowerCase()+"Datensätze"]) {
-						// durch die importierten Datensätze loopen
-						if (IdsVonDatensätzen.indexOf(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]) === -1) {
-							// diese ID wurde noch nicht hinzugefügt > hinzufügen
-							IdsVonDatensätzen.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-							// prüfen, ob die ID zugeordnet werden kann
-							for (var x = 0; x < data.rows.length; x++) {
-								// Vorsicht: window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]] kann Zahlen als string zurückgeben, nicht === verwenden
-								if (data.rows[x].key[2] == window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]) {
-									var Objekt = {};
-									Objekt.Id = parseInt(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]], 10);
-									Objekt.Guid = data.rows[x].key[1];
-									window.adb.ZuordbareDatensätze.push(Objekt);
-									break;
-								}
-								if (x === (data.rows.length-1)) {
-									// diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-									IdsVonNichtImportierbarenDatensätzen.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-								}
-							}
-						} else {
-							// diese ID wurden schon hinzugefügt > mehrfach!
-							MehrfachVorkommendeIds.push(window.adb[dbs.toLowerCase()+"Datensätze"][i][window.adb[dbs+"FelderId"]]);
-						}
-					}
+                    // durch die importierten Datensätze loopen
+                    _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
+                        var name_des_id_felds = window.adb[dbs+"FelderId"];
+                        if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                            // diese ID wurde noch nicht hinzugefügt > hinzufügen
+                            IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            // prüfen, ob die ID zugeordnet werden kann
+                            var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
+                                return objekt_row.key[2] == import_datensatz[name_des_id_felds];
+                            });
+                            if (zugehöriges_objekt) {
+                                var Objekt = {};
+                                Objekt.Id = parseInt(import_datensatz[name_des_id_felds], 10);
+                                Objekt.Guid = zugehöriges_objekt.key[1];
+                                window.adb.ZuordbareDatensätze.push(Objekt);
+                            } else {
+                                // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
+                                IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            }
+                        } else {
+                            // diese ID wurden schon hinzugefügt > mehrfach!
+                            MehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
+                        }
+                    });
 					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
 				}
 			});
@@ -2563,11 +2562,11 @@ window.adb.meldeErfolgVonIdIdentifikation_02 = function(MehrfachVorkommendeIds, 
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 window.adb.importiereDatensammlung = function() {
-	var Datensammlung,
-		anzFelder,
-		anzDs = window.adb.dsDatensätze.length,
+	var datensammlung,
+		anzahl_felder,
+		anz_ds = window.adb.dsDatensätze.length,
         // Der Verlauf soll angezeigt werden, daher braucht es einen zähler
-        anzDsImportiert = 0,
+        anz_ds_importiert = 0,
 		DsImportiert = $.Deferred(),
         $DsName = $("#DsName"),
         $DsBeschreibung = $("#DsBeschreibung"),
@@ -2611,8 +2610,8 @@ window.adb.importiereDatensammlung = function() {
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('adb.ds_hinzugefügt', function() {
-        anzDsImportiert++;
-        var prozent = Math.round(anzDsImportiert/anzDs*100);
+        anz_ds_importiert++;
+        var prozent = Math.round(anz_ds_importiert/anz_ds*100);
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
@@ -2621,7 +2620,7 @@ window.adb.importiereDatensammlung = function() {
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
         }, 2000);
-        if (anzDsImportiert === anzDs) {
+        if (anz_ds_importiert === anz_ds) {
             // die Indexe
             $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
@@ -2638,83 +2637,78 @@ window.adb.importiereDatensammlung = function() {
             });
         }
     });
-
-	for (var x in window.adb.dsDatensätze) {
-		// Datensammlung als Objekt gründen
-		Datensammlung = {};
-		Datensammlung.Name = $DsName.val();
-		if ($DsBeschreibung.val()) {
-			Datensammlung.Beschreibung = $DsBeschreibung.val();
-		}
-		if ($DsDatenstand.val()) {
-			Datensammlung.Datenstand = $DsDatenstand.val();
-		}
-		if ($DsLink.val()) {
-			Datensammlung.Link = $DsLink.val();
-		}
-		// falls die Datensammlung zusammenfassend ist
-		if ($("#DsZusammenfassend").prop('checked')) {
-			Datensammlung.zusammenfassend = true;
-		}
-		if ($DsUrsprungsDs.val()) {
-			Datensammlung.Ursprungsdatensammlung = $DsUrsprungsDs.val();
-		}
-		Datensammlung["importiert von"] = localStorage.Email;
-		// Felder der Datensammlung als Objekt gründen
-		Datensammlung.Daten = {};
-		// Felder anfügen, wenn sie Werte enthalten
-		anzFelder = 0;
-		for (var y in window.adb.dsDatensätze[x]) {
-			// nicht importiert wird die ID und leere Felder
-			if (y !== window.adb.DsFelderId && window.adb.dsDatensätze[x][y] !== "" && window.adb.dsDatensätze[x][y] !== null) {
-				if (window.adb.dsDatensätze[x][y] === -1) {
-					// Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
-					Datensammlung.Daten[y] = true;
-				} else if (window.adb.dsDatensätze[x][y] == "true") {
-					// true/false nicht als string importieren
-					Datensammlung.Daten[y] = true;
-				} else if (window.adb.dsDatensätze[x][y] == "false") {
-					Datensammlung.Daten[y] = false;
-				} else if (window.adb.dsDatensätze[x][y] == parseInt(window.adb.dsDatensätze[x][y], 10)) {
-					// Ganzzahlen als Zahlen importieren
-					Datensammlung.Daten[y] = parseInt(window.adb.dsDatensätze[x][y], 10);
-				} else if (window.adb.dsDatensätze[x][y] == parseFloat(window.adb.dsDatensätze[x][y])) {
-					// Bruchzahlen als Zahlen importieren
-					Datensammlung.Daten[y] = parseFloat(window.adb.dsDatensätze[x][y]);
-				} else {
-					// Normalfall
-					Datensammlung.Daten[y] = window.adb.dsDatensätze[x][y];
-				}
-				anzFelder += 1;
-			}
-		}
-		// entsprechenden Index öffnen
-		// sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
-		if (anzFelder > 0) {
-			// Datenbankabfrage ist langsam. Extern aufrufen, 
-			// sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
-			var guid;
-			if (window.adb.DsId === "guid") {
-				// die in der Tabelle mitgelieferte id ist die guid
-				guid = window.adb.dsDatensätze[x][window.adb.DsFelderId];
-			} else {
-				for (var q = 0; q < window.adb.ZuordbareDatensätze.length; q++) {
-					// in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-					if (window.adb.ZuordbareDatensätze[q].Id == window.adb.dsDatensätze[x][window.adb.DsFelderId]) {
-						// und die guid auslesen
-						guid = window.adb.ZuordbareDatensätze[q].Guid;
-						break;
-					}
-				}
-			}
-			// kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
-			if (guid) {
-				window.adb.fügeDatensammlungZuObjekt(guid, Datensammlung);
+    _.each(window.adb.dsDatensätze, function(ds_datensatz) {
+        // Datensammlung als Objekt gründen
+        datensammlung = {};
+        datensammlung.Name = $DsName.val();
+        if ($DsBeschreibung.val()) {
+            datensammlung.Beschreibung = $DsBeschreibung.val();
+        }
+        if ($DsDatenstand.val()) {
+            datensammlung.Datenstand = $DsDatenstand.val();
+        }
+        if ($DsLink.val()) {
+            datensammlung.Link = $DsLink.val();
+        }
+        // falls die Datensammlung zusammenfassend ist
+        if ($("#DsZusammenfassend").prop('checked')) {
+            datensammlung.zusammenfassend = true;
+        }
+        if ($DsUrsprungsDs.val()) {
+            datensammlung.Ursprungsdatensammlung = $DsUrsprungsDs.val();
+        }
+        datensammlung["importiert von"] = localStorage.Email;
+        // Felder der Datensammlung als Objekt gründen
+        datensammlung.Daten = {};
+        // Felder anfügen, wenn sie Werte enthalten
+        anzahl_felder = 0;
+        _.each(ds_datensatz, function(feldwert, feldname) {
+            // nicht importiert wird die ID und leere Felder
+            if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null) {
+                if (feldwert === -1) {
+                    // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
+                    datensammlung.Daten[feldname] = true;
+                } else if (feldwert == "true") {
+                    // true/false nicht als string importieren
+                    datensammlung.Daten[feldname] = true;
+                } else if (feldwert == "false") {
+                    datensammlung.Daten[feldname] = false;
+                } else if (feldwert == parseInt(feldwert, 10)) {
+                    // Ganzzahlen als Zahlen importieren
+                    datensammlung.Daten[feldname] = parseInt(feldwert, 10);
+                } else if (feldwert == parseFloat(feldwert)) {
+                    // Bruchzahlen als Zahlen importieren
+                    datensammlung.Daten[feldname] = parseFloat(feldwert);
+                } else {
+                    // Normalfall
+                    datensammlung.Daten[feldname] = feldwert;
+                }
+                anzahl_felder += 1;
+            }
+        });
+        // entsprechenden Index öffnen
+        // sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
+        if (anzahl_felder > 0) {
+            // Datenbankabfrage ist langsam. Extern aufrufen,
+            // sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
+            var guid;
+            if (window.adb.DsId === "guid") {
+                // die in der Tabelle mitgelieferte id ist die guid
+                guid = ds_datensatz[window.adb.DsFelderId];
+            } else {
+                var ds_datensatz_mit_richtiger_id = _.find(window.adb.ZuordbareDatensätze, function(datensatz) {
+                    return datensatz.Id == ds_datensatz[window.adb.DsFelderId];
+                });
+                guid = ds_datensatz_mit_richtiger_id.Guid;
+            }
+            // kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
+            if (guid) {
+                window.adb.fügeDatensammlungZuObjekt(guid, datensammlung);
             }
         }
-    }
+    });
     // Für 10 Kontrollbeispiele die Links aufbauen
-    var erste_10_ids = _.pluck(_.first(window.adb.dsDatensätze, 10), window.adb.DsFelderId);
+    var erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
     _.each(erste_10_ids, function(id, index) {
         nr = index + 1;
         rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
@@ -2794,14 +2788,13 @@ window.adb.queryChanges = function(options) {
 // bekommt das Objekt mit den Datensätzen (window.adb.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 window.adb.importiereBeziehungssammlung = function() {
-	var Beziehungssammlung,
-		anzFelder,
-		anzBs = window.adb.bsDatensätze.length,
-        anzBsImportiert = 0,
+	var anzahl_felder,
+		anzahl_beziehungssammlungen = window.adb.bsDatensätze.length,
+        anz_bs_importiert = 0,
         nr,
         rückmeldung_intro,
         rückmeldung_links = "",
-		BsImportiert = $.Deferred(),
+		bs_importiert = $.Deferred(),
         $BsName = $("#BsName"),
         $BsBeschreibung = $("#BsBeschreibung"),
         $BsDatenstand = $("#BsDatenstand"),
@@ -2820,8 +2813,8 @@ window.adb.importiereBeziehungssammlung = function() {
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('adb.bs_hinzugefügt', function() {
-        anzBsImportiert++;
-        var prozent = Math.round(anzBsImportiert/anzBs*100);
+        anz_bs_importiert++;
+        var prozent = Math.round(anz_bs_importiert/anzahl_beziehungssammlungen*100);
         $("#BsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
@@ -2830,7 +2823,7 @@ window.adb.importiereBeziehungssammlung = function() {
         $('html, body').animate({
             scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
         }, 2000);
-        if (anzBsImportiert === anzBs) {
+        if (anz_bs_importiert === anzahl_beziehungssammlungen) {
             // Indices aktualisieren
             $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
@@ -2852,30 +2845,30 @@ window.adb.importiereBeziehungssammlung = function() {
 	$.when(window.adb.bereiteBeziehungspartnerFürImportVor())
 		.then(function() {
 			setTimeout(function() {
-				anzBs = 0;
-				var Beziehungssammlung,
-                    Beziehungssammlung_vorlage = {};
-				Beziehungssammlung_vorlage.Name = $BsName.val();
+				anzahl_beziehungssammlungen = 0;
+				var beziehungssammlung,
+                    beziehungssammlung_vorlage = {};
+				beziehungssammlung_vorlage.Name = $BsName.val();
 				if ($BsBeschreibung.val()) {
-					Beziehungssammlung_vorlage.Beschreibung = $BsBeschreibung.val();
+					beziehungssammlung_vorlage.Beschreibung = $BsBeschreibung.val();
 				}
 				if ($BsDatenstand.val()) {
-					Beziehungssammlung_vorlage.Datenstand = $BsDatenstand.val();
+					beziehungssammlung_vorlage.Datenstand = $BsDatenstand.val();
 				}
 				if ($BsLink.val()) {
-					Beziehungssammlung_vorlage.Link = $BsLink.val();
+					beziehungssammlung_vorlage.Link = $BsLink.val();
 				}
 				// falls die Datensammlung zusammenfassend ist
 				if ($("#BsZusammenfassend").prop('checked')) {
-					Beziehungssammlung_vorlage.zusammenfassend = true;
+					beziehungssammlung_vorlage.zusammenfassend = true;
 				}
 				if ($BsUrsprungsBs.val()) {
-					Beziehungssammlung_vorlage.Ursprungsdatensammlung = $BsUrsprungsBs.val();
+					beziehungssammlung_vorlage.Ursprungsdatensammlung = $BsUrsprungsBs.val();
 				}
-				Beziehungssammlung_vorlage["importiert von"] = localStorage.Email;
-				Beziehungssammlung_vorlage.Beziehungen = [];
+				beziehungssammlung_vorlage["importiert von"] = localStorage.Email;
+				beziehungssammlung_vorlage.Beziehungen = [];
 				// zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
-				var bsDatensätze_objekt = _.groupBy(window.adb.bsDatensätze, function(objekt) {
+				var bs_datensätze_objekt = _.groupBy(window.adb.bsDatensätze, function(objekt) {
 					// id in guid umwandeln
 					var guid;
 					if (window.adb.BsId === "guid") {
@@ -2895,62 +2888,62 @@ window.adb.importiereBeziehungssammlung = function() {
 					return objekt.GUID;
 				});
 				// jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
-				$.each(bsDatensätze_objekt, function(key, value) {
-					var Beziehungen = [];
-					anzBs += 1;
+				$.each(bs_datensätze_objekt, function(importdaten_objekt_id, importdaten_felder_array) {
+					var beziehungen = [];
+					anzahl_beziehungssammlungen += 1;
 					// Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
-					Beziehungssammlung = jQuery.extend(true, {}, Beziehungssammlung_vorlage);
-					for (var x = 0; x<value.length; x++) {
-						// durch die Beziehungen loopen
-						anzFelder = 0;
-						// Felder der Beziehungssammlung als Objekt gründen
-						var Beziehung = {};
-						for (var y in value[x]) {
-							// durch die Felder der Beziehung loopen
-							// nicht importiert wird die GUID und leere Felder
-							if (y !== "GUID" && value[x][y] !== "" && value[x][y] !== null) {
-								if (value[x][y] === -1) {
-									// Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
-									Beziehung[y] = true;
-								} else if (value[x][y] == "true") {
-									// true/false nicht als string importieren
-									Beziehung[y] = true;
-								} else if (value[x][y] == "false") {
-									Beziehung[y] = false;
-								} else if (value[x][y] == parseInt(value[x][y], 10)) {
-									// Ganzzahlen als Zahlen importieren
-									Beziehung[y] = parseInt(value[x][y], 10);
-								} else if (value[x][y] == parseFloat(value[x][y])) {
-									// Bruchzahlen als Zahlen importieren
-									Beziehung[y] = parseFloat(value[x][y]);
-								} else if (y == "Beziehungspartner") {
-									Beziehung[y] = [];
-									// durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
-									for (var i=0; i<value[x][y].length; i++) {
-										Beziehung[y].push(window.adb.bezPartner_objekt[value[x][y][i]]);
-									}
-								} else {
-									// Normalfall
-									Beziehung[y] = value[x][y];
-								}
-								anzFelder++;
-							}
-						}
-						if (anzFelder > 0) {
-							Beziehungen.push(Beziehung);
-						}
-					}
+					beziehungssammlung = jQuery.extend(true, {}, beziehungssammlung_vorlage);
+                    _.each(importdaten_felder_array, function(importdaten_feld) {
+                        // durch die Felder der Beziehungen loopen
+                        anzahl_felder = 0;
+                        // Felder der Beziehungssammlung als Objekt gründen
+                        var beziehung = {};
+                        _.each(importdaten_feld, function(feldwert, feldname) {
+                            // durch die Felder der Beziehung loopen
+                            // nicht importiert wird die GUID und leere Felder
+                            if (feldname !== "GUID" && feldwert !== "" && feldwert !== null) {
+                                if (feldwert === -1) {
+                                    // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
+                                    beziehung[feldname] = true;
+                                } else if (feldwert == "true") {
+                                    // true/false nicht als string importieren
+                                    beziehung[feldname] = true;
+                                } else if (feldwert == "false") {
+                                    beziehung[feldname] = false;
+                                } else if (feldwert == parseInt(feldwert, 10)) {
+                                    // Ganzzahlen als Zahlen importieren
+                                    beziehung[feldname] = parseInt(feldwert, 10);
+                                } else if (feldwert == parseFloat(feldwert)) {
+                                    // Bruchzahlen als Zahlen importieren
+                                    beziehung[feldname] = parseFloat(feldwert);
+                                } else if (feldname == "Beziehungspartner") {
+                                    beziehung[feldname] = [];
+                                    // durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
+                                    _.each(feldwert, function(beziehungspartner_feld) {
+                                        beziehung[feldname].push(window.adb.bezPartner_objekt[beziehungspartner_feld]);
+                                    });
+                                } else {
+                                    // Normalfall
+                                    beziehung[feldname] = feldwert;
+                                }
+                                anzahl_felder++;
+                            }
+                        });
+                        if (anzahl_felder > 0) {
+                            beziehungen.push(beziehung);
+                        }
+                    });
 					// entsprechenden Index öffnen
 					// sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
-					if (Beziehungen.length > 0) {
+					if (beziehungen.length > 0) {
 						// Datenbankabfrage ist langsam. Extern aufrufen, 
 						// sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-						window.adb.fügeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
+						window.adb.fügeBeziehungenZuObjekt(importdaten_objekt_id, beziehungssammlung, beziehungen);
 					}
 				});
 
                 // Für 10 Kontrollbeispiele die Links aufbauen
-                var erste_10_ids = _.pluck(_.first(window.adb.bsDatensätze, 10), window.adb.BsFelderId);
+                var erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
                 _.each(erste_10_ids, function(id, index) {
                     nr = index +1;
                     rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
@@ -2963,17 +2956,16 @@ window.adb.importiereBeziehungssammlung = function() {
                 $('html, body').animate({
                     scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
                 }, 2000);
-				BsImportiert.resolve();
+				bs_importiert.resolve();
 			}, 1000);
 		});
-	return BsImportiert.promise();
+	return bs_importiert.promise();
 };
 
 window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 	var alle_bez_partner_array = [],
 		bez_partner_array,
-		beziehungspartner_vorbereitet = $.Deferred(),
-		x;
+		beziehungspartner_vorbereitet = $.Deferred();
 	window.adb.bezPartner_objekt = {};
 
     _.each(window.adb.bsDatensätze, function(bs_datensatz) {
@@ -2987,40 +2979,29 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
             alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
         }
     });
-	/*for (x in window.adb.bsDatensätze) {
-		if (window.adb.bsDatensätze[x].Beziehungspartner) {
-			// window.adb.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
-			// diese Liste in Array verwandeln
-			bez_partner_array = window.adb.bsDatensätze[x].Beziehungspartner.split(", ");
-			// und in window.adb.bsDatensätze nachführen
-			window.adb.bsDatensätze[x].Beziehungspartner = bez_partner_array;
-			// und vollständige Liste aller Beziehungspartner nachführen
-			alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
-		}
-	}*/
 	// jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
 	// danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
 	$db = $.couch.db("artendb");
 	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
 		success: function(data) {
 			var objekt;
-			var bezPartner;
-			for (var f = 0; f<data.rows.length; f++) {
+			var bez_partner;
+			for (var f = 0; f < data.rows.length; f++) {
 				objekt = data.rows[f].doc;
-				bezPartner = {};
-				bezPartner.Gruppe = objekt.Gruppe;
+				bez_partner = {};
+				bez_partner.Gruppe = objekt.Gruppe;
 				if (objekt.Gruppe === "Lebensräume") {
-					bezPartner.Taxonomie = objekt.Taxonomie.Daten.Taxonomie;
+					bez_partner.Taxonomie = objekt.Taxonomie.Daten.Taxonomie;
 					if (objekt.Taxonomie.Daten.Taxonomie.Label) {
-						bezPartner.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Taxonomie.Einheit;
+						bez_partner.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Taxonomie.Einheit;
 					} else {
-						bezPartner.Name = objekt.Taxonomie.Daten.Einheit;
+						bez_partner.Name = objekt.Taxonomie.Daten.Einheit;
 					}
 				} else {
-					bezPartner.Name = objekt.Taxonomie.Daten["Artname vollständig"];
+					bez_partner.Name = objekt.Taxonomie.Daten["Artname vollständig"];
 				}
-				bezPartner.GUID = objekt._id;
-				window.adb.bezPartner_objekt[objekt._id] = bezPartner;
+				bez_partner.GUID = objekt._id;
+				window.adb.bezPartner_objekt[objekt._id] = bez_partner;
 			}
 		}
 	});
@@ -3032,14 +3013,11 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
 window.adb.entferneDatensammlung = function() {
 	var guid_array = [],
-		guidArray = [],
 		guid,
-		DsEntfernt = $.Deferred(),
-		x,
-		q,
+		ds_entfernt = $.Deferred(),
 		a,
 		batch,
-		batchGrösse;
+		batch_grösse;
     _.each(window.adb.dsDatensätze, function(datensatz) {
         // zuerst die id in guid übersetzen
         if (window.adb.DsId === "guid") {
@@ -3068,46 +3046,46 @@ window.adb.entferneDatensammlung = function() {
 	// alle docs gleichzeitig holen
 	// aber batchweise
 	batch = 150;
-	batchGrösse = 150;
+	batch_grösse = 150;
 	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
-			guidArray.push(guid_array[a]);
+			guid_array.push(guid_array[a]);
 			if (a === (batch-1)) {
-				window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
-				guidArray = [];
-				batch += batchGrösse;
+				window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array, (a-batch_grösse));
+				guid_array = [];
+				batch += batch_grösse;
 			}
 		} else {
-			window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray, (a-batchGrösse));
+			window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array, (a - batch_grösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun ein Index neu aufgebaut werden muss.");
-			DsEntfernt.resolve();
+			ds_entfernt.resolve();
 			break;
 		}
 	}
-	return DsEntfernt.promise();
+	return ds_entfernt.promise();
 };
 
-window.adb.entferneDatensammlung_2 = function(DsName, guidArray, a) {
+window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs_faktor) {
 	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
-		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
+		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
 			success: function(data) {
 				var Objekt;
                 _.each(data.rows, function(data_row) {
                     Objekt = data_row.doc;
-                    window.adb.entferneDatensammlungAusObjekt(DsName, Objekt);
+                    window.adb.entferneDatensammlungAusObjekt(ds_name, Objekt);
                 });
 			}
 		});
-	}, a*40);
+	}, verzögerungs_faktor*40);
 };
 
-window.adb.entferneDatensammlungAusObjekt = function(DsName, Objekt) {
+window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
     console.log("entferneDatensammlungAusObjekt");
-	if (Objekt.Datensammlungen && Objekt.Datensammlungen.length > 0) {
+	if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
         /* hat nicht funktioniert
         var datensammlung = _.find(Objekt.Datensammlungen, function(datensammlung) {
             return datensammlung.Name === DsName;
@@ -3115,11 +3093,11 @@ window.adb.entferneDatensammlungAusObjekt = function(DsName, Objekt) {
         Objekt.Datensammlungen = _.without(Objekt.Datensammlungen, datensammlung);
         $db = $.couch.db("artendb");
         $db.saveDoc(Objekt);*/
-		for (var i=0; i<Objekt.Datensammlungen.length; i++) {
-			if (Objekt.Datensammlungen[i].Name === DsName) {
-				Objekt.Datensammlungen.splice(i,1);
+		for (var i=0; i<objekt.Datensammlungen.length; i++) {
+			if (objekt.Datensammlungen[i].Name === ds_name) {
+				objekt.Datensammlungen.splice(i,1);
 				$db = $.couch.db("artendb");
-				$db.saveDoc(Objekt);
+				$db.saveDoc(objekt);
 				break;
 			}
 		}
