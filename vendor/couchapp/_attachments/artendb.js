@@ -1980,6 +1980,10 @@ window.adb.handleExportFeldFilternChange = function() {
 // wenn exportieren_exportieren angezeigt wird
 // zur Schaltfläche Vorschau scrollen
 window.adb.handleExportierenExportierenShow = function() {
+    // Fehlermeldung verstecken, falls sie noch offen war
+    $("#exportieren_exportieren_error_text")
+        .alert()
+        .css("display", "none");
 	$('html, body').animate({
 		scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
 	}, 2000);
@@ -3776,11 +3780,14 @@ window.adb.filtereFürExport = function(direkt) {
 	// Wenn keine Felder gewählt sind: Melden und aufhören
 	if (gewählte_felder_objekt.felder.length === 0) {
 		// Beschäftigungsmeldung verstecken
-		$exportieren_exportieren_hinweis_text.alert().css("display", "none");
+		$exportieren_exportieren_hinweis_text
+            .alert()
+            .css("display", "none");
+        $("#exportieren_exportieren_error_text_text")
+            .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
 		$("#exportieren_exportieren_error_text")
             .alert()
-            .css("display", "block")
-		    .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
+            .css("display", "block");
 		return;
 	}
 
@@ -3888,7 +3895,15 @@ window.adb.baueTabelleFürExportAuf = function() {
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
 		}, 2000);
 	} else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
-		$('#meldung_keine_exportdaten').modal();
+        $("#exportieren_exportieren_error_text_text")
+            .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
+        $("#exportieren_exportieren_error_text")
+            .alert()
+            .css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#exportieren_exportieren_exportieren").offset().top
+        }, 2000);
+
 	}
 	// Beschäftigungsmeldung verstecken
 	$("#exportieren_exportieren_hinweis_text")
@@ -4118,7 +4133,9 @@ window.adb.exportZuruecksetzen = function() {
 	}
 	$("#exportieren_exportieren_tabelle").hide();
 	$(".exportieren_exportieren_exportieren").hide();
-	$("#exportieren_exportieren_error_text").alert().css("display", "none");
+	$("#exportieren_exportieren_error_text")
+        .alert()
+        .css("display", "none");
 };
 
 window.adb.oeffneGruppe = function(Gruppe) {

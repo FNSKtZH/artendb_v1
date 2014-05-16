@@ -752,7 +752,10 @@
 								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, auch auf alten Browsern)</button>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
 								<div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
-								<div id="exportieren_exportieren_error_text" class="alert alert-danger"></div>
+								<div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <span id="exportieren_exportieren_error_text_text"></span>
+								</div>
 							</div><!--panel-body-->
 						</div><!--panel-collapse-->
 					</div><!--panel-->
@@ -1379,23 +1382,6 @@
 				</div>
 				<div class="modal-body">
 					<p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="meldung_keine_exportdaten" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3>Keine Daten gewählt</h3>
-				</div>
-				<div class="modal-body">
-					<p>Es gibt keine Daten, die exportiert werden könnten.<br>Bitte prüfen Sie die Filterkriterien</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
