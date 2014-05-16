@@ -11,7 +11,6 @@ function(head, req) {
 	var row,
         objekt,
 		export_objekte = [],
-		export_objekt,
 		filterkriterien = [],
 		filterkriterien_objekt = {"filterkriterien": []},
 		felder = [],
@@ -192,9 +191,8 @@ function(head, req) {
 
 			if (objekt_hinzufügen && !objekt_nicht_hinzufügen) {
 				// alle Kriterien sind erfüllt
-                var return_objekt = adb.erstelleExportobjekt(objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, export_objekte);
-                export_objekt = return_objekt.export_objekt;
-                export_objekte = return_objekt.export_objekte;
+                // jetzt das Exportobjekt aufbauen
+                export_objekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, export_objekte);
 			}
 
 			// arrays für sammlungen aus synonymen zurücksetzen

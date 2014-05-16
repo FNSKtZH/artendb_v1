@@ -4,44 +4,46 @@ exports.erstelleExportString = function(exportobjekte) {
 	var stringTitelzeile = "",
 		stringZeilen = "",
 		stringZeile;
-    _.each(exportobjekte, function(exportobjekt) {
-        // aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
-        // daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
-        if (stringTitelzeile === "" || stringTitelzeile === ",") {
-            stringTitelzeile = "";
-            // durch Spalten loopen
-            _.each(exportobjekt, function(feldwert, feldname) {
-                if (stringTitelzeile !== "") {
-                    stringTitelzeile += ',';
-                }
-                stringTitelzeile += '"' + feldname + '"';
-            });
-        }
+    if (exportobjekte && exportobjekte.length > 0) {
+        _.each(exportobjekte, function (exportobjekt) {
+            // aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
+            // daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
+            if (stringTitelzeile === "" || stringTitelzeile === ",") {
+                stringTitelzeile = "";
+                // durch Spalten loopen
+                _.each(exportobjekt, function (feldwert, feldname) {
+                    if (stringTitelzeile !== "") {
+                        stringTitelzeile += ',';
+                    }
+                    stringTitelzeile += '"' + feldname + '"';
+                });
+            }
 
-        if (stringZeilen !== "") {
-            stringZeilen += '\n';
-        }
-        stringZeile = "";
-        // durch die Felder loopen
-        _.each(exportobjekt, function(feldwert) {
-            if (stringZeile !== "") {
-                stringZeile += ',';
+            if (stringZeilen !== "") {
+                stringZeilen += '\n';
             }
-            // null-Werte als leere Werte
-            if (feldwert === null) {
-                stringZeile += "";
-            } else if (typeof feldwert === "number") {
-                // Zahlen ohne Anführungs- und Schlusszeichen exportieren
-                stringZeile += feldwert;
-            } else if (typeof feldwert === "object") {
-                // Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
-                stringZeile += '"' + JSON.stringify(feldwert).replace(/"/g, "'") + '"';
-            } else {
-                stringZeile += '"' + feldwert + '"';
-            }
+            stringZeile = "";
+            // durch die Felder loopen
+            _.each(exportobjekt, function (feldwert) {
+                if (stringZeile !== "") {
+                    stringZeile += ',';
+                }
+                // null-Werte als leere Werte
+                if (feldwert === null) {
+                    stringZeile += "";
+                } else if (typeof feldwert === "number") {
+                    // Zahlen ohne Anführungs- und Schlusszeichen exportieren
+                    stringZeile += feldwert;
+                } else if (typeof feldwert === "object") {
+                    // Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
+                    stringZeile += '"' + JSON.stringify(feldwert).replace(/"/g, "'") + '"';
+                } else {
+                    stringZeile += '"' + feldwert + '"';
+                }
+            });
+            stringZeilen += stringZeile;
         });
-        stringZeilen += stringZeile;
-    });
+    }
 	return stringTitelzeile + "\n" + stringZeilen;
 };
 
@@ -49,24 +51,26 @@ exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergl
 	// Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
 	// wessen Name die Bedingung erfüllt
 	var bezPartner = [];
-    _.each(beziehungspartner, function(partner) {
-        var feldwert = partner.Name.toLowerCase();
-        if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
-            bezPartner.push(partner);
-        } else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
-            bezPartner.push(partner);
-        }
-    });
+    if (beziehungspartner && beziehungspartner.length > 0) {
+        _.each(beziehungspartner, function (partner) {
+            var feldwert = partner.Name.toLowerCase();
+            if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
+                bezPartner.push(partner);
+            } else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
+                bezPartner.push(partner);
+            }
+        });
+    }
 	return bezPartner;
 };
 
@@ -146,32 +150,34 @@ exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterk
         bs_mit_name,
         bez_mit_feldname,
         ds_mit_name;
-    _.each(felder, function(feld) {
-        ds_typ = feld.DsTyp;
-        DsName_z = feld.DsName;
-        feldname = feld.Feldname;
-        if (ds_typ === "Beziehung") {
-            // suche Beziehungssammlung mit DsName_z
-            bs_mit_name = _.find(Objekt.Beziehungssammlungen, function(beziehungssammlung) {
-                return beziehungssammlung.Name === DsName_z;
-            });
-            if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
-                // suche Feld feldname
-                bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function(beziehung) {
-                    return beziehung[feldname] || beziehung[feldname] === 0;
+    if (felder && felder.length > 0) {
+        _.each(felder, function (feld) {
+            ds_typ = feld.DsTyp;
+            DsName_z = feld.DsName;
+            feldname = feld.Feldname;
+            if (ds_typ === "Beziehung") {
+                // suche Beziehungssammlung mit DsName_z
+                bs_mit_name = _.find(Objekt.Beziehungssammlungen, function (beziehungssammlung) {
+                    return beziehungssammlung.Name === DsName_z;
                 });
-                hinzufügen = !!bez_mit_feldname;
+                if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
+                    // suche Feld feldname
+                    bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function (beziehung) {
+                        return beziehung[feldname] || beziehung[feldname] === 0;
+                    });
+                    hinzufügen = !!bez_mit_feldname;
+                }
+            } else if (ds_typ === "Datensammlung") {
+                // das ist ein Feld aus einer Datensammlung
+                // suche Datensammlung mit Name = DsName_z
+                ds_mit_name = _.find(Objekt.Datensammlungen, function (datensammlung) {
+                    return datensammlung.Name === DsName_z;
+                });
+                // hinzufügen, wenn Feld mit feldname existiert und es Daten enthält
+                hinzufügen = (ds_mit_name && typeof ds_mit_name.Daten !== "undefined" && typeof ds_mit_name.Daten[feldname] !== "undefined");
             }
-        } else if (ds_typ === "Datensammlung") {
-            // das ist ein Feld aus einer Datensammlung
-            // suche Datensammlung mit Name = DsName_z
-            ds_mit_name = _.find(Objekt.Datensammlungen, function(datensammlung) {
-                return datensammlung.Name === DsName_z;
-            });
-            // hinzufügen, wenn Feld mit feldname existiert und es Daten enthält
-            hinzufügen = (ds_mit_name && typeof ds_mit_name.Daten !== "undefined" && typeof ds_mit_name.Daten[feldname] !== "undefined");
-        }
-    });
+        });
+    }
 
     // nicht hinzufügen, wenn ein Filter gesetzt wurde und keine Daten aus BS oder DS enthalten sind
     objekt_nicht_hinzufügen = (filterkriterien.length > 0 && !hinzufügen);
@@ -275,25 +281,27 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                         if (objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
                             feld_existiert = false;
                             feld_hinzugefügt = false;
-                            _.each(objekt.Beziehungssammlungen[g].Beziehungen, function(beziehung) {
-                                // durch die Felder der Beziehung loopen
-                                if (beziehung[feldname] || beziehung[feldname] === 0) {
-                                    feld_existiert = true;
-                                    // Beziehungspartner sind Objekte und müssen separat gefiltert werden
-                                    if (feldname === "Beziehungspartner") {
-                                        var bezPartner = exports.filtereBeziehungspartner(feldwert, filterwert, vergleichsoperator);
-                                        if (bezPartner.length > 0) {
-                                            objekt_hinzufügen = true;
-                                            feld_hinzugefügt = true;
-                                        }
-                                    } else {
-                                        if (exports.beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
-                                            objekt_hinzufügen = true;
-                                            feld_hinzugefügt = true;
+                            if (objekt.Beziehungssammlungen[g].Beziehungen && objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
+                                _.each(objekt.Beziehungssammlungen[g].Beziehungen, function (beziehung) {
+                                    // durch die Felder der Beziehung loopen
+                                    if (beziehung[feldname] || beziehung[feldname] === 0) {
+                                        feld_existiert = true;
+                                        // Beziehungspartner sind Objekte und müssen separat gefiltert werden
+                                        if (feldname === "Beziehungspartner") {
+                                            var bezPartner = exports.filtereBeziehungspartner(feldwert, filterwert, vergleichsoperator);
+                                            if (bezPartner.length > 0) {
+                                                objekt_hinzufügen = true;
+                                                feld_hinzugefügt = true;
+                                            }
+                                        } else {
+                                            if (exports.beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
+                                                objekt_hinzufügen = true;
+                                                feld_hinzugefügt = true;
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+                            }
                             if (feld_existiert && !feld_hinzugefügt) {
                                 objekt_nicht_hinzufügen = true;
                                 break loop_filterkriterien;
@@ -347,32 +355,34 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         // hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
         // wenn ja und Feld aus DS/BS: objekt_hinzufügen = true;
         // wenn nein, soll der Datensatz ja nicht exportiert werden
-        _.each(felder, function(feld) {
-            ds_typ = feld.DsTyp;
-            ds_name = feld.DsName;
-            feldname = feld.Feldname;
-            if (ds_typ === "Beziehung") {
-                // Beziehungssammlungen mit Namen = ds_name suchen
-                var bs_mit_name = _.find(objekt.Beziehungssammlungen, function(beziehungssammlung) {
-                    return beziehungssammlung.Name === ds_name;
-                });
-                // Beziehung mit dem gesuchten Feld feldname suchen
-                if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
-                    var bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function(beziehung) {
-                        return !!beziehung[feldname];
+        if (felder && felder.length > 0) {
+            _.each(felder, function (feld) {
+                ds_typ = feld.DsTyp;
+                ds_name = feld.DsName;
+                feldname = feld.Feldname;
+                if (ds_typ === "Beziehung") {
+                    // Beziehungssammlungen mit Namen = ds_name suchen
+                    var bs_mit_name = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
+                        return beziehungssammlung.Name === ds_name;
                     });
-                    objekt_hinzufügen = !!bez_mit_feldname;
+                    // Beziehung mit dem gesuchten Feld feldname suchen
+                    if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
+                        var bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function (beziehung) {
+                            return !!beziehung[feldname];
+                        });
+                        objekt_hinzufügen = !!bez_mit_feldname;
+                    }
+                } else if (ds_typ === "Datensammlung") {
+                    // das ist ein Feld aus einer Datensammlung
+                    // suchen, ob im objekt die gesuchte Datensammlung vorkommt und eine solches Feld mit Daten enthält
+                    var ds_mit_feld = _.find(objekt.Datensammlungen, function (datensammlung) {
+                        return datensammlung.Name === ds_name && typeof datensammlung.Daten !== "undefined" && typeof datensammlung.Daten[feldname] !== "undefined";
+                    });
+                    // wenn das Feld vorkommt, exportieren
+                    objekt_hinzufügen = !!ds_mit_feld;
                 }
-            } else if (ds_typ === "Datensammlung") {
-                // das ist ein Feld aus einer Datensammlung
-                // suchen, ob im objekt die gesuchte Datensammlung vorkommt und eine solches Feld mit Daten enthält
-                var ds_mit_feld = _.find(objekt.Datensammlungen, function(datensammlung) {
-                    return datensammlung.Name === ds_name && typeof datensammlung.Daten !== "undefined" && typeof datensammlung.Daten[feldname] !== "undefined";
-                });
-                // wenn das Feld vorkommt, exportieren
-                objekt_hinzufügen = !!ds_mit_feld;
-            }
-        });
+            });
+        }
     }
     return_object.objektHinzufügen = objekt_hinzufügen;
     return_object.objekt_nicht_hinzufügen = objekt_nicht_hinzufügen;
@@ -380,32 +390,38 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
 };
 
 exports.bereiteFilterkriterienVor = function(filterkriterien) {
-    _.each(filterkriterien, function(filterkriterium) {
-        // die id darf nicht in Kleinschrift verwandelt werden
-        if (filterkriterium.Feldname !== "GUID") {
-            // true wurde offenbar irgendwie umgewandelt
-            // jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
-            // leider kann true oder false nicht wie gewollt von exports.convertToCorrectType zurückgegeben werden
-            if (filterkriterium.Filterwert === "true") {
-                filterkriterium.Filterwert = true;
-            } else if (filterkriterium.Filterwert === "false") {
-                filterkriterium.Filterwert = false;
-            } else {
-                filterkriterium.Filterwert = exports.convertToCorrectType(filterkriterium.Filterwert);
+    if (filterkriterien && filterkriterien.length > 0) {
+        _.each(filterkriterien, function (filterkriterium) {
+            // die id darf nicht in Kleinschrift verwandelt werden
+            if (filterkriterium.Feldname !== "GUID") {
+                // true wurde offenbar irgendwie umgewandelt
+                // jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
+                // leider kann true oder false nicht wie gewollt von exports.convertToCorrectType zurückgegeben werden
+                if (filterkriterium.Filterwert === "true") {
+                    filterkriterium.Filterwert = true;
+                } else if (filterkriterium.Filterwert === "false") {
+                    filterkriterium.Filterwert = false;
+                } else {
+                    filterkriterium.Filterwert = exports.convertToCorrectType(filterkriterium.Filterwert);
+                }
             }
-        }
-    });
+        });
+    }
     return filterkriterien;
 };
 
 // baut die Export-Objekte auf für alle export-lists
 // benötigt Objekt und felder
 // retourniert schon_kopiert und export_objekt
-exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte) {
+exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte) {
     var export_objekt = {},
-        schon_kopiert = false,
-        return_objekt = {};
+        schon_kopiert = false;
 
+    // es müssen Felder übergeben worden sein
+    // wenn nicht, aufhören
+    if (!felder || felder.length === 0) {
+        return {};
+    }
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
     _.each(objekt, function(feldwert, feldname) {
         if (typeof feldwert !== "Object" && feldname !== "_rev") {
@@ -462,8 +478,8 @@ exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_tax
         if (feld.DsTyp === "Beziehung") {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
             export_objekt[export_feldname] = "";
-            // wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
 
+            // wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
             if (feld.Feldname === "Beziehungspartner") {
                 // noch ein Feld hinzufügen
                 export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] = "";
@@ -475,16 +491,15 @@ exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_tax
                 var bs_mit_namen = _.find(objekt.Beziehungssammlungen, function(beziehungssammlung) {
                     return beziehungssammlung.Name && beziehungssammlung.Name === feld.DsName;
                 });
-                if (bs_mit_namen) {
-                    // durch Beziehungen loopen
+                if (bs_mit_namen && bs_mit_namen.Beziehungen && bs_mit_namen.Beziehungen.length > 0) {
+                    // Beziehungen, die exportiert werden sollen, in der Variablen "export_beziehungen" sammeln
+                    // durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
+                    var export_beziehungen = [];
                     _.each(bs_mit_namen.Beziehungen, function(beziehung) {
                         if (typeof beziehung[feld.Feldname] !== "undefined") {
                             // das gesuchte Feld kommt in dieser Beziehung vor
                             feldwert = exports.convertToCorrectType(beziehung[feld.Feldname]);
-                            // Beziehungen in der Variablen "export_beziehungen" sammeln
-                            // durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-                            var export_beziehungen = [];
-                            if (filterkriterien) {
+                            if (filterkriterien && filterkriterien.length > 0) {
                                 _.each(filterkriterien, function(filterkriterium) {
                                     var ds_typ = filterkriterium.DsTyp,
                                         ds_name = filterkriterium.DsName,
@@ -501,7 +516,7 @@ exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_tax
                                                 export_beziehungen.push(beziehung);
                                             }
                                         } else {
-                                            // jetzt müssen die verschiedenen möglichen Vergleichsoperatoren berücksichtigt werden
+                                            // jetzt müssen die möglichen Vergleichsoperatoren berücksichtigt werden
                                             if (vergleichsoperator === "kein" && feldwert == filterwert) {
                                                 export_beziehungen.push(beziehung);
                                             } else if (vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(filterwert) >= 0) {
@@ -527,77 +542,79 @@ exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_tax
                                     export_beziehungen.push(beziehung);
                                 }
                             }
-                            // jetzt unterscheiden, ob alle Treffer in einem Feld oder pro Treffer eine Zeile exportiert wird
-                            if (bez_in_zeilen) {
-                                // pro Treffer eine neue Zeile erstellen
-                                schon_kopiert = false;
-                                // durch Beziehungen loopen
-                                _.each(export_beziehungen, function(export_beziehung) {
-                                    // export_objekt kopieren
-                                    var objekt_kopiert = _.clone(export_objekt);
-                                    // durch die Felder der Beziehung loopen
-                                    _.each(export_beziehung, function(export_beziehung_feldwert, export_beziehung_feldname) {
-                                        if (export_beziehung_feldname === "Beziehungspartner") {
-                                            // zuerst die Beziehungspartner in JSON hinzufügen
-                                            objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] || [];
-                                            objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname].push(export_beziehung_feldwert);
-                                            // Reines GUID-Feld ergänzen
-                                            if (!objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                                objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = export_beziehung_feldwert[0].GUID;
-                                            } else {
-                                                objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + export_beziehung_feldwert[0].GUID;
-                                            }
-                                        } else {
-                                            // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                            if (!objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname]) {
-                                                objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_beziehung_feldwert;
-                                            } else {
-                                                objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] += ", " + export_beziehung_feldwert;
-                                            }
-                                        }
-                                    });
-                                    export_objekte.push(objekt_kopiert);
-                                    schon_kopiert = true;
-                                });
-                            } else {
-                                // jeden Treffer kommagetrennt in dasselbe Feld einfügen
-                                // durch Beziehungen loopen
-                                _.each(export_beziehungen, function(export_beziehung) {
-                                    // durch die Felder der Beziehung loopen
-                                    _.each(export_beziehung, function(feldwert, feldname) {
-                                        if (feldname === "Beziehungspartner") {
-                                            // zuerst die Beziehungspartner in JSON hinzufügen
-                                            if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                                export_objekt[feld.DsName + ": " + feldname] = [];
-                                            }
-                                            export_objekt[feld.DsName + ": " + feldname].push(feldwert);
-                                            // Reines GUID-Feld ergänzen
-                                            if (!export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                                export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
-                                            } else {
-                                                export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + feldwert[0].GUID;
-                                            }
-                                            // es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
-                                        } else if (typeof feldwert === "number") {
-                                            // Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
-                                            if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                                export_objekt[feld.DsName + ": " + feldname] = feldwert;
-                                            } else {
-                                                export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert;
-                                            }
-                                        } else {
-                                            // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                            if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                                export_objekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g,'\(Komma\)');
-                                            } else {
-                                                export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g,'\(Komma\)');
-                                            }
-                                        }
-                                    });
-                                });
-                            }
                         }
                     });
+                    if (export_beziehungen.length > 0) {
+                        // jetzt unterscheiden, ob alle Treffer in einem Feld oder pro Treffer eine Zeile exportiert wird
+                        if (bez_in_zeilen) {
+                            // pro Treffer eine neue Zeile erstellen
+                            schon_kopiert = false;
+                            // durch Beziehungen loopen
+                            _.each(export_beziehungen, function (export_beziehung) {
+                                // export_objekt kopieren
+                                var export_objekt_kopiert = _.clone(export_objekt);
+                                // durch die Felder der Beziehung loopen
+                                _.each(export_beziehung, function (export_beziehung_feldwert, export_beziehung_feldname) {
+                                    if (export_beziehung_feldname === "Beziehungspartner") {
+                                        // zuerst die Beziehungspartner in JSON hinzufügen
+                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] || [];
+                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname].push(export_beziehung_feldwert);
+                                        // Reines GUID-Feld ergänzen
+                                        if (!export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
+                                            export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = export_beziehung_feldwert[0].GUID;
+                                        } else {
+                                            export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + export_beziehung_feldwert[0].GUID;
+                                        }
+                                    } else {
+                                        // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
+                                        if (!export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname]) {
+                                            export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_beziehung_feldwert;
+                                        } else {
+                                            export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] += ", " + export_beziehung_feldwert;
+                                        }
+                                    }
+                                });
+                                export_objekte.push(export_objekt_kopiert);
+                                schon_kopiert = true;
+                            });
+                        } else {
+                            // jeden Treffer kommagetrennt in dasselbe Feld einfügen
+                            // durch Beziehungen loopen
+                            _.each(export_beziehungen, function (export_beziehung) {
+                                // durch die Felder der Beziehung loopen
+                                _.each(export_beziehung, function (feldwert, feldname) {
+                                    if (feldname === "Beziehungspartner") {
+                                        // zuerst die Beziehungspartner in JSON hinzufügen
+                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
+                                            export_objekt[feld.DsName + ": " + feldname] = [];
+                                        }
+                                        export_objekt[feld.DsName + ": " + feldname].push(feldwert);
+                                        // Reines GUID-Feld ergänzen
+                                        if (!export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
+                                            export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
+                                        } else {
+                                            export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + feldwert[0].GUID;
+                                        }
+                                        // es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
+                                    } else if (typeof feldwert === "number") {
+                                        // Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
+                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
+                                            export_objekt[feld.DsName + ": " + feldname] = feldwert;
+                                        } else {
+                                            export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert;
+                                        }
+                                    } else {
+                                        // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
+                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
+                                            export_objekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '\(Komma\)');
+                                        } else {
+                                            export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '\(Komma\)');
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    }
                 }
             }
         }
@@ -608,7 +625,5 @@ exports.erstelleExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_tax
         export_objekte.push(export_objekt);
     }
 
-    return_objekt.export_objekt = export_objekt;
-    return_objekt.export_objekte = export_objekte;
-    return return_objekt;
+    return export_objekte;
 };
