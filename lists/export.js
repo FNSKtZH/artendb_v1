@@ -1,18 +1,18 @@
 function(head, req) {
-	var row, Objekt,
-		exportObjekte = [],
-		exportObjekt,
+	var row,
+        objekt,
+		export_objekte = [],
+		export_objekt,
 		filterkriterien = [],
-		filterkriterienObjekt = {"filterkriterien": []},
+		filterkriterien_objekt = {"filterkriterien": []},
 		felder = [],
 		gruppen,
 		nur_ds,
 		bez_in_zeilen,
-		felderObjekt,
-		schonKopiert = false,
-		objektHinzufügen,
+		felder_objekt,
+		objekt_hinzufügen,
         _ = require("lists/lib/underscore"),
-        _adb = require("lists/lib/artendb_listfunctions");
+        adb = require("lists/lib/artendb_listfunctions");
 
 	// specify that we're providing a JSON response
 	provides('json', function() {
@@ -23,29 +23,15 @@ function(head, req) {
                 fasseTaxonomienZusammen = (value === 'true');
             }
             if (key === "filter") {
-                filterkriterienObjekt = JSON.parse(value);
-                filterkriterien = filterkriterienObjekt.filterkriterien;
+                filterkriterien_objekt = JSON.parse(value);
+                filterkriterien = filterkriterien_objekt.filterkriterien;
                 // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
                 // damit das später nicht dauern wiederholt werden muss
-                _.each(filterkriterien, function(filterkriterium) {
-                    // die id darf nicht in Kleinschrift verwandelt werden
-                    if (filterkriterium.Feldname !== "GUID") {
-                        // true wurde offenbar irgendwie umgewandelt
-                        // jedenfalls musste man als Kriterium 1 statt true erfassen, um die Resultate zu erhalten
-                        // leider kann true oder false nicht wie gewollt von _adb.convertToCorrectType zurückgegeben werden
-                        if (filterkriterium.Filterwert === "true") {
-                            filterkriterium.Filterwert = true;
-                        } else if (filterkriterium.Filterwert === "false") {
-                            filterkriterium.Filterwert = false;
-                        } else {
-                            filterkriterium.Filterwert = _adb.convertToCorrectType(filterkriterium.Filterwert);
-                        }
-                    }
-                });
+                filterkriterien = adb.bereiteFilterkriterienVor(filterkriterien);
             }
             if (key === "felder") {
-                felderObjekt = JSON.parse(value);
-                felder = felderObjekt.felder;
+                felder_objekt = JSON.parse(value);
+                felder = felder_objekt.felder;
             }
             if (key === "gruppen") {
                 gruppen = value.split(",");
@@ -61,35 +47,29 @@ function(head, req) {
         });
 
 		while (row = getRow()) {
-			Objekt = row.doc;
+			objekt = row.doc;
 
-            var obj_erfüllt_kriterien_returnvalue = _adb.prüfeObObjektKriterienErfüllt(Objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_ds);
-            objektHinzufügen = obj_erfüllt_kriterien_returnvalue.objektHinzufügen;
-            objektNichtHinzufügen = obj_erfüllt_kriterien_returnvalue.objektNichtHinzufügen;
+            var obj_kriterien_erfüllt_returnvalue = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_ds);
+            objekt_hinzufügen = obj_kriterien_erfüllt_returnvalue.objektHinzufügen;
+            objekt_nicht_hinzufügen = obj_kriterien_erfüllt_returnvalue.objekt_nicht_hinzufügen;
 
 			if (nur_ds) {
                 // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
                 // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
-                // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
+                // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objekt_hinzufügen = true
                 // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
-                var inf_enthalten_return_object = _adb.beurteileObInformationenEnthaltenSind(Objekt, felder, filterkriterien);
-                objektHinzufügen = inf_enthalten_return_object.objektHinzufügen;
-                objektNichtHinzufügen = inf_enthalten_return_object.objektNichtHinzufügen;
+                var inf_enthalten_return_object = adb.beurteileObInformationenEnthaltenSind(objekt, felder, filterkriterien);
+                objekt_hinzufügen = inf_enthalten_return_object.objektHinzufügen;
+                objekt_nicht_hinzufügen = inf_enthalten_return_object.objekt_nicht_hinzufügen;
 			}
 
-			if (objektHinzufügen && !objektNichtHinzufügen) {
+			if (objekt_hinzufügen && !objekt_nicht_hinzufügen) {
 				// alle Kriterien sind erfüllt
-                var return_objekt = _adb.erstelleExportobjekt(Objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, exportObjekte);
-                schonKopiert = return_objekt.schonKopiert;
-                exportObjekt = return_objekt.exportObjekt;
-                exportObjekte = return_objekt.exportObjekte;
-
-                // Objekt zu Exportobjekten hinzufügen - wenn nicht schon kopiert
-                if (!schonKopiert) {
-                    exportObjekte.push(exportObjekt);
-                }
+                var return_objekt = adb.erstelleExportobjekt(objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, export_objekte);
+                export_objekt = return_objekt.export_objekt;
+                export_objekte = return_objekt.export_objekte;
 			}
 		}
-		send(JSON.stringify(exportObjekte));
+		send(JSON.stringify(export_objekte));
 	});
 }

@@ -4042,18 +4042,6 @@ window.adb.isFileAPIAvailable = function() {
 	}
 };
 
-// übernimmt ein Objekt und einen Array
-// prüft, ob das Objekt im Array enthalten ist
-window.adb.containsObject = function(obj, list) {
-	var i;
-	for (i=0; i<list.length; i++) {
-		if (list[i] === obj) {
-			return true;
-		}
-	}
-	return false;
-};
-
 window.adb.sortiereObjektarrayNachName = function(objektarray) {
 	// Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
 	objektarray.sort(function(a, b) {
