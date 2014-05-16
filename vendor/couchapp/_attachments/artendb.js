@@ -2437,9 +2437,9 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		if (window.adb.DsId === "guid") {
 			$db.view('artendb/all_docs', {
 				success: function(data) {
+                    var name_des_id_felds = window.adb[dbs+"FelderId"];
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
-                        var name_des_id_felds = window.adb[dbs+"FelderId"];
                         if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
@@ -2464,22 +2464,24 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		} else {
 			$db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.DsId + '"]&endkey=["' + window.adb.DsId + '",{},{}]', {
 				success: function(data) {
+                    var name_des_id_felds = window.adb[dbs+"FelderId"];
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
-                        var name_des_id_felds = window.adb[dbs+"FelderId"];
                         if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
                             // prüfen, ob die ID zugeordnet werden kann
                             var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
-                                return objekt_row.key[2] == import_datensatz[name_des_id_felds];
+                                return objekt_row.key[2] === import_datensatz[name_des_id_felds];
                             });
                             if (zugehöriges_objekt) {
+                                //console.log("yeah, zugehörig");
                                 var Objekt = {};
                                 Objekt.Id = parseInt(import_datensatz[name_des_id_felds], 10);
                                 Objekt.Guid = zugehöriges_objekt.key[1];
                                 window.adb.ZuordbareDatensätze.push(Objekt);
                             } else {
+                                //console.log("hoppla, kein zugehöriges Objekt");
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
                                 IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
                             }
@@ -2664,7 +2666,8 @@ window.adb.importiereDatensammlung = function() {
         anzahl_felder = 0;
         _.each(ds_datensatz, function(feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
-            if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null) {
+            // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
+            if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
                 if (feldwert === -1) {
                     // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
                     datensammlung.Daten[feldname] = true;
