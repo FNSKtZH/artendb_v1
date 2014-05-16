@@ -288,7 +288,7 @@ window.adb.initiiereSuchfeld_2 = function() {
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
-		window.adb.oeffneBaumZuId(datum.id);
+		window.adb.öffneBaumZuId(datum.id);
 	});
 	$("#suchfeld"+window.adb.Gruppe).focus();
 };
@@ -368,7 +368,7 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 	});
 };
 
-window.adb.oeffneBaumZuId = function(id) {
+window.adb.öffneBaumZuId = function(id) {
 	// Hierarchie der id holen
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
@@ -649,7 +649,7 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
 	var html,
 		Name,
-		art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name) + altName;
+		art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name) + altName;
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
@@ -731,7 +731,7 @@ window.adb.erstelleHtmlFürDatensammlung = function(dsTyp, art, art_i) {
 		hierarchie_string,
 		array_string,
 		art_i_name;
-	art_i_name = window.adb.ersetzeUngueltigeZeichenInIdNamen(art_i.Name);
+	art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name);
 	// Accordion-Gruppe und -heading anfügen
 	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
@@ -2068,7 +2068,7 @@ window.adb.handleLrParentOptionenChange = function() {
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
 				$.when(window.adb.erstelleBaum()).then(function() {
-					window.adb.oeffneBaumZuId(object._id);
+					window.adb.öffneBaumZuId(object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
@@ -2945,7 +2945,7 @@ window.adb.importiereBeziehungssammlung = function() {
 					if (Beziehungen.length > 0) {
 						// Datenbankabfrage ist langsam. Extern aufrufen, 
 						// sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-						window.adb.fuegeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
+						window.adb.fügeBeziehungenZuObjekt(key, Beziehungssammlung, Beziehungen);
 					}
 				});
 
@@ -3224,22 +3224,20 @@ window.adb.fuegeDatensammlungZuObjekt = function(GUID, Datensammlung) {
 
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
-window.adb.fuegeBeziehungenZuObjekt = function(GUID, Beziehungssammlung, Beziehungen) {
+window.adb.fügeBeziehungenZuObjekt = function(guid, beziehungssammlung, beziehungen) {
 	$db = $.couch.db("artendb");
-	$db.openDoc(GUID, {
+	$db.openDoc(guid, {
 		success: function(doc) {
 			// prüfen, ob die Beziehung schon existiert
 			if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
 				var hinzugefügt = false,
 					i,
-					h,
-					a,
-					b;
+					h;
 				for (i in doc.Beziehungssammlungen) {
-					if (doc.Beziehungssammlungen[i].Name === Beziehungssammlung.Name) {
-						for (h=0; h<Beziehungen.length; h++) {
-							if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, Beziehungen[h])) {
-								doc.Beziehungssammlungen[i].Beziehungen.push(Beziehungen[h]);
+					if (doc.Beziehungssammlungen[i].Name === beziehungssammlung.Name) {
+						for (h=0; h<beziehungen.length; h++) {
+							if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, beziehungen[h])) {
+								doc.Beziehungssammlungen[i].Beziehungen.push(beziehungen[h]);
 							}
 						}
 						// Beziehungen nach Name sortieren
@@ -3250,24 +3248,24 @@ window.adb.fuegeBeziehungenZuObjekt = function(GUID, Beziehungssammlung, Beziehu
 				}
 				if (!hinzugefügt) {
 					// die Beziehungssammlung existiert noch nicht
-					Beziehungssammlung.Beziehungen = [];
-                    _.each(Beziehungen, function(beziehung) {
-                        Beziehungssammlung.Beziehungen.push(beziehung);
+					beziehungssammlung.Beziehungen = [];
+                    _.each(beziehungen, function(beziehung) {
+                        beziehungssammlung.Beziehungen.push(beziehung);
                     });
 					// Beziehungen nach Name sortieren
-					Beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
-					doc.Beziehungssammlungen.push(Beziehungssammlung);
+					beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
+					doc.Beziehungssammlungen.push(beziehungssammlung);
 				}
 			} else {
 				// Beziehungssammlung anfügen
-				Beziehungssammlung.Beziehungen = [];
-                _.each(Beziehungen, function(beziehung) {
-                    Beziehungssammlung.Beziehungen.push(beziehung);
+				beziehungssammlung.Beziehungen = [];
+                _.each(beziehungen, function(beziehung) {
+                    beziehungssammlung.Beziehungen.push(beziehung);
                 });
 				// Beziehungen nach Name sortieren
-				Beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(Beziehungssammlung.Beziehungen);
+				beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
 				doc.Beziehungssammlungen = [];
-				doc.Beziehungssammlungen.push(Beziehungssammlung);
+				doc.Beziehungssammlungen.push(beziehungssammlung);
 			}
 			// Beziehungssammlungen nach Name sortieren
 			doc.Beziehungssammlungen = window.adb.sortiereObjektarrayNachName(doc.Beziehungssammlungen);
@@ -3282,48 +3280,48 @@ window.adb.fuegeBeziehungenZuObjekt = function(GUID, Beziehungssammlung, Beziehu
 
 // übernimmt den Namen einer Datensammlung
 // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
-window.adb.entferneDatensammlungAusAllenObjekten = function(DsName) {
-	var DsEntfernt = $.Deferred();
+window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
+	var ds_entfernt = $.Deferred();
 	$db = $.couch.db("artendb");
-	$db.view('artendb/ds_guid?startkey=["' + DsName + '"]&endkey=["' + DsName + '",{}]', {
+	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
 		success: function(data) {
             _.each(data.rows, function(data_row) {
                 // guid und DsName übergeben
-                window.adb.entferneDatensammlungAusDokument(data_row.key[1], DsName);
+                window.adb.entferneDatensammlungAusDokument(data_row.key[1], ds_name);
             });
-			DsEntfernt.resolve();
+			ds_entfernt.resolve();
 		}
 	});
-	return DsEntfernt.promise();
+	return ds_entfernt.promise();
 };
 
 // übernimmt den Namen einer Beziehungssammlung
 // öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
-window.adb.entferneBeziehungssammlungAusAllenObjekten = function(BsName) {
-	var BsEntfernt = $.Deferred();
+window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
+	var bs_entfernt = $.Deferred();
 	$db = $.couch.db("artendb");
-	$db.view('artendb/bs_guid?startkey=["' + BsName + '"]&endkey=["' + BsName + '",{}]', {
+	$db.view('artendb/bs_guid?startkey=["' + bs_name + '"]&endkey=["' + bs_name + '",{}]', {
 		success: function(data) {
             _.each(data.rows, function(data_row) {
                 // guid und DsName übergeben
-                window.adb.entferneBeziehungssammlungAusDokument(data_row.key[1], BsName);
+                window.adb.entferneBeziehungssammlungAusDokument(data_row.key[1], bs_name);
             });
-			BsEntfernt.resolve();
+			bs_entfernt.resolve();
 		}
 	});
-	return BsEntfernt.promise();
+	return bs_entfernt.promise();
 };
 
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
-window.adb.entferneDatensammlungAusDokument = function(id, DsName) {
+window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Datensammlung entfernen
 			for (var i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name === DsName) {
+				if (doc.Datensammlungen[i].Name === ds_name) {
 					doc.Datensammlungen.splice(i,1);
 				}
 			}
@@ -3336,13 +3334,13 @@ window.adb.entferneDatensammlungAusDokument = function(id, DsName) {
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Beziehungssammlung, die zu entfernen ist
 // entfernt die Beziehungssammlung
-window.adb.entferneBeziehungssammlungAusDokument = function(id, BsName) {
+window.adb.entferneBeziehungssammlungAusDokument = function(id, bs_name) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Beziehungssammlung entfernen
 			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-				if (doc.Beziehungssammlungen[i].Name === BsName) {
+				if (doc.Beziehungssammlungen[i].Name === bs_name) {
 					doc.Beziehungssammlungen.splice(i,1);
 				}
 			}
@@ -3377,12 +3375,11 @@ window.adb.öffneUri = function() {
 				window.adb.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
 				// den richtigen Button aktivieren
-				//$("#Gruppe" + objekt.Gruppe).button('toggle');
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
 				$.when(window.adb.erstelleBaum()).then(function() {
-					window.adb.oeffneBaumZuId(id);
+					window.adb.öffneBaumZuId(id);
 				});
 			}
 		});
@@ -3391,131 +3388,121 @@ window.adb.öffneUri = function() {
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehungssammlungen) {
-	var html_felder_waehlen = '',
+	var html_felder_wählen = '',
 		html_filtern = '',
-		dsTyp,
-		i,
+		ds_typ,
 		x;
 	if (taxonomien && datensammlungen && beziehungssammlungen) {
-		dsTyp = "Taxonomie";
-		html_felder_waehlen += '<h3>Taxonomie</h3>';
+		ds_typ = "Taxonomie";
+		html_felder_wählen += '<h3>Taxonomie</h3>';
 		html_filtern += '<h3>Taxonomie</h3>';
 	} else if (taxonomien && datensammlungen) {
-		dsTyp = "Datensammlung";
-		html_felder_waehlen += '<h3>Datensammlungen</h3>';
+		ds_typ = "Datensammlung";
+		html_felder_wählen += '<h3>Datensammlungen</h3>';
 		html_filtern += '<h3>Datensammlungen</h3>';
 	} else {
-		dsTyp = "Beziehung";
+		ds_typ = "Beziehung";
 		// bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
 		// das muss auch erklärt sein
-		html_felder_waehlen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="radio"><label><input type="radio" id="export_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div><div class="well well-small" style="margin-top:9px;">Sie können aus zwei Varianten wählen:<ol><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Datensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div></div>';
+		html_felder_wählen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="radio"><label><input type="radio" id="export_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div><div class="well well-small" style="margin-top:9px;">Sie können aus zwei Varianten wählen:<ol><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Datensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div></div>';
 		html_filtern += '<h3>Beziehungssammlungen</h3>';
 	}
     _.each(taxonomien, function(taxonomie, index) {
         if (index > 0) {
-            html_felder_waehlen += '<hr>';
+            html_felder_wählen += '<hr>';
             html_filtern += '<hr>';
         }
-        html_felder_waehlen += '<h5>' + taxonomie.Name + '</h5>';
+        html_felder_wählen += '<h5>' + taxonomie.Name + '</h5>';
         // jetzt die checkbox um alle auswählen zu können
         // aber nur, wenn mehr als 1 Feld existieren
         if ((taxonomie.Daten && _.size(taxonomie.Daten) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
-            html_felder_waehlen += '<div class="checkbox"><label>';
-            html_felder_waehlen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
-            html_felder_waehlen += '</div></label>';
+            html_felder_wählen += '<div class="checkbox"><label>';
+            html_felder_wählen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
+            html_felder_wählen += '</div></label>';
         }
-        html_felder_waehlen += '<div class="felderspalte">';
+        html_felder_wählen += '<div class="felderspalte">';
         html_filtern += '<h5>' + taxonomie.Name + '</h5>';
         html_filtern += '<div class="felderspalte">';
         for (x in (taxonomie.Daten || taxonomie.Beziehungen)) {
             // felder wählen
-            html_felder_waehlen += '<div class="checkbox"><label>';
-            html_felder_waehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
-            html_felder_waehlen += '</div></label>';
+            html_felder_wählen += '<div class="checkbox"><label>';
+            html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
+            html_felder_wählen += '</div></label>';
             // filtern
             html_filtern += '<div class="form-group">';
-            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngueltigeZeichenInIdNamen(x) + '"';
+            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
             // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
             if (x.length > 28) {
                 html_filtern += ' style="padding-top:0px"';
             }
             html_filtern += '>'+ x +'</label>';
-            html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngueltigeZeichenInIdNamen(x) + '" DsTyp="'+dsTyp+'" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+            html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="'+ds_typ+'" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
             html_filtern += '</div>';
         }
         // Spalten abschliessen
-        html_felder_waehlen += '</div>';
+        html_felder_wählen += '</div>';
         html_filtern += '</div>';
     });
 	// linie voranstellen
-	html_felder_waehlen = '<hr>' + html_felder_waehlen;
+	html_felder_wählen = '<hr>' + html_felder_wählen;
 	html_filtern = '<hr>' + html_filtern;
 	if (beziehungssammlungen) {
-		$("#exportieren_felder_waehlen_felderliste").html(html_felder_waehlen);
+		$("#exportieren_felder_waehlen_felderliste").html(html_felder_wählen);
 		$("#exportieren_objekte_waehlen_ds_felderliste").html(html_filtern);
 		window.adb.erstelleExportfelder(datensammlungen, beziehungssammlungen);
 	} else if (datensammlungen) {
-		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+		$("#exportieren_felder_waehlen_felderliste").append(html_felder_wählen);
 		$("#exportieren_objekte_waehlen_ds_felderliste").append(html_filtern);
 		window.adb.erstelleExportfelder(datensammlungen);
 	} else {
-		$("#exportieren_felder_waehlen_felderliste").append(html_felder_waehlen);
+		$("#exportieren_felder_waehlen_felderliste").append(html_felder_wählen);
 		$("#exportieren_objekte_waehlen_ds_felderliste").append(html_filtern);
 	}
 };
 
 window.adb.erstelleExportString = function(exportobjekte) {
-	var stringTitelzeile = "",
-		stringZeilen = "",
-		stringZeile,
-		i,
-		a,
-		x;
+	var string_titelzeile = "",
+		string_zeilen = "",
+		string_zeile;
     _.each(exportobjekte, function(exportobjekt) {
         // aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
         // daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
-        if (stringTitelzeile === "" || stringTitelzeile === ",") {
-            stringTitelzeile = "";
+        if (string_titelzeile === "" || string_titelzeile === ",") {
+            string_titelzeile = "";
             // durch Spalten loopen
             _.each(exportobjekt, function(feld, index) {
-                if (stringTitelzeile !== "") {
-                    stringTitelzeile += ',';
+                if (string_titelzeile !== "") {
+                    string_titelzeile += ',';
                 }
-                stringTitelzeile += '"' + index + '"';
+                string_titelzeile += '"' + index + '"';
             });
-            /*for (a in exportobjekt) {
-                if (stringTitelzeile !== "") {
-                    stringTitelzeile += ',';
-                }
-                stringTitelzeile += '"' + a + '"';
-            }*/
         }
 
-        if (stringZeilen !== "") {
-            stringZeilen += '\n';
+        if (string_zeilen !== "") {
+            string_zeilen += '\n';
         }
-        stringZeile = "";
+        string_zeile = "";
         // durch die Felder loopen
         _.each(exportobjekt, function(feld) {
-            if (stringZeile !== "") {
-                stringZeile += ',';
+            if (string_zeile !== "") {
+                string_zeile += ',';
             }
             // null-Werte als leere Werte
             if (feld === null) {
-                stringZeile += "";
+                string_zeile += "";
             } else if (typeof feld === "number") {
                 // Zahlen ohne Anführungs- und Schlusszeichen exportieren
-                stringZeile += feld;
+                string_zeile += feld;
             } else if (typeof feld === "object") {
                 // Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
-                stringZeile += '"' + JSON.stringify(feld).replace(/"/g, "'") + '"';
+                string_zeile += '"' + JSON.stringify(feld).replace(/"/g, "'") + '"';
             } else {
-                stringZeile += '"' + feld + '"';
+                string_zeile += '"' + feld + '"';
             }
         });
-        stringZeilen += stringZeile;
+        string_zeilen += string_zeile;
     });
-	return stringTitelzeile + "\n" + stringZeilen;
+	return string_titelzeile + "\n" + string_zeilen;
 };
 
 // baut im Formular "export" die Liste aller Eigenschaften auf
@@ -4205,7 +4192,7 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							window.adb.initiiere_art(id);
 							// Taxonomie anzeigen
-							$('#' + window.adb.ersetzeUngueltigeZeichenInIdNamen(feldWert)).collapse('show');
+							$('#' + window.adb.ersetzeUngültigeZeichenInIdNamen(feldWert)).collapse('show');
 						} else {
 							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
@@ -4392,7 +4379,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	$db.saveDoc(object, {
 		success: function() {
 			$.when(window.adb.erstelleBaum()).then(function() {
-				window.adb.oeffneBaumZuId(object._id);
+				window.adb.öffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},
@@ -4601,7 +4588,7 @@ window.adb.ermittleVergleichsoperator = function(filterwert) {
 	return [vergleichsoperator, filterwert];
 };
 
-window.adb.ersetzeUngueltigeZeichenInIdNamen = function(idname) {
+window.adb.ersetzeUngültigeZeichenInIdNamen = function(idname) {
 	return idname.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 };
 
