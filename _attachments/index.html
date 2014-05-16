@@ -668,7 +668,7 @@
 								</div>
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" id="exportieren_nur_ds" checked>
+										<input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
 									<b>Nur Datensätze mit Informationen aus den im nächsten Schritt gewählten Daten- und Beziehungssammlungen exportieren.</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen aus Art/Lebensraum und Taxonomie enthalten.
 									</label>
 								</div>
@@ -1223,7 +1223,7 @@
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
                     .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
-                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_ds,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
+                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
                     .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
                         // den event hier stoppen, nicht erst in der Funktion

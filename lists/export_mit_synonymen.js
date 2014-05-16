@@ -15,7 +15,7 @@ function(head, req) {
 		filterkriterien_objekt = {"filterkriterien": []},
 		felder = [],
 		gruppen,
-		nur_ds,
+		nur_objekte_mit_eigenschaften,
 		bez_in_zeilen,
 		felder_objekt,
 		objekt_hinzufügen,
@@ -46,9 +46,9 @@ function(head, req) {
             if (key === "gruppen") {
                 gruppen = value.split(",");
             }
-            if (key === "nur_ds") {
+            if (key === "nur_objekte_mit_eigenschaften") {
                 // true oder false wird als String übergeben > umwandeln
-                nur_ds = (value == 'true');
+                nur_objekte_mit_eigenschaften = (value == 'true');
             }
             if (key === "bez_in_zeilen") {
                 // true oder false wird als String übergeben > umwandeln
@@ -151,11 +151,11 @@ function(head, req) {
                     }
                 });
 
-                var obj_kriterien_erfüllt_returnvalue = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_ds);
+                var obj_kriterien_erfüllt_returnvalue = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften);
                 objekt_hinzufügen = obj_kriterien_erfüllt_returnvalue.objektHinzufügen;
                 objekt_nicht_hinzufügen = obj_kriterien_erfüllt_returnvalue.objekt_nicht_hinzufügen;
 
-                if (nur_ds) {
+                if (nur_objekte_mit_eigenschaften) {
                     // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
                     // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
                     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objekt_hinzufügen = true

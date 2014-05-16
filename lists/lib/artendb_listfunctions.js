@@ -192,7 +192,7 @@ exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterk
     return return_object;
 };
 
-exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_ds) {
+exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
     var objekt_hinzufügen = false,
         objekt_nicht_hinzufügen = false,
         ds_typ,
@@ -210,7 +210,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
     objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
     // kein Filter aber nur Datensätze mit Infos aus DS/BS
-    objekt_hinzufügen = (filterkriterien.length === 0 && !nur_ds);
+    objekt_hinzufügen = (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften);
 
     loop_filterkriterien:
     for (var z=0; z<filterkriterien.length; z++) {
@@ -351,7 +351,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         }
     }
 
-    if (filterkriterien.length === 0 && nur_ds) {
+    if (filterkriterien.length === 0 && nur_objekte_mit_eigenschaften) {
         // hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
         // wenn ja und Feld aus DS/BS: objekt_hinzufügen = true;
         // wenn nein, soll der Datensatz ja nicht exportiert werden
