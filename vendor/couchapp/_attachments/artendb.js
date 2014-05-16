@@ -2709,7 +2709,7 @@ window.adb.importiereDatensammlung = function() {
 			}
 			// kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
 			if (guid) {
-				window.adb.fuegeDatensammlungZuObjekt(guid, Datensammlung);
+				window.adb.fügeDatensammlungZuObjekt(guid, Datensammlung);
             }
         }
     }
@@ -2849,7 +2849,7 @@ window.adb.importiereBeziehungssammlung = function() {
     });
 
 	// zuerst: Veranlassen, dass die Beziehungspartner in window.adb.bsDatensätze in einen Array der richtigen Form umgewandelt werden
-	$.when(window.adb.bereiteBeziehungspartnerFuerImportVor())
+	$.when(window.adb.bereiteBeziehungspartnerFürImportVor())
 		.then(function() {
 			setTimeout(function() {
 				anzBs = 0;
@@ -2969,28 +2969,39 @@ window.adb.importiereBeziehungssammlung = function() {
 	return BsImportiert.promise();
 };
 
-window.adb.bereiteBeziehungspartnerFuerImportVor = function() {
-	var alleBezPartner_array = [],
-		bezPartner_array,
-		bpVorbereitet = $.Deferred(),
+window.adb.bereiteBeziehungspartnerFürImportVor = function() {
+	var alle_bez_partner_array = [],
+		bez_partner_array,
+		beziehungspartner_vorbereitet = $.Deferred(),
 		x;
 	window.adb.bezPartner_objekt = {};
 
-	for (x in window.adb.bsDatensätze) {
+    _.each(window.adb.bsDatensätze, function(bs_datensatz) {
+        if (bs_datensatz.Beziehungspartner) {
+            // bs_datensatz.Beziehungspartner ist eine kommagetrennte Liste von guids
+            // diese Liste in Array verwandeln
+            bez_partner_array = bs_datensatz.Beziehungspartner.split(", ");
+            // und in window.adb.bsDatensätze nachführen
+            bs_datensatz.Beziehungspartner = bez_partner_array;
+            // und vollständige Liste aller Beziehungspartner nachführen
+            alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
+        }
+    });
+	/*for (x in window.adb.bsDatensätze) {
 		if (window.adb.bsDatensätze[x].Beziehungspartner) {
 			// window.adb.bsDatensätze[x].Beziehungspartner ist eine kommagetrennte Liste von guids
 			// diese Liste in Array verwandeln
-			bezPartner_array = window.adb.bsDatensätze[x].Beziehungspartner.split(", ");
+			bez_partner_array = window.adb.bsDatensätze[x].Beziehungspartner.split(", ");
 			// und in window.adb.bsDatensätze nachführen
-			window.adb.bsDatensätze[x].Beziehungspartner = bezPartner_array;
+			window.adb.bsDatensätze[x].Beziehungspartner = bez_partner_array;
 			// und vollständige Liste aller Beziehungspartner nachführen
-			alleBezPartner_array = _.union(alleBezPartner_array, bezPartner_array);
+			alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
 		}
-	}
+	}*/
 	// jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
 	// danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
 	$db = $.couch.db("artendb");
-	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alleBezPartner_array)) + '&include_docs=true', {
+	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
 		success: function(data) {
 			var objekt;
 			var bezPartner;
@@ -3013,8 +3024,8 @@ window.adb.bereiteBeziehungspartnerFuerImportVor = function() {
 			}
 		}
 	});
-	bpVorbereitet.resolve();
-	return bpVorbereitet.promise();
+	beziehungspartner_vorbereitet.resolve();
+	return beziehungspartner_vorbereitet.promise();
 };
 
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
@@ -3119,24 +3130,22 @@ window.adb.entferneDatensammlungAusObjekt = function(DsName, Objekt) {
 // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
 window.adb.entferneBeziehungssammlung = function() {
 	var guid_array = [],
-		guidArray = [],
 		guid,
-		BsName = $("#BsName").val(),
-		BsEntfernt = $.Deferred(),
-		x,
+		bs_name = $("#BsName").val(),
+		bs_entfernt = $.Deferred(),
 		q,
 		a,
 		batch = 150,
-		batchGrösse = 150;
-    _.each(window.adb.bsDatensätze, function(bsDatensatz) {
+		batch_grösse = 150;
+    _.each(window.adb.bsDatensätze, function(bs_datensatz) {
         // zuerst die id in guid übersetzen
         if (window.adb.BsId === "guid") {
             // die in der Tabelle mitgelieferte id ist die guid
-            guid = bsDatensatz.GUID;
+            guid = bs_datensatz.GUID;
         } else {
             for (q = 0; q < window.adb.ZuordbareDatensätze.length; q++) {
                 // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-                if (window.adb.ZuordbareDatensätze[q].Id == bsDatensatz[window.adb.BsFelderId]) {
+                if (window.adb.ZuordbareDatensätze[q].Id == bs_datensatz[window.adb.BsFelderId]) {
                     // und die guid auslesen
                     guid = window.adb.ZuordbareDatensätze[q].Guid;
                     break;
@@ -3154,48 +3163,48 @@ window.adb.entferneBeziehungssammlung = function() {
 	// aber batchweise
 	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
-			guidArray.push(guid_array[a]);
+			guid_array.push(guid_array[a]);
 			if (a === (batch-1)) {
-				window.adb.entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
-				guidArray = [];
-				batch += batchGrösse;
+				window.adb.entferneBeziehungssammlung_2(bs_name, guid_array, (a-batch_grösse));
+				guid_array = [];
+				batch += batch_grösse;
 			}
 		} else {
-			window.adb.entferneBeziehungssammlung_2(BsName, guidArray, (a-batchGrösse));
+			window.adb.entferneBeziehungssammlung_2(bs_name, guid_array, (a-batch_grösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
-			BsEntfernt.resolve();
+			bs_entfernt.resolve();
 			break;
 		}
 	}
-	return BsEntfernt.promise();
+	return bs_entfernt.promise();
 };
 
-window.adb.entferneBeziehungssammlung_2 = function(BsName, guidArray, a) {
+window.adb.entferneBeziehungssammlung_2 = function(bs_name, guid_array, verzögerungs_faktor) {
 	// alle docs holen
 	setTimeout(function() {
 		$db = $.couch.db("artendb");
-		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
+		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
 			success: function(data) {
-				var Objekt,
+				var objekt,
 					f;
                 _.each(data.rows, function(data_row) {
-                    Objekt = data_row.doc;
-                    window.adb.entferneBeziehungssammlungAusObjekt(BsName, Objekt);
+                    objekt = data_row.doc;
+                    window.adb.entferneBeziehungssammlungAusObjekt(bs_name, objekt);
                 });
 			}
 		});
-	}, a*40);
+	}, verzögerungs_faktor*40);
 };
 
-window.adb.entferneBeziehungssammlungAusObjekt = function(BsName, Objekt) {
-	if (Objekt.Beziehungssammlungen && Objekt.Beziehungssammlungen.length > 0) {
-		for (var i=0; i<Objekt.Beziehungssammlungen.length; i++) {
-			if (Objekt.Beziehungssammlungen[i].Name === BsName) {
-				Objekt.Beziehungssammlungen.splice(i,1);
+window.adb.entferneBeziehungssammlungAusObjekt = function(bs_name, objekt) {
+	if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
+		for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {
+			if (objekt.Beziehungssammlungen[i].Name === bs_name) {
+				objekt.Beziehungssammlungen.splice(i,1);
 				$db = $.couch.db("artendb");
-				$db.saveDoc(Objekt);
+				$db.saveDoc(objekt);
 				break;
 			}
 		}
@@ -3204,12 +3213,12 @@ window.adb.entferneBeziehungssammlungAusObjekt = function(BsName, Objekt) {
 
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
-window.adb.fuegeDatensammlungZuObjekt = function(GUID, Datensammlung) {
+window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
 	$db = $.couch.db("artendb");
-	$db.openDoc(GUID, {
+	$db.openDoc(guid, {
 		success: function(doc) {
 			// Datensammlung anfügen
-			doc.Datensammlungen.push(Datensammlung);
+			doc.Datensammlungen.push(datensammlung);
 			// sortieren
 			// Datensammlungen nach Name sortieren
 			doc.Datensammlungen = window.adb.sortiereObjektarrayNachName(doc.Datensammlungen);
