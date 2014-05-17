@@ -1349,7 +1349,7 @@ window.adb.validiereUserAnmeldung = function(woher) {
 // und sie nicht zusammenfassend ist
 window.adb.handleBsNameChange = function() {
 	var that = this,
-		bs_key = _.find(window.adb.bs_namen_eindeutig, function(key) {
+		bs_key = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		});
 	if (bs_key) {
@@ -1752,7 +1752,12 @@ window.adb.handleDsWählenChange = function() {
         x,
         $DsAnzDs = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
-        $DsName = $("#DsName");
+        $DsName = $("#DsName"),
+        $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error");
+    // allfälligen Alert schliessen
+    $importieren_ds_ds_beschreiben_error
+        .alert()
+        .css("display", "none");
 	if (wählbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
@@ -1808,6 +1813,12 @@ window.adb.handleDsWählenChange = function() {
 	} else {
 		// melden, dass diese DS nicht bearbeitet werden kann
 		$('#meldung_ds_nicht_bearbeitbar').modal();
+        // melden, dass diese BS nicht bearbeitet werden kann
+        $("#importieren_ds_ds_beschreiben_error_text")
+            .html("Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.");
+        $importieren_ds_ds_beschreiben_error
+            .alert()
+            .css("display", "block");
 	}
 };
 
@@ -1817,7 +1828,7 @@ window.adb.handleDsWählenChange = function() {
 // und sie nicht zusammenfassend ist
 window.adb.handleDsNameChange = function() {
 	var that = this,
-		DsKey = _.find(window.adb.bs_namen_eindeutig, function(key) {
+		DsKey = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		}),
         $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
@@ -3941,11 +3952,11 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 	}
     // brauche nur drei keys
     // email: leider gibt es Null-Werte
-    window.adb.bs_namen_eindeutig = _.map(window.adb.DsKeys, function(ds_key) {
+    window.adb.ds_namen_eindeutig = _.map(window.adb.DsKeys, function(ds_key) {
         return [ds_key[1], ds_key[2], ds_key[3] || "alex@gabriel-software.ch"];
     });
     // Objektarray reduzieren auf eindeutige Namen
-    window.adb.bs_namen_eindeutig = _.reject(window.adb.bs_namen_eindeutig, function(objekt) {
+    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function(objekt) {
         var position_in_ds_namen = _.indexOf(ds_namen, objekt[0]);
         if (position_in_ds_namen === -1) {
             ds_namen.push(objekt[0]);
@@ -3955,20 +3966,20 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
         }
     });
     // nach DsNamen sortieren
-    window.adb.bs_namen_eindeutig = _.sortBy(window.adb.bs_namen_eindeutig, function(key) {
+    window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function(key) {
         return key[0];
     });
 	// mit leerer Zeile beginnen
-	html = "<option value=''></option>";
+	html = "<option value='' waehlbar=true></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.bs_namen_eindeutig) {
+	for (z in window.adb.ds_namen_eindeutig) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.bs_namen_eindeutig[z][2] === localStorage.Email || window.adb.bs_namen_eindeutig[z][1]) {
+		if (window.adb.ds_namen_eindeutig[z][2] === localStorage.Email || window.adb.ds_namen_eindeutig[z][1]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
 		}
 	}
 	$("#DsWaehlen").html(html);
@@ -4012,11 +4023,11 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 	}
 
     // brauche nur drei keys
-    window.adb.bs_namen_eindeutig = _.map(window.adb.BsKeys, function(bs_key) {
+    window.adb.ds_namen_eindeutig = _.map(window.adb.BsKeys, function(bs_key) {
         return [bs_key[1], bs_key[2], bs_key[3]];
     });
     // Objektarray reduzieren auf eindeutige Namen
-    window.adb.bs_namen_eindeutig = _.reject(window.adb.bs_namen_eindeutig, function(objekt) {
+    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function(objekt) {
         var position_in_bs_namen = _.indexOf(bs_namen, objekt[0]);
         if (position_in_bs_namen === -1) {
             bs_namen.push(objekt[0]);
@@ -4027,20 +4038,20 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
     });
 
 	// nach DsNamen sortieren
-	window.adb.bs_namen_eindeutig = _.sortBy(window.adb.bs_namen_eindeutig, function(key) {
+	window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function(key) {
 		return key[0];
 	});
 	// mit leerer Zeile beginnen
 	html = "<option value='' waehlbar=true></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.bs_namen_eindeutig) {
+	for (z in window.adb.ds_namen_eindeutig) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.bs_namen_eindeutig[z][2] === localStorage.Email || window.adb.bs_namen_eindeutig[z][1]) {
+		if (window.adb.ds_namen_eindeutig[z][2] === localStorage.Email || window.adb.ds_namen_eindeutig[z][1]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
 		}
 	}
 	$("#BsWaehlen").html(html);

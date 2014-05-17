@@ -263,6 +263,10 @@
 									<div id="DsAnzDs" class="feldtext controls"></div>
 								</div>
 								<div id="importieren_ds_ds_beschreiben_hinweis_text2" class="alert alert-info"></div>
+                                <div id="importieren_ds_ds_beschreiben_error" class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_ds_ds_beschreiben_error_text"></div>
+                                </div>
 							</div>
 						</div>
 					</div>
@@ -1386,23 +1390,6 @@
 				</div>
 				<div class="modal-body">
 					<p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="meldung_ds_nicht_bearbeitbar" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3>leider nein...</h3>
-				</div>
-				<div class="modal-body">
-					<p>Sie können nur Datensammlungen verändern, die Sie selber importiert haben<br>Ausnahme: Zusammenfassende Datensammlungen</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
