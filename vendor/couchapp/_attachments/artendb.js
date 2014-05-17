@@ -1291,31 +1291,31 @@ window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
 // nein: retourniert false und öffnet die Anmeldung
 // welche anmeldung hängt ab, woher die Prüfung angefordert wurde
 // darum erwartet die Funktion den parameter woher
-window.adb.pruefeAnmeldung = function(woher) {
+window.adb.prüfeAnmeldung = function(woher) {
 	if (!localStorage.Email) {
 		setTimeout(function() {
-			window.adb.zurueckZurAnmeldung(woher);
+			window.adb.zurückZurAnmeldung(woher);
 		}, 600);
 		return false;
 	}
 	return true;
 };
 
-window.adb.zurueckZurAnmeldung = function(woher) {
-	var praefix = "importieren_";
+window.adb.zurückZurAnmeldung = function(woher) {
+	var präfix = "importieren_";
 
 	// Bei LR muss der Anmeldungsabschnitt eingeblendet werden
 	if (woher === "art") {
-		praefix = "";
+		präfix = "";
 		$("#art_anmelden").show();
 	}
 
 	// Mitteilen, dass Anmeldung nötig ist
-	$("#"+praefix+woher+"_anmelden_hinweis")
+	$("#"+präfix+woher+"_anmelden_hinweis")
         .alert()
         .css("display", "block");
-	$("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
-	$("#"+praefix+woher+"_anmelden_collapse").collapse('show');
+	$("#"+präfix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
+	$("#"+präfix+woher+"_anmelden_collapse").collapse('show');
 	$(".anmelden_btn").show();
 	$(".abmelden_btn").hide();
 	// ausschalten, soll später bei Organisationen möglich werden
@@ -1325,15 +1325,15 @@ window.adb.zurueckZurAnmeldung = function(woher) {
 };
 
 window.adb.validiereUserAnmeldung = function(woher) {
-	var Email = $('#Email_'+woher).val(),
-		Passwort = $('#Passwort_'+woher).val();
-	if (!Email) {
+	var email = $('#Email_'+woher).val(),
+		passwort = $('#Passwort_'+woher).val();
+	if (!email) {
 		setTimeout(function() {
 			$('#Email_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		$("#Emailhinweis_"+woher).css("display", "block");
 		return false;
-	} else if (!Passwort) {
+	} else if (!passwort) {
 		setTimeout(function() {
 			$('#Passwort_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
@@ -1349,10 +1349,10 @@ window.adb.validiereUserAnmeldung = function(woher) {
 // und sie nicht zusammenfassend ist
 window.adb.handleBsNameChange = function() {
 	var that = this,
-		BsKey = _.find(window.adb.BsKeys, function(key) {
-			return key[1] === that.value && key[3] !== localStorage.Email && !key[2];
+		bs_key = _.find(window.adb.bs_namen_eindeutig, function(key) {
+			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		});
-	if (BsKey) {
+	if (bs_key) {
 		$("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()
             .css("display", "block");
@@ -1422,66 +1422,73 @@ window.adb.handleDsZusammenfassendChange = function() {
 	}
 };
 
-// Wenn BsWaehlen geändert wird
-window.adb.handleBsWaehlenChange = function() {
-	var BsName = this.value,
-		waehlbar = $("#"+this.id+" option:selected").attr("waehlbar"),
-		i,
-        x,
+// Wenn BsWählen geändert wird
+window.adb.handleBsWählenChange = function() {
+	var bs_name = this.value,
+		wählbar = $("#"+this.id+" option:selected").attr("waehlbar"),
         $BsAnzDs = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
-        $BsName = $("#BsName");
-	if (waehlbar === "true") {
+        $BsName = $("#BsName"),
+        $importieren_bs_ds_beschreiben_error = $("#importieren_bs_ds_beschreiben_error");
+    // allfälligen Alert schliessen
+    $importieren_bs_ds_beschreiben_error
+        .alert()
+        .css("display", "none");
+	if (wählbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function() {
 			$(this).val('');
 		});
 		$BsAnzDs.html("");
 		$BsAnzDs_label.html("");
-		if (BsName) {
-			for (i in window.adb.bs_von_objekten.rows) {
-				if (window.adb.bs_von_objekten.rows[i].key[1] === BsName) {
-					$BsName.val(BsName);
-					for (x in window.adb.bs_von_objekten.rows[i].key[4]) {
-						if (x === "Ursprungsdatensammlung") {
-							$("#BsUrsprungsBs").val(window.adb.bs_von_objekten.rows[i].key[4][x]);
-						} else if (x !== "importiert von") {
-							$("#Bs" + x).val(window.adb.bs_von_objekten.rows[i].key[4][x]);
-						}
-					}
-					if (window.adb.bs_von_objekten.rows[i].key[2] === true) {
-						$("#BsZusammenfassend").prop('checked', true);
-						$("#BsUrsprungsBs_div").show();
-					} else {
-						// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
-						$("#BsZusammenfassend").prop('checked', false);
-						$("#BsUrsprungsBs_div").hide();
-					}
-					// wenn die ds/bs kein "importiert von" hat ist der Wert null
-					// verhindern, dass null angezeigt wird
-					if (window.adb.bs_von_objekten.rows[i].key[3]) {
-						$("#BsImportiertVon").val(window.adb.bs_von_objekten.rows[i].key[3]);
-					} else {
-						$("#BsImportiertVon").val("");
-					}
-					$BsAnzDs_label.html("Anzahl Arten/Lebensräume");
-					$BsAnzDs.html(window.adb.bs_von_objekten.rows[i].value);
-					// dafür sorgen, dass textareas genug gross sind
-					$('#importieren_bs').find('textarea').each(function() {
-						window.adb.FitToContent(this, document.documentElement.clientHeight);
-					});
-					$BsName.focus();
-				}
-				// löschen-Schaltfläche einblenden
-				$("#BsLoeschen").css("display", "block");
-			}
+		if (bs_name) {
+            _.each(window.adb.bs_von_objekten.rows, function(bs_row) {
+                if (bs_row.key[1] === bs_name) {
+                    $BsName.val(bs_name);
+                    _.each(bs_row, function(feldwert, feldname) {
+                        if (feldname === "Ursprungsdatensammlung") {
+                            $("#BsUrsprungsBs").val(feldwert);
+                        } else if (feldname !== "importiert von") {
+                            $("#Bs" + feldname).val(feldwert);
+                        }
+                    });
+                    if (bs_row.key[2] === true) {
+                        $("#BsZusammenfassend").prop('checked', true);
+                        $("#BsUrsprungsBs_div").show();
+                    } else {
+                        // sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
+                        $("#BsZusammenfassend").prop('checked', false);
+                        $("#BsUrsprungsBs_div").hide();
+                    }
+                    // wenn die ds/bs kein "importiert von" hat ist der Wert null
+                    // verhindern, dass null angezeigt wird
+                    if (bs_row.key[3]) {
+                        $("#BsImportiertVon").val(bs_row.key[3]);
+                    } else {
+                        $("#BsImportiertVon").val("");
+                    }
+                    $BsAnzDs_label.html("Anzahl Arten/Lebensräume");
+                    $BsAnzDs.html(bs_row.value);
+                    // dafür sorgen, dass textareas genug gross sind
+                    $('#importieren_bs').find('textarea').each(function() {
+                        window.adb.FitToContent(this, document.documentElement.clientHeight);
+                    });
+                    $BsName.focus();
+                }
+                // löschen-Schaltfläche einblenden
+                $("#BsLoeschen").css("display", "block");
+            });
 		} else {
 			// löschen-Schaltfläche ausblenden
 			$("#BsLoeschen").css("display", "none");
 		}
 	} else {
 		// melden, dass diese BS nicht bearbeitet werden kann
-		$('#meldung_bs_nicht_bearbeitbar').modal();
+        $("#importieren_bs_ds_beschreiben_error_text")
+            .html("Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Beziehungssammlungen.");
+        $importieren_bs_ds_beschreiben_error
+            .alert()
+            .css("display", "block");
 	}
 };
 
@@ -1587,7 +1594,7 @@ window.adb.handleDs_ImportierenClick = function() {
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (window.adb.pruefeAnmeldung("ds")) {
+		if (window.adb.prüfeAnmeldung("ds")) {
 			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1600,7 +1607,7 @@ window.adb.handleBs_ImportierenClick = function() {
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (window.adb.pruefeAnmeldung("bs")) {
+		if (window.adb.prüfeAnmeldung("bs")) {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1675,7 +1682,7 @@ window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("ds")) {
+	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	} else {
 		$('#DsFile').fileupload();
@@ -1687,7 +1694,7 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("bs")) {
+	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	} else {
 		$('#BsFile').fileupload();
@@ -1699,7 +1706,7 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("ds")) {
+	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1709,7 +1716,7 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("bs")) {
+	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1719,7 +1726,7 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("ds")) {
+	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1729,7 +1736,7 @@ window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
-	if (!window.adb.pruefeAnmeldung("bs")) {
+	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -3899,7 +3906,7 @@ window.adb.fuerExportGewaehlteGruppen = function() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
-	if (!window.adb.pruefeAnmeldung("woher")) {
+	if (!window.adb.prüfeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#DsName").focus();
@@ -3970,7 +3977,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
-	if (!window.adb.pruefeAnmeldung("woher")) {
+	if (!window.adb.prüfeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#BsName").focus();
@@ -4024,7 +4031,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 		return key[0];
 	});
 	// mit leerer Zeile beginnen
-	html = "<option value=''></option>";
+	html = "<option value='' waehlbar=true></option>";
 	// Namen der Datensammlungen als Optionen anfügen
 	for (z in window.adb.bs_namen_eindeutig) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
@@ -4281,7 +4288,7 @@ window.adb.myTypeOf = function(Wert) {
 
 window.adb.bearbeiteLrTaxonomie = function() {
 	// Benutzer muss anmelden
-	if (!window.adb.pruefeAnmeldung("art")) {
+	if (!window.adb.prüfeAnmeldung("art")) {
 		return false;
 	}
 
