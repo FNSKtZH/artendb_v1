@@ -132,6 +132,11 @@ body {
 	vertical-align: top;
 }
 
+/*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
+.adb-hidden {
+    display: none;
+}
+
 .baum .jstree-hovered, .baum .jstree-clicked {
 	border: 0;
 }
@@ -593,7 +598,11 @@ option {
 .well {
 	background-color: #FBFCF7;
 	padding: 9px 9px 4px 9px;
-	margin-bottom: 10px;
+	margin-bottom: 10px !important;
+}
+
+.last-well {
+    margin-bottom: 20px !important;
 }
 
 .well a {

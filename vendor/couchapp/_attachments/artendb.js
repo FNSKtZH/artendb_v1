@@ -1489,6 +1489,9 @@ window.adb.handleBsWählenChange = function() {
         $importieren_bs_ds_beschreiben_error
             .alert()
             .css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#BsWaehlen").offset().top
+        }, 2000);
 	}
 };
 
@@ -1819,6 +1822,9 @@ window.adb.handleDsWählenChange = function() {
         $importieren_ds_ds_beschreiben_error
             .alert()
             .css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#DsWaehlen").offset().top
+        }, 2000);
 	}
 };
 
@@ -3701,7 +3707,7 @@ window.adb.filtereFürExport = function(direkt) {
         $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text");
 
 	// kontrollieren, ob eine Gruppe gewählt wurde
-	if (window.adb.fuerExportGewaehlteGruppen().length === 0) {
+	if (window.adb.fürExportGewählteGruppen().length === 0) {
 		$('#meldung_keine_gruppen').modal();
 		return;
 	}
@@ -3905,7 +3911,7 @@ window.adb.baueTabelleFürExportAuf = function() {
         .css("display", "none");
 };
 
-window.adb.fuerExportGewaehlteGruppen = function() {
+window.adb.fürExportGewählteGruppen = function() {
 	var gruppen = [];
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {

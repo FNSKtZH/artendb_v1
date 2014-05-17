@@ -111,7 +111,7 @@
 						</div>
 						<div id="art_anmelden_collapse" class="panel-collapse collapse anmelden">
 							<div class="panel-body">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+								<div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
 								<div class="form-group">
 									<label class="control-label Email" for="Email_art">Email</label>
 									<input type="email" id="Email_art" class="controls form-control Email" placeholder="Email" required>
@@ -156,7 +156,7 @@
 						</div>
 						<div id="importieren_ds_anmelden_collapse" class="collapse importieren_anmelden_collapse anmelden">
 							<div class="panel-body">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+								<div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
 								<div class="form-group">
 									<label class="control-label Email" for="Email_ds">Email</label>
 									<input type="email" id="Email_ds" class="controls form-control Email" placeholder="Email" required>
@@ -196,9 +196,9 @@
 						</div>
 						<div class="panel-collapse collapse" id="importieren_ds_ds_beschreiben_collapse">
 							<div class="panel-body">
-								<div class="well well-small"><a href="//youtube.com/watch?v=tZIJ89Pj_sc" target="_blank">Screencast sehen</a></div>
-								<div class="well well-small">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen:
-									<ul>
+								<div class="well well-sm"><a href="//youtube.com/watch?v=tZIJ89Pj_sc" target="_blank">Screencast sehen</a></div>
+								<div class="well well-sm">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen <a href="#" class="show_next_hidden">...mehr</a>
+									<ul class="adb-hidden">
 										<li>Der Name sollte ungefähr dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li>
 										<li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li>
 										<li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn"</li>
@@ -208,15 +208,15 @@
 										<li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
 									</ul>
 								</div>
-								<div class="well well-small">Wenn eine zusammenfassende Datensammlung erstellt werden soll, sind die Daten zwei mal zu importieren:
-									<ul>
+								<div class="well well-sm">Für eine zusammenfassende Datensammlung sind die Daten zwei mal zu importieren <a href="#" class="show_next_hidden">...mehr</a>
+									<ul class="adb-hidden">
 										<li>zuerst in die Ursprungs-Datensammlung</li>
 										<li>dann in die zusammenfassende. Bitte die Ursprungs-Datensammlung angeben</li>
 										<li>Mehr Infos <a href="//github.com/FNSKtZH/artendb#zusammenfassende_datensammlungen" target="_blank">hier</a></li>
 									</ul>
 								</div>
-								<div class="well well-small">Autorenrechte beachten:
-									<ul>
+								<div class="well well-sm last-well">Autorenrechte beachten <a href="#" class="show_next_hidden">...mehr</a>
+									<ul class="adb-hidden">
 										<li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
 										<li>Dafür verantwortlich ist, wer Daten importiert</li>
 									</ul>
@@ -279,7 +279,7 @@
 						</div>
 						<div class="panel-collapse collapse" id="importieren_ds_daten_uploaden_collapse">
 							<div class="panel-body">
-								<div class="well well-small">Technische Anforderungen an die Datei:
+								<div class="well well-sm">Technische Anforderungen an die Datei:
 									<ul>
 										<li>Die erste Zeile enthält die Feldnamen</li>
 										<li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. die Eigenschaften für die betreffende Art oder den Lebensraum</li>
@@ -292,7 +292,7 @@
 										<li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="//de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
 									</ul>
 								</div>
-								<div class="well well-small">Inhaltliche Anforderungen:
+								<div class="well well-sm">Inhaltliche Anforderungen:
 									<ul>
 										<li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
 										<li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
@@ -369,7 +369,7 @@
 						</div>
 						<div id="importieren_bs_anmelden_collapse" class="collapse anmelden">
 							<div class="panel-body">
-								<div class="well well-small anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+								<div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
 								<div class="form-group">
 									<label class="control-label Email" for="Email_bs">Email</label>
 									<input type="email" id="Email_bs" class="controls form-control Email" placeholder="Email" required>
@@ -409,7 +409,7 @@
 						</div>
 						<div class="panel-collapse collapse" id="importieren_bs_ds_beschreiben_collapse">
 							<div class="panel-body">
-								<div class="well well-small">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen:
+								<div class="well well-sm">Bitte erleichtern Sie den Benutzern, Ihre Daten zu verstehen:
 									<ul>
 										<li>Der erste Teil des Namens sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Delarze (2008)"</li>
 										<li>Danach sollte der Namen die Art der Beziehung ausdrücken. Beispiel: "Delarze (2008): Art charakterisiert Lebensraum"</li>
@@ -421,13 +421,13 @@
 										<li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
 									</ul>
 								</div>
-								<div class="well well-small">Wenn eine zusammenfassende Beziehungssammlung erstellt werden soll, sind die Daten zwei mal zu importieren:
+								<div class="well well-sm">Wenn eine zusammenfassende Beziehungssammlung erstellt werden soll, sind die Daten zwei mal zu importieren:
 									<ul>
 										<li>zuerst in die Ursprungs-Beziehungssammlung</li>
 										<li>dann in die zusammenfassende. Bitte die Ursprungs-Beziehungssammlung angeben</li>
 									</ul>
 								</div>
-								<div class="well well-small">Autorenrechte beachten:
+								<div class="well well-sm">Autorenrechte beachten:
 									<ul>
 										<li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
 										<li>Dafür verantwortlich ist, wer Daten importiert</li>
@@ -497,7 +497,7 @@
 						</div>
 						<div class="panel-collapse collapse" id="importieren_bs_daten_uploaden_collapse">
 							<div class="panel-body">
-								<div class="well well-small">Technische Anforderungen an die Datei:
+								<div class="well well-sm">Technische Anforderungen an die Datei:
 									<ul>
 										<li>Die erste Zeile enthält die Feldnamen</li>
 										<li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. eine Beziehung für die betreffende Art oder den Lebensraum</li>
@@ -508,7 +508,7 @@
 										<li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
 									</ul>
 								</div>
-								<div class="well well-small">Inhaltliche Anforderungen:
+								<div class="well well-sm">Inhaltliche Anforderungen:
 									<ul>
 										<li>Um die zu beschreibende Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
 										<li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
@@ -588,7 +588,7 @@
 						</div>
 						<div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
 							<div class="panel-body">
-								<div class="well well-small">So geht's:
+								<div class="well well-sm">So geht's:
 									<ul>
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
 										<li>Danach werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
@@ -652,7 +652,7 @@
 						</div>
 						<div class="panel-collapse collapse" id="exportieren_objekte_waehlen_ds_collapse">
 							<div class="panel-body">
-								<div class="well well-small" style="margin-bottom:15px;">So geht's:
+								<div class="well well-sm" style="margin-bottom:15px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Erfassen Sie in den Eigenschaften Ihrer Wahl die gewünschten Kriterien...</li>
@@ -699,7 +699,7 @@
 						</div>
 						<div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="panel-body">
-								<div class="well well-small" style="margin-bottom:15px;">So geht's:
+								<div class="well well-sm" style="margin-bottom:15px;">So geht's:
 									<ul>
 										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
 										<li>Bestimmen Sie, ob Informationen von Synonymen mitgeliefert werden sollen...</li>
@@ -740,7 +740,7 @@
 						</div>
 						<div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
 							<div class="panel-body">
-								<div class="well well-small" style="margin-bottom:9px;">So geht's:
+								<div class="well well-sm" style="margin-bottom:9px;">So geht's:
 									<ul>
 										<li>Der Server filtert und baut die Exportdaten auf</li>
 										<li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
@@ -1119,7 +1119,23 @@
                     .on("click", "#btn_resize", window.adb.handleBtnResizeClick);
 
 				// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-				$("body").on("click", "#menu_btn", window.adb.handleMenuBtnClick);
+				$("body")
+                    .on("click", "#menu_btn", window.adb.handleMenuBtnClick)
+                    .on("click", ".show_next_hidden", function(event) {
+                        var that = this;
+                        event.preventDefault();
+                        var $element_to_show = $(this)
+                            .parent()
+                            .find(".adb-hidden")
+                            .first();
+                        if ($element_to_show.is(':visible')) {
+                            $element_to_show.hide(400);
+                            $(that).text("...mehr");
+                        } else {
+                            $element_to_show.show(400);
+                            $(that).text("...weniger");
+                        }
+                    });
 
 				$("#menu_btn")
                     // testen, ob der Browser das Importieren unterstützt
