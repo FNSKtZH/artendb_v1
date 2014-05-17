@@ -1810,7 +1810,7 @@ window.adb.handleDsWählenChange = function() {
 // und sie nicht zusammenfassend ist
 window.adb.handleDsNameChange = function() {
 	var that = this,
-		DsKey = _.find(window.adb.ds_namen_eindeutig, function(key) {
+		DsKey = _.find(window.adb.bs_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		}),
         $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
@@ -1834,7 +1834,7 @@ window.adb.handleDsNameChange = function() {
 	}
 };
 
-// wenn DsLoeschen geklickt wird
+// wenn DsLöschen geklickt wird
 window.adb.handleDsLöschenClick = function() {
     var $importieren_ds_ds_beschreiben_hinweis_text = $("#importieren_ds_ds_beschreiben_hinweis_text");
 	// Rückmeldung anzeigen
@@ -3934,11 +3934,11 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 	}
     // brauche nur drei keys
     // email: leider gibt es Null-Werte
-    window.adb.ds_namen_eindeutig = _.map(window.adb.DsKeys, function(ds_key) {
+    window.adb.bs_namen_eindeutig = _.map(window.adb.DsKeys, function(ds_key) {
         return [ds_key[1], ds_key[2], ds_key[3] || "alex@gabriel-software.ch"];
     });
     // Objektarray reduzieren auf eindeutige Namen
-    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function(objekt) {
+    window.adb.bs_namen_eindeutig = _.reject(window.adb.bs_namen_eindeutig, function(objekt) {
         var position_in_ds_namen = _.indexOf(ds_namen, objekt[0]);
         if (position_in_ds_namen === -1) {
             ds_namen.push(objekt[0]);
@@ -3948,20 +3948,20 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
         }
     });
     // nach DsNamen sortieren
-    window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function(key) {
+    window.adb.bs_namen_eindeutig = _.sortBy(window.adb.bs_namen_eindeutig, function(key) {
         return key[0];
     });
 	// mit leerer Zeile beginnen
 	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.ds_namen_eindeutig) {
+	for (z in window.adb.bs_namen_eindeutig) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.ds_namen_eindeutig[z][2] === localStorage.Email || window.adb.ds_namen_eindeutig[z][1]) {
+		if (window.adb.bs_namen_eindeutig[z][2] === localStorage.Email || window.adb.bs_namen_eindeutig[z][1]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
+			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
 		}
 	}
 	$("#DsWaehlen").html(html);
@@ -3995,28 +3995,45 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 	var i,
 		html,
-		z;
+		z,
+        bs_namen = [];
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.adb.BsKeys = [];
 	for (i=0; i< window.adb.bs_von_objekten.rows.length; i++) {
 		window.adb.BsKeys.push(window.adb.bs_von_objekten.rows[i].key);
 	}
+
+    // brauche nur drei keys
+    window.adb.bs_namen_eindeutig = _.map(window.adb.BsKeys, function(bs_key) {
+        return [bs_key[1], bs_key[2], bs_key[3]];
+    });
+    // Objektarray reduzieren auf eindeutige Namen
+    window.adb.bs_namen_eindeutig = _.reject(window.adb.bs_namen_eindeutig, function(objekt) {
+        var position_in_bs_namen = _.indexOf(bs_namen, objekt[0]);
+        if (position_in_bs_namen === -1) {
+            bs_namen.push(objekt[0]);
+            return false;
+        } else {
+            return true;
+        }
+    });
+
 	// nach DsNamen sortieren
-	window.adb.BsKeys = _.sortBy(window.adb.BsKeys, function(key) {
-		return key[1];
+	window.adb.bs_namen_eindeutig = _.sortBy(window.adb.bs_namen_eindeutig, function(key) {
+		return key[0];
 	});
 	// mit leerer Zeile beginnen
 	html = "<option value=''></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.BsKeys) {
+	for (z in window.adb.bs_namen_eindeutig) {
 		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.BsKeys[z][3] === localStorage.Email || window.adb.BsKeys[z][2]) {
+		if (window.adb.bs_namen_eindeutig[z][2] === localStorage.Email || window.adb.bs_namen_eindeutig[z][1]) {
 			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.BsKeys[z][1] + "' waehlbar=true>" + window.adb.BsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
 		} else {
 			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.BsKeys[z][1] + "' style='color:grey;' waehlbar=false>" + window.adb.BsKeys[z][1] + "</option>";
+			html += "<option value='" + window.adb.bs_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.bs_namen_eindeutig[z][0] + "</option>";
 		}
 	}
 	$("#BsWaehlen").html(html);
