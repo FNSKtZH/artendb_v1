@@ -1365,6 +1365,9 @@ window.adb.handleBsNameChange = function() {
 	if (bs_key) {
 		$("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()
+            .removeClass("alert-success")
+            .removeClass("alert-danger")
+            .addClass("alert-info")
             .css("display", "block");
 		$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
 		setTimeout(function() {
@@ -1403,6 +1406,9 @@ window.adb.handleBsImportiertVonChange = function() {
 	$("#BsImportiertVon").val(localStorage.Email);
 	$("#importieren_bs_ds_beschreiben_hinweis2")
         .alert()
+        .removeClass("alert-success")
+        .removeClass("alert-danger")
+        .addClass("alert-info")
         .css("display", "block");
 	$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
@@ -1439,9 +1445,9 @@ window.adb.handleBsWählenChange = function() {
         $BsAnzDs = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
         $BsName = $("#BsName"),
-        $importieren_bs_ds_beschreiben_error = $("#importieren_bs_ds_beschreiben_error");
+        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2");
     // allfälligen Alert schliessen
-    $importieren_bs_ds_beschreiben_error
+    $importieren_bs_ds_beschreiben_hinweis2
         .alert()
         .css("display", "none");
 	if (wählbar === "true") {
@@ -1494,10 +1500,13 @@ window.adb.handleBsWählenChange = function() {
 		}
 	} else {
 		// melden, dass diese BS nicht bearbeitet werden kann
-        $("#importieren_bs_ds_beschreiben_error_text")
+        $("#importieren_bs_ds_beschreiben_hinweis2_text")
             .html("Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Beziehungssammlungen.");
-        $importieren_bs_ds_beschreiben_error
+        $importieren_bs_ds_beschreiben_hinweis2
             .alert()
+            .removeClass("alert-success")
+            .removeClass("alert-info")
+            .addClass("alert-danger")
             .css("display", "block");
         $('html, body').animate({
             scrollTop: $("#BsWaehlen").offset().top
@@ -1890,12 +1899,18 @@ window.adb.handleBsLöschenClick = function() {
 	// Rückmeldung anzeigen
 	$("#importieren_bs_ds_beschreiben_hinweis")
         .alert()
+        .removeClass("alert-success")
+        .removeClass("alert-danger")
+        .addClass("alert-info")
         .css("display", "block");
 	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
 	$.when(window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
 		// jetzt Ergebnisse anzeigen
 		$("#importieren_bs_ds_beschreiben_hinweis")
             .alert()
+            .removeClass("alert-info")
+            .removeClass("alert-danger")
+            .addClass("alert-success")
             .css("display", "block");
 		$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");
 	});
