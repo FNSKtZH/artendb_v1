@@ -596,9 +596,11 @@ option {
 }
 
 .well {
-	background-color: #FBFCF7;
+	/*background-color: #FBFCF7 !important;*/
+    background-color: #FFFFF0 !important;
 	padding: 9px 9px 4px 9px;
 	margin-bottom: 10px !important;
+    /*background-color: rgba(255, 255, 240, 0) !important;*/
 }
 
 .last-well {

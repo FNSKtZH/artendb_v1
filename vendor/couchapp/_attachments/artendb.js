@@ -637,7 +637,9 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 		});
 	}
 	// jetzt die Links im Menu setzen
-	// TODO: unklar, wieso dies nochmals nötig ist, da von zeigeFormular schon gemacht
+	// wird zwar in zeigeFormular schon gemacht
+    // trotzdem nötig, weil dort erst mal leere links gesetzt werden
+    // hier wird die url angefügt
 	window.adb.setzteLinksZuBilderUndWikipedia(art);
 	// und die URL anpassen
 	history.pushState(null, null, "index.html?id=" + art._id);
@@ -1188,12 +1190,12 @@ window.adb.erstelleKonto = function(woher) {
 };
 
 window.adb.meldeUserAn = function(woher) {
-	var Email = $('#Email_'+woher).val(),
-		Passwort = $('#Passwort_'+woher).val();
+	var email = $('#Email_'+woher).val(),
+		passwort = $('#Passwort_'+woher).val();
 	if (window.adb.validiereUserAnmeldung(woher)) {
 		$.couch.login({
-			name : Email,
-			password : Passwort,
+			name : email,
+			password : passwort,
 			success : function(r) {
 				localStorage.Email = $('#Email_'+woher).val();
 				if (woher === "art") {
@@ -1215,13 +1217,13 @@ window.adb.meldeUserAn = function(woher) {
 				window.adb.blendeMenus();
 			},
 			error: function() {
-				var praefix = "importieren_";
+				var präfix = "importieren_";
 				if (woher === "art") {
-					praefix = "";
+					präfix = "";
 				}
 				// zuerst allfällige bestehende Hinweise ausblenden
 				$(".hinweis").css("display", "none");
-				$("#"+praefix+woher+"_anmelden_fehler_text")
+				$("#"+präfix+woher+"_anmelden_fehler_text")
                     .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
                     .alert()
 				    .css("display", "block");
@@ -1232,9 +1234,13 @@ window.adb.meldeUserAn = function(woher) {
 
 window.adb.blendeMenus = function() {
 	if (localStorage.admin) {
-		$("#menu_btn").find(".admin").show();
+		$("#menu_btn")
+            .find(".admin")
+            .show();
 	} else {
-		$("#menu_btn").find(".admin").hide();
+		$("#menu_btn")
+            .find(".admin")
+            .hide();
 	}
 };
 
@@ -1260,6 +1266,10 @@ window.adb.meldeUserAb = function() {
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
 	window.adb.schuetzeLrTaxonomie();
+    // falls dieser User admin war: vergessen
+    delete localStorage.admin;
+    // für diesen Nutzer passende Menus anzeigen
+    window.adb.blendeMenus();
 };
 
 window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
@@ -2499,13 +2509,11 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
                                 return objekt_row.key[2] === import_datensatz[name_des_id_felds];
                             });
                             if (zugehöriges_objekt) {
-                                //console.log("yeah, zugehörig");
                                 var Objekt = {};
                                 Objekt.Id = parseInt(import_datensatz[name_des_id_felds], 10);
                                 Objekt.Guid = zugehöriges_objekt.key[1];
                                 window.adb.ZuordbareDatensätze.push(Objekt);
                             } else {
-                                //console.log("hoppla, kein zugehöriges Objekt");
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
                                 IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
                             }
@@ -2623,9 +2631,7 @@ window.adb.importiereDatensammlung = function() {
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('longpoll-data', function(event, data) {
-        console.log("data.results = " + JSON.stringify(data.results));
         anzDsImportiert = anzDsImportiert + data.results.length;
-        console.log(anzDsImportiert + " Datensätze importiert");
         var prozent = Math.round(anzDsImportiert/anzDs*100);
         $("#DsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
         if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
@@ -3051,7 +3057,6 @@ window.adb.entferneDatensammlung = function() {
             // die in der Tabelle mitgelieferte id ist die guid
             guid = datensatz.GUID;
         } else {
-            console.log("getroffen");
             // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
             // und die guid auslesen
             guid = _.find(window.adb.ZuordbareDatensätze, function(datensatz) {
@@ -3398,6 +3403,8 @@ window.adb.öffneUri = function() {
 			}
 		});
 	}
+    // dafür sorgen, dass die passenden Menus angezeigt werden
+    window.adb.blendeMenus();
 };
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
