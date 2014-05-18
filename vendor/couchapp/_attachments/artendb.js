@@ -3384,6 +3384,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.ds_entfernt', function() {
                 anz_vorkommen_von_ds_entfernt++;
+                $importieren_ds_ds_beschreiben_hinweis_text.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
                 rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
                 $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
                 $('html, body').animate({
@@ -3395,6 +3396,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                     $db.view('artendb/lr', {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
+                            $importieren_ds_ds_beschreiben_hinweis_text.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
                             rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
                             rückmeldung += "Die Indexe wurden aktualisiert.";
                             $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
