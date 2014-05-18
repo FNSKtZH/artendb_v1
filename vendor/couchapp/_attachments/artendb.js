@@ -3053,12 +3053,46 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
 window.adb.entferneDatensammlung = function() {
 	var guid_array = [],
-        guid_array_2 = [];
+        guid_array_2 = [],
 		guid,
 		ds_entfernt = $.Deferred(),
 		a,
 		batch,
-		batch_grösse;
+		batch_grösse,
+        anz_vorkommen_von_ds = window.adb.ZuordbareDatensätze.length,
+        anz_vorkommen_von_ds_entfernt = 0,
+        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
+
+    // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
+    $(document).bind('adb.ds_entfernt', function() {
+        anz_vorkommen_von_ds_entfernt++;
+        var prozent = Math.round((anz_vorkommen_von_ds-anz_vorkommen_von_ds_entfernt)/anz_vorkommen_von_ds*100);
+        $("#DsImportierenProgressbar")
+            .css('width', prozent +'%')
+            .attr('aria-valuenow', prozent);
+        $("#DsImportierenProgressbarText").html(prozent + "%");
+        rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
+        $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+        $('html, body').animate({
+            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+        }, 2000);
+        if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
+            // die Indexe aktualisieren
+            $db = $.couch.db("artendb");
+            $db.view('artendb/lr', {
+                success: function() {
+                    // melden, dass Indexe aktualisiert wurden
+                    rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
+                    rückmeldung += "Die Indexe wurden neu aufgebaut.";
+                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+                    $('html, body').animate({
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+                    }, 2000);
+                }
+            });
+        }
+    });
+
     _.each(window.adb.dsDatensätze, function(datensatz) {
         // zuerst die id in guid übersetzen
         if (window.adb.DsId === "guid") {
@@ -3097,10 +3131,6 @@ window.adb.entferneDatensammlung = function() {
 			}
 		} else {
 			window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array_2, (a - batch_grösse));
-			// RückmeldungsLinks in Feld anzeigen:
-			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
-			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun ein Index neu aufgebaut werden muss.");
-			ds_entfernt.resolve();
 			break;
 		}
 	}
@@ -3124,7 +3154,6 @@ window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs
 };
 
 window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
-    console.log("entferneDatensammlungAusObjekt");
 	if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
         /* hat nicht funktioniert
         var datensammlung = _.find(Objekt.Datensammlungen, function(datensammlung) {
@@ -3138,6 +3167,9 @@ window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 				objekt.Datensammlungen.splice(i,1);
 				$db = $.couch.db("artendb");
 				$db.saveDoc(objekt);
+                // mitteilen, dass eine ds entfernt wurde
+                $(document).trigger('adb.ds_entfernt');
+                // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
 				break;
 			}
 		}
@@ -3312,41 +3344,39 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
 	var ds_entfernt = $.Deferred(),
         anz_vorkommen_von_ds,
         anz_vorkommen_von_ds_entfernt = 0,
-        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
-
-    // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-    $(document).bind('adb.ds_entfernt', function() {
-        anz_vorkommen_von_ds_entfernt++;
-        var prozent = Math.round(anz_vorkommen_von_ds/anz_vorkommen_von_ds_entfernt*100);
-        $("#DsImportierenProgressbar")
-            .css('width', prozent +'%')
-            .attr('aria-valuenow', prozent);
-        $("#DsImportierenProgressbarText").html(prozent + "%");
-        rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
-        $('html, body').animate({
-            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
-        }, 2000);
-        if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
-            // die Indexe aktualisieren
-            $db = $.couch.db("artendb");
-            $db.view('artendb/lr', {
-                success: function() {
-                    // melden, dass Indexe aktualisiert wurden
-                    rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
-                    rückmeldung += "Die Indexe wurden neu aufgebaut.";
-                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
-                    $('html, body').animate({
-                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
-                    }, 2000);
-                }
-            });
-        }
-    });
+        $importieren_ds_ds_beschreiben_hinweis_text = $("#importieren_ds_ds_beschreiben_hinweis_text");
 
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
 		success: function(data) {
             anz_vorkommen_von_ds = data.rows.length;
+
+            // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
+            $(document).bind('adb.ds_entfernt', function() {
+                anz_vorkommen_von_ds_entfernt++;
+                rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
+                $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
+                $('html, body').animate({
+                    scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
+                }, 2000);
+                if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
+                    // die Indexe aktualisieren
+                    $db = $.couch.db("artendb");
+                    $db.view('artendb/lr', {
+                        success: function() {
+                            // melden, dass Indexe aktualisiert wurden
+                            rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
+                            rückmeldung += "Die Indexe wurden neu aufgebaut.";
+                            $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
+                            $('html, body').animate({
+                                scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
+                            }, 2000);
+                        }
+                    });
+                }
+            });
+
+            // Datensammlungen entfernen
             _.each(data.rows, function(data_row) {
                 // guid und DsName übergeben
                 window.adb.entferneDatensammlungAusDokument(data_row.key[1], ds_name);
