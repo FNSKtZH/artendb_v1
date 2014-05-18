@@ -2,7 +2,7 @@ window.adb = window.adb || {};
 
 window.adb.erstelleBaum = function() {
 	var gruppe,
-		gruppenbezeichung,
+		gruppenbezeichnung,
 		baum_erstellt = $.Deferred();
 	// alle Bäume ausblenden
 	$(".baum").css("display", "none");
@@ -10,32 +10,32 @@ window.adb.erstelleBaum = function() {
 	$(".treeBeschriftung").css("display", "none");
 	// gewollte beschriften und sichtbar schalten
 	switch (window.adb.Gruppe) {
-		case "Fauna":
-			gruppe = "fauna";
-			gruppenbezeichung = "Tiere";
-			break;
-		case "Flora":
-			gruppe = "flora";
-			gruppenbezeichung = "Pflanzen";
-			break;
-		case "Moose":
-			gruppe = "moose";
-			gruppenbezeichung = "Moose";
-			break;
-		case "Macromycetes":
-			gruppe = "macromycetes";
-			gruppenbezeichung = "Pilze";
-			break;
-		case "Lebensräume":
-			gruppe = "lr";
-			gruppenbezeichung = "Lebensräume";
-			break;
+    case "Fauna":
+        gruppe = "fauna";
+        gruppenbezeichnung = "Tiere";
+        break;
+    case "Flora":
+        gruppe = "flora";
+        gruppenbezeichnung = "Pflanzen";
+        break;
+    case "Moose":
+        gruppe = "moose";
+        gruppenbezeichnung = "Moose";
+        break;
+    case "Macromycetes":
+        gruppe = "macromycetes";
+        gruppenbezeichnung = "Pilze";
+        break;
+    case "Lebensräume":
+        gruppe = "lr";
+        gruppenbezeichnung = "Lebensräume";
+        break;
 	}
 	$db = $.couch.db("artendb");
 	$db.view('artendb/' + gruppe + "_gruppiert", {
 		success: function(data) {
 			var anzahl_objekte = data.rows[0].value;
-			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichung);
+			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
 			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
 		}
 	});
@@ -134,21 +134,21 @@ window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
         url;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
 	switch (window.adb.Gruppe) {
-		case "Fauna":
-			gruppe = "fauna";
-			break;
-		case "Flora":
-			gruppe = "flora";
-			break;
-		case "Moose":
-			gruppe = "moose";
-			break;
-		case "Macromycetes":
-			gruppe = "macromycetes";
-			break;
-		case "Lebensräume":
-			gruppe = "lr";
-			break;
+    case "Fauna":
+        gruppe = "fauna";
+        break;
+    case "Flora":
+        gruppe = "flora";
+        break;
+    case "Moose":
+        gruppe = "moose";
+        break;
+    case "Macromycetes":
+        gruppe = "macromycetes";
+        break;
+    case "Lebensräume":
+        gruppe = "lr";
+        break;
 	}
 	if (window.adb.Gruppe === "Lebensräume") {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
@@ -171,62 +171,62 @@ window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id)
 		endkey = filter.slice();
 	}
 	switch (gruppe) {
-		case "fauna":
-			if (level > 4) {
-				return null;
-			}
-			for (a=5; a>=level; a--) {
-				endkey.push({});
-			}
-			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 4) {
-				// das ist die Art-Ebene
-				// hier soll die id angezeigt werden
-				// dazu muss der nächste level abgerufen werden
-				// damit die list den zu hohen level korrigieren kann, id mitgeben
-				id2 = true;
-				level++;
-			}
-			break;
-		case "flora":
-			if (level > 3) {
-				return null;
-			}
-			for (a=4; a>=level; a--) {
-				endkey.push({});
-			}
-			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 3) {
-				id2 = true;
-				level++;
-			}
-			break;
-		case "moose":
-			if (level > 4) {
-				return null;
-			}
-			for (a=5; a>=level; a--) {
-				endkey.push({});
-			}
-			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 4) {
-				id2 = true;
-				level++;
-			}
-			break;
-		case "macromycetes":
-			if (level > 2) {
-				return null;
-			}
-			for (a=3; a>=level; a--) {
-				endkey.push({});
-			}
-			// im untersten level einen level mehr anzeigen, damit id vorhanden ist
-			if (level === 2) {
-				id2 = true;
-				level++;
-			}
-			break;
+    case "fauna":
+        if (level > 4) {
+            return null;
+        }
+        for (a=5; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 4) {
+            // das ist die Art-Ebene
+            // hier soll die id angezeigt werden
+            // dazu muss der nächste level abgerufen werden
+            // damit die list den zu hohen level korrigieren kann, id mitgeben
+            id2 = true;
+            level++;
+        }
+        break;
+    case "flora":
+        if (level > 3) {
+            return null;
+        }
+        for (a=4; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 3) {
+            id2 = true;
+            level++;
+        }
+        break;
+    case "moose":
+        if (level > 4) {
+            return null;
+        }
+        for (a=5; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 4) {
+            id2 = true;
+            level++;
+        }
+        break;
+    case "macromycetes":
+        if (level > 2) {
+            return null;
+        }
+        for (a=3; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 2) {
+            id2 = true;
+            level++;
+        }
+        break;
 	}
 	if (gruppe === "lr") {
 		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=['+level+', "'+id+'"]&endkey=['+level+', "'+id+'",{},{},{},{}]&group_level=6';
@@ -271,20 +271,20 @@ window.adb.initiiereSuchfeld = function() {
 };
 
 window.adb.initiiereSuchfeld_2 = function() {
-	var suchObjekte;
+	var such_objekte;
 	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
-		suchObjekte = window.adb.filtere_lr.rows;
+		such_objekte = window.adb.filtere_lr.rows;
 	} else if (window.adb.Gruppe) {
-		suchObjekte = window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()].rows;
+		such_objekte = window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()].rows;
 	}
-	suchObjekte = _.map(suchObjekte, function(objekt) {
+	such_objekte = _.map(such_objekte, function(objekt) {
 		return objekt.value;
 	});
 
 	$('#suchfeld' + window.adb.Gruppe).typeahead({
 		name: window.adb.Gruppe,
 		valueKey: 'Name',
-		local: suchObjekte,
+		local: such_objekte,
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
@@ -304,7 +304,7 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 		success: function(lr) {
 			var taxonomie_objekte, 
 				object,
-				neueTaxonomie,
+				neue_taxonomie,
 				object_html,
 				html = "",
 				i;
@@ -337,11 +337,11 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 			taxonomie_objekte = _.sortBy(taxonomie_objekte, function(objekt) {
 				return objekt.Sortier;
 			});
-			neueTaxonomie = {};
-			neueTaxonomie.id = 0;
-			neueTaxonomie.Name = "Neue Taxonomie beginnen";
+			neue_taxonomie = {};
+			neue_taxonomie.id = 0;
+			neue_taxonomie.Name = "Neue Taxonomie beginnen";
 			// neueTaxonomie als erstes Objekt in den Array einfügen
-			taxonomie_objekte.unshift(neueTaxonomie);
+			taxonomie_objekte.unshift(neue_taxonomie);
 
 			// jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
 			for (i=0; i<taxonomie_objekte.length; i++) {
@@ -373,62 +373,62 @@ window.adb.öffneBaumZuId = function(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(objekt) {
-            var $filter_klasse = $("[filter='"+objekt.Taxonomie.Daten.Klasse+"']"),
+            var $filter_klasse = $("[filter='" + objekt.Taxonomie.Daten.Klasse + "']"),
                 $art_anmelden = $("#art_anmelden");
 			switch (objekt.Gruppe) {
-				case "Fauna":
-					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
-						$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+"']"), function() {
-							$.jstree._reference("#treeFauna").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Ordnung+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-								$.jstree._reference("#treeFauna").select_node($("#"+objekt._id), function() {}, false);
-							}, true);
-						}, true);
-					}, true);
-					// Anmeldung verstecken, wenn nicht Lebensräume
-					$art_anmelden.hide();
-					break;
-				case "Flora":
-					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+"']"), function() {
-						$.jstree._reference("#treeFlora").open_node($("[filter='"+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-							$.jstree._reference("#treeFlora").select_node($("#"+objekt._id), function() {}, false);
-						}, true);
-					}, true);
-					// Anmeldung verstecken, wenn nicht Lebensräume
-					$art_anmelden.hide();
-					break;
-				case "Moose":
-					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
-						$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-							$.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-								$.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
-							}, true);
-						}, true);
-					}, true);
-					// Anmeldung verstecken, wenn nicht Lebensräume
-					$art_anmelden.hide();
-					break;
-				case "Macromycetes":
-					// von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-					// oberste Ebene aufbauen nicht nötig, die gibt es schon
-					$.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
-						$.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
-					}, true);
-					// Anmeldung verstecken, wenn nicht Lebensräume
-					$art_anmelden.hide();
-					break;
-				case "Lebensräume":
-					var idArray = [];
-					for (var i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
-						idArray.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
-					}
-					window.adb.oeffneNodeNachIdArray(idArray);
-					break;
+            case "Fauna":
+                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+                // oberste Ebene aufbauen nicht nötig, die gibt es schon
+                $.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
+                    $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Daten.Klasse + "," + objekt.Taxonomie.Daten.Ordnung + "']"), function() {
+                        $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Daten.Klasse + "," + objekt.Taxonomie.Daten.Ordnung + ","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+                            $.jstree._reference("#treeFauna").select_node($("#" + objekt._id), function() {}, false);
+                        }, true);
+                    }, true);
+                }, true);
+                // Anmeldung verstecken, wenn nicht Lebensräume
+                $art_anmelden.hide();
+                break;
+            case "Flora":
+                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+                // oberste Ebene aufbauen nicht nötig, die gibt es schon
+                $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Daten.Familie + "']"), function() {
+                    $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Daten.Familie + "," + objekt.Taxonomie.Daten.Gattung + "']"), function() {
+                        $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function() {}, false);
+                    }, true);
+                }, true);
+                // Anmeldung verstecken, wenn nicht Lebensräume
+                $art_anmelden.hide();
+                break;
+            case "Moose":
+                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+                // oberste Ebene aufbauen nicht nötig, die gibt es schon
+                $.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
+                    $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+                        $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+                            $.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
+                        }, true);
+                    }, true);
+                }, true);
+                // Anmeldung verstecken, wenn nicht Lebensräume
+                $art_anmelden.hide();
+                break;
+            case "Macromycetes":
+                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+                // oberste Ebene aufbauen nicht nötig, die gibt es schon
+                $.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+                    $.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
+                }, true);
+                // Anmeldung verstecken, wenn nicht Lebensräume
+                $art_anmelden.hide();
+                break;
+            case "Lebensräume":
+                var id_array = [];
+                for (var i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
+                    id_array.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
+                }
+                window.adb.oeffneNodeNachIdArray(id_array);
+                break;
 			}
 		}
 	});
@@ -452,50 +452,50 @@ window.adb.initiiere_art = function(id) {
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(art) {
-			var htmlArt,
-				Datensammlungen = art.Datensammlungen,
-				Beziehungssammlungen = [],
-				taxonomischeBeziehungssammlungen = [],
+			var html_art,
+				art_datensammlungen = art.Datensammlungen,
+				art_beziehungssammlungen = [],
+				taxonomische_beziehungssammlungen = [],
 				len,
-				guidsVonSynonymen = [],
-				DatensammlungenVonSynonymen = [],
-				BeziehungssammlungenVonSynonymen = [],
+				guids_von_synonymen = [],
+				datensammlungen_von_synonymen = [],
+				beziehungssammlungen_von_synonymen = [],
 				a, f, h, i, k, x,
-				dsNamen = [],
-				bezNamen = [];
+				ds_namen = [],
+				bez_namen = [];
 			// panel beginnen
-			htmlArt = '<h4>Taxonomie:</h4>';
+			html_art = '<h4>Taxonomie:</h4>';
 			// zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 			// gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-			htmlArt += window.adb.erstelleHtmlFürDatensammlung("Taxonomie", art, art.Taxonomie);
+			html_art += window.adb.erstelleHtmlFürDatensammlung("Taxonomie", art, art.Taxonomie);
 			// Datensammlungen muss nicht gepusht werden
 			// aber Beziehungssammlungen aufteilen
 			if (art.Beziehungssammlungen.length > 0) {
                 _.each(art.Beziehungssammlungen, function(beziehungssammlung) {
                     if (typeof beziehungssammlung.Typ === "undefined") {
-                        Beziehungssammlungen.push(beziehungssammlung);
+                        art_beziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
-                        bezNamen.push(beziehungssammlung.Name);
+                        bez_namen.push(beziehungssammlung.Name);
                     } else if (beziehungssammlung.Typ === "taxonomisch") {
-                        taxonomischeBeziehungssammlungen.push(beziehungssammlung);
+                        taxonomische_beziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
-                        bezNamen.push(beziehungssammlung.Name);
+                        bez_namen.push(beziehungssammlung.Name);
                     }
                 });
 			}
 			// taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
-			if (taxonomischeBeziehungssammlungen.length > 0) {
+			if (taxonomische_beziehungssammlungen.length > 0) {
 				// Titel hinzufügen, falls Datensammlungen existieren
-				htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
-                _.each(taxonomischeBeziehungssammlungen, function(beziehungssammlung) {
+				html_art += "<h4>Taxonomische Beziehungen:</h4>";
+                _.each(taxonomische_beziehungssammlungen, function(beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
+                    html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
                     if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
                         _.each(beziehungssammlung.Beziehungen, function(beziehung) {
                             if (beziehung.Beziehungspartner) {
                                 _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
                                     if (beziehungspartner.GUID) {
-                                        guidsVonSynonymen.push(beziehungspartner.GUID);
+                                        guids_von_synonymen.push(beziehungspartner.GUID);
                                     }
                                 });
                             }
@@ -504,72 +504,72 @@ window.adb.initiiere_art = function(id) {
                 });
 			}
 			// Datensammlungen in gewollter Reihenfolge hinzufügen
-			if (Datensammlungen.length > 0) {
+			if (art_datensammlungen.length > 0) {
 				// Datensammlungen nach Name sortieren
 				/*ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
 				Datensammlungen = window.adb.sortiereObjektarrayNachName(Datensammlungen);*/
 				// Titel hinzufügen
-				htmlArt += "<h4>Eigenschaften:</h4>";
-                _.each(Datensammlungen, function(datensammlung) {
+				html_art += "<h4>Eigenschaften:</h4>";
+                _.each(art_datensammlungen, function(datensammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datensammlung);
+                    html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datensammlung);
                     // dsNamen auflisten, um später zu vergleichen, ob sie schon dargestellt wird
-                    dsNamen.push(datensammlung.Name);
+                    ds_namen.push(datensammlung.Name);
                 });
 			}
 			// Beziehungen hinzufügen
-			if (Beziehungssammlungen.length > 0) {
+			if (art_beziehungssammlungen.length > 0) {
 				// Titel hinzufügen
-				htmlArt += "<h4>Beziehungen:</h4>";
-                _.each(Beziehungssammlungen, function(beziehungssammlung) {
+				html_art += "<h4>Beziehungen:</h4>";
+                _.each(art_beziehungssammlungen, function(beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
+                    html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
                 });
 			}
 			// Beziehungssammlungen von synonymen Arten
-			if (guidsVonSynonymen.length > 0) {
+			if (guids_von_synonymen.length > 0) {
 				$db = $.couch.db("artendb");
-				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidsVonSynonymen)) + '&include_docs=true', {
+				$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guids_von_synonymen)) + '&include_docs=true', {
 					success: function(data) {
-						var synonymeArt;
+						var synonyme_art;
                         _.each(data.rows, function(data_row) {
-                            synonymeArt = data_row.doc;
-                            if (synonymeArt.Datensammlungen && synonymeArt.Datensammlungen.length > 0) {
-                                _.each(synonymeArt.Datensammlungen, function(datensammlungen) {
-                                    if (dsNamen.indexOf(datensammlungen.Name) === -1) {
+                            synonyme_art = data_row.doc;
+                            if (synonyme_art.Datensammlungen && synonyme_art.Datensammlungen.length > 0) {
+                                _.each(synonyme_art.Datensammlungen, function(datensammlungen) {
+                                    if (ds_namen.indexOf(datensammlungen.Name) === -1) {
                                         // diese Datensammlung wird noch nicht dargestellt
-                                        DatensammlungenVonSynonymen.push(datensammlungen);
+                                        datensammlungen_von_synonymen.push(datensammlungen);
                                         // auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-                                        dsNamen.push(datensammlungen.Name);
+                                        ds_namen.push(datensammlungen.Name);
                                         // auch in Datensammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-                                        Datensammlungen.push(datensammlungen);
+                                        art_datensammlungen.push(datensammlungen);
                                     }
                                 });
                             }
-                            if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
-                                _.each(synonymeArt.Beziehungssammlungen, function(beziehungssammlung) {
-                                    if (bezNamen.indexOf(beziehungssammlung.Name) === -1 && beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
+                            if (synonyme_art.Beziehungssammlungen && synonyme_art.Beziehungssammlungen.length > 0) {
+                                _.each(synonyme_art.Beziehungssammlungen, function(beziehungssammlung) {
+                                    if (bez_namen.indexOf(beziehungssammlung.Name) === -1 && beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
                                         // diese Beziehungssammlung wird noch nicht dargestellt
                                         // und sie ist nicht taxonomisch
-                                        BeziehungssammlungenVonSynonymen.push(beziehungssammlung);
+                                        beziehungssammlungen_von_synonymen.push(beziehungssammlung);
                                         // auch in bezNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-                                        bezNamen.push(beziehungssammlung.Name);
+                                        bez_namen.push(beziehungssammlung.Name);
                                         // auch in Beziehungssammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-                                        Beziehungssammlungen.push(beziehungssammlung);
+                                        art_beziehungssammlungen.push(beziehungssammlung);
                                     } else if (beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
                                         // diese Beziehungssammlung wird schon dargestellt
                                         // kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
-                                        var BsDerSynonymenArt = beziehungssammlung,
-                                            BsDerOriginalart = _.find(art.Beziehungssammlungen, function(beziehungssammlung) {
-                                                return beziehungssammlung.Name === BsDerSynonymenArt.Name;
+                                        var bs_der_synonymen_art = beziehungssammlung,
+                                            bs_der_originalart = _.find(art.Beziehungssammlungen, function(beziehungssammlung) {
+                                                return beziehungssammlung.Name === bs_der_synonymen_art.Name;
                                             });
 
-                                        if (BsDerSynonymenArt.Beziehungen && BsDerSynonymenArt.Beziehungen.length > 0 && BsDerOriginalart && BsDerOriginalart.Beziehungen && BsDerOriginalart.Beziehungen.length > 0) {
+                                        if (bs_der_synonymen_art.Beziehungen && bs_der_synonymen_art.Beziehungen.length > 0 && bs_der_originalart && bs_der_originalart.Beziehungen && bs_der_originalart.Beziehungen.length > 0) {
                                             // Beide Arten haben in derselben Beziehungssammlung Beziehungen
                                             // in der Originalart vorhandene Beziehungen aus dem Synonym entfernen
-                                            BsDerSynonymenArt.Beziehungen = _.reject(BsDerSynonymenArt.Beziehungen, function(beziehung_des_synonyms) {
+                                            bs_der_synonymen_art.Beziehungen = _.reject(bs_der_synonymen_art.Beziehungen, function(beziehung_des_synonyms) {
                                                 // suche in Beziehungen der Originalart eine mit denselben Beziehungspartnern
-                                                var beziehung_der_originalart = _.find(BsDerOriginalart.Beziehungen, function(beziehung_origart) {
+                                                var beziehung_der_originalart = _.find(bs_der_originalart.Beziehungen, function(beziehung_origart) {
                                                     //return _.isEqual(beziehung_des_synonyms, beziehung_origart);  Wieso funktioniert das nicht?
                                                     if (beziehung_des_synonyms.Beziehungspartner.length > 0 && beziehung_origart.Beziehungspartner.length > 0) {
                                                         return beziehung_des_synonyms.Beziehungspartner[0].GUID === beziehung_origart.Beziehungspartner[0].GUID;
@@ -580,41 +580,41 @@ window.adb.initiiere_art = function(id) {
                                                 return !!beziehung_der_originalart;
                                             });
                                         }
-                                        if (BsDerSynonymenArt.Beziehungen.length > 0) {
+                                        if (bs_der_synonymen_art.Beziehungen.length > 0) {
                                             // falls noch darzustellende Beziehungen verbleiben, die DS pushen
-                                            BeziehungssammlungenVonSynonymen.push(BsDerSynonymenArt);
+                                            beziehungssammlungen_von_synonymen.push(bs_der_synonymen_art);
                                         }
                                     }
                                 });
                             }
                         });
 						// BS von Synonymen darstellen
-						if (DatensammlungenVonSynonymen.length > 0) {
+						if (datensammlungen_von_synonymen.length > 0) {
 							// DatensammlungenVonSynonymen nach Name sortieren
-							DatensammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(DatensammlungenVonSynonymen);
+							datensammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(datensammlungen_von_synonymen);
 							// Titel hinzufügen
-							htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
-                            _.each(DatensammlungenVonSynonymen, function(datesammlung) {
+							html_art += "<h4>Eigenschaften von Synonymen:</h4>";
+                            _.each(datensammlungen_von_synonymen, function(datesammlung) {
                                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                                htmlArt += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datesammlung);
+                                html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datesammlung);
                             });
 						}
 						// bez von Synonymen darstellen
-						if (BeziehungssammlungenVonSynonymen.length > 0) {
+						if (beziehungssammlungen_von_synonymen.length > 0) {
 							// BeziehungssammlungenVonSynonymen sortieren
-							BeziehungssammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(BeziehungssammlungenVonSynonymen);
+							beziehungssammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(beziehungssammlungen_von_synonymen);
 							// Titel hinzufügen
-							htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
-                            _.each(BeziehungssammlungenVonSynonymen, function(beziehungssammlung) {
+							html_art += "<h4>Beziehungen von Synonymen:</h4>";
+                            _.each(beziehungssammlungen_von_synonymen, function(beziehungssammlung) {
                                 // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                                htmlArt += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "2");
+                                html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "2");
                             });
 						}
-						window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
+						window.adb.initiiere_art_2(html_art, art, art_datensammlungen, datensammlungen_von_synonymen, art_beziehungssammlungen, taxonomische_beziehungssammlungen, beziehungssammlungen_von_synonymen);
 					}
 				});
 			} else {
-				window.adb.initiiere_art_2(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen);
+				window.adb.initiiere_art_2(html_art, art, art_datensammlungen, datensammlungen_von_synonymen, art_beziehungssammlungen, taxonomische_beziehungssammlungen, beziehungssammlungen_von_synonymen);
 			}
 		},
 		error: function() {
@@ -650,7 +650,7 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
 window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
 	var html,
-		Name,
+		name,
 		art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name) + altName;
 
 	// Accordion-Gruppe und -heading anfügen
@@ -697,16 +697,16 @@ window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
             for (var y in beziehung.Beziehungspartner) {
                 //if (beziehung.Beziehungspartner[y].Gruppe === "Lebensräume") {
                 if (beziehung.Beziehungspartner[y].Taxonomie) {
-                    Name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Taxonomie + " > " + beziehung.Beziehungspartner[y].Name;
+                    name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Taxonomie + " > " + beziehung.Beziehungspartner[y].Name;
                 } else {
-                    Name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Name;
+                    name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Name;
                 }
                 // Partner darstellen
                 if (beziehung.Beziehungspartner[y].Rolle) {
                     // Feld soll mit der Rolle beschriftet werden
-                    html += window.adb.generiereHtmlFuerObjektlink(beziehung.Beziehungspartner[y].Rolle, Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                    html += window.adb.generiereHtmlFuerObjektlink(beziehung.Beziehungspartner[y].Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
                 } else {
-                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", Name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
                 }
             }
         }
@@ -846,8 +846,8 @@ window.adb.erstelleHtmlFuerFeld = function(Feldname, Feldwert, dsTyp, dsName) {
 window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
 	// jetzt die Links im Menu setzen
 	if (art) {
-		var googleBilderLink = "";
-		var wikipediaLink = "";
+		var googleBilderLink = "",
+            wikipediaLink = "";
 		switch (art.Gruppe) {
 		case "Flora":
 			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
