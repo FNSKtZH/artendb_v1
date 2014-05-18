@@ -2611,6 +2611,7 @@ window.adb.importiereDatensammlung = function() {
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
         $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis"),
+        $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
         erste_10_ids;
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$DsName.val()) {
@@ -2649,8 +2650,9 @@ window.adb.importiereDatensammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
-        rückmeldung = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
-        $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+        $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
+        rückmeldung = "Die Daten wurden importiert.<br>Die Indexe werden aktualisiert...";
+        $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung);
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
         }, 2000);
@@ -2660,10 +2662,13 @@ window.adb.importiereDatensammlung = function() {
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass views aktualisiert wurden
+                    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
                     rückmeldung = "Die Daten wurden importiert.<br>";
-                    rückmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
+                    rückmeldung += "Die Indexe wurden aktualisiert.<br><br>";
                     rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung + rückmeldung_links);
+                    $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung + rückmeldung_links);
+                    // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
+                    window.adb.rückmeldung_links = rückmeldung_links;
                     $('html, body').animate({
                         scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
                     }, 2000);
@@ -2756,8 +2761,9 @@ window.adb.importiereDatensammlung = function() {
     });
 
     // Rückmeldung in Feld anzeigen
+    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
     rückmeldung = "Die Daten werden importiert...";
-	$("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+	$importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung);
     $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
     $('html, body').animate({
         scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
@@ -3062,6 +3068,7 @@ window.adb.entferneDatensammlung = function() {
 		batch_grösse,
         anz_vorkommen_von_ds = window.adb.ZuordbareDatensätze.length,
         anz_vorkommen_von_ds_entfernt = 0,
+        $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
         $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
@@ -3072,10 +3079,11 @@ window.adb.entferneDatensammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
+        $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
         rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
-        $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+        $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung);
         $('html, body').animate({
-            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+            scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
         }, 2000);
         if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
             // die Indexe aktualisieren
@@ -3083,11 +3091,17 @@ window.adb.entferneDatensammlung = function() {
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
+                    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
                     rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
-                    rückmeldung += "Die Indexe wurden neu aufgebaut.";
-                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+                    rückmeldung += "Die Indexe wurden aktualisiert.";
+                    if (window.adb.rückmeldung_links) {
+                        rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                        rückmeldung += window.adb.rückmeldung_links;
+                        delete window.adb.rückmeldung_links;
+                    }
+                    $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung);
                     $('html, body').animate({
-                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
                     }, 2000);
                 }
             });
@@ -3355,7 +3369,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.ds_entfernt', function() {
                 anz_vorkommen_von_ds_entfernt++;
-                rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
+                rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
                 $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
                 $('html, body').animate({
                     scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
@@ -3367,7 +3381,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
                             rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
-                            rückmeldung += "Die Indexe wurden neu aufgebaut.";
+                            rückmeldung += "Die Indexe wurden aktualisiert.";
                             $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
                             $('html, body').animate({
                                 scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
