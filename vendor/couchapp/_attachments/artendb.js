@@ -2650,6 +2650,7 @@ window.adb.importiereDatensammlung = function() {
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
         rückmeldung = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
+        $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
         }, 2000);
@@ -3071,7 +3072,7 @@ window.adb.entferneDatensammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
-        rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
+        rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
         $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
@@ -3354,7 +3355,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.ds_entfernt', function() {
                 anz_vorkommen_von_ds_entfernt++;
-                rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
+                rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
                 $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
                 $('html, body').animate({
                     scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
