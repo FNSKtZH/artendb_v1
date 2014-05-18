@@ -1886,7 +1886,7 @@ window.adb.handleDsLöschenClick = function() {
 };
 
 // wenn BsLoeschen geklickt wird
-window.adb.handleBsLoeschenClick = function() {
+window.adb.handleBsLöschenClick = function() {
 	// Rückmeldung anzeigen
 	$("#importieren_bs_ds_beschreiben_hinweis")
         .alert()
@@ -2610,7 +2610,8 @@ window.adb.importiereDatensammlung = function() {
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
-        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
+        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis"),
+        erste_10_ids;
 	// prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
 	if (!$DsName.val()) {
 		$("#meldung_individuell_label").html("Namen fehlt");
@@ -2648,7 +2649,7 @@ window.adb.importiereDatensammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
-        rückmeldung_intro = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
+        rückmeldung = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
         }, 2000);
@@ -2658,10 +2659,10 @@ window.adb.importiereDatensammlung = function() {
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass views aktualisiert wurden
-                    rückmeldung_intro = "Die Daten wurden importiert.<br>";
-                    rückmeldung_intro += "Die Indexe wurden neu aufgebaut.<br><br>";
-                    rückmeldung_intro += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro + rückmeldung_links);
+                    rückmeldung = "Die Daten wurden importiert.<br>";
+                    rückmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
+                    rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung + rückmeldung_links);
                     $('html, body').animate({
                         scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
                     }, 2000);
@@ -2697,7 +2698,8 @@ window.adb.importiereDatensammlung = function() {
         _.each(ds_datensatz, function(feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
             // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
-            if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
+            //if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
+            if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null) {
                 if (feldwert === -1) {
                     // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
                     datensammlung.Daten[feldname] = true;
@@ -2736,20 +2738,25 @@ window.adb.importiereDatensammlung = function() {
             }
             // kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
             if (guid) {
+                console.log("füge ds zu objekt");
                 window.adb.fügeDatensammlungZuObjekt(guid, datensammlung);
             }
         }
     });
     // Für 10 Kontrollbeispiele die Links aufbauen
-    var erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
+    if (window.adb.DsId === "guid") {
+        erste_10_ids = _.first(window.adb.ZuordbareDatensätze, 10);
+    } else {
+        erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
+    }
     _.each(erste_10_ids, function(id, index) {
         nr = index + 1;
         rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
     });
 
     // Rückmeldung in Feld anzeigen
-    rückmeldung_intro = "Die Daten werden importiert...";
-	$("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung_intro);
+    rückmeldung = "Die Daten werden importiert...";
+	$("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
     $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
     $('html, body').animate({
         scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
@@ -2852,7 +2859,7 @@ window.adb.importiereBeziehungssammlung = function() {
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
         $("#BsImportierenProgressbarText").html(prozent + "%");
-        rückmeldung_intro = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
+        rückmeldung = "Die Daten wurden importiert.<br>Die Indexe werden neu aufgebaut...";
         $('html, body').animate({
             scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
         }, 2000);
@@ -2862,10 +2869,10 @@ window.adb.importiereBeziehungssammlung = function() {
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
-                    rückmeldung_intro = "Die Daten wurden importiert.<br>";
-                    rückmeldung_intro += "Die Indexe wurden neu aufgebaut.<br><br>";
-                    rückmeldung_intro += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    $("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung_intro + rückmeldung_links);
+                    rückmeldung = "Die Daten wurden importiert.<br>";
+                    rückmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
+                    rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    $("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung + rückmeldung_links);
                     $('html, body').animate({
                         scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
                     }, 2000);
@@ -2983,8 +2990,8 @@ window.adb.importiereBeziehungssammlung = function() {
                 });
 
 				// Rückmeldung in Feld anzeigen:
-                rückmeldung_intro = "Die Daten werden importiert...";
-				$("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung_intro);
+                rückmeldung = "Die Daten werden importiert...";
+				$("#importieren_bs_import_ausfuehren_hinweis_text").html(rückmeldung);
                 $importieren_bs_import_ausfuehren_hinweis.css('display', 'block');
                 $('html, body').animate({
                     scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
@@ -3046,6 +3053,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
 window.adb.entferneDatensammlung = function() {
 	var guid_array = [],
+        guid_array_2 = [];
 		guid,
 		ds_entfernt = $.Deferred(),
 		a,
@@ -3081,14 +3089,14 @@ window.adb.entferneDatensammlung = function() {
 	batch_grösse = 150;
 	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
-			guid_array.push(guid_array[a]);
+			guid_array_2.push(guid_array[a]);
 			if (a === (batch-1)) {
-				window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array, (a-batch_grösse));
-				guid_array = [];
+				window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array_2, (a-batch_grösse));
+				guid_array_2 = [];
 				batch += batch_grösse;
 			}
 		} else {
-			window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array, (a - batch_grösse));
+			window.adb.entferneDatensammlung_2($("#DsName").val(), guid_array_2, (a - batch_grösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_ds_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_ds_import_ausfuehren_hinweis_text").html("Die Datensammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun ein Index neu aufgebaut werden muss.");
@@ -3140,6 +3148,7 @@ window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
 window.adb.entferneBeziehungssammlung = function() {
 	var guid_array = [],
+        guid_array_2 = [],
 		guid,
 		bs_name = $("#BsName").val(),
 		bs_entfernt = $.Deferred(),
@@ -3173,14 +3182,14 @@ window.adb.entferneBeziehungssammlung = function() {
 	// aber batchweise
 	for (a=0; a<batch; a++) {
 		if (a < guid_array.length) {
-			guid_array.push(guid_array[a]);
+			guid_array_2.push(guid_array[a]);
 			if (a === (batch-1)) {
-				window.adb.entferneBeziehungssammlung_2(bs_name, guid_array, (a-batch_grösse));
-				guid_array = [];
+				window.adb.entferneBeziehungssammlung_2(bs_name, guid_array_2, (a-batch_grösse));
+				guid_array_2 = [];
 				batch += batch_grösse;
 			}
 		} else {
-			window.adb.entferneBeziehungssammlung_2(bs_name, guid_array, (a-batch_grösse));
+			window.adb.entferneBeziehungssammlung_2(bs_name, guid_array_2, (a-batch_grösse));
 			// RückmeldungsLinks in Feld anzeigen:
 			$("#importieren_bs_import_ausfuehren_hinweis").css('display', 'block');
 			$("#importieren_bs_import_ausfuehren_hinweis_text").html("Die Beziehungssammlungen wurden entfernt<br>Vorsicht: Wahrscheinlich dauert einer der nächsten Vorgänge sehr lange, da nun eine Index neu aufgebaut werden muss.");
@@ -3300,10 +3309,44 @@ window.adb.fügeBeziehungenZuObjekt = function(guid, beziehungssammlung, beziehu
 // übernimmt den Namen einer Datensammlung
 // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
 window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
-	var ds_entfernt = $.Deferred();
+	var ds_entfernt = $.Deferred(),
+        anz_vorkommen_von_ds,
+        anz_vorkommen_von_ds_entfernt = 0,
+        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
+
+    // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
+    $(document).bind('adb.ds_entfernt', function() {
+        anz_vorkommen_von_ds_entfernt++;
+        var prozent = Math.round(anz_vorkommen_von_ds/anz_vorkommen_von_ds_entfernt*100);
+        $("#DsImportierenProgressbar")
+            .css('width', prozent +'%')
+            .attr('aria-valuenow', prozent);
+        $("#DsImportierenProgressbarText").html(prozent + "%");
+        rückmeldung = "Die Datensammlungen wurden entfernt.<br>Die Indexe werden neu aufgebaut...";
+        $('html, body').animate({
+            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+        }, 2000);
+        if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
+            // die Indexe aktualisieren
+            $db = $.couch.db("artendb");
+            $db.view('artendb/lr', {
+                success: function() {
+                    // melden, dass Indexe aktualisiert wurden
+                    rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
+                    rückmeldung += "Die Indexe wurden neu aufgebaut.";
+                    $("#importieren_ds_import_ausfuehren_hinweis_text").html(rückmeldung);
+                    $('html, body').animate({
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+                    }, 2000);
+                }
+            });
+        }
+    });
+
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
 		success: function(data) {
+            anz_vorkommen_von_ds = data.rows.length;
             _.each(data.rows, function(data_row) {
                 // guid und DsName übergeben
                 window.adb.entferneDatensammlungAusDokument(data_row.key[1], ds_name);
@@ -3346,6 +3389,9 @@ window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
 			}
 			// in artendb speichern
 			$db.saveDoc(doc);
+            // mitteilen, dass eine ds entfernt wurde
+            $(document).trigger('adb.ds_entfernt');
+            // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
 		}
 	});
 };
