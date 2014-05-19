@@ -115,7 +115,7 @@ window.adb.erstelleTree = function() {
 		jstree_erstellt.resolve();
 		$("#suchen"+window.adb.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
-		$("#tree" + window.adb.Gruppe).css("display", "block");
+		$("#tree" + window.adb.Gruppe).show();
 		$("#tree" + window.adb.Gruppe + "Beschriftung").css("display", "block");
 		window.adb.setzeTreehöhe();
 		window.adb.initiiereSuchfeld();
@@ -1532,21 +1532,22 @@ window.adb.handleDsFileChange = function() {
         }, 2000);
 		return;
 	}
-	var file = event.target.files[0],
-		reader = new FileReader();
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#DsTabelleEigenschaften").css("display", "none");
-		$("#importieren_ds_ids_identifizieren_fehler_text").css("display", "none");
-		$("#importieren_ds_ids_identifizieren_erfolg_text").css("display", "none");
-		$("#DsImportieren").css("display", "none");
-		$("#DsEntfernen").css("display", "none");
-	}
-	reader.onload = function(event) {
-		window.adb.dsDatensätze = $.csv.toObjects(event.target.result);
-		window.adb.erstelleTabelle(window.adb.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
-	};
-	reader.readAsText(file);
+		$("#importieren_ds_ids_identifizieren_hinweis_text").hide();
+		$("#DsImportieren").hide();
+		$("#DsEntfernen").hide();
+	} else {
+        var file = event.target.files[0],
+            reader = new FileReader();
+
+        reader.onload = function(event) {
+            window.adb.dsDatensätze = $.csv.toObjects(event.target.result);
+            window.adb.erstelleTabelle(window.adb.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
+        };
+        reader.readAsText(file);
+    }
 };
 
 // wenn BsFile geändert wird
@@ -1565,21 +1566,21 @@ window.adb.handleBsFileChange = function() {
         }, 2000);
 		return;
 	}
-	var file = event.target.files[0],
-		reader = new FileReader();
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#BsTabelleEigenschaften").css("display", "none");
-		$("#importieren_bs_ids_identifizieren_fehler_text").css("display", "none");
-		$("#importieren_bs_ids_identifizieren_erfolg_text").css("display", "none");
-		$("#BsImportieren").css("display", "none");
-		$("#BsEntfernen").css("display", "none");
-	}
-	reader.onload = function(event) {
-		window.adb.bsDatensätze = $.csv.toObjects(event.target.result);
-		window.adb.erstelleTabelle(window.adb.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
-	};
-	reader.readAsText(file);
+		$("#importieren_bs_ids_identifizieren_hinweis_text").hide();
+		$("#BsImportieren").hide();
+		$("#BsEntfernen").hide();
+	} else {
+        var file = event.target.files[0],
+            reader = new FileReader();
+        reader.onload = function(event) {
+            window.adb.bsDatensätze = $.csv.toObjects(event.target.result);
+            window.adb.erstelleTabelle(window.adb.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
+        };
+        reader.readAsText(file);
+    }
 };
 
 // wenn btn_resize geklickt wird
@@ -2419,9 +2420,10 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
     var $dbsFelderSelected = $("#"+dbs+"Felder option:selected"),
         $dbsIdSelected = $("#"+dbs+"Id option:selected"),
-        IdsVonDatensätzen = [],
-        MehrfachVorkommendeIds = [],
-        IdsVonNichtImportierbarenDatensätzen = [];
+        ids_von_datensätzen = [],
+        mehrfach_vorkommende_ids = [],
+        ids_von_nicht_importierbaren_datensätzen = [];
+
 	if ($dbsFelderSelected.length && $dbsIdSelected.length) {
 		// beide ID's sind gewählt
 		window.adb[dbs+"FelderId"] = $dbsFelderSelected.val();
@@ -2431,15 +2433,18 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		window.adb.ZuordbareDatensätze = [];
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text")
             .alert()
-            .css("display", "block")
-		    .html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...");
+            .html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...")
+            .removeClass("alert-success")
+            .removeClass("alert-danger")
+            .addClass("alert-info")
+            .show();
 		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text")
             .alert()
-            .css("display", "none");
+            .hide();
 		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text")
             .alert()
-            .css("display", "none");
+            .hide();
         $('html, body').animate({
             scrollTop: $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_collapse").offset().top
         }, 2000);
@@ -2454,9 +2459,9 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
                     var name_des_id_felds = window.adb[dbs+"FelderId"];
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
-                        if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                        if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
-                            IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
                             // prüfen, ob die ID zugeordnet werden kann
                             var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
                                 return objekt_row.key === import_datensatz[name_des_id_felds];
@@ -2465,14 +2470,14 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
                                 window.adb.ZuordbareDatensätze.push(import_datensatz[name_des_id_felds]);
                             } else {
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-                                IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
+                                ids_von_nicht_importierbaren_datensätzen.push(import_datensatz[name_des_id_felds]);
                             }
                         } else {
                             // diese ID wurden schon hinzugefügt > mehrfach!
-                            MehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
+                            mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
+					window.adb.meldeErfolgVonIdIdentifikation_02(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
 				}
 			});
 		} else {
@@ -2481,9 +2486,9 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
                     var name_des_id_felds = window.adb[dbs+"FelderId"];
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
-                        if (IdsVonDatensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                        if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
-                            IdsVonDatensätzen.push(import_datensatz[name_des_id_felds]);
+                            ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
                             // prüfen, ob die ID zugeordnet werden kann
                             var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
                                 return objekt_row.key[2] === import_datensatz[name_des_id_felds];
@@ -2495,79 +2500,67 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
                                 window.adb.ZuordbareDatensätze.push(Objekt);
                             } else {
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-                                IdsVonNichtImportierbarenDatensätzen.push(import_datensatz[name_des_id_felds]);
+                                ids_von_nicht_importierbaren_datensätzen.push(import_datensatz[name_des_id_felds]);
                             }
                         } else {
                             // diese ID wurden schon hinzugefügt > mehrfach!
-                            MehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
+                            mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-					window.adb.meldeErfolgVonIdIdentifikation_02(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs);
+					window.adb.meldeErfolgVonIdIdentifikation_02(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
 				}
 			});
 		}
 	}
 };
 
-window.adb.meldeErfolgVonIdIdentifikation_02 = function(MehrfachVorkommendeIds, IdsVonDatensätzen, IdsVonNichtImportierbarenDatensätzen, dbs) {
-    var $importieren_dbs_ids_identifizieren_hinweis_text = $("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text"),
-        $importieren_dbs_ids_identifizieren_erfolg_text = $("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text");
-	$importieren_dbs_ids_identifizieren_hinweis_text
-        .alert()
-        .css("display", "none");
+window.adb.meldeErfolgVonIdIdentifikation_02 = function(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs) {
+    var $importieren_dbs_ids_identifizieren_hinweis_text = $("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text");
+    $importieren_dbs_ids_identifizieren_hinweis_text.alert();
 	// rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
-	if (MehrfachVorkommendeIds.length && dbs !== "Bs") {
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text")
-            .alert()
-            .css("display", "block")
-		    .html("Die folgenden ID's kommen mehrfach vor: " + MehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen");
-		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
+	if (mehrfach_vorkommende_ids.length && dbs !== "Bs") {
 		$importieren_dbs_ids_identifizieren_hinweis_text
-            .alert()
-            .css("display", "none");
-		$importieren_dbs_ids_identifizieren_erfolg_text
-            .alert()
-            .css("display", "none");
-	} else if (window.adb.ZuordbareDatensätze.length < IdsVonDatensätzen.length) {
+            .html("Die folgenden ID's kommen mehrfach vor: " + mehrfach_vorkommende_ids + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen")
+            .removeClass("alert-info")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+	} else if (window.adb.ZuordbareDatensätze.length < ids_von_datensätzen.length) {
 		// rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
-		// es können nicht alle zugeordnet werden, daher als Hinweis statt als Erfolg
-		$importieren_dbs_ids_identifizieren_hinweis_text
-            .alert()
-            .css("display", "block");
+        if (window.adb.ZuordbareDatensätze.length > 0) {
+            // ein Teil der Datensätze kann importiert werden. Als Hinweis melden
+            $importieren_dbs_ids_identifizieren_hinweis_text
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-info");
+        } else {
+            // keine Datensätze können importier werden. Als Misserfolg melden
+            $importieren_dbs_ids_identifizieren_hinweis_text
+                .removeClass("alert-info")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
+        }
 		if (dbs === "Bs") {
-			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + IdsVonNichtImportierbarenDatensätzen.length + " Arten mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + ids_von_datensätzen.length + " Arten:<br>Beziehungen von " + ids_von_datensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + ids_von_nicht_importierbaren_datensätzen.length + " Arten mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + ids_von_nicht_importierbaren_datensätzen);
 		} else {
-			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + IdsVonNichtImportierbarenDatensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + IdsVonNichtImportierbarenDatensätzen);
+			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + ids_von_datensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + ids_von_nicht_importierbaren_datensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + ids_von_nicht_importierbaren_datensätzen);
 		}
-		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text")
-            .alert()
-            .css("display", "none");
-		$importieren_dbs_ids_identifizieren_erfolg_text
-            .alert()
-            .css("display", "none");
-		$("#"+dbs+"Importieren").css("display", "block");
-		$("#"+dbs+"Entfernen").css("display", "block");
+		$("#"+dbs+"Importieren").show();
+		$("#"+dbs+"Entfernen").show();
 	} else {
 		// rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
-		$importieren_dbs_ids_identifizieren_erfolg_text
-            .alert()
-            .css("display", "block");
-		if (dbs === "Bs") {
-			$importieren_dbs_ids_identifizieren_erfolg_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + IdsVonDatensätzen.length + " Arten:<br>Beziehungen von " + IdsVonDatensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>Beziehungen von " + window.adb.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
-		} else {
-			$importieren_dbs_ids_identifizieren_erfolg_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + IdsVonDatensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
-		}
-		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text")
-            .alert()
-            .css("display", "none");
 		$importieren_dbs_ids_identifizieren_hinweis_text
-            .alert()
-            .css("display", "none");
-		$("#"+dbs+"Importieren").css("display", "block");
-		$("#"+dbs+"Entfernen").css("display", "block");
+            .removeClass("alert-info")
+            .removeClass("alert-danger")
+            .addClass("alert-success");
+		if (dbs === "Bs") {
+			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + ids_von_datensätzen.length + " Arten:<br>Beziehungen von " + ids_von_datensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>Beziehungen von " + window.adb.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
+		} else {
+			$importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + ids_von_datensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs+"FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+		}
+		$("#"+dbs+"Importieren").show();
+		$("#"+dbs+"Entfernen").show();
 	}
+    $importieren_dbs_ids_identifizieren_hinweis_text.show();
     $('html, body').animate({
         scrollTop: $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_collapse").offset().top
     }, 2000);
