@@ -1855,11 +1855,11 @@ window.adb.handleDsWählenChange = function() {
 // und sie nicht zusammenfassend ist
 window.adb.handleDsNameChange = function() {
 	var that = this,
-		DsKey = _.find(window.adb.ds_namen_eindeutig, function(key) {
+		ds_key = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		}),
         $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
-	if (DsKey) {
+	if (ds_key) {
 		$importieren_ds_ds_beschreiben_hinweis_text2
             .alert()
             .css("display", "block")
@@ -1906,24 +1906,7 @@ window.adb.handleBsLöschenClick = function() {
         .addClass("alert-info")
         .css("display", "block");
 	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
-	$.when(window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val())).then(function() {
-		// jetzt Ergebnisse anzeigen
-		/*$("#importieren_bs_ds_beschreiben_hinweis")
-            .alert()
-            .removeClass("alert-info")
-            .removeClass("alert-danger")
-            .addClass("alert-success")
-            .css("display", "block");
-		$("#importieren_bs_ds_beschreiben_hinweis_text").html("Die Beziehungssammlung wurde erfolgreich entfernt");*/
-	});
-};
-
-// wenn DsImportieren geklickt wird
-window.adb.handleDsImportierenClick = function() {
-	$.when(window.adb.importiereDatensammlung()).then(function() {
-		// jetzt Ergebnisse anzeigen
-		console.log("Datensammlung importiert");
-	});
+    window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
 };
 
 // wenn BsImportieren geklickt wird
@@ -2128,7 +2111,7 @@ window.adb.handleLrParentOptionenChange = function() {
 };
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
-window.adb.handleRueckfrageLrLoeschenJaClick = function() {
+window.adb.handleRückfrageLrLöschenJaClick = function() {
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
