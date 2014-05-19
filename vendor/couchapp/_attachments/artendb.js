@@ -5,9 +5,9 @@ window.adb.erstelleBaum = function() {
 		gruppenbezeichnung,
 		baum_erstellt = $.Deferred();
 	// alle Bäume ausblenden
-	$(".baum").css("display", "none");
+	$(".baum").hide();
 	// alle Beschriftungen ausblenden
-	$(".treeBeschriftung").css("display", "none");
+	$(".treeBeschriftung").hide();
 	// gewollte beschriften und sichtbar schalten
 	switch (window.adb.Gruppe) {
     case "Fauna":
@@ -116,7 +116,7 @@ window.adb.erstelleTree = function() {
 		$("#suchen"+window.adb.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
 		$("#tree" + window.adb.Gruppe).show();
-		$("#tree" + window.adb.Gruppe + "Beschriftung").css("display", "block");
+		$("#tree" + window.adb.Gruppe + "Beschriftung").show();
 		window.adb.setzeTreehöhe();
 		window.adb.initiiereSuchfeld();
 	})
@@ -1099,8 +1099,8 @@ window.adb.zeigeFormular = function(formularname) {
 			history.pushState(null, null, "index.html");
 			// alle Bäume ausblenden, suchfeld, Baumtitel
 			$(".suchen").hide();
-			$(".baum").css("display", "none");
-			$(".treeBeschriftung").css("display", "none");
+			$(".baum").hide();
+			$(".treeBeschriftung").hide();
 			// Gruppe Schaltfläche deaktivieren
 			$('#Gruppe').find('.active').removeClass('active');
 		}
@@ -1126,32 +1126,32 @@ window.adb.validiereSignup = function(woher) {
         passwort,
         passwort2;
 	// zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
-	$(".hinweis").css("display", "none");
+	$(".hinweis").hide();
 	// erfasste Werte holen
 	email = $("#Email_"+woher).val();
 	passwort = $("#Passwort_"+woher).val();
 	passwort2 = $("#Passwort2_"+woher).val();
 	// prüfen
 	if (!email) {
-		$("#Emailhinweis_"+woher).css("display", "block");
+		$("#Emailhinweis_"+woher).show();
 		setTimeout(function() {
 			$("#Email_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!passwort) {
-		$("#Passworthinweis_"+woher).css("display", "block");
+		$("#Passworthinweis_"+woher).show();
 		setTimeout(function() {
 			$("#Passwort_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (!passwort2) {
-		$("#Passwort2hinweis_"+woher).css("display", "block");
+		$("#Passwort2hinweis_"+woher).show();
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
 	} else if (passwort !== passwort2) {
-		$("#Passwort2hinweisFalsch_"+woher).css("display", "block");
+		$("#Passwort2hinweisFalsch_"+woher).show();
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
@@ -1185,7 +1185,7 @@ window.adb.erstelleKonto = function(woher) {
 			$("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
 			$("#"+praefix+woher+"_anmelden_fehler")
                 .alert()
-                .css("display", "block");
+                .show();
 		}
 	});
 };
@@ -1223,11 +1223,11 @@ window.adb.meldeUserAn = function(woher) {
 					präfix = "";
 				}
 				// zuerst allfällige bestehende Hinweise ausblenden
-				$(".hinweis").css("display", "none");
+				$(".hinweis").hide();
 				$("#"+präfix+woher+"_anmelden_fehler_text")
                     .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
                     .alert()
-				    .css("display", "block");
+				    .show();
 			}
 		});
 	}
@@ -1255,8 +1255,8 @@ window.adb.meldeUserAb = function() {
 	}
 	$(".art_anmelden_titel").text("Anmelden");
 	$(".importieren_anmelden_titel").text("1. Anmelden");
-	$(".alert").css("display", "none");
-	$(".hinweis").css("display", "none");
+	$(".alert").hide();
+	$(".hinweis").hide();
 	$(".well.anmelden").show();
 	$(".Email").show();
 	$(".Passwort").show();
@@ -1284,8 +1284,8 @@ window.adb.passeUiFürAngemeldetenUserAn = function(woher) {
 		$("#" + präfix + woher + "_anmelden_collapse").collapse('hide');
 		$("#importieren_" + woher + "_ds_beschreiben_collapse").collapse('show');
 	}
-	$(".alert").css("display", "none");
-	$(".hinweis").css("display", "none");
+	$(".alert").hide();
+	$(".hinweis").hide();
 	$(".well.anmelden").hide();
 	$(".Email").hide();
 	$(".Passwort").hide();
@@ -1324,7 +1324,7 @@ window.adb.zurückZurAnmeldung = function(woher) {
 	// Mitteilen, dass Anmeldung nötig ist
 	$("#"+präfix+woher+"_anmelden_hinweis")
         .alert()
-        .css("display", "block");
+        .show();
 	$("#"+präfix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
 	$("#"+präfix+woher+"_anmelden_collapse").collapse('show');
 	$(".anmelden_btn").show();
@@ -1342,13 +1342,13 @@ window.adb.validiereUserAnmeldung = function(woher) {
 		setTimeout(function() {
 			$('#Email_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-		$("#Emailhinweis_"+woher).css("display", "block");
+		$("#Emailhinweis_"+woher).show();
 		return false;
 	} else if (!passwort) {
 		setTimeout(function() {
 			$('#Passwort_'+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-		$("#Passworthinweis_"+woher).css("display", "block");
+		$("#Passworthinweis_"+woher).show();
 		return false;
 	}
 	return true;
@@ -1369,12 +1369,12 @@ window.adb.handleBsNameChange = function() {
             .removeClass("alert-success")
             .removeClass("alert-danger")
             .addClass("alert-info")
-            .css("display", "block");
+            .show();
 		$("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
 		setTimeout(function() {
 			$("#importieren_bs_ds_beschreiben_hinweis2")
                 .alert()
-                .css("display", "none");
+                .hide();
 		}, 30000);
 		$("#BsName")
             .val("")
@@ -1382,7 +1382,7 @@ window.adb.handleBsNameChange = function() {
 	} else {
 		$("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()
-            .css("display", "none");
+            .hide();
 	}
 };
 
@@ -1393,12 +1393,12 @@ window.adb.handleDsImportiertVonChange = function() {
 	$("#DsImportiertVon").val(localStorage.Email);
 	$importieren_ds_ds_beschreiben_hinweis_text2
         .alert()
-        .css("display", "block")
+        .show()
 	    .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
 		$importieren_ds_ds_beschreiben_hinweis_text2
             .alert()
-            .css("display", "none");
+            .hide();
 	}, 10000);
 };
 
@@ -1411,12 +1411,12 @@ window.adb.handleBsImportiertVonChange = function() {
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info")
-        .css("display", "block");
+        .show();
 	$("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
 		$("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()
-            .css("display", "none");
+            .hide();
 	}, 10000);
 };
 
@@ -1451,7 +1451,7 @@ window.adb.handleBsWählenChange = function() {
     // allfälligen Alert schliessen
     $importieren_bs_ds_beschreiben_hinweis2
         .alert()
-        .css("display", "none");
+        .hide();
 	if (wählbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function() {
@@ -1494,11 +1494,11 @@ window.adb.handleBsWählenChange = function() {
                     $BsName.focus();
                 }
                 // löschen-Schaltfläche einblenden
-                $("#BsLoeschen").css("display", "block");
+                $("#BsLoeschen").show();
             });
 		} else {
 			// löschen-Schaltfläche ausblenden
-			$("#BsLoeschen").css("display", "none");
+			$("#BsLoeschen").hide();
 		}
 	} else {
 		// melden, dass diese BS nicht bearbeitet werden kann
@@ -1509,7 +1509,7 @@ window.adb.handleBsWählenChange = function() {
             .removeClass("alert-success")
             .removeClass("alert-info")
             .addClass("alert-danger")
-            .css("display", "block");
+            .show();
         $('html, body').animate({
             scrollTop: $("#BsWaehlen").offset().top
         }, 2000);
@@ -1518,23 +1518,9 @@ window.adb.handleBsWählenChange = function() {
 
 // wenn DsFile geändert wird
 window.adb.handleDsFileChange = function() {
-	// Check for the various File API support
-	if (window.File && window.FileReader && window.FileList && window.Blob) {
-		// Great success! All the File APIs are supported
-	} else {
-		$("#meldung_individuell_label").html("Importieren nicht möglich");
-		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
-		$("#meldung_individuell_schliessen").html("schliessen");
-		$('#meldung_individuell').modal();
-		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
-        $('html, body').animate({
-            scrollTop: $("#importieren_ds_daten_uploaden_collapse").offset().top
-        }, 2000);
-		return;
-	}
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
-		$("#DsTabelleEigenschaften").css("display", "none");
+		$("#DsTabelleEigenschaften").hide();
 		$("#importieren_ds_ids_identifizieren_hinweis_text").hide();
 		$("#DsImportieren").hide();
 		$("#DsEntfernen").hide();
@@ -1552,23 +1538,9 @@ window.adb.handleDsFileChange = function() {
 
 // wenn BsFile geändert wird
 window.adb.handleBsFileChange = function() {
-	// Check for the various File API support
-	if (window.File && window.FileReader && window.FileList && window.Blob) {
-		// Great success! All the File APIs are supported
-	} else {
-		$("#meldung_individuell_label").html("Importieren nicht möglich");
-		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht");
-		$("#meldung_individuell_schliessen").html("schliessen");
-		$('#meldung_individuell').modal();
-		//alert('Ihr Browser unterstützt diesen Vorgang leider nicht');
-        $('html, body').animate({
-            scrollTop: $("#importieren_bs_daten_uploaden_collapse").offset().top
-        }, 2000);
-		return;
-	}
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
-		$("#BsTabelleEigenschaften").css("display", "none");
+		$("#BsTabelleEigenschaften").hide();
 		$("#importieren_bs_ids_identifizieren_hinweis_text").hide();
 		$("#BsImportieren").hide();
 		$("#BsEntfernen").hide();
@@ -1655,6 +1627,7 @@ window.adb.ergänzePilzeZhgis = function() {
 			ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
 			ds_zhgis.Datenstand = "dauernd nachgeführt";
 			ds_zhgis.Link = "http://www.naturschutz.zh.ch";
+            ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
 			ds_zhgis.Daten = {};
 			ds_zhgis.Daten["GIS-Layer"] = "Pilze";
 			_.each(data.rows, function(row) {
@@ -1782,7 +1755,7 @@ window.adb.handleDsWählenChange = function() {
     // allfälligen Alert schliessen
     $importieren_ds_ds_beschreiben_error
         .alert()
-        .css("display", "none");
+        .hide();
 	if (wählbar === "true") {
 		// zuerst alle Felder leeren
 		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
@@ -1829,11 +1802,11 @@ window.adb.handleDsWählenChange = function() {
 					$DsName.focus();
 				}
 				// löschen-Schaltfläche einblenden
-				$("#DsLoeschen").css("display", "block");
+				$("#DsLoeschen").show();
 			}
 		} else {
 			// löschen-Schaltfläche ausblenden
-			$("#DsLoeschen").css("display", "none");
+			$("#DsLoeschen").hide();
 		}
 	} else {
 		// melden, dass diese DS nicht bearbeitet werden kann
@@ -1843,7 +1816,7 @@ window.adb.handleDsWählenChange = function() {
             .html("Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.");
         $importieren_ds_ds_beschreiben_error
             .alert()
-            .css("display", "block");
+            .show();
         $('html, body').animate({
             scrollTop: $("#DsWaehlen").offset().top
         }, 2000);
@@ -1863,12 +1836,12 @@ window.adb.handleDsNameChange = function() {
 	if (ds_key) {
 		$importieren_ds_ds_beschreiben_hinweis_text2
             .alert()
-            .css("display", "block")
+            .show()
 		    .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
 		setTimeout(function() {
 			$importieren_ds_ds_beschreiben_hinweis_text2
                 .alert()
-                .css("display", "none");
+                .hide();
 		}, 30000);
 		$("#DsName")
             .val("")
@@ -1876,7 +1849,7 @@ window.adb.handleDsNameChange = function() {
 	} else {
 		$importieren_ds_ds_beschreiben_hinweis_text2
             .alert()
-            .css("display", "none");
+            .hide();
 	}
 };
 
@@ -1886,13 +1859,13 @@ window.adb.handleDsLöschenClick = function() {
 	// Rückmeldung anzeigen
 	$importieren_ds_ds_beschreiben_hinweis_text
         .alert()
-        .css("display", "block")
+        .show()
 	    .html("Bitte warten: Die Datensammlung wird entfernt...");
 	$.when(window.adb.entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
 		// jetzt Ergebnisse anzeigen
 		$importieren_ds_ds_beschreiben_hinweis_text
             .alert()
-            .css("display", "block")
+            .show()
 		    .html("Die Datensammlung wurde erfolgreich entfernt");
 	});
 };
@@ -1905,7 +1878,7 @@ window.adb.handleBsLöschenClick = function() {
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info")
-        .css("display", "block");
+        .show();
 	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
     window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
 };
@@ -1964,7 +1937,7 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
 	window.adb.erstelleListeFürFeldwahl();
 	// Tabelle ausblenden, falls sie eingeblendet war
-	$("#exportieren_exportieren_tabelle").css("display", "none");
+	$("#exportieren_exportieren_tabelle").hide();
 };
 
 // wenn export_feld_filtern geändert wird
@@ -1994,7 +1967,7 @@ window.adb.handleExportierenExportierenShow = function() {
     // Fehlermeldung verstecken, falls sie noch offen war
     $("#exportieren_exportieren_error_text")
         .alert()
-        .css("display", "none");
+        .hide();
 	$('html, body').animate({
 		scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
 	}, 2000);
@@ -2141,8 +2114,8 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
 	if ($("#exportieren_exportieren_collapse").css("display") === "block") {
 		// Tabelle und Herunterladen-Schaltfläche ausblenden
-		$("#exportieren_exportieren_tabelle").css("display", "none");
-		$(".exportieren_exportieren_exportieren").css("display", "none");
+		$("#exportieren_exportieren_tabelle").hide();
+		$(".exportieren_exportieren_exportieren").hide();
 		// filtert und baut danach die Vorschautabelle auf
 		window.adb.filtereFürExport();
 	}
@@ -2173,17 +2146,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function() {
-	if (window.File && window.FileReader && window.FileList && window.Blob) {
-		// Great success! All the File APIs are supported
-		// das funktioniert nicht so super:
-		// Chrome: super. Aber manchmal Absturz!
-		// Firefox: super
-		// Safari auf MacOs: Fehlermeldung
-		// iOs: perfekt
-		// Android Chrome: Download scheint nicht zu Ende zu kommen, Datei unbenannt (wenn sie dann endlich auftaucht)
-		// IE9: Windows fragt, ob man das Öffnen einer App gestatten will, dann scheitert es
-		// IE10: funktioniert
-		// soll besser werden, sobald Standards umgesetzt werden
+	if (window.adb.isFileAPIAvailable()) {
 		var exportstring = window.adb.erstelleExportString(window.adb.exportieren_objekte),
 			blob = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
 			d = new Date(),
@@ -2191,11 +2154,6 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 			day = d.getDate(),
 			output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 		saveAs(blob, output + "_export.csv");
-	} else {
-		$("#meldung_individuell_label").html("Direkt herunterladen nicht möglich");
-		$("#meldung_individuell_text").html("Ihr Browser unterstützt diesen Vorgang leider nicht.<br>Sie können die Datei vom Server herunterladen.");
-		$("#meldung_individuell_schliessen").html("schliessen");
-		$('#meldung_individuell').modal();
 	}
 };
 
@@ -2239,19 +2197,19 @@ window.adb.handleAnmeldenBtnClick = function(that) {
 // wenn .Email keyup
 window.adb.handleEmailKeyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
-	$(".Emailhinweis").css("display", "none");
+	$(".Emailhinweis").hide();
 };
 
 // wenn .Passwort keyup
 window.adb.handlePasswortKeyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
-	$(".Passworthinweis").css("display", "none");
+	$(".Passworthinweis").hide();
 };
 
 // wenn .Passwort2 keyup
 window.adb.handlePasswort2Keyup = function() {
 	//allfällig noch vorhandenen Hinweis ausblenden
-	$(".Passworthinweis2").css("display", "none");
+	$(".Passworthinweis2").hide();
 };
 
 // wenn .konto_erstellen_btn geklickt wird
@@ -2260,7 +2218,7 @@ window.adb.handleKontoErstellenBtnClick = function(that) {
 	if (bs_ds === "rt") {
 		bs_ds = "art";
 	}
-	$(".signup").css("display", "block");
+	$(".signup").show();
 	$(".anmelden_btn").hide();
 	$(".abmelden_btn").hide();
 	$(".konto_erstellen_btn").hide();
@@ -2280,7 +2238,7 @@ window.adb.handleKontoSpeichernBtnClick = function(that) {
 	if (window.adb.validiereSignup(bs_ds)) {
 		window.adb.erstelleKonto(bs_ds);
 		// Anmeldefenster zurücksetzen
-		$(".signup").css("display", "none");
+		$(".signup").hide();
 		$(".anmelden_btn").hide();
 		$(".abmelden_btn").show();
 		$(".konto_erstellen_btn").hide();
@@ -2438,13 +2396,6 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
             .removeClass("alert-danger")
             .addClass("alert-info")
             .show();
-		// übrige Hinweisfelder ausschalten, falls jemand 2 mal nacheinander klickt
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_fehler_text")
-            .alert()
-            .hide();
-		$("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_erfolg_text")
-            .alert()
-            .hide();
         $('html, body').animate({
             scrollTop: $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_collapse").offset().top
         }, 2000);
@@ -3720,7 +3671,7 @@ window.adb.erstelleListeFürFeldwahl = function() {
 	// Beschäftigung melden
 	$exportieren_objekte_waehlen_gruppen_hinweis_text
         .alert()
-        .css("display", "block")
+        .show()
 	    .html("Eigenschaften werden ermittelt...");
 	// scrollen, damit Hinweis sicher ganz sichtbar ist
 	$('html, body').animate({
@@ -3822,7 +3773,7 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
 	// Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text")
         .alert()
-        .css("display", "block")
+        .show()
         .html(hinweis_taxonomien);
 };
 
@@ -3907,7 +3858,7 @@ window.adb.filtereFürExport = function(direkt) {
 	if (!direkt) {
 		$exportieren_exportieren_hinweis_text
             .alert()
-            .css("display", "block")
+            .show()
             .html("Die Daten werden vorbereitet...");
 	}
 
@@ -3973,12 +3924,12 @@ window.adb.filtereFürExport = function(direkt) {
 		// Beschäftigungsmeldung verstecken
 		$exportieren_exportieren_hinweis_text
             .alert()
-            .css("display", "none");
+            .hide();
         $("#exportieren_exportieren_error_text_text")
             .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
 		$("#exportieren_exportieren_error_text")
             .alert()
-            .css("display", "block");
+            .show();
 		return;
 	}
 
@@ -4065,7 +4016,7 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
                     // Ergebnis rückmelden
                     $("#exportieren_exportieren_hinweis_text")
                         .alert()
-                        .css("display", "block")
+                        .show()
                         .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
                     window.adb.baueTabelleFürExportAuf();
                 }
@@ -4090,7 +4041,7 @@ window.adb.baueTabelleFürExportAuf = function() {
             .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
         $("#exportieren_exportieren_error_text")
             .alert()
-            .css("display", "block");
+            .show();
         $('html, body').animate({
             scrollTop: $("#exportieren_exportieren_exportieren").offset().top
         }, 2000);
@@ -4099,7 +4050,7 @@ window.adb.baueTabelleFürExportAuf = function() {
 	// Beschäftigungsmeldung verstecken
 	$("#exportieren_exportieren_hinweis_text")
         .alert()
-        .css("display", "none");
+        .hide();
 };
 
 window.adb.fürExportGewählteGruppen = function() {
@@ -4265,13 +4216,13 @@ window.adb.isFileAPIAvailable = function() {
 		// source: <output> availability - //html5doctor.com/the-output-element/
 		var html = "Für den Datenimport benötigen Sie mindestens einen der folgenden Browser:<br>";
 		html += "(Stand März 2014)<br>";
-		html += "- Google Chrome: 13 oder neuer<br>";
+		html += "- Google Chrome: 31 oder neuer<br>";
 		html += "- Chrome auf Android: 33 oder neuer<br>";
-		html += "- Mozilla Firefox: 3.6 oder neuer<br>";
+		html += "- Mozilla Firefox: 28 oder neuer<br>";
 		html += "- Firefox auf Android: 26 oder neuer<br>";
-		html += "- Safari: 6.0 oder neuer<br>";
+		html += "- Safari: 7.0 oder neuer<br>";
 		html += "- iOs Safari: 6.0 oder neuer<br>";
-		html += "- Opera: 11.1 oder neuer<br>";
+		html += "- Opera: 20 oder neuer<br>";
 		html += "- Internet Explorer: 10 oder neuer<br>";
 		html += "- Internet Explorer mobile: bis Version 10 nicht<br>";
 		html += "- Android Standardbrowser: Android 4.4 oder neuer<br>";
@@ -4359,7 +4310,7 @@ window.adb.exportZurücksetzen = function() {
 	$(".exportieren_exportieren_exportieren").hide();
 	$("#exportieren_exportieren_error_text")
         .alert()
-        .css("display", "none");
+        .hide();
 };
 
 window.adb.öffneGruppe = function(Gruppe) {
