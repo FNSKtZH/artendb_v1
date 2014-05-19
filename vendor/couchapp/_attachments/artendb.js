@@ -4485,38 +4485,36 @@ window.adb.schützeLrTaxonomie = function() {
 // oder aus dem Import einer Taxonomie stammen
 // diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
 // Momentan nicht verwendet
-window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(objekt_array) {
-	var i,
-		object,
+window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(object_array) {
+	var object,
 		hierarchie,
 		parent;
-	for (i=0; i<objekt_array.length; i++) {
-		object = objekt_array[i];
-		hierarchie = [];
-		parent = object.Taxonomie.Daten.Parent;
-		// als Start sich selben zur Hierarchie hinzufügen
-		hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
-		if (parent) {
-			object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object._id, hierarchie);
-			$db.saveDoc(object);
-		}
-	}
+    _.each(object_array, function(object) {
+        hierarchie = [];
+        parent = object.Taxonomie.Daten.Parent;
+        // als Start sich selben zur Hierarchie hinzufügen
+        hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
+        if (parent) {
+            object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
+            $db.saveDoc(object);
+        }
+    });
 };
 
 // aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
 // ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
 // diese Funktion wird benötigt, wenn ein neuer LR erstellt wird
 // LR kann mitgegeben werden, muss aber nicht
-// wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedesmal die LR aus der DB neu abgerufen werden sollen
+// wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedes mal die LR aus der DB neu abgerufen werden sollen
 // manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
-window.adb.aktualisiereHierarchieEinesNeuenLr = function(LR, object, aktualisiereHierarchiefeld) {
-	if (LR) {
-		window.adb.aktualisiereHierarchieEinesNeuenLr_2(object, aktualisiereHierarchiefeld);
+window.adb.aktualisiereHierarchieEinesNeuenLr = function(lr, object, aktualisiere_hierarchiefeld) {
+	if (lr) {
+		window.adb.aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);
 	} else {
 		$db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function(data) {
-				window.adb.aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
+				window.adb.aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiere_hierarchiefeld);
 			}
 		});
 	}
@@ -4595,7 +4593,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 	if (!objekt.Taxonomie.Daten) {
 		objekt.Taxonomie.Daten = {};
 	}
-	// als Start sich selben zur Hierarchie hinzufügen
+	// als Start sich selber zur Hierarchie hinzufügen
 	hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
 	if (parent.GUID !== objekt._id) {
 		objekt.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
@@ -4641,24 +4639,23 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
 window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hierarchie) {
-	var i,
-		parentObjekt,
-		hierarchieErgänzt;
-	for (i=0; i<objekt_array.length; i++) {
-		if (objekt_array[i]._id === parentGUID) {
-			parentObjekt = window.adb.erstelleHierarchieobjektAusObjekt(objekt_array[i]);
-			Hierarchie.push(parentObjekt);
-			if (objekt_array[i].Taxonomie.Daten.Parent.GUID !== objekt_array[i]._id) {
-				// die Hierarchie ist noch nicht zu Ende - weitermachen
-				hierarchieErgänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, objekt_array[i].Taxonomie.Daten.Parent.GUID, Hierarchie);
-				return Hierarchie;
-			} else {
-				// jetzt ist die Hierarchie vollständig
-				// sie ist aber verkehrt - umkehren
-				return Hierarchie.reverse();
-			}
-		}
-	}
+	var parent_objekt,
+		hierarchie_ergänzt;
+    _.each(objekt_array, function(object) {
+        if (object._id === parentGUID) {
+            parent_objekt = window.adb.erstelleHierarchieobjektAusObjekt(object);
+            Hierarchie.push(parent_objekt);
+            if (object.Taxonomie.Daten.Parent.GUID !== object._id) {
+                // die Hierarchie ist noch nicht zu Ende - weitermachen
+                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object.Taxonomie.Daten.Parent.GUID, Hierarchie);
+                return Hierarchie;
+            } else {
+                // jetzt ist die Hierarchie vollständig
+                // sie ist aber verkehrt - umkehren
+                return Hierarchie.reverse();
+            }
+        }
+    });
 };
 
 window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
@@ -4669,16 +4666,16 @@ window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
 };
 
 window.adb.erstelleLrLabelNameAusObjekt = function(objekt) {
-	var Label = objekt.Taxonomie.Daten.Label || "",
-		Einheit = objekt.Taxonomie.Daten.Einheit || "";
-	return window.adb.erstelleLrLabelName(Label, Einheit);
+	var label = objekt.Taxonomie.Daten.Label || "",
+		einheit = objekt.Taxonomie.Daten.Einheit || "";
+	return window.adb.erstelleLrLabelName(label, einheit);
 };
 
-window.adb.erstelleLrLabelName = function(Label, Einheit) {
-	if (Label && Einheit) {
-		return Label + ": " + Einheit;
-	} else if (Einheit) {
-		return Einheit;
+window.adb.erstelleLrLabelName = function(label, einheit) {
+	if (label && einheit) {
+		return label + ": " + einheit;
+	} else if (einheit) {
+		return einheit;
 	} else {
 		// aha, ein neues Objekt, noch ohne Label und Einheit
 		return "unbenannte Einheit";
@@ -4689,18 +4686,17 @@ window.adb.erstelleLrLabelName = function(Label, Einheit) {
 // nimmt einen Array von Objekten entgegen
 // baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
 // aktualisiert die Objekte mit einer einzigen Operation
-window.adb.löscheMassenMitObjektArray = function(objekt_array) {
-	var i,
-		objekte_mit_objekte,
+window.adb.löscheMassenMitObjektArray = function(object_array) {
+	var objekte_mit_objekte,
 		objekte = [],
-		objekt;
-	for (i=0; i<objekt_array.length; i++) {
-		objekt = {};
-		objekt._id = objekt_array[i]._id;
-		objekt._rev = objekt_array[i]._rev;
-		objekt._deleted = true;
-		objekte.push(objekt);
-	}
+		new_objekt;
+    _.each(object_array, function(object) {
+        new_objekt = {};
+        new_objekt._id = object._id;
+        new_objekt._rev = object._rev;
+        new_objekt._deleted = true;
+        objekte.push(new_objekt);
+    });
 	objekte_mit_objekte = {};
 	objekte_mit_objekte.docs = objekte;
 	$.ajax({
