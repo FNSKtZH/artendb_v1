@@ -2986,23 +2986,6 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
                 bez_partner.GUID = objekt._id;
                 window.adb.bezPartner_objekt[objekt._id] = bez_partner;
             });
-			/*for (var f = 0; f < data.rows.length; f++) {
-				objekt = data.rows[f].doc;
-				bez_partner = {};
-				bez_partner.Gruppe = objekt.Gruppe;
-				if (objekt.Gruppe === "Lebensräume") {
-					bez_partner.Taxonomie = objekt.Taxonomie.Daten.Taxonomie;
-					if (objekt.Taxonomie.Daten.Taxonomie.Label) {
-						bez_partner.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Taxonomie.Einheit;
-					} else {
-						bez_partner.Name = objekt.Taxonomie.Daten.Einheit;
-					}
-				} else {
-					bez_partner.Name = objekt.Taxonomie.Daten["Artname vollständig"];
-				}
-				bez_partner.GUID = objekt._id;
-				window.adb.bezPartner_objekt[objekt._id] = bez_partner;
-			}*/
 		}
 	});
 	beziehungspartner_vorbereitet.resolve();
@@ -3124,12 +3107,12 @@ window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs
 window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 	if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
         /* hat nicht funktioniert
-        var datensammlung = _.find(Objekt.Datensammlungen, function(datensammlung) {
-            return datensammlung.Name === DsName;
+        var datensammlung = _.find(objekt.Datensammlungen, function(datensammlung) {
+            return datensammlung.Name === ds_name;
         });
-        Objekt.Datensammlungen = _.without(Objekt.Datensammlungen, datensammlung);
+        objekt.Datensammlungen = _.without(Objekt.Datensammlungen, datensammlung);
         $db = $.couch.db("artendb");
-        $db.saveDoc(Objekt);*/
+        $db.saveDoc(objekt);*/
 		for (var i=0; i<objekt.Datensammlungen.length; i++) {
 			if (objekt.Datensammlungen[i].Name === ds_name) {
 				objekt.Datensammlungen.splice(i,1);
@@ -3478,11 +3461,9 @@ window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Datensammlung entfernen
-			for (var i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name === ds_name) {
-					doc.Datensammlungen.splice(i,1);
-				}
-			}
+            doc.Datensammlungen = _.reject(doc.Datensammlungen, function(datensammlung) {
+                return datensammlung.Name === ds_name
+            });
 			// in artendb speichern
 			$db.saveDoc(doc);
             // mitteilen, dass eine ds entfernt wurde
@@ -3500,11 +3481,9 @@ window.adb.entferneBeziehungssammlungAusDokument = function(id, bs_name) {
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Beziehungssammlung entfernen
-			for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-				if (doc.Beziehungssammlungen[i].Name === bs_name) {
-					doc.Beziehungssammlungen.splice(i,1);
-				}
-			}
+            doc.Beziehungssammlungen = _.reject(doc.Beziehungssammlungen, function(beziehungssammlung) {
+                return beziehungssammlung.Name === bs_name
+            });
 			// in artendb speichern
 			$db.saveDoc(doc);
             // mitteilen, dass eine ds entfernt wurde
