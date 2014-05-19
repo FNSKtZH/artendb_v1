@@ -1746,7 +1746,6 @@ window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
 window.adb.handleDsWählenChange = function() {
 	var ds_name = this.value,
 		wählbar = $("#"+this.id+" option:selected").attr("waehlbar"),
-		i,
         x,
         $DsAnzDs = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
@@ -1764,53 +1763,51 @@ window.adb.handleDsWählenChange = function() {
 		$DsAnzDs.html("");
 		$DsAnzDs_label.html("");
 		if (ds_name) {
-			for (i in window.adb.ds_von_objekten.rows) {
-				if (window.adb.ds_von_objekten.rows[i].key[1] === ds_name) {
-					$DsName.val(ds_name);
-					for (x in window.adb.ds_von_objekten.rows[i].key[4]) {
-						if (x === "Ursprungsdatensammlung") {
-							$("#DsUrsprungsDs").val(window.adb.ds_von_objekten.rows[i].key[4][x]);
-						} else if (x !== "importiert von") {
-							$("#Ds" + x).val(window.adb.ds_von_objekten.rows[i].key[4][x]);
-						}
-					}
-					if (window.adb.ds_von_objekten.rows[i].key[2] === true) {
-						$("#DsZusammenfassend").prop('checked', true);
-						// Feld für Ursprungs-DS anzeigen
-						$("#DsUrsprungsDs_div").show();
-					} else {
-						// sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
-						$("#DsZusammenfassend").prop('checked', false);
-						// und Feld für Ursprungs-DS verstecken
-						$("#DsUrsprungsDs_div").hide();
-					}
-					// wenn die ds/bs kein "importiert von" hat ist der Wert null
-					// verhindern, dass null angezeigt wird
-					if (window.adb.ds_von_objekten.rows[i].key[3]) {
-						$("#DsImportiertVon").val(window.adb.ds_von_objekten.rows[i].key[3]);
-					} else {
-						$("#DsImportiertVon").val("");
-					}
-					$DsAnzDs_label.html("Anzahl Arten/Lebensräume");
-					$DsAnzDs.html(window.adb.ds_von_objekten.rows[i].value);
-					// dafür sorgen, dass textareas genug gross sind
-					$('#importieren_ds')
+            _.each(window.adb.ds_von_objekten.rows, function(ds_von_objekten_row) {
+                if (ds_von_objekten_row.key[1] === ds_name) {
+                    $DsName.val(ds_name);
+                    _.each(ds_von_objekten_row.key[4], function(feldwert, feldname) {
+                        if (feldname === "Ursprungsdatensammlung") {
+                            $("#DsUrsprungsDs").val(feldwert);
+                        } else if (feldname !== "importiert von") {
+                            $("#Ds" + feldname).val(feldwert);
+                        }
+                    });
+                    if (ds_von_objekten_row.key[2] === true) {
+                        $("#DsZusammenfassend").prop('checked', true);
+                        // Feld für Ursprungs-DS anzeigen
+                        $("#DsUrsprungsDs_div").show();
+                    } else {
+                        // sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
+                        $("#DsZusammenfassend").prop('checked', false);
+                        // und Feld für Ursprungs-DS verstecken
+                        $("#DsUrsprungsDs_div").hide();
+                    }
+                    // wenn die ds/bs kein "importiert von" hat ist der Wert null
+                    // verhindern, dass null angezeigt wird
+                    if (ds_von_objekten_row.key[3]) {
+                        $("#DsImportiertVon").val(ds_von_objekten_row.key[3]);
+                    } else {
+                        $("#DsImportiertVon").val("");
+                    }
+                    $DsAnzDs_label.html("Anzahl Arten/Lebensräume");
+                    $DsAnzDs.html(ds_von_objekten_row.value);
+                    // dafür sorgen, dass textareas genug gross sind
+                    $('#importieren_ds')
                         .find('textarea')
                         .each(function() {
                             window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
                         });
-					$DsName.focus();
-				}
-				// löschen-Schaltfläche einblenden
-				$("#DsLoeschen").show();
-			}
+                    $DsName.focus();
+                }
+                // löschen-Schaltfläche einblenden
+                $("#DsLoeschen").show();
+            });
 		} else {
 			// löschen-Schaltfläche ausblenden
 			$("#DsLoeschen").hide();
 		}
 	} else {
-		// melden, dass diese DS nicht bearbeitet werden kann
-		$('#meldung_ds_nicht_bearbeitbar').modal();
         // melden, dass diese BS nicht bearbeitet werden kann
         $("#importieren_ds_ds_beschreiben_error_text")
             .html("Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.");
@@ -1855,19 +1852,12 @@ window.adb.handleDsNameChange = function() {
 
 // wenn DsLöschen geklickt wird
 window.adb.handleDsLöschenClick = function() {
-    var $importieren_ds_ds_beschreiben_hinweis_text = $("#importieren_ds_ds_beschreiben_hinweis_text");
 	// Rückmeldung anzeigen
-	$importieren_ds_ds_beschreiben_hinweis_text
+    $("#importieren_ds_ds_beschreiben_hinweis_text")
         .alert()
         .show()
 	    .html("Bitte warten: Die Datensammlung wird entfernt...");
-	$.when(window.adb.entferneDatensammlungAusAllenObjekten($("#DsName").val())).then(function() {
-		// jetzt Ergebnisse anzeigen
-		$importieren_ds_ds_beschreiben_hinweis_text
-            .alert()
-            .show()
-		    .html("Die Datensammlung wurde erfolgreich entfernt");
-	});
+    window.adb.entferneDatensammlungAusAllenObjekten($("#DsName").val());
 };
 
 // wenn BsLoeschen geklickt wird
@@ -2112,7 +2102,7 @@ window.adb.handlePanelbodyLrTaxonomieShown = function() {
 window.adb.handleExportierenExportierenCollapseShown = function() {
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
-	if ($("#exportieren_exportieren_collapse").css("display") === "block") {
+	if ($("#exportieren_exportieren_collapse").is(":visible")) {
 		// Tabelle und Herunterladen-Schaltfläche ausblenden
 		$("#exportieren_exportieren_tabelle").hide();
 		$(".exportieren_exportieren_exportieren").hide();
@@ -2285,8 +2275,6 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 		Feldname = "",
 		html_ds_felder_div = "",
         erste_10_ds,
-		x,
-        i,
         $tabellen_div = $("#"+tabellen_div);
 	if (Datensätze.length > 10) {
 		html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
@@ -2695,6 +2683,7 @@ window.adb.importiereDatensammlung = function() {
 	DsImportiert.resolve();
 };
 
+// wird momentan nicht benutzt
 window.adb.queryChangesStartingNow = function(options) {
     options = options || {};
     options.since = "now";
@@ -2737,6 +2726,7 @@ window.adb.queryChangesStartingNow = function(options) {
     });
 };
 
+// wird momentan nicht benutzt
 window.adb.queryChanges = function(options) {
     options = options || {};
     options.since = options.since || "now";
@@ -2979,7 +2969,24 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 		success: function(data) {
 			var objekt;
 			var bez_partner;
-			for (var f = 0; f < data.rows.length; f++) {
+            _.each(data.rows, function(data_row) {
+                objekt = data_row.doc;
+                bez_partner = {};
+                bez_partner.Gruppe = objekt.Gruppe;
+                if (objekt.Gruppe === "Lebensräume") {
+                    bez_partner.Taxonomie = objekt.Taxonomie.Daten.Taxonomie;
+                    if (objekt.Taxonomie.Daten.Taxonomie.Label) {
+                        bez_partner.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Taxonomie.Einheit;
+                    } else {
+                        bez_partner.Name = objekt.Taxonomie.Daten.Einheit;
+                    }
+                } else {
+                    bez_partner.Name = objekt.Taxonomie.Daten["Artname vollständig"];
+                }
+                bez_partner.GUID = objekt._id;
+                window.adb.bezPartner_objekt[objekt._id] = bez_partner;
+            });
+			/*for (var f = 0; f < data.rows.length; f++) {
 				objekt = data.rows[f].doc;
 				bez_partner = {};
 				bez_partner.Gruppe = objekt.Gruppe;
@@ -2995,7 +3002,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 				}
 				bez_partner.GUID = objekt._id;
 				window.adb.bezPartner_objekt[objekt._id] = bez_partner;
-			}
+			}*/
 		}
 	});
 	beziehungspartner_vorbereitet.resolve();
