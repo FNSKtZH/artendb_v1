@@ -117,14 +117,14 @@ window.adb.erstelleTree = function() {
 		$("#treeMitteilung").hide();
 		$("#tree" + window.adb.Gruppe).css("display", "block");
 		$("#tree" + window.adb.Gruppe + "Beschriftung").css("display", "block");
-		window.adb.setzeTreehoehe();
+		window.adb.setzeTreehöhe();
 		window.adb.initiiereSuchfeld();
 	})
 	.bind("after_open.jstree", function() {
-		window.adb.setzeTreehoehe();
+		window.adb.setzeTreehöhe();
 	})
 	.bind("after_close.jstree", function() {
-		window.adb.setzeTreehoehe();
+		window.adb.setzeTreehöhe();
 	});
 	return jstree_erstellt.promise();
 };
@@ -610,11 +610,11 @@ window.adb.initiiere_art = function(id) {
                                 html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "2");
                             });
 						}
-						window.adb.initiiere_art_2(html_art, art, art_datensammlungen, datensammlungen_von_synonymen, art_beziehungssammlungen, taxonomische_beziehungssammlungen, beziehungssammlungen_von_synonymen);
+						window.adb.initiiere_art_2(html_art, art);
 					}
 				});
 			} else {
-				window.adb.initiiere_art_2(html_art, art, art_datensammlungen, datensammlungen_von_synonymen, art_beziehungssammlungen, taxonomische_beziehungssammlungen, beziehungssammlungen_von_synonymen);
+				window.adb.initiiere_art_2(html_art, art);
 			}
 		},
 		error: function() {
@@ -623,9 +623,9 @@ window.adb.initiiere_art = function(id) {
 	});
 };
 
-window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, DatensammlungenVonSynonymen, Beziehungssammlungen, taxonomischeBeziehungssammlungen, BeziehungssammlungenVonSynonymen) {
+window.adb.initiiere_art_2 = function(html_art, art) {
 	// panel beenden
-	$("#art_inhalt").html(htmlArt);
+	$("#art_inhalt").html(html_art);
 	// richtiges Formular anzeigen
 	window.adb.zeigeFormular("art");
 	// Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
@@ -648,10 +648,10 @@ window.adb.initiiere_art_2 = function(htmlArt, art, Datensammlungen, Datensammlu
 // erstellt die HTML für eine Beziehung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
-window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
+window.adb.erstelleHtmlFürBeziehung = function(art, art_i, alt_name) {
 	var html,
 		name,
-		art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name) + altName;
+		art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name) + alt_name;
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
@@ -694,26 +694,25 @@ window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
 	// jetzt für alle Beziehungen die Felder hinzufügen
     _.each(art_i.Beziehungen, function(beziehung, index) {
         if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
-            for (var y in beziehung.Beziehungspartner) {
-                //if (beziehung.Beziehungspartner[y].Gruppe === "Lebensräume") {
-                if (beziehung.Beziehungspartner[y].Taxonomie) {
-                    name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Taxonomie + " > " + beziehung.Beziehungspartner[y].Name;
+            _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
+                if (beziehungspartner.Taxonomie) {
+                    name = beziehungspartner.Gruppe + ": " + beziehungspartner.Taxonomie + " > " + beziehungspartner.Name;
                 } else {
-                    name = beziehung.Beziehungspartner[y].Gruppe + ": " + beziehung.Beziehungspartner[y].Name;
+                    name = beziehungspartner.Gruppe + ": " + beziehungspartner.Name;
                 }
                 // Partner darstellen
-                if (beziehung.Beziehungspartner[y].Rolle) {
+                if (beziehungspartner.Rolle) {
                     // Feld soll mit der Rolle beschriftet werden
-                    html += window.adb.generiereHtmlFuerObjektlink(beziehung.Beziehungspartner[y].Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                    html += window.adb.generiereHtmlFürObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 } else {
-                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehung.Beziehungspartner[y].GUID);
+                    html += window.adb.generiereHtmlFürObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 }
-            }
+            });
         }
         // Die Felder anzeigen
         _.each(beziehung, function(feldwert, feldname) {
             if (feldname !== "Beziehungspartner") {
-                html += window.adb.erstelleHtmlFuerFeld(feldname, feldwert, "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
+                html += window.adb.erstelleHtmlFürFeld(feldname, feldwert, "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
             }
         });
         // Am Schluss eine Linie, nicht aber bei der letzten Beziehung
@@ -728,117 +727,117 @@ window.adb.erstelleHtmlFürBeziehung = function(art, art_i, altName) {
 
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-window.adb.erstelleHtmlFürDatensammlung = function(dsTyp, art, art_i) {
-	var htmlDatensammlung,
+window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, art_i) {
+	var html_datensammlung,
 		hierarchie_string,
 		array_string,
 		art_i_name;
 	art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name);
 	// Accordion-Gruppe und -heading anfügen
-	htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
+	html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
-	if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
-		htmlDatensammlung += '<div class="btn-toolbar bearb_toolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
+	if (art.Gruppe === "Lebensräume" && ds_typ === "Taxonomie") {
+		html_datensammlung += '<div class="btn-toolbar bearb_toolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 	}
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
+	html_datensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
 	// Titel für die Datensammlung einfügen
-	htmlDatensammlung += art_i.Name;
+	html_datensammlung += art_i.Name;
 	// header abschliessen
-	htmlDatensammlung += '</a></h4></div>';
+	html_datensammlung += '</a></h4></div>';
 	// body beginnen
-	htmlDatensammlung += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + dsTyp + '"><div class="panel-body">';
+	html_datensammlung += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + ds_typ + '"><div class="panel-body">';
 	// Datensammlung beschreiben
-	htmlDatensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
+	html_datensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
 	if (art_i.Beschreibung) {
-		htmlDatensammlung += art_i.Beschreibung;
+		html_datensammlung += art_i.Beschreibung;
 	}
 	if (art_i.Datenstand) {
-		htmlDatensammlung += '. Stand: ';
-		htmlDatensammlung += art_i.Datenstand;
+		html_datensammlung += '. Stand: ';
+		html_datensammlung += art_i.Datenstand;
 	}
 	if (art_i.Link) {
-		htmlDatensammlung += '. <a href="';
-		htmlDatensammlung += art_i.Link;
-		htmlDatensammlung += '">';
-		htmlDatensammlung += art_i.Link;
-		htmlDatensammlung += '</a>';
+		html_datensammlung += '. <a href="';
+		html_datensammlung += art_i.Link;
+		html_datensammlung += '">';
+		html_datensammlung += art_i.Link;
+		html_datensammlung += '</a>';
 	}
 	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
-		htmlDatensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
+		html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
 	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
-		htmlDatensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben';
+		html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben';
 	}
 	// Beschreibung der Datensammlung abschliessen
-	htmlDatensammlung += '</div>';
+	html_datensammlung += '</div>';
 	// Felder anzeigen
 	// zuerst die GUID, aber nur bei der Taxonomie
-	if (dsTyp === "Taxonomie") {
-		htmlDatensammlung += window.adb.erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
+	if (ds_typ === "Taxonomie") {
+		html_datensammlung += window.adb.erstelleHtmlFürFeld("GUID", art._id, ds_typ, "Taxonomie");
 	}
-	for (var y in art_i.Daten) {
-		if (y === "GUID") {
-			// dieses Feld nicht anzeigen. Es wird _id verwendet
-			// dieses Feld wird künftig nicht mehr importiert
-		} else if (((y === "Offizielle Art" || y === "Eingeschlossen in" || y === "Synonym von") && art.Gruppe === "Flora") || (y === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
-			// dann den Link aufbauen lassen
-			htmlDatensammlung += window.adb.generiereHtmlFuerLinkZuGleicherGruppe(y, art._id, art_i.Daten[y].Name);
-		} else if ((y === "Gültige Namen" || y === "Eingeschlossene Arten" || y === "Synonyme") && art.Gruppe === "Flora") {
-			// das ist ein Array von Objekten
-			htmlDatensammlung += window.adb.generiereHtmlFuerLinksZuGleicherGruppe(y, art_i.Daten[y]);
-		} else if ((y === "Artname" && art.Gruppe === "Flora") || (y === "Parent" && art.Gruppe === "Lebensräume")) {
-			// dieses Feld nicht anzeigen
-		} else if (y === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(art_i.Daten[y])) {
-			// Namen kommagetrennt anzeigen
-			hierarchie_string = window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(art_i.Daten[y]);
-			htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(y, hierarchie_string, dsTyp, art_i.Name.replace(/"/g, "'"));
-		} else if (_.isArray(art_i.Daten[y])) {
-			// dieses Feld enthält einen Array von Werten
-			array_string = art_i.Daten[y].toString();
-			htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(y, array_string, dsTyp, art_i.Name.replace(/"/g, "'"));
-		} else {
-			htmlDatensammlung += window.adb.erstelleHtmlFuerFeld(y, art_i.Daten[y], dsTyp, art_i.Name.replace(/"/g, "'"));
-		}
-	}
+    _.each(art_i.Daten, function(feldwert, feldname) {
+        if (feldname === "GUID") {
+            // dieses Feld nicht anzeigen. Es wird _id verwendet
+            // dieses Feld wird künftig nicht mehr importiert
+        } else if (((feldname === "Offizielle Art" || feldname === "Eingeschlossen in" || feldname === "Synonym von") && art.Gruppe === "Flora") || (feldname === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
+            // dann den Link aufbauen lassen
+            html_datensammlung += window.adb.generiereHtmlFürLinkZuGleicherGruppe(feldname, art._id, feldwert.Name);
+        } else if ((feldname === "Gültige Namen" || feldname === "Eingeschlossene Arten" || feldname === "Synonyme") && art.Gruppe === "Flora") {
+            // das ist ein Array von Objekten
+            html_datensammlung += window.adb.generiereHtmlFürLinksZuGleicherGruppe(feldname, feldwert);
+        } else if ((feldname === "Artname" && art.Gruppe === "Flora") || (feldname === "Parent" && art.Gruppe === "Lebensräume")) {
+            // dieses Feld nicht anzeigen
+        } else if (feldname === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(feldwert)) {
+            // Namen kommagetrennt anzeigen
+            hierarchie_string = window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(feldwert);
+            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, hierarchie_string, ds_typ, art_i.Name.replace(/"/g, "'"));
+        } else if (_.isArray(feldwert)) {
+            // dieses Feld enthält einen Array von Werten
+            array_string = feldwert.toString();
+            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, array_string, ds_typ, art_i.Name.replace(/"/g, "'"));
+        } else {
+            html_datensammlung += window.adb.erstelleHtmlFürFeld(feldname, feldwert, ds_typ, art_i.Name.replace(/"/g, "'"));
+        }
+    });
 	// body und Accordion-Gruppe abschliessen
-	htmlDatensammlung += '</div></div></div>';
-	return htmlDatensammlung;
+	html_datensammlung += '</div></div></div>';
+	return html_datensammlung;
 };
 
-window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray = function(hierarchie_array) {
+window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierarchie_array) {
 	if (!_.isArray(hierarchie_array)) {
 		return "";
 	}
 	// Namen kommagetrennt anzeigen
 	var hierarchie_string = "";
-	for (var g=0; g<hierarchie_array.length; g++) {
-		if (g > 0) {
-			hierarchie_string += "\n";
-		}
-		hierarchie_string += hierarchie_array[g].Name;
-	}
+    _.each(hierarchie_array, function(hierarchie_objekt, index) {
+        if (index > 0) {
+            hierarchie_string += "\n";
+        }
+        hierarchie_string += hierarchie_objekt.Name;
+    });
 	return hierarchie_string;
 };
 
 // übernimmt Feldname und Feldwert
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
-window.adb.erstelleHtmlFuerFeld = function(Feldname, Feldwert, dsTyp, dsName) {
-	var htmlDatensammlung = "";
-	if (typeof Feldwert === "string" && Feldwert.slice(0, 7) === "//") {
+window.adb.erstelleHtmlFürFeld = function(feldname, feldwert, ds_typ, ds_name) {
+	var html_datensammlung = "";
+	if (typeof feldwert === "string" && feldwert.slice(0, 7) === "//") {
 		// www-Links als Link darstellen
-		htmlDatensammlung += window.adb.generiereHtmlFuerWwwlink(Feldname, Feldwert, dsTyp, dsName);
-	} else if (typeof Feldwert === "string" && Feldwert.length < 45) {
-		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
-	} else if (typeof Feldwert === "string" && Feldwert.length >= 45) {
-		htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(Feldname, Feldwert, dsTyp);
-	} else if (typeof Feldwert === "number") {
-		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "number", dsTyp, dsName);
-	} else if (typeof Feldwert === "boolean") {
-		htmlDatensammlung += window.adb.generiereHtmlFuerBoolean(Feldname, Feldwert, dsTyp, dsName);
+		html_datensammlung += window.adb.generiereHtmlFürWwwLink(feldname, feldwert, ds_typ, ds_name);
+	} else if (typeof feldwert === "string" && feldwert.length < 45) {
+		html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "text", ds_typ, ds_name);
+	} else if (typeof feldwert === "string" && feldwert.length >= 45) {
+		html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, feldwert, ds_typ);
+	} else if (typeof feldwert === "number") {
+		html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "number", ds_typ, ds_name);
+	} else if (typeof feldwert === "boolean") {
+		html_datensammlung += window.adb.generiereHtmlFürBoolean(feldname, feldwert, ds_typ, ds_name);
 	} else {
-		htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(Feldname, Feldwert, "text", dsTyp, dsName);
+		html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "text", ds_typ, ds_name);
 	}
-	return htmlDatensammlung;
+	return html_datensammlung;
 };
 
 // managt die Links zu Google Bilder und Wikipedia
@@ -846,59 +845,59 @@ window.adb.erstelleHtmlFuerFeld = function(Feldname, Feldwert, dsTyp, dsName) {
 window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
 	// jetzt die Links im Menu setzen
 	if (art) {
-		var googleBilderLink = "",
-            wikipediaLink = "";
+		var google_bilder_link = "",
+            wikipedia_link = "";
 		switch (art.Gruppe) {
 		case "Flora":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
 			if (art.Taxonomie.Daten['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Italienisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Deutsch']) {
-				wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
+				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
 			} else {
-				wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
+				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
 			}
 			break;
 		case "Fauna":
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
 			if (art.Taxonomie.Daten["Name Deutsch"]) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Französisch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
 			}
 			if (art.Taxonomie.Daten['Name Italienisch']) {
-				googleBilderLink += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+				google_bilder_link += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
 			}
-			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
 			break;
 		case 'Moose':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
-			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
 			break;
 		case 'Macromycetes':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
 			if (art.Taxonomie.Daten['Name Deutsch']) {
-				googleBilderLink += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
 			}
-			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
 			break;
 		case 'Lebensräume':
-			googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
-			wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
 			break;
 		}
 		// mit replace Hochkommata ' ersetzen, sonst klappt url nicht
-		$("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
+		$("#GoogleBilderLink").attr("href", encodeURI(google_bilder_link).replace("&#39;", "%20"));
 		$("#GoogleBilderLink_li").removeClass("disabled");
-		$("#WikipediaLink").attr("href", wikipediaLink);
+		$("#WikipediaLink").attr("href", wikipedia_link);
 		$("#WikipediaLink_li").removeClass("disabled");
 	} else {
 		$("#WikipediaLink").attr("href", "#");
@@ -909,147 +908,147 @@ window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function(FeldName, id, Artname) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><p class="form-control-static controls feldtext"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
-	HtmlContainer += id;
-	HtmlContainer += '">';
-	HtmlContainer += Artname;
-	HtmlContainer += '</a></p></div>';
-	return HtmlContainer;
+window.adb.generiereHtmlFürLinkZuGleicherGruppe = function(feld_name, id, artname) {
+	var html_container;
+	html_container = '<div class="form-group"><label class="control-label">';
+	html_container += feld_name;
+	html_container += ':</label><p class="form-control-static controls feldtext"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
+	html_container += id;
+	html_container += '">';
+	html_container += artname;
+	html_container += '</a></p></div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für Serien von Links in Flora
-window.adb.generiereHtmlFuerLinksZuGleicherGruppe = function(FeldName, Objektliste) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><span class="feldtext controls">';
-	for (var a in Objektliste) {
-		if (a > 0) {
-			HtmlContainer += ', ';
-		}
-		HtmlContainer += '<p class="form-control-static controls"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
-		HtmlContainer += Objektliste[a].GUID;
-		HtmlContainer += '">';
-		HtmlContainer += Objektliste[a].Name;
-		HtmlContainer += '</a></p>';
-	}
-	HtmlContainer += '</span></div>';
-	return HtmlContainer;
+window.adb.generiereHtmlFürLinksZuGleicherGruppe = function(feldname, objekt_liste) {
+	var html_container;
+	html_container = '<div class="form-group"><label class="control-label">';
+	html_container += feldname;
+	html_container += ':</label><span class="feldtext controls">';
+    _.each(objekt_liste, function(objekt, index) {
+        if (index > 0) {
+            html_container += ', ';
+        }
+        html_container += '<p class="form-control-static controls"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
+        html_container += objekt.GUID;
+        html_container += '">';
+        html_container += objekt.Name;
+        html_container += '</a></p>';
+    });
+	html_container += '</span></div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerWwwlink = function(FeldName, FeldWert, dsTyp, dsName) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label>\n\t';
+window.adb.generiereHtmlFürWwwLink = function(feldname, feldwert, ds_typ, ds_name) {
+	var html_container;
+	html_container = '<div class="form-group">\n\t<label class="control-label" for="';
+	html_container += feldname;
+	html_container += '">';
+	html_container += feldname;
+	html_container += ':</label>\n\t';
 	// jetzt Link beginnen, damit das Feld klickbar wird
-	HtmlContainer += '<p><a href="';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" name="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" type="text" value="';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" style="cursor:pointer;">';
+	html_container += '<p><a href="';
+	html_container += feldwert;
+	html_container += '"><input class="controls form-control input-sm" dsTyp="'+ds_typ+'" dsName="'+ds_name+'" id="';
+	html_container += feldname;
+	html_container += '" name="';
+	html_container += feldname;
+	html_container += '" type="text" value="';
+	html_container += feldwert;
+	html_container += '" readonly="readonly" style="cursor:pointer;">';
 	// Link abschliessen
-	HtmlContainer += '</a></p>';
-	HtmlContainer += '\n</div>';
-	return HtmlContainer;
+	html_container += '</a></p>';
+	html_container += '\n</div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerObjektlink = function(FeldName, FeldWert, Url) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':';
-	HtmlContainer += '</label>';
-	HtmlContainer += '<p class="form-control-static feldtext controls"><a href="';
-	HtmlContainer += Url;
-	HtmlContainer += '" target="_blank">';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '</a></p></div>';
-	return HtmlContainer;
+window.adb.generiereHtmlFürObjektlink = function(feldname, feldwert, url) {
+	var html_container;
+	html_container = '<div class="form-group"><label class="control-label">';
+	html_container += feldname;
+	html_container += ':';
+	html_container += '</label>';
+	html_container += '<p class="form-control-static feldtext controls"><a href="';
+	html_container += url;
+	html_container += '" target="_blank">';
+	html_container += feldwert;
+	html_container += '</a></p></div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für Textinputs
-window.adb.generiereHtmlFuerTextinput = function(FeldName, FeldWert, InputTyp, dsTyp, dsName) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group">\n\t<label class="control-label" for="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label>\n\t<input class="controls form-control input-sm" id="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" name="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" type="';
-	HtmlContainer += InputTyp;
-	HtmlContainer += '" value="';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
-	return HtmlContainer;
+window.adb.generiereHtmlFürTextinput = function(feldname, feldwert, input_typ, ds_typ, ds_name) {
+	var html_container;
+	html_container = '<div class="form-group">\n\t<label class="control-label" for="';
+	html_container += feldname;
+	html_container += '">';
+	html_container += feldname;
+	html_container += ':</label>\n\t<input class="controls form-control input-sm" id="';
+	html_container += feldname;
+	html_container += '" name="';
+	html_container += feldname;
+	html_container += '" type="';
+	html_container += input_typ;
+	html_container += '" value="';
+	html_container += feldwert;
+	html_container += '" readonly="readonly" dsTyp="'+ds_typ+'" dsName="'+ds_name+'">\n</div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für Textarea
-window.adb.generiereHtmlFuerTextarea = function(FeldName, FeldWert, dsTyp, dsName) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><textarea class="controls form-control" id="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" name="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">';
-	HtmlContainer += FeldWert;
-	HtmlContainer += '</textarea></div>';
-	return HtmlContainer;
+window.adb.generiereHtmlFürTextarea = function(feldname, feldwert, ds_typ, ds_name) {
+	var html_container;
+	html_container = '<div class="form-group"><label class="control-label" for="';
+	html_container += feldname;
+	html_container += '">';
+	html_container += feldname;
+	html_container += ':</label><textarea class="controls form-control" id="';
+	html_container += feldname;
+	html_container += '" name="';
+	html_container += feldname;
+	html_container += '" readonly="readonly" dsTyp="'+ds_typ+'" dsName="'+ds_name+'">';
+	html_container += feldwert;
+	html_container += '</textarea></div>';
+	return html_container;
 };
 
 // generiert den html-Inhalt für ja/nein-Felder
-window.adb.generiereHtmlFuerBoolean = function(FeldName, FeldWert, dsTyp, dsName) {
-	var HtmlContainer;
-	HtmlContainer = '<div class="form-group"><label class="control-label" for="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '">';
-	HtmlContainer += FeldName;
-	HtmlContainer += ':</label><input type="checkbox" id="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '" name="';
-	HtmlContainer += FeldName;
-	HtmlContainer += '"';
-	if (FeldWert === true) {
-		HtmlContainer += ' checked="true"';
+window.adb.generiereHtmlFürBoolean = function(feldname, feldwert, ds_typ, ds_name) {
+	var html_container;
+	html_container = '<div class="form-group"><label class="control-label" for="';
+	html_container += feldname;
+	html_container += '">';
+	html_container += feldname;
+	html_container += ':</label><input type="checkbox" id="';
+	html_container += feldname;
+	html_container += '" name="';
+	html_container += feldname;
+	html_container += '"';
+	if (feldwert === true) {
+		html_container += ' checked="true"';
 	}
-	HtmlContainer += '" readonly="readonly" disabled="disabled" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
-	return HtmlContainer;
+	html_container += '" readonly="readonly" disabled="disabled" dsTyp="'+ds_typ+'" dsName="'+ds_name+'"></div>';
+	return html_container;
 };
 
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
-window.adb.setzeTreehoehe = function() {
-	var windowHeight = $(window).height();
+window.adb.setzeTreehöhe = function() {
+	var window_height = $(window).height();
 	if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
-		$(".baum").css("max-height", windowHeight - 161);
+		$(".baum").css("max-height", window_height - 161);
 	} else {
 		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
-		$(".baum").css("max-height", windowHeight - 252);
+		$(".baum").css("max-height", window_height - 252);
 	}
 };
 
 // setzt die Höhe von textareas so, dass der Text genau rein passt
-window.adb.FitToContent = function(id, maxHeight) {
+window.adb.fitTextareaToContent = function(id, max_height) {
 	var text = id && id.style ? id : document.getElementById(id);
-	maxHeight = maxHeight || document.documentElement.clientHeight;
+	max_height = max_height || document.documentElement.clientHeight;
 	if (!text) {
 		return;
 	}
@@ -1060,11 +1059,11 @@ window.adb.FitToContent = function(id, maxHeight) {
 	}
 
 	var adjustedHeight = text.clientHeight;
-	if (!maxHeight || maxHeight > adjustedHeight) {
+	if (!max_height || max_height > adjustedHeight) {
 		adjustedHeight = Math.max(text.scrollHeight, adjustedHeight);
 	}
-	if (maxHeight) {
-		adjustedHeight = Math.min(maxHeight, adjustedHeight);
+	if (max_height) {
+		adjustedHeight = Math.min(max_height, adjustedHeight);
 	}
 	if (adjustedHeight > text.clientHeight) {
 		text.style.height = adjustedHeight + "px";
@@ -1076,7 +1075,7 @@ window.adb.FitToContent = function(id, maxHeight) {
 // wird ein Formularname übergeben, wird dieses Formular gezeigt
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
-window.adb.zeigeFormular = function(Formularname) {
+window.adb.zeigeFormular = function(formularname) {
 	var formular_angezeigt = $.Deferred(),
         $form = $('form');
 	// zuerst alle Formulare ausblenden
@@ -1085,8 +1084,8 @@ window.adb.zeigeFormular = function(Formularname) {
 		$(this).hide();
 	});
 
-	if (Formularname) {
-		if (Formularname !== "art") {
+	if (formularname) {
+		if (formularname !== "art") {
 			// Spuren des letzten Objekts entfernen
 			// IE8 kann nicht deleten
 			try {
@@ -1107,7 +1106,7 @@ window.adb.zeigeFormular = function(Formularname) {
 		}
 		$form.each(function() {
 			var that = $(this);
-			if (that.attr("id") === Formularname) {
+			if (that.attr("id") === formularname) {
 				$("#forms").show();
 				that.show();
 			}
@@ -1123,33 +1122,35 @@ window.adb.zeigeFormular = function(Formularname) {
 // kontrollieren, ob die erforderlichen Felder etwas enthalten
 // wenn ja wird true retourniert, sonst false
 window.adb.validiereSignup = function(woher) {
-	var Email, Passwort, Passwort2;
+	var email,
+        passwort,
+        passwort2;
 	// zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
 	$(".hinweis").css("display", "none");
 	// erfasste Werte holen
-	Email = $("#Email_"+woher).val();
-	Passwort = $("#Passwort_"+woher).val();
-	Passwort2 = $("#Passwort2_"+woher).val();
+	email = $("#Email_"+woher).val();
+	passwort = $("#Passwort_"+woher).val();
+	passwort2 = $("#Passwort2_"+woher).val();
 	// prüfen
-	if (!Email) {
+	if (!email) {
 		$("#Emailhinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Email_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
-	} else if (!Passwort) {
+	} else if (!passwort) {
 		$("#Passworthinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
-	} else if (!Passwort2) {
+	} else if (!passwort2) {
 		$("#Passwort2hinweis_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
 		}, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 		return false;
-	} else if (Passwort !== Passwort2) {
+	} else if (passwort !== passwort2) {
 		$("#Passwort2hinweisFalsch_"+woher).css("display", "block");
 		setTimeout(function() {
 			$("#Passwort2_"+woher).focus();
@@ -1170,7 +1171,7 @@ window.adb.erstelleKonto = function(woher) {
 			if (woher === "art") {
 				window.adb.bearbeiteLrTaxonomie();
 			}
-			window.adb.passeUiFuerAngemeldetenUserAn(woher);
+			window.adb.passeUiFürAngemeldetenUserAn(woher);
 			// Werte aus Feldern entfernen
 			$("#Email_"+woher).val("");
 			$("#Passwort_"+woher).val("");
@@ -1201,7 +1202,7 @@ window.adb.meldeUserAn = function(woher) {
 				if (woher === "art") {
 					window.adb.bearbeiteLrTaxonomie();
 				}
-				window.adb.passeUiFuerAngemeldetenUserAn(woher);
+				window.adb.passeUiFürAngemeldetenUserAn(woher);
 				// Werte aus Feldern entfernen
 				$("#Email_"+woher).val("");
 				$("#Passwort_"+woher).val("");
@@ -1272,16 +1273,16 @@ window.adb.meldeUserAb = function() {
     window.adb.blendeMenus();
 };
 
-window.adb.passeUiFuerAngemeldetenUserAn = function(woher) {
-	var praefix = "importieren_";
+window.adb.passeUiFürAngemeldetenUserAn = function(woher) {
+	var präfix = "importieren_";
 	if (woher === "art") {
-		praefix = "";
+		präfix = "";
 	}
 	$("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
 	$(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
 	if (woher !== "art") {
-		$("#"+praefix+woher+"_anmelden_collapse").collapse('hide');
-		$("#importieren_"+woher+"_ds_beschreiben_collapse").collapse('show');
+		$("#" + präfix + woher + "_anmelden_collapse").collapse('hide');
+		$("#importieren_" + woher + "_ds_beschreiben_collapse").collapse('show');
 	}
 	$(".alert").css("display", "none");
 	$(".hinweis").css("display", "none");
@@ -1388,13 +1389,14 @@ window.adb.handleBsNameChange = function() {
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
 window.adb.handleDsImportiertVonChange = function() {
+    var $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
 	$("#DsImportiertVon").val(localStorage.Email);
-	$("#importieren_ds_ds_beschreiben_hinweis_text2")
+	$importieren_ds_ds_beschreiben_hinweis_text2
         .alert()
         .css("display", "block")
 	    .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
-		$("#importieren_ds_ds_beschreiben_hinweis_text2")
+		$importieren_ds_ds_beschreiben_hinweis_text2
             .alert()
             .css("display", "none");
 	}, 10000);
@@ -1487,7 +1489,7 @@ window.adb.handleBsWählenChange = function() {
                     $BsAnzDs.html(bs_row.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importieren_bs').find('textarea').each(function() {
-                        window.adb.FitToContent(this, document.documentElement.clientHeight);
+                        window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
                     });
                     $BsName.focus();
                 }
@@ -1821,7 +1823,7 @@ window.adb.handleDsWählenChange = function() {
 					$('#importieren_ds')
                         .find('textarea')
                         .each(function() {
-                            window.adb.FitToContent(this, document.documentElement.clientHeight);
+                            window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
                         });
 					$DsName.focus();
 				}
@@ -2241,7 +2243,7 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 // Höhe der textareas an Textgrösse anpassen
 window.adb.handlePanelShown = function() {
 	$(this).find('textarea').each(function() {
-		window.adb.FitToContent(this.id);
+		window.adb.fitTextareaToContent(this.id);
 	});
 };
 
@@ -2257,10 +2259,10 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function(id) {
 
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function() {
-	window.adb.setzeTreehoehe();
+	window.adb.setzeTreehöhe();
 	// Höhe der Textareas korrigieren
 	$('#forms').find('textarea').each(function() {
-		window.adb.FitToContent(this.id);
+		window.adb.fitTextareaToContent(this.id);
 	});
 };
 
@@ -2353,7 +2355,7 @@ window.adb.handleBsIdChange = function() {
 
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function() {
-	window.adb.FitToContent(this.id);
+	window.adb.fitTextareaToContent(this.id);
 };
 
 // übernimmt eine Array mit Objekten
@@ -4714,7 +4716,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
 	}
 	if (aktualisiereHierarchiefeld) {
-		$("#Hierarchie").val(window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
+		$("#Hierarchie").val(window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
 	}
 	// jetzt den parent aktualisieren
 	if (objekt.Taxonomie.Daten.Hierarchie.length > 1) {
