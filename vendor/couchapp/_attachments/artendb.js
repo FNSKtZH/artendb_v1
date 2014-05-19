@@ -3927,7 +3927,7 @@ window.adb.filtereFürExport = function(direkt) {
 	}
 };
 
-window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, anz_ds_gewaehlt, filterkriterienObjekt, gewaehlte_felder_objekt) {
+window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
 	// Alle Felder abfragen
 	var fTz = "false",
 		queryParam;
@@ -3936,11 +3936,11 @@ window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, an
 		fTz = "true";
 	}
 	if ($("#exportieren_synonym_infos").prop('checked')) {
-		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+		queryParam = "export_mit_synonymen_direkt/all_docs_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	} else {
-		queryParam = "export_direkt/all_docs?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+		queryParam = "export_direkt/all_docs?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
 	}
-	if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewaehlt > 0) {
+	if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
 		// prüfen, ob mindestens ein Feld aus ds gewählt ist
 		// wenn ja: true, sonst false
 		queryParam += "&nur_objekte_mit_eigenschaften=true";
@@ -3955,11 +3955,10 @@ window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, an
 	window.open('_list/' + queryParam);
 };
 
-window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt) {
+window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
 	// Alle Felder abfragen
 	var fTz = "false",
 		anz_gruppen_abgefragt = 0,
-		i,
 		dbParam,
 		queryParam;
 	// window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -3973,10 +3972,10 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
     _.each(gruppen_array, function(gruppe) {
         if ($("#exportieren_synonym_infos").prop('checked')) {
             dbParam = "artendb/export_mit_synonymen";
-            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         } else {
             dbParam = "artendb/export";
-            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
         if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
             // prüfen, ob mindestens ein Feld aus ds gewählt ist
@@ -4074,16 +4073,13 @@ window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
 // DsNamen in Auswahlliste stellen
 // veränderbare sind normal, übrige grau
 window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
-	var i,
-		html,
-        z,
+	var html,
         ds_namen = [];
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-	window.adb.DsKeys = [];
-	for (i=0; i<window.adb.ds_von_objekten.rows.length; i++) {
-		window.adb.DsKeys.push(window.adb.ds_von_objekten.rows[i].key);
-	}
+    window.adb.DsKeys = _.map(window.adb.ds_von_objekten.rows, function(row) {
+        return row.key;
+    });
     // brauche nur drei keys
     // email: leider gibt es Null-Werte
     window.adb.ds_namen_eindeutig = _.map(window.adb.DsKeys, function(ds_key) {
@@ -4106,16 +4102,16 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 	// mit leerer Zeile beginnen
 	html = "<option value='' waehlbar=true></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.ds_namen_eindeutig) {
-		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.ds_namen_eindeutig[z][2] === localStorage.Email || window.adb.ds_namen_eindeutig[z][1]) {
-			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
-		} else {
-			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
-		}
-	}
+    _.each(window.adb.ds_namen_eindeutig, function(ds_name_eindeutig) {
+        // veränderbar sind nur selbst importierte und zusammenfassende
+        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1]) {
+            // veränderbare sind normal = schwarz
+            html += "<option value='" + ds_name_eindeutig[0] + "' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
+        } else {
+            // nicht veränderbare sind grau
+            html += "<option value='" + ds_name_eindeutig[0] + "' style='color:grey;' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
+        }
+    });
 	$("#DsWaehlen").html(html);
 	$("#DsUrsprungsDs").html(html);
 };
@@ -4135,7 +4131,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
 				success: function(data) {
-					// Daten in Objektvariable speichern > Wenn Ds ausgesählt, Angaben in die Felder kopieren
+					// Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
 					window.adb.bs_von_objekten = data;
 					window.adb.bereiteImportieren_bs_beschreibenVor_02();
 				}
@@ -4151,10 +4147,9 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
         bs_namen = [];
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-	window.adb.BsKeys = [];
-	for (i=0; i< window.adb.bs_von_objekten.rows.length; i++) {
-		window.adb.BsKeys.push(window.adb.bs_von_objekten.rows[i].key);
-	}
+	window.adb.BsKeys = _.map(window.adb.bs_von_objekten.rows, function(row) {
+        return row.key;
+    });
 
     // brauche nur drei keys
     window.adb.ds_namen_eindeutig = _.map(window.adb.BsKeys, function(bs_key) {
@@ -4178,16 +4173,16 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 	// mit leerer Zeile beginnen
 	html = "<option value='' waehlbar=true></option>";
 	// Namen der Datensammlungen als Optionen anfügen
-	for (z in window.adb.ds_namen_eindeutig) {
-		// veränderbar sind nur selbst importierte und zusammenfassende
-		if (window.adb.ds_namen_eindeutig[z][2] === localStorage.Email || window.adb.ds_namen_eindeutig[z][1]) {
-			// veränderbare sind normal = schwarz
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' waehlbar=true>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
-		} else {
-			// nicht veränderbare sind grau
-			html += "<option value='" + window.adb.ds_namen_eindeutig[z][0] + "' style='color:grey;' waehlbar=false>" + window.adb.ds_namen_eindeutig[z][0] + "</option>";
-		}
-	}
+    _.each(window.adb.ds_namen_eindeutig, function(ds_name_eindeutig) {
+        // veränderbar sind nur selbst importierte und zusammenfassende
+        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1]) {
+            // veränderbare sind normal = schwarz
+            html += "<option value='" + ds_name_eindeutig[0] + "' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
+        } else {
+            // nicht veränderbare sind grau
+            html += "<option value='" + ds_name_eindeutig[0] + "' style='color:grey;' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
+        }
+    });
 	$("#BsWaehlen").html(html);
 	$("#BsUrsprungsBs").html(html);
 };
@@ -4238,24 +4233,22 @@ window.adb.sortiereBeziehungenNachName = function(beziehungen) {
 // Beziehungen nach Name sortieren
 	beziehungen.sort(function(a, b) {
 		var aName,
-			bName,
-			c,
-			d;
-		for (c in a.Beziehungspartner) {
-			if (a.Beziehungspartner[c].Gruppe === "Lebensräume") {
-				// sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Taxonomie + a.Beziehungspartner[c].Name;
-			} else {
-				aName = a.Beziehungspartner[c].Gruppe + a.Beziehungspartner[c].Name;
-			}
-		}
-		for (d in b.Beziehungspartner) {
-			if (b.Beziehungspartner[d].Gruppe === "Lebensräume") {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Taxonomie + b.Beziehungspartner[d].Name;
-			} else {
-				bName = b.Beziehungspartner[d].Gruppe + b.Beziehungspartner[d].Name;
-			}
-		}
+			bName;
+        _.each(a.Beziehungspartner, function(beziehungspartner) {
+            if (beziehungspartner.Gruppe === "Lebensräume") {
+                // sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
+                aName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
+            } else {
+                aName = beziehungspartner.Gruppe + beziehungspartner.Name;
+            }
+        });
+        _.each(b.Beziehungspartner, function(beziehungspartner) {
+            if (beziehungspartner.Gruppe === "Lebensräume") {
+                bName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
+            } else {
+                bName = beziehungspartner.Gruppe + beziehungspartner.Name;
+            }
+        });
 		if (aName && bName) {
 			return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
 		} else {
@@ -4322,7 +4315,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 
 // schreibt Änderungen in Feldern in die Datenbank
 // wird vorläufig nur für LR Taxonomie verwendet
-window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
+window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
@@ -4335,57 +4328,57 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 		id = uri2.getQueryParamValue('id');
 	}
 	// sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
-	feldWert = window.adb.convertToCorrectType(feldWert);
+	feldwert = window.adb.convertToCorrectType(feldwert);
 	$db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
 			// prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
-			if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+			if (feldname === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
 				// das ist die Wurzel der Taxonomie
 				// somit ändert auch der Taxonomiename
 				// diesen mitgeben
 				// Einheit ändert und Taxonomiename muss auch angepasst werden
-				object.Taxonomie.Name = feldWert;
-				object.Taxonomie.Daten.Taxonomie = feldWert;
+				object.Taxonomie.Name = feldwert;
+				object.Taxonomie.Daten.Taxonomie = feldwert;
 				// TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
 				// TODO: allfällige Beziehungen anpassen
 			}
 			// den übergebenen Wert im übergebenen Feldnamen speichern
-			object.Taxonomie.Daten[feldName] = feldWert;
+			object.Taxonomie.Daten[feldname] = feldwert;
 			$db.saveDoc(object, {
 				success: function(data) {
 					object._rev = data.rev;
 					// prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
-					if (feldName === "Label" || feldName === "Einheit") {
-						if (feldName === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+					if (feldname === "Label" || feldname === "Einheit") {
+						if (feldname === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
 							// das ist die Wurzel der Taxonomie
 							// somit ändert auch der Taxonomiename
 							// diesen mitgeben
 							// Einheit ändert und Taxonomiename muss auch angepasst werden
-							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldWert);
+							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldwert);
 							// Feld Taxonomie und Beschriftung des Accordions aktualisiern
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							window.adb.initiiere_art(id);
 							// Taxonomie anzeigen
-							$('#' + window.adb.ersetzeUngültigeZeichenInIdNamen(feldWert)).collapse('show');
+							$('#' + window.adb.ersetzeUngültigeZeichenInIdNamen(feldwert)).collapse('show');
 						} else {
 							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
 						// node umbenennen
-						var neuerNodetext;
-						if (feldName === "Label") {
+						var neuer_nodetext;
+						if (feldname === "Label") {
 							// object hat noch den alten Wert für Label, neuen verwenden
-							neuerNodetext = window.adb.erstelleLrLabelName(feldWert, object.Taxonomie.Daten.Einheit);
+							neuer_nodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Daten.Einheit);
 						} else {
 							// object hat noch den alten Wert für Einheit, neuen verwenden
-							neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Daten.Label, feldWert);
+							neuer_nodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Daten.Label, feldwert);
 						}
-						$("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
+						$("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuer_nodetext);
 					}
 				},
 				error: function() {
 					$("#meldung_individuell_label").html("Fehler");
-					$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+					$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldname+" wurde nicht gespeichert");
 					$("#meldung_individuell_schliessen").html("schliessen");
 					$('#meldung_individuell').modal();
 				}
@@ -4393,36 +4386,36 @@ window.adb.speichern = function(feldWert, feldName, dsName, dsTyp) {
 		},
 		error: function() {
 			$("#meldung_individuell_label").html("Fehler");
-			$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldName+" wurde nicht gespeichert");
+			$("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldname+" wurde nicht gespeichert");
 			$("#meldung_individuell_schliessen").html("schliessen");
 			$('#meldung_individuell').modal();
 		}
 	});
 };
 
-window.adb.convertToCorrectType = function(feldWert) {
-	var type = window.adb.myTypeOf(feldWert);
+window.adb.convertToCorrectType = function(feldwert) {
+	var type = window.adb.myTypeOf(feldwert);
 	if (type === "boolean") {
-		return Boolean(feldWert);
+		return Boolean(feldwert);
 	} else if (type === "float") {
-		return parseFloat(feldWert);
+		return parseFloat(feldwert);
 	} else if (type === "integer") {
-		return parseInt(feldWert);
+		return parseInt(feldwert);
 	} else {
-		return feldWert;
+		return feldwert;
 	}
 };
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
-window.adb.myTypeOf = function(Wert) {
-	if (typeof Wert === "boolean") {
+window.adb.myTypeOf = function(wert) {
+	if (typeof wert === "boolean") {
 		return "boolean";
-	} else if (parseInt(Wert) && parseFloat(Wert) && parseInt(Wert) != parseFloat(Wert) && parseInt(Wert) == Wert) {
+	} else if (parseInt(wert) && parseFloat(wert) && parseInt(wert) != parseFloat(wert) && parseInt(wert) == wert) {
 		// es ist eine Float
 		return "float";
 	// verhindern, dass führende Nullen abgeschnitten werden
-	} else if (parseInt(Wert) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert)/10)) {
+	} else if (parseInt(wert) == wert && wert.toString().length === Math.ceil(parseInt(wert)/10)) {
 		// es ist eine Integer
 		return "integer";
 	} else {
@@ -4446,14 +4439,15 @@ window.adb.bearbeiteLrTaxonomie = function() {
 
 	// alle Felder schreibbar setzen
 	//$(".Lebensräume.Taxonomie .controls").each(function() {
-	$(".Lebensräume.Taxonomie .controls").each(function() {
+	$(".Lebensräume.Taxonomie").find(".controls").each(function() {
 		// einige Felder nicht bearbeiten
 		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
+            var parent = $(this).parent();
 			$(this).attr('readonly', false);
-			if ($(this).parent().attr('href')) {
-				$(this).parent().attr('href', '#');
+			if (parent.attr('href')) {
+				parent.attr('href', '#');
 				// Standardverhalten beim Klicken von Links verhindern
-				$(this).parent().attr('onclick', 'return false;');
+				parent.attr('onclick', 'return false;');
 				// Mauspointer nicht mehr als Finger
 				this.style.cursor = '';
 			}
@@ -4468,13 +4462,14 @@ window.adb.bearbeiteLrTaxonomie = function() {
 window.adb.schützeLrTaxonomie = function() {
 	// alle Felder schreibbar setzen
 	$(".Lebensräume.Taxonomie .controls").each(function() {
+        var parent = $(this).parent();
 		$(this).attr('readonly', true);
-		if ($(this).parent().attr('href')) {
+		if (parent.attr('href')) {
 			var feldWert = $(this).val();
 			if (typeof feldWert === "string" && feldWert.slice(0, 7) === "//") {
-				$(this).parent().attr('href', feldWert);
+				parent.attr('href', feldWert);
 				// falls onclick besteht, entfernen
-				$(this).parent().removeAttr("onclick");
+				parent.removeAttr("onclick");
 				// Mauspointer nicht mehr als Finger
 				this.style.cursor = 'pointer';
 			}
