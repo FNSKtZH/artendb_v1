@@ -1266,7 +1266,7 @@ window.adb.meldeUserAb = function() {
 	// $(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
-	window.adb.schuetzeLrTaxonomie();
+	window.adb.schützeLrTaxonomie();
     // falls dieser User admin war: vergessen
     delete localStorage.admin;
     // für diesen Nutzer passende Menus anzeigen
@@ -1909,30 +1909,6 @@ window.adb.handleBsLöschenClick = function() {
     window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
 };
 
-// wenn BsImportieren geklickt wird
-window.adb.handleBsImportierenClick = function() {
-	$.when(window.adb.importiereBeziehungssammlung()).then(function() {
-		// jetzt Ergebnisse anzeigen
-		console.log("Beziehungssammlung importiert");
-	});
-};
-
-// wenn DsEntfernen geklickt wird
-window.adb.handleDsEntfernenClick = function() {
-	$.when(window.adb.entferneDatensammlung()).then(function() {
-		// jetzt Ergebnisse anzeigen
-		console.log("Datensammlung entfernt");
-	});
-};
-
-// wenn BsEntfernen geklickt wird
-window.adb.handleBsEntfernenClick = function() {
-	$.when(window.adb.entferneBeziehungssammlung()).then(function() {
-		// jetzt Ergebnisse anzeigen
-		console.log("Beziehungssammlung entfernt");
-	});
-};
-
 // wenn exportieren geklickt wird
 window.adb.handleExportierenClick = function() {
 	window.adb.zeigeFormular("export");
@@ -1948,43 +1924,43 @@ window.adb.handleExportierenAltClick = function() {
 // kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 // und pro Beziehung eine Zeile ausgegeben wird. 
 // Wenn ja: reklamieren und rückgängig machen
-window.adb.handleFeldWaehlenChange = function() {
+window.adb.handleFeldWählenChange = function() {
 	if ($("#export_bez_in_zeilen").prop('checked')) {
-		var bezDsChecked = [],
+		var bez_ds_checked = [],
 			that = this;
 		$("#exportieren_felder_waehlen_felderliste")
             .find(".feld_waehlen")
             .each(function() {
                 if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
-                    bezDsChecked.push($(this).attr('datensammlung'));
+                    bez_ds_checked.push($(this).attr('datensammlung'));
                 }
             });
 		// eindeutige Liste der dsTypen erstellen
-		bezDsChecked = _.union(bezDsChecked);
-		if (bezDsChecked && bezDsChecked.length > 1) {
+		bez_ds_checked = _.union(bez_ds_checked);
+		if (bez_ds_checked && bez_ds_checked.length > 1) {
 			$('#meldung_zuviele_bs').modal();
 			$(that).prop('checked', false);
 		} else {
-			window.adb.exportZuruecksetzen();
+			window.adb.exportZurücksetzen();
 		}
 	}
 };
 
 // wenn .feld_waehlen_alle_von_ds geändert wird
 // wenn checked: alle unchecken, sonst alle checken
-window.adb.handleFeldWaehlenAlleVonDs = function() {
+window.adb.handleFeldWählenAlleVonDs = function() {
 	var ds = $(this).attr('datensammlung'),
 		status = false;
 	if ($(this).prop('checked')) {
 		status = true;
 	}
-	$('[datensammlung="'+ds+'"]').each(function() {
+	$('[datensammlung="' + ds + '"]').each(function() {
 		$(this).prop('checked', status);
 	});
 };
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
-window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function() {
+window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
 	window.adb.erstelleListeFürFeldwahl();
 	// Tabelle ausblenden, falls sie eingeblendet war
 	$("#exportieren_exportieren_tabelle").css("display", "none");
@@ -1993,21 +1969,21 @@ window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function() {
 // wenn export_feld_filtern geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
 window.adb.handleExportFeldFilternChange = function() {
-	var bezDsFiltered = [];
+	var bez_ds_filtered = [];
 	$("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
         .each(function() {
             if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
-                bezDsFiltered.push($(this).attr('eigenschaft'));
+                bez_ds_filtered.push($(this).attr('eigenschaft'));
             }
         });
 	// eindeutige Liste der dsTypen erstellen
-	bezDsFiltered = _.union(bezDsFiltered);
-	if (bezDsFiltered && bezDsFiltered.length > 1) {
+	bez_ds_filtered = _.union(bez_ds_filtered);
+	if (bez_ds_filtered && bez_ds_filtered.length > 1) {
 		$('#meldung_zuviele_bs').modal();
 		$(this).val("");
 	} else {
-		window.adb.exportZuruecksetzen();
+		window.adb.exportZurücksetzen();
 	}
 };
 
@@ -2033,7 +2009,7 @@ window.adb.handleBtnLrBearbBearbKlick = function() {
 // wenn .btn.lr_bearb_schuetzen geklickt wird
 window.adb.handleBtnLrBearbSchuetzenClick = function() {
 	if (!$(this).hasClass('disabled')) {
-		window.adb.schuetzeLrTaxonomie();
+		window.adb.schützeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 		delete localStorage.lr_bearb;
 	}
@@ -2094,8 +2070,8 @@ window.adb.handleLrParentOptionenChange = function() {
 	object.Taxonomie.Daten.Parent = parent;
 	$db = $.couch.db("artendb");
 	$db.saveDoc(object, {
-		success: function(data2) {
-			object._rev = data2.rev;
+		success: function(object_saved) {
+			object._rev = object_saved.rev;
 			if (parent_id !== "0") {
 				// die Hierarchie aufbauen und setzen
 				// bei der Wurzel ist sie schon gesetzt
@@ -2131,16 +2107,16 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
 				return row.doc;
 			});
 			// und diese Dokumente nun löschen
-			window.adb.loescheMassenMitObjektArray(doc_array);
+			window.adb.löscheMassenMitObjektArray(doc_array);
 			// vorigen node ermitteln
 			var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
 			// node des gelöschten LR entfernen
-			jQuery.jstree._reference("#" + id).delete_node("#" + id);
+			$.jstree._reference("#" + id).delete_node("#" + id);
 			// vorigen node öffnen
 			if (voriger_node) {
 				$.jstree._reference(voriger_node).select_node(voriger_node);
 			} else {
-				window.adb.oeffneGruppe("Lebensräume");
+				window.adb.öffneGruppe("Lebensräume");
 			}
 		}
 	});
@@ -2173,6 +2149,7 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that) {
+    var gruppe_ist_gewählt = false;
 	if ($(that).hasClass("active")) {
 		window.adb.fasseTaxonomienZusammen = false;
 		$(that).html("Alle Taxonomien zusammenfassen");
@@ -2181,15 +2158,14 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
 		$(that).html("Taxonomien einzeln behandeln");
 	}
 	// Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-	var gruppeIstGewählt = false;
 	$("#exportieren_objekte_waehlen_gruppen_collapse")
         .find(".exportieren_ds_objekte_waehlen_gruppe")
         .each(function() {
             if ($(that).prop('checked')) {
-                gruppeIstGewählt = true;
+                gruppe_ist_gewählt = true;
             }
         });
-	if (gruppeIstGewählt) {
+	if (gruppe_ist_gewählt) {
 		window.adb.erstelleListeFürFeldwahl();
 	}
 };
@@ -2313,7 +2289,7 @@ window.adb.handleKontoSpeichernBtnClick = function(that) {
 
 // wenn .gruppe geklickt wird
 window.adb.handleOeffneGruppeClick = function() {
-	window.adb.oeffneGruppe($(this).attr("Gruppe"));
+	window.adb.öffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
@@ -2349,6 +2325,7 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 	var html = "",
 		Feldname = "",
 		html_ds_felder_div = "",
+        erste_10_ds,
 		x,
         i,
         $tabellen_div = $("#"+tabellen_div);
@@ -2374,13 +2351,14 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 	html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
 	html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="'+Feldname+'" style="height:' + ((Object.keys(Datensätze[0]).length*19)+9)  + 'px">';
 	html += "<thead><tr>";
-	// durch die Felder zirkeln
-	for (x in Datensätze[0]) {
-		// Spalte anlegen
-		html += "<th>" + x + "</th>";
-		// Option für Feldliste anfügen
-		html_ds_felder_div += '<option value="' + x + '">' + x + '</option>';
-	}
+
+	// durch die Felder des ersten Datensatzes zirkeln
+    _.each(Datensätze[0], function(feldwert, feldname) {
+        // Spalte anlegen
+        html += "<th>" + feldname + "</th>";
+        // Option für Feldliste anfügen
+        html_ds_felder_div += '<option value="' + feldname + '">' + feldname + '</option>';
+    });
 	// Titelzeile abschliessen
 	html += "</tr></thead><tbody>";
 	// Feldliste abschliessen
@@ -2390,37 +2368,39 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 		$("#"+felder_div).html(html_ds_felder_div);
 	}
 
-	// durch die Datensätze zirkeln
-	// nur die ersten 20 anzeigen
-	for (i = 0; i < 10; i++) {
-		// Datenzeilen aufbauen
-		// Zeile anlegen
-		html += "<tr>";
-		// durch die Felder zirkeln
-		for (x in Datensätze[i]) {
-			// Spalte anlegen
-			html += "<td>";
-			if (Datensätze[i][x] === null) {
-				// Null-Werte als leer anzeigen
-				html += "";
-			} else if (typeof Datensätze[i][x] === "object") {
-				html += JSON.stringify(Datensätze[i][x]);
-			} else if (Datensätze[i][x] || Datensätze[i][x] === 0) {
-				html += Datensätze[i][x];
-			} else if (Datensätze[i][x] === false) {
-				// dafür sogen, dass false auch angezeigt wird
-				// ohne diese Zeile bleibt das Feld sonst leer
-				html += Datensätze[i][x];
-			} else {
-				// nullwerte als leerwerte (nicht) anzeigen
-				html += "";
-			}
-			// Spalte abschliessen
-			html += "</td>";
-		}
-		// Zeile abschliessen
-		html += "</tr>";
-	}
+    // Tabellenzeilen aufbauen
+	// nur die ersten 10 Datensätze anzeigen
+    erste_10_ds = _.first(Datensätze, 10);
+
+    _.each(erste_10_ds, function(datensatz) {
+        // Zeile anlegen
+        html += "<tr>";
+        // durch die Felder zirkeln
+        _.each(datensatz, function(feldwert, feldname) {
+            // Spalte anlegen
+            html += "<td>";
+            if (feldwert === null) {
+                // Null-Werte als leer anzeigen
+                html += "";
+            } else if (typeof feldwert === "object") {
+                html += JSON.stringify(feldwert);
+            } else if (feldwert || feldwert === 0) {
+                html += feldwert;
+            } else if (feldwert === false) {
+                // dafür sogen, dass false auch angezeigt wird
+                // ohne diese Zeile bleibt das Feld sonst leer
+                html += feldwert;
+            } else {
+                // nullwerte als leerwerte (nicht) anzeigen
+                html += "";
+            }
+            // Spalte abschliessen
+            html += "</td>";
+        });
+        // Zeile abschliessen
+        html += "</tr>";
+    });
+
 	// Tabelle abschliessen
 	html += '</tbody></table></div>';
 	// html in div einfügen
@@ -2428,7 +2408,7 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
         .html(html)
 	    .css("margin-top", "20px")
         // sichtbar stellen
-        .css("display", "block");
+        .show();
     // fenster scrollen
     $('html, body').animate({
         scrollTop: $tabellen_div.offset().top
@@ -4376,7 +4356,7 @@ window.adb.sortKeysOfObject = function(o) {
 	return sorted;
 };
 
-window.adb.exportZuruecksetzen = function() {
+window.adb.exportZurücksetzen = function() {
     var $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse");
 	// Export ausblenden, falls sie eingeblendet war
 	if ($exportieren_exportieren_collapse.css("display") !== "none") {
@@ -4389,7 +4369,7 @@ window.adb.exportZuruecksetzen = function() {
         .css("display", "none");
 };
 
-window.adb.oeffneGruppe = function(Gruppe) {
+window.adb.öffneGruppe = function(Gruppe) {
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
@@ -4555,7 +4535,7 @@ window.adb.bearbeiteLrTaxonomie = function() {
 	$(".lr_bearb_bearb").addClass('disabled');
 };
 
-window.adb.schuetzeLrTaxonomie = function() {
+window.adb.schützeLrTaxonomie = function() {
 	// alle Felder schreibbar setzen
 	$(".Lebensräume.Taxonomie .controls").each(function() {
 		$(this).attr('readonly', true);
@@ -4784,7 +4764,7 @@ window.adb.erstelleLrLabelName = function(Label, Einheit) {
 // nimmt einen Array von Objekten entgegen
 // baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
 // aktualisiert die Objekte mit einer einzigen Operation
-window.adb.loescheMassenMitObjektArray = function(objekt_array) {
+window.adb.löscheMassenMitObjektArray = function(objekt_array) {
 	var i,
 		objekte_mit_objekte,
 		objekte = [],

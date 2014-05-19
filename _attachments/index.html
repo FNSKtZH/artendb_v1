@@ -1227,7 +1227,7 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.handleDsEntfernenClick();
+                        window.adb.entferneDatensammlung();
                     })
                     // verhindern, dass bootstrap ganz nach oben scrollt
                     .on("click", ".panel-heading a", function(event) {
@@ -1267,16 +1267,16 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.handleBsEntfernenClick();
+                        window.adb.entferneBeziehungssammlung();
                     })
                 ;
 
 				$("#export")
-                    .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWaehlenGruppeChange)
-                    .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
-                    .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs)
+                    .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
+                    .on("change", ".feld_waehlen", window.adb.handleFeldWählenChange)
+                    .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWählenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
-                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
+                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZurücksetzen)
                     .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
                         // den event hier stoppen, nicht erst in der Funktion
