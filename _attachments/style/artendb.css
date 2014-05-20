@@ -367,6 +367,14 @@ a:hover {
 	font-size: 14px !important;
 }
 
+/*Filterfelder im Export: checkboxes gestalten*/
+#exportieren_objekte_waehlen_ds_collapse .felderspalte .form-group input[type='checkbox'] {
+    width: 13px !important;
+    height: 13px;
+    margin-top: 8px !important;
+    margin-left: 4px !important;
+}
+
 /* buttons sind ganz weiss
   so sehen sie aus, wie Felder und fallen gar nicht auf */
 /*.btn-default {

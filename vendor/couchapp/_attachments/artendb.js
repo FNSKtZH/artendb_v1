@@ -3569,15 +3569,28 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
             html_felder_wählen += '</div></label>';
             // filtern
-            html_filtern += '<div class="form-group">';
-            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
-            // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-            if (x.length > 28) {
-                html_filtern += ' style="padding-top:0px"';
+            if (taxonomie.Feldtyp !== "boolean") {
+                html_filtern += '<div class="form-group">';
+                html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
+                // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+                if (x.length > 28) {
+                    html_filtern += ' style="padding-top:0px"';
+                }
+                html_filtern += '>' + x + '</label>';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+                html_filtern += '</div>';
+            } else {
+                html_filtern += '<div class="form-group">';
+                html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
+                // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+                /*if (x.length > 28) {
+                    html_filtern += ' style="padding-top:0px"';
+                }*/
+                html_filtern += '>' + x + '</label>';
+                //html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+                html_filtern += '</div>';
             }
-            html_filtern += '>'+ x +'</label>';
-            html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="'+ds_typ+'" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
-            html_filtern += '</div>';
         }
         // Spalten abschliessen
         html_felder_wählen += '</div>';
@@ -3675,9 +3688,10 @@ window.adb.erstelleListeFürFeldwahl = function() {
 		gruppen = export_gruppen;
         _.each(gruppen, function(gruppe) {
             // Felder abfragen
-            $db.view('artendb/felder?group_level=4&startkey=["'+gruppe+'"]&endkey=["'+gruppe+'",{},{},{},{}]', {
+            $db.view('artendb/felder?group_level=5&startkey=["'+gruppe+'"]&endkey=["'+gruppe+'",{},{},{},{}]', {
                 success: function(data) {
                     export_felder_arrays = _.union(export_felder_arrays, data.rows);
+                    //console.log("Die Gruppe " + gruppe + " hat soviele Felder = " + data.rows.length);
                     // eine Gruppe aus export_gruppen entfernen
                     export_gruppen.splice(0,1);
                     if (export_gruppen.length === 0) {
@@ -3770,13 +3784,15 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
 window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
 	var ds_typ,
 		ds_name,
-		feldname;
+		feldname,
+        feldtyp;
     _.each(felder_array, function(feld_objekt) {
         if (feld_objekt.key) {
             // Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
             ds_typ = feld_objekt.key[0];
             ds_name = feld_objekt.key[1];
             feldname = feld_objekt.key[2];
+            feldtyp = feld_objekt.key[3];
             if (ds_typ === "Objekt") {
                 // das ist eine Eigenschaft des Objekts
                 //FelderObjekt[FeldName] = null;	// NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
@@ -3788,6 +3804,7 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt["Taxonomie(n)"].Typ = ds_typ;
                     felder_objekt["Taxonomie(n)"].Name = "Taxonomie(n)";
                     felder_objekt["Taxonomie(n)"].Daten = {};
+                    felder_objekt["Taxonomie(n)"].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
                 felder_objekt["Taxonomie(n)"].Daten[feldname] = null;
@@ -3798,6 +3815,7 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt[ds_name].Typ = ds_typ;
                     felder_objekt[ds_name].Name = ds_name;
                     felder_objekt[ds_name].Daten = {};
+                    felder_objekt[ds_name].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
                 felder_objekt[ds_name].Daten[feldname] = null;
@@ -3808,6 +3826,7 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt[ds_name].Typ = ds_typ;
                     felder_objekt[ds_name].Name = ds_name;
                     felder_objekt[ds_name].Beziehungen = {};
+                    felder_objekt[ds_name].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
                 felder_objekt[ds_name].Beziehungen[feldname] = null;
