@@ -667,13 +667,6 @@
                                         <li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Eigenschaften derselben Beziehungssammlung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate. Filtern Sie hier also bloss nach einer Eigenschaft und im exportierten Resultat nach der zweiten</li>
                                     </ul>
                                 </div>
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
-									<b>Nur Datensätze mit Informationen aus den im nächsten Schritt gewählten Daten- und Beziehungssammlungen exportieren.</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen aus Art/Lebensraum und Taxonomie enthalten.
-									</label>
-								</div>
-								<hr>
 								<h3>Art / Lebensraum</h3>
 								<div class="form-group">
 									<label class="control-label" for="exportieren_objekte_waehlen_ds_guid">GUID</label>
@@ -700,7 +693,13 @@
 										<li>...und fahren Sie danach mit "4. exportieren" weiter</li>
 									</ul>
 								</div>
-								<div class="checkbox">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
+                                        <b>Nur Datensätze mit Informationen aus den gewählten Daten- und Beziehungssammlungen exportieren.</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen aus Art/Lebensraum und Taxonomie enthalten.
+                                    </label>
+                                </div>
+								<div class="checkbox" style="clear:both; padding-top:7px;">
 									<label>
 										<input type="checkbox" id="exportieren_synonym_infos" checked>
 										<b>inklusive Informationen von Synonymen</b>
@@ -945,8 +944,7 @@
                                             dontEnums[i]);
 								}
 							}
-							return
-                                    result;
+							return result;
 						};
 					})();
 				}
