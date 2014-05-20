@@ -138,14 +138,13 @@ exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoper
 	return false;
 };
 
-exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterkriterien) {
+exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterkriterien) {
     // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
     // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
     // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
     var hinzufügen = false,
         ds_typ,
-        ds_name,
         feldname,
         bs_mit_name,
         bez_mit_feldname,
@@ -157,7 +156,7 @@ exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterk
             feldname = feld.Feldname;
             if (ds_typ === "Beziehung") {
                 // suche Beziehungssammlung mit DsName_z
-                bs_mit_name = _.find(Objekt.Beziehungssammlungen, function (beziehungssammlung) {
+                bs_mit_name = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
                     return beziehungssammlung.Name === DsName_z;
                 });
                 if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
@@ -170,7 +169,7 @@ exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterk
             } else if (ds_typ === "Datensammlung") {
                 // das ist ein Feld aus einer Datensammlung
                 // suche Datensammlung mit Name = DsName_z
-                ds_mit_name = _.find(Objekt.Datensammlungen, function (datensammlung) {
+                ds_mit_name = _.find(objekt.Datensammlungen, function (datensammlung) {
                     return datensammlung.Name === DsName_z;
                 });
                 // hinzufügen, wenn Feld mit feldname existiert und es Daten enthält
@@ -179,17 +178,7 @@ exports.beurteileObInformationenEnthaltenSind = function(Objekt, felder, filterk
         });
     }
 
-    // nicht hinzufügen, wenn ein Filter gesetzt wurde und keine Daten aus BS oder DS enthalten sind
-    objekt_nicht_hinzufügen = (filterkriterien.length > 0 && !hinzufügen);
-
-    // hinzufügen, wenn kein Filter gesetzt wurde und Daten aus BS oder DS enthalten sind
-    objektHinzufügen = (filterkriterien.length === 0 && hinzufügen);
-
-    var return_object = {};
-    return_object.objekt_nicht_hinzufügen = objekt_nicht_hinzufügen;
-    return_object.objektHinzufügen = objektHinzufügen;
-
-    return return_object;
+    return hinzufügen;
 };
 
 exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
@@ -201,7 +190,6 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         filterwert,
         feldwert,
         vergleichsoperator,
-        return_object = {},
         feld_existiert,
         feld_hinzugefügt;
 
@@ -384,9 +372,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
             });
         }
     }
-    return_object.objektHinzufügen = objekt_hinzufügen;
-    return_object.objekt_nicht_hinzufügen = objekt_nicht_hinzufügen;
-    return return_object;
+    return objekt_hinzufügen && !objekt_nicht_hinzufügen;
 };
 
 exports.bereiteFilterkriterienVor = function(filterkriterien) {

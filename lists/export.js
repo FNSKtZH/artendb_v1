@@ -48,21 +48,17 @@ function(head, req) {
 		while (row = getRow()) {
 			objekt = row.doc;
 
-            var obj_kriterien_erfüllt_returnvalue = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften);
-            objekt_hinzufügen = obj_kriterien_erfüllt_returnvalue.objektHinzufügen;
-            objekt_nicht_hinzufügen = obj_kriterien_erfüllt_returnvalue.objekt_nicht_hinzufügen;
+            objekt_hinzufügen = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften);
 
-			if (nur_objekte_mit_eigenschaften) {
+			if (nur_objekte_mit_eigenschaften && objekt_hinzufügen && filterkriterien.length === 0) {
                 // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
-                // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
-                // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objekt_hinzufügen = true
-                // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
-                var inf_enthalten_return_object = adb.beurteileObInformationenEnthaltenSind(objekt, felder, filterkriterien);
-                objekt_hinzufügen = inf_enthalten_return_object.objektHinzufügen;
-                objekt_nicht_hinzufügen = inf_enthalten_return_object.objekt_nicht_hinzufügen;
+                // also müssen wir bei hinzuzufügenden Objekten durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
+                // wenn ja und Feld aus DS/BS: objekt_hinzufügen = true
+                // wenn ein Filter gesetzt wurde, wird eh nur angezeigt, wo daten sind - also ignorieren
+                objekt_hinzufügen = adb.beurteileObInformationenEnthaltenSind(objekt, felder, filterkriterien);
 			}
 
-			if (objekt_hinzufügen && !objekt_nicht_hinzufügen) {
+			if (objekt_hinzufügen) {
 				// alle Kriterien sind erfüllt
                 // jetzt das Exportobjekt aufbauen
                 export_objekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, felder, bez_in_zeilen, fasseTaxonomienZusammen, filterkriterien, export_objekte);
