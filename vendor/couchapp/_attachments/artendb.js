@@ -4438,7 +4438,6 @@ window.adb.bearbeiteLrTaxonomie = function() {
 	$("#art_anmelden").show();
 
 	// alle Felder schreibbar setzen
-	//$(".Lebensräume.Taxonomie .controls").each(function() {
 	$(".Lebensräume.Taxonomie").find(".controls").each(function() {
 		// einige Felder nicht bearbeiten
 		if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
