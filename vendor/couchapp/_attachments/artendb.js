@@ -489,7 +489,7 @@ window.adb.initiiere_art = function(id) {
 				html_art += "<h4>Taxonomische Beziehungen:</h4>";
                 _.each(taxonomische_beziehungssammlungen, function(beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
+                    html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "");
                     if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
                         _.each(beziehungssammlung.Beziehungen, function(beziehung) {
                             if (beziehung.Beziehungspartner) {
@@ -523,7 +523,7 @@ window.adb.initiiere_art = function(id) {
 				html_art += "<h4>Beziehungen:</h4>";
                 _.each(art_beziehungssammlungen, function(beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "");
+                    html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "");
                 });
 			}
 			// Beziehungssammlungen von synonymen Arten
@@ -607,7 +607,7 @@ window.adb.initiiere_art = function(id) {
 							html_art += "<h4>Beziehungen von Synonymen:</h4>";
                             _.each(beziehungssammlungen_von_synonymen, function(beziehungssammlung) {
                                 // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                                html_art += window.adb.erstelleHtmlFürBeziehung(art, beziehungssammlung, "2");
+                                html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "2");
                             });
 						}
 						window.adb.initiiere_art_2(html_art, art);
@@ -646,53 +646,32 @@ window.adb.initiiere_art_2 = function(html_art, art) {
 };
 
 // erstellt die HTML für eine Beziehung
-// benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
+// benötigt von der art bzw. den lr die entsprechende Beziehungssammlung
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
-window.adb.erstelleHtmlFürBeziehung = function(art, art_i, alt_name) {
+window.adb.erstelleHtmlFürBeziehungssammlung = function(art, beziehungssammlung, alt_name) {
 	var html,
 		name,
-		art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name) + alt_name;
+		bs_name = window.adb.ersetzeUngültigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name;
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
+	html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bs_name + '">';
 	// Titel für die Datensammlung einfügen
-	html += art_i.Name + " (" + art_i.Beziehungen.length + ")";
+	html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
 	// header abschliessen
 	html += '</a></h4></div>';
 	// body beginnen
-	html += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse"><div class="panel-body">';
+	html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
 
 	// Datensammlung beschreiben
-	html += '<div class="Datensammlung BeschreibungDatensammlung">';
-	if (art_i.Beschreibung) {
-		html += art_i.Beschreibung;
-	}
-	if (art_i.Datenstand) {
-		html += '. Stand: ';
-		html += art_i.Datenstand;
-	}
-	if (art_i.Link) {
-		html += '. <a href="';
-		html += art_i.Link;
-		html += '">';
-		html += art_i.Link;
-		html += '</a>';
-	}
-	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
-		html += '<br>Diese Beziehungssammlung fasst die Daten mehrerer Ursprungs-Beziehungssammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Beziehungssammlung "' + art_i.Ursprungsdatensammlung + '".';
-	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
-		html += '<br>Diese Beziehungssammlung fasst die Daten mehrerer Ursprungs-Beziehungssammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Beziehungssammlung leider nicht beschrieben.';
-	}
-	// Beschreibung der Datensammlung abschliessen
-	html += '</div>';
+    html += window.adb.erstelleHtmlFürDatensammlungBeschreibung(beziehungssammlung);
 
 	// die Beziehungen sortieren
-	art_i.Beziehungen = window.adb.sortiereBeziehungenNachName(art_i.Beziehungen);
+	beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
 
 	// jetzt für alle Beziehungen die Felder hinzufügen
-    _.each(art_i.Beziehungen, function(beziehung, index) {
+    _.each(beziehungssammlung.Beziehungen, function(beziehung, index) {
         if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
             _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
                 if (beziehungspartner.Taxonomie) {
@@ -712,11 +691,11 @@ window.adb.erstelleHtmlFürBeziehung = function(art, art_i, alt_name) {
         // Die Felder anzeigen
         _.each(beziehung, function(feldwert, feldname) {
             if (feldname !== "Beziehungspartner") {
-                html += window.adb.erstelleHtmlFürFeld(feldname, feldwert, "Beziehungssammlung", art_i.Name.replace(/"/g, "'"));
+                html += window.adb.erstelleHtmlFürFeld(feldname, feldwert, "Beziehungssammlung", beziehungssammlung.Name.replace(/"/g, "'"));
             }
         });
         // Am Schluss eine Linie, nicht aber bei der letzten Beziehung
-        if (index < (art_i.Beziehungen.length-1)) {
+        if (index < (beziehungssammlung.Beziehungen.length-1)) {
             html += "<hr>";
         }
     });
@@ -726,13 +705,13 @@ window.adb.erstelleHtmlFürBeziehung = function(art, art_i, alt_name) {
 };
 
 // erstellt die HTML für eine Datensammlung
-// benötigt von der art bzw. den lr die entsprechende JSON-Methode art_i und ihren Namen
-window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, art_i) {
+// benötigt von der art bzw. den lr die entsprechende Datensammlung
+window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) {
 	var html_datensammlung,
 		hierarchie_string,
 		array_string,
-		art_i_name;
-	art_i_name = window.adb.ersetzeUngültigeZeichenInIdNamen(art_i.Name);
+		ds_name;
+	ds_name = window.adb.ersetzeUngültigeZeichenInIdNamen(datensammlung.Name);
 	// Accordion-Gruppe und -heading anfügen
 	html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
@@ -740,50 +719,21 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, art_i) {
 		html_datensammlung += '<div class="btn-toolbar bearb_toolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lr_bearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lr_bearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lr_bearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
 	}
 	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html_datensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + art_i_name + '">';
+	html_datensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + ds_name + '">';
 	// Titel für die Datensammlung einfügen
-	html_datensammlung += art_i.Name;
+	html_datensammlung += datensammlung.Name;
 	// header abschliessen
 	html_datensammlung += '</a></h4></div>';
 	// body beginnen
-	html_datensammlung += '<div id="collapse' + art_i_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + ds_typ + '"><div class="panel-body">';
+	html_datensammlung += '<div id="collapse' + ds_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + ds_typ + '"><div class="panel-body">';
 	// Datensammlung beschreiben
-	html_datensammlung += '<div class="Datensammlung BeschreibungDatensammlung">';
-	if (art_i.Beschreibung) {
-		html_datensammlung += art_i.Beschreibung;
-	}
-    // wenn weitere Infos kommen: diese einblendbar machen
-    if (art_i.Datenstand || art_i.Link || (art_i.zusammenfassend && art_i.Ursprungsdatensammlung)) {
-        html_datensammlung += ' <a href="#" class="show_next_hidden">...mehr</a>';
-        html_datensammlung += '<div class="adb-hidden">';
-        if (art_i.Datenstand) {
-            html_datensammlung += '<div>Stand: ';
-            html_datensammlung += art_i.Datenstand;
-            html_datensammlung += '</div>';
-        }
-        if (art_i.Link) {
-            html_datensammlung += '<div>Link: <a href="';
-            html_datensammlung += art_i.Link;
-            html_datensammlung += '">';
-            html_datensammlung += art_i.Link;
-            html_datensammlung += '</a></div>';
-        }
-        if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
-            html_datensammlung += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
-        } else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
-            html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
-        }
-        // zusätzliche Infos abschliessen
-        html_datensammlung += '</div>';
-    }
-	// Beschreibung der Datensammlung abschliessen
-	html_datensammlung += '</div>';
+    html_datensammlung += window.adb.erstelleHtmlFürDatensammlungBeschreibung(datensammlung);
 	// Felder anzeigen
 	// zuerst die GUID, aber nur bei der Taxonomie
 	if (ds_typ === "Taxonomie") {
 		html_datensammlung += window.adb.erstelleHtmlFürFeld("GUID", art._id, ds_typ, "Taxonomie");
 	}
-    _.each(art_i.Daten, function(feldwert, feldname) {
+    _.each(datensammlung.Daten, function(feldwert, feldname) {
         if (feldname === "GUID") {
             // dieses Feld nicht anzeigen. Es wird _id verwendet
             // dieses Feld wird künftig nicht mehr importiert
@@ -798,18 +748,58 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, art_i) {
         } else if (feldname === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(feldwert)) {
             // Namen kommagetrennt anzeigen
             hierarchie_string = window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(feldwert);
-            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, hierarchie_string, ds_typ, art_i.Name.replace(/"/g, "'"));
+            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, hierarchie_string, ds_typ, datensammlung.Name.replace(/"/g, "'"));
         } else if (_.isArray(feldwert)) {
             // dieses Feld enthält einen Array von Werten
             array_string = feldwert.toString();
-            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, array_string, ds_typ, art_i.Name.replace(/"/g, "'"));
+            html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, array_string, ds_typ, datensammlung.Name.replace(/"/g, "'"));
         } else {
-            html_datensammlung += window.adb.erstelleHtmlFürFeld(feldname, feldwert, ds_typ, art_i.Name.replace(/"/g, "'"));
+            html_datensammlung += window.adb.erstelleHtmlFürFeld(feldname, feldwert, ds_typ, datensammlung.Name.replace(/"/g, "'"));
         }
     });
 	// body und Accordion-Gruppe abschliessen
 	html_datensammlung += '</div></div></div>';
 	return html_datensammlung;
+};
+
+window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(ds_oder_bs) {
+    var html = '<div class="Datensammlung BeschreibungDatensammlung">';
+    if (ds_oder_bs.Beschreibung) {
+        html += ds_oder_bs.Beschreibung;
+    }
+    // wenn weitere Infos kommen: diese können wahlweise eingeblendet werden
+    if (ds_oder_bs.Datenstand || ds_oder_bs.Link || (ds_oder_bs.zusammenfassend && ds_oder_bs.Ursprungsdatensammlung)) {
+        // wenn keine Beschreibung existiert, andere Option einblenden
+        if (ds_oder_bs.Beschreibung) {
+            html += ' <a href="#" class="show_next_hidden">...mehr</a>';
+        } else {
+            // wenn keine Beschreibung existiert, andere Option einblenden
+            html += '<a href="#" class="show_next_hidden">Beschreibung der Datensammlung anzeigen</a>';
+        }
+        html += '<div class="adb-hidden">';
+        if (ds_oder_bs.Datenstand) {
+            html += '<div>Stand: ';
+            html += ds_oder_bs.Datenstand;
+            html += '</div>';
+        }
+        if (ds_oder_bs.Link) {
+            html += '<div>Link: <a href="';
+            html += ds_oder_bs.Link;
+            html += '">';
+            html += ds_oder_bs.Link;
+            html += '</a></div>';
+        }
+        if (ds_oder_bs.zusammenfassend && ds_oder_bs.Ursprungsdatensammlung) {
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + ds_oder_bs.Ursprungsdatensammlung + '"';
+        } else if (ds_oder_bs.zusammenfassend && !ds_oder_bs.Ursprungsdatensammlung) {
+            html += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
+        }
+        // zusätzliche Infos abschliessen
+        html += '</div>';
+    }
+    // Beschreibung der Datensammlung abschliessen
+    html += '</div>';
+    return html;
 };
 
 window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierarchie_array) {
