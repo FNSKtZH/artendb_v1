@@ -752,22 +752,30 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, art_i) {
 	if (art_i.Beschreibung) {
 		html_datensammlung += art_i.Beschreibung;
 	}
-	if (art_i.Datenstand) {
-		html_datensammlung += '. Stand: ';
-		html_datensammlung += art_i.Datenstand;
-	}
-	if (art_i.Link) {
-		html_datensammlung += '. <a href="';
-		html_datensammlung += art_i.Link;
-		html_datensammlung += '">';
-		html_datensammlung += art_i.Link;
-		html_datensammlung += '</a>';
-	}
-	if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
-		html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
-	} else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
-		html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben';
-	}
+    // wenn weitere Infos kommen: diese einblendbar machen
+    if (art_i.Datenstand || art_i.Link || (art_i.zusammenfassend && art_i.Ursprungsdatensammlung)) {
+        html_datensammlung += ' <a href="#" class="show_next_hidden">...mehr</a>';
+        html_datensammlung += '<div class="adb-hidden">';
+        if (art_i.Datenstand) {
+            html_datensammlung += '<div>Stand: ';
+            html_datensammlung += art_i.Datenstand;
+            html_datensammlung += '</div>';
+        }
+        if (art_i.Link) {
+            html_datensammlung += '<div>Link: <a href="';
+            html_datensammlung += art_i.Link;
+            html_datensammlung += '">';
+            html_datensammlung += art_i.Link;
+            html_datensammlung += '</a></div>';
+        }
+        if (art_i.zusammenfassend && art_i.Ursprungsdatensammlung) {
+            html_datensammlung += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + art_i.Ursprungsdatensammlung + '"';
+        } else if (art_i.zusammenfassend && !art_i.Ursprungsdatensammlung) {
+            html_datensammlung += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
+        }
+        // zusätzliche Infos abschliessen
+        html_datensammlung += '</div>';
+    }
 	// Beschreibung der Datensammlung abschliessen
 	html_datensammlung += '</div>';
 	// Felder anzeigen
