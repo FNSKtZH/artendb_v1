@@ -1562,11 +1562,27 @@ window.adb.handleBtnResizeClick = function() {
 		// Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
 		$(".baum").css("max-height", windowHeight - 252);
 		// button rechts ausrichten
-		$("#btn_resize").css("margin-right", "0px");
+		$("#btn_resize")
+            .css("margin-right", "0px")
+            //.attr("title", "in zwei Spalten anzeigen")
+            .attr("data-original-title", "in zwei Spalten anzeigen")
+           // .tooltip()
+            /*.tooltip({
+                title: "in zwei Spalten anzeigen",
+                html: "in zwei Spalten anzeigen"
+            })*/;
 	} else {
 		$(".baum").css("max-height", windowHeight - 161);
 		// button an anderen Schaltflächen ausrichten
-		$("#btn_resize").css("margin-right", "6px");
+		$("#btn_resize")
+            .css("margin-right", "6px")
+            //.attr("title", "ganze Breite nutzen")
+            .attr("data-original-title", "ganze Breite nutzen")
+            //.tooltip()
+            /*.tooltip({
+                title: "ganze Breite nutzen",
+                html: "ganze Breite nutzen"
+            })*/;
 	}
 };
 

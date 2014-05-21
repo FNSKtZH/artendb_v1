@@ -44,7 +44,7 @@
 		</div>
 		<fieldset id="menu">
 			<div>
-				<button id="btn_resize" type="button" class="btn btn-sm btn-default pull-right"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
+				<button id="btn_resize" type="button" class="btn btn-sm btn-default pull-right" data-toggle="tooltip" data-placement="left" title="ganze Breite nutzen"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
 				<div id="menu-div">
 					<div id="gruppe_label">Gruppe wählen:</div>
 				</div>
@@ -1377,6 +1377,7 @@
                         event.preventDefault();
                         window.adb.handleKontoSpeichernBtnClick(this);
                     });
+                $('#btn_resize').tooltip();
             });
 
 		</script>
