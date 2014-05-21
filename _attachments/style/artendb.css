@@ -137,6 +137,11 @@ body {
     display: none;
 }
 
+a.show_next_hidden,
+a.show_next_hidden_export {
+    font-style: italic;
+}
+
 .baum .jstree-hovered, .baum .jstree-clicked {
 	border: 0;
 }
@@ -300,13 +305,41 @@ label+input[type="radio"], label+input[type="checkbox"] {
 	display: none !important;
 }
 
-/*
-*TODO: Sind diese noch nötig?
-*/
-
 h1, h2, h3, h4, h5, h6 {
 	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
 	font-weight: bold !important;
+}
+
+h5 a {
+    font-weight: normal !important;
+}
+
+#exportieren_panel .adb-hidden {
+    margin-bottom: 20px;
+    margin-top: -10px;
+    color: #8D8C8C;
+}
+
+#exportieren_panel .export_ds_zeile {
+    display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -ms-box-orient: horizontal;
+}
+
+#exportieren_panel .export_ds_zeile > div:nth-child(1) {
+    width: 110px;
+}
+
+#exportieren_panel .export_ds_zeile > div:nth-child(2) {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
 }
 
 .felderspalte .form-group {

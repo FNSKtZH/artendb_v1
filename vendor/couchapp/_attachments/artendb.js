@@ -821,7 +821,7 @@ window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierar
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
 window.adb.erstelleHtmlFürFeld = function(feldname, feldwert, ds_typ, ds_name) {
 	var html_datensammlung = "";
-	if (typeof feldwert === "string" && feldwert.slice(0, 7) === "//") {
+	if ((typeof feldwert === "string" && feldwert.slice(0, 7) === "http://") || (typeof feldwert === "string" && feldwert.slice(0, 8) === "https://") || (typeof feldwert === "string" && feldwert.slice(0, 2) === "//")) {
 		// www-Links als Link darstellen
 		html_datensammlung += window.adb.generiereHtmlFürWwwLink(feldname, feldwert, ds_typ, ds_name);
 	} else if (typeof feldwert === "string" && feldwert.length < 45) {
@@ -1564,25 +1564,13 @@ window.adb.handleBtnResizeClick = function() {
 		// button rechts ausrichten
 		$("#btn_resize")
             .css("margin-right", "0px")
-            //.attr("title", "in zwei Spalten anzeigen")
-            .attr("data-original-title", "in zwei Spalten anzeigen")
-           // .tooltip()
-            /*.tooltip({
-                title: "in zwei Spalten anzeigen",
-                html: "in zwei Spalten anzeigen"
-            })*/;
+            .attr("data-original-title", "in zwei Spalten anzeigen");
 	} else {
 		$(".baum").css("max-height", windowHeight - 161);
 		// button an anderen Schaltflächen ausrichten
 		$("#btn_resize")
             .css("margin-right", "6px")
-            //.attr("title", "ganze Breite nutzen")
-            .attr("data-original-title", "ganze Breite nutzen")
-            //.tooltip()
-            /*.tooltip({
-                title: "ganze Breite nutzen",
-                html: "ganze Breite nutzen"
-            })*/;
+            .attr("data-original-title", "ganze Breite nutzen");
 	}
 };
 
@@ -3575,13 +3563,28 @@ window.adb.öffneUri = function() {
     // dafür sorgen, dass die passenden Menus angezeigt werden
     window.adb.blendeMenus();
 };
+
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehungssammlungen) {
 	var html_felder_wählen = '',
 		html_filtern = '',
 		ds_typ,
-		x;
+        x,
+        dsbs_von_objekten = [],
+        dsbs_von_objekt,
+        ds_felder_objekt;
+
+    // Datensammlungen vorbereiten
+    // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
+    // erst mal die nicht benötigten Werte entfernen
+    _.each(window.adb.ds_bs_von_objekten.rows, function(object_with_array_in_key) {
+        dsbs_von_objekten.push([object_with_array_in_key.key[1], object_with_array_in_key.key[4]]);
+    });
+    // Struktur von dsbs_von_objekten ist jetzt: [ds.Name, felder_objekt]
+    // jetzt gibt es Mehrfacheinträge, diese entfernen
+    dsbs_von_objekten = _.union(dsbs_von_objekten);
+
 	if (taxonomien && datensammlungen && beziehungssammlungen) {
 		ds_typ = "Taxonomie";
 		html_felder_wählen += '<h3>Taxonomie</h3>';
@@ -3602,7 +3605,35 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_felder_wählen += '<hr>';
             html_filtern += '<hr>';
         }
-        html_felder_wählen += '<h5>' + taxonomie.Name + '</h5>';
+
+        html_felder_wählen += '<h5>' + taxonomie.Name;
+        html_filtern += '<h5>' + taxonomie.Name;
+        // informationen zur ds holen
+        dsbs_von_objekt = _.find(dsbs_von_objekten, function(array) {
+            return array[0] === taxonomie.Name;
+        });
+        if (dsbs_von_objekt && dsbs_von_objekt[1]) {
+            html_felder_wählen += ' <a href="#" class="show_next_hidden_export">...mehr</a>';
+            html_filtern += ' <a href="#" class="show_next_hidden_export">...mehr</a>';
+            // ds-titel abschliessen
+            html_felder_wählen += '</h5>';
+            html_filtern += '</h5>';
+            // Felder der ds darstellen
+            html_felder_wählen += '<div class="adb-hidden">';
+            html_filtern += '<div class="adb-hidden">';
+            ds_felder_objekt = dsbs_von_objekt[1];
+            _.each(ds_felder_objekt, function(feldwert, feldname) {
+                html_felder_wählen += '<div class="export_ds_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+                html_filtern += '<div class="export_ds_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+            });
+            html_felder_wählen += '</div>';
+            html_filtern += '</div>';
+        } else {
+            // ds-titel abschliessen
+            html_felder_wählen += '</h5>';
+            html_filtern += '</h5>';
+        }
+
         // jetzt die checkbox um alle auswählen zu können
         // aber nur, wenn mehr als 1 Feld existieren
         if ((taxonomie.Daten && _.size(taxonomie.Daten) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
@@ -3611,7 +3642,8 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_felder_wählen += '</div></label>';
         }
         html_felder_wählen += '<div class="felderspalte">';
-        html_filtern += '<h5>' + taxonomie.Name + '</h5>';
+
+
         html_filtern += '<div class="felderspalte">';
         for (x in (taxonomie.Daten || taxonomie.Beziehungen)) {
             // felder wählen
@@ -3815,7 +3847,9 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
         }
     });
 
-	window.adb.erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen);
+    $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function() {
+        window.adb.erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen);
+    });
 
 	// kontrollieren, ob Taxonomien zusammengefasst werden
 	if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
@@ -3831,6 +3865,25 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
         .addClass("alert-success")
         .show()
         .html(hinweis_taxonomien);
+};
+
+// holt eine Liste aller Datensammlungen, wenn nötig
+// speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann
+window.adb.holeDatensammlungenFürExportfelder = function() {
+    var exfe_geholt = $.Deferred();
+    if (window.adb.ds_bs_von_objekten) {
+        exfe_geholt.resolve();
+    } else {
+        $db = $.couch.db("artendb");
+        $db.view('artendb/ds_von_objekten?group_level=5', {
+            success: function(data) {
+                // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
+                window.adb.ds_bs_von_objekten = data;
+                exfe_geholt.resolve();
+            }
+        });
+    }
+    return exfe_geholt.promise();
 };
 
 // Nimmt ein FelderObjekt entgegen. Das ist entweder leer (erste Gruppe) oder enthält schon Felder (ab der zweiten Gruppe)
@@ -4270,7 +4323,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 		//$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
 		// Daten holen, wenn nötig
 		if (window.adb.bs_von_objekten) {
-			window.adb.bereiteImportieren_bs_beschreibenVor_02();
+            window.adb.bereiteImportieren_bs_beschreibenVor_02();
 		} else {
 			$db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
@@ -4954,3 +5007,14 @@ var BrowserDetect =
 * //apache.org/licenses/LICENSE-2.0.txt
 */
 !function(e){var t=function(t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function(e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function(e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function(e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function(e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function(e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function(n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function(t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery);
+
+/*!
+ * Autolinker.js
+ * 0.10.1
+ *
+ * Copyright(c) 2014 Gregory Jacobs <greg@greg-jacobs.com>
+ * MIT Licensed. http://www.opensource.org/licenses/mit-license.php
+ *
+ * https://github.com/gregjacobs/Autolinker.js
+ */
+!function(a,b){"function"==typeof define&&define.amd?define(b):"undefined"!=typeof exports?module.exports=b():a.Autolinker=b()}(this,function(){var a=function(a){a=a||{};for(var b in a)a.hasOwnProperty(b)&&(this[b]=a[b])};return a.prototype={constructor:a,newWindow:!0,stripPrefix:!0,twitter:!0,email:!0,urls:!0,className:"",matcherRegex:function(){var a=/(^|[^\w])@(\w{1,15})/,b=/(?:[\-;:&=\+\$,\w\.]+@)/,c=/(?:[A-Za-z]{3,9}:(?:\/\/)?)/,d=/(?:www\.)/,e=/[A-Za-z0-9\.\-]*[A-Za-z0-9\-]/,f=/\.(?:international|construction|contractors|enterprises|photography|productions|foundation|immobilien|industries|management|properties|technology|christmas|community|directory|education|equipment|institute|marketing|solutions|vacations|bargains|boutique|builders|catering|cleaning|clothing|computer|democrat|diamonds|graphics|holdings|lighting|partners|plumbing|supplies|training|ventures|academy|careers|company|cruises|domains|exposed|flights|florist|gallery|guitars|holiday|kitchen|neustar|okinawa|recipes|rentals|reviews|shiksha|singles|support|systems|agency|berlin|camera|center|coffee|condos|dating|estate|events|expert|futbol|kaufen|luxury|maison|monash|museum|nagoya|photos|repair|report|social|supply|tattoo|tienda|travel|viajes|villas|vision|voting|voyage|actor|build|cards|cheap|codes|dance|email|glass|house|mango|ninja|parts|photo|shoes|solar|today|tokyo|tools|watch|works|aero|arpa|asia|best|bike|blue|buzz|camp|club|cool|coop|farm|fish|gift|guru|info|jobs|kiwi|kred|land|limo|link|menu|mobi|moda|name|pics|pink|post|qpon|rich|ruhr|sexy|tips|vote|voto|wang|wien|wiki|zone|bar|bid|biz|cab|cat|ceo|com|edu|gov|int|kim|mil|net|onl|org|pro|pub|red|tel|uno|wed|xxx|xyz|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|za|zm|zw)\b/,g=/(?:[\-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_()|])?/;return new RegExp(["(",a.source,")","|","(",b.source,e.source,f.source,")","|","(","(?:","(?:",c.source,e.source,")","|","(?:","(.?//)?",d.source,e.source,")","|","(?:","(.?//)?",e.source,f.source,")",")",g.source,")"].join(""),"g")}(),protocolRelativeRegex:/(.)?\/\//,htmlRegex:function(){var a=/[0-9a-zA-Z:]+/,b=/[^\s\0"'>\/=\x01-\x1F\x7F]+/,c=/(?:".*?"|'.*?'|[^'"=<>`\s]+)/;return new RegExp(["<(/)?","("+a.source+")","(?:","\\s+",b.source,"(?:\\s*=\\s*"+c.source+")?",")*","\\s*",">"].join(""),"g")}(),urlPrefixRegex:/^(https?:\/\/)?(www\.)?/,link:function(a){return this.processHtml(a)},processHtml:function(a){for(var b,c,d=this.htmlRegex,e=0,f=0,g=[];null!==(b=d.exec(a));){var h=b[0],i=b[2],j=!!b[1];c=a.substring(e,b.index),e=b.index+h.length,"a"===i?j?(f=Math.max(f-1,0),0===f&&g.push(c)):(f++,g.push(this.processTextNode(c))):g.push(0===f?this.processTextNode(c):c),g.push(h)}if(e<a.length){var k=this.processTextNode(a.substring(e));g.push(k)}return g.join("")},processTextNode:function(a){var b=this,c=this.matcherRegex,d=this.twitter,e=this.email,f=this.urls;return a.replace(c,function(a,c,g,h,i,j,k,l){var m=c,n=g,o=h,p=i,q=j,r=k||l,s="",t="";if(m&&!d||p&&!e||q&&!f||q&&-1===q.indexOf(".")||q&&/^[A-Za-z]{3,9}:/.test(q)&&!/:.*?[A-Za-z]/.test(q)||r&&/^[\w]\/\//.test(r))return a;var u=a.charAt(a.length-1);if(")"===u){var v=a.match(/\(/g),w=a.match(/\)/g),x=v&&v.length||0,y=w&&w.length||0;y>x&&(a=a.substr(0,a.length-1),t=")")}var z,A=a,B=a;if(m)z="twitter",s=n,A="https://twitter.com/"+o,B="@"+o;else if(p)z="email",A="mailto:"+p,B=p;else if(z="url",r){var C=new RegExp("^"+b.protocolRelativeRegex.source),D=r.match(C)[1]||"";s=D+s,A=A.replace(C,"//"),B=B.replace(C,"")}else/^[A-Za-z]{3,9}:/i.test(A)||(A="http://"+A);var E=b.createAnchorTag(z,A,B);return s+E+t})},createAnchorTag:function(a,b,c){var d=this.createAnchorAttrsStr(a,b);return c=this.processAnchorText(c),"<a "+d+">"+c+"</a>"},createAnchorAttrsStr:function(a,b){var c=['href="'+b+'"'],d=this.createCssClass(a);return d&&c.push('class="'+d+'"'),this.newWindow&&c.push('target="_blank"'),c.join(" ")},createCssClass:function(a){var b=this.className;return b?b+" "+b+"-"+a:""},processAnchorText:function(a){return this.stripPrefix&&(a=this.stripUrlPrefix(a)),a=this.removeTrailingSlash(a),a=this.doTruncate(a)},stripUrlPrefix:function(a){return a.replace(this.urlPrefixRegex,"")},removeTrailingSlash:function(a){return"/"===a.charAt(a.length-1)&&(a=a.slice(0,-1)),a},doTruncate:function(a){var b=this.truncate;return b&&a.length>b&&(a=a.substring(0,b-2)+".."),a}},a.link=function(b,c){var d=new a(c);return d.link(b)},a});
