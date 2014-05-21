@@ -3865,7 +3865,8 @@ window.adb.filtereFürExport = function(direkt) {
 		gewählte_felder = [],
 		gewählte_felder_objekt = {},
 		anz_ds_gewählt = 0,
-        $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text");
+        $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text"),
+        html_filterkriterien;
 
 	// kontrollieren, ob eine Gruppe gewählt wurde
 	if (window.adb.fürExportGewählteGruppen().length === 0) {
@@ -3907,7 +3908,7 @@ window.adb.filtereFürExport = function(direkt) {
                 filter_objekt.DsName = $this.attr('eigenschaft');
                 filter_objekt.Feldname = $this.attr('feld');
                 filter_objekt.Filterwert = $this.prop("checked");
-                filter_objekt.Vergleichsoperator = "kein";
+                filter_objekt.Vergleichsoperator = "=";
                 filterkriterien.push(filter_objekt);
             } else {
                 // übrige checkboxen ignorieren
@@ -3924,9 +3925,6 @@ window.adb.filtereFürExport = function(direkt) {
 			filterkriterien.push(filter_objekt);
 		}
 	});
-
-    // TODO: filterkriterien in GUI anzeigen
-    // Tabelle, für jedes Filterkriterium eine Tabellenzeile
 
 	// den array dem objekt zuweisen
 	filterkriterien_objekt.filterkriterien = filterkriterien;
@@ -3969,6 +3967,61 @@ window.adb.filtereFürExport = function(direkt) {
             .show();
 		return;
 	}
+
+    // TODO: filterkriterien in GUI anzeigen
+    // Tabelle, für jedes Filterkriterium eine Tabellenzeile
+    // html für filterkriterien aufbauen
+    console.log("filterkriterien = " + JSON.stringify(filterkriterien));
+    if (filterkriterien.length > 0) {
+        html_filterkriterien = "Gewählte Filterkriterien:<ul>";
+        if (filterkriterien.length === 1 && filterkriterien[0].DsTyp === "Taxonomie" && anz_ds_gewählt === 0) {
+            // es wurde kein Filterkriterium aus einer DS/BS gewählt
+            // ob Informationen von Synonymen berücksichtigt werden, ist irrelevant
+            html_filterkriterien = "Gewähltes Filterkriterium:<ul>";
+        }
+        if (anz_ds_gewählt > 0) {
+            if ($("#exportieren_synonym_infos").prop('checked')) {
+                html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
+            } else {
+                html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
+            }
+        }
+        _.each(filterkriterien, function(filterkriterium) {
+            html_filterkriterien += "<li>";
+            html_filterkriterien += "Feld \"" + filterkriterium.Feldname + "\" ";
+            if (filterkriterium.Vergleichsoperator !== "kein") {
+                html_filterkriterien += filterkriterium.Vergleichsoperator + " \"";
+            } else {
+                html_filterkriterien += "enthält \"";
+            }
+            html_filterkriterien += filterkriterium.Filterwert;
+            html_filterkriterien += "\"</li>";
+        });
+        html_filterkriterien += "</ul>";
+        $("#exportieren_exportieren_filterkriterien")
+            .html(html_filterkriterien)
+            .show();
+    } else {
+        // kein Filter gesetzt
+        if (anz_ds_gewählt === 0) {
+            // es wurden keine Infos aus DS/BS gewählt: nichts melden
+            $("#exportieren_exportieren_filterkriterien").hide();
+        } else {html_filterkriterien = "Gewählte Filterkriterien:<ul>";
+            if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked')) {
+                html_filterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen Informationen enthalten</li>";
+            } else {
+                html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen keine Informationen enthalten</li>";
+            }
+            if ($("#exportieren_synonym_infos").prop('checked')) {
+                html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
+            } else {
+                html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
+            }
+            $("#exportieren_exportieren_filterkriterien")
+                .html(html_filterkriterien)
+                .show();
+        }
+    }
 
 	// jetzt das filterObjekt übergeben
 	if (direkt) {

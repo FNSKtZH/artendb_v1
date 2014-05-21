@@ -432,6 +432,10 @@ a:hover {
 	word-wrap: break-word;
 }
 
+#exportieren_exportieren_filterkriterien li {
+    margin-left: -24px;
+}
+
 /* alle Datenfelder links ausrichten */
 .Datenfelder {
 	float: left;
