@@ -654,10 +654,11 @@ option {
     margin-bottom: 20px !important;
 }
 
+/* 21.5.2014: ausgeschaltet, da unschön und Zweck unklar
 .well a {
 	display: inline-block;
 	margin-bottom: 5px;
-}
+}*/
 
 /*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
 #importieren_ds_import_ausfuehren_collapse button,
