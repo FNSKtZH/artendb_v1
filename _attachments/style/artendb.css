@@ -413,6 +413,7 @@ a:hover {
 .alert {
 	/* wird erst sichtbar geschaltet, wenn benötigt */
 	display: none;
+    margin-bottom: 0px !important;
 }
 
 .modal-backdrop.fade.in {
