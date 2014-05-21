@@ -1931,6 +1931,23 @@ window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
 // wenn export_feld_filtern geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
 window.adb.handleExportFeldFilternChange = function() {
+    $this = $(this);
+    // die Checkboxen sollen drei Werte annehmen können:
+    if (this.type === "checkbox") {
+        if (this.readOnly) {
+            // so ist es zu Beginn
+            // dann soll er auf chedked wechseln
+            this.readOnly = this.indeterminate = false;
+            $this.prop('checked', true);
+        } else if (!$this.prop('checked')) {
+            this.readOnly = this.indeterminate = false;
+            $this.prop('checked', false);
+        } else {
+            $this.prop('checked', false);
+            this.indeterminate = this.readOnly = true;
+        }
+    }
+
 	var bez_ds_filtered = [];
 	$("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
@@ -3569,28 +3586,23 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
             html_felder_wählen += '</div></label>';
             // filtern
-            if (taxonomie.Feldtyp !== "boolean") {
-                html_filtern += '<div class="form-group">';
-                html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
-                // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-                if (x.length > 28) {
-                    html_filtern += ' style="padding-top:0px"';
-                }
-                html_filtern += '>' + x + '</label>';
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
-                html_filtern += '</div>';
-            } else {
-                html_filtern += '<div class="form-group">';
-                html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
-                // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
-                /*if (x.length > 28) {
-                    html_filtern += ' style="padding-top:0px"';
-                }*/
-                html_filtern += '>' + x + '</label>';
-                //html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
-                html_filtern += '</div>';
+            html_filtern += '<div class="form-group">';
+            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
+            // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
+            if (x.length > 28) {
+                html_filtern += ' style="padding-top:0px"';
             }
+            html_filtern += '>' + x + '</label>';
+            //if (taxonomie.Feldtyp === "boolean") {
+            if ((taxonomie.Daten && (taxonomie.Daten[x] === "boolean")) || (taxonomie.Beziehungen && (taxonomie.Beziehungen[x] === "boolean"))) {
+                // in einer checkbox darstellen
+                // readonly markiert, dass kein Wert erfasst wurde
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
+            } else {
+                // in einem input-feld darstellen
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+            }
+            html_filtern += '</div>';
         }
         // Spalten abschliessen
         html_felder_wählen += '</div>';
@@ -3609,7 +3621,11 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 		window.adb.erstelleExportfelder(datensammlungen);
 	} else {
 		$("#exportieren_felder_waehlen_felderliste").append(html_felder_wählen);
-		$("#exportieren_objekte_waehlen_ds_felderliste").append(html_filtern);
+		$("#exportieren_objekte_waehlen_ds_felderliste")
+            .append(html_filtern)
+            .find("input[type='checkbox']").each(function() {
+               this.indeterminate = true;
+            });
 	}
 };
 
@@ -3804,10 +3820,10 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt["Taxonomie(n)"].Typ = ds_typ;
                     felder_objekt["Taxonomie(n)"].Name = "Taxonomie(n)";
                     felder_objekt["Taxonomie(n)"].Daten = {};
-                    felder_objekt["Taxonomie(n)"].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
-                felder_objekt["Taxonomie(n)"].Daten[feldname] = null;
+                // als Feldwert den Feldtyp übergeben
+                felder_objekt["Taxonomie(n)"].Daten[feldname] = feldtyp;
             } else if (ds_typ === "Datensammlung" || ds_typ === "Taxonomie") {
                 // Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
                 if (!felder_objekt[ds_name]) {
@@ -3815,10 +3831,10 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt[ds_name].Typ = ds_typ;
                     felder_objekt[ds_name].Name = ds_name;
                     felder_objekt[ds_name].Daten = {};
-                    felder_objekt[ds_name].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
-                felder_objekt[ds_name].Daten[feldname] = null;
+                // als Feldwert den Feldtyp übergeben
+                felder_objekt[ds_name].Daten[feldname] = feldtyp;
             } else if (ds_typ === "Beziehung") {
                 // Wenn Beziehungstyp noch nicht existiert, gründen
                 if (!felder_objekt[ds_name]) {
@@ -3826,10 +3842,10 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt[ds_name].Typ = ds_typ;
                     felder_objekt[ds_name].Name = ds_name;
                     felder_objekt[ds_name].Beziehungen = {};
-                    felder_objekt[ds_name].Feldtyp = feldtyp;
                 }
                 // Feld ergänzen
-                felder_objekt[ds_name].Beziehungen[feldname] = null;
+                // als Feldwert den Feldtyp übergeben
+                felder_objekt[ds_name].Beziehungen[feldname] = feldtyp;
             }
         }
     });
@@ -3882,18 +3898,36 @@ window.adb.filtereFürExport = function(direkt) {
 	// durch alle Filterfelder loopen
 	// wenn ein Feld einen Wert enthält, danach filtern
 	$("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {
-		if (this.value || this.value === 0) {
+        var that = this,
+            $this = $(this);
+        if (that.type === "checkbox") {
+            if (!$this.prop('readonly')) {
+                filter_objekt = {};
+                filter_objekt.DsTyp = $this.attr('dstyp');
+                filter_objekt.DsName = $this.attr('eigenschaft');
+                filter_objekt.Feldname = $this.attr('feld');
+                filter_objekt.Filterwert = $this.prop("checked");
+                filter_objekt.Vergleichsoperator = "kein";
+                filterkriterien.push(filter_objekt);
+            } else {
+                // übrige checkboxen ignorieren
+            }
+        } else if (this.value || this.value === 0) {
 			// Filterobjekt zurücksetzen
 			filter_objekt = {};
-			filter_objekt.DsTyp = $(this).attr('dstyp');
-			filter_objekt.DsName = $(this).attr('eigenschaft');
-			filter_objekt.Feldname = $(this).attr('feld');
+			filter_objekt.DsTyp = $this.attr('dstyp');
+			filter_objekt.DsName = $this.attr('eigenschaft');
+			filter_objekt.Feldname = $this.attr('feld');
 			// Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFürExport später auch in Kleinschrift verwandelt)
 			filter_objekt.Filterwert = window.adb.ermittleVergleichsoperator(this.value)[1];
 			filter_objekt.Vergleichsoperator = window.adb.ermittleVergleichsoperator(this.value)[0];
 			filterkriterien.push(filter_objekt);
 		}
 	});
+
+    // TODO: filterkriterien in GUI anzeigen
+    // Tabelle, für jedes Filterkriterium eine Tabellenzeile
+
 	// den array dem objekt zuweisen
 	filterkriterien_objekt.filterkriterien = filterkriterien;
 	// gewählte Felder ermitteln
