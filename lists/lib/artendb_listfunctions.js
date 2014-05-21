@@ -204,7 +204,8 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
     for (var z=0; z<filterkriterien.length; z++) {
         ds_typ = filterkriterien[z].DsTyp;
         ds_name = filterkriterien[z].DsName;
-        feldname = filterkriterien[z].Feldname;
+        feldname = filterkriterien[z].Feldname,
+        filterwert = filterkriterien[z].Filterwert;
         if (feldname === "GUID") {
             // die ID darf nicht in Kleinschrift verwandelt werden
             filterwert = filterkriterien[z].Filterwert;
@@ -234,8 +235,15 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                 if (exports.beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                     objekt_hinzufügen = true;
                 } else {
-                    objekt_nicht_hinzufügen = true;
-                    break;
+                    if (filterwert === false) {
+                        // ausser: es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                        // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                        // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                        objekt_hinzufügen = true;
+                    } else {
+                        objekt_nicht_hinzufügen = true;
+                        break;
+                    }
                 }
             } else {
                 // Bedingung nicht erfüllt
@@ -257,6 +265,13 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                     // Bedingung nicht erfüllt
                     objekt_nicht_hinzufügen = true;
                     break;
+                }
+            } else {
+                if (filterwert === false) {
+                    // ausser: es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                    // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                    // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                    objekt_hinzufügen = true;
                 }
             }
         } else if (ds_typ === "Beziehung") {
@@ -286,6 +301,13 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                                                 objekt_hinzufügen = true;
                                                 feld_hinzugefügt = true;
                                             }
+                                            if (filterwert === false) {
+                                                // es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                                                // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                                                // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                                                objekt_hinzufügen = true;
+                                                feld_hinzugefügt = true;
+                                            }
                                         }
                                     }
                                 });
@@ -295,9 +317,16 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                                 break loop_filterkriterien;
                             }
                         } else {
-                            // es gibt keine passende Beziehung, nicht hinzufügen
-                            objekt_nicht_hinzufügen = true;
-                            break loop_filterkriterien;
+                            if (filterwert === false) {
+                                // ausser: es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                                // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                                // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                                objekt_hinzufügen = true;
+                            } else {
+                                // es gibt keine passende Beziehung, nicht hinzufügen
+                                objekt_nicht_hinzufügen = true;
+                                break loop_filterkriterien;
+                            }
                         }
                         break;
                     }
@@ -309,6 +338,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         } else if (ds_typ === "Datensammlung") {
             ds_existiert = false;
             // das ist ein Feld aus einer Datensammlung
+            // Wenn die Datensammlung nicht existiert aber nach false gesucht wurde, muss der Datensatz trotzdem geliefert werden
             for (var k=0; k<objekt.Datensammlungen.length; k++) {
                 if (objekt.Datensammlungen[k].Name === ds_name) {
                     ds_existiert = true;
@@ -325,16 +355,30 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                         }
                     } else {
                         // das Feld existiert nicht, also Filterkriterium nicht erfüllt
-                        objekt_nicht_hinzufügen = true;
-                        break loop_filterkriterien;
+                        if (filterwert === false) {
+                            // ausser: es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                            // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                            // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                            objekt_hinzufügen = true;
+                        } else {
+                            objekt_nicht_hinzufügen = true;
+                            break loop_filterkriterien;
+                        }
                     }
                     break;
                 }
             }
             if (!ds_existiert) {
-                // es gibt keine passende Beziehung, nicht hinzufügen
-                objekt_nicht_hinzufügen = true;
-                break;
+                if (filterwert === false) {
+                    // es handelt sich um ein ja/nein Feld und es wird nach false gesucht
+                    // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
+                    // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
+                    objekt_hinzufügen = true;
+                } else {
+                    // es gibt keine passende Beziehung, nicht hinzufügen
+                    objekt_nicht_hinzufügen = true;
+                    break;
+                }
             }
         }
     }

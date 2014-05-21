@@ -3968,10 +3968,8 @@ window.adb.filtereFürExport = function(direkt) {
 		return;
 	}
 
-    // TODO: filterkriterien in GUI anzeigen
-    // Tabelle, für jedes Filterkriterium eine Tabellenzeile
     // html für filterkriterien aufbauen
-    console.log("filterkriterien = " + JSON.stringify(filterkriterien));
+//    console.log("filterkriterien = " + JSON.stringify(filterkriterien));
     if (filterkriterien.length > 0) {
         html_filterkriterien = "Gewählte Filterkriterien:<ul>";
         if (filterkriterien.length === 1 && filterkriterien[0].DsTyp === "Taxonomie" && anz_ds_gewählt === 0) {
@@ -4118,6 +4116,7 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
 };
 
 window.adb.baueTabelleFürExportAuf = function() {
+    var hinweis = "";
 	if (window.adb.exportieren_objekte.length > 0) {
 		window.adb.erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle");
 		$(".exportieren_exportieren_exportieren").show();
@@ -4126,8 +4125,12 @@ window.adb.baueTabelleFürExportAuf = function() {
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
 		}, 2000);
 	} else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
+        //console.log('$("#exportieren_exportieren_filterkriterien").text() = ' + $("#exportieren_exportieren_filterkriterien").text());
+        if ($("#exportieren_exportieren_filterkriterien").text().indexOf('"false"') >= 0) {
+            hinweis = "<br><br>Hinweis: Sie haben in einem Feld nach dem Wert \"false\" gefiltert. Es kann aber sein, dass die entsprechenden Datensätze dieses Feld einfach nicht enthalten (statt es mit dem Wert \"false\" zu enthalten). Das würde erklären, wieso der Filter keine passenden Ergebnisse geliefert hat";
+        }
         $("#exportieren_exportieren_error_text_text")
-            .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
+            .html("Keine Daten erhalten<br>Bitte passen Sie die Filterkriterien an" + hinweis);
         $("#exportieren_exportieren_error_text")
             .alert()
             .show();
