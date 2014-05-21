@@ -314,7 +314,7 @@ h5 a {
     font-weight: normal !important;
 }
 
-#exportieren_panel .adb-hidden {
+#exportieren_panel div.adb-hidden {
     margin-bottom: 20px;
     margin-top: -10px;
     color: #8D8C8C;
