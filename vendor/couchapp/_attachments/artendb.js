@@ -2118,12 +2118,29 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
 	if ($("#exportieren_exportieren_collapse").is(":visible")) {
-		// Tabelle und Herunterladen-Schaltfläche ausblenden
-		$("#exportieren_exportieren_tabelle").hide();
-		$(".exportieren_exportieren_exportieren").hide();
-		// filtert und baut danach die Vorschautabelle auf
-		window.adb.filtereFürExport();
+        if (window.adb.handleExportierenObjekteWählenCollapseShown()) {
+            // Gruppe ist gewählt, weitermachen
+            // Tabelle und Herunterladen-Schaltfläche ausblenden
+            $("#exportieren_exportieren_tabelle").hide();
+            $(".exportieren_exportieren_exportieren").hide();
+            // filtert und baut danach die Vorschautabelle auf
+            window.adb.filtereFürExport();
+        }
 	}
+};
+
+window.adb.handleExportierenObjekteWählenCollapseShown = function() {
+    var gruppen_gewählt = window.adb.fürExportGewählteGruppen(),
+        that = this;
+    if (gruppen_gewählt.length === 0) {
+        // keine Gruppe gewählt
+        window.adb.erstelleListeFürFeldwahl();
+        // und den panel schliessen
+        $(that).collapse('hide');
+        return false;
+    } else {
+        return true;
+    }
 };
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
@@ -3684,6 +3701,9 @@ window.adb.erstelleListeFürFeldwahl = function() {
 	// Beschäftigung melden
 	$exportieren_objekte_waehlen_gruppen_hinweis_text
         .alert()
+        .removeClass("alert-success")
+        .removeClass("alert-danger")
+        .addClass("alert-info")
         .show()
 	    .html("Eigenschaften werden ermittelt...");
 	// scrollen, damit Hinweis sicher ganz sichtbar ist
@@ -3719,7 +3739,10 @@ window.adb.erstelleListeFürFeldwahl = function() {
         });
 	} else {
 		// letzte Rückmeldung anpassen
-		$exportieren_objekte_waehlen_gruppen_hinweis_text.html("keine Gruppe gewählt");
+		$exportieren_objekte_waehlen_gruppen_hinweis_text.html("bitte eine Gruppe wählen")
+            .removeClass("alert-info")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
 		// Felder entfernen
 		$("#exportieren_felder_waehlen_felderliste").html("");
 		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
@@ -3787,6 +3810,9 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
 	// Ergebnis rückmelden
 	$("#exportieren_objekte_waehlen_gruppen_hinweis_text")
         .alert()
+        .removeClass("alert-info")
+        .removeClass("alert-danger")
+        .addClass("alert-success")
         .show()
         .html(hinweis_taxonomien);
 };
@@ -3870,7 +3896,6 @@ window.adb.filtereFürExport = function(direkt) {
 
 	// kontrollieren, ob eine Gruppe gewählt wurde
 	if (window.adb.fürExportGewählteGruppen().length === 0) {
-		$('#meldung_keine_gruppen').modal();
 		return;
 	}
 
@@ -4125,12 +4150,8 @@ window.adb.baueTabelleFürExportAuf = function() {
 			scrollTop: $("#exportieren_exportieren_exportieren").offset().top
 		}, 2000);
 	} else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
-        //console.log('$("#exportieren_exportieren_filterkriterien").text() = ' + $("#exportieren_exportieren_filterkriterien").text());
-        if ($("#exportieren_exportieren_filterkriterien").text().indexOf('"false"') >= 0) {
-            hinweis = "<br><br>Hinweis: Sie haben in einem Feld nach dem Wert \"false\" gefiltert. Es kann aber sein, dass die entsprechenden Datensätze dieses Feld einfach nicht enthalten (statt es mit dem Wert \"false\" zu enthalten). Das würde erklären, wieso der Filter keine passenden Ergebnisse geliefert hat";
-        }
         $("#exportieren_exportieren_error_text_text")
-            .html("Keine Daten erhalten<br>Bitte passen Sie die Filterkriterien an" + hinweis);
+            .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
         $("#exportieren_exportieren_error_text")
             .alert()
             .show();

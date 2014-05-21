@@ -1301,7 +1301,10 @@
                     .on("click", ".panel-heading a", function(event) {
                         event.preventDefault();
                     })
-                    .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown);
+                    .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
+                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', window.adb.handleExportierenObjekteWählenCollapseShown)
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWählenCollapseShown)
+                    .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenObjekteWählenCollapseShown);
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 
@@ -1421,23 +1424,6 @@
 				</div>
 				<div class="modal-body">
 					<p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="meldung_keine_gruppen" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="meldung_keine_gruppen_label">Keine Gruppe gewählt</h3>
-				</div>
-				<div class="modal-body">
-					<p id="meldung_keine_gruppen_text">Bitte wählen Sie mindestens eine Gruppe, deren Daten exportiert werden sollen</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
