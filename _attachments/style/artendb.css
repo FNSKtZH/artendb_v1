@@ -211,6 +211,11 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	line-height: 30px;
 }
 
+#menu_btn iframe {
+    padding-left: 20px;
+    margin-top: 3px;
+}
+
 #Gruppe {
 	margin-top: 5px;
 	margin-bottom: 5px;

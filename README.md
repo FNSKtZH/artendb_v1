@@ -640,7 +640,7 @@ Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. M
 
 Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
-Verglichen mit der Datenstruktur in der relationalen Datenbank wurde hier Komplexität (Dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt:
+Verglichen mit der Datenstruktur in der relationalen Datenbank wird Komplexität (dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt:
 
 - Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben
 - Beziehungen werden in allen beteiligten Objekten beschrieben
@@ -678,7 +678,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
    }
 ]
 ```
-Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern. So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
+Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern, siehe [diese Idee](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln). So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 <a name="Schnittstellen"></a>
 ###Schnittstellen
