@@ -718,10 +718,7 @@ Aktueller Stand:
 
 ###Was kann man mit der aktuellen Version machen?
 
-Achtung:
-
-- Die hier aufgelisteten Funktionen beziehen sich auf meine lokale Entwicklerversion. Einzelne können in der [Version im Web](http://arteigenschaften.ch) noch fehlen
-- Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden)
+Achtung: Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden).
 
 Arten suchen:
 
@@ -760,10 +757,13 @@ Lebensräume in der Anwendung bearbeiten:
 
 - Ist erst grob implementiert. Muss noch getestet und verbessert werden
 
-**To do**
+**Ideen für die Zukunft**
 
+- [Schreibrechte für Organisationen und Benutzer gestalten](https://github.com/FNSKtZH/artendb/wiki/Schreibrechte:-Organisationen-und-Benutzer) (bald)
+- [In Datensammlungen Nutzungsbedingungen festlegen](https://github.com/FNSKtZH/artendb/wiki/In-Datensammlungen-Nutzungsbedingungen-festlegen) (bald)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
+- [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
 <a href="#top">&#8593; top</a>
