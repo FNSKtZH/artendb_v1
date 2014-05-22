@@ -763,7 +763,7 @@ Lebensräume in der Anwendung bearbeiten:
 - [In Datensammlungen Nutzungsbedingungen festlegen](https://github.com/FNSKtZH/artendb/wiki/In-Datensammlungen-Nutzungsbedingungen-festlegen) (bald)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
-- [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln)
+- [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) (grundlegend)
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
 <a href="#top">&#8593; top</a>
