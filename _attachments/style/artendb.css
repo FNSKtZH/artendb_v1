@@ -321,14 +321,14 @@ h5 a {
 }
 
 #exportieren_panel .export_ds_zeile {
-    display: box;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    box-orient: horizontal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flexbox;
+    display: -ms-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
 }
 
 #exportieren_panel .export_ds_zeile > div:nth-child(1) {
