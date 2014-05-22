@@ -3958,6 +3958,7 @@ window.adb.filtereFürExport = function(direkt) {
 		gruppen_array = [],
 		gruppen = "",
 		gewählte_felder = [],
+        anz_gewählte_felder_aus_dsbs = 0,
 		gewählte_felder_objekt = {},
 		anz_ds_gewählt = 0,
         $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text"),
@@ -4043,6 +4044,7 @@ window.adb.filtereFürExport = function(direkt) {
 			feldObjekt.DsName = $(this).attr('datensammlung');
 			feldObjekt.Feldname = $(this).attr('feld');
 			gewählte_felder.push(feldObjekt);
+            anz_gewählte_felder_aus_dsbs++;
 		}
 	});
 	// den array dem objekt zuweisen
@@ -4063,21 +4065,13 @@ window.adb.filtereFürExport = function(direkt) {
 	}
 
     // html für filterkriterien aufbauen
-//    console.log("filterkriterien = " + JSON.stringify(filterkriterien));
+    html_filterkriterien = "Gewählte Filterkriterien:<ul>";
+    if ($("#exportieren_synonym_infos").prop('checked')) {
+        html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
+    } else {
+        html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
+    }
     if (filterkriterien.length > 0) {
-        html_filterkriterien = "Gewählte Filterkriterien:<ul>";
-        if (filterkriterien.length === 1 && filterkriterien[0].DsTyp === "Taxonomie" && anz_ds_gewählt === 0) {
-            // es wurde kein Filterkriterium aus einer DS/BS gewählt
-            // ob Informationen von Synonymen berücksichtigt werden, ist irrelevant
-            html_filterkriterien = "Gewähltes Filterkriterium:<ul>";
-        }
-        if (anz_ds_gewählt > 0) {
-            if ($("#exportieren_synonym_infos").prop('checked')) {
-                html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
-            } else {
-                html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
-            }
-        }
         _.each(filterkriterien, function(filterkriterium) {
             html_filterkriterien += "<li>";
             html_filterkriterien += "Feld \"" + filterkriterium.Feldname + "\" ";
@@ -4090,30 +4084,19 @@ window.adb.filtereFürExport = function(direkt) {
             html_filterkriterien += "\"</li>";
         });
         html_filterkriterien += "</ul>";
-        $("#exportieren_exportieren_filterkriterien")
-            .html(html_filterkriterien)
-            .show();
-    } else {
-        // kein Filter gesetzt
-        if (anz_ds_gewählt === 0) {
-            // es wurden keine Infos aus DS/BS gewählt: nichts melden
-            $("#exportieren_exportieren_filterkriterien").hide();
-        } else {html_filterkriterien = "Gewählte Filterkriterien:<ul>";
-            if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked')) {
-                html_filterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen Informationen enthalten</li>";
-            } else {
-                html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen keine Informationen enthalten</li>";
-            }
-            if ($("#exportieren_synonym_infos").prop('checked')) {
-                html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
-            } else {
-                html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
-            }
-            $("#exportieren_exportieren_filterkriterien")
-                .html(html_filterkriterien)
-                .show();
+    } else if (anz_gewählte_felder_aus_dsbs > 0) {
+        // wenn Filterkriterien erfasst wurde, werden sowieso nur Datensätze angezeigt, in denen Daten vorkommen
+        // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
+        // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden
+        if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked')) {
+            html_filterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen Informationen enthalten</li>";
+        } else {
+            html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen keine Informationen enthalten</li>";
         }
     }
+    $("#exportieren_exportieren_filterkriterien")
+        .html(html_filterkriterien)
+        .show();
 
 	// jetzt das filterObjekt übergeben
 	if (direkt) {
