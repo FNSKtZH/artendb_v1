@@ -14,7 +14,7 @@ Ihre Stärke ist der einfache Import und Export von Daten. Die Absicht dahinter:
 <a name="Ziele"></a>
 #Ziele
 ###Ausgangspunkt
-...sind Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](http://aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
+...sind Erfahrungen, welche in der Fachstelle Naturschutz mit der [bisherigen Datenbank](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/arten_db.html#a-content) gemacht wurden:
 
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
 - Entscheidend für die Aktualität der Datenbank ist es, die Informationen einfach und mit geringem Aufwand importieren und danach direkt nutzen zu können
@@ -58,7 +58,7 @@ ArtenDb ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwe
 - gut verfügbar:
  - von jedem Gerät im Internet
  - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
- - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/FNSKtZH/EvabMobile), beliebige Apps
+ - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/FNSKtZH/EvabMobile), beliebige Apps
 - ...und kann ohne zusätzlichen Aufwand über alle Arten- und Lebensraumgruppen hinweg exportiert werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
