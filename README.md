@@ -246,7 +246,7 @@ Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz
 ###Verwendete Technologien
 Eingesetzt werden:
 - Die Datenbank [CouchDb](http://couchdb.apache.org/)...
-- ...in Form einer [CouchApp](http://couchapp.org/page/index). So kann die Anwendung:
+- ...in Form einer [CouchApp](http://couchapp.org). So kann die Anwendung:
  - lokal installiert...
  - und mit anderen ArtenDb's synchronisiert werden
  - und sie ist ihr eigener Webserver: die lokale, synchronisierte Version kann genau so wie diejenige im Web verwendet werden, bloss ist sie leistungsfähiger und netzunabhängig
@@ -697,8 +697,8 @@ Gibt es für die gewünschten Daten einen GUID, einen view oder eine list und ke
 Bisher realisierte Schnittstellen:
 
 - Artenlisten und Artgruppen für [_evab mobile_](http://artbeobachtungen.ch/index.html)
-- Arteigenschaften für das [Artenlistentool](http://aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
-- Taxonomien für [EvAB](http://aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
+- Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
+- Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
 - Arteigenschaften für [ApFloraDb](https://github.com/FNSKtZH/apflora)
 
 Wollen Sie mit Ihrer Anwendung auf die Daten von ArtenDb greifen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, und wir vereinbaren eine geeignete Schnittstelle.
