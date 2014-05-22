@@ -218,7 +218,7 @@ Will jemand zum Beispiel neue Arteigenschaften ergänzen, geht das so:
 4. Sie bezeichnet die für die Verknüpfung der Daten benötigten ID's
 5. Der Import wird ausgeführt
 
-fertig!
+fertig! Siehe auch den [screencast](http://youtu.be/nqd-v6YxkOY).
 
 Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt, exportiert und via Schnittstelle zugegriffen werden.
 
@@ -231,6 +231,8 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 4. Die Datei wird generiert und im .csv-Format heruntergeladen
 
 Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). Es können beliebige Informationen aus Taxonomie und Datensammlungen hinzugefügt werden.
+
+Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
 
 ###Daten in ArtenDb bearbeiten
 Grundsätzlich müssen keine Daten in ArtenDb bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die ArtenDb importiert.
