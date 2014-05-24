@@ -21,6 +21,7 @@ function(head, req) {
 		objekt_hinzufügen,
 		beziehungssammlungen_aus_synonymen,
         datensammlungen_aus_synonymen,
+        ergänzeDsBsVonSynonym_return,
         _ = require("lists/lib/underscore"),
         adb = require("lists/lib/artendb_listfunctions");
 
@@ -63,47 +64,14 @@ function(head, req) {
 		while (row = getRow()) {
 			objekt = row.doc;
 
-			// row.key[1] ist 0, wenn es sich um ein Synonym handelt, dessen Informationen geholt werden sollen
 			if (row.key[1] === 0) {
-				if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
-					var ds_aus_syn_namen = [];
-					if (datensammlungen_aus_synonymen.length > 0) {
-                        _.each(datensammlungen_aus_synonymen, function(datensammlung) {
-                            if (datensammlung.Name) {
-                                ds_aus_syn_namen.push(datensammlung.Name);
-                            }
-                        });
-					}
-					var ds_aus_syn_name;
-					if (objekt.Datensammlungen.length > 0) {
-                        _.each(objekt.Datensammlungen, function(datensammlung) {
-                            ds_aus_syn_name = datensammlung.Name;
-                            if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
-                                datensammlungen_aus_synonymen.push(datensammlung);
-                                // sicherstellen, dass diese ds nicht nochmals gepuscht wird
-                                ds_aus_syn_namen.push(ds_aus_syn_name);
-                            }
-                        });
-					}
-				}
-				if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
-					var bs_aus_syn_namen = [];
-                    _.each(beziehungssammlungen_aus_synonymen, function(beziehungssammlung) {
-                        if (beziehungssammlung.Name) {
-                            bs_aus_syn_namen.push(beziehungssammlung.Name);
-                        }
-                    });
-					var bs_aus_syn_name;
-                    _.each(objekt.Beziehungssammlungen, function(beziehungssammlung) {
-                        bs_aus_syn_name = beziehungssammlung.Name;
-                        if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
-                            beziehungssammlungen_aus_synonymen.push(beziehungssammlung);
-                            // sicherstellen, dass diese bs nicht nochmals gepuscht wird
-                            bs_aus_syn_namen.push(bs_aus_syn_name);
-                        }
-                    });
-				}
-				// das war ein Synonym. Hier aufhören
+                // das ist ein Synonym
+                // wir erstellen je eine Liste aller in Synonymen enthaltenen Daten- und Beziehungssammlungen inkl. der darin enthaltenen Daten
+                // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
+                // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
+                ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
+                datensammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[0];
+                beziehungssammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[1];
 			} else if (row.key[1] === 1) {
 				// wir sind jetzt im Originalobjekt
 
