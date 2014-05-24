@@ -8,7 +8,7 @@ function(head, req) {
 		}
 	});
 
-	var row, Objekt,
+	var row, objekt,
 		exportObjekte = [],
 		exportObjekt,
 		gruppen,
@@ -26,9 +26,9 @@ function(head, req) {
 
 	objekt_loop:
 	while (row = getRow()) {
-		Objekt = row.doc;
+		objekt = row.doc;
 
-		if (gruppen.indexOf(Objekt.Gruppe) === -1) {
+		if (gruppen.indexOf(objekt.Gruppe) === -1) {
 			// diese Gruppe wollen wir nicht > weiter mit nächstem Objekt
 			continue objekt_loop;
 		}
@@ -44,20 +44,20 @@ function(head, req) {
 		} else if (row.key[1] === 1) {
 			// wir sind jetzt im Originalobjekt
 			// sicherstellen, dass DS und BS existieren
-			if (!Objekt.Datensammlungen) {
-				Objekt.Datensammlungen = [];
+			if (!objekt.Datensammlungen) {
+				objekt.Datensammlungen = [];
 			}
-			if (!Objekt.Beziehungssammlungen) {
-				Objekt.Beziehungssammlungen = [];
+			if (!objekt.Beziehungssammlungen) {
+				objekt.Beziehungssammlungen = [];
 			}
 			// allfällige DS und BS aus Synonymen anhängen
 			// zuerst DS
 			// eine Liste der im Objekt enthaltenen DsNamen erstellen
 			var dsNamen = [];
-			if (Objekt.Datensammlungen.length > 0) {
-				for (i=0; i<Objekt.Datensammlungen.length; i++) {
-					if (Objekt.Datensammlungen[i].Name) {
-						dsNamen.push(Objekt.Datensammlungen[i].Name);
+			if (objekt.Datensammlungen.length > 0) {
+				for (i=0; i<objekt.Datensammlungen.length; i++) {
+					if (objekt.Datensammlungen[i].Name) {
+						dsNamen.push(objekt.Datensammlungen[i].Name);
 					}
 				}
 			}
@@ -67,7 +67,7 @@ function(head, req) {
 				for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
 					ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
 					if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-						Objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
+						objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
 						// den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						dsNamen.push(ds_aus_syn_name2);
 					}
@@ -76,10 +76,10 @@ function(head, req) {
 			// jetzt BS aus Synonymen anhängen
 			// eine Liste der im Objekt enthaltenen BsNamen erstellen
 			var bsNamen = [];
-			if (Objekt.Beziehungssammlungen.length > 0) {
-				for (i=0; i<Objekt.Beziehungssammlungen.length; i++) {
-					if (Objekt.Beziehungssammlungen[i].Name) {
-						bsNamen.push(Objekt.Beziehungssammlungen[i].Name);
+			if (objekt.Beziehungssammlungen.length > 0) {
+				for (i=0; i<objekt.Beziehungssammlungen.length; i++) {
+					if (objekt.Beziehungssammlungen[i].Name) {
+						bsNamen.push(objekt.Beziehungssammlungen[i].Name);
 					}
 				}
 			}
@@ -89,7 +89,7 @@ function(head, req) {
 				for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
 					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
 					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
-						Objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
+						objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
 						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						bsNamen.push(bs_aus_syn_name2);
 					}
@@ -100,10 +100,10 @@ function(head, req) {
 			exportObjekt = {};
 
 			// Felder hinzufügen
-			exportObjekt.Gruppe = Objekt.Gruppe;
-			exportObjekt.Ref = Objekt.Taxonomie.Daten["Taxonomie ID"];
+			exportObjekt.Gruppe = objekt.Gruppe;
+			exportObjekt.Ref = objekt.Taxonomie.Daten["Taxonomie ID"];
 
-			var ds_zh_gis = _.find(Objekt.Datensammlungen, function(ds) {
+			var ds_zh_gis = _.find(objekt.Datensammlungen, function(ds) {
 				return ds.Name === "ZH GIS";
 			}) || {};
 
@@ -117,13 +117,13 @@ function(head, req) {
 				exportObjekt.Distanz = ds_zh_gis.Daten["Betrachtungsdistanz (m)"];
 			}
 
-			exportObjekt.NameLat = Objekt.Taxonomie.Daten.Artname;
+			exportObjekt.NameLat = objekt.Taxonomie.Daten.Artname;
 			exportObjekt.NameDeu = "";
-			if (Objekt.Taxonomie.Daten["Name Deutsch"]) {
-				exportObjekt.NameDeu = Objekt.Taxonomie.Daten["Name Deutsch"];
+			if (objekt.Taxonomie.Daten["Name Deutsch"]) {
+				exportObjekt.NameDeu = objekt.Taxonomie.Daten["Name Deutsch"];
 			}
 
-			var ds_zh_artwert_1995 = _.find(Objekt.Datensammlungen, function(ds) {
+			var ds_zh_artwert_1995 = _.find(objekt.Datensammlungen, function(ds) {
 				return ds.Name === "ZH Artwert (1995)";
 			}) || {};
 
@@ -137,7 +137,7 @@ function(head, req) {
 				exportObjekt.AwZusatz = ds_zh_artwert_1995.Daten["Artwert Zusatz"];
 			}
 
-			var ds_blaue_liste = _.find(Objekt.Datensammlungen, function(ds) {
+			var ds_blaue_liste = _.find(objekt.Datensammlungen, function(ds) {
 				return ds.Name === "Blaue Liste (1998)";
 			}) || {};
 
@@ -156,7 +156,7 @@ function(head, req) {
 				exportObjekt.Wirksamkeit = ds_blaue_liste.Daten.Wirksamkeit;
 			}
 
-			var ds_zh_ap_flora = _.find(Objekt.Datensammlungen, function(ds) {
+			var ds_zh_ap_flora = _.find(objekt.Datensammlungen, function(ds) {
 				return ds.Name === "ZH AP Flora";
 			}) || {};
 
@@ -165,7 +165,7 @@ function(head, req) {
 				exportObjekt.Link_zum_AP_Bericht = ds_zh_ap_flora.Daten["Link zum AP-Bericht"];
 			}
 
-			exportObjekt["GUID_FNS"] = Objekt._id;
+			exportObjekt["GUID_FNS"] = objekt._id;
 			
 			// Objekt zu Exportobjekten hinzufügen
 			exportObjekte.push(exportObjekt);
