@@ -446,48 +446,47 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
     // zuerst DS
     // eine Liste der im objekt enthaltenen DsNamen erstellen
     var dsNamen = [],
-        i;
+        ds_aus_syn_name2,
+        bsNamen = [];
     if (objekt.Datensammlungen.length > 0) {
-        for (i=0; i<objekt.Datensammlungen.length; i++) {
-            if (objekt.Datensammlungen[i].Name) {
-                dsNamen.push(objekt.Datensammlungen[i].Name);
+        _.each(objekt.Datensammlungen, function(datensammlung) {
+            if (datensammlung.Name) {
+                dsNamen.push(datensammlung.Name);
             }
-        }
+        });
     }
     // nicht enthaltene Datensammlungen ergänzen
-    var ds_aus_syn_name2;
     if (datensammlungen_aus_synonymen.length > 0) {
-        for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-            ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
+        _.each(datensammlungen_aus_synonymen, function(datensammlung) {
+            ds_aus_syn_name2 = datensammlung.Name;
             if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-                objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
+                objekt.Datensammlungen.push(datensammlung);
                 // den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
                 dsNamen.push(ds_aus_syn_name2);
             }
-        }
+        });
     }
     // jetzt BS aus Synonymen anhängen
     // eine Liste der im objekt enthaltenen BsNamen erstellen
-    var bsNamen = [];
     if (objekt.Beziehungssammlungen.length > 0) {
-        for (i=0; i<objekt.Beziehungssammlungen.length; i++) {
-            if (objekt.Beziehungssammlungen[i].Name) {
-                bsNamen.push(objekt.Beziehungssammlungen[i].Name);
+        _.each(objekt.Beziehungssammlungen, function(beziehungssammlung) {
+            if (beziehungssammlung.Name) {
+                bsNamen.push(beziehungssammlung.Name);
             }
-        }
+        });
     }
     // nicht enthaltene Beziehungssammlungen ergänzen
     var bs_aus_syn_name2;
     if (beziehungssammlungen_aus_synonymen.length > 0) {
-        for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-            bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
+        _.each(beziehungssammlungen_aus_synonymen, function(beziehungssammlung) {
+            bs_aus_syn_name2 = beziehungssammlung.Name;
             if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
-                objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
+                objekt.Beziehungssammlungen.push(beziehungssammlung);
                 // den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird
                 // auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
                 bsNamen.push(bs_aus_syn_name2);
             }
-        }
+        });
     }
     return objekt;
 };
