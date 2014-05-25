@@ -40,6 +40,7 @@ function(head, req) {
 			objekt = row.doc;
 
             // Prüfen, ob Gruppen übergeben wurden
+            /* ist nicht nötig, weil pro Gruppe eine list aufgerufen wird, die dann den view der Gruppe benutzt
             if (ü_var.gruppen && ü_var.gruppen.length > 0) {
                 // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
                 if (objekt.Gruppe.indexOf(ü_var.gruppen) > -1) {
@@ -48,7 +49,7 @@ function(head, req) {
                     // Gruppen werden gefiltert und Filter ist nicht erfüllt > weiter mit nächstem objekt
                     continue;
                 }
-            }
+            }*/
 
 			if (row.key[1] === 0) {
                 // das ist ein Synonym

@@ -68,6 +68,7 @@ function(head, req) {
 			}
 
 			// Prüfen, ob Gruppen übergeben wurden
+            // ist hier nötig, weil nicht pro gewählte Gruppe eine list aufgerufen werden kann
 			if (gruppen && gruppen.length > 0) {
 				// ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
 				if (objekt.Gruppe.indexOf(gruppen) > -1) {
