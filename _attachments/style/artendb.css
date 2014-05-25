@@ -414,6 +414,17 @@ a:hover {
 	font-size: 14px !important;
 }
 
+#exportieren_exportieren_collapse button {
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+#exportieren_exportieren_collapse .checkbox {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+
 /*Filterfelder im Export: checkboxes gestalten*/
 #exportieren_objekte_waehlen_ds_collapse .felderspalte .form-group input[type='checkbox'] {
     width: 13px !important;

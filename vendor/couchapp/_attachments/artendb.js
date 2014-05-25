@@ -1883,7 +1883,7 @@ window.adb.handleExportierenClick = function() {
 
 // wenn exportieren_alt geklickt wird
 window.adb.handleExportierenAltClick = function() {
-	window.open("_list/export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true");
+	window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
 };
 
 // wenn .feld_waehlen geändert wird

@@ -58,12 +58,9 @@ function(head, req) {
 		} else if (row.key[1] === 1) {
 			// wir sind jetzt im Originalobjekt
 			// sicherstellen, dass DS und BS existieren
-			if (!objekt.Datensammlungen) {
-				objekt.Datensammlungen = [];
-			}
-			if (!objekt.Beziehungssammlungen) {
-				objekt.Beziehungssammlungen = [];
-			}
+            objekt.Datensammlungen = objekt.Datensammlungen || [];
+            objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
+
 			// allfällige DS und BS aus Synonymen anhängen
             objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
 

@@ -579,7 +579,8 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
 // baut die Export-Objekte auf für alle export-lists
 // benötigt Objekt und felder
 // retourniert schon_kopiert und export_objekt
-exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte) {
+// export_für: ermöglicht anpassungen für spezielle Exporte, z.b. für das Artenlistentool
+exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte, export_für) {
     var export_objekt = {},
         schon_kopiert = false;
 
@@ -588,6 +589,50 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
     if (!felder || felder.length === 0) {
         return {};
     }
+
+    // wenn der Export für das Artenlistentool erstellt wird: Obligatorische Felder einfügen
+    if (export_für && export_für === "alt") {
+        // Felder hinzufügen
+        export_objekt.Gruppe = objekt.Gruppe;
+        export_objekt.Ref = objekt.Taxonomie.Daten["Taxonomie ID"];
+
+        var ds_zh_gis = _.find(objekt.Datensammlungen, function(ds) {
+            return ds.Name === "ZH GIS";
+        }) || {};
+
+        export_objekt.GISLayer = "";
+        if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
+            export_objekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
+        }
+
+        export_objekt.Distanz = "";
+        if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["Betrachtungsdistanz (m)"]) {
+            export_objekt.Distanz = ds_zh_gis.Daten["Betrachtungsdistanz (m)"];
+        }
+
+        export_objekt.NameLat = objekt.Taxonomie.Daten.Artname;
+        export_objekt.NameDeu = "";
+        if (objekt.Taxonomie.Daten["Name Deutsch"]) {
+            export_objekt.NameDeu = objekt.Taxonomie.Daten["Name Deutsch"];
+        }
+
+        var ds_zh_artwert_1995 = _.find(objekt.Datensammlungen, function(ds) {
+            return ds.Name === "ZH Artwert (1995)";
+        }) || {};
+
+        export_objekt.Artwert = "";
+        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && (ds_zh_artwert_1995.Daten.Artwert || ds_zh_artwert_1995.Daten.Artwert === 0)) {
+            export_objekt.Artwert = ds_zh_artwert_1995.Daten.Artwert;
+        }
+
+        export_objekt.AwZusatz = "";
+        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && ds_zh_artwert_1995.Daten["Artwert Zusatz"]) {
+            export_objekt.AwZusatz = ds_zh_artwert_1995.Daten["Artwert Zusatz"];
+        }
+
+        export_objekt["GUID_FNS"] = objekt._id;
+    }
+
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
     _.each(objekt, function(feldwert, feldname) {
         if (typeof feldwert !== "Object" && feldname !== "_rev") {

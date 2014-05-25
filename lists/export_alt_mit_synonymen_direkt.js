@@ -10,13 +10,26 @@ function(head, req) {
 
 	var row,
         objekt,
-		exportObjekte = [],
+        export_objekte = [],
+        ü_var = {
+            fasseTaxonomienZusammen: false,
+            filterkriterien: [],
+            felder: [],
+            nur_objekte_mit_eigenschaften: true,
+            bez_in_zeilen: true
+        },
+        filterkriterien_objekt = {"filterkriterien": []},
+        felder_objekt,
+        objekt_hinzufügen,
 		exportObjekt,
-		gruppen,
-		beziehungssammlungen_aus_synonymen, datensammlungen_aus_synonymen,
+		beziehungssammlungen_aus_synonymen,
+        datensammlungen_aus_synonymen,
         ergänzeDsBsVonSynonym_return,
         _ = require("lists/lib/underscore"),
         adb = require("lists/lib/artendb_listfunctions");
+
+    // übergebene Variablen extrahieren
+    ü_var = adb.holeÜbergebeneVariablen(req.query);
 
 	// gruppen ist vorgegeben
 	gruppen = ["Fauna", "Flora"];
@@ -44,97 +57,21 @@ function(head, req) {
 		} else if (row.key[1] === 1) {
 			// wir sind jetzt im Originalobjekt
 			// sicherstellen, dass DS und BS existieren
-			if (!objekt.Datensammlungen) {
-				objekt.Datensammlungen = [];
-			}
-			if (!objekt.Beziehungssammlungen) {
-				objekt.Beziehungssammlungen = [];
-			}
+            objekt.Datensammlungen = objekt.Datensammlungen || [];
+            objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 			// allfällige DS und BS aus Synonymen anhängen
             objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
 
-			// exportobjekt gründen bzw. zurücksetzen
-			exportObjekt = {};
+            // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen
 
-			// Felder hinzufügen
-			exportObjekt.Gruppe = objekt.Gruppe;
-			exportObjekt.Ref = objekt.Taxonomie.Daten["Taxonomie ID"];
-
-			var ds_zh_gis = _.find(objekt.Datensammlungen, function(ds) {
-				return ds.Name === "ZH GIS";
-			}) || {};
-
-			exportObjekt.GISLayer = "";
-			if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
-				exportObjekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
-			}
-
-			exportObjekt.Distanz = "";
-			if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["Betrachtungsdistanz (m)"]) {
-				exportObjekt.Distanz = ds_zh_gis.Daten["Betrachtungsdistanz (m)"];
-			}
-
-			exportObjekt.NameLat = objekt.Taxonomie.Daten.Artname;
-			exportObjekt.NameDeu = "";
-			if (objekt.Taxonomie.Daten["Name Deutsch"]) {
-				exportObjekt.NameDeu = objekt.Taxonomie.Daten["Name Deutsch"];
-			}
-
-			var ds_zh_artwert_1995 = _.find(objekt.Datensammlungen, function(ds) {
-				return ds.Name === "ZH Artwert (1995)";
-			}) || {};
-
-			exportObjekt.Artwert = "";
-			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && (ds_zh_artwert_1995.Daten.Artwert || ds_zh_artwert_1995.Daten.Artwert === 0)) {
-				exportObjekt.Artwert = ds_zh_artwert_1995.Daten.Artwert;
-			}
-
-			exportObjekt.AwZusatz = "";
-			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && ds_zh_artwert_1995.Daten["Artwert Zusatz"]) {
-				exportObjekt.AwZusatz = ds_zh_artwert_1995.Daten["Artwert Zusatz"];
-			}
-
-			var ds_blaue_liste = _.find(objekt.Datensammlungen, function(ds) {
-				return ds.Name === "Blaue Liste (1998)";
-			}) || {};
-
-			exportObjekt.Bestandesentwicklung = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Bestandesentwicklung) {
-				exportObjekt.Bestandesentwicklung = ds_blaue_liste.Daten.Bestandesentwicklung;
-			}
-
-			exportObjekt.Schutzmassnahmen = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Schutzmassnahmen) {
-				exportObjekt.Schutzmassnahmen = ds_blaue_liste.Daten.Schutzmassnahmen;
-			}
-
-			exportObjekt.Wirksamkeit = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Wirksamkeit) {
-				exportObjekt.Wirksamkeit = ds_blaue_liste.Daten.Wirksamkeit;
-			}
-
-			var ds_zh_ap_flora = _.find(objekt.Datensammlungen, function(ds) {
-				return ds.Name === "ZH AP Flora";
-			}) || {};
-
-			exportObjekt.Link_zum_AP_Bericht = "";
-			if (ds_zh_ap_flora && ds_zh_ap_flora.Daten && ds_zh_ap_flora.Daten["Link zum AP-Bericht"]) {
-				exportObjekt.Link_zum_AP_Bericht = ds_zh_ap_flora.Daten["Link zum AP-Bericht"];
-			}
-
-			exportObjekt["GUID_FNS"] = objekt._id;
-			
-			// Objekt zu Exportobjekten hinzufügen
-			exportObjekte.push(exportObjekt);
+            // Exportobjekte um das Objekt ergänzen
+            // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
+            export_objekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, ü_var.felder, ü_var.bez_in_zeilen, ü_var.fasseTaxonomienZusammen, ü_var.filterkriterien, export_objekte, "alt");
 			// arrays für sammlungen aus synonymen zurücksetzen
 			beziehungssammlungen_aus_synonymen = [];
 			datensammlungen_aus_synonymen = [];
 		}
 	}
-	// leere Objekte entfernen
-	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
-		return _.isEmpty(object);
-	});
 
-	send(adb.erstelleExportString(exportObjekte_ohne_leere));
+	send(adb.erstelleExportString(export_objekte));
 }
