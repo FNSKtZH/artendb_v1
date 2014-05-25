@@ -10,13 +10,26 @@ function(head, req) {
 
 	var row,
         objekt,
-		exportObjekte = [],
+        exportObjekte = [],
+        ü_var = {
+            fasseTaxonomienZusammen: false,
+            filterkriterien: [],
+            felder: [],
+            nur_objekte_mit_eigenschaften: true,
+            bez_in_zeilen: true
+        },
+        filterkriterien_objekt = {"filterkriterien": []},
+        felder_objekt,
+        objekt_hinzufügen,
 		exportObjekt,
-		gruppen,
-		beziehungssammlungen_aus_synonymen, datensammlungen_aus_synonymen,
+		beziehungssammlungen_aus_synonymen,
+        datensammlungen_aus_synonymen,
         ergänzeDsBsVonSynonym_return,
         _ = require("lists/lib/underscore"),
-        _a = require("lists/lib/artendb_listfunctions");
+        adb = require("lists/lib/artendb_listfunctions");
+
+    // übergebene Variablen extrahieren
+    ü_var = adb.holeÜbergebeneVariablen(req.query);
 
 	// gruppen ist vorgegeben
 	gruppen = ["Fauna", "Flora"];
@@ -51,51 +64,7 @@ function(head, req) {
 				objekt.Beziehungssammlungen = [];
 			}
 			// allfällige DS und BS aus Synonymen anhängen
-			// zuerst DS
-			// eine Liste der im Objekt enthaltenen DsNamen erstellen
-			var dsNamen = [];
-			if (objekt.Datensammlungen.length > 0) {
-				for (i=0; i<objekt.Datensammlungen.length; i++) {
-					if (objekt.Datensammlungen[i].Name) {
-						dsNamen.push(objekt.Datensammlungen[i].Name);
-					}
-				}
-			}
-			// nicht enthaltene Datensammlungen ergänzen
-			var ds_aus_syn_name2;
-			if (datensammlungen_aus_synonymen.length > 0) {
-				for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-					ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
-					if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-						objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
-						// den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
-						dsNamen.push(ds_aus_syn_name2);
-					}
-				}
-			}
-			// jetzt BS aus Synonymen anhängen
-			// eine Liste der im Objekt enthaltenen BsNamen erstellen
-			var bsNamen = [];
-			if (objekt.Beziehungssammlungen.length > 0) {
-				for (i=0; i<objekt.Beziehungssammlungen.length; i++) {
-					if (objekt.Beziehungssammlungen[i].Name) {
-						bsNamen.push(objekt.Beziehungssammlungen[i].Name);
-					}
-				}
-			}
-			// nicht enthaltene Beziehungssammlungen ergänzen
-			var bs_aus_syn_name2;
-			if (beziehungssammlungen_aus_synonymen.length > 0) {
-				for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
-					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
-						objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
-						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird
-						// auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
-						bsNamen.push(bs_aus_syn_name2);
-					}
-				}
-			}
+            objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
 
 			// exportobjekt gründen bzw. zurücksetzen
 			exportObjekt = {};

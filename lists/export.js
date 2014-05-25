@@ -21,20 +21,11 @@ function(head, req) {
         ü_var = adb.holeÜbergebeneVariablen(req.query);
 
 		while (row = getRow()) {
-			objekt = row.doc;// Prüfen, ob Gruppen übergeben wurden
+			objekt = row.doc;
 
-            /* ist nicht nötig, weil pro Gruppe eine list aufgerufen wird, die dann den view der Gruppe benutzt
-            if (ü_var.gruppen && ü_var.gruppen.length > 0) {
-                // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
-                if (objekt.Gruppe.indexOf(ü_var.gruppen) > -1) {
-                    // diese Gruppe wollen wir
-                    objekt_hinzufügen = true;
-                } else {
-                    // Gruppen werden gefiltert und Filter ist nicht erfüllt > weiter mit nächstem objekt
-                    continue;
-                }
-            }*/
+			// Prüfen, ob Gruppen übergeben wurden: ist nicht nötig, weil pro Gruppe eine list aufgerufen wird, die dann den view der Gruppe benutzt
 
+            // prüfen, ob die Kriterien erfüllt sind
             objekt_hinzufügen = adb.prüfeObObjektKriterienErfüllt(objekt, ü_var.felder, ü_var.filterkriterien, ü_var.fasseTaxonomienZusammen, ü_var.nur_objekte_mit_eigenschaften);
 
 			if (ü_var.nur_objekte_mit_eigenschaften && objekt_hinzufügen && ü_var.filterkriterien.length === 0) {

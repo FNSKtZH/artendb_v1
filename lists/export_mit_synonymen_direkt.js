@@ -65,53 +65,9 @@ function(head, req) {
 				objekt.Beziehungssammlungen = [];
 			}
 			// allfällige DS und BS aus Synonymen anhängen
-			// zuerst DS
-			// eine Liste der im objekt enthaltenen DsNamen erstellen
-			var dsNamen = [];
-			if (objekt.Datensammlungen.length > 0) {
-				for (i=0; i<objekt.Datensammlungen.length; i++) {
-					if (objekt.Datensammlungen[i].Name) {
-						dsNamen.push(objekt.Datensammlungen[i].Name);
-					}
-				}
-			}
-			// nicht enthaltene Datensammlungen ergänzen
-			var ds_aus_syn_name2;
-			if (datensammlungen_aus_synonymen.length > 0) {
-				for (i=0; i<datensammlungen_aus_synonymen.length; i++) {
-					ds_aus_syn_name2 = datensammlungen_aus_synonymen[i].Name;
-					if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-						objekt.Datensammlungen.push(datensammlungen_aus_synonymen[i]);
-						// den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
-						dsNamen.push(ds_aus_syn_name2);
-					}
-				}
-			}
-			// jetzt BS aus Synonymen anhängen
-			// eine Liste der im objekt enthaltenen BsNamen erstellen
-			var bsNamen = [];
-			if (objekt.Beziehungssammlungen.length > 0) {
-				for (i=0; i<objekt.Beziehungssammlungen.length; i++) {
-					if (objekt.Beziehungssammlungen[i].Name) {
-						bsNamen.push(objekt.Beziehungssammlungen[i].Name);
-					}
-				}
-			}
-			// nicht enthaltene Beziehungssammlungen ergänzen
-			var bs_aus_syn_name2;
-			if (beziehungssammlungen_aus_synonymen.length > 0) {
-				for (i=0; i<beziehungssammlungen_aus_synonymen.length; i++) {
-					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
-					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
-						objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
-						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird
-						// auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
-						bsNamen.push(bs_aus_syn_name2);
-					}
-				}
-			}
+            objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
 
-            //noinspection JSUnusedAssignment
+            // prüfen, ob das Objekt die Kriterien erfüllt
             objekt_hinzufügen = adb.prüfeObObjektKriterienErfüllt(objekt, ü_var.felder, ü_var.filterkriterien, ü_var.fasseTaxonomienZusammen, ü_var.nur_objekte_mit_eigenschaften);
 
             if (ü_var.nur_objekte_mit_eigenschaften && objekt_hinzufügen && ü_var.filterkriterien.length === 0) {
