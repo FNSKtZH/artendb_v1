@@ -30,36 +30,7 @@ function(head, req) {
 	// specify that we're providing a JSON response
 	provides('json', function() {
 		// übergebene Variablen extrahieren
-        _.each(req.query, function(value, key) {
-            switch (key) {
-            case "fasseTaxonomienZusammen":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.fasseTaxonomienZusammen = (value === 'true');
-                break;
-            case "filter":
-                filterkriterien_objekt = JSON.parse(value);
-                ü_var.filterkriterien = filterkriterien_objekt.filterkriterien || [];
-                // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
-                // damit das später nicht dauern wiederholt werden muss
-                ü_var.filterkriterien = adb.bereiteFilterkriterienVor(ü_var.filterkriterien);
-                break;
-            case "felder":
-                felder_objekt = JSON.parse(value);
-                ü_var.felder = felder_objekt.felder || [];
-                break;
-            case "gruppen":
-                ü_var.gruppen = value.split(",");
-                break
-            case "nur_objekte_mit_eigenschaften":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.nur_objekte_mit_eigenschaften = (value == 'true');
-                break;
-            case "bez_in_zeilen":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.bez_in_zeilen = (value === 'true');
-                break;
-            }
-        });
+        ü_var = adb.holeÜbergebeneVariablen(req.query);
 
 		// arrays für sammlungen aus synonymen gründen
 		beziehungssammlungen_aus_synonymen = [];

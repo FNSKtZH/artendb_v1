@@ -440,6 +440,49 @@ exports.bereiteFilterkriterienVor = function(filterkriterien) {
     return filterkriterien;
 };
 
+// liest übergebene Variabeln für Export aus
+// und bereitet sie für die Verwendung auf
+exports.holeÜbergebeneVariablen = function(query_objekt) {
+    var ü_var = {
+        fasseTaxonomienZusammen: false,
+        filterkriterien: [],
+        felder: [],
+        nur_objekte_mit_eigenschaften: true,
+        bez_in_zeilen: true
+    };
+    _.each(query_objekt, function(value, key) {
+        switch (key) {
+            case "fasseTaxonomienZusammen":
+                // true oder false wird als String übergeben > umwandeln
+                ü_var.fasseTaxonomienZusammen = (value === 'true');
+                break;
+            case "filter":
+                filterkriterien_objekt = JSON.parse(value);
+                ü_var.filterkriterien = filterkriterien_objekt.filterkriterien || [];
+                // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
+                // damit das später nicht dauern wiederholt werden muss
+                ü_var.filterkriterien = exports.bereiteFilterkriterienVor(ü_var.filterkriterien);
+                break;
+            case "felder":
+                felder_objekt = JSON.parse(value);
+                ü_var.felder = felder_objekt.felder || [];
+                break;
+            case "gruppen":
+                ü_var.gruppen = value.split(",");
+                break
+            case "nur_objekte_mit_eigenschaften":
+                // true oder false wird als String übergeben > umwandeln
+                ü_var.nur_objekte_mit_eigenschaften = (value == 'true');
+                break;
+            case "bez_in_zeilen":
+                // true oder false wird als String übergeben > umwandeln
+                ü_var.bez_in_zeilen = (value === 'true');
+                break;
+        }
+    });
+    return ü_var;
+};
+
 exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
     var ds_aus_syn_namen = [],
         bs_aus_syn_namen = [],
