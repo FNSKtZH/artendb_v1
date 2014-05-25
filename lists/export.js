@@ -46,7 +46,18 @@ function(head, req) {
         });
 
 		while (row = getRow()) {
-			objekt = row.doc;
+			objekt = row.doc;// Prüfen, ob Gruppen übergeben wurden
+
+            if (gruppen && gruppen.length > 0) {
+                // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
+                if (objekt.Gruppe.indexOf(gruppen) > -1) {
+                    // diese Gruppe wollen wir
+                    objekt_hinzufügen = true;
+                } else {
+                    // Gruppen werden gefiltert und Filter ist nicht erfüllt > weiter mit nächstem objekt
+                    continue;
+                }
+            }
 
             objekt_hinzufügen = adb.prüfeObObjektKriterienErfüllt(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften);
 

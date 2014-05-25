@@ -8,14 +8,15 @@ function(head, req) {
 		}
 	});
 
-	var row, objekt,
+	var row,
+        objekt,
 		exportObjekte = [],
 		exportObjekt,
 		gruppen,
 		beziehungssammlungen_aus_synonymen, datensammlungen_aus_synonymen,
-        ergänzeDsBsVonSynonym_return;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+        ergänzeDsBsVonSynonym_return,
+        _ = require("lists/lib/underscore"),
+        _a = require("lists/lib/artendb_listfunctions");
 
 	// gruppen ist vorgegeben
 	gruppen = ["Fauna", "Flora"];
@@ -24,13 +25,12 @@ function(head, req) {
 	beziehungssammlungen_aus_synonymen = [];
 	datensammlungen_aus_synonymen = [];
 
-	objekt_loop:
 	while (row = getRow()) {
 		objekt = row.doc;
 
 		if (gruppen.indexOf(objekt.Gruppe) === -1) {
 			// diese Gruppe wollen wir nicht > weiter mit nächstem Objekt
-			continue objekt_loop;
+			continue;
 		}
 
 		if (row.key[1] === 0) {
@@ -90,7 +90,8 @@ function(head, req) {
 					bs_aus_syn_name2 = beziehungssammlungen_aus_synonymen[i].Name;
 					if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
 						objekt.Beziehungssammlungen.push(beziehungssammlungen_aus_synonymen[i]);
-						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
+						// den Namen zu den bsNamen hinzufügen, damit diese BS sicher nicht nochmals gepusht wird
+						// auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
 						bsNamen.push(bs_aus_syn_name2);
 					}
 				}
