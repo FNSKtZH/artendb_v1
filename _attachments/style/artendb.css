@@ -419,10 +419,8 @@ a:hover {
     margin-right: 5px;
 }
 
-#exportieren_exportieren_collapse .checkbox {
-    display: inline-flex;
-    vertical-align: middle;
-    margin-bottom: 0px;
+#exportieren_exportieren_collapse .tooltip-inner {
+    max-width: 250px;
 }
 
 /*Filterfelder im Export: checkboxes gestalten*/

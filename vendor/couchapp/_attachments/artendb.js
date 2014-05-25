@@ -4099,11 +4099,41 @@ window.adb.filtereFürExport = function(direkt) {
         .show();
 
 	// jetzt das filterObjekt übergeben
-	if (direkt) {
+	if (direkt === "direkt") {
 		window.adb.übergebeFilterFürDirektExport(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
-	} else {
+	} if (direkt === "für_alt") {
+        window.adb.übergebeFilterFürExportFürAlt(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+    }else {
 		window.adb.übergebeFilterFürExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
 	}
+};
+
+window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+    // Alle Felder abfragen
+    var fTz = "false",
+        queryParam;
+    // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
+    if (window.adb.fasseTaxonomienZusammen) {
+        fTz = "true";
+    }
+    if ($("#exportieren_synonym_infos").prop('checked')) {
+        queryParam = "export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+    } else {
+        queryParam = "export_alt_direkt/all_docs?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+    }
+    if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
+        // prüfen, ob mindestens ein Feld aus ds gewählt ist
+        // wenn ja: true, sonst false
+        queryParam += "&nur_objekte_mit_eigenschaften=true";
+    } else {
+        queryParam += "&nur_objekte_mit_eigenschaften=false";
+    }
+    if ($("#export_bez_in_zeilen").prop('checked')) {
+        queryParam += "&bez_in_zeilen=true";
+    } else {
+        queryParam += "&bez_in_zeilen=false";
+    }
+    window.open('_list/' + queryParam);
 };
 
 window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {

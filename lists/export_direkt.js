@@ -35,12 +35,8 @@ function(head, req) {
 			objekt_nicht_hinzufügen = false;
 
 			// sicherstellen, dass DS und BS existieren
-			if (!objekt.Datensammlungen) {
-				objekt.Datensammlungen = [];
-			}
-			if (!objekt.Beziehungssammlungen) {
-				objekt.Beziehungssammlungen = [];
-			}
+            objekt.Datensammlungen = objekt.Datensammlungen || [];
+            objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
 			// Prüfen, ob Gruppen übergeben wurden
 			if (ü_var.gruppen && ü_var.gruppen.length > 0) {

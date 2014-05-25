@@ -631,6 +631,11 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         }
 
         export_objekt["GUID_FNS"] = objekt._id;
+
+        // wenn für alt: Pflichtfelder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
+        felder = _.reject(felder, function(feld) {
+            return ["GUID", "Gruppe", "Artwert"].indexOf(feld.Feldname) >=0;
+        });
     }
 
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
