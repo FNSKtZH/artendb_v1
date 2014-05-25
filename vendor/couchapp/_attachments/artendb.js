@@ -3982,6 +3982,7 @@ window.adb.filtereFürExport = function(direkt) {
 		scrollTop: $exportieren_exportieren_hinweis_text.offset().top
 	}, 2000);
 	// gewählte Gruppen ermitteln
+    $("#exportieren_exportieren_exportieren_fuer_alt").addClass("adb-hidden");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			gruppen_array.push($(this).attr('view'));
@@ -3989,6 +3990,10 @@ window.adb.filtereFürExport = function(direkt) {
 				gruppen += ",";
 			}
 			gruppen += $(this).val();
+            // Wenn Flora und oder Fauna: Schaltfläche für den Export für das ALT anzeigen
+            if ($(this).val() === "Flora" || $(this).val() === "Fauna") {
+                $("#exportieren_exportieren_exportieren_fuer_alt").removeClass("adb-hidden");
+            }
 		}
 	});
 	// durch alle Filterfelder loopen

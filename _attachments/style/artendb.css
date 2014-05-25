@@ -139,7 +139,7 @@ body {
 
 /*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
 .adb-hidden {
-    display: none;
+    display: none !important;
 }
 
 a.show_next_hidden,
