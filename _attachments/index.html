@@ -582,21 +582,26 @@
 						</div>
 						<div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
 							<div class="panel-body">
-								<div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+								<div class="well well-sm"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
 										<li>Wählen Sie eine oder mehrere Gruppen</li>
 										<li>Danach werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
 										<li>...und Sie können filtern und Eigenschaften wählen</li>
-										<li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet
-											<ul>
-												<li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.
-												<br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
-											<li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
-											</ul>
-										</li>
-										<li><a href="//youtu.be/J13wS88pYC8" target="_blank">Screencast sehen</a></li>
+                                        <li><a href="//youtu.be/J13wS88pYC8" target="_blank">Screencast sehen</a></li>
 									</ul>
 								</div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet
+                                            <ul>
+                                                <li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.
+                                                    <br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
+                                                <li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
+                                            </ul>
+                                        </li>
+                                        <li>Möchten Sie individuelle Felder für das <a href="//www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content" target="_blank">Artenlistentool</a> exportieren? Wählen Sie die Gruppen "Fauna" und "Flora". Dann wird Ihnen im letzten Schritt ein Export für das Artenlistentool angeboten (noch nicht umgesetzt)</li>
+                                    </ul>
+                                </div>
 								<div class="checkbox">
                                     <label>
                                         <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
@@ -751,7 +756,7 @@
 								</div>
 								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
 								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
-                                <button id="exportieren_exportieren_exportieren_fuer_alt" class="btn btn-primary exportieren_exportieren_exportieren adb-hidden-strictly" data-toggle="tooltip" data-placement="right auto" data-html="true" title="Gewählte Felder werden übernommen<br>Gruppen sind immer: Flora, Fauna<br>Filter werden ignoriert">für das Artenlistentool exportieren</button>
+                                <button id="exportieren_exportieren_exportieren_fuer_alt" class="btn btn-primary exportieren_exportieren_exportieren adb-hidden-strictly" data-toggle="tooltip" data-placement="right auto" data-html="true" title="Gewählte Felder werden übernommen<br>Filter werden ignoriert">für das Artenlistentool exportieren</button>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
 								<div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
