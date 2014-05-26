@@ -527,7 +527,7 @@ exports.holeÜbergebeneVariablen = function(query_objekt) {
                 break;
             case "gruppen":
                 ü_var.gruppen = value.split(",");
-                break
+                break;
             case "nur_objekte_mit_eigenschaften":
                 // true oder false wird als String übergeben > umwandeln
                 ü_var.nur_objekte_mit_eigenschaften = (value == 'true');

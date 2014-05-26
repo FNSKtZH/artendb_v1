@@ -37,7 +37,7 @@ function(head, req) {
             // Prüfen, ob Gruppen übergeben wurden
             if (ü_var.gruppen && ü_var.gruppen.length > 0) {
                 // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
-                if (objekt.Gruppe.indexOf(ü_var.gruppen) === -1) {
+                if (ü_var.gruppen.indexOf(objekt.Gruppe) === -1) {
                     // diese Gruppe wollen wir nicht > weiter mit nächstem objekt
                     continue;
                 }

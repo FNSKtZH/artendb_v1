@@ -1666,6 +1666,56 @@ window.adb.ergänzePilzeZhgis = function() {
 	});
 };
 
+window.adb.korrigiereArtwertnameInFlora = function() {
+    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
+    $db = $.couch.db("artendb");
+    $db.view('artendb/flora?include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    ds_artwert,
+                    daten = {};
+                if (art.Datensammlungen) {
+                    ds_artwert = _.find(art.Datensammlungen, function(ds) {
+                       return ds.Name === "ZH Artwert (1995)"
+                    });
+                    //if (ds_artwert && ds_artwert.Daten && ds_artwert.Daten["Artwert KT ZH"]) {
+                    if (ds_artwert && ds_artwert.Daten) {
+                        save = false;
+                        // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
+                        _.each(ds_artwert.Daten, function(value, key) {
+                            if (key === "Artwert KT ZH") {
+                                key = "Artwert";
+                                save = true;
+                            }
+                            daten[key] = value;
+                        });
+                        if (save) {
+                            ds_artwert.Daten = daten;
+                            $db.saveDoc(art, {
+                                success: function() {
+                                    korrigiert ++;
+                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                },
+                                error: function() {
+                                    fehler ++;
+                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+            if (korrigiert === 0) {
+                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
+            }
+        }
+    });
+};
+
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss

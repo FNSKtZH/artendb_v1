@@ -750,7 +750,7 @@
 									</ul>
 								</div>
 								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
-								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, auch auf alten Browsern)</button>
+								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
                                 <button id="exportieren_exportieren_exportieren_fuer_alt" class="btn btn-primary exportieren_exportieren_exportieren adb-hidden" data-toggle="tooltip" data-placement="right auto" data-html="true" title="Gewählte Felder werden übernommen<br>Gruppen sind immer: Flora, Fauna<br>Filter werden ignoriert" style="display:none;">für das Artenlistentool exportieren</button>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
 								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
@@ -777,6 +777,9 @@
 							<div class="panel-body">
 								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-default">Pilze: GIS-Layer "Pilze" in Datensammlung "ZH GIS" ergänzen</button>
 								<span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
+                                <hr>
+                                <button id="admin_korrigiere_artwertname_in_flora" type="button" class="btn btn-default">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
+                                <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
 							</div>
 						</div>
 					</div>
@@ -1190,7 +1193,9 @@
                         , "#exportieren", window.adb.handleExportierenClick)
                     .on("click", "#exportieren_alt", window.adb.handleExportierenAltClick);
 
-				$("#exportieren_diverses").on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis);
+				$("#exportieren_diverses")
+                    .on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis)
+                    .on("click", "#admin_korrigiere_artwertname_in_flora", window.adb.korrigiereArtwertnameInFlora);
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
