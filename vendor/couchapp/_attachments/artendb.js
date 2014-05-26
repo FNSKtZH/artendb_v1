@@ -4048,7 +4048,7 @@ window.adb.filtereFürExport = function(direkt) {
 		scrollTop: $exportieren_exportieren_hinweis_text.offset().top
 	}, 2000);
 	// gewählte Gruppen ermitteln
-    $("#exportieren_exportieren_exportieren_fuer_alt").addClass("adb-hidden");
+    $("#exportieren_exportieren_exportieren_fuer_alt").addClass("adb-hidden-strictly");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			gruppen_array.push($(this).attr('view'));
@@ -4056,12 +4056,13 @@ window.adb.filtereFürExport = function(direkt) {
 				gruppen += ",";
 			}
 			gruppen += $(this).val();
-            // Wenn Flora und oder Fauna: Schaltfläche für den Export für das ALT anzeigen
-            if ($(this).val() === "Flora" || $(this).val() === "Fauna") {
-                $("#exportieren_exportieren_exportieren_fuer_alt").removeClass("adb-hidden");
-            }
 		}
 	});
+    var gruppenliste = gruppen.split(",");
+    if (gruppenliste.indexOf("Flora") >= 0 && gruppenliste.indexOf("Fauna") >= 0) {
+        // Wenn Flora und Fauna gewählt: Schaltfläche für den Export für das ALT anzeigen
+        $("#exportieren_exportieren_exportieren_fuer_alt").removeClass("adb-hidden-strictly");
+    }
 	// durch alle Filterfelder loopen
 	// wenn ein Feld einen Wert enthält, danach filtern
 	$("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {

@@ -139,6 +139,10 @@ body {
 
 /*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
 .adb-hidden {
+    display: none;
+}
+
+.adb-hidden-strictly {
     display: none !important;
 }
 
