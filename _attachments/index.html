@@ -632,7 +632,7 @@
                                         Lebensräume
                                     </label>
                                 </div>
-								<button id="exportieren_objekte_Taxonomien_zusammenfassen" class="exportieren_ds_objekte_waehlen_gruppe" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
+								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
 								<div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info"></div>
 							</div>
 						</div>
@@ -1284,7 +1284,7 @@
                 ;
 
 				$("#export")
-                    .on("click", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
+                    .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
                     .on("change", ".feld_waehlen", window.adb.handleFeldWählenChange)
                     .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWählenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
@@ -1297,6 +1297,7 @@
                         event.preventDefault();
                         // this übergeben!
                         window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
+                        window.adb.handleExportierenDsObjekteWählenGruppeChange();
                     })
                     .on("click", "#exportieren_exportieren_exportieren", function(event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt

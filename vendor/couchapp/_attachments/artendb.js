@@ -1928,8 +1928,6 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
 	window.adb.erstelleListeFürFeldwahl();
-	// Tabelle ausblenden, falls sie eingeblendet war
-	$("#exportieren_exportieren_tabelle").hide();
 };
 
 // wenn export_feld_filtern geändert wird
@@ -3795,6 +3793,8 @@ window.adb.erstelleListeFürFeldwahl = function() {
 		$("#exportieren_felder_waehlen_felderliste").html("");
 		$("#exportieren_objekte_waehlen_ds_felderliste").html("");
 	}
+    // Tabelle ausblenden, falls sie eingeblendet war
+    $("#exportieren_exportieren_tabelle").hide();
 };
 
 window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
