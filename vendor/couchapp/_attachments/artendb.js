@@ -3795,7 +3795,21 @@ window.adb.erstelleListeFürFeldwahl = function() {
 		gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
-        $exportieren_nur_objekte_mit_eigenschaften = $("#exportieren_nur_objekte_mit_eigenschaften");
+        $exportieren_nur_objekte_mit_eigenschaften = $("#exportieren_nur_objekte_mit_eigenschaften"),
+        $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse"),
+        $exportieren_felder_waehlen_collapse = $("#exportieren_felder_waehlen_collapse"),
+        $exportieren_objekte_waehlen_ds_collapse = $("#exportieren_objekte_waehlen_ds_collapse");
+    // falls noch offen: folgende Bereiche schliessen
+    if ($exportieren_exportieren_collapse.is(':visible')) {
+        $exportieren_exportieren_collapse.collapse('hide');
+    }
+    if ($exportieren_felder_waehlen_collapse.is(':visible')) {
+        $exportieren_felder_waehlen_collapse.collapse('hide');
+    }
+    if ($exportieren_objekte_waehlen_ds_collapse.is(':visible')) {
+        $exportieren_objekte_waehlen_ds_collapse.collapse('hide');
+    }
+
 	// Beschäftigung melden
 	$exportieren_objekte_waehlen_gruppen_hinweis_text
         .alert()
