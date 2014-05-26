@@ -1320,9 +1320,12 @@
                         event.preventDefault();
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', window.adb.handleExportierenObjekteWählenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWählenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenObjekteWählenCollapseShown);
+                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function() {
+                            window.adb.handleExportierenObjekteWählenCollapseShown(this);
+                        })
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function() {
+                            window.adb.handleExportierenObjekteWählenCollapseShown(this);
+                        });
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 

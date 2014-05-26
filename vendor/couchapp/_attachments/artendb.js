@@ -2117,10 +2117,11 @@ window.adb.handlePanelbodyLrTaxonomieShown = function() {
 
 // wenn #exportieren_exportieren_collapse geöffnet wird
 window.adb.handleExportierenExportierenCollapseShown = function() {
+    var that = this;
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
 	if ($("#exportieren_exportieren_collapse").is(":visible")) {
-        if (window.adb.handleExportierenObjekteWählenCollapseShown()) {
+        if (window.adb.handleExportierenObjekteWählenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
             // Tabelle und Herunterladen-Schaltfläche ausblenden
             $("#exportieren_exportieren_tabelle").hide();
@@ -2131,9 +2132,8 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 	}
 };
 
-window.adb.handleExportierenObjekteWählenCollapseShown = function() {
-    var gruppen_gewählt = window.adb.fürExportGewählteGruppen(),
-        that = this;
+window.adb.handleExportierenObjekteWählenCollapseShown = function(that) {
+    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
         window.adb.erstelleListeFürFeldwahl();
@@ -3768,10 +3768,11 @@ window.adb.erstelleListeFürFeldwahl = function() {
 			export_gruppen.push($(this).val());
 		}
 	});
-    if (export_gruppen.length > 1) {
+    /*if (export_gruppen.length > 1) {
         // wenn mehrere Gruppen gewählt werden
         // Option exportieren_nur_objekte_mit_eigenschaften ausblenden
         // und false setzen
+        // sonst kommen nur die DS einer Gruppe
         $exportieren_nur_objekte_mit_eigenschaften_checkbox.addClass("adb-hidden");
         $exportieren_nur_objekte_mit_eigenschaften.prop('checked', false);
     } else {
@@ -3779,7 +3780,7 @@ window.adb.erstelleListeFürFeldwahl = function() {
             $exportieren_nur_objekte_mit_eigenschaften_checkbox.removeClass("adb-hidden")
             $exportieren_nur_objekte_mit_eigenschaften.prop('checked', true);
         }
-    }
+    }*/
 	if (export_gruppen.length > 0) {
         // gruppen einzeln abfragen
         gruppen = export_gruppen;

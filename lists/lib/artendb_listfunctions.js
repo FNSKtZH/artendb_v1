@@ -144,6 +144,8 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
     // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
     var hinzufügen = false,
+        // es reicht, wenn mindestens ein feld mit Werten enthalten ist!
+        mindestens_ein_feld_hinzufügen = false,
         ds_typ,
         feldname,
         bs_mit_name,
@@ -152,12 +154,12 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
     if (felder && felder.length > 0) {
         _.each(felder, function (feld) {
             ds_typ = feld.DsTyp;
-            DsName_z = feld.DsName;
+            ds_name = feld.DsName;
             feldname = feld.Feldname;
             if (ds_typ === "Beziehung") {
-                // suche Beziehungssammlung mit DsName_z
+                // suche Beziehungssammlung mit ds_name
                 bs_mit_name = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
-                    return beziehungssammlung.Name === DsName_z;
+                    return beziehungssammlung.Name === ds_name;
                 });
                 if (bs_mit_name && bs_mit_name.Beziehungen && bs_mit_name.Beziehungen.length > 0) {
                     // suche Feld feldname
@@ -165,20 +167,25 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
                         return beziehung[feldname] || beziehung[feldname] === 0;
                     });
                     hinzufügen = !!bez_mit_feldname;
+                    if (hinzufügen) {
+                        mindestens_ein_feld_hinzufügen = true;
+                    }
                 }
             } else if (ds_typ === "Datensammlung") {
                 // das ist ein Feld aus einer Datensammlung
-                // suche Datensammlung mit Name = DsName_z
+                // suche Datensammlung mit Name = ds_name
                 ds_mit_name = _.find(objekt.Datensammlungen, function (datensammlung) {
-                    return datensammlung.Name === DsName_z;
+                    return datensammlung.Name === ds_name;
                 });
                 // hinzufügen, wenn Feld mit feldname existiert und es Daten enthält
                 hinzufügen = (ds_mit_name && typeof ds_mit_name.Daten !== "undefined" && typeof ds_mit_name.Daten[feldname] !== "undefined");
+                if (hinzufügen) {
+                    mindestens_ein_feld_hinzufügen = true;
+                }
             }
         });
     }
-
-    return hinzufügen;
+    return mindestens_ein_feld_hinzufügen;
 };
 
 exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
