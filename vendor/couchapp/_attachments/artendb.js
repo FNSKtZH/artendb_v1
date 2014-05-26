@@ -3743,7 +3743,9 @@ window.adb.erstelleExportString = function(exportobjekte) {
 window.adb.erstelleListeFürFeldwahl = function() {
 	var export_gruppen = [],
 		gruppen = [],
-        $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text");
+        $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
+        $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
+        $exportieren_nur_objekte_mit_eigenschaften = $("#exportieren_nur_objekte_mit_eigenschaften");
 	// Beschäftigung melden
 	$exportieren_objekte_waehlen_gruppen_hinweis_text
         .alert()
@@ -3766,8 +3768,21 @@ window.adb.erstelleListeFürFeldwahl = function() {
 			export_gruppen.push($(this).val());
 		}
 	});
+    if (export_gruppen.length > 1) {
+        // wenn mehrere Gruppen gewählt werden
+        // Option exportieren_nur_objekte_mit_eigenschaften ausblenden
+        // und false setzen
+        $exportieren_nur_objekte_mit_eigenschaften_checkbox.addClass("adb-hidden");
+        $exportieren_nur_objekte_mit_eigenschaften.prop('checked', false);
+    } else {
+        if ($exportieren_nur_objekte_mit_eigenschaften_checkbox.hasClass("adb-hidden")) {
+            $exportieren_nur_objekte_mit_eigenschaften_checkbox.removeClass("adb-hidden")
+            $exportieren_nur_objekte_mit_eigenschaften.prop('checked', true);
+        }
+    }
 	if (export_gruppen.length > 0) {
-		gruppen = export_gruppen;
+        // gruppen einzeln abfragen
+        gruppen = export_gruppen;
         _.each(gruppen, function(gruppe) {
             // Felder abfragen
             $db.view('artendb/felder?group_level=5&startkey=["'+gruppe+'"]&endkey=["'+gruppe+'",{},{},{},{}]', {
