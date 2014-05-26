@@ -205,7 +205,10 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
     objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
     // kein Filter aber nur Datensätze mit Infos aus DS/BS
-    objekt_hinzufügen = (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften);
+    //objekt_hinzufügen = (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften);
+    if (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften) {
+        objekt_hinzufügen = true;
+    }
 
     loop_filterkriterien:
     for (var z=0; z<filterkriterien.length; z++) {
@@ -409,7 +412,9 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                         var bez_mit_feldname = _.find(bs_mit_name.Beziehungen, function (beziehung) {
                             return !!beziehung[feldname];
                         });
-                        objekt_hinzufügen = !!bez_mit_feldname;
+                        if (bez_mit_feldname) {
+                            objekt_hinzufügen = true;
+                        }
                     }
                 } else if (ds_typ === "Datensammlung") {
                     // das ist ein Feld aus einer Datensammlung
@@ -418,7 +423,9 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                         return datensammlung.Name === ds_name && typeof datensammlung.Daten !== "undefined" && typeof datensammlung.Daten[feldname] !== "undefined";
                     });
                     // wenn das Feld vorkommt, exportieren
-                    objekt_hinzufügen = !!ds_mit_feld;
+                    if (ds_mit_feld) {
+                        objekt_hinzufügen = true;
+                    }
                 }
             });
         }

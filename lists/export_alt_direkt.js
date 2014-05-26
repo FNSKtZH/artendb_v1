@@ -31,8 +31,8 @@ function(head, req) {
     // übergebene Variablen extrahieren
     ü_var = adb.holeÜbergebeneVariablen(req.query);
 
-	// gruppen ist vorgegeben
-	gruppen = ["Fauna", "Flora"];
+	// gruppen ist vom verwendeten view vorgegeben
+	//gruppen = ["Fauna", "Flora"];
 
 	// arrays für sammlungen aus synonymen gründen
 	beziehungssammlungen_aus_synonymen = [];
@@ -41,10 +41,10 @@ function(head, req) {
 	while (row = getRow()) {
 		objekt = row.doc;
 
-		if (gruppen.indexOf(objekt.Gruppe) === -1) {
+		/*if (gruppen.indexOf(objekt.Gruppe) === -1) {
 			// diese Gruppe wollen wir nicht > weiter mit nächstem Objekt
 			continue;
-		}
+		}*/
 
         // sicherstellen, dass DS und BS existieren
         objekt.Datensammlungen = objekt.Datensammlungen || [];
