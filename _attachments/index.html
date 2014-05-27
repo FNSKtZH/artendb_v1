@@ -584,8 +584,8 @@
 							<div class="panel-body">
 								<div class="well well-sm"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
-										<li>Wählen Sie eine oder mehrere Gruppen</li>
-										<li>Danach werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
+										<li>Wählen Sie eine oder mehrere Gruppen...</li>
+										<li>...dann werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
 										<li>...und Sie können filtern und Eigenschaften wählen</li>
                                         <li><a href="//youtu.be/J13wS88pYC8" target="_blank">Screencast sehen</a></li>
 									</ul>
@@ -658,7 +658,7 @@
 										<li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li>
 									</ul>
 								</div>
-                                <div class="well well-sm last-well" style="margin-bottom:15px;"><b>Tipps zum Filtern</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well" style="margin-bottom:15px;"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"
                                             <br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
@@ -691,14 +691,18 @@
 						</div>
 						<div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
 							<div class="panel-body">
-								<div class="well well-sm last-well" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+								<div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
 										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
-										<li>Bestimmen Sie, ob Informationen von Synonymen mitgeliefert werden sollen...</li>
-										<li>...markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
+										<li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
 										<li>...und fahren Sie danach mit "4. exportieren" weiter</li>
 									</ul>
 								</div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
+                                    </ul>
+                                </div>
                                 <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
                                     <label>
                                         <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
@@ -708,7 +712,7 @@
 								<div class="checkbox" style="clear:both; padding-top:7px;">
 									<label>
 										<input type="checkbox" id="exportieren_synonym_infos" checked>
-										<b>inklusive Informationen von Synonymen</b>
+										<b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
 									</label>
 								</div>
 								<hr>
@@ -738,22 +742,28 @@
 						</div>
 						<div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
 							<div class="panel-body">
-								<div class="well well-sm last-well" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+								<div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
 										<li>Der Server filtert und baut die Exportdaten auf</li>
 										<li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
 										<li>Danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
 										<li>...und es erscheinen Schaltflächen für den Download</li>
-										<li>Die Exportdatei hat das .csv-Format:
-											<ul>
-												<li>Zeichensatz ist UTF-8 (wichtig, sonst werden Umlaute zu Datensalat)</li>
-												<li>Die erste Zeile enthält die Feldnamen</li>
-												<li>Felder sind mit Kommas (,) getrennt</li>
-												<li>Text ist in Anführungs- und Schlusszeichen (") eingeschlossen</li>
-											</ul>
-										</li>
 									</ul>
 								</div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die Exportdatei hat das .csv-Format:
+                                            <ul>
+                                                <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
+                                                <li>Die erste Zeile enthält die Feldnamen</li>
+                                                <li>Felder sind mit Kommas (,) getrennt</li>
+                                                <li>Text ist in Anführungs- und Schlusszeichen (") eingeschlossen</li>
+                                            </ul>
+                                        </li>
+                                        <li>In Microsoft Excel wählen Sie für den Import den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken)</li>
+                                        <li>In OpenOffice und LibreOffice können Sie die Datei einfach öffnen oder doppelklicken</li>
+                                    </ul>
+                                </div>
 								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
 								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
                                 <button id="exportieren_exportieren_exportieren_fuer_alt" class="btn btn-primary exportieren_exportieren_exportieren adb-hidden-strictly" data-toggle="tooltip" data-placement="right auto" data-html="true" title="Gewählte Felder werden übernommen<br>Filter werden ignoriert">für das Artenlistentool exportieren</button>
