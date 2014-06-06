@@ -1762,7 +1762,6 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
 };
 
 window.adb.nenneDsUm = function() {
-    console.log("nenneDsUm");
     var $admin_korrigiere_ds_name_ch_rückmeldung = $("#admin_korrigiere_ds_name_rückmeldung"),
         $admin_korrigiere_ds_name_name_vorher = $("#admin_korrigiere_ds_name_name_vorher"),
         $admin_korrigiere_ds_name_name_nachher = $("#admin_korrigiere_ds_name_name_nachher"),
