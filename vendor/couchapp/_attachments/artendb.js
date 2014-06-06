@@ -1687,7 +1687,7 @@ window.adb.korrigiereArtwertnameInFlora = function() {
                     daten = {};
                 if (art.Datensammlungen) {
                     ds_artwert = _.find(art.Datensammlungen, function(ds) {
-                       return ds.Name === "ZH Artwert (1995)"
+                       return ds.Name === "ZH Artwert (1995)";
                     });
                     //if (ds_artwert && ds_artwert.Daten && ds_artwert.Daten["Artwert KT ZH"]) {
                     if (ds_artwert && ds_artwert.Daten) {
@@ -1718,6 +1718,122 @@ window.adb.korrigiereArtwertnameInFlora = function() {
             });
             if (korrigiert === 0) {
                 $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
+            }
+        }
+    });
+};
+
+window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
+    var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
+    $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
+    $db = $.couch.db("artendb");
+    $db.view('artendb/flora?include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    ds;
+                if (art.Datensammlungen) {
+                    ds = _.find(art.Datensammlungen, function(ds) {
+                        return ds.Name === "CH Rote Liste (1991)";
+                    });
+                    if (ds) {
+                        ds.Name = "CH Rote Listen Flora (1991)";
+                        $db.saveDoc(art, {
+                            success: function() {
+                                korrigiert ++;
+                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            },
+                            error: function() {
+                                fehler ++;
+                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            }
+                        });
+                    }
+                }
+            });
+            if (korrigiert === 0) {
+                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
+            }
+        }
+    });
+};
+
+window.adb.nenneDsUm = function() {
+    console.log("nenneDsUm");
+    var $admin_korrigiere_ds_name_ch_rückmeldung = $("#admin_korrigiere_ds_name_rückmeldung"),
+        $admin_korrigiere_ds_name_name_vorher = $("#admin_korrigiere_ds_name_name_vorher"),
+        $admin_korrigiere_ds_name_name_nachher = $("#admin_korrigiere_ds_name_name_nachher"),
+        name_vorher = $admin_korrigiere_ds_name_name_vorher.val(),
+        name_nachher = $admin_korrigiere_ds_name_name_nachher.val();
+    if (!name_vorher) {
+        $admin_korrigiere_ds_name_ch_rückmeldung.html("Bitte Name vorher erfassen");
+        $admin_korrigiere_ds_name_name_vorher.focus();
+        return;
+    }
+    if (!name_nachher) {
+        $admin_korrigiere_ds_name_ch_rückmeldung.html("Bitte Name nachher erfassen");
+        $admin_korrigiere_ds_name_name_nachher.focus();
+        return;
+    }
+    $admin_korrigiere_ds_name_ch_rückmeldung.html("Daten werden analysiert...");
+    $db = $.couch.db("artendb");
+    $db.view('artendb/ds_bs_guid?startkey=["' + name_vorher + '"]&endkey=["' + name_vorher + '",{}]&include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            if (data.rows.length === 0) {
+                $admin_korrigiere_ds_name_ch_rückmeldung.html("Es gibt keine Datensammlung namens " + name_vorher);
+                return;
+            }
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    ds,
+                    bs,
+                    save = false;
+                // Datensammlung mit diesem Namen suchen
+                if (art.Datensammlungen && art.Datensammlungen.length > 0) {
+                    ds = _.find(art.Datensammlungen, function(ds_) {
+                        if (ds_.Name) {
+                            return ds_.Name === name_vorher;
+                        }
+                    });
+                    if (ds) {
+                        ds.Name = name_nachher;
+                        save = true;
+                    }
+                }
+                // Beziehungssammlung mit diesem Namen suchen
+                if (art.Beziehungssammlungen && art.Beziehungssammlungen.length > 0) {
+                    bs = _.find(art.Beziehungssammlungen, function(ds_) {
+                        if (ds_.Name) {
+                            return ds_.Name === name_vorher;
+                        }
+                    });
+                    if (bs) {
+                        bs.Name = name_nachher;
+                        save = true;
+                    }
+                }
+                // Datensatz speichern, wenn nötig
+                if (save) {
+                    $db.saveDoc(art, {
+                        success: function() {
+                            korrigiert ++;
+                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        },
+                        error: function() {
+                            fehler ++;
+                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        }
+                    });
+                }
+            });
+            if (korrigiert === 0) {
+                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen '" + name_vorher + "'");
             }
         }
     });

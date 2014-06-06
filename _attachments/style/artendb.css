@@ -281,7 +281,15 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	column-width: 450px;
 }
 
-#art label, #importieren_ds label, #importieren_bs label, #export .form-group label {
+#admin label {
+    font-weight: normal;
+    color: #555555;
+}
+
+#art label,
+#importieren_ds label,
+#importieren_bs label,
+#export .form-group label {
 	width: 200px;
 	color: #555555;
 	margin-right: 7px;

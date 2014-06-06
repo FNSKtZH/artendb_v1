@@ -790,11 +790,36 @@
 						</div>
 						<div class="collapse in" id="exportieren_diverses_collapse">
 							<div class="panel-body">
-								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-default">Pilze: GIS-Layer "Pilze" in Datensammlung "ZH GIS" ergänzen</button>
+								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Datensammlung "ZH GIS" ergänzen</button>
 								<span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
                                 <hr>
-                                <button id="admin_korrigiere_artwertname_in_flora" type="button" class="btn btn-default">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
+                                <button id="admin_korrigiere_artwertname_in_flora" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
                                 <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
+                                <hr>
+                                <button id="admin_korrigiere_ds_name_ch_rote_liste_1991" type="button" class="btn btn-primary">Datensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
+                                <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung"></span>
+                                <hr>
+                                <fieldset>
+                                    <p style="font-weight:bold;">Datensammlung umbenennen</p>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_vorher">Name vorher</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_vorher" style="max-width:400px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_nachher">Name nachher</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_nachher" style="max-width:400px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-1 col-sm-11">
+                                            <button id="admin_korrigiere_ds_name" type="button" class="btn btn-primary">umbenennen</button>
+                                            <span id="admin_korrigiere_ds_name_rückmeldung"></span>
+                                        </div>
+                                    </div>
+                                </fieldset>
 							</div>
 						</div>
 					</div>
@@ -1210,7 +1235,16 @@
 
 				$("#exportieren_diverses")
                     .on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis)
-                    .on("click", "#admin_korrigiere_artwertname_in_flora", window.adb.korrigiereArtwertnameInFlora);
+                    .on("click", "#admin_korrigiere_artwertname_in_flora", window.adb.korrigiereArtwertnameInFlora)
+                    .on("click", "#admin_korrigiere_ds_name_ch_rote_liste_1991", window.adb.korrigiereDsNameFloraChRoteListe1991)
+                    .on("click", "#admin_korrigiere_ds_name", function(event) {
+                            // dieser Event wurde bei jedem Laden der Seite ausgelöst!
+                            if ($("#exportieren_diverses_collapse").is(':visible')) {
+                                window.adb.nenneDsUm();
+                            } else {
+                                event.preventDefault();
+                            }
+                        });
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
