@@ -1387,14 +1387,14 @@ window.adb.handleBsNameChange = function() {
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
 window.adb.handleDsImportiertVonChange = function() {
-    var $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
+    var $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
 	$("#DsImportiertVon").val(localStorage.Email);
-	$importieren_ds_ds_beschreiben_hinweis_text2
+	$importieren_ds_ds_beschreiben_hinweis2
         .alert()
         .show()
 	    .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
 	setTimeout(function() {
-		$importieren_ds_ds_beschreiben_hinweis_text2
+		$importieren_ds_ds_beschreiben_hinweis2
             .alert()
             .hide();
 	}, 10000);
@@ -1441,7 +1441,7 @@ window.adb.handleDsZusammenfassendChange = function() {
 // Wenn BsWählen geändert wird
 window.adb.handleBsWählenChange = function() {
 	var bs_name = this.value,
-		wählbar = $("#"+this.id+" option:selected").attr("waehlbar"),
+		wählbar = false,
         $BsAnzDs = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
         $BsName = $("#BsName"),
@@ -1450,7 +1450,14 @@ window.adb.handleBsWählenChange = function() {
     $importieren_bs_ds_beschreiben_hinweis2
         .alert()
         .hide();
-	if (wählbar === "true") {
+    // wählbar setzen
+    // wählen kann man nur, was man selber importiert hat - oder admin ist
+    if ($("#"+this.id+" option:selected").attr("waehlbar") === "true") {
+        wählbar = true;
+    } else if (Boolean(localStorage.admin)) {
+        wählbar = true;
+    }
+	if (wählbar) {
 		// zuerst alle Felder leeren
 		$('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function() {
 			$(this).val('');
@@ -1500,7 +1507,7 @@ window.adb.handleBsWählenChange = function() {
 		}
 	} else {
 		// melden, dass diese BS nicht bearbeitet werden kann
-        $("#importieren_bs_ds_beschreiben_hinweis2_text")
+        $("#importieren_bs_ds_beschreiben_hinweis2")
             .html("Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Beziehungssammlungen.");
         $importieren_bs_ds_beschreiben_hinweis2
             .alert()
@@ -1797,8 +1804,7 @@ window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
 // wenn DsWählen geändert wird
 window.adb.handleDsWählenChange = function() {
 	var ds_name = this.value,
-		wählbar = $("#"+this.id+" option:selected").attr("waehlbar"),
-        x,
+		wählbar = false,
         $DsAnzDs = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
         $DsName = $("#DsName"),
@@ -1807,7 +1813,14 @@ window.adb.handleDsWählenChange = function() {
     $importieren_ds_ds_beschreiben_error
         .alert()
         .hide();
-	if (wählbar === "true") {
+    // wählbar setzen
+    // wählen kann man nur, was man selber importiert hat - oder admin ist
+    if ($("#"+this.id+" option:selected").attr("waehlbar") === "true") {
+        wählbar = true;
+    } else if (Boolean(localStorage.admin)) {
+        wählbar = true;
+    }
+	if (wählbar) {
 		// zuerst alle Felder leeren
 		$('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
 			$(this).val('');
@@ -1881,14 +1894,14 @@ window.adb.handleDsNameChange = function() {
 		ds_key = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
 		}),
-        $importieren_ds_ds_beschreiben_hinweis_text2 = $("#importieren_ds_ds_beschreiben_hinweis_text2");
+        $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
 	if (ds_key) {
-		$importieren_ds_ds_beschreiben_hinweis_text2
+		$importieren_ds_ds_beschreiben_hinweis2
             .alert()
             .show()
 		    .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
 		setTimeout(function() {
-			$importieren_ds_ds_beschreiben_hinweis_text2
+			$importieren_ds_ds_beschreiben_hinweis2
                 .alert()
                 .hide();
 		}, 30000);
@@ -1896,7 +1909,7 @@ window.adb.handleDsNameChange = function() {
             .val("")
 		    .focus();
 	} else {
-		$importieren_ds_ds_beschreiben_hinweis_text2
+		$importieren_ds_ds_beschreiben_hinweis2
             .alert()
             .hide();
 	}
@@ -1905,7 +1918,7 @@ window.adb.handleDsNameChange = function() {
 // wenn DsLöschen geklickt wird
 window.adb.handleDsLöschenClick = function() {
 	// Rückmeldung anzeigen
-    $("#importieren_ds_ds_beschreiben_hinweis_text")
+    $("#importieren_ds_ds_beschreiben_hinweis")
         .alert()
         .show()
 	    .html("Bitte warten: Die Datensammlung wird entfernt...");
@@ -1921,7 +1934,7 @@ window.adb.handleBsLöschenClick = function() {
         .removeClass("alert-danger")
         .addClass("alert-info")
         .show();
-	$("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
+    $("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
     window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
 };
 
@@ -3437,7 +3450,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
 	var ds_entfernt = $.Deferred(),
         anz_vorkommen_von_ds,
         anz_vorkommen_von_ds_entfernt = 0,
-        $importieren_ds_ds_beschreiben_hinweis_text = $("#importieren_ds_ds_beschreiben_hinweis_text");
+        $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis");
 
 	$db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
@@ -3447,11 +3460,12 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.ds_entfernt', function() {
                 anz_vorkommen_von_ds_entfernt++;
-                $importieren_ds_ds_beschreiben_hinweis_text.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
                 rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
-                $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
+                $importieren_ds_ds_beschreiben_hinweis
+                    .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
+                    .html(rückmeldung);
                 $('html, body').animate({
-                    scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
+                    scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
                 }, 2000);
                 if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
                     // die Indexe aktualisieren
@@ -3459,12 +3473,13 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                     $db.view('artendb/lr', {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
-                            $importieren_ds_ds_beschreiben_hinweis_text.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
                             rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
                             rückmeldung += "Die Indexe wurden aktualisiert.";
-                            $("#importieren_ds_ds_beschreiben_hinweis_text").html(rückmeldung);
+                            $importieren_ds_ds_beschreiben_hinweis
+                                .removeClass("alert-info").removeClass("alert-danger").addClass("alert-success")
+                                .html(rückmeldung);
                             $('html, body').animate({
-                                scrollTop: $importieren_ds_ds_beschreiben_hinweis_text.offset().top
+                                scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
                             }, 2000);
                         }
                     });
@@ -4427,12 +4442,12 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 	// Namen der Datensammlungen als Optionen anfügen
     _.each(window.adb.ds_namen_eindeutig, function(ds_name_eindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
-        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1]) {
+        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
-            html += "<option value='" + ds_name_eindeutig[0] + "' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
         } else {
             // nicht veränderbare sind grau
-            html += "<option value='" + ds_name_eindeutig[0] + "' style='color:grey;' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
         }
     });
 	$("#DsWaehlen").html(html);
@@ -4498,12 +4513,12 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 	// Namen der Datensammlungen als Optionen anfügen
     _.each(window.adb.ds_namen_eindeutig, function(ds_name_eindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
-        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1]) {
+        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
-            html += "<option value='" + ds_name_eindeutig[0] + "' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
         } else {
             // nicht veränderbare sind grau
-            html += "<option value='" + ds_name_eindeutig[0] + "' style='color:grey;' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
         }
     });
 	$("#BsWaehlen").html(html);

@@ -554,6 +554,19 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	column-break-inside:avoid;
 }
 
+/*
+** Auswahlliste um bestehende DS/BS zu wählen: wählbare sollen grün und fett sein, nicht wählbare grau und normal
+*/
+.adb_gruen_fett {
+    color:green;
+    font-weight:bold;
+}
+
+.adb_grau_normal {
+    color:grey;
+    font-weight:normal;
+}
+
 [type=number] {
 	width: 100px;
 }
