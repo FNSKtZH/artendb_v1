@@ -1,6 +1,7 @@
 window.adb = window.adb || {};
 
 window.adb.erstelleBaum = function() {
+	'use strict';
 	var gruppe,
 		gruppenbezeichnung,
 		baum_erstellt = $.Deferred();
@@ -31,7 +32,7 @@ window.adb.erstelleBaum = function() {
         gruppenbezeichnung = "Lebensräume";
         break;
 	}
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/' + gruppe + "_gruppiert", {
 		success: function(data) {
 			var anzahl_objekte = data.rows[0].value;
@@ -46,6 +47,7 @@ window.adb.erstelleBaum = function() {
 };
 
 window.adb.erstelleTree = function() {
+	'use strict';
 	var level,
 		gruppe,
 		filter,
@@ -68,7 +70,7 @@ window.adb.erstelleTree = function() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return window.adb.holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
+						return window.adb.holeDatenUrlFürTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
@@ -100,6 +102,7 @@ window.adb.erstelleTree = function() {
 		"plugins" : ["ui", "themes", "json_data", "sort"]
 	})
 	.bind("select_node.jstree", function(e, data) {
+        'use strict';
 		var node = data.rslt.obj;
 		$.jstree._reference(node).open_node(node);
 		if (node.attr("id")) {
@@ -112,6 +115,7 @@ window.adb.erstelleTree = function() {
 		}
 	})
 	.bind("loaded.jstree", function() {
+        'use strict';
 		jstree_erstellt.resolve();
 		$("#suchen"+window.adb.Gruppe).css("display", "table");
 		$("#treeMitteilung").hide();
@@ -130,6 +134,7 @@ window.adb.erstelleTree = function() {
 };
 
 window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
+	'use strict';
 	var gruppe,
         url;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
@@ -158,7 +163,8 @@ window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
 	return url;
 };
 
-window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id) {
+window.adb.holeDatenUrlFürTreeUntereLevel = function(level, filter, gruppe, id) {
+	'use strict';
 	var startkey,
 		// flag, um mitzuliefern, ob die id angezeigt werden soll
 		id2 = false,
@@ -240,8 +246,9 @@ window.adb.holeDatenUrlFuerTreeUntereLevel = function(level, filter, gruppe, id)
 };
 
 window.adb.initiiereSuchfeld = function() {
+	'use strict';
 	// zuerst mal die benötigten Daten holen
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
 		if (window.adb.filtere_lr) {
 			window.adb.initiiereSuchfeld_2();
@@ -271,6 +278,7 @@ window.adb.initiiereSuchfeld = function() {
 };
 
 window.adb.initiiereSuchfeld_2 = function() {
+	'use strict';
 	var such_objekte;
 	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
 		such_objekte = window.adb.filtere_lr.rows;
@@ -298,8 +306,9 @@ window.adb.initiiereSuchfeld_2 = function() {
 // In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
 // plus man soll auch einen neue Taxonomie beginnen können
 window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
+	'use strict';
 	// lr holen
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/lr?include_docs=true', {
 		success: function(lr) {
 			var taxonomie_objekte, 
@@ -370,7 +379,7 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 
 window.adb.öffneBaumZuId = function(id) {
 	// Hierarchie der id holen
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(objekt) {
             var $filter_klasse = $("[filter='" + objekt.Taxonomie.Daten.Klasse + "']"),
@@ -449,7 +458,7 @@ window.adb.oeffneNodeNachIdArray = function(idArray) {
 };
 
 window.adb.initiiere_art = function(id) {
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(art) {
 			var html_art,
@@ -1625,7 +1634,7 @@ window.adb.handleMenuAdminClick = function() {
 
 window.adb.ergänzePilzeZhgis = function() {
 	$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/macromycetes?include_docs=true', {
 		success: function(data) {
 			var ds_zhgis = {},
@@ -1675,7 +1684,7 @@ window.adb.ergänzePilzeZhgis = function() {
 
 window.adb.korrigiereArtwertnameInFlora = function() {
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
-    $db = $.couch.db("artendb");
+    var $db = $.couch.db("artendb");
     $db.view('artendb/flora?include_docs=true', {
         success: function(data) {
             var korrigiert = 0,
@@ -1726,7 +1735,7 @@ window.adb.korrigiereArtwertnameInFlora = function() {
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
     var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
     $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
-    $db = $.couch.db("artendb");
+    var $db = $.couch.db("artendb");
     $db.view('artendb/flora?include_docs=true', {
         success: function(data) {
             var korrigiert = 0,
@@ -1778,7 +1787,7 @@ window.adb.nenneDsUm = function() {
         return;
     }
     $admin_korrigiere_ds_name_ch_rückmeldung.html("Daten werden analysiert...");
-    $db = $.couch.db("artendb");
+    var $db = $.couch.db("artendb");
     $db.view('artendb/ds_bs_guid?startkey=["' + name_vorher + '"]&endkey=["' + name_vorher + '",{}]&include_docs=true', {
         success: function(data) {
             var korrigiert = 0,
@@ -2227,7 +2236,7 @@ window.adb.handleLrParentOptionenChange = function() {
 		parent.GUID = parent_id;
 	}
 	object.Taxonomie.Daten.Parent = parent;
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.saveDoc(object, {
 		success: function(object_saved) {
 			object._rev = object_saved.rev;
@@ -2258,7 +2267,7 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
 		id = uri2.getQueryParamValue('id');
 	}
 	// Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
 		success: function(data) {
 			// daraus einen Array von docs machen
@@ -2603,7 +2612,7 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 		// Dokumente aus der Gruppe der Datensätze holen
 		// durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
 		// kontrollieren, ob eine id mehr als einmal vorkommt
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		if (window.adb.DsId === "guid") {
 			$db.view('artendb/all_docs', {
 				success: function(data) {
@@ -2782,7 +2791,7 @@ window.adb.importiereDatensammlung = function() {
         }, 2000);
         if (anz_ds_importiert === anz_ds) {
             // die Indexe
-            $db = $.couch.db("artendb");
+            var $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass views aktualisiert wurden
@@ -3017,7 +3026,7 @@ window.adb.importiereBeziehungssammlung = function() {
         }, 2000);
         if (anz_bs_importiert === anzahl_beziehungssammlungen) {
             // Indices aktualisieren
-            $db = $.couch.db("artendb");
+            var $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
@@ -3176,7 +3185,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
     });
 	// jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
 	// danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
 		success: function(data) {
 			var objekt;
@@ -3235,7 +3244,7 @@ window.adb.entferneDatensammlung = function() {
         }, 2000);
         if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
             // die Indexe aktualisieren
-            $db = $.couch.db("artendb");
+            var $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
@@ -3303,7 +3312,7 @@ window.adb.entferneDatensammlung = function() {
 window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs_faktor) {
 	// alle docs holen
 	setTimeout(function() {
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
 			success: function(data) {
 				var Objekt;
@@ -3328,7 +3337,7 @@ window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 		for (var i=0; i<objekt.Datensammlungen.length; i++) {
 			if (objekt.Datensammlungen[i].Name === ds_name) {
 				objekt.Datensammlungen.splice(i,1);
-				$db = $.couch.db("artendb");
+				var $db = $.couch.db("artendb");
 				$db.saveDoc(objekt);
                 // mitteilen, dass eine ds entfernt wurde
                 $(document).trigger('adb.ds_entfernt');
@@ -3368,7 +3377,7 @@ window.adb.entferneBeziehungssammlung = function() {
 
         if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
             // die Indexe aktualisieren
-            $db = $.couch.db("artendb");
+            var $db = $.couch.db("artendb");
             $db.view('artendb/lr', {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
@@ -3454,7 +3463,7 @@ window.adb.entferneBeziehungssammlung = function() {
 window.adb.entferneBeziehungssammlung_2 = function(bs_name, guid_array, verzögerungs_faktor) {
 	// alle docs holen
 	setTimeout(function() {
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		$db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
 			success: function(data) {
 				var objekt,
@@ -3473,7 +3482,7 @@ window.adb.entferneBeziehungssammlungAusObjekt = function(bs_name, objekt) {
 		for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {
 			if (objekt.Beziehungssammlungen[i].Name === bs_name) {
 				objekt.Beziehungssammlungen.splice(i,1);
-				$db = $.couch.db("artendb");
+				var $db = $.couch.db("artendb");
 				$db.saveDoc(objekt);
                 // mitteilen, dass eine bs entfernt wurde
                 $(document).trigger('adb.bs_entfernt');
@@ -3486,7 +3495,7 @@ window.adb.entferneBeziehungssammlungAusObjekt = function(bs_name, objekt) {
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
 window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(guid, {
 		success: function(doc) {
 			// Datensammlung anfügen
@@ -3506,7 +3515,7 @@ window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
 window.adb.fügeBeziehungenZuObjekt = function(guid, beziehungssammlung, beziehungen) {
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(guid, {
 		success: function(doc) {
 			// prüfen, ob die Beziehung schon existiert
@@ -3567,7 +3576,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
         anz_vorkommen_von_ds_entfernt = 0,
         $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis");
 
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
 		success: function(data) {
             anz_vorkommen_von_ds = data.rows.length;
@@ -3584,7 +3593,6 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                 }, 2000);
                 if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
                     // die Indexe aktualisieren
-                    $db = $.couch.db("artendb");
                     $db.view('artendb/lr', {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
@@ -3620,7 +3628,7 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
         anz_vorkommen_von_bs,
         $importieren_bs_ds_beschreiben_hinweis = $("#importieren_bs_ds_beschreiben_hinweis"),
         $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text");
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.view('artendb/bs_guid?startkey=["' + bs_name + '"]&endkey=["' + bs_name + '",{}]', {
 		success: function(data) {
             anz_vorkommen_von_bs = data.rows.length;
@@ -3638,7 +3646,6 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
                 }, 2000);
                 if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
                     // die Indexe aktualisieren
-                    $db = $.couch.db("artendb");
                     $db.view('artendb/lr', {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
@@ -3671,7 +3678,7 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
 window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Datensammlung entfernen
@@ -3691,7 +3698,7 @@ window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
 // und den Namen der Beziehungssammlung, die zu entfernen ist
 // entfernt die Beziehungssammlung
 window.adb.entferneBeziehungssammlungAusDokument = function(id, bs_name) {
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Beziehungssammlung entfernen
@@ -3722,7 +3729,7 @@ window.adb.öffneUri = function() {
 	}
 	if (id) {
 		// Gruppe ermitteln
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		$db.openDoc(id, {
 			success: function(objekt) {
 				// window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
@@ -3956,7 +3963,7 @@ window.adb.erstelleListeFürFeldwahl = function() {
 	// globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
 	// globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
 	var export_felder_arrays = [];
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
 			export_gruppen.push($(this).val());
@@ -4084,7 +4091,7 @@ window.adb.holeDatensammlungenFürExportfelder = function() {
     if (window.adb.ds_bs_von_objekten) {
         exfe_geholt.resolve();
     } else {
-        $db = $.couch.db("artendb");
+        var $db = $.couch.db("artendb");
         $db.view('artendb/ds_von_objekten?group_level=5', {
             success: function(data) {
                 // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
@@ -4441,7 +4448,7 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
         } else {
             queryParam += "&bez_in_zeilen=false";
         }
-        $db = $.couch.db("artendb");
+        var $db = $.couch.db("artendb");
         $db.list(dbParam, queryParam, {
             success: function(data) {
                 // alle Objekte in data in window.adb.exportieren_objekte anfügen
@@ -4511,7 +4518,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
 		if (window.adb.ds_von_objekten) {
 			window.adb.bereiteImportieren_ds_beschreibenVor_02();
 		} else {
-			$db = $.couch.db("artendb");
+			var $db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
 				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
@@ -4581,7 +4588,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 		if (window.adb.bs_von_objekten) {
             window.adb.bereiteImportieren_bs_beschreibenVor_02();
 		} else {
-			$db = $.couch.db("artendb");
+			var $db = $.couch.db("artendb");
 			$db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
 				success: function(data) {
 					// Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
@@ -4782,7 +4789,7 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 	}
 	// sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
 	feldwert = window.adb.convertToCorrectType(feldwert);
-	$db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(object) {
 			// prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
@@ -4963,7 +4970,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr = function(lr, object, aktualisier
 	if (lr) {
 		window.adb.aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);
 	} else {
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function(data) {
 				window.adb.aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiere_hierarchiefeld);
@@ -5024,7 +5031,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, o
 	if (lr) {
 		window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 	} else {
-		$db = $.couch.db("artendb");
+		var $db = $.couch.db("artendb");
 		$db.view('artendb/lr?include_docs=true', {
 			success: function(lr) {
 				window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
