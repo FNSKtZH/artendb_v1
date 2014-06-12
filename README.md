@@ -770,9 +770,9 @@ Lebensräume in der Anwendung bearbeiten:
 - Exporte und Importe direkt nach und von .xlsx-Formate (Probleme von Excel umgehen)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
-- [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) (grundlegend)
+- [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) = alternative Taxonomien verwalten und darstellen (grundlegend)
 - Datensammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Datensammlung ursprünglich erstellt wurde  
-- Alternative Taxonomien verwalten und darstellen (wenig prioritär)
+- Nach beliebigem Text suchen können
 
 <a href="#top">&#8593; top</a>
 
