@@ -378,6 +378,7 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 };
 
 window.adb.öffneBaumZuId = function(id) {
+	'use strict';
 	// Hierarchie der id holen
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
@@ -447,6 +448,7 @@ window.adb.öffneBaumZuId = function(id) {
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 window.adb.oeffneNodeNachIdArray = function(idArray) {
+	'use strict';
 	if (idArray.length > 1) {
 		$.jstree._reference("#tree" + window.adb.Gruppe).open_node($("#"+idArray[0]), function() {
 			idArray.splice(0,1);
@@ -458,6 +460,7 @@ window.adb.oeffneNodeNachIdArray = function(idArray) {
 };
 
 window.adb.initiiere_art = function(id) {
+	'use strict';
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(art) {
@@ -633,6 +636,7 @@ window.adb.initiiere_art = function(id) {
 };
 
 window.adb.initiiere_art_2 = function(html_art, art) {
+	'use strict';
 	// panel beenden
 	$("#art_inhalt").html(html_art);
 	// richtiges Formular anzeigen
@@ -658,6 +662,7 @@ window.adb.initiiere_art_2 = function(html_art, art) {
 // benötigt von der art bzw. den lr die entsprechende Beziehungssammlung
 // altName ist für Beziehungssammlungen von Synonymen: Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen, sonst geht nur die erste auf
 window.adb.erstelleHtmlFürBeziehungssammlung = function(art, beziehungssammlung, alt_name) {
+	'use strict';
 	var html,
 		name,
 		bs_name = window.adb.ersetzeUngültigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name;
@@ -716,6 +721,7 @@ window.adb.erstelleHtmlFürBeziehungssammlung = function(art, beziehungssammlung
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende Datensammlung
 window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) {
+	'use strict';
 	var html_datensammlung,
 		hierarchie_string,
 		array_string,
@@ -772,6 +778,7 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 };
 
 window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(ds_oder_bs) {
+	'use strict';
     var html = '<div class="Datensammlung BeschreibungDatensammlung">';
     if (ds_oder_bs.Beschreibung) {
         html += ds_oder_bs.Beschreibung;
@@ -812,6 +819,7 @@ window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(ds_oder_bs) {
 };
 
 window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierarchie_array) {
+	'use strict';
 	if (!_.isArray(hierarchie_array)) {
 		return "";
 	}
@@ -829,6 +837,7 @@ window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierar
 // übernimmt Feldname und Feldwert
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
 window.adb.erstelleHtmlFürFeld = function(feldname, feldwert, ds_typ, ds_name) {
+	'use strict';
 	var html_datensammlung = "";
 	if ((typeof feldwert === "string" && feldwert.slice(0, 7) === "http://") || (typeof feldwert === "string" && feldwert.slice(0, 8) === "https://") || (typeof feldwert === "string" && feldwert.slice(0, 2) === "//")) {
 		// www-Links als Link darstellen
@@ -850,6 +859,7 @@ window.adb.erstelleHtmlFürFeld = function(feldname, feldwert, ds_typ, ds_name) 
 // managt die Links zu Google Bilder und Wikipedia
 // erwartet das Objekt mit der Art
 window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
+	'use strict';
 	// jetzt die Links im Menu setzen
 	if (art) {
 		var google_bilder_link = "",
@@ -916,6 +926,7 @@ window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
 
 // generiert den html-Inhalt für einzelne Links in Flora
 window.adb.generiereHtmlFürLinkZuGleicherGruppe = function(feld_name, id, artname) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group"><label class="control-label">';
 	html_container += feld_name;
@@ -929,6 +940,7 @@ window.adb.generiereHtmlFürLinkZuGleicherGruppe = function(feld_name, id, artna
 
 // generiert den html-Inhalt für Serien von Links in Flora
 window.adb.generiereHtmlFürLinksZuGleicherGruppe = function(feldname, objekt_liste) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group"><label class="control-label">';
 	html_container += feldname;
@@ -949,6 +961,7 @@ window.adb.generiereHtmlFürLinksZuGleicherGruppe = function(feldname, objekt_li
 
 // generiert den html-Inhalt für einzelne Links in Flora
 window.adb.generiereHtmlFürWwwLink = function(feldname, feldwert, ds_typ, ds_name) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group">\n\t<label class="control-label" for="';
 	html_container += feldname;
@@ -973,6 +986,7 @@ window.adb.generiereHtmlFürWwwLink = function(feldname, feldwert, ds_typ, ds_na
 
 // generiert den html-Inhalt für einzelne Links in Flora
 window.adb.generiereHtmlFürObjektlink = function(feldname, feldwert, url) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group"><label class="control-label">';
 	html_container += feldname;
@@ -988,6 +1002,7 @@ window.adb.generiereHtmlFürObjektlink = function(feldname, feldwert, url) {
 
 // generiert den html-Inhalt für Textinputs
 window.adb.generiereHtmlFürTextinput = function(feldname, feldwert, input_typ, ds_typ, ds_name) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group">\n\t<label class="control-label" for="';
 	html_container += feldname;
@@ -1007,6 +1022,7 @@ window.adb.generiereHtmlFürTextinput = function(feldname, feldwert, input_typ, 
 
 // generiert den html-Inhalt für Textarea
 window.adb.generiereHtmlFürTextarea = function(feldname, feldwert, ds_typ, ds_name) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group"><label class="control-label" for="';
 	html_container += feldname;
@@ -1024,6 +1040,7 @@ window.adb.generiereHtmlFürTextarea = function(feldname, feldwert, ds_typ, ds_n
 
 // generiert den html-Inhalt für ja/nein-Felder
 window.adb.generiereHtmlFürBoolean = function(feldname, feldwert, ds_typ, ds_name) {
+	'use strict';
 	var html_container;
 	html_container = '<div class="form-group"><label class="control-label" for="';
 	html_container += feldname;
@@ -1043,6 +1060,7 @@ window.adb.generiereHtmlFürBoolean = function(feldname, feldwert, ds_typ, ds_na
 
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
 window.adb.setzeTreehöhe = function() {
+	'use strict';
 	var window_height = $(window).height();
 	if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
 		$(".baum").css("max-height", window_height - 161);
@@ -1054,6 +1072,7 @@ window.adb.setzeTreehöhe = function() {
 
 // setzt die Höhe von textareas so, dass der Text genau rein passt
 window.adb.fitTextareaToContent = function(id, max_height) {
+	'use strict';
 	var text = id && id.style ? id : document.getElementById(id);
 	max_height = max_height || document.documentElement.clientHeight;
 	if (!text) {
@@ -1083,6 +1102,7 @@ window.adb.fitTextareaToContent = function(id, max_height) {
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 window.adb.zeigeFormular = function(formularname) {
+	'use strict';
 	var formular_angezeigt = $.Deferred(),
         $form = $('form');
 	// zuerst alle Formulare ausblenden
@@ -1129,6 +1149,7 @@ window.adb.zeigeFormular = function(formularname) {
 // kontrollieren, ob die erforderlichen Felder etwas enthalten
 // wenn ja wird true retourniert, sonst false
 window.adb.validiereSignup = function(woher) {
+	'use strict';
 	var email,
         passwort,
         passwort2;
@@ -1168,6 +1189,7 @@ window.adb.validiereSignup = function(woher) {
 };
 
 window.adb.erstelleKonto = function(woher) {
+	'use strict';
 	// User in _user eintragen
 	$.couch.signup({
 		name: $('#Email_'+woher).val()
@@ -1198,6 +1220,7 @@ window.adb.erstelleKonto = function(woher) {
 };
 
 window.adb.meldeUserAn = function(woher) {
+	'use strict';
 	var email = $('#Email_'+woher).val(),
 		passwort = $('#Passwort_'+woher).val();
 	if (window.adb.validiereUserAnmeldung(woher)) {
@@ -1241,6 +1264,7 @@ window.adb.meldeUserAn = function(woher) {
 };
 
 window.adb.blendeMenus = function() {
+	'use strict';
 	if (localStorage.admin) {
 		$("#menu_btn")
             .find(".admin")
@@ -1253,6 +1277,7 @@ window.adb.blendeMenus = function() {
 };
 
 window.adb.meldeUserAb = function() {
+	'use strict';
 	// IE8 kann nicht deleten
 	try {
 		delete localStorage.Email;
@@ -1281,6 +1306,7 @@ window.adb.meldeUserAb = function() {
 };
 
 window.adb.passeUiFürAngemeldetenUserAn = function(woher) {
+	'use strict';
 	var präfix = "importieren_";
 	if (woher === "art") {
 		präfix = "";
@@ -1310,6 +1336,7 @@ window.adb.passeUiFürAngemeldetenUserAn = function(woher) {
 // welche anmeldung hängt ab, woher die Prüfung angefordert wurde
 // darum erwartet die Funktion den parameter woher
 window.adb.prüfeAnmeldung = function(woher) {
+	'use strict';
 	if (!localStorage.Email) {
 		setTimeout(function() {
 			window.adb.zurückZurAnmeldung(woher);
@@ -1320,6 +1347,7 @@ window.adb.prüfeAnmeldung = function(woher) {
 };
 
 window.adb.zurückZurAnmeldung = function(woher) {
+	'use strict';
 	var präfix = "importieren_";
 
 	// Bei LR muss der Anmeldungsabschnitt eingeblendet werden
@@ -1343,6 +1371,7 @@ window.adb.zurückZurAnmeldung = function(woher) {
 };
 
 window.adb.validiereUserAnmeldung = function(woher) {
+	'use strict';
 	var email = $('#Email_'+woher).val(),
 		passwort = $('#Passwort_'+woher).val();
 	if (!email) {
@@ -1366,6 +1395,7 @@ window.adb.validiereUserAnmeldung = function(woher) {
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
 window.adb.handleBsNameChange = function() {
+	'use strict';
 	var that = this,
 		bs_key = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
@@ -1396,6 +1426,7 @@ window.adb.handleBsNameChange = function() {
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
 window.adb.handleDsImportiertVonChange = function() {
+	'use strict';
     var $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
 	$("#DsImportiertVon").val(localStorage.Email);
 	$importieren_ds_ds_beschreiben_hinweis2
@@ -1412,6 +1443,7 @@ window.adb.handleDsImportiertVonChange = function() {
 // Wenn BsImportiertVon geändert wird
 // Kontrollieren, dass es die email der angemeldeten Person ist
 window.adb.handleBsImportiertVonChange = function() {
+	'use strict';
 	$("#BsImportiertVon").val(localStorage.Email);
 	$("#importieren_bs_ds_beschreiben_hinweis2")
         .alert()
@@ -1430,6 +1462,7 @@ window.adb.handleBsImportiertVonChange = function() {
 // wenn BsZusammenfassend geändert wird
 // BsUrsprungsBs_div zeigen oder verstecken
 window.adb.handleBsZusammenfassendChange = function() {
+	'use strict';
 	if ($(this).prop('checked')) {
 		$("#BsUrsprungsBs_div").show();
 	} else {
@@ -1440,6 +1473,7 @@ window.adb.handleBsZusammenfassendChange = function() {
 // wenn DsZusammenfassend geändert wird
 // DsUrsprungsDs zeigen oder verstecken
 window.adb.handleDsZusammenfassendChange = function() {
+	'use strict';
 	if ($(this).prop('checked')) {
 		$("#DsUrsprungsDs_div").show();
 	} else {
@@ -1449,6 +1483,7 @@ window.adb.handleDsZusammenfassendChange = function() {
 
 // Wenn BsWählen geändert wird
 window.adb.handleBsWählenChange = function() {
+	'use strict';
 	var bs_name = this.value,
 		wählbar = false,
         $BsAnzDs = $("#BsAnzDs"),
@@ -1532,6 +1567,7 @@ window.adb.handleBsWählenChange = function() {
 
 // wenn DsFile geändert wird
 window.adb.handleDsFileChange = function() {
+	'use strict';
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#DsTabelleEigenschaften").hide();
@@ -1552,6 +1588,7 @@ window.adb.handleDsFileChange = function() {
 
 // wenn BsFile geändert wird
 window.adb.handleBsFileChange = function() {
+	'use strict';
 	if (typeof event.target.files[0] === "undefined") {
 		// vorhandene Datei wurde entfernt
 		$("#BsTabelleEigenschaften").hide();
@@ -1571,6 +1608,7 @@ window.adb.handleBsFileChange = function() {
 
 // wenn btn_resize geklickt wird
 window.adb.handleBtnResizeClick = function() {
+	'use strict';
 	var windowHeight = $(window).height(),
         $body = $("body");
 	$body.toggleClass("force-mobile");
@@ -1593,6 +1631,7 @@ window.adb.handleBtnResizeClick = function() {
 // wenn menu_btn geklickt wird
 // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
 window.adb.handleMenuBtnClick = function() {
+	'use strict';
 	if (localStorage.art_id) {
 		$("#GoogleBilderLink_li").removeClass("disabled");
 		$("#WikipediaLink_li").removeClass("disabled");
@@ -1606,6 +1645,7 @@ window.adb.handleMenuBtnClick = function() {
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function() {
+	'use strict';
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -1619,6 +1659,7 @@ window.adb.handleDs_ImportierenClick = function() {
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function() {
+	'use strict';
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -1629,10 +1670,12 @@ window.adb.handleBs_ImportierenClick = function() {
 };
 
 window.adb.handleMenuAdminClick = function() {
+	'use strict';
 	window.adb.zeigeFormular("admin");
 };
 
 window.adb.ergänzePilzeZhgis = function() {
+	'use strict';
 	$("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
 	var $db = $.couch.db("artendb");
 	$db.view('artendb/macromycetes?include_docs=true', {
@@ -1683,6 +1726,7 @@ window.adb.ergänzePilzeZhgis = function() {
 };
 
 window.adb.korrigiereArtwertnameInFlora = function() {
+	'use strict';
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
     var $db = $.couch.db("artendb");
     $db.view('artendb/flora?include_docs=true', {
@@ -1733,6 +1777,7 @@ window.adb.korrigiereArtwertnameInFlora = function() {
 };
 
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
+	'use strict';
     var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
     $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
     var $db = $.couch.db("artendb");
@@ -1771,6 +1816,7 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
 };
 
 window.adb.nenneDsUm = function() {
+	'use strict';
     var $admin_korrigiere_ds_name_ch_rückmeldung = $("#admin_korrigiere_ds_name_rückmeldung"),
         $admin_korrigiere_ds_name_name_vorher = $("#admin_korrigiere_ds_name_name_vorher"),
         $admin_korrigiere_ds_name_name_nachher = $("#admin_korrigiere_ds_name_name_nachher"),
@@ -1849,6 +1895,7 @@ window.adb.nenneDsUm = function() {
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
+	'use strict';
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 	window.adb.bereiteImportieren_ds_beschreibenVor("ds");
 	$("#DsImportiertVon").val(localStorage.Email);
@@ -1856,6 +1903,7 @@ window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
 
 // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
+	'use strict';
 	// mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
 	window.adb.bereiteImportieren_bs_beschreibenVor("bs");
 	$("#BsImportiertVon").val(localStorage.Email);
@@ -1863,6 +1911,7 @@ window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	} else {
@@ -1875,6 +1924,7 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	} else {
@@ -1887,6 +1937,7 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
@@ -1897,6 +1948,7 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
@@ -1906,7 +1958,8 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 };
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
+window.adb.handleImportierenDsImportAusführenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
@@ -1916,7 +1969,8 @@ window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function() {
 };
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
+window.adb.handleImportierenBsImportAusführenCollapseShown = function() {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
@@ -1927,6 +1981,7 @@ window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function() {
 
 // wenn DsWählen geändert wird
 window.adb.handleDsWählenChange = function() {
+	'use strict';
 	var ds_name = this.value,
 		wählbar = false,
         $DsAnzDs = $("#DsAnzDs"),
@@ -2014,6 +2069,7 @@ window.adb.handleDsWählenChange = function() {
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
 window.adb.handleDsNameChange = function() {
+	'use strict';
 	var that = this,
 		ds_key = _.find(window.adb.ds_namen_eindeutig, function(key) {
 			return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
@@ -2041,6 +2097,7 @@ window.adb.handleDsNameChange = function() {
 
 // wenn DsLöschen geklickt wird
 window.adb.handleDsLöschenClick = function() {
+	'use strict';
 	// Rückmeldung anzeigen
     $("#importieren_ds_ds_beschreiben_hinweis")
         .alert()
@@ -2051,6 +2108,7 @@ window.adb.handleDsLöschenClick = function() {
 
 // wenn BsLoeschen geklickt wird
 window.adb.handleBsLöschenClick = function() {
+	'use strict';
 	// Rückmeldung anzeigen
 	$("#importieren_bs_ds_beschreiben_hinweis")
         .alert()
@@ -2064,12 +2122,14 @@ window.adb.handleBsLöschenClick = function() {
 
 // wenn exportieren geklickt wird
 window.adb.handleExportierenClick = function() {
+	'use strict';
 	window.adb.zeigeFormular("export");
 	delete window.adb.exportieren_objekte;
 };
 
 // wenn exportieren_alt geklickt wird
 window.adb.handleExportierenAltClick = function() {
+	'use strict';
 	window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
 };
 
@@ -2078,6 +2138,7 @@ window.adb.handleExportierenAltClick = function() {
 // und pro Beziehung eine Zeile ausgegeben wird. 
 // Wenn ja: reklamieren und rückgängig machen
 window.adb.handleFeldWählenChange = function() {
+	'use strict';
 	if ($("#export_bez_in_zeilen").prop('checked')) {
 		var bez_ds_checked = [],
 			that = this;
@@ -2102,6 +2163,7 @@ window.adb.handleFeldWählenChange = function() {
 // wenn .feld_waehlen_alle_von_ds geändert wird
 // wenn checked: alle unchecken, sonst alle checken
 window.adb.handleFeldWählenAlleVonDs = function() {
+	'use strict';
 	var ds = $(this).attr('datensammlung'),
 		status = false;
 	if ($(this).prop('checked')) {
@@ -2114,13 +2176,15 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
+	'use strict';
 	window.adb.erstelleListeFürFeldwahl();
 };
 
 // wenn export_feld_filtern geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält. Wenn ja: reklamieren und rückgängig machen
 window.adb.handleExportFeldFilternChange = function() {
-    $this = $(this);
+	'use strict';
+    var $this = $(this);
     // die Checkboxen sollen drei Werte annehmen können:
     if (this.type === "checkbox") {
         if (this.readOnly) {
@@ -2158,6 +2222,7 @@ window.adb.handleExportFeldFilternChange = function() {
 // wenn exportieren_exportieren angezeigt wird
 // zur Schaltfläche Vorschau scrollen
 window.adb.handleExportierenExportierenShow = function() {
+	'use strict';
     // Fehlermeldung verstecken, falls sie noch offen war
     $("#exportieren_exportieren_error_text")
         .alert()
@@ -2169,13 +2234,15 @@ window.adb.handleExportierenExportierenShow = function() {
 
 // wenn .btn.lr_bearb_bearb geklickt wird
 window.adb.handleBtnLrBearbBearbKlick = function() {
+	'use strict';
 	if (!$(this).hasClass('disabled')) {
 		window.adb.bearbeiteLrTaxonomie();
 	}
 };
 
 // wenn .btn.lr_bearb_schuetzen geklickt wird
-window.adb.handleBtnLrBearbSchuetzenClick = function() {
+window.adb.handleBtnLrBearbSchützenClick = function() {
+	'use strict';
 	if (!$(this).hasClass('disabled')) {
 		window.adb.schützeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
@@ -2185,6 +2252,7 @@ window.adb.handleBtnLrBearbSchuetzenClick = function() {
 
 // wenn .btn.lr_bearb_neu geklickt wird
 window.adb.handleBtnLrBearbNeuClick = function() {
+	'use strict';
 	if (!$(this).hasClass('disabled')) {
 		window.adb.initiiereLrParentAuswahlliste($("#Taxonomie").val());
 	}
@@ -2192,6 +2260,7 @@ window.adb.handleBtnLrBearbNeuClick = function() {
 
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 window.adb.handleLrParentOptionenChange = function() {
+	'use strict';
 	// prüfen, ob oberster Node gewählt wurde
 	var parent_name = $(this).val(),
 		parent_id = this.id,
@@ -2256,6 +2325,7 @@ window.adb.handleLrParentOptionenChange = function() {
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
 window.adb.handleRückfrageLrLöschenJaClick = function() {
+	'use strict';
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
@@ -2292,11 +2362,13 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
 window.adb.handleLrTaxonomieControlsChange = function() {
+	'use strict';
 	window.adb.speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
 };
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
 window.adb.handlePanelbodyLrTaxonomieShown = function() {
+	'use strict';
 	if (localStorage.lr_bearb == "true") {
 		window.adb.bearbeiteLrTaxonomie();
 	}
@@ -2304,6 +2376,7 @@ window.adb.handlePanelbodyLrTaxonomieShown = function() {
 
 // wenn #exportieren_exportieren_collapse geöffnet wird
 window.adb.handleExportierenExportierenCollapseShown = function() {
+	'use strict';
     var that = this;
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
@@ -2320,6 +2393,7 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 };
 
 window.adb.handleExportierenObjekteWählenCollapseShown = function(that) {
+	'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
@@ -2334,6 +2408,7 @@ window.adb.handleExportierenObjekteWählenCollapseShown = function(that) {
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that) {
+	'use strict';
     var gruppe_ist_gewählt = false;
 	if ($(that).hasClass("active")) {
 		window.adb.fasseTaxonomienZusammen = false;
@@ -2357,6 +2432,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function() {
+	'use strict';
 	if (window.adb.isFileAPIAvailable()) {
 		var exportstring = window.adb.erstelleExportString(window.adb.exportieren_objekte),
 			blob = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
@@ -2371,6 +2447,7 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
 window.adb.handlePanelShown = function() {
+	'use strict';
 	$(this).find('textarea').each(function() {
 		window.adb.fitTextareaToContent(this.id);
 	});
@@ -2378,6 +2455,7 @@ window.adb.handlePanelShown = function() {
 
 // wenn .LinkZuArtGleicherGruppe geklickt wird
 window.adb.handleLinkZuArtGleicherGruppeClick = function(id) {
+	'use strict';
     $(".suchen").val("");
 	$("#tree" + window.adb.Gruppe)
         .jstree("clear_search")
@@ -2388,6 +2466,7 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function(id) {
 
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function() {
+	'use strict';
 	window.adb.setzeTreehöhe();
 	// Höhe der Textareas korrigieren
 	$('#forms').find('textarea').each(function() {
@@ -2397,6 +2476,7 @@ window.adb.handleResize = function() {
 
 // wenn .anmelden_btn geklickt wird
 window.adb.handleAnmeldenBtnClick = function(that) {
+	'use strict';
 	// es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
 	var bs_ds = that.id.substring(that.id.length-2);
 	if (bs_ds === "rt") {
@@ -2407,24 +2487,28 @@ window.adb.handleAnmeldenBtnClick = function(that) {
 
 // wenn .Email keyup
 window.adb.handleEmailKeyup = function() {
+	'use strict';
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Emailhinweis").hide();
 };
 
 // wenn .Passwort keyup
 window.adb.handlePasswortKeyup = function() {
+	'use strict';
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Passworthinweis").hide();
 };
 
 // wenn .Passwort2 keyup
 window.adb.handlePasswort2Keyup = function() {
+	'use strict';
 	//allfällig noch vorhandenen Hinweis ausblenden
 	$(".Passworthinweis2").hide();
 };
 
 // wenn .konto_erstellen_btn geklickt wird
 window.adb.handleKontoErstellenBtnClick = function(that) {
+	'use strict';
 	var bs_ds = that.id.substring(that.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
@@ -2442,6 +2526,7 @@ window.adb.handleKontoErstellenBtnClick = function(that) {
 
 // wenn .konto_speichern_btn geklickt wird
 window.adb.handleKontoSpeichernBtnClick = function(that) {
+	'use strict';
 	var bs_ds = that.id.substring(that.id.length-2);
 	if (bs_ds === "rt") {
 		bs_ds = "art";
@@ -2458,32 +2543,38 @@ window.adb.handleKontoSpeichernBtnClick = function(that) {
 };
 
 // wenn .gruppe geklickt wird
-window.adb.handleOeffneGruppeClick = function() {
+window.adb.handleÖffneGruppeClick = function() {
+	'use strict';
 	window.adb.öffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function() {
+	'use strict';
 	window.adb.meldeErfolgVonIdIdentifikation("Ds");
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function() {
+	'use strict';
 	window.adb.meldeErfolgVonIdIdentifikation("Bs");
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function() {
+	'use strict';
 	window.adb.meldeErfolgVonIdIdentifikation("Ds");
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function() {
+	'use strict';
 	window.adb.meldeErfolgVonIdIdentifikation("Bs");
 };
 
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function() {
+	'use strict';
 	window.adb.fitTextareaToContent(this.id);
 };
 
@@ -2492,6 +2583,7 @@ window.adb.handleTextareaKeyupFocus = function() {
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
+	'use strict';
 	var html = "",
 		Feldname = "",
 		html_ds_felder_div = "",
@@ -2585,6 +2677,7 @@ window.adb.erstelleTabelle = function(Datensätze, felder_div, tabellen_div) {
 
 // erhält dbs = "Ds" oder "Bs"
 window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
+	'use strict';
     var $dbsFelderSelected = $("#"+dbs+"Felder option:selected"),
         $dbsIdSelected = $("#"+dbs+"Id option:selected"),
         ids_von_datensätzen = [],
@@ -2675,6 +2768,7 @@ window.adb.meldeErfolgVonIdIdentifikation = function(dbs) {
 };
 
 window.adb.meldeErfolgVonIdIdentifikation_02 = function(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs) {
+	'use strict';
     var $importieren_dbs_ids_identifizieren_hinweis_text = $("#importieren_"+dbs.toLowerCase()+"_ids_identifizieren_hinweis_text");
     $importieren_dbs_ids_identifizieren_hinweis_text.alert();
 	// rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
@@ -2729,6 +2823,7 @@ window.adb.meldeErfolgVonIdIdentifikation_02 = function(mehrfach_vorkommende_ids
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 window.adb.importiereDatensammlung = function() {
+	'use strict';
 	var datensammlung,
 		anzahl_felder,
 		anz_ds = window.adb.dsDatensätze.length,
@@ -2777,8 +2872,10 @@ window.adb.importiereDatensammlung = function() {
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('adb.ds_hinzugefügt', function() {
+	'use strict';
         anz_ds_importiert++;
-        var prozent = Math.round(anz_ds_importiert/anz_ds*100);
+        var prozent = Math.round(anz_ds_importiert/anz_ds*100),
+            rückmeldung;
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);

@@ -1169,7 +1169,7 @@
 
 				$("#menu")
                     // Baum aufbauen, wenn Gruppe gewählt wird
-                    .on("click", ".gruppe", window.adb.handleOeffneGruppeClick)
+                    .on("click", ".gruppe", window.adb.handleÖffneGruppeClick)
                     // zwischen Mobil- und Desktopsicht wechseln
                     .on("click", "#btn_resize", window.adb.handleBtnResizeClick);
 
@@ -1245,9 +1245,9 @@
 
 				$('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
 
-				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
+				$('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusführenCollapseShown);
 
-				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
+				$('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusführenCollapseShown);
 
 				$("#importieren_ds")
                     .on("change", "#DsWaehlen", window.adb.handleDsWählenChange)
@@ -1375,7 +1375,7 @@
                         event.preventDefault();
                     })
                     .on("click", ".btn.lr_bearb_bearb", window.adb.handleBtnLrBearbBearbKlick)
-                    .on("click", ".btn.lr_bearb_schuetzen", window.adb.handleBtnLrBearbSchuetzenClick)
+                    .on("click", ".btn.lr_bearb_schuetzen", window.adb.handleBtnLrBearbSchützenClick)
                     .on("click", ".btn.lr_bearb_neu", window.adb.handleBtnLrBearbNeuClick)
                     .on("change", ".Lebensräume.Taxonomie .controls", window.adb.handleLrTaxonomieControlsChange)
                     .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
