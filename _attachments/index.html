@@ -759,8 +759,15 @@
                                                 <li>Text ist in Anführungs- und Schlusszeichen (") eingeschlossen</li>
                                             </ul>
                                         </li>
-                                        <li>In Microsoft Excel wählen Sie für den Import den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken)</li>
-                                        <li>In OpenOffice und LibreOffice können Sie die Datei einfach öffnen oder doppelklicken</li>
+                                        <li>In Microsoft Excel wählen Sie für den Import den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken). Aber VORSICHT: Ich empfehle Excel NICHT für den Import von Daten aus dem .csv-Format. Excel macht es einem schwer, die Daten korrekt und fehlerfrei zu erhalten! Beispiele:
+                                            <ul>
+                                                <li>Manchmal erkennt Excel Felder nicht richtig, worauf es die Daten vermischt</li>
+                                                <li>Excel bestimmt eigenmächtig die Formate von Daten in Zellen und wandelt Zahlen in Datenformate um. Excel macht das aber nicht in allen Zeilen der Tabelle, sondern nur in denjenigen, deren Daten es als Datum zu erkennen glaubt. Gut möglich, dass Sie es also viel zu spät merken</li>
+                                                <li>Excel geht davon aus, dass Sie English sprechen, weshalb es ohne Umstellen der Codierung Umlaute und Sonderzeichen in Datenmüll verwandelt</li>
+                                                <li></li>
+                                            </ul>
+                                        </li>
+                                        <li>In <a href="http://www.openoffice.org/de/">OpenOffice</a> und <a href="http://de.libreoffice.org/">LibreOffice</a> können Sie die Datei einfach öffnen oder doppelklicken. Das ist die empfohlene Variante!</li>
                                     </ul>
                                 </div>
 								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
