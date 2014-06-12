@@ -4,11 +4,11 @@
 		gattung,
 		artname_vollständig;
 
-	if (doc.Gruppe && doc.Gruppe === "Flora" && doc.Taxonomie && doc.Taxonomie.Daten) {
+	if (doc.Gruppe && doc.Gruppe === "Flora" && doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
 
-		familie = doc.Taxonomie.Daten.Familie || "(unbekannte Familie)";
-		gattung = doc.Taxonomie.Daten.Gattung || "(unbekannte Gattung)";
-		artname_vollständig = doc.Taxonomie.Daten["Artname vollständig"] || "(unbekannter Artname vollständig)";
+		familie = doc.Taxonomie.Eigenschaften.Familie || "(unbekannte Familie)";
+		gattung = doc.Taxonomie.Eigenschaften.Gattung || "(unbekannte Gattung)";
+		artname_vollständig = doc.Taxonomie.Eigenschaften["Artname vollständig"] || "(unbekannter Artname vollständig)";
 
 		emit ([familie, gattung, artname_vollständig, doc._id], null);
 	}

@@ -192,7 +192,7 @@
 					<div class="panel panel-default" id="importieren_ds_ds_beschreiben">
 						<div class="panel-heading panel-heading-gradient">
 							<h4 class="panel-title">
-								<a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_ds_beschreiben_collapse">2. Datensammlung beschreiben</a>
+								<a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_ds_beschreiben_collapse">2. Eigenschaftensammlung beschreiben</a>
 							</h4>
 						</div>
 						<div class="panel-collapse collapse" id="importieren_ds_ds_beschreiben_collapse">
@@ -203,16 +203,16 @@
 										<li>Der Name sollte ungefähr dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li>
 										<li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li>
 										<li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn"</li>
-										<li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Datensammlung enthält. Beispiel: "Eigenschaften von 207 Tierarten und 885 Pflanzenarten"</li>
+										<li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Eigenschaftensammlung enthält. Beispiel: "Eigenschaften von 207 Tierarten und 885 Pflanzenarten"</li>
 										<li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li>
-										<li>Im Datenstand ist erkenntlich, wann die Datensammlung zuletzt aktualisiert wurde</li>
+										<li>Im Datenstand ist erkenntlich, wann die Eigenschaftensammlung zuletzt aktualisiert wurde</li>
 										<li>Besonders hilfreich ist es, wenn die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
 									</ul>
 								</div>
-								<div class="well well-sm"><b>Für eine zusammenfassende Datensammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
+								<div class="well well-sm"><b>Für eine zusammenfassende Eigenschaftensammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
-										<li>zuerst in die Ursprungs-Datensammlung</li>
-										<li>dann in die zusammenfassende. Bitte die Ursprungs-Datensammlung angeben</li>
+										<li>zuerst in die Ursprungs-Eigenschaftensammlung</li>
+										<li>dann in die zusammenfassende. Bitte die Ursprungs-Eigenschaftensammlung angeben</li>
 										<li>Mehr Infos <a href="//github.com/FNSKtZH/artendb#zusammenfassende_datensammlungen" target="_blank">hier</a></li>
 									</ul>
 								</div>
@@ -227,7 +227,7 @@
 									<select class="form-control controls" id="DsWaehlen"></select>
 								</div>
 								<div class="controls feld">
-									<button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Datensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+									<button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
 								<div id="importieren_ds_ds_beschreiben_hinweis" class="alert alert-info"></div>
 								</div>
 								<hr>
@@ -256,7 +256,7 @@
 									<input type="checkbox" id="DsZusammenfassend">
 								</div>
 								<div class="form-group" id="DsUrsprungsDs_div" style="display:none;">
-									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Datensammlung</label>
+									<label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Eigenschaftensammlung</label>
 									<select class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
 								</div>
 								<div class="form-group">
@@ -296,10 +296,10 @@
 								<div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
 										<li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
-										<li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
+										<li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Eigenschaftensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
 										<li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li>
 										<li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li>
-										<li>ArtenDb setzt beim Export von Daten den Namen der Datensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
+										<li>ArtenDb setzt beim Export von Daten den Namen der Eigenschaftensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Eigenschaftensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
 									</ul>
 								</div>
 								<label class="sr-only" for="DsFile">Datei wählen</label>
@@ -342,8 +342,8 @@
 						</div>
 						<div class="panel-collapse collapse" id="importieren_ds_import_ausfuehren_collapse">
 							<div class="panel-body">
-								<button type="button" class="btn btn-primary" id="DsImportieren" style="margin-bottom:6px; display:none;">Datensammlung mit allen Eigenschaften importieren</button>
-								<button type="button" class="btn btn-primary" id="DsEntfernen" style="margin-bottom:6px; display:none;">Datensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+								<button type="button" class="btn btn-primary" id="DsImportieren" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften importieren</button>
+								<button type="button" class="btn btn-primary" id="DsEntfernen" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
                                 <div class="progress">
                                     <div id="DsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id="DsImportierenProgressbarText"></span>
                                     </div>
@@ -511,7 +511,7 @@
 										<li>Es können beliebig viele weitere, die Beziehung beschreibende Felder enthalten sein</li>
 										<li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li>
 										<li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li>
-										<li>ArtenDb setzt beim Export von Daten den Namen der Datensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
+										<li>ArtenDb setzt beim Export von Daten den Namen der Beziehungssammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
 									</ul>
 								</div>
 								<label class="sr-only" for="BsFile">Datei wählen</label>
@@ -705,7 +705,7 @@
                                 <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
                                     <label>
                                         <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
-                                        <b>Nur Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
+                                        <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
                                     </label>
                                 </div>
 								<div class="checkbox" style="clear:both; padding-top:7px;">
@@ -803,17 +803,17 @@
 						</div>
 						<div class="collapse in" id="exportieren_diverses_collapse">
 							<div class="panel-body">
-								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Datensammlung "ZH GIS" ergänzen</button>
+								<button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Eigenschaftensammlung "ZH GIS" ergänzen</button>
 								<span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
                                 <hr>
                                 <button id="admin_korrigiere_artwertname_in_flora" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
                                 <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
                                 <hr>
-                                <button id="admin_korrigiere_ds_name_ch_rote_liste_1991" type="button" class="btn btn-primary">Datensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
+                                <button id="admin_korrigiere_ds_name_ch_rote_liste_1991" type="button" class="btn btn-primary">Eigenschaftensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
                                 <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung"></span>
                                 <hr>
                                 <fieldset>
-                                    <p style="font-weight:bold;">Datensammlung umbenennen</p>
+                                    <p style="font-weight:bold;">Eigenschaften- oder Beziehungssammlung umbenennen</p>
                                     <div class="form-group">
                                         <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_vorher">Name vorher</label>
                                         <div class="col-sm-11">
@@ -833,7 +833,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
+                                    <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button>
                                     <span id="admin_baue_ds_zu_eigenschaften_um_rückmeldung"></span>
                                 </fieldset>
 							</div>
@@ -864,7 +864,7 @@
                     $('#meldung_individuell').modal();
                     // jetzt den nächstgrössten Bock
                 } else if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version === 9) {
-                    $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Daten- und Beziehungssammlungen korrekt darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
+                    $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
                     $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
                     $('#meldung_individuell_label').html("ungeeigneter Browser");
                     $('#meldung_individuell').modal();
@@ -1248,8 +1248,8 @@
                             } else {
                                 event.preventDefault();
                             }
-                        }
-                    .on("click", "#admin_baue_ds_zu_eigenschaften_um", window.adb.baueDsZuEigenschaftenUm));
+                        })
+                    .on("click", "#admin_baue_ds_zu_eigenschaften_um", window.adb.baueDsZuEigenschaftenUm);
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 

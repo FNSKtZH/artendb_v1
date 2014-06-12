@@ -5,9 +5,9 @@ function(doc) {
 		artname_vollstaendig,
 		artname_vollstaendig_worte;
 
-	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten["Artname vollständig"]) {
+	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften["Artname vollständig"]) {
 
-		artname_vollstaendig = doc.Taxonomie.Daten["Artname vollständig"];
+		artname_vollstaendig = doc.Taxonomie.Eigenschaften["Artname vollständig"];
 
 		// value.Name: dieser Name wird als Suchresultat angezeigt
 		value.Name = artname_vollstaendig;
@@ -28,8 +28,8 @@ function(doc) {
 		// Idee: GUID und Taxonomie Id als token ergänzen
 		// funktioniert nicht, daher ausgeschaltet
 		/*value.tokens.push(doc._id);
-		if (doc.Taxonomie.Daten["Taxonomie ID"]) {
-			value.tokens.push(doc.Taxonomie.Daten["Taxonomie ID"]);
+		if (doc.Taxonomie.Eigenschaften["Taxonomie ID"]) {
+			value.tokens.push(doc.Taxonomie.Eigenschaften["Taxonomie ID"]);
 		}*/
 		
 		emit ([doc.Gruppe, artname_vollstaendig], value);

@@ -4,16 +4,16 @@ function(doc) {
 
 	if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt") {
 
-		if (doc.Taxonomie && doc.Taxonomie.Daten) {
-            _.each(doc.Taxonomie.Daten, function(feldwert, feldname) {
+		if (doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
+            _.each(doc.Taxonomie.Eigenschaften, function(feldwert, feldname) {
                 emit ([doc.Gruppe, "Taxonomie", doc.Taxonomie.Name, feldname, typeof feldwert], doc._id);
             });
 		}
 
-		if (doc.Datensammlungen) {
-            _.each(doc.Datensammlungen, function(datensammlung) {
-                if (datensammlung.Daten) {
-                    _.each(datensammlung.Daten, function(feldwert, feldname) {
+		if (doc.Eigenschaftensammlungen) {
+            _.each(doc.Eigenschaftensammlungen, function(datensammlung) {
+                if (datensammlung.Eigenschaften) {
+                    _.each(datensammlung.Eigenschaften, function(feldwert, feldname) {
                         emit ([doc.Gruppe, "Datensammlung", datensammlung.Name, feldname, typeof feldwert], doc._id);
                     });
                 }

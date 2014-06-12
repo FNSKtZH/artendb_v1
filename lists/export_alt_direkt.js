@@ -47,7 +47,7 @@ function(head, req) {
 		}*/
 
         // sicherstellen, dass DS und BS existieren
-        objekt.Datensammlungen = objekt.Datensammlungen || [];
+        objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
         objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
         // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen

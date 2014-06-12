@@ -8,17 +8,17 @@
 		x,
 		y;
 
-	if (doc.Datensammlungen) {
-		for (i=0; i<doc.Datensammlungen.length; i++) {
+	if (doc.Eigenschaftensammlungen) {
+		for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
 			// ds_zusammenfassend ergänzen
-			ds_zusammenfassend = !!doc.Datensammlungen[i].zusammenfassend;
+			ds_zusammenfassend = !!doc.Eigenschaftensammlungen[i].zusammenfassend;
 			Felder = {};
-			for (x in doc.Datensammlungen[i]) {
-				if (x !== "Typ" && x !== "Name" && x !== "Daten" ) {
-					Felder[x] = doc.Datensammlungen[i][x];
+			for (x in doc.Eigenschaftensammlungen[i]) {
+				if (x !== "Typ" && x !== "Name" && x !== "Eigenschaften" ) {
+					Felder[x] = doc.Eigenschaftensammlungen[i][x];
 				}
 			}
-			emit (["Datensammlung", doc.Datensammlungen[i].Name, ds_zusammenfassend, doc.Datensammlungen[i]["importiert von"], Felder], doc._id);
+			emit (["Datensammlung", doc.Eigenschaftensammlungen[i].Name, ds_zusammenfassend, doc.Eigenschaftensammlungen[i]["importiert von"], Felder], doc._id);
 		}
 	}
 

@@ -139,7 +139,7 @@ exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoper
 };
 
 exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterkriterien) {
-    // der Benutzer will nur Objekte mit Informationen aus den gewählten Daten- und Beziehungssammlungen erhalten
+    // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
     // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
     // wenn ein Filter gesetzt wurde und keine Daten enthalten sind, nicht anzeigen
@@ -174,11 +174,11 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
             } else if (ds_typ === "Datensammlung") {
                 // das ist ein Feld aus einer Datensammlung
                 // suche Datensammlung mit Name = ds_name
-                ds_mit_name = _.find(objekt.Datensammlungen, function (datensammlung) {
+                ds_mit_name = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
                     return datensammlung.Name === ds_name;
                 });
                 // hinzufügen, wenn Feld mit feldname existiert und es Daten enthält
-                hinzufügen = (ds_mit_name && typeof ds_mit_name.Daten !== "undefined" && typeof ds_mit_name.Daten[feldname] !== "undefined");
+                hinzufügen = (ds_mit_name && typeof ds_mit_name.Eigenschaften !== "undefined" && typeof ds_mit_name.Eigenschaften[feldname] !== "undefined");
                 if (hinzufügen) {
                     mindestens_ein_feld_hinzufügen = true;
                 }
@@ -201,7 +201,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         feld_hinzugefügt;
 
     // sicherstellen, dass DS und BS existieren
-    objekt.Datensammlungen = objekt.Datensammlungen || [];
+    objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
     objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
     // kein Filter aber nur Datensätze mit Infos aus DS/BS
@@ -238,7 +238,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                 }
             }
         } else if (ds_typ === "Taxonomie" && fasseTaxonomienZusammen) {
-            feldwert = exports.convertToCorrectType(objekt.Taxonomie.Daten[feldname]);
+            feldwert = exports.convertToCorrectType(objekt.Taxonomie.Eigenschaften[feldname]);
             // das Feld ist aus Taxonomie und die werden zusammengefasst
             // daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
             if (feldwert || feldwert === 0) {
@@ -261,7 +261,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                 break;
             }
         } else if (ds_typ === "Taxonomie") {
-            feldwert = exports.convertToCorrectType(objekt.Taxonomie.Daten[feldname]);
+            feldwert = exports.convertToCorrectType(objekt.Taxonomie.Eigenschaften[feldname]);
             // das Feld ist aus Taxonomie und die werden nicht zusammengefasst
             if (feldwert || feldwert === 0) {
                 if (objekt.Taxonomie.Name === ds_name) {
@@ -349,13 +349,13 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
             ds_existiert = false;
             // das ist ein Feld aus einer Datensammlung
             // Wenn die Datensammlung nicht existiert aber nach false gesucht wurde, muss der Datensatz trotzdem geliefert werden
-            for (var k=0; k<objekt.Datensammlungen.length; k++) {
-                if (objekt.Datensammlungen[k].Name === ds_name) {
+            for (var k=0; k<objekt.Eigenschaftensammlungen.length; k++) {
+                if (objekt.Eigenschaftensammlungen[k].Name === ds_name) {
                     ds_existiert = true;
-                    if (objekt.Datensammlungen[k].Name === ds_name && typeof objekt.Datensammlungen[k].Daten !== "undefined" && typeof objekt.Datensammlungen[k].Daten[feldname] !== "undefined") {
+                    if (objekt.Eigenschaftensammlungen[k].Name === ds_name && typeof objekt.Eigenschaftensammlungen[k].Eigenschaften !== "undefined" && typeof objekt.Eigenschaftensammlungen[k].Eigenschaften[feldname] !== "undefined") {
                         // wir haben das gesuchte Feld gefunden!
-                        feldwert = exports.convertToCorrectType(objekt.Datensammlungen[k].Daten[feldname]);
-                        // in Datensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
+                        feldwert = exports.convertToCorrectType(objekt.Eigenschaftensammlungen[k].Eigenschaften[feldname]);
+                        // in Eigenschaftensammlungen gibt es keine Feldwerte vom Typ object, diesen Fall also nicht abfangen
                         if (exports.beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                             objekt_hinzufügen = true;
                         } else {
@@ -418,9 +418,9 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
                     }
                 } else if (ds_typ === "Datensammlung") {
                     // das ist ein Feld aus einer Datensammlung
-                    // suchen, ob im objekt die gesuchte Datensammlung vorkommt und eine solches Feld mit Daten enthält
-                    var ds_mit_feld = _.find(objekt.Datensammlungen, function (datensammlung) {
-                        return datensammlung.Name === ds_name && typeof datensammlung.Daten !== "undefined" && typeof datensammlung.Daten[feldname] !== "undefined";
+                    // suchen, ob im objekt die gesuchte Datensammlung vorkommt und eine solches Feld mit Eigenschaften enthält
+                    var ds_mit_feld = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
+                        return datensammlung.Name === ds_name && typeof datensammlung.Eigenschaften !== "undefined" && typeof datensammlung.Eigenschaften[feldname] !== "undefined";
                     });
                     // wenn das Feld vorkommt, exportieren
                     if (ds_mit_feld) {
@@ -462,19 +462,19 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
     var dsNamen = [],
         ds_aus_syn_name2,
         bsNamen = [];
-    if (objekt.Datensammlungen.length > 0) {
-        _.each(objekt.Datensammlungen, function(datensammlung) {
+    if (objekt.Eigenschaftensammlungen.length > 0) {
+        _.each(objekt.Eigenschaftensammlungen, function(datensammlung) {
             if (datensammlung.Name) {
                 dsNamen.push(datensammlung.Name);
             }
         });
     }
-    // nicht enthaltene Datensammlungen ergänzen
+    // nicht enthaltene Eigenschaftensammlungen ergänzen
     if (datensammlungen_aus_synonymen.length > 0) {
         _.each(datensammlungen_aus_synonymen, function(datensammlung) {
             ds_aus_syn_name2 = datensammlung.Name;
             if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
-                objekt.Datensammlungen.push(datensammlung);
+                objekt.Eigenschaftensammlungen.push(datensammlung);
                 // den Namen zu den dsNamen hinzufügen, damit diese DS sicher nicht nochmals gepusht wird, auch nicht, wenn sie von einem anderen Synonym nochmals gebracht wird
                 dsNamen.push(ds_aus_syn_name2);
             }
@@ -553,7 +553,7 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
         bs_aus_syn_namen = [],
         ds_aus_syn_name,
         bs_aus_syn_name;
-    if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
+    if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
         if (datensammlungen_aus_synonymen.length > 0) {
             _.each(datensammlungen_aus_synonymen, function(datensammlung) {
                 if (datensammlung.Name) {
@@ -561,7 +561,7 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
                 }
             });
         }
-        _.each(objekt.Datensammlungen, function(datensammlung) {
+        _.each(objekt.Eigenschaftensammlungen, function(datensammlung) {
             ds_aus_syn_name = datensammlung.Name;
             if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
                 datensammlungen_aus_synonymen.push(datensammlung);
@@ -608,40 +608,40 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
     if (export_für && export_für === "alt") {
         // Felder hinzufügen
         export_objekt.Gruppe = objekt.Gruppe;
-        export_objekt.Ref = objekt.Taxonomie.Daten["Taxonomie ID"];
+        export_objekt.Ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
-        var ds_zh_gis = _.find(objekt.Datensammlungen, function(ds) {
+        var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
             return ds.Name === "ZH GIS";
         }) || {};
 
         export_objekt.GISLayer = "";
-        if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
-            export_objekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
+        if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
+            export_objekt.GISLayer = ds_zh_gis.Eigenschaften["GIS-Layer"];
         }
 
         export_objekt.Distanz = "";
-        if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["Betrachtungsdistanz (m)"]) {
-            export_objekt.Distanz = ds_zh_gis.Daten["Betrachtungsdistanz (m)"];
+        if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
+            export_objekt.Distanz = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
         }
 
-        export_objekt.NameLat = objekt.Taxonomie.Daten.Artname;
+        export_objekt.NameLat = objekt.Taxonomie.Eigenschaften.Artname;
         export_objekt.NameDeu = "";
-        if (objekt.Taxonomie.Daten["Name Deutsch"]) {
-            export_objekt.NameDeu = objekt.Taxonomie.Daten["Name Deutsch"];
+        if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
+            export_objekt.NameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"];
         }
 
-        var ds_zh_artwert_1995 = _.find(objekt.Datensammlungen, function(ds) {
+        var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function(ds) {
             return ds.Name === "ZH Artwert (1995)";
         }) || {};
 
         export_objekt.Artwert = "";
-        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && (ds_zh_artwert_1995.Daten.Artwert || ds_zh_artwert_1995.Daten.Artwert === 0)) {
-            export_objekt.Artwert = ds_zh_artwert_1995.Daten.Artwert;
+        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
+            export_objekt.Artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
         }
 
         export_objekt.AwZusatz = "";
-        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && ds_zh_artwert_1995.Daten["Artwert Zusatz"]) {
-            export_objekt.AwZusatz = ds_zh_artwert_1995.Daten["Artwert Zusatz"];
+        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"]) {
+            export_objekt.AwZusatz = ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"];
         }
 
         export_objekt["GUID_FNS"] = objekt._id;
@@ -671,11 +671,11 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         // Taxonomie: Felder übernehmen
         if (feld.DsTyp === "Taxonomie" && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)) {
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
-            if (typeof objekt.Taxonomie.Daten[feld.Feldname] !== "undefined") {
+            if (typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
                 if (fasse_taxonomien_zusammen) {
-                    export_objekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Daten[feld.Feldname];
+                    export_objekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
-                    export_objekt[export_feldname] = objekt.Taxonomie.Daten[feld.Feldname];
+                    export_objekt[export_feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 }
             } else {
                 // sonst einen leerwert setzen
@@ -687,19 +687,19 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
             }
         }
 
-        // Datensammlungen: Felder übernehmen
+        // Eigenschaftensammlungen: Felder übernehmen
         if (feld.DsTyp === "Datensammlung") {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
             export_objekt[export_feldname] = "";
-            if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
+            if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
                 // Enthält das objekt diese Datensammlung?
-                var gesuchte_ds = _.find(objekt.Datensammlungen, function(datensammlung) {
+                var gesuchte_ds = _.find(objekt.Eigenschaftensammlungen, function(datensammlung) {
                     return datensammlung.Name && datensammlung.Name === feld.DsName;
                 });
                 if (gesuchte_ds) {
                     // ja. Wenn die Datensammlung das Feld enthält > exportieren
-                    if (gesuchte_ds.Daten && typeof gesuchte_ds.Daten[feld.Feldname] !== "undefined") {
-                        export_objekt[export_feldname] = gesuchte_ds.Daten[feld.Feldname];
+                    if (gesuchte_ds.Eigenschaften && typeof gesuchte_ds.Eigenschaften[feld.Feldname] !== "undefined") {
+                        export_objekt[export_feldname] = gesuchte_ds.Eigenschaften[feld.Feldname];
                     }
                 }
             }

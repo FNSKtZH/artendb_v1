@@ -38,8 +38,8 @@ function(head, req) {
 		switch(exportObjekt.Gruppe) {
 		case "Fauna":
 			// Felder aktualisieren, wo Daten vorhanden
-			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
-				dsTaxonomie = Objekt.Taxonomie.Daten;
+			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
+				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
 				if (dsTaxonomie["Taxonomie ID"]) {
 					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
 				}
@@ -60,18 +60,18 @@ function(head, req) {
 				}
 			}
 			// Datensammlung "ZH GIS" holen
-			var ds_zh_gis = _.find(Objekt.Datensammlungen, function(ds) {
+			var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH GIS";
 			}) || {};
 			
-			if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
-				exportObjekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
+			if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
+				exportObjekt.GISLayer = ds_zh_gis.Eigenschaften["GIS-Layer"];
 			}
 			break;
 		case "Flora":
 			// Felder aktualisieren, wo Daten vorhanden
-			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
-				dsTaxonomie = Objekt.Taxonomie.Daten;
+			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
+				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
 				if (dsTaxonomie["Taxonomie ID"]) {
 					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
 				}
@@ -89,8 +89,8 @@ function(head, req) {
 			break;
 		case "Moose":
 			// Felder aktualisieren, wo Daten vorhanden
-			if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
-				dsTaxonomie = Objekt.Taxonomie.Daten;
+			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
+				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
 				if (dsTaxonomie["Taxonomie ID"]) {
 					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
 				}

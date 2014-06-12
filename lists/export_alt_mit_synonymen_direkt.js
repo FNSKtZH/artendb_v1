@@ -48,7 +48,7 @@ function(head, req) {
 
 		if (row.key[1] === 0) {
             // das ist ein Synonym
-            // wir erstellen je eine Liste aller in Synonymen enthaltenen Daten- und Beziehungssammlungen inkl. der darin enthaltenen Daten
+            // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
             ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
@@ -57,7 +57,7 @@ function(head, req) {
 		} else if (row.key[1] === 1) {
 			// wir sind jetzt im Originalobjekt
 			// sicherstellen, dass DS und BS existieren
-            objekt.Datensammlungen = objekt.Datensammlungen || [];
+            objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
             objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 			// allfällige DS und BS aus Synonymen anhängen
             objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);

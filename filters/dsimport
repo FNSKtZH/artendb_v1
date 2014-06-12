@@ -1,9 +1,9 @@
 function(doc, req) {
-    // Zweck: Filter für Changes-Feed für importierte Datensammlungen,
+    // Zweck: Filter für Changes-Feed für importierte Eigenschaftensammlungen,
     // in dem nur die vom aktuellen User importierten / gelöschten Objekte erscheinen
     var dsname = req.query.dsname;
-    if (doc.Datensammlungen && doc.Datensammlungen.length > 0 && dsname) {
-        doc.Datensammlungen.forEach(function(ds) {
+    if (doc.Eigenschaftensammlungen && doc.Eigenschaftensammlungen.length > 0 && dsname) {
+        doc.Eigenschaftensammlungen.forEach(function(ds) {
            if (ds.Name === dsname && ds["importiert von"] == req.userCtx.name) {
                return true;
            }

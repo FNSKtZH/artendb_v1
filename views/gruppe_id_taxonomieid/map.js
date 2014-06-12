@@ -1,5 +1,5 @@
 ﻿function(doc) {
-	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten["Taxonomie ID"]) {
-		emit ([doc.Gruppe, doc._id, doc.Taxonomie.Daten["Taxonomie ID"]], null);
+	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften["Taxonomie ID"]) {
+		emit ([doc.Gruppe, doc._id, doc.Taxonomie.Eigenschaften["Taxonomie ID"]], null);
 	}
 }

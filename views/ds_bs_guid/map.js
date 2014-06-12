@@ -4,9 +4,9 @@
 			emit ([doc.Beziehungssammlungen[i].Name, doc._id], 1);
 		}
 	}
-    if (doc.Datensammlungen) {
-        for (var i=0; i<doc.Datensammlungen.length; i++) {
-            emit ([doc.Datensammlungen[i].Name, doc._id], 1);
+    if (doc.Eigenschaftensammlungen) {
+        for (var i=0; i<doc.Eigenschaftensammlungen.length; i++) {
+            emit ([doc.Eigenschaftensammlungen[i].Name, doc._id], 1);
         }
     }
 }

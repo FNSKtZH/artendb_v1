@@ -4,10 +4,10 @@
 		gis_layer;
 
 	if (doc.Typ && doc.Typ === "Objekt") {
-		if (doc.Datensammlungen) {
-			for (i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name && doc.Datensammlungen[i].Name === "ZH GIS" && doc.Datensammlungen[i].Daten && doc.Datensammlungen[i].Daten["GIS-Layer"]) {
-					gis_layer = doc.Datensammlungen[i].Daten["GIS-Layer"];
+		if (doc.Eigenschaftensammlungen) {
+			for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
+				if (doc.Eigenschaftensammlungen[i].Name && doc.Eigenschaftensammlungen[i].Name === "ZH GIS" && doc.Eigenschaftensammlungen[i].Eigenschaften && doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"]) {
+					gis_layer = doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"];
 					emit (gis_layer, null);
 					break;
 				}

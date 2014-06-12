@@ -325,13 +325,13 @@ window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
 			taxonomie_objekte = _.map(taxonomie_objekte, function(row) {
 				object = {};
 				object.id = row.doc._id;
-				if (row.doc.Taxonomie.Daten && row.doc.Taxonomie.Daten.Einheit) {
-					if (row.doc.Taxonomie.Daten.Label) {
-						object.Name = row.doc.Taxonomie.Daten.Label + ": " + row.doc.Taxonomie.Daten.Einheit;
+				if (row.doc.Taxonomie.Eigenschaften && row.doc.Taxonomie.Eigenschaften.Einheit) {
+					if (row.doc.Taxonomie.Eigenschaften.Label) {
+						object.Name = row.doc.Taxonomie.Eigenschaften.Label + ": " + row.doc.Taxonomie.Eigenschaften.Einheit;
 					} else {
-						object.Name = row.doc.Taxonomie.Daten.Einheit;
+						object.Name = row.doc.Taxonomie.Eigenschaften.Einheit;
 					}
-					if (row.doc.Taxonomie.Daten.Hierarchie && row.doc.Taxonomie.Daten.Hierarchie.length === 1) {
+					if (row.doc.Taxonomie.Eigenschaften.Hierarchie && row.doc.Taxonomie.Eigenschaften.Hierarchie.length === 1) {
 						// das ist das oberste Objekt, soll auch zuoberst einsortiert werden
 						// oft hat es als einziges keinen label und würde daher zuunterst sortiert!
 						object.Sortier = "0";
@@ -383,15 +383,15 @@ window.adb.öffneBaumZuId = function(id) {
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(objekt) {
-            var $filter_klasse = $("[filter='" + objekt.Taxonomie.Daten.Klasse + "']"),
+            var $filter_klasse = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
                 $art_anmelden = $("#art_anmelden");
 			switch (objekt.Gruppe) {
             case "Fauna":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
                 // oberste Ebene aufbauen nicht nötig, die gibt es schon
                 $.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
-                    $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Daten.Klasse + "," + objekt.Taxonomie.Daten.Ordnung + "']"), function() {
-                        $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Daten.Klasse + "," + objekt.Taxonomie.Daten.Ordnung + ","+objekt.Taxonomie.Daten.Familie+"']"), function() {
+                    $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + "']"), function() {
+                        $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + ","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
                             $.jstree._reference("#treeFauna").select_node($("#" + objekt._id), function() {}, false);
                         }, true);
                     }, true);
@@ -402,8 +402,8 @@ window.adb.öffneBaumZuId = function(id) {
             case "Flora":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
                 // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Daten.Familie + "']"), function() {
-                    $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Daten.Familie + "," + objekt.Taxonomie.Daten.Gattung + "']"), function() {
+                $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "']"), function() {
+                    $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "," + objekt.Taxonomie.Eigenschaften.Gattung + "']"), function() {
                         $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function() {}, false);
                     }, true);
                 }, true);
@@ -414,8 +414,8 @@ window.adb.öffneBaumZuId = function(id) {
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
                 // oberste Ebene aufbauen nicht nötig, die gibt es schon
                 $.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
-                    $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+"']"), function() {
-                        $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Daten.Klasse+","+objekt.Taxonomie.Daten.Familie+","+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+                    $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
+                        $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+","+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
                             $.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
                         }, true);
                     }, true);
@@ -426,7 +426,7 @@ window.adb.öffneBaumZuId = function(id) {
             case "Macromycetes":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
                 // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Daten.Gattung+"']"), function() {
+                $.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
                     $.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
                 }, true);
                 // Anmeldung verstecken, wenn nicht Lebensräume
@@ -434,8 +434,8 @@ window.adb.öffneBaumZuId = function(id) {
                 break;
             case "Lebensräume":
                 var id_array = [];
-                for (var i=0; i<objekt.Taxonomie.Daten.Hierarchie.length; i++) {
-                    id_array.push(objekt.Taxonomie.Daten.Hierarchie[i].GUID);
+                for (var i=0; i<objekt.Taxonomie.Eigenschaften.Hierarchie.length; i++) {
+                    id_array.push(objekt.Taxonomie.Eigenschaften.Hierarchie[i].GUID);
                 }
                 window.adb.oeffneNodeNachIdArray(id_array);
                 break;
@@ -465,12 +465,12 @@ window.adb.initiiere_art = function(id) {
 	$db.openDoc(id, {
 		success: function(art) {
 			var html_art,
-				art_datensammlungen = art.Datensammlungen,
+				art_eigenschaftensammlungen = art.Eigenschaftensammlungen,
 				art_beziehungssammlungen = [],
 				taxonomische_beziehungssammlungen = [],
 				len,
 				guids_von_synonymen = [],
-				datensammlungen_von_synonymen = [],
+				eigenschaftensammlungen_von_synonymen = [],
 				beziehungssammlungen_von_synonymen = [],
 				a, f, h, i, k, x,
 				ds_namen = [],
@@ -516,13 +516,13 @@ window.adb.initiiere_art = function(id) {
                 });
 			}
 			// Datensammlungen in gewollter Reihenfolge hinzufügen
-			if (art_datensammlungen.length > 0) {
+			if (art_eigenschaftensammlungen.length > 0) {
 				// Datensammlungen nach Name sortieren
 				/*ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
 				Datensammlungen = window.adb.sortiereObjektarrayNachName(Datensammlungen);*/
 				// Titel hinzufügen
 				html_art += "<h4>Eigenschaften:</h4>";
-                _.each(art_datensammlungen, function(datensammlung) {
+                _.each(art_eigenschaftensammlungen, function(datensammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
                     html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datensammlung);
                     // dsNamen auflisten, um später zu vergleichen, ob sie schon dargestellt wird
@@ -546,15 +546,15 @@ window.adb.initiiere_art = function(id) {
 						var synonyme_art;
                         _.each(data.rows, function(data_row) {
                             synonyme_art = data_row.doc;
-                            if (synonyme_art.Datensammlungen && synonyme_art.Datensammlungen.length > 0) {
-                                _.each(synonyme_art.Datensammlungen, function(datensammlungen) {
-                                    if (ds_namen.indexOf(datensammlungen.Name) === -1) {
+                            if (synonyme_art.Eigenschaftensammlungen && synonyme_art.Eigenschaftensammlungen.length > 0) {
+                                _.each(synonyme_art.Eigenschaftensammlungen, function(eigenschaftensammlungen) {
+                                    if (ds_namen.indexOf(eigenschaftensammlungen.Name) === -1) {
                                         // diese Datensammlung wird noch nicht dargestellt
-                                        datensammlungen_von_synonymen.push(datensammlungen);
+                                        eigenschaftensammlungen_von_synonymen.push(eigenschaftensammlungen);
                                         // auch in dsNamen pushen, damit beim nächsten Vergleich mit berücksichtigt
-                                        ds_namen.push(datensammlungen.Name);
+                                        ds_namen.push(eigenschaftensammlungen.Name);
                                         // auch in Datensammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
-                                        art_datensammlungen.push(datensammlungen);
+                                        art_eigenschaftensammlungen.push(eigenschaftensammlungen);
                                     }
                                 });
                             }
@@ -601,12 +601,12 @@ window.adb.initiiere_art = function(id) {
                             }
                         });
 						// BS von Synonymen darstellen
-						if (datensammlungen_von_synonymen.length > 0) {
+						if (eigenschaftensammlungen_von_synonymen.length > 0) {
 							// DatensammlungenVonSynonymen nach Name sortieren
-							datensammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(datensammlungen_von_synonymen);
+							eigenschaftensammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(eigenschaftensammlungen_von_synonymen);
 							// Titel hinzufügen
 							html_art += "<h4>Eigenschaften von Synonymen:</h4>";
-                            _.each(datensammlungen_von_synonymen, function(datesammlung) {
+                            _.each(eigenschaftensammlungen_von_synonymen, function(datesammlung) {
                                 // HTML für Datensammlung erstellen lassen und hinzufügen
                                 html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datesammlung);
                             });
@@ -644,7 +644,7 @@ window.adb.initiiere_art_2 = function(html_art, art) {
 	// Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
 	$("#art_anmelden").hide();
 	// Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-	if (art.Datensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
+	if (art.Eigenschaftensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
 		$('.panel-collapse.Taxonomie').each(function() {
 			$(this).collapse('show');
 		});
@@ -748,7 +748,7 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 	if (ds_typ === "Taxonomie") {
 		html_datensammlung += window.adb.erstelleHtmlFürFeld("GUID", art._id, ds_typ, "Taxonomie");
 	}
-    _.each(datensammlung.Daten, function(feldwert, feldname) {
+    _.each(datensammlung.Eigenschaften, function(feldwert, feldname) {
         if (feldname === "GUID") {
             // dieses Feld nicht anzeigen. Es wird _id verwendet
             // dieses Feld wird künftig nicht mehr importiert
@@ -777,37 +777,37 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 	return html_datensammlung;
 };
 
-window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(ds_oder_bs) {
+window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(es_oder_bs) {
 	'use strict';
     var html = '<div class="Datensammlung BeschreibungDatensammlung">';
-    if (ds_oder_bs.Beschreibung) {
-        html += ds_oder_bs.Beschreibung;
+    if (es_oder_bs.Beschreibung) {
+        html += es_oder_bs.Beschreibung;
     }
     // wenn weitere Infos kommen: diese können wahlweise eingeblendet werden
-    if (ds_oder_bs.Datenstand || ds_oder_bs.Link || (ds_oder_bs.zusammenfassend && ds_oder_bs.Ursprungsdatensammlung)) {
+    if (es_oder_bs.Datenstand || es_oder_bs.Link || (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung)) {
         // wenn keine Beschreibung existiert, andere Option einblenden
-        if (ds_oder_bs.Beschreibung) {
+        if (es_oder_bs.Beschreibung) {
             html += ' <a href="#" class="show_next_hidden">...mehr</a>';
         } else {
             // wenn keine Beschreibung existiert, andere Option einblenden
             html += '<a href="#" class="show_next_hidden">Beschreibung der Datensammlung anzeigen</a>';
         }
         html += '<div class="adb-hidden">';
-        if (ds_oder_bs.Datenstand) {
+        if (es_oder_bs.Datenstand) {
             html += '<div>Stand: ';
-            html += ds_oder_bs.Datenstand;
+            html += es_oder_bs.Datenstand;
             html += '</div>';
         }
-        if (ds_oder_bs.Link) {
+        if (es_oder_bs.Link) {
             html += '<div>Link: <a href="';
-            html += ds_oder_bs.Link;
+            html += es_oder_bs.Link;
             html += '">';
-            html += ds_oder_bs.Link;
+            html += es_oder_bs.Link;
             html += '</a></div>';
         }
-        if (ds_oder_bs.zusammenfassend && ds_oder_bs.Ursprungsdatensammlung) {
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + ds_oder_bs.Ursprungsdatensammlung + '"';
-        } else if (ds_oder_bs.zusammenfassend && !ds_oder_bs.Ursprungsdatensammlung) {
+        if (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung) {
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"';
+        } else if (es_oder_bs.zusammenfassend && !es_oder_bs.Ursprungsdatensammlung) {
             html += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
         }
         // zusätzliche Infos abschliessen
@@ -866,49 +866,49 @@ window.adb.setzteLinksZuBilderUndWikipedia = function(art) {
             wikipedia_link = "";
 		switch (art.Gruppe) {
 		case "Flora":
-			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-			if (art.Taxonomie.Daten['Name Deutsch']) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Artname + '"';
+			if (art.Taxonomie.Eigenschaften['Name Deutsch']) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Deutsch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Name Französisch']) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+			if (art.Taxonomie.Eigenschaften['Name Französisch']) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Französisch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Name Italienisch']) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+			if (art.Taxonomie.Eigenschaften['Name Italienisch']) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Italienisch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Name Deutsch']) {
-				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten['Name Deutsch'];
+			if (art.Taxonomie.Eigenschaften['Name Deutsch']) {
+				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften['Name Deutsch'];
 			} else {
-				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Artname;
+				wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Artname;
 			}
 			break;
 		case "Fauna":
-			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Artname + '"';
-			if (art.Taxonomie.Daten["Name Deutsch"]) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Artname + '"';
+			if (art.Taxonomie.Eigenschaften["Name Deutsch"]) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Deutsch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Name Französisch']) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Französisch'] + '"';
+			if (art.Taxonomie.Eigenschaften['Name Französisch']) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Französisch'] + '"';
 			}
-			if (art.Taxonomie.Daten['Name Italienisch']) {
-				google_bilder_link += '+OR"' + art.Taxonomie.Daten['Name Italienisch'] + '"';
+			if (art.Taxonomie.Eigenschaften['Name Italienisch']) {
+				google_bilder_link += '+OR"' + art.Taxonomie.Eigenschaften['Name Italienisch'] + '"';
 			}
-			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Gattung + '_' + art.Taxonomie.Eigenschaften.Art;
 			break;
 		case 'Moose':
-			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Gattung + ' ' + art.Taxonomie.Daten.Art + '"';
-			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Gattung + '_' + art.Taxonomie.Daten.Art;
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Gattung + ' ' + art.Taxonomie.Eigenschaften.Art + '"';
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Gattung + '_' + art.Taxonomie.Eigenschaften.Art;
 			break;
 		case 'Macromycetes':
-			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Name + '"';
-			if (art.Taxonomie.Daten['Name Deutsch']) {
-				google_bilder_link += '+OR+"' + art.Taxonomie.Daten['Name Deutsch'] + '"';
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Name + '"';
+			if (art.Taxonomie.Eigenschaften['Name Deutsch']) {
+				google_bilder_link += '+OR+"' + art.Taxonomie.Eigenschaften['Name Deutsch'] + '"';
 			}
-			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Name;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Name;
 			break;
 		case 'Lebensräume':
-			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Daten.Einheit;
-			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Daten.Einheit;
+			google_bilder_link = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Einheit;
+			wikipedia_link = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Einheit;
 			break;
 		}
 		// mit replace Hochkommata ' ersetzen, sonst klappt url nicht
@@ -1689,21 +1689,21 @@ window.adb.ergänzePilzeZhgis = function() {
 			ds_zhgis.Datenstand = "dauernd nachgeführt";
 			ds_zhgis.Link = "http://www.naturschutz.zh.ch";
             ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
-			ds_zhgis.Daten = {};
-			ds_zhgis.Daten["GIS-Layer"] = "Pilze";
+			ds_zhgis.Eigenschaften = {};
+			ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
 			_.each(data.rows, function(row) {
 				var pilz = row.doc,
 					zhgis_in_ds;
-				if (!pilz.Datensammlungen) {
-					pilz.Datensammlungen = [];
+				if (!pilz.Eigenschaftensammlungen) {
+					pilz.Eigenschaftensammlungen = [];
 				}
-				zhgis_in_ds = _.find(pilz.Datensammlungen, function(ds) {
+				zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function(ds) {
 					return ds.Name === "ZH GIS";
 				});
 				// nur ergänzen, wenn ZH GIS noch nicht existiert
 				if (!zhgis_in_ds) {
-					pilz.Datensammlungen.push(ds_zhgis);
-					pilz.Datensammlungen = _.sortBy(pilz.Datensammlungen, function(ds) {
+					pilz.Eigenschaftensammlungen.push(ds_zhgis);
+					pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function(ds) {
 						return ds.Name;
 					});
 					$db.saveDoc(pilz, {
@@ -1738,15 +1738,15 @@ window.adb.korrigiereArtwertnameInFlora = function() {
                 var art = row.doc,
                     ds_artwert,
                     daten = {};
-                if (art.Datensammlungen) {
-                    ds_artwert = _.find(art.Datensammlungen, function(ds) {
+                if (art.Eigenschaftensammlungen) {
+                    ds_artwert = _.find(art.Eigenschaftensammlungen, function(ds) {
                        return ds.Name === "ZH Artwert (1995)";
                     });
-                    //if (ds_artwert && ds_artwert.Daten && ds_artwert.Daten["Artwert KT ZH"]) {
-                    if (ds_artwert && ds_artwert.Daten) {
+                    //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
+                    if (ds_artwert && ds_artwert.Eigenschaften) {
                         save = false;
                         // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
-                        _.each(ds_artwert.Daten, function(value, key) {
+                        _.each(ds_artwert.Eigenschaften, function(value, key) {
                             if (key === "Artwert KT ZH") {
                                 key = "Artwert";
                                 save = true;
@@ -1754,7 +1754,7 @@ window.adb.korrigiereArtwertnameInFlora = function() {
                             daten[key] = value;
                         });
                         if (save) {
-                            ds_artwert.Daten = daten;
+                            ds_artwert.Eigenschaften = daten;
                             $db.saveDoc(art, {
                                 success: function() {
                                     korrigiert ++;
@@ -1789,8 +1789,8 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
             _.each(data.rows, function(row) {
                 var art = row.doc,
                     ds;
-                if (art.Datensammlungen) {
-                    ds = _.find(art.Datensammlungen, function(ds) {
+                if (art.Eigenschaftensammlungen) {
+                    ds = _.find(art.Eigenschaftensammlungen, function(ds) {
                         return ds.Name === "CH Rote Liste (1991)";
                     });
                     if (ds) {
@@ -1849,8 +1849,8 @@ window.adb.nenneDsUm = function() {
                     bs,
                     save = false;
                 // Datensammlung mit diesem Namen suchen
-                if (art.Datensammlungen && art.Datensammlungen.length > 0) {
-                    ds = _.find(art.Datensammlungen, function(ds_) {
+                if (art.Eigenschaftensammlungen && art.Eigenschaftensammlungen.length > 0) {
+                    ds = _.find(art.Eigenschaftensammlungen, function(ds_) {
                         if (ds_.Name) {
                             return ds_.Name === name_vorher;
                         }
@@ -1898,7 +1898,8 @@ window.adb.baueDsZuEigenschaftenUm = function() {
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
         $db = $.couch.db("artendb");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-    $db.view('artendb/all_docs?&include_docs=true', {
+    //$db.view('artendb/all_docs?include_docs=true', {
+    $db.view('artendb/all_docs', {
         success: function(data) {
             var korrigiert = 0,
                 fehler = 0,
@@ -1908,45 +1909,64 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 return;
             }
             _.each(data.rows, function(row) {
-                var art = row.doc,
-                    datensammlungen,
-                    beziehungssammlungen,
-                    ds_daten;
-                // Datensammlungen umbenennen
-                // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
-                // damit die Reihenfolge bewahrt bleibt
-                if (art.Datensammlungen) {
-                    datensammlungen = art.Datensammlungen;
-                    _.each(datensammlungen, function(ds) {
-                        if (ds.Daten) {
-                            ds_daten = ds.Daten;
-                            delete ds.Daten;
-                            ds.Eigenschaften = ds_daten;
+                $db.openDoc(row.key, {
+                    success: function(art) {
+                        var datensammlungen,
+                            beziehungssammlungen,
+                            ds_daten,
+                            tax_daten,
+                            save = false;
+                        // Datensammlungen umbenennen
+                        // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
+                        // damit die Reihenfolge bewahrt bleibt
+                        if (art.Taxonomie && art.Taxonomie.Daten) {
+                            tax_daten = art.Taxonomie.Daten;
+                            delete art.Taxonomie.Daten;
+                            art.Taxonomie.Eigenschaften = tax_daten;
+                            save = true;
                         }
-                    });
-                    delete art.Datensammlungen;
-                    if (art.Beziehungssammlungen) {
-                        beziehungssammlungen = art.Beziehungssammlungen;
-                        delete art.Beziehungssammlungen;
-                    } else {
-                        beziehungssammlungen = {};
+                        if (art.Datensammlungen) {
+                            datensammlungen = art.Datensammlungen;
+                            _.each(datensammlungen, function(ds) {
+                                if (ds.Daten) {
+                                    ds_daten = ds.Daten;
+                                    delete ds.Daten;
+                                    ds.Eigenschaften = ds_daten;
+                                }
+                            });
+                            delete art.Datensammlungen;
+                            if (art.Beziehungssammlungen) {
+                                beziehungssammlungen = art.Beziehungssammlungen;
+                                delete art.Beziehungssammlungen;
+                            } else {
+                                beziehungssammlungen = {};
+                            }
+                            art.Eigenschaftensammlungen = datensammlungen;
+                            art.Beziehungssammlungen = beziehungssammlungen;
+                            save = true;
+                        }
+                        if (save) {
+                            $db.saveDoc(art, {
+                                success: function() {
+                                    korrigiert ++;
+                                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                                },
+                                error: function() {
+                                    fehler ++;
+                                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                                }
+                            });
+                        }
+                    },
+                    error: function() {
+                        fehler ++;
+                        $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                     }
-                    art.Eigenschaftensammlungen = datensammlungen;
-                    art.Beziehungssammlungen = beziehungssammlungen;
-                    $db.saveDoc(art, {
-                        success: function() {
-                            korrigiert ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                        },
-                        error: function() {
-                            fehler ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                        }
-                    });
-                }
+                });
+
             });
             if (korrigiert === 0) {
-                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+                $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
             }
         }
     });
@@ -2331,24 +2351,24 @@ window.adb.handleLrParentOptionenChange = function() {
 	object.Typ = "Objekt";
 	object.Taxonomie = {};
 	object.Taxonomie.Name = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-	object.Taxonomie.Daten = {};
-	object.Taxonomie.Daten.Taxonomie = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+	object.Taxonomie.Eigenschaften = {};
+	object.Taxonomie.Eigenschaften.Taxonomie = "neue Taxonomie";	// wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
 	// wenn keine Wurzel: Label anzeigen
 	if (parent_id !== "0") {
-		object.Taxonomie.Daten.Label = "";
+		object.Taxonomie.Eigenschaften.Label = "";
 	}
-	object.Taxonomie.Daten.Einheit = "unbeschriebener Lebensraum";
+	object.Taxonomie.Eigenschaften.Einheit = "unbeschriebener Lebensraum";
 	if (parent_id === "0") {
-		object.Taxonomie.Daten.Einheit = "neue Taxonomie";
+		object.Taxonomie.Eigenschaften.Einheit = "neue Taxonomie";
 	}
 	/*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
-	object.Taxonomie.Daten["Einheit-Nr FNS"] = "";
+	object.Taxonomie.Eigenschaften["Einheit-Nr FNS"] = "";
 	if (parent_id === "0") {
-		object.Taxonomie.Daten["Einheit-Nrn FNS von"] = "";
-		object.Taxonomie.Daten["Einheit-Nrn FNS bis"] = "";
+		object.Taxonomie.Eigenschaften["Einheit-Nrn FNS von"] = "";
+		object.Taxonomie.Eigenschaften["Einheit-Nrn FNS bis"] = "";
 	}*/
-	object.Taxonomie.Daten.Beschreibung = "";
-	object.Datensammlungen = [];
+	object.Taxonomie.Eigenschaften.Beschreibung = "";
+	object.Eigenschaftensammlungen = [];
 	object.Beziehungssammlungen = [];
 	// jetzt den parent erstellen
 	// geht nicht vorher, weil die id bekannt sein muss
@@ -2357,13 +2377,13 @@ window.adb.handleLrParentOptionenChange = function() {
 		parent.Name = "neue Taxonomie";
 		parent.GUID = object._id;
 		// bei der Wurzel ist Hierarchie gleich parent
-		object.Taxonomie.Daten.Hierarchie = [];
-		object.Taxonomie.Daten.Hierarchie.push(parent);
+		object.Taxonomie.Eigenschaften.Hierarchie = [];
+		object.Taxonomie.Eigenschaften.Hierarchie.push(parent);
 	} else {
 		parent.Name = parent_name;
 		parent.GUID = parent_id;
 	}
-	object.Taxonomie.Daten.Parent = parent;
+	object.Taxonomie.Eigenschaften.Parent = parent;
 	var $db = $.couch.db("artendb");
 	$db.saveDoc(object, {
 		success: function(object_saved) {
@@ -2894,6 +2914,7 @@ window.adb.importiereDatensammlung = function() {
         nr,
         rückmeldung_intro,
         rückmeldung_links = "",
+        rückmeldung,
         $DsDatenstand = $("#DsDatenstand"),
         $DsLink = $("#DsLink"),
         $DsUrsprungsDs = $("#DsUrsprungsDs"),
@@ -2931,7 +2952,6 @@ window.adb.importiereDatensammlung = function() {
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('adb.ds_hinzugefügt', function() {
-	'use strict';
         anz_ds_importiert++;
         var prozent = Math.round(anz_ds_importiert/anz_ds*100),
             rückmeldung;
@@ -2987,7 +3007,7 @@ window.adb.importiereDatensammlung = function() {
         }
         datensammlung["importiert von"] = localStorage.Email;
         // Felder der Datensammlung als Objekt gründen
-        datensammlung.Daten = {};
+        datensammlung.Eigenschaften = {};
         // Felder anfügen, wenn sie Werte enthalten
         anzahl_felder = 0;
         _.each(ds_datensatz, function(feldwert, feldname) {
@@ -2997,21 +3017,21 @@ window.adb.importiereDatensammlung = function() {
             if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null) {
                 if (feldwert === -1) {
                     // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
-                    datensammlung.Daten[feldname] = true;
+                    datensammlung.Eigenschaften[feldname] = true;
                 } else if (feldwert == "true") {
                     // true/false nicht als string importieren
-                    datensammlung.Daten[feldname] = true;
+                    datensammlung.Eigenschaften[feldname] = true;
                 } else if (feldwert == "false") {
-                    datensammlung.Daten[feldname] = false;
+                    datensammlung.Eigenschaften[feldname] = false;
                 } else if (feldwert == parseInt(feldwert, 10)) {
                     // Ganzzahlen als Zahlen importieren
-                    datensammlung.Daten[feldname] = parseInt(feldwert, 10);
+                    datensammlung.Eigenschaften[feldname] = parseInt(feldwert, 10);
                 } else if (feldwert == parseFloat(feldwert)) {
                     // Bruchzahlen als Zahlen importieren
-                    datensammlung.Daten[feldname] = parseFloat(feldwert);
+                    datensammlung.Eigenschaften[feldname] = parseFloat(feldwert);
                 } else {
                     // Normalfall
-                    datensammlung.Daten[feldname] = feldwert;
+                    datensammlung.Eigenschaften[feldname] = feldwert;
                 }
                 anzahl_felder += 1;
             }
@@ -3062,6 +3082,7 @@ window.adb.importiereDatensammlung = function() {
 
 // wird momentan nicht benutzt
 window.adb.queryChangesStartingNow = function(options) {
+	'use strict';
     options = options || {};
     options.since = "now";
     if (options.filter) {
@@ -3105,6 +3126,7 @@ window.adb.queryChangesStartingNow = function(options) {
 
 // wird momentan nicht benutzt
 window.adb.queryChanges = function(options) {
+	'use strict';
     options = options || {};
     options.since = options.since || "now";
     options.feed = options.feed || "longpoll";
@@ -3126,10 +3148,13 @@ window.adb.queryChanges = function(options) {
 // bekommt das Objekt mit den Datensätzen (window.adb.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 window.adb.importiereBeziehungssammlung = function() {
+	'use strict';
 	var anzahl_felder,
 		anzahl_beziehungssammlungen = window.adb.bsDatensätze.length,
         anz_bs_importiert = 0,
+        erste_10_ids,
         nr,
+        rückmeldung,
         rückmeldung_intro,
         rückmeldung_links = "",
 		bs_importiert = $.Deferred(),
@@ -3323,6 +3348,7 @@ window.adb.importiereBeziehungssammlung = function() {
 };
 
 window.adb.bereiteBeziehungspartnerFürImportVor = function() {
+	'use strict';
 	var alle_bez_partner_array = [],
 		bez_partner_array,
 		beziehungspartner_vorbereitet = $.Deferred();
@@ -3351,14 +3377,14 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
                 bez_partner = {};
                 bez_partner.Gruppe = objekt.Gruppe;
                 if (objekt.Gruppe === "Lebensräume") {
-                    bez_partner.Taxonomie = objekt.Taxonomie.Daten.Taxonomie;
-                    if (objekt.Taxonomie.Daten.Taxonomie.Label) {
-                        bez_partner.Name = objekt.Taxonomie.Daten.Label + ": " + objekt.Taxonomie.Daten.Taxonomie.Einheit;
+                    bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
+                    if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
+                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
                     } else {
-                        bez_partner.Name = objekt.Taxonomie.Daten.Einheit;
+                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
                     }
                 } else {
-                    bez_partner.Name = objekt.Taxonomie.Daten["Artname vollständig"];
+                    bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
                 }
                 bez_partner.GUID = objekt._id;
                 window.adb.bezPartner_objekt[objekt._id] = bez_partner;
@@ -3372,6 +3398,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
 window.adb.entferneDatensammlung = function() {
+	'use strict';
 	var guid_array = [],
         guid_array_2 = [],
 		guid,
@@ -3381,6 +3408,7 @@ window.adb.entferneDatensammlung = function() {
 		batch_grösse,
         anz_vorkommen_von_ds = window.adb.ZuordbareDatensätze.length,
         anz_vorkommen_von_ds_entfernt = 0,
+        rückmeldung,
         $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
         $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
 
@@ -3393,7 +3421,7 @@ window.adb.entferneDatensammlung = function() {
             .attr('aria-valuenow', prozent);
         $("#DsImportierenProgressbarText").html(prozent + "%");
         $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
-        rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
+        rückmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
         $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung);
         $('html, body').animate({
             scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
@@ -3405,7 +3433,7 @@ window.adb.entferneDatensammlung = function() {
                 success: function() {
                     // melden, dass Indexe aktualisiert wurden
                     $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
-                    rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
+                    rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
                     rückmeldung += "Die Indexe wurden aktualisiert.";
                     if (window.adb.rückmeldung_links) {
                         rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
@@ -3466,6 +3494,7 @@ window.adb.entferneDatensammlung = function() {
 };
 
 window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs_faktor) {
+	'use strict';
 	// alle docs holen
 	setTimeout(function() {
 		var $db = $.couch.db("artendb");
@@ -3482,17 +3511,18 @@ window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs
 };
 
 window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
-	if (objekt.Datensammlungen && objekt.Datensammlungen.length > 0) {
+	'use strict';
+	if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
         /* hat nicht funktioniert
-        var datensammlung = _.find(objekt.Datensammlungen, function(datensammlung) {
+        var datensammlung = _.find(objekt.Eigenschaftensammlungen, function(datensammlung) {
             return datensammlung.Name === ds_name;
         });
-        objekt.Datensammlungen = _.without(Objekt.Datensammlungen, datensammlung);
+        objekt.Eigenschaftensammlungen = _.without(Objekt.Eigenschaftensammlungen, datensammlung);
         $db = $.couch.db("artendb");
         $db.saveDoc(objekt);*/
-		for (var i=0; i<objekt.Datensammlungen.length; i++) {
-			if (objekt.Datensammlungen[i].Name === ds_name) {
-				objekt.Datensammlungen.splice(i,1);
+		for (var i=0; i<objekt.Eigenschaftensammlungen.length; i++) {
+			if (objekt.Eigenschaftensammlungen[i].Name === ds_name) {
+				objekt.Eigenschaftensammlungen.splice(i,1);
 				var $db = $.couch.db("artendb");
 				$db.saveDoc(objekt);
                 // mitteilen, dass eine ds entfernt wurde
@@ -3507,6 +3537,7 @@ window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 // bekommt das Objekt mit den Datensätzen (window.adb.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
 window.adb.entferneBeziehungssammlung = function() {
+	'use strict';
 	var guid_array = [],
         guid_array_2 = [],
 		guid,
@@ -3617,6 +3648,7 @@ window.adb.entferneBeziehungssammlung = function() {
 };
 
 window.adb.entferneBeziehungssammlung_2 = function(bs_name, guid_array, verzögerungs_faktor) {
+	'use strict';
 	// alle docs holen
 	setTimeout(function() {
 		var $db = $.couch.db("artendb");
@@ -3634,6 +3666,7 @@ window.adb.entferneBeziehungssammlung_2 = function(bs_name, guid_array, verzöge
 };
 
 window.adb.entferneBeziehungssammlungAusObjekt = function(bs_name, objekt) {
+	'use strict';
 	if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
 		for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {
 			if (objekt.Beziehungssammlungen[i].Name === bs_name) {
@@ -3651,14 +3684,15 @@ window.adb.entferneBeziehungssammlungAusObjekt = function(bs_name, objekt) {
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
 window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
+	'use strict';
 	var $db = $.couch.db("artendb");
 	$db.openDoc(guid, {
 		success: function(doc) {
 			// Datensammlung anfügen
-			doc.Datensammlungen.push(datensammlung);
+			doc.Eigenschaftensammlungen.push(datensammlung);
 			// sortieren
-			// Datensammlungen nach Name sortieren
-			doc.Datensammlungen = window.adb.sortiereObjektarrayNachName(doc.Datensammlungen);
+			// Eigenschaftensammlungen nach Name sortieren
+			doc.Eigenschaftensammlungen = window.adb.sortiereObjektarrayNachName(doc.Eigenschaftensammlungen);
 			// in artendb speichern
 			$db.saveDoc(doc);
             // mitteilen, dass ein ds importiert wurde
@@ -3671,6 +3705,7 @@ window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
 window.adb.fügeBeziehungenZuObjekt = function(guid, beziehungssammlung, beziehungen) {
+	'use strict';
 	var $db = $.couch.db("artendb");
 	$db.openDoc(guid, {
 		success: function(doc) {
@@ -3727,12 +3762,13 @@ window.adb.fügeBeziehungenZuObjekt = function(guid, beziehungssammlung, beziehu
 // übernimmt den Namen einer Datensammlung
 // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
 window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
+	'use strict';
 	var ds_entfernt = $.Deferred(),
         anz_vorkommen_von_ds,
         anz_vorkommen_von_ds_entfernt = 0,
-        $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis");
-
-	var $db = $.couch.db("artendb");
+        $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
+        $db = $.couch.db("artendb"),
+        rückmeldung;
 	$db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
 		success: function(data) {
             anz_vorkommen_von_ds = data.rows.length;
@@ -3740,7 +3776,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.ds_entfernt', function() {
                 anz_vorkommen_von_ds_entfernt++;
-                rückmeldung = "Datensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
+                rückmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
                 $importieren_ds_ds_beschreiben_hinweis
                     .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
                     .html(rückmeldung);
@@ -3752,7 +3788,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                     $db.view('artendb/lr', {
                         success: function() {
                             // melden, dass Indexe aktualisiert wurden
-                            rückmeldung = "Die Datensammlungen wurden entfernt.<br>";
+                            rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
                             rückmeldung += "Die Indexe wurden aktualisiert.";
                             $importieren_ds_ds_beschreiben_hinweis
                                 .removeClass("alert-info").removeClass("alert-danger").addClass("alert-success")
@@ -3765,7 +3801,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
                 }
             });
 
-            // Datensammlungen entfernen
+            // Eigenschaftensammlungen entfernen
             _.each(data.rows, function(data_row) {
                 // guid und DsName übergeben
                 window.adb.entferneDatensammlungAusDokument(data_row.key[1], ds_name);
@@ -3779,12 +3815,14 @@ window.adb.entferneDatensammlungAusAllenObjekten = function(ds_name) {
 // übernimmt den Namen einer Beziehungssammlung
 // öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
 window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
+	'use strict';
 	var bs_entfernt = $.Deferred(),
         anz_vorkommen_von_bs_entfernt = 0,
         anz_vorkommen_von_bs,
         $importieren_bs_ds_beschreiben_hinweis = $("#importieren_bs_ds_beschreiben_hinweis"),
-        $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text");
-	var $db = $.couch.db("artendb");
+        $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text"),
+        $db = $.couch.db("artendb"),
+        rückmeldung;
 	$db.view('artendb/bs_guid?startkey=["' + bs_name + '"]&endkey=["' + bs_name + '",{}]', {
 		success: function(data) {
             anz_vorkommen_von_bs = data.rows.length;
@@ -3834,11 +3872,12 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function(bs_name) {
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
 window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
+	'use strict';
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
 			// Datensammlung entfernen
-            doc.Datensammlungen = _.reject(doc.Datensammlungen, function(datensammlung) {
+            doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function(datensammlung) {
                 return datensammlung.Name === ds_name
             });
 			// in artendb speichern
@@ -3854,6 +3893,7 @@ window.adb.entferneDatensammlungAusDokument = function(id, ds_name) {
 // und den Namen der Beziehungssammlung, die zu entfernen ist
 // entfernt die Beziehungssammlung
 window.adb.entferneBeziehungssammlungAusDokument = function(id, bs_name) {
+	'use strict';
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
 		success: function(doc) {
@@ -3872,6 +3912,7 @@ window.adb.entferneBeziehungssammlungAusDokument = function(id, bs_name) {
 
 // prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
 window.adb.öffneUri = function() {
+	'use strict';
 	// parameter der uri holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
@@ -3908,6 +3949,7 @@ window.adb.öffneUri = function() {
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehungssammlungen) {
+	'use strict';
 	var html_felder_wählen = '',
 		html_filtern = '',
 		ds_typ,
@@ -3916,7 +3958,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
         dsbs_von_objekt,
         ds_felder_objekt;
 
-    // Datensammlungen vorbereiten
+    // Eigenschaftensammlungen vorbereiten
     // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
     // erst mal die nicht benötigten Werte entfernen
     _.each(window.adb.ds_bs_von_objekten.rows, function(object_with_array_in_key) {
@@ -3932,13 +3974,13 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 		html_filtern += '<h3>Taxonomie</h3>';
 	} else if (taxonomien && datensammlungen) {
 		ds_typ = "Datensammlung";
-		html_felder_wählen += '<h3>Datensammlungen</h3>';
-		html_filtern += '<h3>Datensammlungen</h3>';
+		html_felder_wählen += '<h3>Eigenschaftensammlungen</h3>';
+		html_filtern += '<h3>Eigenschaftensammlungen</h3>';
 	} else {
 		ds_typ = "Beziehung";
 		// bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
 		// das muss auch erklärt sein
-		html_felder_wählen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="show_next_hidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Datensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
+		html_felder_wählen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="show_next_hidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
 		html_filtern += '<h3>Beziehungssammlungen</h3>';
 	}
     _.each(taxonomien, function(taxonomie, index) {
@@ -3977,7 +4019,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 
         // jetzt die checkbox um alle auswählen zu können
         // aber nur, wenn mehr als 1 Feld existieren
-        if ((taxonomie.Daten && _.size(taxonomie.Daten) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
+        if ((taxonomie.Eigenschaften && _.size(taxonomie.Eigenschaften) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
             html_felder_wählen += '<div class="checkbox"><label>';
             html_felder_wählen += '<input class="feld_waehlen_alle_von_ds" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
             html_felder_wählen += '</div></label>';
@@ -3986,7 +4028,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 
 
         html_filtern += '<div class="felderspalte">';
-        for (x in (taxonomie.Daten || taxonomie.Beziehungen)) {
+        for (x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
             // felder wählen
             html_felder_wählen += '<div class="checkbox"><label>';
             html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
@@ -4000,7 +4042,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             }
             html_filtern += '>' + x + '</label>';
             //if (taxonomie.Feldtyp === "boolean") {
-            if ((taxonomie.Daten && (taxonomie.Daten[x] === "boolean")) || (taxonomie.Beziehungen && (taxonomie.Beziehungen[x] === "boolean"))) {
+            if ((taxonomie.Eigenschaften && (taxonomie.Eigenschaften[x] === "boolean")) || (taxonomie.Beziehungen && (taxonomie.Beziehungen[x] === "boolean"))) {
                 // in einer checkbox darstellen
                 // readonly markiert, dass kein Wert erfasst wurde
                 html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
@@ -4036,6 +4078,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
 };
 
 window.adb.erstelleExportString = function(exportobjekte) {
+	'use strict';
 	var string_titelzeile = "",
 		string_zeilen = "",
 		string_zeile;
@@ -4084,6 +4127,7 @@ window.adb.erstelleExportString = function(exportobjekte) {
 // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 // bekommt den Namen der Gruppe
 window.adb.erstelleListeFürFeldwahl = function() {
+	'use strict';
 	var export_gruppen = [],
 		gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
@@ -4171,6 +4215,7 @@ window.adb.erstelleListeFürFeldwahl = function() {
 };
 
 window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
+	'use strict';
 	var felder_objekt = {},
 		hinweis_taxonomien,
         taxonomien,
@@ -4187,7 +4232,7 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
         export_felder.key.splice(0,1);
     });
 
-	// jetzt nur noch eineindeutige Array-Objekte (=Datensammlungen) belassen
+	// jetzt nur noch eineindeutige Array-Objekte (=Eigenschaftensammlungen) belassen
 	export_felder_arrays = _.union(export_felder_arrays);
 	// jetzt den Array von Objekten nach key sortieren
 	export_felder_arrays = _.sortBy(export_felder_arrays, function(object) {
@@ -4198,8 +4243,8 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
 	felder_objekt = window.adb.ergänzeFelderObjekt(felder_objekt, export_felder_arrays);
 
 	// bei allfälligen "Taxonomie(n)" Feldnamen sortieren
-	if (felder_objekt["Taxonomie(n)"] && felder_objekt["Taxonomie(n)"].Daten) {
-		felder_objekt["Taxonomie(n)"].Daten = window.adb.sortKeysOfObject(felder_objekt["Taxonomie(n)"].Daten);
+	if (felder_objekt["Taxonomie(n)"] && felder_objekt["Taxonomie(n)"].Eigenschaften) {
+		felder_objekt["Taxonomie(n)"].Eigenschaften = window.adb.sortKeysOfObject(felder_objekt["Taxonomie(n)"].Eigenschaften);
 	}
 
 	// Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
@@ -4243,6 +4288,7 @@ window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
 // holt eine Liste aller Datensammlungen, wenn nötig
 // speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann
 window.adb.holeDatensammlungenFürExportfelder = function() {
+	'use strict';
     var exfe_geholt = $.Deferred();
     if (window.adb.ds_bs_von_objekten) {
         exfe_geholt.resolve();
@@ -4266,6 +4312,7 @@ window.adb.holeDatensammlungenFürExportfelder = function() {
 // retourniert das ergänzte FelderObjekt
 // das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
+	'use strict';
 	var ds_typ,
 		ds_name,
 		feldname,
@@ -4287,22 +4334,22 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
                     felder_objekt["Taxonomie(n)"] = {};
                     felder_objekt["Taxonomie(n)"].Typ = ds_typ;
                     felder_objekt["Taxonomie(n)"].Name = "Taxonomie(n)";
-                    felder_objekt["Taxonomie(n)"].Daten = {};
+                    felder_objekt["Taxonomie(n)"].Eigenschaften = {};
                 }
                 // Feld ergänzen
                 // als Feldwert den Feldtyp übergeben
-                felder_objekt["Taxonomie(n)"].Daten[feldname] = feldtyp;
+                felder_objekt["Taxonomie(n)"].Eigenschaften[feldname] = feldtyp;
             } else if (ds_typ === "Datensammlung" || ds_typ === "Taxonomie") {
                 // Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
                 if (!felder_objekt[ds_name]) {
                     felder_objekt[ds_name] = {};
                     felder_objekt[ds_name].Typ = ds_typ;
                     felder_objekt[ds_name].Name = ds_name;
-                    felder_objekt[ds_name].Daten = {};
+                    felder_objekt[ds_name].Eigenschaften = {};
                 }
                 // Feld ergänzen
                 // als Feldwert den Feldtyp übergeben
-                felder_objekt[ds_name].Daten[feldname] = feldtyp;
+                felder_objekt[ds_name].Eigenschaften[feldname] = feldtyp;
             } else if (ds_typ === "Beziehung") {
                 // Wenn Beziehungstyp noch nicht existiert, gründen
                 if (!felder_objekt[ds_name]) {
@@ -4323,6 +4370,7 @@ window.adb.ergänzeFelderObjekt = function(felder_objekt, felder_array) {
 // wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
 // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 window.adb.filtereFürExport = function(direkt) {
+	'use strict';
 	// Array von Filterobjekten bilden
 	var filterkriterien = [],
 		// Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
@@ -4468,9 +4516,9 @@ window.adb.filtereFürExport = function(direkt) {
         // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
         // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden
         if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked')) {
-            html_filterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen Informationen enthalten</li>";
+            html_filterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</li>";
         } else {
-            html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Daten- und Beziehungssammlungen keine Informationen enthalten</li>";
+            html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";
         }
     }
     $("#exportieren_exportieren_filterkriterien")
@@ -4488,6 +4536,7 @@ window.adb.filtereFürExport = function(direkt) {
 };
 
 window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+	'use strict';
     // Alle Felder abfragen
     var fTz = "false",
         queryParam;
@@ -4516,6 +4565,7 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
 };
 
 window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+	'use strict';
 	// Alle Felder abfragen
 	var fTz = "false",
 		queryParam,
@@ -4571,6 +4621,7 @@ window.adb.übergebeFilterFürDirektExport = function(gruppen, gruppen_array, an
 };
 
 window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+	'use strict';
 	// Alle Felder abfragen
 	var fTz = "false",
 		anz_gruppen_abgefragt = 0,
@@ -4629,6 +4680,7 @@ window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_arra
 };
 
 window.adb.baueTabelleFürExportAuf = function() {
+	'use strict';
     var hinweis = "";
 	if (window.adb.exportieren_objekte.length > 0) {
 		window.adb.erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle");
@@ -4655,6 +4707,7 @@ window.adb.baueTabelleFürExportAuf = function() {
 };
 
 window.adb.fürExportGewählteGruppen = function() {
+	'use strict';
 	var gruppen = [];
 	$(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
 		if ($(this).prop('checked')) {
@@ -4666,6 +4719,7 @@ window.adb.fürExportGewählteGruppen = function() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 	} else {
@@ -4689,6 +4743,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
 // DsNamen in Auswahlliste stellen
 // veränderbare sind normal, übrige grau
 window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
+	'use strict';
 	var html,
         ds_namen = [];
 	// in diesem Array werden alle keys gesammelt
@@ -4734,6 +4789,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
+	'use strict';
 	if (!window.adb.prüfeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
 	} else {
@@ -4757,10 +4813,9 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 };
 
 window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
-	var i,
-		html,
-		z,
-        bs_namen = [];
+	'use strict';
+	var html,
+		bs_namen = [];
 	// in diesem Array werden alle keys gesammelt
 	// diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
 	window.adb.BsKeys = _.map(window.adb.bs_von_objekten.rows, function(row) {
@@ -4804,6 +4859,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
 };
 
 window.adb.isFileAPIAvailable = function() {
+	'use strict';
 	// Check for the various File API support.
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		// Great success! All the File APIs are supported.
@@ -4830,6 +4886,7 @@ window.adb.isFileAPIAvailable = function() {
 };
 
 window.adb.sortiereObjektarrayNachName = function(objektarray) {
+	'use strict';
 	// Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
 	objektarray.sort(function(a, b) {
 		var aName = a.Name,
@@ -4846,6 +4903,7 @@ window.adb.sortiereObjektarrayNachName = function(objektarray) {
 // übernimmt einen Array mit den Beziehungen
 // gibt diesen sortiert zurück
 window.adb.sortiereBeziehungenNachName = function(beziehungen) {
+	'use strict';
 // Beziehungen nach Name sortieren
 	beziehungen.sort(function(a, b) {
 		var aName,
@@ -4877,6 +4935,7 @@ window.adb.sortiereBeziehungenNachName = function(beziehungen) {
 // sortiert nach den keys des Objekts
 // resultat nicht garantiert!
 window.adb.sortKeysOfObject = function(o) {
+	'use strict';
 	var sorted = {},
 		key,
 		a = [];
@@ -4896,6 +4955,7 @@ window.adb.sortKeysOfObject = function(o) {
 };
 
 window.adb.exportZurücksetzen = function() {
+	'use strict';
     var $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse");
 	// Export ausblenden, falls sie eingeblendet war
 	if ($exportieren_exportieren_collapse.css("display") !== "none") {
@@ -4909,6 +4969,7 @@ window.adb.exportZurücksetzen = function() {
 };
 
 window.adb.öffneGruppe = function(Gruppe) {
+	'use strict';
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
@@ -4932,6 +4993,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 // schreibt Änderungen in Feldern in die Datenbank
 // wird vorläufig nur für LR Taxonomie verwendet
 window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
+	'use strict';
 	// zuerst die id des Objekts holen
 	var uri = new Uri($(location).attr('href')),
 		id = uri.getQueryParamValue('id'),
@@ -4949,24 +5011,24 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 	$db.openDoc(id, {
 		success: function(object) {
 			// prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
-			if (feldname === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+			if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
 				// das ist die Wurzel der Taxonomie
 				// somit ändert auch der Taxonomiename
 				// diesen mitgeben
 				// Einheit ändert und Taxonomiename muss auch angepasst werden
 				object.Taxonomie.Name = feldwert;
-				object.Taxonomie.Daten.Taxonomie = feldwert;
+				object.Taxonomie.Eigenschaften.Taxonomie = feldwert;
 				// TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
 				// TODO: allfällige Beziehungen anpassen
 			}
 			// den übergebenen Wert im übergebenen Feldnamen speichern
-			object.Taxonomie.Daten[feldname] = feldwert;
+			object.Taxonomie.Eigenschaften[feldname] = feldwert;
 			$db.saveDoc(object, {
 				success: function(data) {
 					object._rev = data.rev;
 					// prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
 					if (feldname === "Label" || feldname === "Einheit") {
-						if (feldname === "Einheit" && object.Taxonomie.Daten.Einheit === object.Taxonomie.Daten.Taxonomie) {
+						if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
 							// das ist die Wurzel der Taxonomie
 							// somit ändert auch der Taxonomiename
 							// diesen mitgeben
@@ -4984,10 +5046,10 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 						var neuer_nodetext;
 						if (feldname === "Label") {
 							// object hat noch den alten Wert für Label, neuen verwenden
-							neuer_nodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Daten.Einheit);
+							neuer_nodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
 						} else {
 							// object hat noch den alten Wert für Einheit, neuen verwenden
-							neuer_nodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Daten.Label, feldwert);
+							neuer_nodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
 						}
 						$("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuer_nodetext);
 					}
@@ -5106,11 +5168,11 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(object_array) {
 		parent;
     _.each(object_array, function(object) {
         hierarchie = [];
-        parent = object.Taxonomie.Daten.Parent;
+        parent = object.Taxonomie.Eigenschaften.Parent;
         // als Start sich selben zur Hierarchie hinzufügen
         hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
         if (parent) {
-            object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
+            object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
             $db.saveDoc(object);
         }
     });
@@ -5145,19 +5207,19 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	if (!object.Taxonomie) {
 		object.Taxonomie = {};
 	}
-	if (!object.Taxonomie.Daten) {
-		object.Taxonomie.Daten = {};
+	if (!object.Taxonomie.Eigenschaften) {
+		object.Taxonomie.Eigenschaften = {};
 	}
 	parent_object = _.find(object_array, function(obj) {
-		return obj._id === object.Taxonomie.Daten.Parent.GUID;
+		return obj._id === object.Taxonomie.Eigenschaften.Parent.GUID;
 	});
 	// object.Name setzen
 	object.Taxonomie.Name = parent_object.Taxonomie.Name;
-	// object.Taxonomie.Daten.Taxonomie setzen
-	object.Taxonomie.Daten.Taxonomie = parent_object.Taxonomie.Daten.Taxonomie;
+	// object.Taxonomie.Eigenschaften.Taxonomie setzen
+	object.Taxonomie.Eigenschaften.Taxonomie = parent_object.Taxonomie.Eigenschaften.Taxonomie;
 	// als Start sich selben zur Hierarchie hinzufügen
 	hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
-	object.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Daten.Parent.GUID, hierarchie);
+	object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function() {
@@ -5198,40 +5260,40 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, o
 
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
 	var hierarchie = [],
-		parent = objekt.Taxonomie.Daten.Parent,
+		parent = objekt.Taxonomie.Eigenschaften.Parent,
 		object_array = _.map(lr.rows, function(row) {
 			return row.doc;
 		});
 	if (!objekt.Taxonomie) {
 		objekt.Taxonomie = {};
 	}
-	if (!objekt.Taxonomie.Daten) {
-		objekt.Taxonomie.Daten = {};
+	if (!objekt.Taxonomie.Eigenschaften) {
+		objekt.Taxonomie.Eigenschaften = {};
 	}
 	// als Start sich selber zur Hierarchie hinzufügen
 	hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
 	if (parent.GUID !== objekt._id) {
-		objekt.Taxonomie.Daten.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Daten.Parent.GUID, hierarchie);
+		objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
 	} else {
 		// aha, das ist die Wurzel des Baums
-		objekt.Taxonomie.Daten.Hierarchie = hierarchie;
+		objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
 	}
 	if (aktualisiereHierarchiefeld) {
-		$("#Hierarchie").val(window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(objekt.Taxonomie.Daten.Hierarchie));
+		$("#Hierarchie").val(window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
 	}
 	// jetzt den parent aktualisieren
-	if (objekt.Taxonomie.Daten.Hierarchie.length > 1) {
+	if (objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {
 		// es gibt höhere Ebenen
 		// das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
-		objekt.Taxonomie.Daten.Parent = objekt.Taxonomie.Daten.Hierarchie[objekt.Taxonomie.Daten.Hierarchie.length-2];
-	} else if (objekt.Taxonomie.Daten.Hierarchie.length === 1) {
+		objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[objekt.Taxonomie.Eigenschaften.Hierarchie.length-2];
+	} else if (objekt.Taxonomie.Eigenschaften.Hierarchie.length === 1) {
 		// das ist die oberste Ebene
-		objekt.Taxonomie.Daten.Parent = objekt.Taxonomie.Daten.Hierarchie[0];
+		objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[0];
 	}
 	if (einheit_ist_taxonomiename) {
 		// Einheit ändert und Taxonomiename muss auch angepasst werden
 		objekt.Taxonomie.Name = einheit_ist_taxonomiename;
-		objekt.Taxonomie.Daten.Taxonomie = einheit_ist_taxonomiename;
+		objekt.Taxonomie.Eigenschaften.Taxonomie = einheit_ist_taxonomiename;
 	}
 	$db.saveDoc(objekt, {
 		success: function() {
@@ -5239,7 +5301,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 			// kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
             _.each(lr.rows, function(lr_row) {
                 doc = lr_row.doc;
-                if (doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten.Parent && doc.Taxonomie.Daten.Parent.GUID && doc.Taxonomie.Daten.Parent.GUID === objekt._id && doc._id !== objekt._id) {
+                if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
                     // das ist ein child
                     // auch aktualisieren
                     // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
@@ -5260,9 +5322,9 @@ window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hie
         if (object._id === parentGUID) {
             parent_objekt = window.adb.erstelleHierarchieobjektAusObjekt(object);
             Hierarchie.push(parent_objekt);
-            if (object.Taxonomie.Daten.Parent.GUID !== object._id) {
+            if (object.Taxonomie.Eigenschaften.Parent.GUID !== object._id) {
                 // die Hierarchie ist noch nicht zu Ende - weitermachen
-                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object.Taxonomie.Daten.Parent.GUID, Hierarchie);
+                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
                 return Hierarchie;
             } else {
                 // jetzt ist die Hierarchie vollständig
@@ -5281,8 +5343,8 @@ window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
 };
 
 window.adb.erstelleLrLabelNameAusObjekt = function(objekt) {
-	var label = objekt.Taxonomie.Daten.Label || "",
-		einheit = objekt.Taxonomie.Daten.Einheit || "";
+	var label = objekt.Taxonomie.Eigenschaften.Label || "",
+		einheit = objekt.Taxonomie.Eigenschaften.Einheit || "";
 	return window.adb.erstelleLrLabelName(label, einheit);
 };
 

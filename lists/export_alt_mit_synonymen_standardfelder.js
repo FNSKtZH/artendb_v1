@@ -35,7 +35,7 @@ function(head, req) {
 
 		if (row.key[1] === 0) {
             // das ist ein Synonym
-            // wir erstellen je eine Liste aller in Synonymen enthaltenen Daten- und Beziehungssammlungen inkl. der darin enthaltenen Daten
+            // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
             ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
@@ -44,8 +44,8 @@ function(head, req) {
 		} else if (row.key[1] === 1) {
 			// wir sind jetzt im Originalobjekt
 			// sicherstellen, dass DS und BS existieren
-			if (!objekt.Datensammlungen) {
-				objekt.Datensammlungen = [];
+			if (!objekt.Eigenschaftensammlungen) {
+				objekt.Eigenschaftensammlungen = [];
 			}
 			if (!objekt.Beziehungssammlungen) {
 				objekt.Beziehungssammlungen = [];
@@ -58,68 +58,68 @@ function(head, req) {
 
 			// Felder hinzufügen
 			exportObjekt.Gruppe = objekt.Gruppe;
-			exportObjekt.Ref = objekt.Taxonomie.Daten["Taxonomie ID"];
+			exportObjekt.Ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
-			var ds_zh_gis = _.find(objekt.Datensammlungen, function(ds) {
+			var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH GIS";
 			}) || {};
 
 			exportObjekt.GISLayer = "";
-			if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["GIS-Layer"]) {
-				exportObjekt.GISLayer = ds_zh_gis.Daten["GIS-Layer"];
+			if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
+				exportObjekt.GISLayer = ds_zh_gis.Eigenschaften["GIS-Layer"];
 			}
 
 			exportObjekt.Distanz = "";
-			if (ds_zh_gis && ds_zh_gis.Daten && ds_zh_gis.Daten["Betrachtungsdistanz (m)"]) {
-				exportObjekt.Distanz = ds_zh_gis.Daten["Betrachtungsdistanz (m)"];
+			if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
+				exportObjekt.Distanz = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
 			}
 
-			exportObjekt.NameLat = objekt.Taxonomie.Daten.Artname;
+			exportObjekt.NameLat = objekt.Taxonomie.Eigenschaften.Artname;
 			exportObjekt.NameDeu = "";
-			if (objekt.Taxonomie.Daten["Name Deutsch"]) {
-				exportObjekt.NameDeu = objekt.Taxonomie.Daten["Name Deutsch"];
+			if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
+				exportObjekt.NameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"];
 			}
 
-			var ds_zh_artwert_1995 = _.find(objekt.Datensammlungen, function(ds) {
+			var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH Artwert (1995)";
 			}) || {};
 
 			exportObjekt.Artwert = "";
-			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && (ds_zh_artwert_1995.Daten.Artwert || ds_zh_artwert_1995.Daten.Artwert === 0)) {
-				exportObjekt.Artwert = ds_zh_artwert_1995.Daten.Artwert;
+			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
+				exportObjekt.Artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
 			}
 
 			exportObjekt.AwZusatz = "";
-			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Daten && ds_zh_artwert_1995.Daten["Artwert Zusatz"]) {
-				exportObjekt.AwZusatz = ds_zh_artwert_1995.Daten["Artwert Zusatz"];
+			if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"]) {
+				exportObjekt.AwZusatz = ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"];
 			}
 
-			var ds_blaue_liste = _.find(objekt.Datensammlungen, function(ds) {
+			var ds_blaue_liste = _.find(objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "Blaue Liste (1998)";
 			}) || {};
 
 			exportObjekt.Bestandesentwicklung = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Bestandesentwicklung) {
-				exportObjekt.Bestandesentwicklung = ds_blaue_liste.Daten.Bestandesentwicklung;
+			if (ds_blaue_liste && ds_blaue_liste.Eigenschaften && ds_blaue_liste.Eigenschaften.Bestandesentwicklung) {
+				exportObjekt.Bestandesentwicklung = ds_blaue_liste.Eigenschaften.Bestandesentwicklung;
 			}
 
 			exportObjekt.Schutzmassnahmen = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Schutzmassnahmen) {
-				exportObjekt.Schutzmassnahmen = ds_blaue_liste.Daten.Schutzmassnahmen;
+			if (ds_blaue_liste && ds_blaue_liste.Eigenschaften && ds_blaue_liste.Eigenschaften.Schutzmassnahmen) {
+				exportObjekt.Schutzmassnahmen = ds_blaue_liste.Eigenschaften.Schutzmassnahmen;
 			}
 
 			exportObjekt.Wirksamkeit = "";
-			if (ds_blaue_liste && ds_blaue_liste.Daten && ds_blaue_liste.Daten.Wirksamkeit) {
-				exportObjekt.Wirksamkeit = ds_blaue_liste.Daten.Wirksamkeit;
+			if (ds_blaue_liste && ds_blaue_liste.Eigenschaften && ds_blaue_liste.Eigenschaften.Wirksamkeit) {
+				exportObjekt.Wirksamkeit = ds_blaue_liste.Eigenschaften.Wirksamkeit;
 			}
 
-			var ds_zh_ap_flora = _.find(objekt.Datensammlungen, function(ds) {
+			var ds_zh_ap_flora = _.find(objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH AP Flora";
 			}) || {};
 
 			exportObjekt.Link_zum_AP_Bericht = "";
-			if (ds_zh_ap_flora && ds_zh_ap_flora.Daten && ds_zh_ap_flora.Daten["Link zum AP-Bericht"]) {
-				exportObjekt.Link_zum_AP_Bericht = ds_zh_ap_flora.Daten["Link zum AP-Bericht"];
+			if (ds_zh_ap_flora && ds_zh_ap_flora.Eigenschaften && ds_zh_ap_flora.Eigenschaften["Link zum AP-Bericht"]) {
+				exportObjekt.Link_zum_AP_Bericht = ds_zh_ap_flora.Eigenschaften["Link zum AP-Bericht"];
 			}
 
 			exportObjekt["GUID_FNS"] = objekt._id;

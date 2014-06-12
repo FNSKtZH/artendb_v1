@@ -25,15 +25,15 @@ function(head, req) {
 			art._id = doc._id;
 			art.Typ = "Arteigenschaft";
 			ds_loop:
-			for (i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name === "ZH GIS") {
-					art.ArtGruppe = doc.Datensammlungen[i].Daten["GIS-Layer"];
+			for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
+				if (doc.Eigenschaftensammlungen[i].Name === "ZH GIS") {
+					art.ArtGruppe = doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"];
 					art.ArtGruppe = art.ArtGruppe.replace('ae', 'ä').replace('oe', 'ö').replace('ue', 'ü');
 					break ds_loop;
 				}
 			}
-			art["Taxonomie ID"] = doc.Taxonomie.Daten["Taxonomie ID"];
-			art.Artname = doc.Taxonomie.Daten["Artname vollständig"];
+			art["Taxonomie ID"] = doc.Taxonomie.Eigenschaften["Taxonomie ID"];
+			art.Artname = doc.Taxonomie.Eigenschaften["Artname vollständig"];
 			// Hinweis Verwandschaft
 			if (doc.Gruppe === "Flora" && doc.Beziehungssammlungen) {
 				bs_loop:

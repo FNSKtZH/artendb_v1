@@ -69,7 +69,7 @@ arteigenschaften.ch ist <a href="#OpenSource">open source</a>. Es steht allen fr
 
 ###Ziele für Datenpfleger und Systemverantwortliche
 
-- Datensammlungen können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
+- Daten können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
 - Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
 - Der Code ist offen und dokumentiert. Nutzer können eigene Erweiterungen entwickeln (lassen) und/oder arteigenschaften.ch gemeinsam weiter entwickeln
 
@@ -82,10 +82,10 @@ Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach ent
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
-Der Grundgedanke hinter arteigenschaften.ch ist daher: Komplexität minimieren. Es gibt ein paar (nachfolgend erklärte) Grundbegriffe. Daraus leiten sich lediglich drei Grundstrukturen ab: Objekte, ihre Daten- und Beziehungssammlungen.
+Der Grundgedanke hinter arteigenschaften.ch ist daher: Komplexität minimieren. Es gibt ein paar (nachfolgend erklärte) Grundbegriffe. Daraus leiten sich lediglich drei Grundstrukturen ab: Objekte, ihre Eigenschaften- und Beziehungssammlungen.
 
 ###Taxonomien
-[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in arteigenschaften.ch: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Datensammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
+[Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in arteigenschaften.ch: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Eigenschaftensammlungen, Beziehungssammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
 Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebensraumschlüssel. 
 
@@ -101,52 +101,52 @@ Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie n
 ###Gruppen
 Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert. Es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
 
-###Datensammlungen
-Systematische Informationen über Arten kommen in ganzen Datensammlungen, z.B. „Flora Indicativa 2010“. Solche Datensammlungen haben gemeinsame Eigenschaften wie z.B.:
+###Eigenschaftensammlungen
+Systematische Informationen über Arten kommen in ganzen Eigenschaftensammlungen, z.B. „Flora Indicativa 2010“. Solche Eigenschaftensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation, Publikationsdatum)
-- Denselben Zweck: Die Datensammlung wurde in der Regel für einen bestimmten Zweck erarbeitet. Für das Verständnis der Daten kann diese Information sehr hilfreich sein
+- Denselben Zweck: Die Eigenschaftensammlung wurde in der Regel für einen bestimmten Zweck erarbeitet. Für das Verständnis der Daten kann diese Information sehr hilfreich sein
 - Bezug auf eine bestimmte Taxonomie
 - Meist eine bestimmte Artgruppe (z.B. Flora, Fauna, Schmetterlinge…)
 - Innerhalb der Artgruppe eine definierte Auswahl bearbeiteter Arten
 - Definierte Methodik und Auswahl erfasster Informationen
 
-Statt "Datensammlung" könnte auch der Begriff "Publikation" verwendet werden. Damit würde klar:
+Statt "Eigenschaftensammlung" könnte auch der Begriff "Publikation" verwendet werden. Damit würde klar:
 
-- Dass arteigenschaften.ch an Datensammlungen minimale Qualitätsansprüche stellt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
-- Dass eine aktualisierte Version einer bestehenden Datensammlung in der Regel als neue Datensammlung zu behandeln ist
+- Dass arteigenschaften.ch an Eigenschaftensammlungen minimale Qualitätsansprüche stellt. Es muss nicht eine prominent publizierte wissenschaftliche Publikation sein aber die fachliche Qualität sollte dem definierten Zweck entsprechen
+- Dass eine aktualisierte Version einer bestehenden Eigenschaftensammlung in der Regel als neue Eigenschaftensammlung zu behandeln ist
 
-Datensammlungen sollten nur durch die Autoren nachgeführt werden (nicht zu verwechseln mit: importiert).
+Eigenschaftensammlungen sollten nur durch die Autoren nachgeführt werden (nicht zu verwechseln mit: importiert).
 
-Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, Datensammlungen als wesentlichen Teil der Struktur zu behandeln. In arteigenschaften.ch sind sie Eigenschaften der Objekte. Sie erleichtern dem Benutzer, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen.
+Um Arten- und Lebensraumeigenschaften verstehen und verwalten zu können, ist es wichtig, Eigenschaftensammlungen als wesentlichen Teil der Struktur zu behandeln. In arteigenschaften.ch sind sie Eigenschaften der Objekte. Sie erleichtern dem Benutzer, die Übersicht über die riesige Menge von Eigenschaften zu gewinnen.
 
-arteigenschaften.ch kann auch Datensammlungen von synonymen Objekten anzeigen und exportieren.
+arteigenschaften.ch kann auch Eigenschaftensammlungen von synonymen Objekten anzeigen und exportieren.
 
-In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Datensammlung darzustellen. Z.B. bei der Anzeige in der Anwendung oder wenn Daten für Exporte ausgewählt werden.
+In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Eigenschaftensammlung darzustellen. Z.B. bei der Anzeige in der Anwendung oder wenn Daten für Exporte ausgewählt werden.
 
 <a name="zusammenfassende_datensammlungen"></a>
-###Zusammenfassende Datensammlungen
-Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Datensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Datensammlungen, da er häufig pro Artengruppe separat publiziert wird.
+###Zusammenfassende Eigenschaftensammlungen
+Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Eigenschaftensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Eigenschaftensammlungen, da er häufig pro Artengruppe separat publiziert wird.
 
 Das geht so:
 
-- In den jeweiligen Objekten wird eine zusätzliche Datensammlung mit Eigenschaft "zusammenfassend" geschaffen
+- In den jeweiligen Objekten wird eine zusätzliche Eigenschaftensammlung mit Eigenschaft "zusammenfassend" geschaffen
 - Die entsprechenden Daten werden zwei mal importiert:
- - Ein mal in die Ursprungs-Datensammlung
+ - Ein mal in die Ursprungs-Eigenschaftensammlung
  - Ein mal in die zusammenfassende
-- Die zusammenfassende Datensammlung kann genau gleich wie alle anderen Datensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
+- Die zusammenfassende Eigenschaftensammlung kann genau gleich wie alle anderen Eigenschaftensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
-- Es wird eine neue Datensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken", und die Eigenschaften importiert
-- Die alte Datensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
-- Die Eigenschaften werden nochmals in die zusammenfassende Datensammlung "Rote Listen (aktuell)" importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
-- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Datensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Datensammlung mitgeliefert werden
+- Es wird eine neue Eigenschaftensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken", und die Eigenschaften importiert
+- Die alte Eigenschaftensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
+- Die Eigenschaften werden nochmals in die zusammenfassende Eigenschaftensammlung "Rote Listen (aktuell)" importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
+- Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Eigenschaftensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Eigenschaftensammlung mitgeliefert werden
 
 ###Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
 ###Beziehungssammlungen
-Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Datensammlungen. Sammlungen von Beziehungen werden in Analogie zu Datensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Datensammlungen und werden separat behandelt, weil sie eine leicht abweichende Datenstruktur erfordern.
+Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Eigenschaftensammlungen. Sammlungen von Beziehungen werden in Analogie zu Eigenschaftensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Eigenschaftensammlungen und werden separat behandelt, weil sie eine leicht abweichende Datenstruktur erfordern.
 
 ###Gruppen vereinen
 In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. 
@@ -156,14 +156,14 @@ Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der 
 ###Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Daten in der bisherigen arteigenschaften.ch codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Die Rohdaten sind für Menschen nicht mehr lesbar. Deshalb sind codierte Informationen zu vermeiden.
 
-###Datensammlungen aktualisieren
-Wie soll eine bestehende Datensammlung aktualisiert werden? Zu bedenken sind u.a.:
-- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Datensammlungen) unverändert erhalten bleiben
-- Wird eine Datensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
+###Eigenschaftensammlungen aktualisieren
+Wie soll eine bestehende Eigenschaftensammlung aktualisiert werden? Zu bedenken sind u.a.:
+- Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Eigenschaftensammlungen) unverändert erhalten bleiben
+- Wird eine Eigenschaftensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
 
 Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgendermassen vorgegangen werden:
-- Neue Daten als neue Datensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (1995)" gibt und ev. weitere
-- Für die Auswertung unter Einbezug aller Artwerte eine zusammenfassende Datensammlung schaffen, z.B. "ZH Artwert (aktuell)"
+- Neue Daten als neue Eigenschaftensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (1995)" gibt und ev. weitere
+- Für die Auswertung unter Einbezug aller Artwerte eine zusammenfassende Eigenschaftensammlung schaffen, z.B. "ZH Artwert (aktuell)"
 
 <a href="#top">&#8593; top</a>
 
@@ -187,8 +187,8 @@ Im Baum wird die Hierarchie der Objekte dynamisch aufgebaut - soweit sie in der 
 
 **Formular**
 
-Klickt man auf den Namen einer Taxonomie oder Datensammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Datensammlung. Darunter die Eigenschaften des Objekts.<br>Hier ein Beispiel einer Datensammlung:
-<img src="http://barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Datensammlung Blaue Liste" width="100%">
+Klickt man auf den Namen einer Taxonomie, Eigenschaften- oder Beziehungssammlung, werden die dazugehörigen Eigenschaften angezeigt: Zuoberst die Beschreibung der Taxonomie, Eigenschaften- oder Beziehungssammlung. Darunter die Eigenschaften des Objekts.<br>Hier ein Beispiel einer Eigenschaftensammlung:
+<img src="http://barbalex.ch/artendb/datensammlung_.png" alt="Beispiel Aconitum napellus auct., Eigenschaftensammlung Blaue Liste" width="100%">
 
 ...und eine Beziehungssammlung:
 <img src="http://barbalex.ch/artendb/beziehungssammlung_.png" alt="Beispiel Aconitum napellus auct., Lebensraumbeziehungen eines Synonyms" width="100%">
@@ -210,7 +210,7 @@ Das Menu ermöglicht:
 
 arteigenschaften.ch ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig, womit arteigenschaften.ch auf meinem iPad ganz brauchbar ist. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert, die Fingerbedienbarkeit und die Darstellung verbessert, damit arteigenschaften.ch auch auf Smartphones brauchbar ist (wenn man unbedingt will, klappt es schon heute).
  
-###Neue Datensammlungen hinzufügen
+###Neue Eigenschaftensammlungen hinzufügen
 Importiert werden können:
 * Taxonomien (noch nicht umgesetzt)
 * Eigenschaften
@@ -219,7 +219,7 @@ Importiert werden können:
 Will jemand zum Beispiel neue Arteigenschaften ergänzen, geht das so:
 
 1. Die Benutzerin meldet sich an (erstellt beim ersten Mal ein Konto)
-2. Sie beschreibt die Datensammlung
+2. Sie beschreibt die Eigenschaftensammlung
 3. Sie lädt eine vorbereitete csv-Datei mit den Eigenschaften
 4. Sie bezeichnet die für die Verknüpfung der Daten benötigten ID's
 5. Der Import wird ausgeführt
@@ -228,7 +228,7 @@ fertig! Siehe auch den [screencast](http://youtu.be/nqd-v6YxkOY).
 
 Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden dynamisch aus den für die Art gespeicherten Attributen aufgebaut. Somit können neu importierte Eigenschaften anschliessend direkt angezeigt, exportiert und via Schnittstelle zugegriffen werden.
 
-Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
+Neue Eigenschaftensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
 
 ###Daten exportieren
 
@@ -236,7 +236,7 @@ Neue Datensammlungen sind in der aktuellen Access-Datenbank viel umständlicher 
 2. Sie wählt die gewünschten Eigenschaften.<br>Standardmässig werden nur Datensätze exportiert, die Informationen zu den gewählten Eigenschaften enthalten. Diese Option kann ausgeschaltet werden
 4. Die Datei wird generiert und im .csv-Format heruntergeladen
 
-Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). Es können beliebige Informationen aus Taxonomie und Datensammlungen hinzugefügt werden.
+Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). Es können beliebige Informationen aus Taxonomie und Eigenschaftensammlungen hinzugefügt werden.
 
 Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
 
@@ -263,18 +263,18 @@ Eingesetzt werden:
 arteigenschaften.ch wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Importe und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Für die Exporte wurde zusätzlich eine zuverlässige aber langsame Variante implementiert. Auf dem Internet Explorer funktioniert arteigenschaften.ch erst ab Version 9 leidlich.
 
 ###Dokumenten-Datenbank
-In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Datensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Datensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
+In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Eigenschaftensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Eigenschaftensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
-Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Datensammlungen geschieht.
+Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Eigenschaftensammlungen geschieht.
 
-Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Datensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
+Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und Gruppen (Flora, Fauna, Moose, Pilze, Flechten, sogar die Lebensräume) nur aufgrund eines Attributs zu unterscheiden (natürlich enthalten die jeweiligen Eigenschaftensammlungen je nach Gruppe spezifische Eigenschaften). Beziehungen zwischen Objekten gestalten sich entsprechend einfach. Und sie können genau gleich, sozusagen "in der Karteikarte notiert" werden. Simpel, oder?
 
 Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email angefügt werden, z.B. Bilder, Tonaufnahmen, Videos, Berichte (noch nicht umgesetzt).
 
 ###Datenstruktur
 ####Objekte
 
-Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Datensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
+Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Eigenschaftensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
 {
 	"_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
@@ -292,14 +292,14 @@ Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
 - Datenstand (Datum, als die Daten bezogen wurden)
 - Link
 
-Ihre Eigenschaften sind unter "Daten" aufgelistet:
+Ihre Eigenschaften sind unter "Eigenschaften" aufgelistet:
 ```javascript
 "Taxonomie": {
 		"Name":"CSCF (2009)",
 		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
 		"Datenstand":"2009",
 		"Link":"http://www.cscf.ch/",
-		"Daten": {
+		"Eigenschaften": {
 			"Taxonomie ID": 70150,
 			"Klasse":"Reptilia",
 			"Ordnung":"Chelonii",
@@ -320,18 +320,18 @@ Ihre Eigenschaften sind unter "Daten" aufgelistet:
 ```
 Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet.
 
-####Datensammlungen
-Die JSON-Eigenschaft "Datensammlungen" enthält alle Datensammlungen des Objekts. Datensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
+####Eigenschaftensammlungen
+Die JSON-Eigenschaft "Eigenschaftensammlungen" enthält alle Eigenschaftensammlungen des Objekts. Eigenschaftensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
 
-Hier ein Auszug mit nur einer Datensammlung:
+Hier ein Auszug mit nur einer Eigenschaftensammlung:
 ```javascript
-"Datensammlungen": [
+"Eigenschaftensammlungen": [
 	{
 		"Name":"CH Agroscope Zielart (2008)",
 		"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
 		"Datenstand":"2008",
 		"Link":"http://www.agroscope.admin.ch",
-		"Daten": {
+		"Eigenschaften": {
 			"1_1 West-Jura": false,
 			"1_2 Nord-Jura": false,
 			"1_3 Nordostschweiz": false,
@@ -357,7 +357,7 @@ Hier ein Auszug mit nur einer Datensammlung:
 ```
 
 ####Beziehungssammlungen
-Beziehungssammlungen werden ähnlich aufgebaut wie Datensammlungen. Hier ein Auszug mit nur einer Beziehung:
+Beziehungssammlungen werden ähnlich aufgebaut wie Eigenschaftensammlungen. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
 "Beziehungssammlungen": [
 	{
@@ -383,11 +383,11 @@ Beziehungssammlungen werden ähnlich aufgebaut wie Datensammlungen. Hier ein Aus
 ]
 
 ```
-Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
+Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Eigenschaftensammlung:
 
-- Anstatt "Daten" enthält sie "Beziehungen"
-- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Datensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung verständlicher ist
-- Enthält eine Datensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
+- Anstatt "Eigenschaften" enthält sie "Beziehungen"
+- Jede Beziehung enthält im Feld "Beziehungspartner" beliebig viele beteiligte Objekte. Daneben kann sie wie gewöhnliche Eigenschaftensammlungen weitere beschreibende Felder enthalten. Der Begriff "Beziehungspartner" wird anstelle von "Objekt" verwendet, weil er im Kontext der Beziehung verständlicher ist
+- Enthält eine Eigenschaftensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
 - Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen werden, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung auf dem Bildschirm
 
 ####Beispiel des vollständigen Objekts
@@ -403,7 +403,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
 		"Datenstand":"2009",
 		"Link":"http://www.cscf.ch/",
-		"Daten":{
+		"Eigenschaften":{
 			"Taxonomie ID": 70150,
 			"Klasse":"Reptilia",
 			"Ordnung":"Chelonii",
@@ -421,13 +421,13 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Schutz CH":"Schutz gemäss NHG"
 		}
 	},
-	"Datensammlungen": [
+	"Eigenschaftensammlungen": [
 		{
 			"Name":"CH Agroscope Zielart (2008)",
 			"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
 			"Datenstand":"2008",
 			"Link":"http://www.agroscope.admin.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"1_1 West-Jura": false,
 				"1_2 Nord-Jura": false,
 				"1_3 Nordostschweiz": false,
@@ -454,7 +454,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
 			"Datenstand":"2012.01",
 			"Link":"http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
-			"Daten":{
+			"Eigenschaften":{
 				"Priorität":"hoch",
 				"Gefährdung":"vom Aussterben bedroht",
 				"Verantwortung":"geringe Verantwortung",
@@ -479,7 +479,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Name":"CH Rote Listen (unterschiedliche Jahre)",
 			"Beschreibung":"Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
 			"Datenstand":"unterschiedlich",
-			"Daten":{
+			"Eigenschaften":{
 				"Europa Smaragd": true,
 				"Europa":"potentiell gefährdet (NT)",
 				"Schweiz aktuell":"vom Aussterben bedroht (CR)",
@@ -494,7 +494,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
 			"Datenstand":"2010",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"Art ist für AP FM relevant": true,
 				"Bindung an Flachmoore": 7,
 				"Artwert AP FM": 18,
@@ -520,7 +520,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
 			"Datenstand":"ca. 1995",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"Dringlichkeit Aktionsplan":"nicht beurteilt",
 				"Priorität nach Naturschutz-Gesamtkonzept 1990":"nicht beurteilt",
 				"Bestandesentwicklung 1985-2000":"Abnahme",
@@ -545,7 +545,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Artengruppen Kt. Zürich. Eigenschaften von allen Arten",
 			"Datenstand":"2012",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"GIS-Layer":"Reptilien",
 				"Artengruppen-ID in EvAB": 12
 			}
@@ -555,7 +555,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
 			"Datenstand":"ca. 1995",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"Artwert": 11,
 				"Artwertberechnung Areal weltweit":"gross (0 Punkte)",
 				"Artwertberechnung Anteil am CH-Bestand":"klein: <1/4 (0 Punkte)"
@@ -566,7 +566,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 			"Beschreibung":"GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften von allen Arten",
 			"Datenstand":"2012",
 			"Link":"http://www.naturschutz.zh.ch",
-			"Daten":{
+			"Eigenschaften":{
 				"Betrachtungsdistanz (m)": 500,
 				"Kriterien für Bestimmung der Betrachtungsdistanz":"5 (500m als Minimalwert zugeteilt)"
 			}
@@ -646,11 +646,11 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Datensammlung:
 ```
 Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.
 
-Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Datensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Datensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
+Versuchen Sie einmal, diese Informationen aus einer relationalen Datenbank abzufragen und so übersichtlich darzustellen. Es wäre nur schon eine Kunst, die diversen Felder nicht anzuzeigen, in denen für diese Art keine Informationen enthalten sind (die aber existieren, weil andere Arten mit ihnen beschrieben werden). Die Zusammenfassung aller Eigenschaftensammlungen in einer einzigen Zeile vernichtet jede strukturelle Information und ist schlecht lesbar. Und dann darf man sich noch mit so interessanten Problemen rumschlagen wie: Wie wird garantiert, dass jeder Feldname _über alle Eigenschaftensammlungen hinweg_ eindeutig ist? In JSON ist das kein Problem, da die Felder aufgrund der vorhandenen Hierarchie eindeutig sind.
 
 Verglichen mit der Datenstruktur in der relationalen Datenbank wird Komplexität (dutzende verknüpfter Tabellen mit Schlüsseln und Fremdschlüsseln) durch Redundanz ersetzt:
 
-- Datensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben
+- Eigenschaftensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben
 - Beziehungen werden in allen beteiligten Objekten beschrieben
 
 ###Hierarchien
@@ -734,26 +734,26 @@ Arten suchen:
 Eigenschaften anzeigen:
 
 - Für über 40'000 Arten (aus den Gruppen Fauna, Flora, Moose, Pilze) und Lebensräume
-- Auch Daten- und Beziehungssammlungen von synonymen Objekten werden angezeigt
-- Daten- und Beziehungssammlungen sind beschrieben
+- Auch Eigenschaften- und Beziehungssammlungen von synonymen Objekten werden angezeigt
+- Eigenschaften- und Beziehungssammlungen sind beschrieben
 - Beziehungen zwischen Objekten sind verlinkt
 - Felder, die nur einen Web-Link enthalten, werden als Hyperlink angezeigt
 
 Daten importieren:
 
-- Datensammlungen (auch zusammenfassende)
+- Eigenschaftensammlungen (auch zusammenfassende)
 - Beziehungssammlungen (auch zusammenfassende)
 - mit Unterstützung einer Anleitung und eines Screencasts
 
 Daten exportieren:
 
-- Objekte inklusive Taxonomien, Datensammlungen und Beziehungssammlungen
+- Objekte inklusive Taxonomien, Eigenschaftensammlungen und Beziehungssammlungen
 - Zuerst werden die gewünschten Gruppen gewählt
 - Es kann nach jedem (!) in diesen Gruppen existierenden Feld gefiltert werden
 - Dabei können Vergleichsoperatoren verwendet werden (=, >, >=, <, <=)
 - In einer übersichtlichen Liste werden die gewünschten Felder gewählt
 - Informationen von synonymen Arten können mit exportiert werden
-- Wenn gewünscht, werden nur Datensätze geliefert, für die Informationen in den gewählten Datensammlungen existieren
+- Wenn gewünscht, werden nur Datensätze geliefert, für die Informationen in den gewählten Eigenschaftensammlungen existieren
 - Bei Beziehungssammlungen kann man wahlweise:
  - pro Beziehung eine Zeile erstellen
  - pro Objekt eine Zeile erstellen und die Informationen aller Beziehungen kommagetrennt hintereinander ins entsprechende Feld schreiben
@@ -766,18 +766,18 @@ Lebensräume in der Anwendung bearbeiten:
 **Ideen für die Zukunft**
 
 - [Schreibrechte für Organisationen und Benutzer gestalten](https://github.com/FNSKtZH/artendb/wiki/Schreibrechte:-Organisationen-und-Benutzer) (bald)
-- [In Datensammlungen Nutzungsbedingungen festlegen](https://github.com/FNSKtZH/artendb/wiki/In-Datensammlungen-Nutzungsbedingungen-festlegen) (bald)
+- [In Eigenschaften- und Beziehungssammlungen Nutzungsbedingungen festlegen](https://github.com/FNSKtZH/artendb/wiki/In-Datensammlungen-Nutzungsbedingungen-festlegen) (bald)
 - Exporte und Importe direkt nach und von .xlsx-Formate (Probleme von Excel umgehen)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) = alternative Taxonomien verwalten und darstellen (grundlegend)
-- Datensammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Datensammlung ursprünglich erstellt wurde  
+- Eigenschaften- und Beziehungssammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Eigenschaften- oder Beziehungssammlung ursprünglich erstellt wurde  
 - Nach beliebigem Text suchen können
 
 <a href="#top">&#8593; top</a>
 
 <a name="OpenSource"></a>
 #Open source
-Die für die Anwendung verwendete [Lizenz](https://github.com/FNSKtZH/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten(sammlungen) ist aber nur mit Einverständnis der Autoren zulässig.
+Die für die Anwendung verwendete [Lizenz](https://github.com/FNSKtZH/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten ist aber nur mit Einverständnis der Autoren zulässig.
 
 <a href="#top">&#8593; top</a>

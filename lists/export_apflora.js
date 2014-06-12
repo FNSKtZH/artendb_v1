@@ -36,8 +36,8 @@ function(head, req) {
 		exportObjekt.FnsJahresartJahr = null;
 
 		// Felder aktualisieren, wo Daten vorhanden
-		if (Objekt.Taxonomie && Objekt.Taxonomie.Daten) {
-			dsTaxonomie = Objekt.Taxonomie.Daten;
+		if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
+			dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
 			exportObjekt.TaxonomieId = dsTaxonomie["Taxonomie ID"];
 			if (dsTaxonomie["Artname vollständig"]) {
 				exportObjekt.Artname = dsTaxonomie["Artname vollständig"];
@@ -51,32 +51,32 @@ function(head, req) {
 			}
 		}
 
-		if (Objekt.Datensammlungen.length > 0) {
+		if (Objekt.Eigenschaftensammlungen.length > 0) {
 
-			dsArtwert = _.find(Objekt.Datensammlungen, function(ds) {
+			dsArtwert = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH Artwert (1995)";
 			});
-			if (dsArtwert && dsArtwert.Daten && dsArtwert.Daten.Artwert) {
-				exportObjekt.Artwert = dsArtwert.Daten.Artwert;
+			if (dsArtwert && dsArtwert.Eigenschaften && dsArtwert.Eigenschaften.Artwert) {
+				exportObjekt.Artwert = dsArtwert.Eigenschaften.Artwert;
 			}
 
-			dsKef = _.find(Objekt.Datensammlungen, function(ds) {
+			dsKef = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH KEF";
 			});
-			if (dsKef && dsKef.Daten && dsKef.Daten["Art ist KEF-Kontrollindikator"]) {
+			if (dsKef && dsKef.Eigenschaften && dsKef.Eigenschaften["Art ist KEF-Kontrollindikator"]) {
 				// MySQL erwartet für true eine -1
 				exportObjekt.KefArt = -1;
 			}
-			if (dsKef && dsKef.Daten && dsKef.Daten["Erstes Kontrolljahr"]) {
+			if (dsKef && dsKef.Eigenschaften && dsKef.Eigenschaften["Erstes Kontrolljahr"]) {
 				// MySQL erwartet für true eine 1
-				exportObjekt.KefKontrolljahr = dsKef.Daten["Erstes Kontrolljahr"];
+				exportObjekt.KefKontrolljahr = dsKef.Eigenschaften["Erstes Kontrolljahr"];
 			}
 
-			dsJahresarten = _.find(Objekt.Datensammlungen, function(ds) {
+			dsJahresarten = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
 				return ds.Name === "ZH Jahresarten";
 			});
-			if (dsJahresarten && dsJahresarten.Daten && dsJahresarten.Daten.Jahr) {
-				exportObjekt.FnsJahresartJahr = dsJahresarten.Daten.Jahr;
+			if (dsJahresarten && dsJahresarten.Eigenschaften && dsJahresarten.Eigenschaften.Jahr) {
+				exportObjekt.FnsJahresartJahr = dsJahresarten.Eigenschaften.Jahr;
 			}
 		}
 		

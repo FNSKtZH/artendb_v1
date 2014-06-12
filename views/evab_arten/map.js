@@ -2,13 +2,13 @@
 	var i,
 		gis_layer;
 
-	if (doc.Typ && doc.Typ === "Objekt" && doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Daten && doc.Taxonomie.Daten["Artname vollständig"] && (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora" || doc.Gruppe === "Moose" || doc.Gruppe === "Macromycetes")) {
+	if (doc.Typ && doc.Typ === "Objekt" && doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften["Artname vollständig"] && (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora" || doc.Gruppe === "Moose" || doc.Gruppe === "Macromycetes")) {
 
 		// gis-layer bestimmen
-		if (doc.Datensammlungen) {
-			for (i=0; i<doc.Datensammlungen.length; i++) {
-				if (doc.Datensammlungen[i].Name && doc.Datensammlungen[i].Name === "ZH GIS" && doc.Datensammlungen[i].Daten && doc.Datensammlungen[i].Daten["GIS-Layer"]) {
-					gis_layer = doc.Datensammlungen[i].Daten["GIS-Layer"];
+		if (doc.Eigenschaftensammlungen) {
+			for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
+				if (doc.Eigenschaftensammlungen[i].Name && doc.Eigenschaftensammlungen[i].Name === "ZH GIS" && doc.Eigenschaftensammlungen[i].Eigenschaften && doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"]) {
+					gis_layer = doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"];
 					break;
 				}
 			}
@@ -19,6 +19,6 @@
 			gis_layer = "Pilze";
 		}
 
-		emit ([gis_layer, doc.Taxonomie.Daten["Artname vollständig"]], null);
+		emit ([gis_layer, doc.Taxonomie.Eigenschaften["Artname vollständig"]], null);
 	}
 }

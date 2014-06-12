@@ -5,10 +5,10 @@ function(doc) {
     if (doc.Gruppe) {
         if (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora") {
             // sicherstellen, dass GIS-Layer und Betrachtungsdistanz existieren
-            if (doc.Datensammlungen && doc.Datensammlungen.length > 0) {
-                // durch alle Datensammlungen loopen
-                _.each(doc.Datensammlungen, function(datensammlung) {
-                    if (datensammlung.Name && datensammlung.Name === "ZH GIS" && datensammlung.Daten && datensammlung.Daten["GIS-Layer"] && datensammlung.Daten["Betrachtungsdistanz (m)"]) {
+            if (doc.Eigenschaftensammlungen && doc.Eigenschaftensammlungen.length > 0) {
+                // durch alle Eigenschaftensammlungen loopen
+                _.each(doc.Eigenschaftensammlungen, function(datensammlung) {
+                    if (datensammlung.Name && datensammlung.Name === "ZH GIS" && datensammlung.Eigenschaften && datensammlung.Eigenschaften["GIS-Layer"] && datensammlung.Eigenschaften["Betrachtungsdistanz (m)"]) {
                         // ok, alle benötigten Felder sind vorhanden
                         emit(doc._id);
                     }
