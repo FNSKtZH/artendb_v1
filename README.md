@@ -771,6 +771,7 @@ Lebensräume in der Anwendung bearbeiten:
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) (grundlegend)
+- Datensammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Datensammlung ursprünglich erstellt wurde  
 - Alternative Taxonomien verwalten und darstellen (wenig prioritär)
 
 <a href="#top">&#8593; top</a>
