@@ -761,6 +761,7 @@ Lebensräume in der Anwendung bearbeiten:
 
 - [Schreibrechte für Organisationen und Benutzer gestalten](https://github.com/FNSKtZH/artendb/wiki/Schreibrechte:-Organisationen-und-Benutzer) (bald)
 - [In Datensammlungen Nutzungsbedingungen festlegen](https://github.com/FNSKtZH/artendb/wiki/In-Datensammlungen-Nutzungsbedingungen-festlegen) (bald)
+- Exporte und Importe direkt nach und von .xlsx-Formate (Probleme von Excel umgehen)
 - Taxonomien bearbeiten (mittel prioritär)
 - Taxonomien importieren (wenig prioritär)
 - [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) (grundlegend)
