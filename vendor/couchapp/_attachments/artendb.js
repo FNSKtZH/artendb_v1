@@ -1898,8 +1898,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
         $db = $.couch.db("artendb");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-    //$db.view('artendb/all_docs?include_docs=true', {
-    $db.view('artendb/all_docs', {
+    $db.view('artendb/all_docs?include_docs=true', {
         success: function(data) {
             var korrigiert = 0,
                 fehler = 0,
@@ -1909,60 +1908,53 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 return;
             }
             _.each(data.rows, function(row) {
-                $db.openDoc(row.key, {
-                    success: function(art) {
-                        var datensammlungen,
-                            beziehungssammlungen,
-                            ds_daten,
-                            tax_daten,
-                            save = false;
-                        // Datensammlungen umbenennen
-                        // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
-                        // damit die Reihenfolge bewahrt bleibt
-                        if (art.Taxonomie && art.Taxonomie.Daten) {
-                            tax_daten = art.Taxonomie.Daten;
-                            delete art.Taxonomie.Daten;
-                            art.Taxonomie.Eigenschaften = tax_daten;
-                            save = true;
+                var art = row.doc,
+                    datensammlungen,
+                    beziehungssammlungen,
+                    ds_daten,
+                    tax_daten,
+                    save = false;
+                // Datensammlungen umbenennen
+                // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
+                // damit die Reihenfolge bewahrt bleibt
+                if (art.Taxonomie && art.Taxonomie.Daten) {
+                    tax_daten = art.Taxonomie.Daten;
+                    delete art.Taxonomie.Daten;
+                    art.Taxonomie.Eigenschaften = tax_daten;
+                    save = true;
+                }
+                if (art.Datensammlungen) {
+                    datensammlungen = art.Datensammlungen;
+                    _.each(datensammlungen, function(ds) {
+                        if (ds.Daten) {
+                            ds_daten = ds.Daten;
+                            delete ds.Daten;
+                            ds.Eigenschaften = ds_daten;
                         }
-                        if (art.Datensammlungen) {
-                            datensammlungen = art.Datensammlungen;
-                            _.each(datensammlungen, function(ds) {
-                                if (ds.Daten) {
-                                    ds_daten = ds.Daten;
-                                    delete ds.Daten;
-                                    ds.Eigenschaften = ds_daten;
-                                }
-                            });
-                            delete art.Datensammlungen;
-                            if (art.Beziehungssammlungen) {
-                                beziehungssammlungen = art.Beziehungssammlungen;
-                                delete art.Beziehungssammlungen;
-                            } else {
-                                beziehungssammlungen = {};
-                            }
-                            art.Eigenschaftensammlungen = datensammlungen;
-                            art.Beziehungssammlungen = beziehungssammlungen;
-                            save = true;
-                        }
-                        if (save) {
-                            $db.saveDoc(art, {
-                                success: function() {
-                                    korrigiert ++;
-                                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                                },
-                                error: function() {
-                                    fehler ++;
-                                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                                }
-                            });
-                        }
-                    },
-                    error: function() {
-                        fehler ++;
-                        $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                    });
+                    delete art.Datensammlungen;
+                    if (art.Beziehungssammlungen) {
+                        beziehungssammlungen = art.Beziehungssammlungen;
+                        delete art.Beziehungssammlungen;
+                    } else {
+                        beziehungssammlungen = {};
                     }
-                });
+                    art.Eigenschaftensammlungen = datensammlungen;
+                    art.Beziehungssammlungen = beziehungssammlungen;
+                    save = true;
+                }
+                if (save) {
+                    $db.saveDoc(art, {
+                        success: function() {
+                            korrigiert ++;
+                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        },
+                        error: function() {
+                            fehler ++;
+                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        }
+                    });
+                }
 
             });
             if (korrigiert === 0) {
@@ -1971,6 +1963,85 @@ window.adb.baueDsZuEigenschaftenUm = function() {
         }
     });
 };
+
+/*window.adb.baueDsZuEigenschaftenUm = function() {
+ 'use strict';
+ var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
+ $db = $.couch.db("artendb");
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
+ //$db.view('artendb/all_docs?include_docs=true', {
+ $db.view('artendb/all_docs', {
+ success: function(data) {
+ var korrigiert = 0,
+ fehler = 0,
+ save;
+ if (data.rows.length === 0) {
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Keine Daten erhalten");
+ return;
+ }
+ _.each(data.rows, function(row) {
+ $db.openDoc(row.key, {
+ success: function(art) {
+ var datensammlungen,
+ beziehungssammlungen,
+ ds_daten,
+ tax_daten,
+ save = false;
+ // Datensammlungen umbenennen
+ // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
+ // damit die Reihenfolge bewahrt bleibt
+ if (art.Taxonomie && art.Taxonomie.Daten) {
+ tax_daten = art.Taxonomie.Daten;
+ delete art.Taxonomie.Daten;
+ art.Taxonomie.Eigenschaften = tax_daten;
+ save = true;
+ }
+ if (art.Datensammlungen) {
+ datensammlungen = art.Datensammlungen;
+ _.each(datensammlungen, function(ds) {
+ if (ds.Daten) {
+ ds_daten = ds.Daten;
+ delete ds.Daten;
+ ds.Eigenschaften = ds_daten;
+ }
+ });
+ delete art.Datensammlungen;
+ if (art.Beziehungssammlungen) {
+ beziehungssammlungen = art.Beziehungssammlungen;
+ delete art.Beziehungssammlungen;
+ } else {
+ beziehungssammlungen = {};
+ }
+ art.Eigenschaftensammlungen = datensammlungen;
+ art.Beziehungssammlungen = beziehungssammlungen;
+ save = true;
+ }
+ if (save) {
+ $db.saveDoc(art, {
+ success: function() {
+ korrigiert ++;
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+ },
+ error: function() {
+ fehler ++;
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+ }
+ });
+ }
+ },
+ error: function() {
+ fehler ++;
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+ }
+ });
+
+ });
+ if (korrigiert === 0) {
+ $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+ }
+ }
+ });
+ };*/
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
@@ -5072,6 +5143,7 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 };
 
 window.adb.convertToCorrectType = function(feldwert) {
+	'use strict';
 	var type = window.adb.myTypeOf(feldwert);
 	if (type === "boolean") {
 		return Boolean(feldwert);
@@ -5087,6 +5159,7 @@ window.adb.convertToCorrectType = function(feldwert) {
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
 window.adb.myTypeOf = function(wert) {
+	'use strict';
 	if (typeof wert === "boolean") {
 		return "boolean";
 	} else if (parseInt(wert) && parseFloat(wert) && parseInt(wert) != parseFloat(wert) && parseInt(wert) == wert) {
@@ -5103,6 +5176,7 @@ window.adb.myTypeOf = function(wert) {
 };
 
 window.adb.bearbeiteLrTaxonomie = function() {
+	'use strict';
 	// Benutzer muss anmelden
 	if (!window.adb.prüfeAnmeldung("art")) {
 		return false;
@@ -5137,6 +5211,7 @@ window.adb.bearbeiteLrTaxonomie = function() {
 };
 
 window.adb.schützeLrTaxonomie = function() {
+	'use strict';
 	// alle Felder schreibbar setzen
 	$(".Lebensräume.Taxonomie .controls").each(function() {
         var parent = $(this).parent();
@@ -5163,6 +5238,7 @@ window.adb.schützeLrTaxonomie = function() {
 // diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
 // Momentan nicht verwendet
 window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(object_array) {
+	'use strict';
 	var object,
 		hierarchie,
 		parent;
@@ -5185,6 +5261,7 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function(object_array) {
 // wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedes mal die LR aus der DB neu abgerufen werden sollen
 // manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
 window.adb.aktualisiereHierarchieEinesNeuenLr = function(lr, object, aktualisiere_hierarchiefeld) {
+	'use strict';
 	if (lr) {
 		window.adb.aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);
 	} else {
@@ -5198,6 +5275,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr = function(lr, object, aktualisier
 };
 
 window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
+	'use strict';
 	var object_array,
 		hierarchie = [],
 		parent_object;
@@ -5246,6 +5324,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 // wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+	'use strict';
 	if (lr) {
 		window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 	} else {
@@ -5259,6 +5338,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, o
 };
 
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+	'use strict';
 	var hierarchie = [],
 		parent = objekt.Taxonomie.Eigenschaften.Parent,
 		object_array = _.map(lr.rows, function(row) {
@@ -5316,6 +5396,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
 window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hierarchie) {
+	'use strict';
 	var parent_objekt,
 		hierarchie_ergänzt;
     _.each(objekt_array, function(object) {
@@ -5336,6 +5417,7 @@ window.adb.ergänzeParentZuLrHierarchie = function(objekt_array, parentGUID, Hie
 };
 
 window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
+	'use strict';
 	var hierarchieobjekt = {};
 	hierarchieobjekt.Name = window.adb.erstelleLrLabelNameAusObjekt(objekt);
 	hierarchieobjekt.GUID = objekt._id;
@@ -5343,12 +5425,14 @@ window.adb.erstelleHierarchieobjektAusObjekt = function(objekt) {
 };
 
 window.adb.erstelleLrLabelNameAusObjekt = function(objekt) {
+	'use strict';
 	var label = objekt.Taxonomie.Eigenschaften.Label || "",
 		einheit = objekt.Taxonomie.Eigenschaften.Einheit || "";
 	return window.adb.erstelleLrLabelName(label, einheit);
 };
 
 window.adb.erstelleLrLabelName = function(label, einheit) {
+	'use strict';
 	if (label && einheit) {
 		return label + ": " + einheit;
 	} else if (einheit) {
@@ -5364,6 +5448,7 @@ window.adb.erstelleLrLabelName = function(label, einheit) {
 // baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
 // aktualisiert die Objekte mit einer einzigen Operation
 window.adb.löscheMassenMitObjektArray = function(object_array) {
+	'use strict';
 	var objekte_mit_objekte,
 		objekte = [],
 		new_objekt;
@@ -5388,6 +5473,7 @@ window.adb.löscheMassenMitObjektArray = function(object_array) {
 // dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
 // retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
 window.adb.ermittleVergleichsoperator = function(filterwert) {
+	'use strict';
 	var vergleichsoperator;
 	if (filterwert.indexOf(">=") === 0) {
 		vergleichsoperator = ">=";
@@ -5432,6 +5518,7 @@ window.adb.ermittleVergleichsoperator = function(filterwert) {
 };
 
 window.adb.ersetzeUngültigeZeichenInIdNamen = function(idname) {
+	'use strict';
 	return idname.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 };
 
