@@ -832,6 +832,9 @@
                                             <span id="admin_korrigiere_ds_name_rückmeldung"></span>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
+                                    <span id="admin_baue_ds_zu_eigenschaften_um_rückmeldung"></span>
                                 </fieldset>
 							</div>
 						</div>
@@ -1245,7 +1248,8 @@
                             } else {
                                 event.preventDefault();
                             }
-                        });
+                        }
+                    .on("click", "#admin_baue_ds_zu_eigenschaften_um", window.adb.baueDsZuEigenschaftenUm));
 
 				$('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
