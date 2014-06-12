@@ -30,10 +30,10 @@ Die wichtigsten Merkmale dürften sein:
 - Daten können einfach und rasch kombiniert und exportiert werden, um anschliessend mit ihrer Hilfe Auswertungen durchzuführen
 
 ###Wozu wird ArtenDb benutzt?
-####Nachschlagen
+#####Nachschlagen
 Man kann ArtenDb benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. Da die Benutzeroberfläche dynamisch aus flexiblen Datenstrukturen generiert wird und ArtenDb (bisher) keine Bilder enthält, ist die Darstellung aber eingeschränkt. Anwendungen mit statischer Datenstruktur können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass ArtenDb besonders umfassende und aktuelle Informationen enthält.
 
-####Auswerten
+#####Auswerten
 ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen durchzuführen. Meist in Kombination mit Artbeobachtungen oder Lebensraumkartierungen. Beispiele:
 
 - In einer Liste von Artbeobachtungen die wertvollsten Arten identifizieren, z.B. mithilfe des Artwerts, der nationalen Priorität oder des Rote-Liste-Status
@@ -45,10 +45,10 @@ ArtenDb wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen 
 
 Besonders geeignet ist ArtenDb, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
 
-####Daten für andere Anwendung abholen
+#####Daten für andere Anwendung abholen
 Andere Anwendungen können Daten aus arteigenschaften.ch direkt abholen und nutzen. Mehr Infos [hier](https://github.com/FNSKtZH/artendb/blob/master/README.md#schnittstellen)
 
-####Nutzungsbedingungen
+#####Nutzungsbedingungen
 ArtenDb ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). ArtenDb steht frei zur Verfügung, inklusive der Importmöglichkeiten (Logins erhalten Sie von [Alex](alex@gabriel-software.ch)). Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in ArtenDb zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung einverstanden sind.
 
 ArtenDb ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS oder mit Daten, die man nicht veröffentlichen will.
