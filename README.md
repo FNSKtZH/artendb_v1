@@ -240,7 +240,7 @@ Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile expor
 
 Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
 
-###Daten in arteigenschaften.ch bearbeiten
+###Daten bearbeiten
 Grundsätzlich müssen keine Daten in arteigenschaften.ch bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die arteigenschaften.ch importiert.
 
 Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in arteigenschaften.ch erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar.
