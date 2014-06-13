@@ -805,6 +805,13 @@ window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(es_oder_bs) {
             html += es_oder_bs.Link;
             html += '</a></div>';
         }
+        if (es_oder_bs["importiert von"]) {
+            html += '<div>Importiert von: <a href="mailto:';
+            html += es_oder_bs["importiert von"];
+            html += '">';
+            html += es_oder_bs["importiert von"];
+            html += '</a></div>';
+        }
         if (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung) {
             html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"';
         } else if (es_oder_bs.zusammenfassend && !es_oder_bs.Ursprungsdatensammlung) {
