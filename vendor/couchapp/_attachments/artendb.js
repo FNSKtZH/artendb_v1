@@ -794,28 +794,33 @@ window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(es_oder_bs) {
         }
         html += '<div class="adb-hidden">';
         if (es_oder_bs.Datenstand) {
-            html += '<div>Stand: ';
-            html += es_oder_bs.Datenstand;
+            html += '<div class="ds_beschreibung_zeile">';
+            html += '<div>Stand: </div>';
+            html += '<div>' + es_oder_bs.Datenstand + '</div>';
             html += '</div>';
         }
         if (es_oder_bs.Link) {
-            html += '<div>Link: <a href="';
-            html += es_oder_bs.Link;
-            html += '">';
-            html += es_oder_bs.Link;
-            html += '</a></div>';
+            html += '<div class="ds_beschreibung_zeile">';
+            html += '<div>Link: </div>';
+            html += '<div>' + Autolinker.link(es_oder_bs.Link) + '</div>';
+            html += '</div>';
         }
         if (es_oder_bs["importiert von"]) {
-            html += '<div>Importiert von: <a href="mailto:';
-            html += es_oder_bs["importiert von"];
-            html += '">';
-            html += es_oder_bs["importiert von"];
-            html += '</a></div>';
+            html += '<div class="ds_beschreibung_zeile">';
+            html += '<div>Importiert von: </div>';
+            html += '<div>' + Autolinker.link(es_oder_bs["importiert von"]) + '</div>';
+            html += '</div>';
         }
         if (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung) {
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"';
+            html += '<div class="ds_beschreibung_zeile">';
+            html += '<div>Zus.-fassend: </div>';
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen.<br>Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"</div>';
+            html += '</div>';
         } else if (es_oder_bs.zusammenfassend && !es_oder_bs.Ursprungsdatensammlung) {
-            html += '<br>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen. Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
+            html += '<div class="ds_beschreibung_zeile">';
+            html += '<div>Zus.-fassend: </div>';
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen.<br>Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
+            html += '</div>';
         }
         // zusätzliche Infos abschliessen
         html += '</div>';
@@ -4084,8 +4089,8 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_filtern += '<div class="adb-hidden">';
             ds_felder_objekt = dsbs_von_objekt[1];
             _.each(ds_felder_objekt, function(feldwert, feldname) {
-                html_felder_wählen += '<div class="export_ds_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
-                html_filtern += '<div class="export_ds_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+                html_felder_wählen += '<div class="ds_beschreibung_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+                html_filtern += '<div class="ds_beschreibung_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
             });
             html_felder_wählen += '</div>';
             html_filtern += '</div>';
