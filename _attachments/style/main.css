@@ -6143,7 +6143,7 @@ h5 a {
 
 #exportieren_panel .ds_beschreibung_zeile > div:nth-child(1),
 #art .ds_beschreibung_zeile > div:nth-child(1) {
-    width: 110px;
+    width: 97px;
     word-wrap: break-word;
 }
 
@@ -6156,9 +6156,6 @@ h5 a {
     -ms-flex: 1;              /* IE 10 */
     flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
-
-
-
 
 .felderspalte .form-group {
 	/* bootstrap setzt -15px */
@@ -6287,7 +6284,6 @@ a:hover {
 }
 
 .BeschreibungDatensammlung {
-	font-size:17px;
 	padding-bottom: 0.9em;
 	/* sehr lange links müssen im Wort umbrechen können */
 	word-wrap: break-word;

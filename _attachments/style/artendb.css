@@ -357,7 +357,7 @@ h5 a {
 
 #exportieren_panel .ds_beschreibung_zeile > div:nth-child(1),
 #art .ds_beschreibung_zeile > div:nth-child(1) {
-    width: 110px;
+    width: 97px;
     word-wrap: break-word;
 }
 
@@ -498,7 +498,6 @@ a:hover {
 }
 
 .BeschreibungDatensammlung {
-	font-size:17px;
 	padding-bottom: 0.9em;
 	/* sehr lange links müssen im Wort umbrechen können */
 	word-wrap: break-word;
