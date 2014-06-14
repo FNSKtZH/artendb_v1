@@ -813,13 +813,13 @@ window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(es_oder_bs) {
         }
         if (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung) {
             html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Zus.-fassend: </div>';
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen.<br>Die angezeigten Informationen stammen aus der Ursprungs-Datensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"</div>';
+            html += '<div>Zus.-fassend:</div>';
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen.<br>Die angezeigten Informationen stammen aus der Eigenschaftensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"</div>';
             html += '</div>';
         } else if (es_oder_bs.zusammenfassend && !es_oder_bs.Ursprungsdatensammlung) {
             html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Zus.-fassend: </div>';
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Ursprungs-Datensammlungen in einer zusammen.<br>Bei den angezeigten Informationen ist die Ursprungs-Datensammlung leider nicht beschrieben</div>';
+            html += '<div>Zus.-fassend:</div>';
+            html += '<div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen.<br>Bei den angezeigten Informationen ist die Ursprungs-Eigenschaftensammlung leider nicht beschrieben</div>';
             html += '</div>';
         }
         // zusätzliche Infos abschliessen
@@ -3771,6 +3771,15 @@ window.adb.fügeDatensammlungZuObjekt = function(guid, datensammlung) {
 	var $db = $.couch.db("artendb");
 	$db.openDoc(guid, {
 		success: function(doc) {
+			// sicherstellen, dass Eigenschaftensammlung existiert
+			if (!doc.Eigenschaftensammlungen) {
+				doc.Eigenschaftensammlungen = [];
+			}
+			// falls dieselbe Datensammlung schon existierte: löschen
+			// trifft z.B. zu bei zusammenfassenden
+			doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function(es) {
+				return es.Name === datensammlung.Name;
+			});
 			// Datensammlung anfügen
 			doc.Eigenschaftensammlungen.push(datensammlung);
 			// sortieren
@@ -4039,7 +4048,8 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
         x,
         dsbs_von_objekten = [],
         dsbs_von_objekt,
-        ds_felder_objekt;
+        ds_felder_objekt,
+        html;
 
     // Eigenschaftensammlungen vorbereiten
     // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
@@ -4089,8 +4099,16 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_filtern += '<div class="adb-hidden">';
             ds_felder_objekt = dsbs_von_objekt[1];
             _.each(ds_felder_objekt, function(feldwert, feldname) {
-                html_felder_wählen += '<div class="ds_beschreibung_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
-                html_filtern += '<div class="ds_beschreibung_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+            	if (feldname === "zusammenfassend") {
+            		// nicht sagen, woher die Infos stammen, weil das Objekt-abhängig ist
+            		html = '<div class="ds_beschreibung_zeile"><div>Zus.-fassend:</div><div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen</div></div>';
+            		html_felder_wählen += html;
+	                html_filtern += html;
+	            } else if (feldname !== "Ursprungsdatensammlung") {
+            		html = '<div class="ds_beschreibung_zeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>';
+            		html_felder_wählen += html;
+	                html_filtern += html;
+            	}
             });
             html_felder_wählen += '</div>';
             html_filtern += '</div>';
