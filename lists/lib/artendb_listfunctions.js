@@ -669,20 +669,20 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
     _.each(felder, function(feld) {
         var export_feldname = feld.DsName + ": " + feld.Feldname;
         // Taxonomie: Felder übernehmen
-        if (feld.DsTyp === "Taxonomie" && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)) {
+        // 2014.06.15: zweite Bedingung ausgeklammert, weil die Felder nur geliefert wurden, wenn zusammenfassend true war
+        if (feld.DsTyp === "Taxonomie"/* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/) {
+            // Leerwert setzen. Wird überschrieben, falls danach ein Wert gefunden wird
+            if (fasse_taxonomien_zusammen) {
+                export_objekt["Taxonomie(n): " + feld.Feldname] = "";
+            } else {
+                export_objekt[export_feldname] = "";
+            }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
             if (typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
                 if (fasse_taxonomien_zusammen) {
                     export_objekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
                     export_objekt[export_feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
-                }
-            } else {
-                // sonst einen leerwert setzen
-                if (fasse_taxonomien_zusammen) {
-                    export_objekt["Taxonomie(n): " + feld.Feldname] = "";
-                } else {
-                    export_objekt[export_feldname] = "";
                 }
             }
         }
