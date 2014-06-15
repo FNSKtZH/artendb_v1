@@ -2,8 +2,9 @@ function(head, req) {
     'use strict';
 	// specify that we're providing a JSON response
     provides('json', function() {
-		var row, objekt, objekt_array;
-		objekt_array = [];
+		var row,
+            objekt,
+            objekt_array = [];
 		while(row = getRow()) {
 			objekt = {};
 			objekt.data = row.key[4];

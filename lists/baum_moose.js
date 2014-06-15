@@ -2,12 +2,15 @@
 function(head, req) {
 	// specify that we're providing a JSON response
     provides('json', function() {
-		var row, objekt, objekt_array, level, filter;
-		level = parseInt(req.query["group_level"]);
+		var row,
+            objekt,
+            objekt_array = [],
+            level = parseInt(req.query["group_level"]),
+            filter,
+            i;
 		if (req.query["id"]) {
 			level--;
 		}
-		objekt_array = [];
 		while(row = getRow()) {
 			objekt = {};
 			objekt.data = row.key[level-1];
