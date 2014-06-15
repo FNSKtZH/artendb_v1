@@ -1,7 +1,8 @@
 function(doc, req) {
-	var field = req.query.field;
-	var value = req.query.value;
-	var message;
+    'use strict';
+	var field = req.query.field,
+        value = req.query.value,
+        message;
 	doc[field] = {};
 	for (i in value) {
 		doc[field][i] = value[i];

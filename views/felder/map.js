@@ -1,4 +1,5 @@
 function(doc) {
+    'use strict';
 
 	var _ = require("views/lib/underscore");
 
@@ -6,7 +7,7 @@ function(doc) {
 
 		if (doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
             _.each(doc.Taxonomie.Eigenschaften, function(feldwert, feldname) {
-                emit ([doc.Gruppe, "Taxonomie", doc.Taxonomie.Name, feldname, typeof feldwert], doc._id);
+                emit([doc.Gruppe, "Taxonomie", doc.Taxonomie.Name, feldname, typeof feldwert], doc._id);
             });
 		}
 
@@ -14,7 +15,7 @@ function(doc) {
             _.each(doc.Eigenschaftensammlungen, function(datensammlung) {
                 if (datensammlung.Eigenschaften) {
                     _.each(datensammlung.Eigenschaften, function(feldwert, feldname) {
-                        emit ([doc.Gruppe, "Datensammlung", datensammlung.Name, feldname, typeof feldwert], doc._id);
+                        emit([doc.Gruppe, "Datensammlung", datensammlung.Name, feldname, typeof feldwert], doc._id);
                     });
                 }
             });
@@ -28,7 +29,7 @@ function(doc) {
                             // irgendwie liefert dieser Loop auch Zahlen, die aussehen als wären sie die keys eines Arrays. Ausschliessen
                             if (isNaN(parseInt(bez_feldname))) {
                                 // jetzt loopen wir durch die Daten der Beziehung
-                                emit ([doc.Gruppe, "Beziehung", beziehungssammlung.Name, bez_feldname, typeof bez_feldwert], doc._id);
+                                emit([doc.Gruppe, "Beziehung", beziehungssammlung.Name, bez_feldname, typeof bez_feldwert], doc._id);
                             }
                         });
                     });

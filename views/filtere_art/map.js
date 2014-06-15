@@ -1,16 +1,17 @@
 function(doc) {
+    'use strict';
 
 	var value = {},
-		i,
-		artname_vollstaendig,
-		artname_vollstaendig_worte;
+		artname_vollständig,
+		artname_vollständig_worte,
+        _ = require("views/lib/underscore");
 
 	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften["Artname vollständig"]) {
 
-		artname_vollstaendig = doc.Taxonomie.Eigenschaften["Artname vollständig"];
+		artname_vollständig = doc.Taxonomie.Eigenschaften["Artname vollständig"];
 
 		// value.Name: dieser Name wird als Suchresultat angezeigt
-		value.Name = artname_vollstaendig;
+		value.Name = artname_vollständig;
 
 		// mit dieser id wird der Datensatz geholt
 		value.id = doc._id;
@@ -19,11 +20,11 @@ function(doc) {
 		value.tokens = [];
 
 		// Artnamen vollständig auftrennen
-		artname_vollstaendig_worte = artname_vollstaendig.split(" ");
-		for (i=0; i<artname_vollstaendig_worte.length; i++) {
-			// Klammern entfernen. Sonst findet die Suche nach "Erd" keine Erdkröte (nur die Suche nach "(Erd")
-			value.tokens.push(artname_vollstaendig_worte[i].replace("\(", "", "g").replace("\)", "", "g"));
-		}
+		artname_vollständig_worte = artname_vollständig.split(" ");
+        _.each(artname_vollständig_worte, function(wort) {
+            // Klammern entfernen. Sonst findet die Suche nach "Erd" keine Erdkröte (nur die Suche nach "(Erd")
+            value.tokens.push(wort.replace("\(", "", "g").replace("\)", "", "g"));
+        });
 
 		// Idee: GUID und Taxonomie Id als token ergänzen
 		// funktioniert nicht, daher ausgeschaltet
@@ -32,7 +33,7 @@ function(doc) {
 			value.tokens.push(doc.Taxonomie.Eigenschaften["Taxonomie ID"]);
 		}*/
 		
-		emit ([doc.Gruppe, artname_vollstaendig], value);
+		emit([doc.Gruppe, artname_vollständig], value);
 	}
 	
 }
