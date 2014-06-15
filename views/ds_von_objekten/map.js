@@ -1,39 +1,39 @@
 ﻿function(doc) {
+    'use strict';
 
 	var Felder,
 		ds_zusammenfassend,
 		bs_zusammenfassend,
-		i,
-		h,
 		x,
-		y;
+        y,
+        _ = require("views/lib/underscore");
 
 	if (doc.Eigenschaftensammlungen) {
-		for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
-			// ds_zusammenfassend ergänzen
-			ds_zusammenfassend = !!doc.Eigenschaftensammlungen[i].zusammenfassend;
-			Felder = {};
-			for (x in doc.Eigenschaftensammlungen[i]) {
-				if (x !== "Typ" && x !== "Name" && x !== "Eigenschaften" ) {
-					Felder[x] = doc.Eigenschaftensammlungen[i][x];
-				}
-			}
-			emit (["Datensammlung", doc.Eigenschaftensammlungen[i].Name, ds_zusammenfassend, doc.Eigenschaftensammlungen[i]["importiert von"], Felder], doc._id);
-		}
+        _.each(doc.Eigenschaftensammlungen, function(es) {
+            // ds_zusammenfassend ergänzen
+            ds_zusammenfassend = !!es.zusammenfassend;
+            Felder = {};
+            for (x in es) {
+                if (x !== "Typ" && x !== "Name" && x !== "Eigenschaften" ) {
+                    Felder[x] = es[x];
+                }
+            }
+            emit(["Datensammlung", es.Name, ds_zusammenfassend, es["importiert von"], Felder], doc._id);
+        });
 	}
 
 	if (doc.Beziehungssammlungen) {
-		for (h=0; h<doc.Beziehungssammlungen.length; h++) {
-			// bs_zusammenfassend ergänzen
-			bs_zusammenfassend = !!doc.Beziehungssammlungen[h].zusammenfassend;
-			Felder = {};
-			for (y in doc.Beziehungssammlungen[h]) {
-				if (y !== "Typ" && y !== "Name" && y !== "Beziehungen") {
-					Felder[y] = doc.Beziehungssammlungen[h][y];
-				}
-			}
-			emit (["Beziehungssammlung", doc.Beziehungssammlungen[h].Name, bs_zusammenfassend, doc.Beziehungssammlungen[h]["importiert von"], Felder], doc._id);
-		}
+        _.each(doc.Beziehungssammlungen, function(bs) {
+            // bs_zusammenfassend ergänzen
+            bs_zusammenfassend = !!bs.zusammenfassend;
+            Felder = {};
+            for (y in bs) {
+                if (y !== "Typ" && y !== "Name" && y !== "Beziehungen") {
+                    Felder[y] = bs[y];
+                }
+            }
+            emit(["Beziehungssammlung", bs.Name, bs_zusammenfassend, bs["importiert von"], Felder], doc._id);
+        });
 	}
 	
 }

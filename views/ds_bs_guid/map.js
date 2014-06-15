@@ -1,12 +1,14 @@
 ﻿function(doc) {
+    'use strict';
+    var _ = require("views/lib/underscore");
 	if (doc.Beziehungssammlungen) {
-		for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-			emit ([doc.Beziehungssammlungen[i].Name, doc._id], 1);
-		}
+        _.each(doc.Beziehungssammlungen, function(bs) {
+            emit(bs.Name, doc._id], 1);
+        });
 	}
     if (doc.Eigenschaftensammlungen) {
-        for (var i=0; i<doc.Eigenschaftensammlungen.length; i++) {
-            emit ([doc.Eigenschaftensammlungen[i].Name, doc._id], 1);
-        }
+        _.each(doc.Eigenschaftensammlungen, function(es) {
+            emit([es.Name, doc._id], 1);
+        });
     }
 }

@@ -1,7 +1,9 @@
 ﻿function(doc) {
+    'use strict';
+    var _ = require("views/lib/underscore");
 	if (doc.Beziehungssammlungen) {
-		for (var i=0; i<doc.Beziehungssammlungen.length; i++) {
-			emit ([doc.Beziehungssammlungen[i].Name, doc._id], 1);
-		}
+        _.each(doc.Beziehungssammlungen, function(bs) {
+            emit([bs.Name, doc._id], 1);
+        });
 	}
 }
