@@ -1,3 +1,4 @@
+'use strict';
 function(head, req) {
 
 	start({
@@ -32,7 +33,6 @@ function(head, req) {
         while (row = getRow()) {
             objekt = row.doc;
             objekt_hinzufügen = false;
-            objekt_nicht_hinzufügen = false;
 
             // Prüfen, ob Gruppen übergeben wurden
             if (ü_var.gruppen && ü_var.gruppen.length > 0) {

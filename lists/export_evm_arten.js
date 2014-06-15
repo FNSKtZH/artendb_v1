@@ -1,3 +1,4 @@
+'use strict';
 function(head, req) {
 
 	start({
@@ -24,36 +25,33 @@ function(head, req) {
 			art = {};
 			art._id = doc._id;
 			art.Typ = "Arteigenschaft";
-			ds_loop:
 			for (i=0; i<doc.Eigenschaftensammlungen.length; i++) {
 				if (doc.Eigenschaftensammlungen[i].Name === "ZH GIS") {
 					art.ArtGruppe = doc.Eigenschaftensammlungen[i].Eigenschaften["GIS-Layer"];
 					art.ArtGruppe = art.ArtGruppe.replace('ae', 'ä').replace('oe', 'ö').replace('ue', 'ü');
-					break ds_loop;
+					break;
 				}
 			}
 			art["Taxonomie ID"] = doc.Taxonomie.Eigenschaften["Taxonomie ID"];
 			art.Artname = doc.Taxonomie.Eigenschaften["Artname vollständig"];
 			// Hinweis Verwandschaft
 			if (doc.Gruppe === "Flora" && doc.Beziehungssammlungen) {
-				bs_loop:
 				for (j=0; j<doc.Beziehungssammlungen.length; j++) {
 					if (doc.Beziehungssammlungen[j].Name === "SISF Index 2 (2005): offizielle Art") {
 						if (doc.Beziehungssammlungen[j].Beziehungen && doc.Beziehungssammlungen[j].Beziehungen[0] && doc.Beziehungssammlungen[j].Beziehungen[0].Beziehungspartner && doc.Beziehungssammlungen[j].Beziehungen[0].Beziehungspartner[0] && doc.Beziehungssammlungen[j].Beziehungen[0].Beziehungspartner[0].Name) {
 							art.HinweisVerwandschaft = "Achtung: Synonym von " + doc.Beziehungssammlungen[j].Beziehungen[0].Beziehungspartner[0].Name;
 						}
-						break bs_loop;
+						break;
 					}
 				}
 			}
 			if (doc.Gruppe === "Moose") {
-				bs_loop_2:
 				for (k=0; k<doc.Beziehungssammlungen.length; k++) {
 					if (doc.Beziehungssammlungen[k].Name === "NISM (2010): akzeptierte Referenz") {
 						if (doc.Beziehungssammlungen[k].Beziehungen && doc.Beziehungssammlungen[k].Beziehungen[0] && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0] && doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0].Name) {
 							art.HinweisVerwandschaft = "Achtung: Synonym von " + doc.Beziehungssammlungen[k].Beziehungen[0].Beziehungspartner[0].Name;
 						}
-						break bs_loop_2;
+						break;
 					}
 				}
 			}

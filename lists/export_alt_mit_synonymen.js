@@ -1,3 +1,4 @@
+'use strict';
 function(head, req) {
 	var row,
         objekt,
@@ -11,6 +12,7 @@ function(head, req) {
         },
         filterkriterien_objekt = {"filterkriterien": []},
         felder_objekt,
+        gruppen,
         objekt_hinzufügen,
 		exportObjekt,
 		beziehungssammlungen_aus_synonymen,

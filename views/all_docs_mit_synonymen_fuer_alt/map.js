@@ -1,6 +1,7 @@
 ﻿// wählt alle Dokumente, die GIS-Layer und Betrachtungsdistanz enthalten
 // sowie ihre Synonyme
 function(doc) {
+    'use strict';
     var _ = require("views/lib/underscore");
 	if (doc.Gruppe) {
         if (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora") {

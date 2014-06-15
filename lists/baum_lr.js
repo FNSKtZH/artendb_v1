@@ -1,4 +1,5 @@
 function(head, req) {
+    'use strict';
 	// specify that we're providing a JSON response
     provides('json', function() {
 		var row, objekt, objekt_array;

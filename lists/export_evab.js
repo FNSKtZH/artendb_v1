@@ -1,3 +1,4 @@
+'use strict';
 function(head, req) {
 
 	start({
@@ -15,7 +16,6 @@ function(head, req) {
 	var _ = require("lists/lib/underscore");
 	var _a = require("lists/lib/artendb_listfunctions");
 
-	objekt_loop:
 	while (row = getRow()) {
 		Objekt = row.doc;
 
@@ -103,7 +103,7 @@ function(head, req) {
 			break;
 		default:
 			// zum nächsten row
-			continue objekt_loop;
+			continue;
 		}
 
 		exportObjekt.idArt = "{" + Objekt._id + "}";

@@ -1,3 +1,4 @@
 ﻿function(doc) {
-	emit (doc._id);
+    'use strict';
+	emit(doc._id);
 }

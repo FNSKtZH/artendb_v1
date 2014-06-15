@@ -1,4 +1,5 @@
 function(doc, req) {
+    'use strict';
     // Zweck: Filter für Changes-Feed für importierte Eigenschaftensammlungen,
     // in dem nur die vom aktuellen User importierten / gelöschten Objekte erscheinen
     var dsname = req.query.dsname;
