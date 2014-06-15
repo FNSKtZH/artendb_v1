@@ -1,3 +1,4 @@
+'use strict';
 var _ = require("lists/lib/underscore");
 
 exports.erstelleExportString = function(exportobjekte) {
@@ -150,7 +151,8 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
         feldname,
         bs_mit_name,
         bez_mit_feldname,
-        ds_mit_name;
+        ds_mit_name,
+        ds_name;
     if (felder && felder.length > 0) {
         _.each(felder, function (feld) {
             ds_typ = feld.DsTyp;
@@ -193,6 +195,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
         objekt_nicht_hinzufügen = false,
         ds_typ,
         ds_name,
+        ds_existiert,
         feldname,
         filterwert,
         feldwert,
@@ -509,12 +512,14 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
 // und bereitet sie für die Verwendung auf
 exports.holeÜbergebeneVariablen = function(query_objekt) {
     var ü_var = {
-        fasseTaxonomienZusammen: false,
-        filterkriterien: [],
-        felder: [],
-        nur_objekte_mit_eigenschaften: true,
-        bez_in_zeilen: true
-    };
+            fasseTaxonomienZusammen: false,
+            filterkriterien: [],
+            felder: [],
+            nur_objekte_mit_eigenschaften: true,
+            bez_in_zeilen: true
+        },
+        filterkriterien_objekt,
+        felder_objekt;
     _.each(query_objekt, function(value, key) {
         switch (key) {
             case "fasseTaxonomienZusammen":
@@ -667,7 +672,8 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
     });
 
     _.each(felder, function(feld) {
-        var export_feldname = feld.DsName + ": " + feld.Feldname;
+        var export_feldname = feld.DsName + ": " + feld.Feldname,
+            feldwert;
         // Taxonomie: Felder übernehmen
         // 2014.06.15: zweite Bedingung ausgeklammert, weil die Felder nur geliefert wurden, wenn zusammenfassend true war
         if (feld.DsTyp === "Taxonomie"/* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/) {
