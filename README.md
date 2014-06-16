@@ -773,6 +773,12 @@ Lebensräume in der Anwendung bearbeiten:
 - [Objekte von Taxonomien entkoppeln](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln) = alternative Taxonomien verwalten und darstellen (grundlegend)
 - Eigenschaften- und Beziehungssammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Eigenschaften- oder Beziehungssammlung ursprünglich erstellt wurde  
 - Nach beliebigem Text suchen können
+- Listen von Beobachtungen/Lebensräumen mit Eigenschaften verknüpfen:
+    - Benutzerin lädt eine Tabelle mit ihren Beobachtungen oder Lebensräumen (wie bei Importen)
+    - Sie wählt, mit welcher ID diese Daten mit Eigenschaften verknüpft werden sollen (wie bei Importen)
+    - Anwendung meldet, wie erfolgreich die Verknüpfung ist (wie bei Importen)
+    - Benutzer wählt Eigenschaften (wie bei Exporten)
+    - Benutzer lädt Ergebnis herunter (wie bei Exporten)
 
 <a href="#top">&#8593; top</a>
 
