@@ -684,7 +684,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
                 export_objekt[export_feldname] = "";
             }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
-            if (typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
+            if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
                 if (fasse_taxonomien_zusammen) {
                     export_objekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {

@@ -59,7 +59,7 @@ window.adb.erstelleTree = function() {
 				type: 'GET',
 				url: function(node) {
 					if (node == -1) {
-						return window.adb.holeDatenUrlFuerTreeOberstesLevel();
+						return window.adb.holeDatenUrlFürTreeOberstesLevel();
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -133,7 +133,7 @@ window.adb.erstelleTree = function() {
 	return jstree_erstellt.promise();
 };
 
-window.adb.holeDatenUrlFuerTreeOberstesLevel = function() {
+window.adb.holeDatenUrlFürTreeOberstesLevel = function() {
 	'use strict';
 	var gruppe,
         url;
