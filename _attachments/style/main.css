@@ -5787,13 +5787,20 @@ button.close {
 /**
  * INHALT
  *
- * GLOBALE EINSTELLUNGEN
+ * 1. GRUNDSTRUKTUR............responsive
  *
- * MENU.....................die linke Spalte
+ * 2. MENU.....................die linke Spalte
+ *    allgemein / querbeet
+ *    Twitter typeahead........Vorschläge beim Suchen
  * 
- * FORMS....................die rechte Spalte
+ * 3. FORMS....................die rechte Spalte
+ *    allgemein / querbeet
+ *    art
+ *    exportieren
+ *    importieren
+ *    admin
  *
- * TOOLS
+ * 4. TOOLS/QUERBEET
  * 
  */
 
@@ -5802,9 +5809,8 @@ button.close {
 
 
 /*--------------------------------*\
-	#GLOBALE EINSTELLUNGEN
+	1. #GRUNDSTRUKTUR
 \*--------------------------------*/
-
 
 body {
 	padding: 8px 8px 8px 7px !important;
@@ -5815,29 +5821,12 @@ body {
     hyphens: auto;
 }
 
-
-
-
-/*--------------------------------*\
-	#MENU
-\*--------------------------------*/
-
 #menu_btn {
+	position: absolute;
 	top: 18px;
 	left: 16px;
 	/* vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken */
 	z-index: 5;
-}
-
-#menu {
-	left: 7px;
-	overflow: visible;
-	border: 1px solid #e5e5e5;
-	border-radius: 6px;
-	padding: 8px 8px 8px 8px;
-	background-color: #FFFFF0;
-	/* auf chrome liegt Menu ohne diesen z-index unter Accordion (in FF und IE nicht) */
-	z-index: 1;
 }
 
 #forms {
@@ -5858,16 +5847,20 @@ body {
 * iPhone ignoriert handheld leider
 */
 #menu {
-	right: 0;
-	float: left;
+	left: 7px;
+	/* right: 0; ausgeschaltet - unnötig */
+	/* float: left; ausgeschaltet - unnötig */
 	width: -webkit-calc(100% - 2px);
 	width: -o-calc(100% - 2px);
 	width: calc(100% - 2px);
+	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
-}
-
-#menu_btn {
-	position: absolute;
+	overflow: visible;
+	border: 1px solid #e5e5e5;
+	border-radius: 6px;
+	background-color: #FFFFF0;
+	/* auf chrome liegt Menu ohne z-index unter Accordion */
+	z-index: 1;
 }
 
 /* über 1000px nebeneinander
@@ -5884,17 +5877,17 @@ body {
 	}
 
 	body:not(.force-mobile) #forms {
-		width: -webkit-calc(100% - 391px);
-		width: -o-calc(100% - 391px);
-		width: calc(100% - 391px);
-	}
-
-	body:not(.force-mobile) #forms {
+		/* nach rechts schieben */
 		-ms-transform: translate(391px,0px);
 		-webkit-transform: translate(391px,0px);
 		-o-transform: translate(391px,0px);
 		-moz-transform: translate(391px,0px);
 		transform: translate(391px,0px);
+
+		/* Breite berechnen */
+		width: -webkit-calc(100% - 391px);
+		width: -o-calc(100% - 391px);
+		width: calc(100% - 391px);
 	}
 
 	/* In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div! */
@@ -5919,18 +5912,17 @@ body {
 	}
 }
 
-.baum {
-	overflow: auto;
-	overflow-x: hidden;
-	/* verhindern, das Text hinter dem Scrollbalken verschwindet */
-	padding-right: 15px;
-}
 
-/* Text umbrechen lassen */
-#menu .jstree a {
-	white-space: normal;
-	height: auto;
-	padding: 4px 1px;
+
+
+
+/*--------------------------------*\
+	2. #MENU
+	   #allgemein / querbeet
+\*--------------------------------*/
+
+#menu-div {
+	line-height: 30px;
 }
 
 /* Symbol auffälliger machen
@@ -5944,110 +5936,13 @@ body {
 	margin-right: 7px;
 }
 
-#menu button:focus {
-  outline: none;
-}
-
-.baum li > ins {
-	vertical-align: top;
-}
-
-/*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
-.adb-hidden {
-    display: none;
-}
-
-.adb-hidden-strictly {
-    display: none !important;
-}
-
-a.show_next_hidden,
-a.show_next_hidden_export {
-    font-style: italic;
-}
-
-.baum .jstree-hovered, .baum .jstree-clicked {
-	border: 0;
-}
-
-.baum a ins {
-	height: 20px;
-	width: 20px;
-	background-position: -56px -17px;
-}
-
-/* gesuchte Einträge formattieren */
-.jstree-search {
-	color: #CC012A !important;
-}
-
-.panel {
-	margin-bottom: 2px;
-}
-
-.panel-heading {
-	padding-top: 6px;
-	padding-bottom: 6px;
-	border: none;
-}
-
-.panel-heading a {
-	font-size: 17px;
-	color: #944600;
-	font-weight: bold;
-}
-
-.panel-heading h4.panel-title {
-	font-size: 17px;
-	color: #944600;
-	font-weight: bold;
-	padding-left: 0;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	margin-bottom: 0;
-}
-
-/* Gradient, um die panels zu stylen */
-.panel-heading-gradient {
-	background-color: #FFFFD8; 
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
-	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
-	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
-}
-
-.panel-body {
-	background-color: #FFFFF0;
-	border-top: 1px solid #e5e5e5;
-}
-
-input[readonly="readonly"], textarea[readonly="readonly"] {
-    background-color: #ffffff !important;
-}
-
-#menu-div {
-	line-height: 30px;
-}
-
 #menu_btn iframe {
     padding-left: 20px;
     margin-top: 3px;
 }
 
-#Gruppe {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	position: relative;
-	margin-left: 0;
-}
-
-#gruppe_label {
-	position: relative;
-	left: 68px;
-	top: 8px;
-	/* sonst überlappt es das Formular rechts davon! */
-	width: 250px;
+#menu button:focus {
+  outline: none;
 }
 
 #menu .suchen {
@@ -6055,18 +5950,6 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	display: none;
 }
 
-.btn-primary {
-	background-color: #414141 !important;
-	border-color: #222 !important;
-}
-
-.btn-primary:hover {
-	background-color: #222 !important;
-}
-
-#Gruppe .active {
-	background-color: #222 !important;
-}
 /*
 **Breite und Eckrundungen einstellen
 **weil twitter typeahead sie sonst verändert
@@ -6086,452 +5969,74 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 	text-overflow: ellipsis;
 }
 
-.treeBeschriftung {
-	margin-bottom: 1px;
+/* gesuchte Einträge formattieren */
+.jstree-search {
+	color: #CC012A !important;
 }
 
-.felderspalte {
-	-moz-column-width: 450px;
-	-webkit-column-width: 450px;
-	column-width: 450px;
+/* Text umbrechen lassen */
+#menu .jstree a {
+	white-space: normal;
+	height: auto;
+	padding: 4px 1px;
 }
 
-#admin label {
-    font-weight: normal;
-    color: #555555;
-}
-
-#art label,
-#importieren_ds label,
-#importieren_bs label,
-#export .form-group label {
-	width: 200px;
-	color: #555555;
-	margin-right: 7px;
-	/* bootstrap.css macht font-weight bold */
-	font-weight: normal;
-	/* vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist */
-	margin-bottom: 0;
-}
-
-a {
-	color: #016ca2;
-}
-
-.form input[type="radio"], .form input[type="checkbox"] {
-	margin-top: 8px !important;
-	margin-left: 4px !important;
-}
-
-label+input[type="radio"], label+input[type="checkbox"] {
-    margin-bottom: -5px !important;
-}
-
-#export input[type="radio"], #export input[type="checkbox"] {
-	margin-top: 1px !important;
-	margin-left: -19px !important;
-}
-
-#exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
-	margin-top: 1px !important;
-	margin-left: -19px !important;
-}
-
-/*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
-.konto_erstellen_btn {
-	display: none !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
-	font-weight: bold !important;
-}
-
-h5 a {
-    font-weight: normal !important;
-}
-
-#exportieren_panel div.adb-hidden {
-    margin-bottom: 20px;
-    margin-top: -10px;
-    color: #8D8C8C;
-}
-
-#exportieren_panel .ds_beschreibung_zeile,
-#art .ds_beschreibung_zeile {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
-    -ms-flex-direction: row;
-}
-
-#exportieren_panel .ds_beschreibung_zeile > div:nth-child(1),
-#art .ds_beschreibung_zeile > div:nth-child(1) {
-    width: 97px;
-    word-wrap: break-word;
-}
-
-#exportieren_panel .ds_beschreibung_zeile > div:nth-child(2),
-#art .ds_beschreibung_zeile > div:nth-child(2) {
-    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
-    -moz-box-flex: 1;         /* OLD - Firefox 19- */
-    width: 20%;               /* For old syntax, otherwise collapses. */
-    -webkit-flex: 1;          /* Chrome */
-    -ms-flex: 1;              /* IE 10 */
-    flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-}
-
-.felderspalte .form-group {
-	/* bootstrap setzt -15px */
-	margin-left: 0;
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
-}
-
-.felderspalte {
-	/* bootstrap setzt -15px */
-	margin-left: 0;
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
-}
-
-/* ohne das werden checkboxen z.T. von ihrem Label getrennt, in Chrome */
-.felderspalte .checkbox {
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
-}
-
-#export .checkbox {
-	padding-top: 0;
-	margin-bottom: 5px;
-}
-
-.export_zum_titel_gehoerig {
-	margin-bottom: 15px;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-#art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
-	color: #6F6F66;
-	font-weight: bold;
-	margin: 0 0 7px 0;
-}
-
-.controls {
-	/* Breite fix setzen für Browser, die calc nicht unterstützen */
-	width: 1000px;
-	/* Breite fix setzen für Browser, die calc unterstützen */
-	width: -webkit-calc(100% - 230px) !important;
-	width: -o-calc(100% - 230px) !important;
-	width: calc(100% - 230px) !important;
-	font-size: 14px !important;
-}
-
-#exportieren_exportieren_collapse button {
-    margin-bottom: 10px;
-    margin-right: 5px;
-}
-
-#exportieren_exportieren_collapse .tooltip-inner {
-    max-width: 250px;
-}
-
-/*Filterfelder im Export: checkboxes gestalten*/
-#exportieren_objekte_waehlen_ds_collapse .felderspalte .form-group input[type='checkbox'] {
-    width: 13px !important;
-    height: 13px;
-    margin-top: 8px !important;
-    margin-left: 4px !important;
-    cursor: auto;
-}
-
-/* buttons sind ganz weiss
-  so sehen sie aus, wie Felder und fallen gar nicht auf */
-/*.btn-default {
-	background-color: #EBEBEB !important;
-}
-.btn-default:hover {
-	background-color: #E0E0E0 !important;
-}*/
-
-.feld_in_formgroup {
-	margin-left: 210px;
-}
-
-.feld {
-	margin-left: 192px;
-}
-
-.feldtext {
-	margin-top: 4px;
-}
-
-.Datensammlung {
-	color: #944600;
-}
-
-.tabelle {
+.baum {
 	overflow: auto;
-	overflow-y: hidden;
+	overflow-x: hidden;
+	/* verhindern, das Text hinter dem Scrollbalken verschwindet */
+	padding-right: 15px;
 }
 
-.table {
-	margin-bottom: 0;
+.baum li > ins {
+	vertical-align: top;
 }
 
-.alert {
-	/* wird erst sichtbar geschaltet, wenn benötigt */
-	display: none;
-    margin-bottom: 0px !important;
+.baum .jstree-hovered, .baum .jstree-clicked {
+	border: 0;
 }
 
-.modal-backdrop.fade.in {
-	/* bootstrap macht schwarz, das ist hässlich */
-	opacity: 0.8;
-}
-
-.btn.disabled {
-	/* bootstrap macht 0.85, das ist nur schwer sichtbar */
-	opacity: 0.5;
-}
-
-.BeschreibungDatensammlung {
-	padding-bottom: 0.9em;
-	/* sehr lange links müssen im Wort umbrechen können */
-	word-wrap: break-word;
-}
-
-#exportieren_exportieren_filterkriterien li {
-    margin-left: -24px;
-}
-
-/* alle Datenfelder links ausrichten */
-.Datenfelder {
-	float: left;
-	margin: 0 5px 10px 0;
-}
-
-/* ausrichten wie die Felder */
-.form-horizontal .form-actions {
-	padding-left: 190px;
-}
-
-.form-control {
-	display: inline-block !important;
-}
-
-.panel-body hr {
-	margin: 11px 0;
-}
-
-#export .panel-body hr {
-	margin-bottom: 0;
-	margin-top: 16px;
-}
-
-/* Titel für Eigenschaften und Beziehungen stylen */
-.form h4 {
-	padding-left: 15px;
-	margin-bottom: 3px;
-	color: #424242;
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.form h4:first-child {
-	margin-top: 3px;
-}
-
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-	color: #424242;
-}
-
-.form {
-	margin-left: auto;
-	/* verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt */
-	display: none;
-}
-
-/* vertikalen Abstand zwischen Feldern verkleinern */
-#art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
-	margin-bottom: 5px;
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
-}
-
-/*
-** Auswahlliste um bestehende DS/BS zu wählen: wählbare sollen grün und fett sein, nicht wählbare grau und normal
-*/
-.adb_gruen_fett {
-    color:green;
-    font-weight:bold;
-}
-
-.adb_grau_normal {
-    color:grey;
-    font-weight:normal;
-}
-
-[type=number] {
-	width: 100px;
-}
-
-.form-control-static {
-	margin-left: 207px;
-	padding-top: 0 !important;
-}
-
-input[type=file] {
-	margin-left: 0 !important;
-}
-
-.input-group-xs > .input-group-addon {
-	/* aus unbekanntem Grund stimmt die Höhe nicht */
+.baum a ins {
 	height: 20px;
-}
-
-#art textarea {
-	/* textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso */
-	/*margin-left: 4px;*/
-}
-
-label {
-	/* nicht nötig, wenn checkbox mit label beschrieben wird*/
-	line-height: 15px !important;
-	float: left !important;
-}
-
-option {
-	white-space: pre;
-}
-
-.bearb_toolbar {
-	position: absolute;
-	margin-top: -3px;
-	right: 23px;
-}
-
-#lr_parent_waehlen .modal-content {
-	background-color: #FFFFF0;
-}
-
-#lr_parent_waehlen .modal-dialog {
-	display: block;
-	/*max-width: -webkit-calc(100% - 20px);
-	max-width: -o-calc(100% - 20px);
-	max-width: calc(100% - 20px);*/
-}
-
-#lr_parent_waehlen .modal-body {
-	overflow-y: auto !important;
-	padding-top: 0;
-	padding-bottom: 0;
-}
-
-#lr_parent_waehlen .modal-header {
-	padding: 0 15px 0 15px;
-}
-
-.modal-header {
-	padding: 5px 20px 5px 20px;
-}
-
-.modal-footer {
-	padding: 10px 15px 10px 15px;
-}
-
-#lr_parent_waehlen h3 {
-	margin-top: 10px;
+	width: 20px;
+	background-position: -56px -17px;
 }
 
 #vakata-contextmenu {
 	width: 230px;
 }
 
-.hinweis {
-	/* wird erst eingeblendet, wenn ein Anliegen besteht */
-	display: none;
-	margin-left: 210px;
-	margin-top: 7px;
-	margin-bottom: 7px !important;
-	padding-top: 7px;
-	padding-bottom: 7px;
-}
-
-.alert {
-	margin-bottom: 0;
-}
-
-.progress {
-    /*display: none;*/  /*soll erst sichtbar werden, wenn vom Code eingeschaltet*/
-    margin-top: 18px;
-}
-
-#importieren_ds_ids_identifizieren .alert {
-	margin-left: 192px;
-	margin-right: 7px;
-	margin-top: 6px;
-}
-
-.signup {
-	/* wird erst bei signup eingeblendet */
-	display: none;
-}
-
-/* Bootstrap übersteuern */
-.form-actions {
-	background-color: transparent;
-	border-top: none;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding: 5px 20px 0;
-}
-
-.well {
-	/*background-color: #FBFCF7 !important;*/
-    background-color: #FFFFF0 !important;
-	padding: 9px 9px 4px 9px;
-	margin-bottom: 10px !important;
-    /*background-color: rgba(255, 255, 240, 0) !important;*/
-}
-
-.last-well {
-    margin-bottom: 20px !important;
-}
-
-/* 21.5.2014: ausgeschaltet, da unschön und Zweck unklar
-.well a {
-	display: inline-block;
+#Gruppe {
+	margin-top: 5px;
 	margin-bottom: 5px;
-}*/
-
-/*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
-#importieren_ds_import_ausfuehren_collapse button,
-#importieren_bs_import_ausfuehren_collapse button {
-    display: block;
+	position: relative;
+	margin-left: 0;
 }
 
-/* twitter typeahead stylen */
+#Gruppe .active {
+	background-color: #222 !important;
+}
+
+#gruppe_label {
+	position: relative;
+	left: 68px;
+	top: 8px;
+	/* sonst überlappt es das Formular rechts davon! */
+	width: 250px;
+}
+
+.treeBeschriftung {
+	margin-bottom: 1px;
+}
+
+
+
+
+/*--------------------------------*\
+	2. #MENU
+	   #Twitter typeahead
+\*--------------------------------*/
+
 .twitter-typeahead {
 	background-color: #FFF !important;
 	font-size: 14px !important;
@@ -6611,4 +6116,543 @@ option {
 
 .tt-suggestion p {
   margin: 0;
+}
+
+
+
+
+
+/*--------------------------------*\
+	3. #FORMS
+	   allgemein / querbeet
+\*--------------------------------*/
+
+.panel {
+	margin-bottom: 2px;
+}
+
+.panel-heading {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	border: none;
+}
+
+.panel-heading a {
+	font-size: 17px;
+	color: #944600;
+	font-weight: bold;
+}
+
+.panel-heading h4.panel-title {
+	font-size: 17px;
+	color: #944600;
+	font-weight: bold;
+	padding-left: 0;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-bottom: 0;
+}
+
+/* Gradient, um die panels zu stylen */
+.panel-heading-gradient {
+	background-color: #FFFFD8; 
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
+	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
+	background-image: -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
+	background-image: -o-linear-gradient(top, #FFFFE0, #FFFFD8);
+}
+
+.panel-body {
+	background-color: #FFFFF0;
+	border-top: 1px solid #e5e5e5;
+}
+
+.panel-body hr {
+	margin: 11px 0;
+}
+
+input[readonly="readonly"], textarea[readonly="readonly"] {
+    background-color: #ffffff !important;
+}
+
+#art label,
+#importieren_ds label,
+#importieren_bs label,
+#export .form-group label {
+	width: 200px;
+	color: #555555;
+	margin-right: 7px;
+	/* bootstrap.css macht font-weight bold */
+	font-weight: normal;
+	/* vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist */
+	margin-bottom: 0;
+}
+
+a {
+	color: #016ca2;
+}
+
+.form input[type="radio"], .form input[type="checkbox"] {
+	margin-top: 8px !important;
+	margin-left: 4px !important;
+}
+
+label+input[type="radio"], label+input[type="checkbox"] {
+    margin-bottom: -5px !important;
+}
+
+/*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
+.konto_erstellen_btn {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
+	font-weight: bold !important;
+}
+
+h5 a {
+    font-weight: normal !important;
+}
+
+#exportieren_panel .ds_beschreibung_zeile,
+#art .ds_beschreibung_zeile {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+}
+
+#exportieren_panel .ds_beschreibung_zeile > div:nth-child(1),
+#art .ds_beschreibung_zeile > div:nth-child(1) {
+    width: 97px;
+    word-wrap: break-word;
+}
+
+#exportieren_panel .ds_beschreibung_zeile > div:nth-child(2),
+#art .ds_beschreibung_zeile > div:nth-child(2) {
+    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;         /* OLD - Firefox 19- */
+    width: 20%;               /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;          /* Chrome */
+    -ms-flex: 1;              /* IE 10 */
+    flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+.felderspalte {
+	/* Breite */
+	-moz-column-width: 450px;
+	-webkit-column-width: 450px;
+	column-width: 450px;
+	/* bootstrap setzt -15px */
+	margin-left: 0;
+	/* Trennung */
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+.felderspalte .form-group {
+	/* bootstrap setzt -15px */
+	margin-left: 0;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+/* ohne das werden checkboxen z.T. von ihrem Label getrennt, in Chrome */
+.felderspalte .checkbox {
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
+	color: #6F6F66;
+	font-weight: bold;
+	margin: 0 0 7px 0;
+}
+
+.controls {
+	/* Breite fix setzen für Browser, die calc nicht unterstützen */
+	width: 1000px;
+	/* Breite fix setzen für Browser, die calc unterstützen */
+	width: -webkit-calc(100% - 230px) !important;
+	width: -o-calc(100% - 230px) !important;
+	width: calc(100% - 230px) !important;
+	font-size: 14px !important;
+}
+
+.feld_in_formgroup {
+	margin-left: 210px;
+}
+
+.feld {
+	margin-left: 192px;
+}
+
+.feldtext {
+	margin-top: 4px;
+}
+
+.Datensammlung {
+	color: #944600;
+}
+
+.tabelle {
+	overflow: auto;
+	overflow-y: hidden;
+}
+
+.table {
+	margin-bottom: 0;
+}
+
+.alert {
+	/* wird erst sichtbar geschaltet, wenn benötigt */
+	display: none;
+    margin-bottom: 0px !important;
+}
+
+.modal-backdrop.fade.in {
+	/* bootstrap macht schwarz, das ist hässlich */
+	opacity: 0.8;
+}
+
+.btn.disabled {
+	/* bootstrap macht 0.85, das ist nur schwer sichtbar */
+	opacity: 0.5;
+}
+
+.BeschreibungDatensammlung {
+	padding-bottom: 0.9em;
+	/* sehr lange links müssen im Wort umbrechen können */
+	word-wrap: break-word;
+}
+
+/* alle Datenfelder links ausrichten */
+.Datenfelder {
+	float: left;
+	margin: 0 5px 10px 0;
+}
+
+/* ausrichten wie die Felder */
+.form-horizontal .form-actions {
+	padding-left: 190px;
+}
+
+.form-control {
+	display: inline-block !important;
+}
+
+/* Titel für Eigenschaften und Beziehungen stylen */
+.form h4 {
+	padding-left: 15px;
+	margin-bottom: 3px;
+	color: #424242;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.form h4:first-child {
+	margin-top: 3px;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	color: #424242;
+}
+
+.form {
+	margin-left: auto;
+	/* verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt */
+	display: none;
+}
+
+/* vertikalen Abstand zwischen Feldern verkleinern */
+#art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
+	margin-bottom: 5px;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+[type=number] {
+	width: 100px;
+}
+
+.form-control-static {
+	margin-left: 207px;
+	padding-top: 0 !important;
+}
+
+input[type=file] {
+	margin-left: 0 !important;
+}
+
+.input-group-xs > .input-group-addon {
+	/* aus unbekanntem Grund stimmt die Höhe nicht */
+	height: 20px;
+}
+
+label {
+	/* nicht nötig, wenn checkbox mit label beschrieben wird*/
+	line-height: 15px !important;
+	float: left !important;
+}
+
+option {
+	white-space: pre;
+}
+
+.modal-header {
+	padding: 5px 20px 5px 20px;
+}
+
+.modal-footer {
+	padding: 10px 15px 10px 15px;
+}
+
+.hinweis {
+	/* wird erst eingeblendet, wenn ein Anliegen besteht */
+	display: none;
+	margin-left: 210px;
+	margin-top: 7px;
+	margin-bottom: 7px !important;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.alert {
+	margin-bottom: 0;
+}
+
+.signup {
+	/* wird erst bei signup eingeblendet */
+	display: none;
+}
+
+/* Bootstrap übersteuern */
+.form-actions {
+	background-color: transparent;
+	border-top: none;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 5px 20px 0;
+}
+
+.well {
+    background-color: #FFFFF0 !important;
+	padding: 9px 9px 4px 9px;
+	margin-bottom: 10px !important;
+}
+
+.last-well {
+    margin-bottom: 20px !important;
+}
+
+a.show_next_hidden,
+a.show_next_hidden_export {
+    font-style: italic;
+}
+
+
+
+
+
+/*--------------------------------*\
+	3. #FORMS
+	   #art
+\*--------------------------------*/
+
+#art textarea {
+	/* textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso */
+	/*margin-left: 4px;*/
+}
+
+.bearb_toolbar {
+	position: absolute;
+	margin-top: -3px;
+	right: 23px;
+}
+
+#lr_parent_waehlen .modal-content {
+	background-color: #FFFFF0;
+}
+
+#lr_parent_waehlen .modal-dialog {
+	display: block;
+	/*max-width: -webkit-calc(100% - 20px);
+	max-width: -o-calc(100% - 20px);
+	max-width: calc(100% - 20px);*/
+}
+
+#lr_parent_waehlen .modal-body {
+	overflow-y: auto !important;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+#lr_parent_waehlen .modal-header {
+	padding: 0 15px 0 15px;
+}
+
+#lr_parent_waehlen h3 {
+	margin-top: 10px;
+}
+
+
+
+
+
+/*--------------------------------*\
+	3. #FORMS
+	   #exportieren
+\*--------------------------------*/
+
+#export .panel-body hr {
+	margin-bottom: 0;
+	margin-top: 16px;
+}
+
+#export .checkbox {
+	padding-top: 0;
+	margin-bottom: 5px;
+}
+
+.export_zum_titel_gehoerig {
+	margin-bottom: 15px;
+}
+
+#export input[type="radio"], #export input[type="checkbox"] {
+	margin-top: 1px !important;
+	margin-left: -19px !important;
+}
+
+#exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
+	margin-top: 1px !important;
+	margin-left: -19px !important;
+}
+
+#exportieren_panel div.adb-hidden {
+    margin-bottom: 20px;
+    margin-top: -10px;
+    color: #8D8C8C;
+}
+
+#exportieren_exportieren_collapse button {
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+#exportieren_exportieren_collapse .tooltip-inner {
+    max-width: 250px;
+}
+
+/*Filterfelder im Export: checkboxes gestalten*/
+#exportieren_objekte_waehlen_ds_collapse .felderspalte .form-group input[type='checkbox'] {
+    width: 13px !important;
+    height: 13px;
+    margin-top: 8px !important;
+    margin-left: 4px !important;
+    cursor: auto;
+}
+
+#exportieren_exportieren_filterkriterien li {
+    margin-left: -24px;
+}
+
+
+
+
+/*--------------------------------*\
+	3. #FORMS
+	   #importieren
+\*--------------------------------*/
+
+/*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
+#importieren_ds_import_ausfuehren_collapse button,
+#importieren_bs_import_ausfuehren_collapse button {
+    display: block;
+}
+
+/*
+** Auswahlliste um bestehende DS/BS zu wählen: wählbare sollen grün und fett sein, nicht wählbare grau und normal
+*/
+.adb_gruen_fett {
+    color:green;
+    font-weight:bold;
+}
+
+.adb_grau_normal {
+    color:grey;
+    font-weight:normal;
+}
+
+.progress {
+    /*display: none;*/  /*soll erst sichtbar werden, wenn vom Code eingeschaltet*/
+    margin-top: 18px;
+}
+
+#importieren_ds_ids_identifizieren .alert {
+	margin-left: 192px;
+	margin-right: 7px;
+	margin-top: 6px;
+}
+
+
+
+
+
+/*--------------------------------*\
+	3. #FORMS
+	   #admin
+\*--------------------------------*/
+
+#admin label {
+    font-weight: normal;
+    color: #555555;
+}
+
+
+
+
+
+/*--------------------------------*\
+	4. #TOOLS/QUERBEET
+\*--------------------------------*/
+
+/*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
+.adb-hidden {
+    display: none;
+}
+
+.adb-hidden-strictly {
+    display: none !important;
+}
+
+.btn-primary {
+	background-color: #414141 !important;
+	border-color: #222 !important;
+}
+
+.btn-primary:hover {
+	background-color: #222 !important;
 }
