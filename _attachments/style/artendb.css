@@ -1,3 +1,25 @@
+/**
+ * INHALT
+ *
+ * GLOBALE EINSTELLUNGEN
+ *
+ * MENU.....................die linke Spalte
+ * 
+ * FORMS....................die rechte Spalte
+ *
+ * TOOLS
+ * 
+ */
+
+
+
+
+
+/*--------------------------------*\
+	#GLOBALE EINSTELLUNGEN
+\*--------------------------------*/
+
+
 body {
 	padding: 8px 8px 8px 7px !important;
     -webkit-hyphens: auto;
@@ -6,6 +28,13 @@ body {
     -o-hyphens: auto;
     hyphens: auto;
 }
+
+
+
+
+/*--------------------------------*\
+	#MENU
+\*--------------------------------*/
 
 #menu_btn {
 	top: 18px;

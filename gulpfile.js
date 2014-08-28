@@ -12,6 +12,10 @@ gulp.task('prod', function() {
     gulp.start('prod_build_style', 'prod_build_src');
 });
 
+gulp.task('default', function() {
+    gulp.start('dev_build_style', 'dev_build_src');
+});
+
 gulp.task('dev', function() {
     gulp.start('dev_build_style', 'dev_build_src');
 });
