@@ -33,5 +33,8 @@
     "gulp-uglify": "~0.3.0",
     "gulp-autoprefixer": "0.0.7",
     "gulp-minify-css": "~0.3.4"
+  },
+  "dependencies": {
+    "require-dir": "~0.1.0"
   }
 }
