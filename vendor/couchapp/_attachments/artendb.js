@@ -91,14 +91,10 @@ window.adb.erstelleTree = function() {
 	return jstree_erstellt.promise();
 };
 
-window.adb.initiiereSuchfeld_2 = function() {
+// muss hier bleiben, weil typeahead benutzt wird
+// und dieses nicht node- bzw. browserify-tauglich ist
+window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 	'use strict';
-	var such_objekte;
-	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
-		such_objekte = window.adb.filtere_lr.rows;
-	} else if (window.adb.Gruppe) {
-		such_objekte = window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()].rows;
-	}
 	such_objekte = _.map(such_objekte, function(objekt) {
 		return objekt.value;
 	});
@@ -113,82 +109,6 @@ window.adb.initiiereSuchfeld_2 = function() {
 		window.adb.öffneBaumZuId(datum.id);
 	});
 	$("#suchfeld"+window.adb.Gruppe).focus();
-};
-
-// baut die Auswahlliste auf, mit der ein Parent ausgewählt werden soll
-// bekommt die id des LR, von dem aus ein neuer LR erstellt werden soll
-// In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
-// plus man soll auch einen neue Taxonomie beginnen können
-window.adb.initiiereLrParentAuswahlliste = function(taxonomie_name) {
-	'use strict';
-	// lr holen
-	var $db = $.couch.db("artendb");
-	$db.view('artendb/lr?include_docs=true', {
-		success: function(lr) {
-			var taxonomie_objekte, 
-				object,
-				neue_taxonomie,
-				object_html,
-				html = "",
-				i;
-			// reduzieren auf die LR der Taxonomie
-			taxonomie_objekte = _.filter(lr.rows, function(row) {
-				return row.doc.Taxonomie.Name === taxonomie_name;
-			});
-			// einen Array von Objekten schaffen mit id und Name
-			taxonomie_objekte = _.map(taxonomie_objekte, function(row) {
-				object = {};
-				object.id = row.doc._id;
-				if (row.doc.Taxonomie.Eigenschaften && row.doc.Taxonomie.Eigenschaften.Einheit) {
-					if (row.doc.Taxonomie.Eigenschaften.Label) {
-						object.Name = row.doc.Taxonomie.Eigenschaften.Label + ": " + row.doc.Taxonomie.Eigenschaften.Einheit;
-					} else {
-						object.Name = row.doc.Taxonomie.Eigenschaften.Einheit;
-					}
-					if (row.doc.Taxonomie.Eigenschaften.Hierarchie && row.doc.Taxonomie.Eigenschaften.Hierarchie.length === 1) {
-						// das ist das oberste Objekt, soll auch zuoberst einsortiert werden
-						// oft hat es als einziges keinen label und würde daher zuunterst sortiert!
-						object.Sortier = "0";
-					} else {
-						// mittels Array sortieren
-						object.Sortier = object.Name;
-					}
-				}
-				return object;
-			});
-			// jetzt nach Name sortieren
-			taxonomie_objekte = _.sortBy(taxonomie_objekte, function(objekt) {
-				return objekt.Sortier;
-			});
-			neue_taxonomie = {};
-			neue_taxonomie.id = 0;
-			neue_taxonomie.Name = "Neue Taxonomie beginnen";
-			// neueTaxonomie als erstes Objekt in den Array einfügen
-			taxonomie_objekte.unshift(neue_taxonomie);
-
-			// jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
-			for (i=0; i<taxonomie_objekte.length; i++) {
-				object_html = '';
-				if (i === 1) {
-					object_html += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
-				}
-				object_html += '<div class="radio"><label>';
-				object_html += '<input type="radio" name="parent_optionen" id="';
-				object_html += taxonomie_objekte[i].id;
-				object_html += '" value="';
-				object_html += taxonomie_objekte[i].Name;
-				object_html += '">';
-				object_html += taxonomie_objekte[i].Name;
-				object_html += '</label></div>';
-				html += object_html;
-			}
-			$("#lr_parent_waehlen_optionen").html(html);
-			// jetzt das modal aufrufen
-			// höhe Anpassen funktioniert leider nicht über css mit calc
-			$('#lr_parent_waehlen').modal();
-			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()-100);
-		}
-	});
 };
 
 window.adb.öffneBaumZuId = function(id) {
@@ -2230,8 +2150,9 @@ window.adb.handleBtnLrBearbSchützenClick = function() {
 // wenn .btn.lr_bearb_neu geklickt wird
 window.adb.handleBtnLrBearbNeuClick = function() {
 	'use strict';
+	var initiiereLrParentAuswahlliste = require('./modules/initiiereLrParentAuswahlliste');
 	if (!$(this).hasClass('disabled')) {
-		window.adb.initiiereLrParentAuswahlliste($("#Taxonomie").val());
+		initiiereLrParentAuswahlliste($("#Taxonomie").val());
 	}
 };
 
