@@ -855,15 +855,15 @@
 
 			$(document).ready(function() {
 
-                BrowserDetect.init();
+                window.adb.browserDetect.init();
                 // zunächst mal den gröbsten Bock abfangen
-                if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version < 9) {
+                if (window.adb.browserDetect.browser == 'Explorer' && window.adb.browserDetect.version < 9) {
                     $('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>viele Felder exportieren</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren</li><li>Daten werden nicht optimal angezeigt</li><li>die Anwendung ist teilweise extrem langsam</li><li>...und dauernd erscheinen Fenster mit der Frage 'Ausführung des Skripts abbrechen?'</li></ul><br>Empfehlung: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
                     $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
                     $('#meldung_individuell_label').html("inkompatibler Browser");
                     $('#meldung_individuell').modal();
                     // jetzt den nächstgrössten Bock
-                } else if (BrowserDetect.browser == 'Explorer' && BrowserDetect.version === 9) {
+                } else if (window.adb.browserDetect.browser == 'Explorer' && window.adb.browserDetect.version === 9) {
                     $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
                     $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
                     $('#meldung_individuell_label').html("ungeeigneter Browser");
