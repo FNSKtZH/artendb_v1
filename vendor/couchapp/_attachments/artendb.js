@@ -1,6 +1,6 @@
 window.adb = window.adb || {};
 
-window.adb.erstelleBaum = function() {
+window.adb.erstelleBaum = function() { 
 	'use strict';
 	var gruppe,
 		gruppenbezeichnung,

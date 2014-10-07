@@ -5,7 +5,10 @@ var gulp = require('gulp'),
     notify = require('gulp-notify');
 
 gulp.task('prod_build_style', function() {
-    return gulp.src(['_attachments/style/bootstrap.css', '_attachments/style/artendb.css'])
+    return gulp.src([
+            '_attachments/style/bootstrap.css',
+            '_attachments/style/artendb.css'
+        ])
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         .pipe(minifycss())
         .pipe(concat('main.css'))

@@ -1,2 +1,4 @@
 /.idea
 /artendb.iml
+couchPass.json
+vendor/couchapp/_attachments/artendb_browserified.js

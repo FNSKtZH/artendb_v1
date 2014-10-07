@@ -4,5 +4,9 @@
   // ".*~$"
   // ".*\\.swp$"
   // ".*\\.bak$"
-  "node_modules$", "gulp-tasks$", "gulpfile.js"
+  "node_modules$",
+  "gulp-tasks$",
+  "gulpfile.js",
+  "couchPass.json",
+  "vendor/couchapp/_attachments/artendb_browserified.js"
 ]

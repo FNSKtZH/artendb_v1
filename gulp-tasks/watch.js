@@ -1,6 +1,18 @@
 var gulp = require('gulp');
 
 return gulp.task('watch', function() {
-    gulp.watch(['_attachments/*', 'vendor/couchapp/_attachments/*', '-vendor/couchapp/_attachments/main.js', '-vendor/couchapp/_attachments/main2.js', '-_attachments/style'], ['dev_build_src']);
-    gulp.watch(['_attachments/style/*', '-_attachments/style/main.css'], ['dev_build_style']);
+    gulp.watch([
+    	'_attachments/*',
+    	'vendor/couchapp/_attachments/*',
+    	'-vendor/couchapp/_attachments/artendb_browserified.js',
+    	'-vendor/couchapp/_attachments/artendb_built.js',
+        'vendor/couchapp/_attachments/modules/*',
+        'vendor/couchapp/_attachments/lib/*',
+    	'-_attachments/style',
+        '_attachments/style/*',
+        '-_attachments/style/main.css'
+	],
+	[
+    	'dev'
+	]);
 });
