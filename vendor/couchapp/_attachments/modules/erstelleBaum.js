@@ -1,6 +1,7 @@
 'use strict';
 
-var returnFunction = function () {
+// erhält $, weil jquery.couch.js nicht nod-fähig ist
+var returnFunction = function ($) {
 	var gruppe,
 		gruppenbezeichnung,
 		baum_erstellt = $.Deferred();

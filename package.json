@@ -41,6 +41,7 @@
     "gulp-shell": "^0.2.9"
   },
   "dependencies": {
-    "require-dir": "~0.1.0"
+    "require-dir": "~0.1.0",
+    "autolinker": "^0.12.3"
   }
 }
