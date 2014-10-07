@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jquery');
+
 var returnFunction = function () {
 	var gruppe,
         url;

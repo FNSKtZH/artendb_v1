@@ -4,3 +4,4 @@ node_modules/
 couchPass.json
 vendor/couchapp/_attachments/artendb_browserified.js
 vendor/couchapp/_attachments/artendb_built.js
+vendor/couchapp/_attachments/artendb_built.js

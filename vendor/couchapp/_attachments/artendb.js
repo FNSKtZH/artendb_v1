@@ -7,7 +7,7 @@ window.adb.erstelleTree = function() {
 		filter,
 		id,
 		jstree_erstellt = $.Deferred(),
-		holeDatenUrlFürTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel'),
+		holeDatenUrlFuerTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel'),
 		holeDatenUrlFürTreeUntereLevel = require('./modules/holeDatenUrlFuerTreeUntereLevel'),
 		initiiereSuchfeld = require('./modules/initiiereSuchfeld');
 
@@ -17,7 +17,7 @@ window.adb.erstelleTree = function() {
 				type: 'GET',
 				url: function(node) {
 					if (node == -1) {
-						return holeDatenUrlFürTreeOberstesLevel();
+						return holeDatenUrlFuerTreeOberstesLevel();
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -28,7 +28,7 @@ window.adb.erstelleTree = function() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return holeDatenUrlFürTreeUntereLevel(level, filter, gruppe, id);
+						return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
@@ -106,13 +106,12 @@ window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
-		window.adb.öffneBaumZuId(datum.id);
+		window.adb.oeffneBaumZuId (datum.id);
 	});
 	$("#suchfeld"+window.adb.Gruppe).focus();
 };
 
-window.adb.öffneBaumZuId = function(id) {
-	'use strict';
+window.adb.oeffneBaumZuId = function (id) {
 	// Hierarchie der id holen
 	var $db = $.couch.db("artendb");
 	$db.openDoc(id, {
@@ -2214,7 +2213,7 @@ window.adb.handleLrParentOptionenChange = function() {
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
 				$.when(erstelleBaum($)).then(function() {
-					window.adb.öffneBaumZuId(object._id);
+					window.adb.oeffneBaumZuId(object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
@@ -2280,7 +2279,7 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 	// nur ausführen, wenn exportieren_exportieren_collapse offen ist
 	// komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
 	if ($("#exportieren_exportieren_collapse").is(":visible")) {
-        if (window.adb.handleExportierenObjekteWählenCollapseShown(that)) {
+        if (window.adb.handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
             // Tabelle und Herunterladen-Schaltfläche ausblenden
             $("#exportieren_exportieren_tabelle").hide();
@@ -2291,7 +2290,7 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
 	}
 };
 
-window.adb.handleExportierenObjekteWählenCollapseShown = function(that) {
+window.adb.handleExportierenObjekteWaehlenCollapseShown = function(that) {
 	'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
@@ -3767,7 +3766,7 @@ window.adb.öffneUri = function() {
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
 				$.when(erstelleBaum($)).then(function() {
-					window.adb.öffneBaumZuId(id);
+					window.adb.oeffneBaumZuId($, id);
 				});
 			}
 		});
@@ -5073,7 +5072,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	$db.saveDoc(object, {
 		success: function() {
 			$.when(erstelleBaum($)).then(function() {
-				window.adb.öffneBaumZuId(object._id);
+				window.adb.oeffneBaumZuId($, object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},

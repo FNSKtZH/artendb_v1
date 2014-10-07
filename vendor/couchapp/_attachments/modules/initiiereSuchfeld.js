@@ -1,7 +1,5 @@
 'use strict';
 
-var initiiereSuchfeld_2 = require('./initiiereSuchfeld_2')
-
 var returnFunction = function ($) {
 
 	// zuerst mal die benötigten Daten holen
