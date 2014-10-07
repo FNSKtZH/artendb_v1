@@ -7,7 +7,10 @@ window.adb.erstelleTree = function() {
 		filter,
 		id,
 		jstree_erstellt = $.Deferred(),
-		holeDatenUrlFürTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel');
+		holeDatenUrlFürTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel'),
+		holeDatenUrlFürTreeUntereLevel = require('./modules/holeDatenUrlFuerTreeUntereLevel'),
+		initiiereSuchfeld = require('./modules/initiiereSuchfeld');
+
 	$("#tree" + window.adb.Gruppe).jstree({
 		"json_data": {
 			ajax: {
@@ -25,7 +28,7 @@ window.adb.erstelleTree = function() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return window.adb.holeDatenUrlFürTreeUntereLevel(level, filter, gruppe, id);
+						return holeDatenUrlFürTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
@@ -77,7 +80,7 @@ window.adb.erstelleTree = function() {
 		$("#tree" + window.adb.Gruppe).show();
 		$("#tree" + window.adb.Gruppe + "Beschriftung").show();
 		window.adb.setzeTreehöhe();
-		window.adb.initiiereSuchfeld();
+		initiiereSuchfeld($);
 	})
 	.bind("after_open.jstree", function() {
 		window.adb.setzeTreehöhe();
@@ -86,120 +89,6 @@ window.adb.erstelleTree = function() {
 		window.adb.setzeTreehöhe();
 	});
 	return jstree_erstellt.promise();
-};
-
-window.adb.holeDatenUrlFürTreeUntereLevel = function(level, filter, gruppe, id) {
-	'use strict';
-	var startkey,
-		// flag, um mitzuliefern, ob die id angezeigt werden soll
-		id2 = false,
-		endkey = [],
-        a,
-        url;
-	if (filter) {
-		// bei lr gibt es keinen filter und das erzeugt einen fehler
-		startkey = filter.slice();
-		endkey = filter.slice();
-	}
-	switch (gruppe) {
-    case "fauna":
-        if (level > 4) {
-            return null;
-        }
-        for (a=5; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 4) {
-            // das ist die Art-Ebene
-            // hier soll die id angezeigt werden
-            // dazu muss der nächste level abgerufen werden
-            // damit die list den zu hohen level korrigieren kann, id mitgeben
-            id2 = true;
-            level++;
-        }
-        break;
-    case "flora":
-        if (level > 3) {
-            return null;
-        }
-        for (a=4; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 3) {
-            id2 = true;
-            level++;
-        }
-        break;
-    case "moose":
-        if (level > 4) {
-            return null;
-        }
-        for (a=5; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 4) {
-            id2 = true;
-            level++;
-        }
-        break;
-    case "macromycetes":
-        if (level > 2) {
-            return null;
-        }
-        for (a=3; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 2) {
-            id2 = true;
-            level++;
-        }
-        break;
-	}
-	if (gruppe === "lr") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=['+level+', "'+id+'"]&endkey=['+level+', "'+id+'",{},{},{},{}]&group_level=6';
-	} else {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?startkey="+JSON.stringify(startkey)+"&endkey="+JSON.stringify(endkey)+"&group_level="+level;
-	}
-	if (id2) {
-		url = url + "&id=true";
-	}
-	return url;
-};
-
-window.adb.initiiereSuchfeld = function() {
-	'use strict';
-	// zuerst mal die benötigten Daten holen
-	var $db = $.couch.db("artendb");
-	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
-		if (window.adb.filtere_lr) {
-			window.adb.initiiereSuchfeld_2();
-		} else {
-			var startkey = encodeURIComponent('["'+window.adb.Gruppe+'"]'),
-				endkey = encodeURIComponent('["'+window.adb.Gruppe+'",{},{},{}]'),
-				url = 'artendb/filtere_lr?startkey='+startkey+'&endkey=' + endkey;
-			$db.view(url, {
-				success: function(data) {
-					window.adb.filtere_lr = data;
-					window.adb.initiiereSuchfeld_2();
-				}
-			});
-		}
-	} else if (window.adb.Gruppe) {
-		if (window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
-			window.adb.initiiereSuchfeld_2();
-		} else {
-			$db.view('artendb/filtere_art?startkey=["'+window.adb.Gruppe+'"]&endkey=["'+window.adb.Gruppe+'",{}]', {
-				success: function(data) {
-					window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
-					window.adb.initiiereSuchfeld_2();
-				}
-			});
-		}
-	}
 };
 
 window.adb.initiiereSuchfeld_2 = function() {
@@ -5485,16 +5374,13 @@ window.adb.ersetzeUngültigeZeichenInIdNamen = function(idname) {
 
 // kontrolliert den verwendeten Browser
 // Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
-window.adb.browserDetect = 
-{
-	init: function() 
-	{
+window.adb.browserDetect = {
+	init: function() {
 		this.browser = this.searchString(this.dataBrowser) || "Other";
 		this.version = this.searchVersion(navigator.userAgent) ||	   this.searchVersion(navigator.appVersion) || "Unknown";
 	},
 
-	searchString: function(data) 
-	{
+	searchString: function(data) {
 		for (var i=0 ; i < data.length ; i++)   
 		{
 			var dataString = data[i].string;
@@ -5507,17 +5393,15 @@ window.adb.browserDetect =
 		}
 	},
 
-	searchVersion: function(dataString) 
-	{
+	searchVersion: function(dataString) {
 		var index = dataString.indexOf(this.versionSearchString);
 		if (index == -1) return;
 		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
 	},
 
-	dataBrowser: 
-	[
+	dataBrowser: [
 		{ string: navigator.userAgent, subString: "Chrome",  identity: "Chrome" },
-		{ string: navigator.userAgent, subString: "MSIE",	identity: "Explorer" },
+		{ string: navigator.userAgent, subString: "MSIE",	 identity: "Explorer" },
 		{ string: navigator.userAgent, subString: "Firefox", identity: "Firefox" },
 		{ string: navigator.userAgent, subString: "Safari",  identity: "Safari" },
 		{ string: navigator.userAgent, subString: "Opera",   identity: "Opera" }

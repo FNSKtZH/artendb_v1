@@ -42,6 +42,8 @@
   },
   "dependencies": {
     "require-dir": "~0.1.0",
-    "autolinker": "^0.12.3"
+    "autolinker": "^0.12.3",
+    "jquery": "^2.1.1",
+    "underscore": "^1.7.0"
   }
 }
