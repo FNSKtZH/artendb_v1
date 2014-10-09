@@ -37,7 +37,8 @@ window.adb.oeffneNodeNachIdArray = function(idArray) {
 
 window.adb.initiiere_art = function(id) {
 	'use strict';
-	var $db = $.couch.db("artendb");
+	var $db = $.couch.db("artendb"),
+		initiiereArt2 = require('./modules/initiiereArt2');
 	$db.openDoc(id, {
 		success: function(art) {
 			var html_art,
@@ -93,9 +94,6 @@ window.adb.initiiere_art = function(id) {
 			}
 			// Datensammlungen in gewollter Reihenfolge hinzufügen
 			if (art_eigenschaftensammlungen.length > 0) {
-				// Datensammlungen nach Name sortieren
-				/*ausgeschaltet, um Tempo zu gewinnen, Daten sind eh sortiert
-				Datensammlungen = window.adb.sortiereObjektarrayNachName(Datensammlungen);*/
 				// Titel hinzufügen
 				html_art += "<h4>Eigenschaften:</h4>";
                 _.each(art_eigenschaftensammlungen, function(datensammlung) {
@@ -198,40 +196,17 @@ window.adb.initiiere_art = function(id) {
                                 html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "2");
                             });
 						}
-						window.adb.initiiere_art_2(html_art, art);
+						initiiereArt2 ($, html_art, art);
 					}
 				});
 			} else {
-				window.adb.initiiere_art_2(html_art, art);
+				initiiereArt2 ($, html_art, art);
 			}
 		},
 		error: function() {
 			//melde("Fehler: Art konnte nicht geöffnet werden");
 		}
 	});
-};
-
-window.adb.initiiere_art_2 = function(html_art, art) {
-	'use strict';
-	// panel beenden
-	$("#art_inhalt").html(html_art);
-	// richtiges Formular anzeigen
-	window.adb.zeigeFormular("art");
-	// Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
-	$("#art_anmelden").hide();
-	// Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
-	if (art.Eigenschaftensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
-		$('.panel-collapse.Taxonomie').each(function() {
-			$(this).collapse('show');
-		});
-	}
-	// jetzt die Links im Menu setzen
-	// wird zwar in zeigeFormular schon gemacht
-    // trotzdem nötig, weil dort erst mal leere links gesetzt werden
-    // hier wird die url angefügt
-	window.adb.setzteLinksZuBilderUndWikipedia(art);
-	// und die URL anpassen
-	history.pushState(null, null, "index.html?id=" + art._id);
 };
 
 // erstellt die HTML für eine Beziehung
