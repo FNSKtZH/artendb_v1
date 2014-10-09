@@ -14,7 +14,8 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
 		name,
 		ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
 		bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name,
-		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung');
+		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+        erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
@@ -54,7 +55,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
         // Die Felder anzeigen
         _.each(beziehung, function(feldwert, feldname) {
             if (feldname !== "Beziehungspartner") {
-                html += window.adb.erstelleHtmlFürFeld(feldname, feldwert, "Beziehungssammlung", beziehungssammlung.Name.replace(/"/g, "'"));
+                html += erstelleHtmlFuerFeld(feldname, feldwert, "Beziehungssammlung", beziehungssammlung.Name.replace(/"/g, "'"));
             }
         });
         // Am Schluss eine Linie, nicht aber bei der letzten Beziehung

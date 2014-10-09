@@ -9,7 +9,8 @@ var returnFunction = function (ds_typ, art, datensammlung) {
 		array_string,
 		ds_name,
 		ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung');
+		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+		erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
 	ds_name = ersetzeUngueltigeZeichenInIdNamen (datensammlung.Name);
 	// Accordion-Gruppe und -heading anfügen
 	html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
@@ -30,7 +31,7 @@ var returnFunction = function (ds_typ, art, datensammlung) {
 	// Felder anzeigen
 	// zuerst die GUID, aber nur bei der Taxonomie
 	if (ds_typ === "Taxonomie") {
-		html_datensammlung += window.adb.erstelleHtmlFürFeld("GUID", art._id, ds_typ, "Taxonomie");
+		html_datensammlung += erstelleHtmlFuerFeld ("GUID", art._id, ds_typ, "Taxonomie");
 	}
     _.each(datensammlung.Eigenschaften, function(feldwert, feldname) {
         if (feldname === "GUID") {
@@ -53,7 +54,7 @@ var returnFunction = function (ds_typ, art, datensammlung) {
             array_string = feldwert.toString();
             html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, array_string, ds_typ, datensammlung.Name.replace(/"/g, "'"));
         } else {
-            html_datensammlung += window.adb.erstelleHtmlFürFeld(feldname, feldwert, ds_typ, datensammlung.Name.replace(/"/g, "'"));
+            html_datensammlung += erstelleHtmlFuerFeld (feldname, feldwert, ds_typ, datensammlung.Name.replace(/"/g, "'"));
         }
     });
 	// body und Accordion-Gruppe abschliessen
