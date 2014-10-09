@@ -188,57 +188,6 @@ window.adb.fitTextareaToContent = function(id, max_height) {
 	}
 };
 
-// managed die Sichtbarkeit von Formularen
-// wird von allen initiiere_-Funktionen verwendet
-// wird ein Formularname übergeben, wird dieses Formular gezeigt
-// und alle anderen ausgeblendet
-// zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
-window.adb.zeigeFormular = function(formularname) {
-	'use strict';
-	var formular_angezeigt = $.Deferred(),
-        $form = $('form'),
-        setzteLinksZuBilderUndWikipedia = require('./modules/setzteLinksZuBilderUndWikipedia');
-	// zuerst alle Formulare ausblenden
-	$("#forms").hide();
-    $form.each(function() {
-		$(this).hide();
-	});
-
-	if (formularname) {
-		if (formularname !== "art") {
-			// Spuren des letzten Objekts entfernen
-			// IE8 kann nicht deleten
-			try {
-				delete localStorage.art_id;
-			}
-			catch (e) {
-				localStorage.art_id = undefined;
-			}
-			// URL anpassen, damit kein Objekt angezeigt wird
-			// TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-			history.pushState(null, null, "index.html");
-			// alle Bäume ausblenden, suchfeld, Baumtitel
-			$(".suchen").hide();
-			$(".baum").hide();
-			$(".treeBeschriftung").hide();
-			// Gruppe Schaltfläche deaktivieren
-			$('#Gruppe').find('.active').removeClass('active');
-		}
-		$form.each(function() {
-			var that = $(this);
-			if (that.attr("id") === formularname) {
-				$("#forms").show();
-				that.show();
-			}
-		});
-		$(window).scrollTop(0);
-		// jetzt die Links im Menu (de)aktivieren
-		setzteLinksZuBilderUndWikipedia ();
-		formular_angezeigt.resolve();
-	}
-	return formular_angezeigt.promise();
-};
-
 // kontrollieren, ob die erforderlichen Felder etwas enthalten
 // wenn ja wird true retourniert, sonst false
 window.adb.validiereSignup = function(woher) {
@@ -775,8 +724,9 @@ window.adb.handleMenuBtnClick = function() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function() {
 	'use strict';
+	var zeigeFormular = require('./modules/zeigeFormular');
 	if(window.adb.isFileAPIAvailable()) {
-		window.adb.zeigeFormular("importieren_ds");
+		zeigeFormular ("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 		if (window.adb.pruefeAnmeldung("ds")) {
 			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
@@ -789,8 +739,9 @@ window.adb.handleDs_ImportierenClick = function() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function() {
 	'use strict';
+	var zeigeFormular = require('./modules/zeigeFormular');
 	if(window.adb.isFileAPIAvailable()) {
-		window.adb.zeigeFormular("importieren_bs");
+		zeigeFormular ("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
 		if (window.adb.pruefeAnmeldung("bs")) {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
@@ -800,7 +751,8 @@ window.adb.handleBs_ImportierenClick = function() {
 
 window.adb.handleMenuAdminClick = function() {
 	'use strict';
-	window.adb.zeigeFormular("admin");
+	var zeigeFormular = require('./modules/zeigeFormular');
+	zeigeFormular ("admin");
 };
 
 window.adb.ergänzePilzeZhgis = function() {
@@ -1402,7 +1354,8 @@ window.adb.handleBsLöschenClick = function() {
 // wenn exportieren geklickt wird
 window.adb.handleExportierenClick = function() {
 	'use strict';
-	window.adb.zeigeFormular("export");
+	var zeigeFormular = require('./modules/zeigeFormular');
+	zeigeFormular ("export");
 	delete window.adb.exportieren_objekte;
 };
 
