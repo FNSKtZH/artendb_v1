@@ -43,7 +43,8 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 		hierarchie_string,
 		array_string,
 		ds_name,
-		ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen');
+		ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen'),
+		erstelleHtmlFuerDatensammlungBeschreibung = require('./modules/erstelleHtmlFuerDatensammlungBeschreibung');
 	ds_name = ersetzeUngueltigeZeichenInIdNamen (datensammlung.Name);
 	// Accordion-Gruppe und -heading anfügen
 	html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
@@ -60,7 +61,7 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 	// body beginnen
 	html_datensammlung += '<div id="collapse' + ds_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + ds_typ + '"><div class="panel-body">';
 	// Datensammlung beschreiben
-    html_datensammlung += window.adb.erstelleHtmlFürDatensammlungBeschreibung(datensammlung);
+    html_datensammlung += erstelleHtmlFuerDatensammlungBeschreibung (datensammlung);
 	// Felder anzeigen
 	// zuerst die GUID, aber nur bei der Taxonomie
 	if (ds_typ === "Taxonomie") {
@@ -93,60 +94,6 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 	// body und Accordion-Gruppe abschliessen
 	html_datensammlung += '</div></div></div>';
 	return html_datensammlung;
-};
-
-window.adb.erstelleHtmlFürDatensammlungBeschreibung = function(es_oder_bs) {
-	'use strict';
-    var html = '<div class="Datensammlung BeschreibungDatensammlung">',
-    	Autolinker = require('autolinker');
-    if (es_oder_bs.Beschreibung) {
-        html += es_oder_bs.Beschreibung;
-    }
-    // wenn weitere Infos kommen: diese können wahlweise eingeblendet werden
-    if (es_oder_bs.Datenstand || es_oder_bs.Link || (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung)) {
-        // wenn keine Beschreibung existiert, andere Option einblenden
-        if (es_oder_bs.Beschreibung) {
-            html += ' <a href="#" class="show_next_hidden">...mehr</a>';
-        } else {
-            // wenn keine Beschreibung existiert, andere Option einblenden
-            html += '<a href="#" class="show_next_hidden">Beschreibung der Datensammlung anzeigen</a>';
-        }
-        html += '<div class="adb-hidden">';
-        if (es_oder_bs.Datenstand) {
-            html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Stand: </div>';
-            html += '<div>' + es_oder_bs.Datenstand + '</div>';
-            html += '</div>';
-        }
-        if (es_oder_bs.Link) {
-            html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Link: </div>';
-            html += '<div>' + Autolinker.link(es_oder_bs.Link) + '</div>';
-            html += '</div>';
-        }
-        if (es_oder_bs["importiert von"]) {
-            html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Importiert von: </div>';
-            html += '<div>' + Autolinker.link(es_oder_bs["importiert von"]) + '</div>';
-            html += '</div>';
-        }
-        if (es_oder_bs.zusammenfassend && es_oder_bs.Ursprungsdatensammlung) {
-            html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Zus.-fassend:</div>';
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen.<br>Die angezeigten Informationen stammen aus der Eigenschaftensammlung "' + es_oder_bs.Ursprungsdatensammlung + '"</div>';
-            html += '</div>';
-        } else if (es_oder_bs.zusammenfassend && !es_oder_bs.Ursprungsdatensammlung) {
-            html += '<div class="ds_beschreibung_zeile">';
-            html += '<div>Zus.-fassend:</div>';
-            html += '<div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen.<br>Bei den angezeigten Informationen ist die Ursprungs-Eigenschaftensammlung leider nicht beschrieben</div>';
-            html += '</div>';
-        }
-        // zusätzliche Infos abschliessen
-        html += '</div>';
-    }
-    // Beschreibung der Datensammlung abschliessen
-    html += '</div>';
-    return html;
 };
 
 window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function(hierarchie_array) {

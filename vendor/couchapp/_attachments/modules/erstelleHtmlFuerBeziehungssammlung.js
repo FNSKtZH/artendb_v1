@@ -13,7 +13,8 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
 	var html,
 		name,
 		ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-		bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name;
+		bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name,
+		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung');
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
@@ -27,7 +28,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
 	html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
 
 	// Datensammlung beschreiben
-    html += window.adb.erstelleHtmlFürDatensammlungBeschreibung(beziehungssammlung);
+    html += erstelleHtmlFuerDatensammlungBeschreibung (beziehungssammlung);
 
 	// die Beziehungen sortieren
 	beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
