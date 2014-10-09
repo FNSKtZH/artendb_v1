@@ -3,7 +3,8 @@
 var _ = require('underscore');
 
 var returnFunction = function ($, id) {
-	var initiiereArt2 = require('./initiiereArt2');
+	var initiiereArt2 = require('./initiiereArt2'),
+        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
 
 	$.ajax('http://localhost:5984/artendb/' + id, {
         type: 'GET',
@@ -46,7 +47,7 @@ var returnFunction = function ($, id) {
 			html_art += "<h4>Taxonomische Beziehungen:</h4>";
             _.each(taxonomische_beziehungssammlungen, function(beziehungssammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "");
+                html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "");
                 if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
                     _.each(beziehungssammlung.Beziehungen, function(beziehung) {
                         if (beziehung.Beziehungspartner) {
@@ -77,7 +78,7 @@ var returnFunction = function ($, id) {
 			html_art += "<h4>Beziehungen:</h4>";
             _.each(art_beziehungssammlungen, function(beziehungssammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "");
+                html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "");
             });
 		}
 		// Beziehungssammlungen von synonymen Arten
@@ -166,7 +167,7 @@ var returnFunction = function ($, id) {
 					html_art += "<h4>Beziehungen von Synonymen:</h4>";
                     _.each(beziehungssammlungen_von_synonymen, function(beziehungssammlung) {
                         // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                        html_art += window.adb.erstelleHtmlFürBeziehungssammlung(art, beziehungssammlung, "2");
+                        html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "2");
                     });
 				}
 				initiiereArt2 ($, html_art, art);
