@@ -20,12 +20,13 @@ var returnFunction = function ($, id) {
 			beziehungssammlungen_von_synonymen = [],
 			a, f, h, i, k, x,
 			ds_namen = [],
-			bez_namen = [];
+			bez_namen = [],
+            erstelleHtmlFuerDatensammlung = require('./erstelleHtmlFuerDatensammlung');
 		// panel beginnen
 		html_art = '<h4>Taxonomie:</h4>';
 		// zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
 		// gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-		html_art += window.adb.erstelleHtmlFürDatensammlung("Taxonomie", art, art.Taxonomie);
+		html_art += erstelleHtmlFuerDatensammlung ("Taxonomie", art, art.Taxonomie);
 		// Datensammlungen muss nicht gepusht werden
 		// aber Beziehungssammlungen aufteilen
 		if (art.Beziehungssammlungen.length > 0) {
@@ -67,7 +68,7 @@ var returnFunction = function ($, id) {
 			html_art += "<h4>Eigenschaften:</h4>";
             _.each(art_eigenschaftensammlungen, function(datensammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datensammlung);
+                html_art += erstelleHtmlFuerDatensammlung ("Datensammlung", art, datensammlung);
                 // dsNamen auflisten, um später zu vergleichen, ob sie schon dargestellt wird
                 ds_namen.push(datensammlung.Name);
             });
@@ -156,7 +157,7 @@ var returnFunction = function ($, id) {
 					html_art += "<h4>Eigenschaften von Synonymen:</h4>";
                     _.each(eigenschaftensammlungen_von_synonymen, function(datesammlung) {
                         // HTML für Datensammlung erstellen lassen und hinzufügen
-                        html_art += window.adb.erstelleHtmlFürDatensammlung("Datensammlung", art, datesammlung);
+                        html_art += erstelleHtmlFuerDatensammlung ("Datensammlung", art, datesammlung);
                     });
 				}
 				// bez von Synonymen darstellen
