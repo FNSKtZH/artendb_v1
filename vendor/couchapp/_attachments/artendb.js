@@ -235,6 +235,7 @@ window.adb.initiiereSuchfeld = function () {
 // und dieses nicht node- bzw. browserify-tauglich ist
 window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 	'use strict';
+	var oeffneBaumZuId = require('./modules/oeffneBaumZuId');
 	such_objekte = _.map(such_objekte, function(objekt) {
 		return objekt.value;
 	});
@@ -246,75 +247,9 @@ window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
-		window.adb.oeffneBaumZuId (datum.id);
+		oeffneBaumZuId ($, datum.id);
 	});
 	$("#suchfeld"+window.adb.Gruppe).focus();
-};
-
-window.adb.oeffneBaumZuId = function (id) {
-	// Hierarchie der id holen
-	var $db = $.couch.db("artendb");
-	$db.openDoc(id, {
-		success: function(objekt) {
-            var $filter_klasse = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
-                $art_anmelden = $("#art_anmelden");
-			switch (objekt.Gruppe) {
-            case "Fauna":
-                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-                // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
-                    $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + "']"), function() {
-                        $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + ","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
-                            $.jstree._reference("#treeFauna").select_node($("#" + objekt._id), function() {}, false);
-                        }, true);
-                    }, true);
-                }, true);
-                // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
-                break;
-            case "Flora":
-                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-                // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "']"), function() {
-                    $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "," + objekt.Taxonomie.Eigenschaften.Gattung + "']"), function() {
-                        $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function() {}, false);
-                    }, true);
-                }, true);
-                // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
-                break;
-            case "Moose":
-                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-                // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
-                    $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
-                        $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+","+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
-                            $.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
-                        }, true);
-                    }, true);
-                }, true);
-                // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
-                break;
-            case "Macromycetes":
-                // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
-                // oberste Ebene aufbauen nicht nötig, die gibt es schon
-                $.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
-                    $.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
-                }, true);
-                // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
-                break;
-            case "Lebensräume":
-                var id_array = [];
-                for (var i=0; i<objekt.Taxonomie.Eigenschaften.Hierarchie.length; i++) {
-                    id_array.push(objekt.Taxonomie.Eigenschaften.Hierarchie[i].GUID);
-                }
-                window.adb.oeffneNodeNachIdArray(id_array);
-                break;
-			}
-		}
-	});
 };
 
 // läuft von oben nach unten durch die Hierarchie der Lebensräume
@@ -2345,7 +2280,8 @@ window.adb.handleLrParentOptionenChange = function() {
 	var parent_name = $(this).val(),
 		parent_id = this.id,
 		parent = {},
-		object = {};
+		object = {},
+		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
 	// zuerst eine id holen
 	object._id = $.couch.newUUID(1);
 	object.Gruppe = "Lebensräume";
@@ -2395,7 +2331,7 @@ window.adb.handleLrParentOptionenChange = function() {
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
 				$.when(window.adb.erstelleBaum()).then(function() {
-					window.adb.oeffneBaumZuId(object._id);
+					oeffneBaumZuId($, object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
@@ -3974,7 +3910,8 @@ window.adb.öffneUri = function() {
 		// wenn browser history nicht unterstützt, erstellt history.js eine hash
 		// dann muss die id durch die id in der hash ersetzt werden
 		hash = uri.anchor(),
-		uri2;
+		uri2,
+		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
 	if (hash) {
 		uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
@@ -3992,7 +3929,7 @@ window.adb.öffneUri = function() {
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
 				$.when(window.adb.erstelleBaum()).then(function() {
-					window.adb.oeffneBaumZuId(id);
+					oeffneBaumZuId($, id);
 				});
 			}
 		});
@@ -5272,7 +5209,9 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	'use strict';
 	var object_array,
 		hierarchie = [],
-		parent_object;
+		parent_object,
+		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+
 	object_array = _.map(LR.rows, function(row) {
 		return row.doc;
 	});
@@ -5296,7 +5235,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	$db.saveDoc(object, {
 		success: function() {
 			$.when(window.adb.erstelleBaum()).then(function() {
-				window.adb.oeffneBaumZuId(object._id);
+				oeffneBaumZuId($, object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},
