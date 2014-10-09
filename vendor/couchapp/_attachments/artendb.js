@@ -6,10 +6,7 @@ window.adb.erstelleTree = function() {
 		gruppe,
 		filter,
 		id,
-		jstree_erstellt = $.Deferred(),
-		holeDatenUrlFuerTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel'),
-		holeDatenUrlFürTreeUntereLevel = require('./modules/holeDatenUrlFuerTreeUntereLevel'),
-		initiiereSuchfeld = require('./modules/initiiereSuchfeld');
+		jstree_erstellt = $.Deferred();
 
 	$("#tree" + window.adb.Gruppe).jstree({
 		"json_data": {
@@ -17,7 +14,7 @@ window.adb.erstelleTree = function() {
 				type: 'GET',
 				url: function(node) {
 					if (node == -1) {
-						return holeDatenUrlFuerTreeOberstesLevel();
+						return window.adb.holeDatenUrlFuerTreeOberstesLevel();
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -28,7 +25,7 @@ window.adb.erstelleTree = function() {
 							filter = "";
 							id = node.attr('id');
 						}
-						return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
+						return window.adb.holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
@@ -80,7 +77,7 @@ window.adb.erstelleTree = function() {
 		$("#tree" + window.adb.Gruppe).show();
 		$("#tree" + window.adb.Gruppe + "Beschriftung").show();
 		window.adb.setzeTreehöhe();
-		initiiereSuchfeld($);
+		window.adb.initiiereSuchfeld();
 	})
 	.bind("after_open.jstree", function() {
 		window.adb.setzeTreehöhe();
@@ -89,6 +86,149 @@ window.adb.erstelleTree = function() {
 		window.adb.setzeTreehöhe();
 	});
 	return jstree_erstellt.promise();
+};
+
+window.adb.holeDatenUrlFuerTreeOberstesLevel = function () {
+	var gruppe,
+        url;
+	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
+	switch (window.adb.Gruppe) {
+    case "Fauna":
+        gruppe = "fauna";
+        break;
+    case "Flora":
+        gruppe = "flora";
+        break;
+    case "Moose":
+        gruppe = "moose";
+        break;
+    case "Macromycetes":
+        gruppe = "macromycetes";
+        break;
+    case "Lebensräume":
+        gruppe = "lr";
+        break;
+	}
+	if (window.adb.Gruppe === "Lebensräume") {
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
+	} else {
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
+	}
+	return url;
+};
+
+window.adb.holeDatenUrlFuerTreeUntereLevel = function (level, filter, gruppe, id) {
+	var startkey,
+		// flag, um mitzuliefern, ob die id angezeigt werden soll
+		id2 = false,
+		endkey = [],
+        a,
+        url;
+
+	if (filter) {
+		// bei lr gibt es keinen filter und das erzeugt einen fehler
+		startkey = filter.slice();
+		endkey = filter.slice();
+	}
+	
+	switch (gruppe) {
+    case "fauna":
+        if (level > 4) {
+            return null;
+        }
+        for (a=5; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 4) {
+            // das ist die Art-Ebene
+            // hier soll die id angezeigt werden
+            // dazu muss der nächste level abgerufen werden
+            // damit die list den zu hohen level korrigieren kann, id mitgeben
+            id2 = true;
+            level++;
+        }
+        break;
+    case "flora":
+        if (level > 3) {
+            return null;
+        }
+        for (a=4; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 3) {
+            id2 = true;
+            level++;
+        }
+        break;
+    case "moose":
+        if (level > 4) {
+            return null;
+        }
+        for (a=5; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 4) {
+            id2 = true;
+            level++;
+        }
+        break;
+    case "macromycetes":
+        if (level > 2) {
+            return null;
+        }
+        for (a=3; a>=level; a--) {
+            endkey.push({});
+        }
+        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
+        if (level === 2) {
+            id2 = true;
+            level++;
+        }
+        break;
+	}
+	if (gruppe === "lr") {
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
+	} else {
+		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
+	}
+	if (id2) {
+		url = url + "&id=true";
+	}
+	return url;
+};
+
+window.adb.initiiereSuchfeld = function () {
+	// zuerst mal die benötigten Daten holen
+	var $db = $.couch.db("artendb");
+	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
+		if (window.adb.filtere_lr) {
+			window.adb.initiiereSuchfeld_2(window.adb.filtere_lr);
+		} else {
+			var startkey = encodeURIComponent('["' + window.adb.Gruppe + '"]'),
+				endkey = encodeURIComponent('["' + window.adb.Gruppe + '",{},{},{}]'),
+				url = 'artendb/filtere_lr?startkey=' + startkey + '&endkey=' + endkey;
+			$db.view(url, {
+				success: function(data) {
+					window.adb.filtere_lr = data;
+					window.adb.initiiereSuchfeld_2(data);
+				}
+			});
+		}
+	} else if (window.adb.Gruppe) {
+		if (window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
+			window.adb.initiiereSuchfeld_2(window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]);
+		} else {
+			$db.view('artendb/filtere_art?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{}]', {
+				success: function(data) {
+					window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
+					window.adb.initiiereSuchfeld_2(data);
+				}
+			});
+		}
+	}
 };
 
 // muss hier bleiben, weil typeahead benutzt wird
@@ -1044,7 +1184,7 @@ window.adb.meldeUserAb = function() {
 	// $(".konto_erstellen_btn").show();
 	$(".konto_speichern_btn").hide();
 	$("#art_anmelden").hide();
-	window.adb.schützeLrTaxonomie();
+	window.adb.schuetzeLrTaxonomie();
     // falls dieser User admin war: vergessen
     delete localStorage.admin;
     // für diesen Nutzer passende Menus anzeigen
@@ -1081,18 +1221,18 @@ window.adb.passeUiFürAngemeldetenUserAn = function(woher) {
 // nein: retourniert false und öffnet die Anmeldung
 // welche anmeldung hängt ab, woher die Prüfung angefordert wurde
 // darum erwartet die Funktion den parameter woher
-window.adb.prüfeAnmeldung = function(woher) {
+window.adb.pruefeAnmeldung = function(woher) {
 	'use strict';
 	if (!localStorage.Email) {
 		setTimeout(function() {
-			window.adb.zurückZurAnmeldung(woher);
+			window.adb.zurueckZurAnmeldung(woher);
 		}, 600);
 		return false;
 	}
 	return true;
 };
 
-window.adb.zurückZurAnmeldung = function(woher) {
+window.adb.zurueckZurAnmeldung = function(woher) {
 	'use strict';
 	var präfix = "importieren_";
 
@@ -1115,6 +1255,42 @@ window.adb.zurückZurAnmeldung = function(woher) {
 	$(".konto_speichern_btn").hide();
 	$("#Email_"+woher).focus();
 };
+
+window.adb.testeCouchHttp = function () {
+
+	'use strict';
+
+	/*var request = require('request'),
+		options = {
+			url: 'http://localhost:5984/artendb/_design/artendb/_view/lr',
+			qs: { include_docs: true },
+			method: 'GET'
+		};
+
+	request(options, function (error, response, body) {
+		if (error) console.log('error: ', error);
+		console.log('response: ', response);
+
+		if (!error && response.statusCode == 200) {
+			console.log(body) // Print the google web page.
+		}
+	});*/
+
+	$.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
+        type: 'GET',
+        dataType: "json",
+        data: {
+        	include_docs: true
+        }
+	})
+	.done(function (data) {
+		console.log('got: ', data);
+	})
+	.fail(function () {
+		console.log('fail');
+	});
+};
+
 
 window.adb.validiereUserAnmeldung = function(woher) {
 	'use strict';
@@ -1395,7 +1571,7 @@ window.adb.handleDs_ImportierenClick = function() {
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_ds");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (window.adb.prüfeAnmeldung("ds")) {
+		if (window.adb.pruefeAnmeldung("ds")) {
 			$("#importieren_ds_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1409,7 +1585,7 @@ window.adb.handleBs_ImportierenClick = function() {
 	if(window.adb.isFileAPIAvailable()) {
 		window.adb.zeigeFormular("importieren_bs");
 		// Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-		if (window.adb.prüfeAnmeldung("bs")) {
+		if (window.adb.pruefeAnmeldung("bs")) {
 			$("#importieren_bs_ds_beschreiben_collapse").collapse('show');
 		}
 	}
@@ -1808,7 +1984,7 @@ window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	} else {
 		$('#DsFile').fileupload();
@@ -1821,7 +1997,7 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	} else {
 		$('#BsFile').fileupload();
@@ -1834,7 +2010,7 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1845,7 +2021,7 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1856,7 +2032,7 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenDsImportAusführenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("ds")) {
+	if (!window.adb.pruefeAnmeldung("ds")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -1867,7 +2043,7 @@ window.adb.handleImportierenDsImportAusführenCollapseShown = function() {
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenBsImportAusführenCollapseShown = function() {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("bs")) {
+	if (!window.adb.pruefeAnmeldung("bs")) {
 		$(this).collapse('hide');
 	}
     $('html, body').animate({
@@ -2137,10 +2313,10 @@ window.adb.handleBtnLrBearbBearbKlick = function() {
 };
 
 // wenn .btn.lr_bearb_schuetzen geklickt wird
-window.adb.handleBtnLrBearbSchützenClick = function() {
+window.adb.handleBtnLrBearbSchuetzenClick = function() {
 	'use strict';
 	if (!$(this).hasClass('disabled')) {
-		window.adb.schützeLrTaxonomie();
+		window.adb.schuetzeLrTaxonomie();
 		// Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
 		delete localStorage.lr_bearb;
 	}
@@ -2149,9 +2325,16 @@ window.adb.handleBtnLrBearbSchützenClick = function() {
 // wenn .btn.lr_bearb_neu geklickt wird
 window.adb.handleBtnLrBearbNeuClick = function() {
 	'use strict';
-	var initiiereLrParentAuswahlliste = require('./modules/initiiereLrParentAuswahlliste');
+	var getHtmlForLrParentAuswahlliste = require('./modules/getHtmlForLrParentAuswahlliste'),
+		html;
 	if (!$(this).hasClass('disabled')) {
-		initiiereLrParentAuswahlliste($("#Taxonomie").val());
+		getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
+			$("#lr_parent_waehlen_optionen").html(html);
+			// jetzt das modal aufrufen
+			// höhe Anpassen funktioniert leider nicht über css mit calc
+			$('#lr_parent_waehlen').modal();
+			$('#lr_parent_waehlen_optionen').css('max-height', $(window).height()-100);
+		});
 	}
 };
 
@@ -2162,8 +2345,7 @@ window.adb.handleLrParentOptionenChange = function() {
 	var parent_name = $(this).val(),
 		parent_id = this.id,
 		parent = {},
-		object = {},
-		erstelleBaum = require('./modules/erstelleBaum');
+		object = {};
 	// zuerst eine id holen
 	object._id = $.couch.newUUID(1);
 	object.Gruppe = "Lebensräume";
@@ -2212,13 +2394,58 @@ window.adb.handleLrParentOptionenChange = function() {
 				// bei der Wurzel ist sie schon gesetzt
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
-				$.when(erstelleBaum($)).then(function() {
+				$.when(window.adb.erstelleBaum()).then(function() {
 					window.adb.oeffneBaumZuId(object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
 		}
 	});
+};
+
+window.adb.erstelleBaum = function () {
+	var gruppe,
+		gruppenbezeichnung,
+		baum_erstellt = $.Deferred();
+	// alle Bäume ausblenden
+	$(".baum").hide();
+	// alle Beschriftungen ausblenden
+	$(".treeBeschriftung").hide();
+	// gewollte beschriften und sichtbar schalten
+	switch (window.adb.Gruppe) {
+    case "Fauna":
+        gruppe = "fauna";
+        gruppenbezeichnung = "Tiere";
+        break;
+    case "Flora":
+        gruppe = "flora";
+        gruppenbezeichnung = "Pflanzen";
+        break;
+    case "Moose":
+        gruppe = "moose";
+        gruppenbezeichnung = "Moose";
+        break;
+    case "Macromycetes":
+        gruppe = "macromycetes";
+        gruppenbezeichnung = "Pilze";
+        break;
+    case "Lebensräume":
+        gruppe = "lr";
+        gruppenbezeichnung = "Lebensräume";
+        break;
+	}
+	var $db = $.couch.db("artendb");
+	$db.view('artendb/' + gruppe + "_gruppiert", {
+		success: function(data) {
+			var anzahl_objekte = data.rows[0].value;
+			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
+		}
+	});
+	$.when(window.adb.erstelleTree()).then(function() {
+		baum_erstellt.resolve();
+	});
+	return baum_erstellt.promise();
 };
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
@@ -3747,8 +3974,7 @@ window.adb.öffneUri = function() {
 		// wenn browser history nicht unterstützt, erstellt history.js eine hash
 		// dann muss die id durch die id in der hash ersetzt werden
 		hash = uri.anchor(),
-		uri2,
-		erstelleBaum = require('./modules/erstelleBaum');
+		uri2;
 	if (hash) {
 		uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
@@ -3765,8 +3991,8 @@ window.adb.öffneUri = function() {
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
-				$.when(erstelleBaum($)).then(function() {
-					window.adb.oeffneBaumZuId($, id);
+				$.when(window.adb.erstelleBaum()).then(function() {
+					window.adb.oeffneBaumZuId(id);
 				});
 			}
 		});
@@ -4559,7 +4785,7 @@ window.adb.fürExportGewählteGruppen = function() {
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_ds_beschreibenVor = function(woher) {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("woher")) {
+	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#DsName").focus();
@@ -4629,7 +4855,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_bs_beschreibenVor = function(woher) {
 	'use strict';
-	if (!window.adb.prüfeAnmeldung("woher")) {
+	if (!window.adb.pruefeAnmeldung("woher")) {
 		$('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
 	} else {
 		$("#BsName").focus();
@@ -4809,7 +5035,6 @@ window.adb.exportZurücksetzen = function() {
 
 window.adb.öffneGruppe = function(Gruppe) {
 	'use strict';
-	var erstelleBaum = require('./modules/erstelleBaum');
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
@@ -4825,7 +5050,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 	$("#treeMitteilung")
         .html(treeMitteilung)
         .show();
-	erstelleBaum($);
+	window.adb.erstelleBaum();
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
 };
@@ -4947,7 +5172,7 @@ window.adb.myTypeOf = function(wert) {
 window.adb.bearbeiteLrTaxonomie = function() {
 	'use strict';
 	// Benutzer muss anmelden
-	if (!window.adb.prüfeAnmeldung("art")) {
+	if (!window.adb.pruefeAnmeldung("art")) {
 		return false;
 	}
 
@@ -4979,7 +5204,7 @@ window.adb.bearbeiteLrTaxonomie = function() {
 	$(".lr_bearb_bearb").addClass('disabled');
 };
 
-window.adb.schützeLrTaxonomie = function() {
+window.adb.schuetzeLrTaxonomie = function() {
 	'use strict';
 	// alle Felder schreibbar setzen
 	$(".Lebensräume.Taxonomie .controls").each(function() {
@@ -5047,8 +5272,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	'use strict';
 	var object_array,
 		hierarchie = [],
-		parent_object,
-		erstelleBaum = require('./modules/erstelleBaum');
+		parent_object;
 	object_array = _.map(LR.rows, function(row) {
 		return row.doc;
 	});
@@ -5071,8 +5295,8 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function() {
-			$.when(erstelleBaum($)).then(function() {
-				window.adb.oeffneBaumZuId($, object._id);
+			$.when(window.adb.erstelleBaum()).then(function() {
+				window.adb.oeffneBaumZuId(object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},
