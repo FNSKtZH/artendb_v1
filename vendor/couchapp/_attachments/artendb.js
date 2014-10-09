@@ -2324,64 +2324,20 @@ window.adb.handleLrParentOptionenChange = function() {
 	var $db = $.couch.db("artendb");
 	$db.saveDoc(object, {
 		success: function(object_saved) {
+			var erstelleBaum = require('./modules/erstelleBaum');
 			object._rev = object_saved.rev;
 			if (parent_id !== "0") {
 				// die Hierarchie aufbauen und setzen
 				// bei der Wurzel ist sie schon gesetzt
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
-				$.when(window.adb.erstelleBaum()).then(function() {
+				$.when(erstelleBaum()).then(function() {
 					oeffneBaumZuId($, object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
 		}
 	});
-};
-
-window.adb.erstelleBaum = function () {
-	var gruppe,
-		gruppenbezeichnung,
-		baum_erstellt = $.Deferred();
-	// alle Bäume ausblenden
-	$(".baum").hide();
-	// alle Beschriftungen ausblenden
-	$(".treeBeschriftung").hide();
-	// gewollte beschriften und sichtbar schalten
-	switch (window.adb.Gruppe) {
-    case "Fauna":
-        gruppe = "fauna";
-        gruppenbezeichnung = "Tiere";
-        break;
-    case "Flora":
-        gruppe = "flora";
-        gruppenbezeichnung = "Pflanzen";
-        break;
-    case "Moose":
-        gruppe = "moose";
-        gruppenbezeichnung = "Moose";
-        break;
-    case "Macromycetes":
-        gruppe = "macromycetes";
-        gruppenbezeichnung = "Pilze";
-        break;
-    case "Lebensräume":
-        gruppe = "lr";
-        gruppenbezeichnung = "Lebensräume";
-        break;
-	}
-	var $db = $.couch.db("artendb");
-	$db.view('artendb/' + gruppe + "_gruppiert", {
-		success: function(data) {
-			var anzahl_objekte = data.rows[0].value;
-			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
-			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
-		}
-	});
-	$.when(window.adb.erstelleTree()).then(function() {
-		baum_erstellt.resolve();
-	});
-	return baum_erstellt.promise();
 };
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
@@ -3921,6 +3877,7 @@ window.adb.öffneUri = function() {
 		var $db = $.couch.db("artendb");
 		$db.openDoc(id, {
 			success: function(objekt) {
+				var erstelleBaum = require('./modules/erstelleBaum');
 				// window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
 				window.adb.Gruppe = objekt.Gruppe;
 				$(".baum.jstree").jstree("deselect_all");
@@ -3928,7 +3885,7 @@ window.adb.öffneUri = function() {
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
-				$.when(window.adb.erstelleBaum()).then(function() {
+				$.when(erstelleBaum()).then(function() {
 					oeffneBaumZuId($, id);
 				});
 			}
@@ -4972,6 +4929,7 @@ window.adb.exportZurücksetzen = function() {
 
 window.adb.öffneGruppe = function(Gruppe) {
 	'use strict';
+	var erstelleBaum = require('./modules/erstelleBaum');
 	// Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
 	window.adb.Gruppe = Gruppe;
 	$(".suchfeld").val("");
@@ -4987,7 +4945,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 	$("#treeMitteilung")
         .html(treeMitteilung)
         .show();
-	window.adb.erstelleBaum();
+	erstelleBaum();
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
 };
@@ -5234,7 +5192,8 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	// save ohne open: _rev wurde zuvor übernommen
 	$db.saveDoc(object, {
 		success: function() {
-			$.when(window.adb.erstelleBaum()).then(function() {
+			var erstelleBaum = require('./modules/erstelleBaum');
+			$.when(erstelleBaum()).then(function() {
 				oeffneBaumZuId($, object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});

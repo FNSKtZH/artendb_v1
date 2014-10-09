@@ -1,5 +1,6 @@
 'use strict';
 
+// übernimmt $, weil $.jstree enthalten ist und jstree v1 nicht node-fähig ist
 var returnFunction = function ($, id) {
 	// Hierarchie der id holen
     $.ajax('http://localhost:5984/artendb/' + id, {

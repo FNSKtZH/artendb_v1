@@ -1,7 +1,9 @@
 'use strict';
 
+var $ = require('jquery');
+
 // erhält $, weil jquery.couch.js nicht nod-fähig ist
-var returnFunction = function ($) {
+var returnFunction = function () {
 	var gruppe,
 		gruppenbezeichnung,
 		baum_erstellt = $.Deferred();
@@ -32,17 +34,22 @@ var returnFunction = function ($) {
         gruppenbezeichnung = "Lebensräume";
         break;
 	}
-	var $db = $.couch.db("artendb");
-	$db.view('artendb/' + gruppe + "_gruppiert", {
-		success: function(data) {
-			var anzahl_objekte = data.rows[0].value;
-			$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
-			// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
-		}
+
+	$.ajax('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
+        type: 'GET',
+        dataType: "json"
+	}).done(function (data) {
+		var anzahl_objekte = data.rows[0].value;
+		$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+		// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
+	}).fail(function () {
+		console.log('keine Daten erhalten')
 	});
+
 	$.when(window.adb.erstelleTree()).then(function() {
 		baum_erstellt.resolve();
 	});
+
 	return baum_erstellt.promise();
 };
 
