@@ -9,7 +9,6 @@ var $ = require('jquery'),
 	_ = require('underscore');
 
 module.exports = function (taxonomie_name, callback) {
-	var response = $.Deferred;
 	// lr holen
 	$.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
         type: 'GET',

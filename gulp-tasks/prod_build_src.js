@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
+    concat = require('gulp-concat-sourcemap'),
     notify = require('gulp-notify');
 
 gulp.task('prod_build_src', function() {

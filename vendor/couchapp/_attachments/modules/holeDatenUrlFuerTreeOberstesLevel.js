@@ -1,8 +1,8 @@
 'use strict';
 
-var $ = require('jquery');
+//var $ = require('jquery');
 
-var returnFunction = function () {
+var returnFunction = function ($) {
 	var gruppe,
         url;
 	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?

@@ -1,12 +1,13 @@
 'use strict';
 
-var $ = require('jquery');
+//var $ = require('jquery');
 
 // erhält $, weil jquery.couch.js nicht nod-fähig ist
-var returnFunction = function () {
+var returnFunction = function ($) {
 	var gruppe,
 		gruppenbezeichnung,
-		baum_erstellt = $.Deferred();
+		baum_erstellt = $.Deferred(),
+		erstelleTree = require('./erstelleTree');
 	// alle Bäume ausblenden
 	$(".baum").hide();
 	// alle Beschriftungen ausblenden
@@ -46,7 +47,7 @@ var returnFunction = function () {
 		console.log('keine Daten erhalten')
 	});
 
-	$.when(window.adb.erstelleTree()).then(function() {
+	$.when(erstelleTree($)).then(function() {
 		baum_erstellt.resolve();
 	});
 

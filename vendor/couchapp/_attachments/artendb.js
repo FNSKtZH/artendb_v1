@@ -1,241 +1,9 @@
 window.adb = window.adb || {};
 
-window.adb.erstelleTree = function() {
-	'use strict';
-	var level,
-		gruppe,
-		filter,
-		id,
-		jstree_erstellt = $.Deferred();
-
-	$("#tree" + window.adb.Gruppe).jstree({
-		"json_data": {
-			ajax: {
-				type: 'GET',
-				url: function(node) {
-					if (node == -1) {
-						return window.adb.holeDatenUrlFuerTreeOberstesLevel();
-					} else {
-						level = parseInt(node.attr('level'), 10) + 1;
-						gruppe = node.attr('gruppe');
-						if (node.attr('filter')) {
-							filter = node.attr('filter').split(",");
-							id = "";
-						} else {
-							filter = "";
-							id = node.attr('id');
-						}
-						return window.adb.holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
-					}
-				},
-				success: function(data) {
-					//console.log("erstelleTree meldet: ajax success");
-					return data;
-				},
-				error: function(data) {
-					//console.log("erstelleTree meldet: ajax failure");
-				}
-			}
-		},
-		"ui": {
-			"select_limit": 1,	// nur ein Datensatz kann aufs mal gewählt werden
-			"selected_parent_open": true,	// wenn Code einen node wählt, werden alle parents geöffnet
-			"select_prev_on_delete": true
-		},
-		"core": {
-			"open_parents": true,	// wird ein node programmatisch geöffnet, öffnen sich alle parents
-			"strings": {
-				"loading": "hole Daten..."
-			}
-		},
-		"sort": function(a, b) {
-			return this.get_text(a) > this.get_text(b) ? 1 : -1;
-		},
-		"themes": {
-			"icons": false
-		},
-		"plugins" : ["ui", "themes", "json_data", "sort"]
-	})
-	.bind("select_node.jstree", function(e, data) {
-        'use strict';
-		var node = data.rslt.obj;
-		$.jstree._reference(node).open_node(node);
-		if (node.attr("id")) {
-			// verhindern, dass bereits offene Seiten nochmals geöffnet werden
-			if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
-				localStorage.art_id = node.attr("id");
-				// Anzeige im Formular initiieren. ID und Datensammlung übergeben
-				window.adb.initiiere_art(node.attr("id"));
-			}
-		}
-	})
-	.bind("loaded.jstree", function() {
-        'use strict';
-		jstree_erstellt.resolve();
-		$("#suchen"+window.adb.Gruppe).css("display", "table");
-		$("#treeMitteilung").hide();
-		$("#tree" + window.adb.Gruppe).show();
-		$("#tree" + window.adb.Gruppe + "Beschriftung").show();
-		window.adb.setzeTreehöhe();
-		window.adb.initiiereSuchfeld();
-	})
-	.bind("after_open.jstree", function() {
-		window.adb.setzeTreehöhe();
-	})
-	.bind("after_close.jstree", function() {
-		window.adb.setzeTreehöhe();
-	});
-	return jstree_erstellt.promise();
-};
-
-window.adb.holeDatenUrlFuerTreeOberstesLevel = function () {
-	var gruppe,
-        url;
-	// wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
-	switch (window.adb.Gruppe) {
-    case "Fauna":
-        gruppe = "fauna";
-        break;
-    case "Flora":
-        gruppe = "flora";
-        break;
-    case "Moose":
-        gruppe = "moose";
-        break;
-    case "Macromycetes":
-        gruppe = "macromycetes";
-        break;
-    case "Lebensräume":
-        gruppe = "lr";
-        break;
-	}
-	if (window.adb.Gruppe === "Lebensräume") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
-	} else {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
-	}
-	return url;
-};
-
-window.adb.holeDatenUrlFuerTreeUntereLevel = function (level, filter, gruppe, id) {
-	var startkey,
-		// flag, um mitzuliefern, ob die id angezeigt werden soll
-		id2 = false,
-		endkey = [],
-        a,
-        url;
-
-	if (filter) {
-		// bei lr gibt es keinen filter und das erzeugt einen fehler
-		startkey = filter.slice();
-		endkey = filter.slice();
-	}
-	
-	switch (gruppe) {
-    case "fauna":
-        if (level > 4) {
-            return null;
-        }
-        for (a=5; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 4) {
-            // das ist die Art-Ebene
-            // hier soll die id angezeigt werden
-            // dazu muss der nächste level abgerufen werden
-            // damit die list den zu hohen level korrigieren kann, id mitgeben
-            id2 = true;
-            level++;
-        }
-        break;
-    case "flora":
-        if (level > 3) {
-            return null;
-        }
-        for (a=4; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 3) {
-            id2 = true;
-            level++;
-        }
-        break;
-    case "moose":
-        if (level > 4) {
-            return null;
-        }
-        for (a=5; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 4) {
-            id2 = true;
-            level++;
-        }
-        break;
-    case "macromycetes":
-        if (level > 2) {
-            return null;
-        }
-        for (a=3; a>=level; a--) {
-            endkey.push({});
-        }
-        // im untersten level einen level mehr anzeigen, damit id vorhanden ist
-        if (level === 2) {
-            id2 = true;
-            level++;
-        }
-        break;
-	}
-	if (gruppe === "lr") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
-	} else {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
-	}
-	if (id2) {
-		url = url + "&id=true";
-	}
-	return url;
-};
-
-window.adb.initiiereSuchfeld = function () {
-	// zuerst mal die benötigten Daten holen
-	var $db = $.couch.db("artendb");
-	if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
-		if (window.adb.filtere_lr) {
-			window.adb.initiiereSuchfeld_2(window.adb.filtere_lr);
-		} else {
-			var startkey = encodeURIComponent('["' + window.adb.Gruppe + '"]'),
-				endkey = encodeURIComponent('["' + window.adb.Gruppe + '",{},{},{}]'),
-				url = 'artendb/filtere_lr?startkey=' + startkey + '&endkey=' + endkey;
-			$db.view(url, {
-				success: function(data) {
-					window.adb.filtere_lr = data;
-					window.adb.initiiereSuchfeld_2(data);
-				}
-			});
-		}
-	} else if (window.adb.Gruppe) {
-		if (window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
-			window.adb.initiiereSuchfeld_2(window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]);
-		} else {
-			$db.view('artendb/filtere_art?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{}]', {
-				success: function(data) {
-					window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
-					window.adb.initiiereSuchfeld_2(data);
-				}
-			});
-		}
-	}
-};
-
 // muss hier bleiben, weil typeahead benutzt wird
 // und dieses nicht node- bzw. browserify-tauglich ist
 window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 	'use strict';
-	var oeffneBaumZuId = require('./modules/oeffneBaumZuId');
 	such_objekte = _.map(such_objekte, function(objekt) {
 		return objekt.value;
 	});
@@ -247,7 +15,7 @@ window.adb.initiiereSuchfeld_2 = function(such_objekte) {
 		limit: 20
 	})
 	.on('typeahead:selected', function(e, datum) {
-		oeffneBaumZuId ($, datum.id);
+		window.adb.oeffneBaumZuId (datum.id);
 	});
 	$("#suchfeld"+window.adb.Gruppe).focus();
 };
@@ -2260,8 +2028,8 @@ window.adb.handleBtnLrBearbSchuetzenClick = function() {
 // wenn .btn.lr_bearb_neu geklickt wird
 window.adb.handleBtnLrBearbNeuClick = function() {
 	'use strict';
-	var getHtmlForLrParentAuswahlliste = require('./modules/getHtmlForLrParentAuswahlliste'),
-		html;
+	var html,
+		getHtmlForLrParentAuswahlliste = require('./modules/getHtmlForLrParentAuswahlliste');
 	if (!$(this).hasClass('disabled')) {
 		getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
 			$("#lr_parent_waehlen_optionen").html(html);
@@ -2280,8 +2048,7 @@ window.adb.handleLrParentOptionenChange = function() {
 	var parent_name = $(this).val(),
 		parent_id = this.id,
 		parent = {},
-		object = {},
-		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+		object = {};
 	// zuerst eine id holen
 	object._id = $.couch.newUUID(1);
 	object.Gruppe = "Lebensräume";
@@ -2331,8 +2098,8 @@ window.adb.handleLrParentOptionenChange = function() {
 				// bei der Wurzel ist sie schon gesetzt
 				window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
 			} else {
-				$.when(erstelleBaum()).then(function() {
-					oeffneBaumZuId($, object._id);
+				$.when(erstelleBaum($)).then(function() {
+					window.adb.oeffneBaumZuId (object._id);
 					$('#lr_parent_waehlen').modal('hide');
 				});
 			}
@@ -3866,8 +3633,8 @@ window.adb.öffneUri = function() {
 		// wenn browser history nicht unterstützt, erstellt history.js eine hash
 		// dann muss die id durch die id in der hash ersetzt werden
 		hash = uri.anchor(),
-		uri2,
-		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+		uri2;
+
 	if (hash) {
 		uri2 = new Uri(hash);
 		id = uri2.getQueryParamValue('id');
@@ -3885,8 +3652,8 @@ window.adb.öffneUri = function() {
 				$('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
 				$("#Gruppe_label").html("Gruppe:");
 				// tree aufbauen, danach Datensatz initiieren
-				$.when(erstelleBaum()).then(function() {
-					oeffneBaumZuId($, id);
+				$.when(erstelleBaum($)).then(function() {
+					window.adb.oeffneBaumZuId (id);
 				});
 			}
 		});
@@ -4945,7 +4712,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 	$("#treeMitteilung")
         .html(treeMitteilung)
         .show();
-	erstelleBaum();
+	erstelleBaum($);
 	// keine Art mehr aktiv
 	delete localStorage.art_id;
 };
@@ -5163,12 +4930,79 @@ window.adb.aktualisiereHierarchieEinesNeuenLr = function(lr, object, aktualisier
 	}
 };
 
+window.adb.oeffneBaumZuId = function (id) {
+	// Hierarchie der id holen
+    $.ajax('http://localhost:5984/artendb/' + id, {
+        type: 'GET',
+        dataType: "json"
+    }).done(function (objekt) {
+        var $filter_klasse = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
+            $art_anmelden = $("#art_anmelden");
+        switch (objekt.Gruppe) {
+        case "Fauna":
+            // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+            // oberste Ebene aufbauen nicht nötig, die gibt es schon
+            $.jstree._reference("#treeFauna").open_node($filter_klasse, function() {
+                $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + "']"), function() {
+                    $.jstree._reference("#treeFauna").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "," + objekt.Taxonomie.Eigenschaften.Ordnung + ","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
+                        $.jstree._reference("#treeFauna").select_node($("#" + objekt._id), function() {}, false);
+                    }, true);
+                }, true);
+            }, true);
+            // Anmeldung verstecken, wenn nicht Lebensräume
+            $art_anmelden.hide();
+            break;
+        case "Flora":
+            // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+            // oberste Ebene aufbauen nicht nötig, die gibt es schon
+            $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "']"), function() {
+                $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "," + objekt.Taxonomie.Eigenschaften.Gattung + "']"), function() {
+                    $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function() {}, false);
+                }, true);
+            }, true);
+            // Anmeldung verstecken, wenn nicht Lebensräume
+            $art_anmelden.hide();
+            break;
+        case "Moose":
+            // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+            // oberste Ebene aufbauen nicht nötig, die gibt es schon
+            $.jstree._reference("#treeMoose").open_node($filter_klasse, function() {
+                $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+"']"), function() {
+                    $.jstree._reference("#treeMoose").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Klasse+","+objekt.Taxonomie.Eigenschaften.Familie+","+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
+                        $.jstree._reference("#treeMoose").select_node($("#"+objekt._id), function() {}, false);
+                    }, true);
+                }, true);
+            }, true);
+            // Anmeldung verstecken, wenn nicht Lebensräume
+            $art_anmelden.hide();
+            break;
+        case "Macromycetes":
+            // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
+            // oberste Ebene aufbauen nicht nötig, die gibt es schon
+            $.jstree._reference("#treeMacromycetes").open_node($("[filter='"+objekt.Taxonomie.Eigenschaften.Gattung+"']"), function() {
+                $.jstree._reference("#treeMacromycetes").select_node($("#"+objekt._id), function() {}, false);
+            }, true);
+            // Anmeldung verstecken, wenn nicht Lebensräume
+            $art_anmelden.hide();
+            break;
+        case "Lebensräume":
+            var id_array = [];
+            _.each(objekt.Taxonomie.Eigenschaften.Hierarchie, function (hierarchie) {
+            	id_array.push(hierarchie.GUID);
+            });
+            window.adb.oeffneNodeNachIdArray(id_array);
+            break;
+        }
+    }).fail(function () {
+        console.log('keine Daten erhalten');
+    });
+};
+
 window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	'use strict';
 	var object_array,
 		hierarchie = [],
-		parent_object,
-		oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+		parent_object;
 
 	object_array = _.map(LR.rows, function(row) {
 		return row.doc;
@@ -5193,8 +5027,8 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 	$db.saveDoc(object, {
 		success: function() {
 			var erstelleBaum = require('./modules/erstelleBaum');
-			$.when(erstelleBaum()).then(function() {
-				oeffneBaumZuId($, object._id);
+			$.when(erstelleBaum($)).then(function() {
+				window.adb.oeffneBaumZuId (object._id);
 				$('#lr_parent_waehlen').modal('hide');
 			});
 		},

@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    concat = require('gulp-concat'),
+    concat = require('gulp-concat-sourcemap'),
     notify = require('gulp-notify');
 
 gulp.task('dev_build_src', function() {

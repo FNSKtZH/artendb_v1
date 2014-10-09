@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
-    concat = require('gulp-concat'),
+    concat = require('gulp-concat-sourcemap'),
     notify = require('gulp-notify');
 
 gulp.task('prod_build_style', function() {

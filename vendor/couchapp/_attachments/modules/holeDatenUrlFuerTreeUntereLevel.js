@@ -1,8 +1,8 @@
 'use strict';
 
-$ = require('jquery')
+//$ = require('jquery')
 
-var returnFunction = function (level, filter, gruppe, id) {
+var returnFunction = function ($, level, filter, gruppe, id) {
 	var startkey,
 		// flag, um mitzuliefern, ob die id angezeigt werden soll
 		id2 = false,

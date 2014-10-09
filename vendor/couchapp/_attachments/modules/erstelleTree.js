@@ -6,9 +6,9 @@ var returnFunction = function ($) {
 		filter,
 		id,
 		jstree_erstellt = $.Deferred(),
-		holeDatenUrlFuerTreeOberstesLevel = require('./modules/holeDatenUrlFuerTreeOberstesLevel'),
-		holeDatenUrlFürTreeUntereLevel = require('./modules/holeDatenUrlFuerTreeUntereLevel'),
-		initiiereSuchfeld = require('./modules/initiiereSuchfeld');
+		holeDatenUrlFuerTreeOberstesLevel = require('./holeDatenUrlFuerTreeOberstesLevel'),
+		holeDatenUrlFuerTreeUntereLevel = require('./holeDatenUrlFuerTreeUntereLevel'),
+		initiiereSuchfeld = require('./initiiereSuchfeld');
 
 	$("#tree" + window.adb.Gruppe).jstree({
 		"json_data": { 
@@ -16,7 +16,7 @@ var returnFunction = function ($) {
 				type: 'GET',
 				url: function(node) {
 					if (node == -1) {
-						return holeDatenUrlFuerTreeOberstesLevel();
+						return holeDatenUrlFuerTreeOberstesLevel($);
 					} else {
 						level = parseInt(node.attr('level'), 10) + 1;
 						gruppe = node.attr('gruppe');
@@ -27,7 +27,7 @@ var returnFunction = function ($) {
 							filter = "";
 							id = node.attr('id');
 						}
-						return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
+						return holeDatenUrlFuerTreeUntereLevel($, level, filter, gruppe, id);
 					}
 				},
 				success: function(data) {
