@@ -1,25 +1,5 @@
 window.adb = window.adb || {};
 
-// muss hier bleiben, weil typeahead benutzt wird
-// und dieses nicht node- bzw. browserify-tauglich ist
-window.adb.initiiereSuchfeld_2 = function(such_objekte) {
-	'use strict';
-	such_objekte = _.map(such_objekte, function(objekt) {
-		return objekt.value;
-	});
-
-	$('#suchfeld' + window.adb.Gruppe).typeahead({
-		name: window.adb.Gruppe,
-		valueKey: 'Name',
-		local: such_objekte,
-		limit: 20
-	})
-	.on('typeahead:selected', function(e, datum) {
-		window.adb.oeffneBaumZuId (datum.id);
-	});
-	$("#suchfeld"+window.adb.Gruppe).focus();
-};
-
 // läuft von oben nach unten durch die Hierarchie der Lebensräume
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
