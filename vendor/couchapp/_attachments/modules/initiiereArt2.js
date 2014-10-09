@@ -2,6 +2,7 @@
 
 // $ muss übernommen werden, wegen .collapse
 var returnFunction = function ($, html_art, art) {
+	var setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia');
 	// panel beenden
 	$("#art_inhalt").html(html_art);
 	// richtiges Formular anzeigen
@@ -18,7 +19,7 @@ var returnFunction = function ($, html_art, art) {
 	// wird zwar in zeigeFormular schon gemacht
     // trotzdem nötig, weil dort erst mal leere links gesetzt werden
     // hier wird die url angefügt
-	window.adb.setzteLinksZuBilderUndWikipedia(art);
+	setzteLinksZuBilderUndWikipedia (art);
 	// und die URL anpassen
 	history.pushState(null, null, "index.html?id=" + art._id);
 };
