@@ -42,8 +42,9 @@ window.adb.erstelleHtmlFürDatensammlung = function(ds_typ, art, datensammlung) 
 	var html_datensammlung,
 		hierarchie_string,
 		array_string,
-		ds_name;
-	ds_name = window.adb.ersetzeUngültigeZeichenInIdNamen(datensammlung.Name);
+		ds_name,
+		ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen');
+	ds_name = ersetzeUngueltigeZeichenInIdNamen (datensammlung.Name);
 	// Accordion-Gruppe und -heading anfügen
 	html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
 	// bei LR: Symbolleiste einfügen
@@ -3415,7 +3416,8 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
         dsbs_von_objekt,
         ds_felder_objekt,
         html,
-        Autolinker = require('autolinker');
+        Autolinker = require('autolinker'),
+        ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen');
 
     // Eigenschaftensammlungen vorbereiten
     // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
@@ -3502,7 +3504,7 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             html_felder_wählen += '</div></label>';
             // filtern
             html_filtern += '<div class="form-group">';
-            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '"';
+            html_filtern += '<label class="control-label" for="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '"';
             // Feldnamen, die mehr als eine Zeile belegen: Oben ausrichten
             if (x.length > 28) {
                 html_filtern += ' style="padding-top:0px"';
@@ -3512,10 +3514,10 @@ window.adb.erstelleExportfelder = function(taxonomien, datensammlungen, beziehun
             if ((taxonomie.Eigenschaften && (taxonomie.Eigenschaften[x] === "boolean")) || (taxonomie.Beziehungen && (taxonomie.Beziehungen[x] === "boolean"))) {
                 // in einer checkbox darstellen
                 // readonly markiert, dass kein Wert erfasst wurde
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
             } else {
                 // in einem input-feld darstellen
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + window.adb.ersetzeUngültigeZeichenInIdNamen(x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
             }
             html_filtern += '</div>';
         }
@@ -4493,7 +4495,8 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 			object.Taxonomie.Eigenschaften[feldname] = feldwert;
 			$db.saveDoc(object, {
 				success: function(data) {
-					var initiiereArt = require('./modules/initiiereArt');
+					var initiiereArt = require('./modules/initiiereArt'),
+						ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen');
 					object._rev = data.rev;
 					// prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
 					if (feldname === "Label" || feldname === "Einheit") {
@@ -4507,7 +4510,7 @@ window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
 							// dazu neu initiieren, weil sonst das Accordion nicht verändert wird
 							initiiereArt ($, id);
 							// Taxonomie anzeigen
-							$('#' + window.adb.ersetzeUngültigeZeichenInIdNamen(feldwert)).collapse('show');
+							$('#' + ersetzeUngueltigeZeichenInIdNamen(feldwert)).collapse('show');
 						} else {
 							window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
 						}
@@ -4984,11 +4987,6 @@ window.adb.ermittleVergleichsoperator = function(filterwert) {
 		vergleichsoperator = "kein";
 	}
 	return [vergleichsoperator, filterwert];
-};
-
-window.adb.ersetzeUngültigeZeichenInIdNamen = function(idname) {
-	'use strict';
-	return idname.replace(/\s+/g, " ").replace(/ /g,'').replace(/,/g,'').replace(/\./g,'').replace(/:/g,'').replace(/-/g,'').replace(/\//g,'').replace(/\(/g,'').replace(/\)/g,'').replace(/\&/g,'');
 };
 
 // kontrolliert den verwendeten Browser

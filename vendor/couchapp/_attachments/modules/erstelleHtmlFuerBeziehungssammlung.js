@@ -12,7 +12,8 @@ var _ = require('underscore'),
 var returnFunction = function (art, beziehungssammlung, alt_name) {
 	var html,
 		name,
-		bs_name = window.adb.ersetzeUngültigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name;
+		ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
+		bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name;
 
 	// Accordion-Gruppe und -heading anfügen
 	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
