@@ -60,14 +60,15 @@ var returnFunction = function ($) {
 	})
 	.bind("select_node.jstree", function(e, data) {
         'use strict';
-		var node = data.rslt.obj;
+		var node = data.rslt.obj,
+		initiiereArt = require('./initiiereArt');
 		$.jstree._reference(node).open_node(node);
 		if (node.attr("id")) {
 			// verhindern, dass bereits offene Seiten nochmals geöffnet werden
 			if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
 				localStorage.art_id = node.attr("id");
 				// Anzeige im Formular initiieren. ID und Datensammlung übergeben
-				window.adb.initiiere_art(node.attr("id"));
+				initiiereArt ($, node.attr("id"));
 			}
 		}
 	})
