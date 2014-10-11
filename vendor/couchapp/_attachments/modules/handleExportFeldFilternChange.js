@@ -6,7 +6,7 @@
 
 // braucht $ wegen .modal
 var returnFunction = function ($, that) {
-	var $that = $(that);
+    var $that = $(that);
     // die Checkboxen sollen drei Werte annehmen können:
     if (that.type === "checkbox") {
         if (that.readOnly) {
@@ -23,22 +23,22 @@ var returnFunction = function ($, that) {
         }
     }
 
-	var bez_ds_filtered = [];
-	$("#exportieren_objekte_waehlen_ds_collapse")
+    var bez_ds_filtered = [];
+    $("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
         .each(function() {
             if ((that.value || that.value === 0) && $(that).attr('dstyp') === "Beziehung") {
                 bez_ds_filtered.push($(that).attr('eigenschaft'));
             }
         });
-	// eindeutige Liste der dsTypen erstellen
-	bez_ds_filtered = _.union(bez_ds_filtered);
-	if (bez_ds_filtered && bez_ds_filtered.length > 1) {
-		$('#meldung_zuviele_bs').modal();
-		$(that).val("");
-	} else {
-		window.adb.exportZurücksetzen();
-	}
+    // eindeutige Liste der dsTypen erstellen
+    bez_ds_filtered = _.union(bez_ds_filtered);
+    if (bez_ds_filtered && bez_ds_filtered.length > 1) {
+        $('#meldung_zuviele_bs').modal();
+        $(that).val("");
+    } else {
+        window.adb.exportZurücksetzen();
+    }
 };
 
 module.exports = returnFunction;

@@ -5,14 +5,14 @@
 'use strict';
 
 var oeffneNodeNachIdArray = function ($, idArray) {
-	if (idArray.length > 1) {
-		$.jstree._reference("#tree" + window.adb.Gruppe).open_node($("#"+idArray[0]), function() {
-			idArray.splice(0,1);
-			oeffneNodeNachIdArray($, idArray);
-		}, false);
-	} else if (idArray.length === 1) {
-		$.jstree._reference("#tree" + window.adb.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
-	}
+    if (idArray.length > 1) {
+        $.jstree._reference("#tree" + window.adb.Gruppe).open_node($("#"+idArray[0]), function() {
+            idArray.splice(0,1);
+            oeffneNodeNachIdArray($, idArray);
+        }, false);
+    } else if (idArray.length === 1) {
+        $.jstree._reference("#tree" + window.adb.Gruppe).select_node($("#"+idArray[0]),function() {}, true);
+    }
 };
 
 module.exports = oeffneNodeNachIdArray;

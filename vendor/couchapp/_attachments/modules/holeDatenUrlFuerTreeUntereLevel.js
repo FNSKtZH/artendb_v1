@@ -3,20 +3,20 @@
 //$ = require('jquery')
 
 var returnFunction = function ($, level, filter, gruppe, id) {
-	var startkey,
-		// flag, um mitzuliefern, ob die id angezeigt werden soll
-		id2 = false,
-		endkey = [],
+    var startkey,
+        // flag, um mitzuliefern, ob die id angezeigt werden soll
+        id2 = false,
+        endkey = [],
         a,
         url;
 
-	if (filter) {
-		// bei lr gibt es keinen filter und das erzeugt einen fehler
-		startkey = filter.slice();
-		endkey = filter.slice();
-	}
-	
-	switch (gruppe) {
+    if (filter) {
+        // bei lr gibt es keinen filter und das erzeugt einen fehler
+        startkey = filter.slice();
+        endkey = filter.slice();
+    }
+    
+    switch (gruppe) {
     case "fauna":
         if (level > 4) {
             return null;
@@ -73,16 +73,16 @@ var returnFunction = function ($, level, filter, gruppe, id) {
             level++;
         }
         break;
-	}
-	if (gruppe === "lr") {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
-	} else {
-		url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
-	}
-	if (id2) {
-		url = url + "&id=true";
-	}
-	return url;
+    }
+    if (gruppe === "lr") {
+        url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
+    } else {
+        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
+    }
+    if (id2) {
+        url = url + "&id=true";
+    }
+    return url;
 };
 
 module.exports = returnFunction;

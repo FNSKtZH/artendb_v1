@@ -2,7 +2,7 @@
 
 // braucht $ wegen $.jstree
 var returnFunction = function ($, id) {
-	// Hierarchie der id holen
+    // Hierarchie der id holen
     $.ajax('http://localhost:5984/artendb/' + id, {
         type: 'GET',
         dataType: "json"
@@ -60,7 +60,7 @@ var returnFunction = function ($, id) {
         case "Lebensräume":
             var id_array = [];
             _.each(objekt.Taxonomie.Eigenschaften.Hierarchie, function (hierarchie) {
-            	id_array.push(hierarchie.GUID);
+                id_array.push(hierarchie.GUID);
             });
             oeffneNodeNachIdArray ($, id_array);
             break;

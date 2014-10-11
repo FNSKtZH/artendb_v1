@@ -7,34 +7,34 @@
 'use strict';
 
 var _ = require('underscore'),
-	$ = require('jquery');
+    $ = require('jquery');
 
 var returnFunction = function (art, beziehungssammlung, alt_name) {
-	var html,
-		name,
-		ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-		bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name,
-		erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+    var html,
+        name,
+        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
+        bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name,
+        erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
 
-	// Accordion-Gruppe und -heading anfügen
-	html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
-	// die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-	html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bs_name + '">';
-	// Titel für die Datensammlung einfügen
-	html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
-	// header abschliessen
-	html += '</a></h4></div>';
-	// body beginnen
-	html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
+    // Accordion-Gruppe und -heading anfügen
+    html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
+    // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
+    html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bs_name + '">';
+    // Titel für die Datensammlung einfügen
+    html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
+    // header abschliessen
+    html += '</a></h4></div>';
+    // body beginnen
+    html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
 
-	// Datensammlung beschreiben
+    // Datensammlung beschreiben
     html += erstelleHtmlFuerDatensammlungBeschreibung (beziehungssammlung);
 
-	// die Beziehungen sortieren
-	beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
+    // die Beziehungen sortieren
+    beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
 
-	// jetzt für alle Beziehungen die Felder hinzufügen
+    // jetzt für alle Beziehungen die Felder hinzufügen
     _.each(beziehungssammlung.Beziehungen, function(beziehung, index) {
         if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
             _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
@@ -63,9 +63,9 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
             html += "<hr>";
         }
     });
-	// body und Accordion-Gruppe abschliessen
-	html += '</div></div></div>';
-	return html;
+    // body und Accordion-Gruppe abschliessen
+    html += '</div></div></div>';
+    return html;
 };
 
 module.exports = returnFunction;

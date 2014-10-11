@@ -4,16 +4,16 @@
 
 // erhält $, weil jquery.couch.js nicht nod-fähig ist
 var returnFunction = function ($) {
-	var gruppe,
-		gruppenbezeichnung,
-		baum_erstellt = $.Deferred(),
-		erstelleTree = require('./erstelleTree');
-	// alle Bäume ausblenden
-	$(".baum").hide();
-	// alle Beschriftungen ausblenden
-	$(".treeBeschriftung").hide();
-	// gewollte beschriften und sichtbar schalten
-	switch (window.adb.Gruppe) {
+    var gruppe,
+        gruppenbezeichnung,
+        baum_erstellt = $.Deferred(),
+        erstelleTree = require('./erstelleTree');
+    // alle Bäume ausblenden
+    $(".baum").hide();
+    // alle Beschriftungen ausblenden
+    $(".treeBeschriftung").hide();
+    // gewollte beschriften und sichtbar schalten
+    switch (window.adb.Gruppe) {
     case "Fauna":
         gruppe = "fauna";
         gruppenbezeichnung = "Tiere";
@@ -34,24 +34,24 @@ var returnFunction = function ($) {
         gruppe = "lr";
         gruppenbezeichnung = "Lebensräume";
         break;
-	}
+    }
 
-	$.ajax('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
+    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
         type: 'GET',
         dataType: "json"
-	}).done(function (data) {
-		var anzahl_objekte = data.rows[0].value;
-		$("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
-		// eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
-	}).fail(function () {
-		console.log('keine Daten erhalten')
-	});
+    }).done(function (data) {
+        var anzahl_objekte = data.rows[0].value;
+        $("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+        // eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
+    }).fail(function () {
+        console.log('keine Daten erhalten')
+    });
 
-	$.when(erstelleTree($)).then(function() {
-		baum_erstellt.resolve();
-	});
+    $.when(erstelleTree($)).then(function() {
+        baum_erstellt.resolve();
+    });
 
-	return baum_erstellt.promise();
+    return baum_erstellt.promise();
 };
 
 module.exports = returnFunction;

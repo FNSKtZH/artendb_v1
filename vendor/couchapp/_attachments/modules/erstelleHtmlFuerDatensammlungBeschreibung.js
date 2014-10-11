@@ -3,7 +3,7 @@
 var Autolinker = require('autolinker');
 
 var returnFunction = function (es_oder_bs) {
-	var html = '<div class="Datensammlung BeschreibungDatensammlung">';
+    var html = '<div class="Datensammlung BeschreibungDatensammlung">';
     if (es_oder_bs.Beschreibung) {
         html += es_oder_bs.Beschreibung;
     }
