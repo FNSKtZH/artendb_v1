@@ -6,21 +6,20 @@
 
 // braucht $ wegen .modal
 var returnFunction = function ($, that) {
-	var this = that,
-		$this = $(that);
+	var $that = $(that);
     // die Checkboxen sollen drei Werte annehmen können:
-    if (this.type === "checkbox") {
-        if (this.readOnly) {
+    if (that.type === "checkbox") {
+        if (that.readOnly) {
             // so ist es zu Beginn
             // dann soll er auf chedked wechseln
-            this.readOnly = this.indeterminate = false;
-            $this.prop('checked', true);
-        } else if (!$this.prop('checked')) {
-            this.readOnly = this.indeterminate = false;
-            $this.prop('checked', false);
+            that.readOnly = that.indeterminate = false;
+            $that.prop('checked', true);
+        } else if (!$that.prop('checked')) {
+            that.readOnly = that.indeterminate = false;
+            $that.prop('checked', false);
         } else {
-            $this.prop('checked', false);
-            this.indeterminate = this.readOnly = true;
+            $that.prop('checked', false);
+            that.indeterminate = that.readOnly = true;
         }
     }
 
@@ -28,15 +27,15 @@ var returnFunction = function ($, that) {
 	$("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
         .each(function() {
-            if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
-                bez_ds_filtered.push($(this).attr('eigenschaft'));
+            if ((that.value || that.value === 0) && $(that).attr('dstyp') === "Beziehung") {
+                bez_ds_filtered.push($(that).attr('eigenschaft'));
             }
         });
 	// eindeutige Liste der dsTypen erstellen
 	bez_ds_filtered = _.union(bez_ds_filtered);
 	if (bez_ds_filtered && bez_ds_filtered.length > 1) {
 		$('#meldung_zuviele_bs').modal();
-		$(this).val("");
+		$(that).val("");
 	} else {
 		window.adb.exportZurücksetzen();
 	}
