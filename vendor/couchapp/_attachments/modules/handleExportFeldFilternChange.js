@@ -27,8 +27,8 @@ var returnFunction = function ($, that) {
     $("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
         .each(function() {
-            if ((that.value || that.value === 0) && $(that).attr('dstyp') === "Beziehung") {
-                bez_ds_filtered.push($(that).attr('eigenschaft'));
+            if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
+                bez_ds_filtered.push($(this).attr('eigenschaft'));
             }
         });
     // eindeutige Liste der dsTypen erstellen

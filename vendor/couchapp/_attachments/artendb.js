@@ -1415,6 +1415,7 @@ window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
 // ist nötig, weil index.html nicht requiren kann
 window.adb.handleExportFeldFilternChange = function() {
     'use strict';
+    console.log('this: ', this);
     var that = this,
         handleExportFeldFilternChange = require('./modules/handleExportFeldFilternChange');
     handleExportFeldFilternChange($, that);
