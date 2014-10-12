@@ -46,22 +46,22 @@ var returnFunction = function () {
                 dataType: "json"
             }).done(function () {
                 // melden, dass Indexe aktualisiert wurden
-                    $importieren_ds_import_ausfuehren_hinweis
-                        .removeClass("alert-info")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success");
-                    rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
-                    rückmeldung += "Die Indexe wurden aktualisiert.";
-                    if (window.adb.rückmeldung_links) {
-                        rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                        rückmeldung += window.adb.rückmeldung_links;
-                        delete window.adb.rückmeldung_links;
-                    }
-                    $importieren_ds_import_ausfuehren_hinweis_text
-                        .html(rückmeldung);
-                    $('html, body').animate({
-                        scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
-                    }, 2000);
+                $importieren_ds_import_ausfuehren_hinweis
+                    .removeClass("alert-info")
+                    .removeClass("alert-danger")
+                    .addClass("alert-success");
+                rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
+                rückmeldung += "Die Indexe wurden aktualisiert.";
+                if (window.adb.rückmeldung_links) {
+                    rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    rückmeldung += window.adb.rückmeldung_links;
+                    delete window.adb.rückmeldung_links;
+                }
+                $importieren_ds_import_ausfuehren_hinweis_text
+                    .html(rückmeldung);
+                $('html, body').animate({
+                    scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
+                }, 2000);
             }).fail(function () {
                 console.log('keine Daten erhalten');
             });
