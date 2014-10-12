@@ -1471,68 +1471,9 @@ window.adb.handleBtnLrBearbNeuClick = function() {
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 window.adb.handleLrParentOptionenChange = function() {
     'use strict';
-    // prüfen, ob oberster Node gewählt wurde
-    var parent_name = $(this).val(),
-        parent_id = this.id,
-        parent = {},
-        object = {};
-    // zuerst eine id holen
-    object._id = $.couch.newUUID(1);
-    object.Gruppe = "Lebensräume";
-    object.Typ = "Objekt";
-    object.Taxonomie = {};
-    object.Taxonomie.Name = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-    object.Taxonomie.Eigenschaften = {};
-    object.Taxonomie.Eigenschaften.Taxonomie = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
-    // wenn keine Wurzel: Label anzeigen
-    if (parent_id !== "0") {
-        object.Taxonomie.Eigenschaften.Label = "";
-    }
-    object.Taxonomie.Eigenschaften.Einheit = "unbeschriebener Lebensraum";
-    if (parent_id === "0") {
-        object.Taxonomie.Eigenschaften.Einheit = "neue Taxonomie";
-    }
-    /*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
-    object.Taxonomie.Eigenschaften["Einheit-Nr FNS"] = "";
-    if (parent_id === "0") {
-        object.Taxonomie.Eigenschaften["Einheit-Nrn FNS von"] = "";
-        object.Taxonomie.Eigenschaften["Einheit-Nrn FNS bis"] = "";
-    }*/
-    object.Taxonomie.Eigenschaften.Beschreibung = "";
-    object.Eigenschaftensammlungen = [];
-    object.Beziehungssammlungen = [];
-    // jetzt den parent erstellen
-    // geht nicht vorher, weil die id bekannt sein muss
-    if (parent_id === "0") {
-        // das ist die Wurzel der Taxonomie
-        parent.Name = "neue Taxonomie";
-        parent.GUID = object._id;
-        // bei der Wurzel ist Hierarchie gleich parent
-        object.Taxonomie.Eigenschaften.Hierarchie = [];
-        object.Taxonomie.Eigenschaften.Hierarchie.push(parent);
-    } else {
-        parent.Name = parent_name;
-        parent.GUID = parent_id;
-    }
-    object.Taxonomie.Eigenschaften.Parent = parent;
-    var $db = $.couch.db("artendb");
-    $db.saveDoc(object, {
-        success: function(object_saved) {
-            var erstelleBaum = require('./modules/erstelleBaum');
-            object._rev = object_saved.rev;
-            if (parent_id !== "0") {
-                // die Hierarchie aufbauen und setzen
-                // bei der Wurzel ist sie schon gesetzt
-                window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
-            } else {
-                $.when(erstelleBaum($)).then(function() {
-                    var oeffneBaumZuId = require('./modules/oeffneBaumZuId');
-                    oeffneBaumZuId ($, object._id);
-                    $('#lr_parent_waehlen').modal('hide');
-                });
-            }
-        }
-    });
+    console.log('hallo');
+    var handleLrParentOptionenChange = require('./modules/handleLrParentOptionenChange');
+    handleLrParentOptionenChange($, this);
 };
 
 // wenn rueckfrage_lr_loeschen_ja geklickt wird
