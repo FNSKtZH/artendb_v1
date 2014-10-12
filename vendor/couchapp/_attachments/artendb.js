@@ -1929,12 +1929,13 @@ window.adb.erstelleListeFürFeldwahl = function() {
     'use strict';
     var export_gruppen = [],
         gruppen = [],
-        $exportieren_objekte_waehlen_gruppen_hinweis_text = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
+        $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
-        $exportieren_nur_objekte_mit_eigenschaften = $("#exportieren_nur_objekte_mit_eigenschaften"),
-        $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse"),
-        $exportieren_felder_waehlen_collapse = $("#exportieren_felder_waehlen_collapse"),
-        $exportieren_objekte_waehlen_ds_collapse = $("#exportieren_objekte_waehlen_ds_collapse");
+        $exportieren_nur_objekte_mit_eigenschaften          = $("#exportieren_nur_objekte_mit_eigenschaften"),
+        $exportieren_exportieren_collapse                   = $("#exportieren_exportieren_collapse"),
+        $exportieren_felder_waehlen_collapse                = $("#exportieren_felder_waehlen_collapse"),
+        $exportieren_objekte_waehlen_ds_collapse            = $("#exportieren_objekte_waehlen_ds_collapse");
+
     // falls noch offen: folgende Bereiche schliessen
     if ($exportieren_exportieren_collapse.is(':visible')) {
         $exportieren_exportieren_collapse.collapse('hide');
