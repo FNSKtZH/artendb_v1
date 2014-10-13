@@ -2483,8 +2483,9 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     'use strict';
+    var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./modules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
-        window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {
         $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
             type: 'GET',
@@ -2493,16 +2494,11 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, o
                 include_docs: true
             }
         }).done(function (lr) {
-            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+            aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
         }).fail(function () {
             console.log('keine Daten erhalten');
         });
     }
-};
-
-window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
-    'use strict';
-    require('./modules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2') (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
 };
 
 // Baut den Hierarchiepfad für einen Lebensraum auf
