@@ -1070,7 +1070,7 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
     'use strict';
-    window.adb.erstelleListeFürFeldwahl();
+    require('./modules/erstelleListeFuerFeldwahl') ($);
 };
 
 // ist nötig, weil index.html nicht requiren kann
@@ -1210,7 +1210,7 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function(that) {
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
-        window.adb.erstelleListeFürFeldwahl();
+        require('./modules/erstelleListeFuerFeldwahl') ($);
         // und den panel schliessen
         $(that).collapse('hide');
         return false;
@@ -1239,7 +1239,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
             }
         });
     if (gruppe_ist_gewählt) {
-        window.adb.erstelleListeFürFeldwahl();
+        require('./modules/erstelleListeFuerFeldwahl') ($);
     }
 };
 
@@ -1920,12 +1920,6 @@ window.adb.erstelleExportString = function(exportobjekte) {
         string_zeilen += string_zeile;
     });
     return string_titelzeile + "\n" + string_zeilen;
-};
-
-
-window.adb.erstelleListeFürFeldwahl = function() {
-    'use strict';
-    require('./modules/erstelleListeFuerFeldwahl') ($);
 };
 
 window.adb.erstelleListeFürFeldwahl_2 = function(export_felder_arrays) {
