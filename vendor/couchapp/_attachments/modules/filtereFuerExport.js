@@ -20,7 +20,8 @@ var returnFunction = function ($, direkt) {
         anz_ds_gewählt = 0,
         $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text"),
         html_filterkriterien,
-        übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport');
+        übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport'),
+        uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau');
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (window.adb.fürExportGewählteGruppen().length === 0) {
@@ -170,7 +171,7 @@ var returnFunction = function ($, direkt) {
     } if (direkt === "für_alt") {
         window.adb.übergebeFilterFürExportFürAlt(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     } else {
-        window.adb.übergebeFilterFürExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        uebergebeFilterFuerExportMitVorschau ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     }
 };
 
