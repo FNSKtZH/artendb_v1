@@ -82,7 +82,7 @@ var returnFunction = function ($) {
                 export_gruppen.splice(0,1);
                 if (export_gruppen.length === 0) {
                     // alle Gruppen sind verarbeitet
-                    window.adb.erstelleListeFürFeldwahl_2(export_felder_arrays);
+                    require('./erstelleListeFuerFeldwahl2') ($, export_felder_arrays);
                 }
             }).fail(function () {
                 console.log('keine Daten erhalten');
