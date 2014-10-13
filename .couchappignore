@@ -8,5 +8,6 @@
   "gulp-tasks$",
   "gulpfile.js",
   "couchPass.json",
-  "vendor/couchapp/_attachments/artendb_browserified.js"
+  "vendor/couchapp/_attachments/artendb_browserified.js",
+  "vendor/couchapp/_attachments/artendb_built.js.map"
 ]

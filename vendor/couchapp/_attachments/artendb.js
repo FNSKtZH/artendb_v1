@@ -1976,11 +1976,6 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
     window.open('_list/' + queryParam);
 };
 
-window.adb.übergebeFilterFürExportMitVorschau = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
-    'use strict';
-    require('./modules/uebergebeFilterFuerExportMitVorschau') ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
-};
-
 window.adb.baueTabelleFürExportAuf = function() {
     'use strict';
     var hinweis = "",
@@ -2295,87 +2290,10 @@ window.adb.öffneGruppe = function(Gruppe) {
     delete localStorage.art_id;
 };
 
-// schreibt Änderungen in Feldern in die Datenbank
-// wird vorläufig nur für LR Taxonomie verwendet
+
 window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
     'use strict';
-    // zuerst die id des Objekts holen
-    var uri = new Uri($(location).attr('href')),
-        id = uri.getQueryParamValue('id'),
-        // wenn browser history nicht unterstützt, erstellt history.js eine hash
-        // dann muss die id durch die id in der hash ersetzt werden
-        hash = uri.anchor(),
-        uri2;
-    if (hash) {
-        uri2 = new Uri(hash);
-        id = uri2.getQueryParamValue('id');
-    }
-    // sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
-    feldwert = window.adb.convertToCorrectType(feldwert);
-    var $db = $.couch.db("artendb");
-    $db.openDoc(id, {
-        success: function(object) {
-            // prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
-            if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
-                // das ist die Wurzel der Taxonomie
-                // somit ändert auch der Taxonomiename
-                // diesen mitgeben
-                // Einheit ändert und Taxonomiename muss auch angepasst werden
-                object.Taxonomie.Name = feldwert;
-                object.Taxonomie.Eigenschaften.Taxonomie = feldwert;
-                // TODO: prüfen, ob die Änderung zulässig ist (Taxonomiename eindeutig) --- VOR DEM SPEICHERN
-                // TODO: allfällige Beziehungen anpassen
-            }
-            // den übergebenen Wert im übergebenen Feldnamen speichern
-            object.Taxonomie.Eigenschaften[feldname] = feldwert;
-            $db.saveDoc(object, {
-                success: function(data) {
-                    var initiiereArt = require('./modules/initiiereArt'),
-                        ersetzeUngueltigeZeichenInIdNamen = require('./modules/ersetzeUngueltigeZeichenInIdNamen');
-                    object._rev = data.rev;
-                    // prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
-                    if (feldname === "Label" || feldname === "Einheit") {
-                        if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
-                            // das ist die Wurzel der Taxonomie
-                            // somit ändert auch der Taxonomiename
-                            // diesen mitgeben
-                            // Einheit ändert und Taxonomiename muss auch angepasst werden
-                            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldwert);
-                            // Feld Taxonomie und Beschriftung des Accordions aktualisiern
-                            // dazu neu initiieren, weil sonst das Accordion nicht verändert wird
-                            initiiereArt ($, id);
-                            // Taxonomie anzeigen
-                            $('#' + ersetzeUngueltigeZeichenInIdNamen(feldwert)).collapse('show');
-                        } else {
-                            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
-                        }
-                        // node umbenennen
-                        var neuer_nodetext;
-                        if (feldname === "Label") {
-                            // object hat noch den alten Wert für Label, neuen verwenden
-                            neuer_nodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
-                        } else {
-                            // object hat noch den alten Wert für Einheit, neuen verwenden
-                            neuer_nodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
-                        }
-                        $("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuer_nodetext);
-                    }
-                },
-                error: function() {
-                    $("#meldung_individuell_label").html("Fehler");
-                    $("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldname+" wurde nicht gespeichert");
-                    $("#meldung_individuell_schliessen").html("schliessen");
-                    $('#meldung_individuell').modal();
-                }
-            });
-        },
-        error: function() {
-            $("#meldung_individuell_label").html("Fehler");
-            $("#meldung_individuell_text").html("Die letzte Änderung im Feld "+feldname+" wurde nicht gespeichert");
-            $("#meldung_individuell_schliessen").html("schliessen");
-            $('#meldung_individuell').modal();
-        }
-    });
+    require('./modules/speichern') ($, feldwert, feldname, ds_name, ds_typ);
 };
 
 window.adb.convertToCorrectType = function(feldwert) {
@@ -2568,11 +2486,16 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, o
     if (lr) {
         window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {
-        var $db = $.couch.db("artendb");
-        $db.view('artendb/lr?include_docs=true', {
-            success: function(lr) {
-                window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
+            type: 'GET',
+            dataType: "json",
+            data: {
+                include_docs: true
             }
+        }).done(function (lr) {
+            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        }).fail(function () {
+            console.log('keine Daten erhalten');
         });
     }
 };
@@ -2615,20 +2538,25 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2 = function(lr,
         objekt.Taxonomie.Name = einheit_ist_taxonomiename;
         objekt.Taxonomie.Eigenschaften.Taxonomie = einheit_ist_taxonomiename;
     }
-    $db.saveDoc(objekt, {
-        success: function() {
-            var doc;
-            // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-            _.each(lr.rows, function(lr_row) {
-                doc = lr_row.doc;
-                if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
-                    // das ist ein child
-                    // auch aktualisieren
-                    // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-                    window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
-                }
-            });
-        }
+    // db aktualisieren
+    $.ajax('http://localhost:5984/artendb/' + objekt._id, {
+        type: 'PUT',
+        dataType: "json",
+        data: JSON.stringify(objekt)
+    }).done(function () {
+        var doc;
+        // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
+        _.each(lr.rows, function(lr_row) {
+            doc = lr_row.doc;
+            if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
+                // das ist ein child
+                // auch aktualisieren
+                // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
+                window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2(lr, doc, false, einheit_ist_taxonomiename);
+            }
+        });
+    }).fail(function () {
+        console.log('Datensatz nicht gespeichert');
     });
 };
 
