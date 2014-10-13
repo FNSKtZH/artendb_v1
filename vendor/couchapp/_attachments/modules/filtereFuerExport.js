@@ -19,7 +19,8 @@ var returnFunction = function ($, direkt) {
         gewählte_felder_objekt = {},
         anz_ds_gewählt = 0,
         $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text"),
-        html_filterkriterien;
+        html_filterkriterien,
+        übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport');
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (window.adb.fürExportGewählteGruppen().length === 0) {
@@ -165,7 +166,7 @@ var returnFunction = function ($, direkt) {
 
     // jetzt das filterObjekt übergeben
     if (direkt === "direkt") {
-        window.adb.übergebeFilterFürDirektExport(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     } if (direkt === "für_alt") {
         window.adb.übergebeFilterFürExportFürAlt(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     } else {
