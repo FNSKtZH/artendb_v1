@@ -72,8 +72,8 @@ var returnFunction = function ($) {
                 dataType: "json",
                 data: {
                     group_level: 5,
-                    startkey: '["'+gruppe+'"]',
-                    endkey: '["'+gruppe+'",{},{},{},{}]'
+                    startkey: '["' + gruppe + '"]',
+                    endkey: '["' + gruppe + '",{},{},{},{}]'
                 }
             }).done(function (data) {
                 export_felder_arrays = _.union(export_felder_arrays, data.rows);

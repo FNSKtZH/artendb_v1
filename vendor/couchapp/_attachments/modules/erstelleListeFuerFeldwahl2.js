@@ -8,7 +8,8 @@ var returnFunction = function ($, export_felder_arrays) {
         hinweis_taxonomien,
         taxonomien,
         datensammlungen,
-        beziehungssammlungen;
+        beziehungssammlungen,
+        ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt');
 
     // in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
@@ -28,7 +29,7 @@ var returnFunction = function ($, export_felder_arrays) {
     });
 
     // Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
-    felder_objekt = window.adb.ergänzeFelderObjekt(felder_objekt, export_felder_arrays);
+    felder_objekt = ergaenzeFelderObjekt (felder_objekt, export_felder_arrays);
 
     // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
     if (felder_objekt["Taxonomie(n)"] && felder_objekt["Taxonomie(n)"].Eigenschaften) {
