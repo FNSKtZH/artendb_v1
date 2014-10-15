@@ -10,8 +10,8 @@ gulp.task('prod_build_style', function() {
             '_attachments/style/artendb.css'
         ])
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(minifycss())
         .pipe(concat('main.css'))
+        .pipe(minifycss())
         .pipe(gulp.dest('_attachments/style'))
         .pipe(notify({message: 'prod_build_style task beendet'}));
 });
