@@ -527,14 +527,14 @@ window.adb.handleDsZusammenfassendChange = function() {
 // Wenn BsWählen geändert wird
 window.adb.handleBsWählenChange = function() {
     'use strict';
-    var handleBsWaehlenChange = require('./modules/handleBsWaehlenChange');
+    var handleBsWaehlenChange = require('./adbModules/handleBsWaehlenChange');
     handleBsWaehlenChange ($, this);
 };
 
 // wenn DsFile geändert wird
 window.adb.handleDsFileChange = function() {
     'use strict';
-    var erstelleTabelle = require('./modules/erstelleTabelle');
+    var erstelleTabelle = require('./adbModules/erstelleTabelle');
     if (typeof event.target.files[0] === "undefined") {
         // vorhandene Datei wurde entfernt
         $("#DsTabelleEigenschaften").hide();
@@ -556,7 +556,7 @@ window.adb.handleDsFileChange = function() {
 // wenn BsFile geändert wird
 window.adb.handleBsFileChange = function() {
     'use strict';
-    var erstelleTabelle = require('./modules/erstelleTabelle');
+    var erstelleTabelle = require('./adbModules/erstelleTabelle');
     if (typeof event.target.files[0] === "undefined") {
         // vorhandene Datei wurde entfernt
         $("#BsTabelleEigenschaften").hide();
@@ -614,7 +614,7 @@ window.adb.handleMenuBtnClick = function() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function() {
     'use strict';
-    var zeigeFormular = require('./modules/zeigeFormular');
+    var zeigeFormular = require('./adbModules/zeigeFormular');
     if(window.adb.isFileAPIAvailable()) {
         zeigeFormular ("importieren_ds");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -629,7 +629,7 @@ window.adb.handleDs_ImportierenClick = function() {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function() {
     'use strict';
-    var zeigeFormular = require('./modules/zeigeFormular');
+    var zeigeFormular = require('./adbModules/zeigeFormular');
     if(window.adb.isFileAPIAvailable()) {
         zeigeFormular ("importieren_bs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
@@ -641,7 +641,7 @@ window.adb.handleBs_ImportierenClick = function() {
 
 window.adb.handleMenuAdminClick = function() {
     'use strict';
-    var zeigeFormular = require('./modules/zeigeFormular');
+    var zeigeFormular = require('./adbModules/zeigeFormular');
     zeigeFormular ("admin");
 };
 
@@ -800,7 +800,7 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
 
 window.adb.nenneDsUm = function() {
     'use strict';
-    var nenneDsUm = require('./modules/nenneDsUm');
+    var nenneDsUm = require('./adbModules/nenneDsUm');
     nenneDsUm ();
 };
 
@@ -964,7 +964,7 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function() {
 // wenn DsWählen geändert wird
 window.adb.handleDsWählenChange = function() {
     'use strict';
-    var handleDsWaehlenChange = require('./modules/handleDsWaehlenChange');
+    var handleDsWaehlenChange = require('./adbModules/handleDsWaehlenChange');
     handleDsWaehlenChange ($, this);
 };
 
@@ -1027,7 +1027,7 @@ window.adb.handleBsLöschenClick = function() {
 // wenn exportieren geklickt wird
 window.adb.handleExportierenClick = function() {
     'use strict';
-    var zeigeFormular = require('./modules/zeigeFormular');
+    var zeigeFormular = require('./adbModules/zeigeFormular');
     zeigeFormular ("export");
     delete window.adb.exportieren_objekte;
 };
@@ -1082,14 +1082,14 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
     'use strict';
-    require('./modules/erstelleListeFuerFeldwahl') ($);
+    require('./adbModules/erstelleListeFuerFeldwahl') ($);
 };
 
 // ist nötig, weil index.html nicht requiren kann
 window.adb.handleExportFeldFilternChange = function() {
     'use strict';
     var that = this,
-        handleExportFeldFilternChange = require('./modules/handleExportFeldFilternChange');
+        handleExportFeldFilternChange = require('./adbModules/handleExportFeldFilternChange');
     handleExportFeldFilternChange($, that);
 };
 
@@ -1128,7 +1128,7 @@ window.adb.handleBtnLrBearbSchuetzenClick = function() {
 window.adb.handleBtnLrBearbNeuClick = function() {
     'use strict';
     var html,
-        getHtmlForLrParentAuswahlliste = require('./modules/getHtmlForLrParentAuswahlliste');
+        getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');
     if (!$(this).hasClass('disabled')) {
         getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
             $("#lr_parent_waehlen_optionen").html(html);
@@ -1143,7 +1143,7 @@ window.adb.handleBtnLrBearbNeuClick = function() {
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 window.adb.handleLrParentOptionenChange = function() {
     'use strict';
-    var handleLrParentOptionenChange = require('./modules/handleLrParentOptionenChange');
+    var handleLrParentOptionenChange = require('./adbModules/handleLrParentOptionenChange');
     handleLrParentOptionenChange($, this);
 };
 
@@ -1202,7 +1202,7 @@ window.adb.handlePanelbodyLrTaxonomieShown = function() {
 window.adb.handleExportierenExportierenCollapseShown = function() {
     'use strict';
     var that = this,
-        filtereFuerExport = require('./modules/filtereFuerExport');
+        filtereFuerExport = require('./adbModules/filtereFuerExport');
     // nur ausführen, wenn exportieren_exportieren_collapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
     if ($("#exportieren_exportieren_collapse").is(":visible")) {
@@ -1222,7 +1222,7 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function(that) {
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
-        require('./modules/erstelleListeFuerFeldwahl') ($);
+        require('./adbModules/erstelleListeFuerFeldwahl') ($);
         // und den panel schliessen
         $(that).collapse('hide');
         return false;
@@ -1251,7 +1251,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
             }
         });
     if (gruppe_ist_gewählt) {
-        require('./modules/erstelleListeFuerFeldwahl') ($);
+        require('./adbModules/erstelleListeFuerFeldwahl') ($);
     }
 };
 
@@ -1376,25 +1376,25 @@ window.adb.handleÖffneGruppeClick = function() {
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function() {
     'use strict';
-    require('./modules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
+    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function() {
     'use strict';
-    require('./modules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
+    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function() {
     'use strict';
-    require('./modules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
+    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function() {
     'use strict';
-    require('./modules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
+    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
 };
 
 // wenn in textarea keyup oder focus
@@ -1405,7 +1405,7 @@ window.adb.handleTextareaKeyupFocus = function() {
 
 window.adb.importiereDatensammlung = function() {
     'use strict';
-    require('./modules/importiereDatensammlung') ($);
+    require('./adbModules/importiereDatensammlung') ($);
 };
 
 // wird momentan nicht benutzt
@@ -1475,7 +1475,7 @@ window.adb.queryChanges = function(options) {
 
 window.adb.importiereBeziehungssammlung = function() {
     'use strict';
-    require('./modules/importiereBeziehungssammlung') ($);
+    require('./adbModules/importiereBeziehungssammlung') ($);
 };
 
 window.adb.bereiteBeziehungspartnerFürImportVor = function() {
@@ -1528,7 +1528,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
 
 window.adb.entferneDatensammlung = function() {
     'use strict';
-    require('./modules/entferneDatensammlung') ();
+    require('./adbModules/entferneDatensammlung') ();
 };
 
 window.adb.entferneDatensammlung_2 = function(ds_name, guid_array, verzögerungs_faktor) {
@@ -1574,7 +1574,7 @@ window.adb.entferneDatensammlungAusObjekt = function(ds_name, objekt) {
 
 window.adb.entferneBeziehungssammlung = function() {
     'use strict';
-    require('./modules/entferneBeziehungssammlung') ();
+    require('./adbModules/entferneBeziehungssammlung') ();
 };
 
 window.adb.entferneBeziehungssammlung_2 = function(bs_name, guid_array, verzögerungs_faktor) {
@@ -1869,7 +1869,7 @@ window.adb.öffneUri = function() {
         var $db = $.couch.db("artendb");
         $db.openDoc(id, {
             success: function(objekt) {
-                var erstelleBaum = require('./modules/erstelleBaum');
+                var erstelleBaum = require('./adbModules/erstelleBaum');
                 // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.Gruppe = objekt.Gruppe;
                 $(".baum.jstree").jstree("deselect_all");
@@ -1878,7 +1878,7 @@ window.adb.öffneUri = function() {
                 $("#Gruppe_label").html("Gruppe:");
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum($)).then(function() {
-                    var oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+                    var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                     oeffneBaumZuId ($, id);
                 });
             }
@@ -1956,7 +1956,7 @@ window.adb.holeDatensammlungenFürExportfelder = function() {
 
 window.adb.filtereFürExport = function(direkt) {
     'use strict';
-    require('./modules/filtereFuerExport') ($, direkt);
+    require('./adbModules/filtereFuerExport') ($, direkt);
 };
 
 window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
@@ -1991,7 +1991,7 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
 window.adb.baueTabelleFürExportAuf = function() {
     'use strict';
     var hinweis = "",
-        erstelleTabelle = require('./modules/erstelleTabelle');
+        erstelleTabelle = require('./adbModules/erstelleTabelle');
 
     if (window.adb.exportieren_objekte.length > 0) {
         erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle");
@@ -2281,7 +2281,7 @@ window.adb.exportZurücksetzen = function() {
 
 window.adb.öffneGruppe = function(Gruppe) {
     'use strict';
-    var erstelleBaum = require('./modules/erstelleBaum');
+    var erstelleBaum = require('./adbModules/erstelleBaum');
     // Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
     window.adb.Gruppe = Gruppe;
     $(".suchfeld").val("");
@@ -2305,7 +2305,7 @@ window.adb.öffneGruppe = function(Gruppe) {
 
 window.adb.speichern = function(feldwert, feldname, ds_name, ds_typ) {
     'use strict';
-    require('./modules/speichern') ($, feldwert, feldname, ds_name, ds_typ);
+    require('./adbModules/speichern') ($, feldwert, feldname, ds_name, ds_typ);
 };
 
 window.adb.convertToCorrectType = function(feldwert) {
@@ -2468,15 +2468,15 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
     // save ohne open: _rev wurde zuvor übernommen
     $db.saveDoc(object, {
         success: function() {
-            var erstelleBaum = require('./modules/erstelleBaum');
+            var erstelleBaum = require('./adbModules/erstelleBaum');
             $.when(erstelleBaum($)).then(function() {
-                var oeffneBaumZuId = require('./modules/oeffneBaumZuId');
+                var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                 oeffneBaumZuId ($, object._id);
                 $('#lr_parent_waehlen').modal('hide');
             });
         },
         error: function() {
-            var initiiereArt = require('./modules/initiiereArt');
+            var initiiereArt = require('./adbModules/initiiereArt');
             $("#meldung_individuell_label").html("Fehler");
             $("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
             $("#meldung_individuell_schliessen").html("schliessen");
@@ -2495,7 +2495,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     'use strict';
-    var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./modules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+    var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
         aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {

@@ -5,18 +5,18 @@ var gulp = require('gulp'),
 
 gulp.task('prod_build_src', function() {
     return gulp.src([
-	    	'vendor/couchapp/_attachments/underscore.js',
-	    	'vendor/couchapp/_attachments/typeahead.js',
-	    	'vendor/couchapp/_attachments/jquery.cookie.js',
-	    	'vendor/couchapp/_attachments/jquery.hotkeys.js',
-	    	'vendor/couchapp/_attachments/jquery.couch.js',
-	    	'vendor/couchapp/_attachments/jquery.csv.js',
-            'vendor/couchapp/_attachments/bootstrap.js',
-	    	'vendor/couchapp/_attachments/jsuri.js',
-	    	'vendor/couchapp/_attachments/FileSaver.js',
-	    	'vendor/couchapp/_attachments/css3-mediaqueries.js',
-	    	'vendor/couchapp/_attachments/history.js',
-	    	'vendor/couchapp/_attachments/sha1.js',
+	    	'vendor/couchapp/_attachments/index_lib/underscore.js',
+	    	'vendor/couchapp/_attachments/index_lib/typeahead.js',
+	    	'vendor/couchapp/_attachments/index_lib/jquery.cookie.js',
+	    	'vendor/couchapp/_attachments/index_lib/jquery.hotkeys.js',
+	    	'vendor/couchapp/_attachments/index_lib/jquery.couch.js',
+	    	'vendor/couchapp/_attachments/index_lib/jquery.csv.js',
+            'vendor/couchapp/_attachments/index_lib/bootstrap.js',
+	    	'vendor/couchapp/_attachments/index_lib/jsuri.js',
+	    	'vendor/couchapp/_attachments/index_lib/FileSaver.js',
+	    	'vendor/couchapp/_attachments/index_lib/css3-mediaqueries.js',
+	    	'vendor/couchapp/_attachments/index_lib/history.js',
+	    	'vendor/couchapp/_attachments/index_lib/sha1.js',
 	    	'vendor/couchapp/_attachments/artendb_browserified.js'
     	])
         .pipe(concat('artendb_built.js'))

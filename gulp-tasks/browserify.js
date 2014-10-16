@@ -8,9 +8,9 @@
 
 var browserify   = require('browserify');
 var watchify     = require('watchify');
-var bundleLogger = require('../vendor/couchapp/_attachments/lib/bundleLogger');
+var bundleLogger = require('../vendor/couchapp/_attachments/adb_lib/bundleLogger');
 var gulp         = require('gulp');
-var handleErrors = require('../vendor/couchapp/_attachments/lib/handleErrors');
+var handleErrors = require('../vendor/couchapp/_attachments/adb_lib/handleErrors');
 var source       = require('vinyl-source-stream');
 
 gulp.task('browserify', function() {

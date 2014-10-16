@@ -8,6 +8,13 @@
   "gulp-tasks$",
   "gulpfile.js",
   "couchPass.json",
-  "vendor/couchapp/_attachments/artendb_browserified.js",
-  "vendor/couchapp/_attachments/artendb_built.js.map"
+  "artendb.js",
+  "artendb_browserified.js",
+  "artendb_built.js.map",
+  "adbModules$",
+  "adb_lib$",
+  "index_lib$",
+  "index_dev.html",
+  "arteigenschaften_fuer_evab.mdb",
+  "arteigenschaften_fuer_alt.mdb"
 ]
