@@ -65,9 +65,10 @@ body {
 	left: 7px;
 	/* right: 0; ausgeschaltet - unnötig */
 	/* float: left; ausgeschaltet - unnötig */
-	width: -webkit-calc(100% - 2px);
+	/*width: -webkit-calc(100% - 2px);
 	width:      -o-calc(100% - 2px);
-	width:         calc(100% - 2px);
+	width:         calc(100% - 2px);*/
+    width: 100%;
 	padding: 8px 8px 8px 8px;
 	margin-bottom: 10px;
 	overflow: visible;
@@ -163,8 +164,6 @@ body {
 #menu .suchen {
 	margin-bottom: 2px;
 	display: none;
-    width: 358px;
-    max-width: 100%;
 }
 
 /*
@@ -178,7 +177,7 @@ body {
 	border-bottom-right-radius: 3px;*/
 
 	/* Styling ohne Lupe links im Suchfeld */
-	width: 358px;
+	width: 354px;
 	border-radius: 3px;
 	background-color: #FFFFFF !important;
 	font-size: 14px !important;
