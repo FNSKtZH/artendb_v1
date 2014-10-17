@@ -163,6 +163,8 @@ body {
 #menu .suchen {
 	margin-bottom: 2px;
 	display: none;
+    width: 358px;
+    max-width: 100%;
 }
 
 /*
