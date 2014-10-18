@@ -816,7 +816,6 @@ window.adb.baueDsZuEigenschaftenUm = function() {
     'use strict';
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-
     $.ajax('http://localhost:5984/artendb/_design/artendb/_view/all_docs', {
         type: 'GET',
         dataType: "json",
@@ -1177,26 +1176,32 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
         id = uri2.getQueryParamValue('id');
     }
     // Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
-    var $db = $.couch.db("artendb");
-    $db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
-        success: function(data) {
-            // daraus einen Array von docs machen
-            var doc_array = _.map(data.rows, function(row) {
-                return row.doc;
-            });
-            // und diese Dokumente nun löschen
-            window.adb.löscheMassenMitObjektArray(doc_array);
-            // vorigen node ermitteln
-            var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
-            // node des gelöschten LR entfernen
-            $.jstree._reference("#" + id).delete_node("#" + id);
-            // vorigen node öffnen
-            if (voriger_node) {
-                $.jstree._reference(voriger_node).select_node(voriger_node);
-            } else {
-                window.adb.öffneGruppe("Lebensräume");
-            }
+    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/hierarchie', {
+        type: 'GET',
+        dataType: "json",
+        data: {
+            key: id,
+            include_docs: true
         }
+    }).done(function (data) {
+        // daraus einen Array von docs machen
+        var doc_array = _.map(data.rows, function(row) {
+            return row.doc;
+        });
+        // und diese Dokumente nun löschen
+        window.adb.löscheMassenMitObjektArray(doc_array);
+        // vorigen node ermitteln
+        var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+        // node des gelöschten LR entfernen
+        $.jstree._reference("#" + id).delete_node("#" + id);
+        // vorigen node öffnen
+        if (voriger_node) {
+            $.jstree._reference(voriger_node).select_node(voriger_node);
+        } else {
+            window.adb.öffneGruppe("Lebensräume");
+        }
+    }).fail(function () {
+        console.log('keine Daten erhalten');
     });
 };
 
@@ -2482,6 +2487,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function(LR, object) {
     hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
     object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     // save ohne open: _rev wurde zuvor übernommen
+    var $db = $.couch.db("artendb");
     $db.saveDoc(object, {
         success: function() {
             var erstelleBaum = require('./adbModules/erstelleBaum');

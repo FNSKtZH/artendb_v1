@@ -88,7 +88,7 @@ var returnFunction = function ($, id) {
                 type: 'GET',
                 dataType: "json",
                 data: {
-                    keys: encodeURI(JSON.stringify(guids_von_synonymen)),
+                    keys: JSON.stringify(guids_von_synonymen),
                     include_docs: true
                 }
             }).done(function (data) {
