@@ -1517,31 +1517,38 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
             alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
         }
     });
+    
     // jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
     // danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
-    var $db = $.couch.db("artendb");
-    $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
-        success: function(data) {
-            var objekt;
-            var bez_partner;
-            _.each(data.rows, function(data_row) {
-                objekt = data_row.doc;
-                bez_partner = {};
-                bez_partner.Gruppe = objekt.Gruppe;
-                if (objekt.Gruppe === "Lebensräume") {
-                    bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
-                    if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
-                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
-                    } else {
-                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
-                    }
-                } else {
-                    bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
-                }
-                bez_partner.GUID = objekt._id;
-                window.adb.bezPartner_objekt[objekt._id] = bez_partner;
-            });
+    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/all_docs', {
+        type: 'GET',
+        dataType: "json",
+        data: {
+            keys: JSON.stringify(alle_bez_partner_array),
+            include_docs: true
         }
+    }).done(function (data) {
+        var objekt,
+            bez_partner;
+        _.each(data.rows, function(data_row) {
+            objekt = data_row.doc;
+            bez_partner = {};
+            bez_partner.Gruppe = objekt.Gruppe;
+            if (objekt.Gruppe === "Lebensräume") {
+                bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
+                if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
+                    bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
+                } else {
+                    bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
+                }
+            } else {
+                bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
+            }
+            bez_partner.GUID = objekt._id;
+            window.adb.bezPartner_objekt[objekt._id] = bez_partner;
+        });
+    }).fail(function () {
+        console.log('keine Daten erhalten');
     });
     beziehungspartner_vorbereitet.resolve();
     return beziehungspartner_vorbereitet.promise();
