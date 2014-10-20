@@ -6,3 +6,5 @@ vendor/couchapp/_attachments/artendb_browserified.js
 vendor/couchapp/_attachments/artendb_built.js
 vendor/couchapp/_attachments/artendb_built.js.map
 _attachments/index.html
+_attachments/style/main.css.map
+_attachments/style/main.css
