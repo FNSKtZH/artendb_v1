@@ -1,10 +1,31 @@
 'use strict';
+
 var _ = require("lists/lib/underscore");
 
+// bekommt einen der existierenden Werte für Status bei Flora
+// retourniert den einstelligen Code
+// wird benötigt von EvAB
+exports.codiereFloraStatus = function (status) {
+    var codierteWerte = {
+        "eigenständige Art aber im Index nicht enthalten":                  "?",
+        "akzeptierter Name":                                                "A",
+        "in anderem Taxon eingeschlossener Name":                           "E",
+        "in anderem Taxon eingeschlossener Name. Im Index nicht enthalten": "f",
+        "Synonym":                                                          "S",
+        "zusammenfassender Name. Im Index nicht enthalten":                 "y",
+        "zusammenfassender Name":                                           "Z"
+    };
+    if (codierteWerte[status]) {
+        return codierteWerte[status];
+    } else {
+        return null;
+    }
+};
+
 exports.erstelleExportString = function(exportobjekte) {
-	var stringTitelzeile = "",
-		stringZeilen = "",
-		stringZeile;
+    var stringTitelzeile = "",
+        stringZeilen = "",
+        stringZeile;
     if (exportobjekte && exportobjekte.length > 0) {
         _.each(exportobjekte, function (exportobjekt) {
             // aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
@@ -45,13 +66,13 @@ exports.erstelleExportString = function(exportobjekte) {
             stringZeilen += stringZeile;
         });
     }
-	return stringTitelzeile + "\n" + stringZeilen;
+    return stringTitelzeile + "\n" + stringZeilen;
 };
 
 exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergleichsoperator) {
-	// Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
-	// wessen Name die Bedingung erfüllt
-	var bezPartner = [];
+    // Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
+    // wessen Name die Bedingung erfüllt
+    var bezPartner = [];
     if (beziehungspartner && beziehungspartner.length > 0) {
         _.each(beziehungspartner, function (partner) {
             var feldwert = partner.Name.toLowerCase();
@@ -72,71 +93,71 @@ exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergl
             }
         });
     }
-	return bezPartner;
+    return bezPartner;
 };
 
 exports.convertToCorrectType = function(feldWert) {
-	var type = exports.myTypeOf(feldWert);
-	if (type === "boolean") {
-		return Boolean(feldWert);
-	} else if (type === "float") {
-		return parseFloat(feldWert);
-	} else if (type === "integer") {
-		return parseInt(feldWert, 10);
-	} else if (type === "string") {
-		// string jetzt kleinschreiben, damit das nicht später erfolgen muss
-		return feldWert.toLowerCase();
-	} else {
-		// object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
-		return feldWert;
-	}
+    var type = exports.myTypeOf(feldWert);
+    if (type === "boolean") {
+        return Boolean(feldWert);
+    } else if (type === "float") {
+        return parseFloat(feldWert);
+    } else if (type === "integer") {
+        return parseInt(feldWert, 10);
+    } else if (type === "string") {
+        // string jetzt kleinschreiben, damit das nicht später erfolgen muss
+        return feldWert.toLowerCase();
+    } else {
+        // object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
+        return feldWert;
+    }
 };
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
 exports.myTypeOf = function(Wert) {
-	if (typeof Wert === "boolean") {
-		return "boolean";
-	} else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
-		// es ist eine Float
-		return "float";
-	// verhindern, dass führende Nullen abgeschnitten werden
-	} else if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") {
-		// es ist eine Integer
-		return "integer";
-	} else if (typeof Wert === "object") {
-		// es ist ein Objekt
-		return "object";
-	} else if (typeof Wert === "string") {
-		// als String behandeln
-		return "string";
-	} else if (typeof Wert === "undefined") {
-		return "undefined";
-	} else if (typeof Wert === "function") {
-		return "function";
-	}
+    if (typeof Wert === "boolean") {
+        return "boolean";
+    } else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
+        // es ist eine Float
+        return "float";
+    // verhindern, dass führende Nullen abgeschnitten werden
+    } else if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") {
+        // es ist eine Integer
+        return "integer";
+    } else if (typeof Wert === "object") {
+        // es ist ein Objekt
+        return "object";
+    } else if (typeof Wert === "string") {
+        // als String behandeln
+        return "string";
+    } else if (typeof Wert === "undefined") {
+        return "undefined";
+    } else if (typeof Wert === "function") {
+        return "function";
+    }
 };
 
 // beurteilt, ob ein Objekt exportiert werden soll
 // indem er Feldwerte mit Filterkriterien vergleicht
 // das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
 exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoperator) {
-	if (vergleichsoperator === "kein" && feldwert == filterwert) {
-		return true;
-	} else if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) {
-		return true;
-	} else if (vergleichsoperator === "=" && feldwert == filterwert) {
-		return true;
-	} else if (vergleichsoperator === ">" && feldwert > filterwert) {
-		return true;
-	} else if (vergleichsoperator === ">=" && feldwert >= filterwert) {
-		return true;
-	} else if (vergleichsoperator === "<" && feldwert < filterwert) {
-		return true;
-	} else if (vergleichsoperator === "<=" && feldwert <= filterwert) {
-		return true;
-	}
-	return false;
+    if (vergleichsoperator === "kein" && feldwert == filterwert) {
+        return true;
+    } else if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) {
+        return true;
+    } else if (vergleichsoperator === "=" && feldwert == filterwert) {
+        return true;
+    } else if (vergleichsoperator === ">" && feldwert > filterwert) {
+        return true;
+    } else if (vergleichsoperator === ">=" && feldwert >= filterwert) {
+        return true;
+    } else if (vergleichsoperator === "<" && feldwert < filterwert) {
+        return true;
+    } else if (vergleichsoperator === "<=" && feldwert <= filterwert) {
+        return true;
+    }
+    return false;
 };
 
 exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterkriterien) {

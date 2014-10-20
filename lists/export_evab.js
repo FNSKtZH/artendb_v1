@@ -1,120 +1,95 @@
 'use strict';
 function(head, req) {
 
-	start({
-		"headers": {
-			"Content-Type": "text/csv",
-			"Content-disposition": "attachment;filename=Eigenschaften_fuer_EvAB.csv",
-			"Accept-Charset": "utf-8"
-		}
-	});
-
-	var row, Objekt,
+	var row,
+		Objekt,
 		exportObjekte = [],
 		exportObjekt,
-		dsTaxonomie;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+		dsTaxonomie = {},
+		floraStatusCodiert,
+		_ = require("lists/lib/underscore"),
+		_a = require("lists/lib/artendb_listfunctions");
 
-	while (row = getRow()) {
-		Objekt = row.doc;
+	// specify that we're providing a JSON response
+	provides('json', function() {
 
-		// exportobjekt gründen bzw. zurücksetzen
-		exportObjekt = {};
+		while (row = getRow()) {
+			Objekt = row.doc;
 
-		// Gruppe setzen
-		exportObjekt.Gruppe = Objekt.Gruppe;
+			// exportobjekt gründen bzw. zurücksetzen
+			exportObjekt = {};
 
-		// zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
-		exportObjekt.Nummer = null;
-		exportObjekt.DeutscherArtname = null;
-		exportObjekt.Gattung = null;
-		exportObjekt.Untergattung = null;
-		exportObjekt.Artname = null;
-		exportObjekt.Unterart = null;
-		exportObjekt.GISLayer = null;
-		exportObjekt.Status = null;
+			// zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
+			/*exportObjekt.idArt            = null;
+			exportObjekt.nummer           = null;
+			exportObjekt.wissenschArtname = '';
+			exportObjekt.deutscherArtname = '';
+			exportObjekt.status           = null;
+			exportObjekt.klasse           = null;*/
 
-		switch(exportObjekt.Gruppe) {
-		case "Fauna":
-			// Felder aktualisieren, wo Daten vorhanden
-			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
-				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
-				if (dsTaxonomie["Taxonomie ID"]) {
-					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
-				}
-				if (dsTaxonomie["Name Deutsch"]) {
-					exportObjekt.DeutscherArtname = dsTaxonomie["Name Deutsch"];
-				}
-				if (dsTaxonomie.Gattung) {
-					exportObjekt.Gattung = dsTaxonomie.Gattung;
-				}
-				if (dsTaxonomie.Untergattung) {
-					exportObjekt.Untergattung = dsTaxonomie.Untergattung;
-				}
-				if (dsTaxonomie.Art) {
-					exportObjekt.Artname = dsTaxonomie.Art;
-				}
-				if (dsTaxonomie.Unterart) {
-					exportObjekt.Unterart = dsTaxonomie.Unterart;
-				}
-			}
-			// Datensammlung "ZH GIS" holen
-			var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
-				return ds.Name === "ZH GIS";
-			}) || {};
 			
-			if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
-				exportObjekt.GISLayer = ds_zh_gis.Eigenschaften["GIS-Layer"];
-			}
-			break;
-		case "Flora":
-			// Felder aktualisieren, wo Daten vorhanden
 			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
 				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
-				if (dsTaxonomie["Taxonomie ID"]) {
-					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
+			}
+
+			// bei allen Gruppen gleiche Eigenschaften setzen
+			exportObjekt.idArt = "{" + Objekt._id + "}";
+			if (dsTaxonomie["Taxonomie ID"]) {
+				exportObjekt.nummer = dsTaxonomie["Taxonomie ID"];
+			}
+			if (dsTaxonomie.Artname) {
+				exportObjekt.wissenschArtname = dsTaxonomie.Artname.substring(0, 255);
+			}
+			// Name Deutsch existiert bei Moosen nicht
+			// hier lassen, falls er künftig existiert
+			if (dsTaxonomie["Name Deutsch"]) {
+				exportObjekt.deutscherArtname = dsTaxonomie["Name Deutsch"].substring(0, 255);
+			}
+
+			// gruppen-abhängige Eigenschaften setzen
+			switch(Objekt.Gruppe) {
+
+			case "Fauna":
+				// Status ist bei Fauna immer A
+				exportObjekt.status = "A";
+
+				// Datensammlung "ZH GIS" holen
+				var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
+					return ds.Name === "ZH GIS";
+				}) || {};
+				
+				if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
+					exportObjekt.klasse = ds_zh_gis.Eigenschaften["GIS-Layer"].substring(0, 50);
 				}
-				if (dsTaxonomie["Name Deutsch"]) {
-					exportObjekt.DeutscherArtname = dsTaxonomie["Name Deutsch"];
-				}
-				if (dsTaxonomie.Artname) {
-					exportObjekt.Artname = dsTaxonomie.Artname;
-				}
+				break;
+
+			case "Flora":
+				// Felder aktualisieren, wo Daten vorhanden
 				if (dsTaxonomie.Status) {
-					exportObjekt.Status = dsTaxonomie.Status;
+					// Status codieren
+					floraStatusCodiert = _a.codiereFloraStatus(dsTaxonomie.Status);
+					exportObjekt.status = floraStatusCodiert;
 				}
-				exportObjekt.GISLayer = "Flora";
+				// GIS-Layer ist bei Flora immer Flora
+				exportObjekt.klasse = "Flora";
+				break;
+
+			case "Moose":
+				// Status ist bei Moose immer A
+				exportObjekt.status = "A";
+				// GIS-Layer ist bei Moose immer Moose
+				exportObjekt.klasse = "Moose";
+				break;
+
+			default:
+				// zum nächsten row
+				continue;
 			}
-			break;
-		case "Moose":
-			// Felder aktualisieren, wo Daten vorhanden
-			if (Objekt.Taxonomie && Objekt.Taxonomie.Eigenschaften) {
-				dsTaxonomie = Objekt.Taxonomie.Eigenschaften;
-				if (dsTaxonomie["Taxonomie ID"]) {
-					exportObjekt.Nummer = dsTaxonomie["Taxonomie ID"];
-				}
-				if (dsTaxonomie.Artname) {
-					exportObjekt.Artname = dsTaxonomie.Artname;
-				}
-				exportObjekt.Status = "A";
-				exportObjekt.GISLayer = "Moose";
-			}
-			break;
-		default:
-			// zum nächsten row
-			continue;
+			
+			// Objekt zu Exportobjekten hinzufügen
+			exportObjekte.push(exportObjekt);
 		}
 
-		exportObjekt.idArt = "{" + Objekt._id + "}";
-		
-		// Objekt zu Exportobjekten hinzufügen
-		exportObjekte.push(exportObjekt);
-	}
-	// leere Objekte entfernen
-	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
-		return _.isEmpty(object);
+		send(JSON.stringify(exportObjekte));
 	});
-
-	send(_a.erstelleExportString(exportObjekte_ohne_leere));
 }
