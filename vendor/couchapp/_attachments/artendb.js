@@ -816,7 +816,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
     'use strict';
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/all_docs', {
+    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/umbenennen_loeschen', {
         type: 'GET',
         dataType: "json",
         data: {
@@ -867,7 +867,6 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 save = true;
             }
             if (save) {
-
                 $.ajax('http://localhost:5984/artendb/' + art._id, {
                     type: 'PUT',
                     dataType: "json",
@@ -877,7 +876,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                 }).fail(function () {
                     fehler ++;
-                        $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                 });
             }
 
