@@ -618,10 +618,10 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
 
 // baut die Export-Objekte auf für alle export-lists
 // benötigt Objekt und felder
-// retourniert schon_kopiert und export_objekt
+// retourniert schon_kopiert und exportObjekt
 // export_für: ermöglicht anpassungen für spezielle Exporte, z.b. für das Artenlistentool
 exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte, export_für) {
-    var export_objekt = {},
+    var exportObjekt = {},
         schon_kopiert = false;
 
     // es müssen Felder übergeben worden sein
@@ -632,49 +632,12 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
 
     // wenn der Export für das Artenlistentool erstellt wird: Obligatorische Felder einfügen
     if (export_für && export_für === "alt") {
-        // Felder hinzufügen
-        export_objekt.Gruppe = objekt.Gruppe;
-        export_objekt.Ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
+        // Für das ALT obligatorische Felder hinzufügen
+        exportObjekt = adb.fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
 
-        var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
-            return ds.Name === "ZH GIS";
-        }) || {};
-
-        export_objekt.GISLayer = "";
-        if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
-            export_objekt.GISLayer = ds_zh_gis.Eigenschaften["GIS-Layer"];
-        }
-
-        export_objekt.Distanz = "";
-        if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
-            export_objekt.Distanz = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
-        }
-
-        export_objekt.NameLat = objekt.Taxonomie.Eigenschaften.Artname;
-        export_objekt.NameDeu = "";
-        if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
-            export_objekt.NameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"];
-        }
-
-        var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function(ds) {
-            return ds.Name === "ZH Artwert (1995)";
-        }) || {};
-
-        export_objekt.Artwert = "";
-        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
-            export_objekt.Artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
-        }
-
-        export_objekt.AwZusatz = "";
-        if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"]) {
-            export_objekt.AwZusatz = ds_zh_artwert_1995.Eigenschaften["Artwert Zusatz"];
-        }
-
-        export_objekt["GUID_FNS"] = objekt._id;
-
-        // wenn für alt: Pflichtfelder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
+        // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
         felder = _.reject(felder, function(feld) {
-            return ["GUID", "Gruppe", "Artwert"].indexOf(feld.Feldname) >=0;
+            return ["Artwert"].indexOf(feld.Feldname) >=0;
         });
     }
 
@@ -683,10 +646,10 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         if (typeof feldwert !== "Object" && feldname !== "_rev") {
             _.each(felder, function(feld) {
                 if (feld.DsName === "Objekt" && feld.Feldname === feldname) {
-                    export_objekt[feldname] = feldwert;
+                    exportObjekt[feldname] = feldwert;
                 }
                 if (feld.DsName === "Objekt" && feld.Feldname === "GUID" && feldname === "_id") {
-                    export_objekt["GUID"] = feldwert;
+                    exportObjekt["GUID"] = feldwert;
                 }
             });
         }
@@ -700,16 +663,16 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         if (feld.DsTyp === "Taxonomie"/* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/) {
             // Leerwert setzen. Wird überschrieben, falls danach ein Wert gefunden wird
             if (fasse_taxonomien_zusammen) {
-                export_objekt["Taxonomie(n): " + feld.Feldname] = "";
+                exportObjekt["Taxonomie(n): " + feld.Feldname] = "";
             } else {
-                export_objekt[export_feldname] = "";
+                exportObjekt[export_feldname] = "";
             }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
             if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
                 if (fasse_taxonomien_zusammen) {
-                    export_objekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
+                    exportObjekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
-                    export_objekt[export_feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
+                    exportObjekt[export_feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 }
             }
         }
@@ -717,7 +680,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         // Eigenschaftensammlungen: Felder übernehmen
         if (feld.DsTyp === "Datensammlung") {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-            export_objekt[export_feldname] = "";
+            exportObjekt[export_feldname] = "";
             if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
                 // Enthält das objekt diese Datensammlung?
                 var gesuchte_ds = _.find(objekt.Eigenschaftensammlungen, function(datensammlung) {
@@ -726,7 +689,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
                 if (gesuchte_ds) {
                     // ja. Wenn die Datensammlung das Feld enthält > exportieren
                     if (gesuchte_ds.Eigenschaften && typeof gesuchte_ds.Eigenschaften[feld.Feldname] !== "undefined") {
-                        export_objekt[export_feldname] = gesuchte_ds.Eigenschaften[feld.Feldname];
+                        exportObjekt[export_feldname] = gesuchte_ds.Eigenschaften[feld.Feldname];
                     }
                 }
             }
@@ -734,12 +697,12 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
 
         if (feld.DsTyp === "Beziehung") {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-            export_objekt[export_feldname] = "";
+            exportObjekt[export_feldname] = "";
 
             // wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
             if (feld.Feldname === "Beziehungspartner") {
                 // noch ein Feld hinzufügen
-                export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] = "";
+                exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] = "";
             }
 
             if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
@@ -808,8 +771,8 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
                             schon_kopiert = false;
                             // durch Beziehungen loopen
                             _.each(export_beziehungen, function (export_beziehung) {
-                                // export_objekt kopieren
-                                var export_objekt_kopiert = _.clone(export_objekt);
+                                // exportObjekt kopieren
+                                var export_objekt_kopiert = _.clone(exportObjekt);
                                 // durch die Felder der Beziehung loopen
                                 _.each(export_beziehung, function (export_beziehung_feldwert, export_beziehung_feldname) {
                                     if (export_beziehung_feldname === "Beziehungspartner") {
@@ -842,30 +805,30 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
                                 _.each(export_beziehung, function (feldwert, feldname) {
                                     if (feldname === "Beziehungspartner") {
                                         // zuerst die Beziehungspartner in JSON hinzufügen
-                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                            export_objekt[feld.DsName + ": " + feldname] = [];
+                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
+                                            exportObjekt[feld.DsName + ": " + feldname] = [];
                                         }
-                                        export_objekt[feld.DsName + ": " + feldname].push(feldwert);
+                                        exportObjekt[feld.DsName + ": " + feldname].push(feldwert);
                                         // Reines GUID-Feld ergänzen
-                                        if (!export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                            export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
+                                        if (!exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
+                                            exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
                                         } else {
-                                            export_objekt[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + feldwert[0].GUID;
+                                            exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + feldwert[0].GUID;
                                         }
                                         // es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
                                     } else if (typeof feldwert === "number") {
                                         // Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
-                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                            export_objekt[feld.DsName + ": " + feldname] = feldwert;
+                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
+                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert;
                                         } else {
-                                            export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert;
+                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert;
                                         }
                                     } else {
                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                        if (!export_objekt[feld.DsName + ": " + feldname]) {
-                                            export_objekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '\(Komma\)');
+                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
+                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '\(Komma\)');
                                         } else {
-                                            export_objekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '\(Komma\)');
+                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '\(Komma\)');
                                         }
                                     }
                                 });
@@ -879,8 +842,51 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
 
     // objekt zu Exportobjekten hinzufügen - wenn nicht schon kopiert
     if (!schon_kopiert) {
-        export_objekte.push(export_objekt);
+        export_objekte.push(exportObjekt);
     }
 
     return export_objekte;
+};
+
+// fügt die für ALT obligatorischen Felder ein
+// und entfernt diese aus dem übergebenen exportObjekt, falls sie schon darin enthalten waren
+// erhält das Objekt und das exportObjekt
+// retourniert das angepasste exportObjekt
+exports.fuegeObligatorischeFelderFuerAltEin = function (objekt, exportObjekt) {
+    // übergebene Variabeln prüfen
+    if (!objekt) return {};
+    if (!exportObjekt) exportObjekt = {};
+
+    // Felder ergänzen
+    exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
+
+    var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
+        return ds.Name === "ZH GIS";
+    }) || {};
+
+    if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
+        exportObjekt.gisLayer = ds_zh_gis.Eigenschaften["GIS-Layer"].substring(0, 50);
+    }
+
+    if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
+        exportObjekt.distance = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
+    }
+
+    if (objekt.Taxonomie.Eigenschaften.Artname) {
+        exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);    
+    }
+    
+    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
+        exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
+    }
+
+    var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function(ds) {
+        return ds.Name === "ZH Artwert (1995)";
+    }) || {};
+
+    if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
+        exportObjekt.artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
+    }
+
+    return exportObjekt;
 };
