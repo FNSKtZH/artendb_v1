@@ -637,7 +637,7 @@
                                     </label>
                                 </div>
 								<button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
-								<div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info"></div>
+								<div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text"></div>
 							</div>
 						</div>
 					</div>
@@ -843,10 +843,10 @@
 					<div id="exportieren_alt_exportieren" class="panel panel-default">
 						<div class="panel-heading panel-heading-gradient">
 							<h4 class="panel-title">
-								<a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" data-parent="exportieren_alt_panel" href="#exportieren_exportieren_collapse">2. exportieren</a>
+								<a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_exportieren_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_exportieren_collapse">2. exportieren</a>
 							</h4>
 						</div>
-						<div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
+						<div id="exportieren_alt_exportieren_collapse" class="panel-collapse collapse">
 							<div class="panel-body">
 								<div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
@@ -887,7 +887,7 @@
 								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
 								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
-								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
+								<div id="exportieren_alt_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
 								<div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
 								<div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -1481,6 +1481,7 @@
                         event.preventDefault();
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
+                    // TODO: on exportieren_alt_exportieren_collapse shown
                     .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function() {
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
                     })
@@ -1489,6 +1490,7 @@
                     })
                     // TODO: on exportieren_alt_felder_waehlen_collapse
                     .on('shown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function() {
+                    	console.log('exportieren_alt_felder_waehlen_collapse shown');
                         window.adb.handleExportierenAltObjekteWaehlenCollapseShown();
                     });
 

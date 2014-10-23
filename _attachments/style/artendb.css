@@ -743,12 +743,14 @@ a.show_next_hidden_export {
 	   #exportieren
 \*--------------------------------*/
 
-#export .panel-body hr {
+#export .panel-body hr,
+#export_alt .panel-body hr {
 	margin-bottom: 0;
 	margin-top:   16px;
 }
 
-#export .checkbox {
+#export .checkbox,
+#export_alt .checkbox {
 	padding-top:   0;
 	margin-bottom: 5px;
 }
@@ -757,12 +759,16 @@ a.show_next_hidden_export {
 	margin-bottom: 15px;
 }
 
-#export input[type="radio"], #export input[type="checkbox"] {
+#export input[type="radio"], #export input[type="checkbox"],
+#export_alt input[type="radio"], #export input[type="checkbox"] {
 	margin-top:    1px !important;
 	margin-left: -19px !important;
 }
 
-#exportieren_felder_waehlen input[type="radio"], #exportieren_felder_waehlen input[type="checkbox"] {
+#exportieren_felder_waehlen input[type="radio"],
+#exportieren_alt_felder_waehlen input[type="radio"],
+#exportieren_felder_waehlen input[type="checkbox"],
+#exportieren_alt_felder_waehlen input[type="checkbox"] {
 	margin-top:    1px !important;
 	margin-left: -19px !important;
 }

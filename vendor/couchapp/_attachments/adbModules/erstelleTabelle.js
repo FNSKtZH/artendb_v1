@@ -13,7 +13,7 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div) {
         Feldname = "",
         html_ds_felder_div = "",
         erste_10_ds,
-        $tabellen_div = $("#"+tabellen_div);
+        $tabellen_div = $("#" + tabellen_div);
     if (Datensätze.length > 10) {
         html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
     } else if (Datensätze.length > 1) {

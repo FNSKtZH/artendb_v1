@@ -1,5 +1,6 @@
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
+// formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)
 
 'use strict';
 
@@ -7,7 +8,7 @@ var _          = require('underscore'),
     Autolinker = require('autolinker'),
     $          = require('jquery');
 
-var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen) {
+var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen, formular) {
     var html_felder_wählen = '',
         html_filtern = '',
         ds_typ,
@@ -97,7 +98,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
 
 
         html_filtern += '<div class="felderspalte">';
-        for (x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
+        for (var x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
             // felder wählen
             html_felder_wählen += '<div class="checkbox"><label>';
             html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
@@ -128,27 +129,45 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     // linie voranstellen
     html_felder_wählen = '<hr>' + html_felder_wählen;
     html_filtern = '<hr>' + html_filtern;
-    if (beziehungssammlungen) {
-        $("#export .exportieren_felder_waehlen_felderliste")
-            .html(html_felder_wählen);
-        $("#exportieren_objekte_waehlen_ds_felderliste")
-            .html(html_filtern);
-        erstelleExportfelder (datensammlungen, beziehungssammlungen);
-    } else if (datensammlungen) {
-        $("#export .exportieren_felder_waehlen_felderliste")
-            .append(html_felder_wählen);
-        $("#exportieren_objekte_waehlen_ds_felderliste")
-            .append(html_filtern);
-        erstelleExportfelder (datensammlungen);
-    } else {
-        $("#export .exportieren_felder_waehlen_felderliste")
-            .append(html_felder_wählen);
-        $("#exportieren_objekte_waehlen_ds_felderliste")
-            .append(html_filtern)
-            .find("input[type='checkbox']").each(function() {
-               this.indeterminate = true;
-            });
+
+    // html anfügen
+    if (!formular || formular === 'export') {
+        if (beziehungssammlungen) {
+            $("#export .exportieren_felder_waehlen_felderliste")
+                .html(html_felder_wählen);
+            $("#exportieren_objekte_waehlen_ds_felderliste")
+                .html(html_filtern);
+            erstelleExportfelder (datensammlungen, beziehungssammlungen);
+        } else if (datensammlungen) {
+            $("#export .exportieren_felder_waehlen_felderliste")
+                .append(html_felder_wählen);
+            $("#exportieren_objekte_waehlen_ds_felderliste")
+                .append(html_filtern);
+            erstelleExportfelder (datensammlungen);
+        } else {
+            $("#export .exportieren_felder_waehlen_felderliste")
+                .append(html_felder_wählen);
+            $("#exportieren_objekte_waehlen_ds_felderliste")
+                .append(html_filtern)
+                .find("input[type='checkbox']").each(function() {
+                   this.indeterminate = true;
+                });
+        }
     }
+    if (formular === 'export_alt') {
+        if (beziehungssammlungen) {
+            $("#export_alt .exportieren_felder_waehlen_felderliste")
+                .html(html_felder_wählen);
+            erstelleExportfelder (datensammlungen, beziehungssammlungen, null, 'export_alt');
+        } else if (datensammlungen) {
+            $("#export_alt .exportieren_felder_waehlen_felderliste")
+                .append(html_felder_wählen);
+            erstelleExportfelder (datensammlungen, null, null, 'export_alt');
+        } else {
+            $("#export_alt .exportieren_felder_waehlen_felderliste")
+                .append(html_felder_wählen);
+        }
+    }   
 };
 
 module.exports = returnFunction;

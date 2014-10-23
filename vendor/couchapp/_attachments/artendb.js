@@ -1925,6 +1925,7 @@ window.adb.öffneUri = function() {
     }
     if (exportieren_fuer_alt) {
         zeigeFormular('export_alt');
+        require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
     }
     if (importieren_datensammlung) {
         zeigeFormular('importieren_ds');

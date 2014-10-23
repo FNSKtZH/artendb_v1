@@ -3,7 +3,7 @@
 var _ = require('underscore');
 
 // braucht $ wegen .alert
-var returnFunction = function ($, export_felder_arrays) {
+var returnFunction = function ($, export_felder_arrays, formular) {
     var felder_objekt = {},
         hinweis_taxonomien,
         taxonomien,
@@ -24,12 +24,12 @@ var returnFunction = function ($, export_felder_arrays) {
     // jetzt nur noch eineindeutige Array-Objekte (=Eigenschaftensammlungen) belassen
     export_felder_arrays = _.union(export_felder_arrays);
     // jetzt den Array von Objekten nach key sortieren
-    export_felder_arrays = _.sortBy(export_felder_arrays, function(object) {
+    export_felder_arrays = _.sortBy(export_felder_arrays, function (object) {
         return object.key;
     });
 
     // Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
-    felder_objekt = ergaenzeFelderObjekt (felder_objekt, export_felder_arrays);
+    felder_objekt = ergaenzeFelderObjekt(felder_objekt, export_felder_arrays);
 
     // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
     if (felder_objekt["Taxonomie(n)"] && felder_objekt["Taxonomie(n)"].Eigenschaften) {
@@ -41,7 +41,7 @@ var returnFunction = function ($, export_felder_arrays) {
     datensammlungen = [];
     beziehungssammlungen = [];
 
-    _.each(felder_objekt, function(ds) {
+    _.each(felder_objekt, function (ds) {
         if (typeof ds === "object" && ds.Typ) {
             // das ist Datensammlung oder Taxonomie
             if (ds.Typ === "Datensammlung") {
@@ -55,23 +55,26 @@ var returnFunction = function ($, export_felder_arrays) {
     });
 
     $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function() {
-        require('./erstelleExportfelder') (taxonomien, datensammlungen, beziehungssammlungen);
+        require('./erstelleExportfelder') (taxonomien, datensammlungen, beziehungssammlungen, formular);
     });
 
-    // kontrollieren, ob Taxonomien zusammengefasst werden
-    if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
-        hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
-    } else {
-        hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
+    if (!formular || formular === 'export') {
+        // kontrollieren, ob Taxonomien zusammengefasst werden
+        if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+            hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
+        } else {
+            hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
+        }
+        // Ergebnis rückmelden
+        $("#exportieren_objekte_waehlen_gruppen_hinweis_text")
+            .alert()
+            .removeClass("alert-info")
+            .removeClass("alert-danger")
+            .addClass("alert-success")
+            .show()
+            .html(hinweis_taxonomien);
     }
-    // Ergebnis rückmelden
-    $("#exportieren_objekte_waehlen_gruppen_hinweis_text")
-        .alert()
-        .removeClass("alert-info")
-        .removeClass("alert-danger")
-        .addClass("alert-success")
-        .show()
-        .html(hinweis_taxonomien);
+    
 };
 
 module.exports = returnFunction;

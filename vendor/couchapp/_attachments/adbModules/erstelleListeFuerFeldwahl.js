@@ -9,6 +9,10 @@ var _ = require('underscore');
 
 // braucht $ wegen .alert
 var returnFunction = function ($, export_gruppen, formular) {
+
+    console.log('erstelleListeFuerFeldwahl: export_gruppen: ', export_gruppen);
+    console.log('erstelleListeFuerFeldwahl: formular: ', formular);
+
     var gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
@@ -28,18 +32,21 @@ var returnFunction = function ($, export_gruppen, formular) {
         $exportieren_objekte_waehlen_ds_collapse.collapse('hide');
     }
 
-    // Beschäftigung melden
-    $exportieren_objekte_waehlen_gruppen_hinweis_text
-        .alert()
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info")
-        .show()
-        .html("Eigenschaften werden ermittelt...");
-    // scrollen, damit Hinweis sicher ganz sichtbar ist
-    $('html, body').animate({
-        scrollTop: $exportieren_objekte_waehlen_gruppen_hinweis_text.offset().top
-    }, 2000);
+    if (!formular || formular === 'export') {
+        // Beschäftigung melden
+        $exportieren_objekte_waehlen_gruppen_hinweis_text
+            .alert()
+            .removeClass("alert-success")
+            .removeClass("alert-danger")
+            .addClass("alert-info")
+            .show()
+            .html("Eigenschaften werden ermittelt...");
+        // scrollen, damit Hinweis sicher ganz sichtbar ist
+        $('html, body').animate({
+            scrollTop: $exportieren_objekte_waehlen_gruppen_hinweis_text.offset().top
+        }, 2000);
+    }
+
     // gewählte Gruppen ermitteln
     // globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
     // globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
@@ -60,7 +67,7 @@ var returnFunction = function ($, export_gruppen, formular) {
     if (export_gruppen.length > 0) {
         // gruppen einzeln abfragen
         gruppen = export_gruppen;
-        _.each(gruppen, function(gruppe) {
+        _.each(gruppen, function (gruppe) {
             // Felder abfragen
             $.ajax('http://localhost:5984/artendb/_design/artendb/_view/felder', {
                 type: 'GET',
@@ -72,12 +79,11 @@ var returnFunction = function ($, export_gruppen, formular) {
                 }
             }).done(function (data) {
                 export_felder_arrays = _.union(export_felder_arrays, data.rows);
-                //console.log("Die Gruppe " + gruppe + " hat soviele Felder = " + data.rows.length);
                 // eine Gruppe aus export_gruppen entfernen
                 export_gruppen.splice(0,1);
                 if (export_gruppen.length === 0) {
                     // alle Gruppen sind verarbeitet
-                    require('./erstelleListeFuerFeldwahl2') ($, export_felder_arrays);
+                    require('./erstelleListeFuerFeldwahl2')($, export_felder_arrays, formular);
                 }
             }).fail(function () {
                 console.log('keine Daten erhalten');
@@ -96,7 +102,7 @@ var returnFunction = function ($, export_gruppen, formular) {
             .html("");
     }
     // Tabelle ausblenden, falls sie eingeblendet war
-    $("#exportieren_exportieren_tabelle")
+    $(".exportieren_exportieren_tabelle")
         .hide();
 };
 
