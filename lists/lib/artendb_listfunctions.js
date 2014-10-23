@@ -633,7 +633,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
     // wenn der Export für das Artenlistentool erstellt wird: Obligatorische Felder einfügen
     if (export_für && export_für === "alt") {
         // Für das ALT obligatorische Felder hinzufügen
-        exportObjekt = adb.fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
+        exportObjekt = fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
 
         // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
         felder = _.reject(felder, function(feld) {
@@ -852,7 +852,9 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
 // und entfernt diese aus dem übergebenen exportObjekt, falls sie schon darin enthalten waren
 // erhält das Objekt und das exportObjekt
 // retourniert das angepasste exportObjekt
-exports.fuegeObligatorischeFelderFuerAltEin = function (objekt, exportObjekt) {
+exports.fuegeObligatorischeFelderFuerAltEin = fuegeObligatorischeFelderFuerAltEin();
+
+function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
     // übergebene Variabeln prüfen
     if (!objekt) return {};
     if (!exportObjekt) exportObjekt = {};
@@ -889,4 +891,4 @@ exports.fuegeObligatorischeFelderFuerAltEin = function (objekt, exportObjekt) {
     }
 
     return exportObjekt;
-};
+}

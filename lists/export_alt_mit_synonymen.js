@@ -21,7 +21,7 @@ function(head, req) {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
             felder: [],
-            nur_objekte_mit_eigenschaften: true,
+            nur_objekte_mit_eigenschaften: false,
             bez_in_zeilen: true
         },
         filterkriterien_objekt = {"filterkriterien": []},
@@ -36,6 +36,10 @@ function(head, req) {
 
     // übergebene Variablen extrahieren
     üVar = adb.holeÜbergebeneVariablen(req.query);
+    // Wichtige überschreiben:
+    üVar.nur_objekte_mit_eigenschaften = false;
+    üVar.filterkriterien = [];
+    üVar.fasseTaxonomienZusammen = false;
 
 	// arrays für sammlungen aus synonymen gründen
 	beziehungssammlungen_aus_synonymen = [];

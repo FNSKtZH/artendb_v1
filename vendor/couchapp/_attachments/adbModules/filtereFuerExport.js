@@ -6,7 +6,7 @@
 var _ = require('underscore');
 
 // $ wird benötigt wegen .alert
-var returnFunction = function ($, direkt) {
+var returnFunction = function ($, direkt, fürAlt) {
     // Array von Filterobjekten bilden
     var filterkriterien = [],
         // Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
@@ -14,17 +14,26 @@ var returnFunction = function ($, direkt) {
         filter_objekt,
         gruppen_array = [],
         gruppen = "",
+        gruppenliste,
         gewählte_felder = [],
         anz_gewählte_felder_aus_dsbs = 0,
         gewählte_felder_objekt = {},
         anz_ds_gewählt = 0,
-        $exportieren_exportieren_hinweis_text = $("#exportieren_exportieren_hinweis_text"),
+        $exportieren_exportieren_hinweis_text,
         html_filterkriterien,
+        formular = 'export',
+        _alt = '',
         übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport'),
         uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau');
 
+    if (fürAlt) {
+        formular = 'export_alt';
+        _alt = '_alt';
+    }
+    $exportieren_exportieren_hinweis_text = $("#exportieren" + _alt + "_exportieren_hinweis_text");
+
     // kontrollieren, ob eine Gruppe gewählt wurde
-    if (window.adb.fürExportGewählteGruppen().length === 0) {
+    if (!fürAlt && window.adb.fürExportGewählteGruppen().length === 0) {
         return;
     }
 
@@ -34,57 +43,68 @@ var returnFunction = function ($, direkt) {
             .alert()
             .show()
             .html("Die Daten werden vorbereitet...");
+        // zum Hinweistext scrollen
+        $('html, body').animate({
+            scrollTop: $exportieren_exportieren_hinweis_text.offset().top
+        }, 2000);
     }
 
-    // zum Hinweistext scrollen
-    $('html, body').animate({
-        scrollTop: $exportieren_exportieren_hinweis_text.offset().top
-    }, 2000);
     // gewählte Gruppen ermitteln
-    $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
-        if ($(this).prop('checked')) {
-            gruppen_array.push($(this).attr('view'));
-            if (gruppen) {
-                gruppen += ",";
+    if (!fürAlt) {
+        $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
+            if ($(this).prop('checked')) {
+                gruppen_array.push($(this).attr('view'));
+                if (gruppen) {
+                    gruppen += ",";
+                }
+                gruppen += $(this).val();
             }
-            gruppen += $(this).val();
-        }
-    });
-    var gruppenliste = gruppen.split(",");
-    // durch alle Filterfelder loopen
-    // wenn ein Feld einen Wert enthält, danach filtern
-    $("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {
-        var that = this,
-            $this = $(this);
-        if (that.type === "checkbox") {
-            if (!$this.prop('readonly')) {
+        });
+    } else {
+        gruppen_array = ['fauna', 'flora'];
+        gruppen = 'Fauna, Flora';
+    }
+
+    gruppenliste = gruppen.split(",");
+
+    if (!fürAlt) {
+        // durch alle Filterfelder loopen
+        // aber nur, wenn nicht für ALT exportiert wird
+        // wenn ein Feld einen Wert enthält, danach filtern
+        $("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {
+            var that = this,
+                $this = $(this);
+            if (that.type === "checkbox") {
+                if (!$this.prop('readonly')) {
+                    filter_objekt = {};
+                    filter_objekt.DsTyp = $this.attr('dstyp');
+                    filter_objekt.DsName = $this.attr('eigenschaft');
+                    filter_objekt.Feldname = $this.attr('feld');
+                    filter_objekt.Filterwert = $this.prop("checked");
+                    filter_objekt.Vergleichsoperator = "=";
+                    filterkriterien.push(filter_objekt);
+                } else {
+                    // übrige checkboxen ignorieren
+                }
+            } else if (this.value || this.value === 0) {
+                // Filterobjekt zurücksetzen
                 filter_objekt = {};
                 filter_objekt.DsTyp = $this.attr('dstyp');
                 filter_objekt.DsName = $this.attr('eigenschaft');
                 filter_objekt.Feldname = $this.attr('feld');
-                filter_objekt.Filterwert = $this.prop("checked");
-                filter_objekt.Vergleichsoperator = "=";
+                // Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFürExport später auch in Kleinschrift verwandelt)
+                filter_objekt.Filterwert = window.adb.ermittleVergleichsoperator(this.value)[1];
+                filter_objekt.Vergleichsoperator = window.adb.ermittleVergleichsoperator(this.value)[0];
                 filterkriterien.push(filter_objekt);
-            } else {
-                // übrige checkboxen ignorieren
             }
-        } else if (this.value || this.value === 0) {
-            // Filterobjekt zurücksetzen
-            filter_objekt = {};
-            filter_objekt.DsTyp = $this.attr('dstyp');
-            filter_objekt.DsName = $this.attr('eigenschaft');
-            filter_objekt.Feldname = $this.attr('feld');
-            // Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFürExport später auch in Kleinschrift verwandelt)
-            filter_objekt.Filterwert = window.adb.ermittleVergleichsoperator(this.value)[1];
-            filter_objekt.Vergleichsoperator = window.adb.ermittleVergleichsoperator(this.value)[0];
-            filterkriterien.push(filter_objekt);
-        }
-    });
+        });
+    }
 
     // den array dem objekt zuweisen
     filterkriterien_objekt.filterkriterien = filterkriterien;
+
     // gewählte Felder ermitteln
-    $("#export .exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
+    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};
@@ -93,7 +113,7 @@ var returnFunction = function ($, direkt) {
             gewählte_felder.push(feldObjekt);
         }
     });
-    $("#export .exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
+    $("#" + formular).find(".exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};
@@ -116,9 +136,9 @@ var returnFunction = function ($, direkt) {
         $exportieren_exportieren_hinweis_text
             .alert()
             .hide();
-        $("#exportieren_exportieren_error_text_text")
+        $("#exportieren" + _alt + "_exportieren_error_text_text")
             .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
-        $("#exportieren_exportieren_error_text")
+        $("#exportieren" + _alt + "_exportieren_error_text")
             .alert()
             .show();
         return;
@@ -154,14 +174,14 @@ var returnFunction = function ($, direkt) {
             html_filterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";
         }
     }
-    $("#exportieren_exportieren_filterkriterien")
+    $("#exportieren" + _alt + "_exportieren_filterkriterien")
         .html(html_filterkriterien)
         .show();
 
     // jetzt das filterObjekt übergeben
     if (direkt === "direkt") {
         übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
-    } if (direkt === "für_alt") {
+    } if (fürAlt) {
         window.adb.übergebeFilterFürExportFürAlt(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     } else {
         uebergebeFilterFuerExportMitVorschau ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);

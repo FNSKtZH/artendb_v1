@@ -1058,10 +1058,16 @@ window.adb.handleExportierenAltClick = function() {
 // Wenn ja: reklamieren und rückgängig machen
 window.adb.handleFeldWählenChange = function() {
     'use strict';
-    if ($("#export_bez_in_zeilen").prop('checked')) {
+    var that = this,
+        formular = $(that).closest('form').attr('id'),
+        _alt = '';
+
+    if (formular === 'export_alt') _alt = '_alt';
+
+    if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
         var bez_ds_checked = [],
             that = this;
-        $("#export .exportieren_felder_waehlen_felderliste")
+        $("#export" + _alt + " .exportieren_felder_waehlen_felderliste")
             .find(".feld_waehlen")
             .each(function() {
                 if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
@@ -1074,7 +1080,7 @@ window.adb.handleFeldWählenChange = function() {
             $('#meldung_zuviele_bs').modal();
             $(that).prop('checked', false);
         } else {
-            window.adb.exportZurücksetzen();
+            window.adb.exportZurücksetzen(_alt);
         }
     }
 };
@@ -1220,24 +1226,33 @@ window.adb.handlePanelbodyLrTaxonomieShown = function() {
 };
 
 // wenn #exportieren_exportieren_collapse geöffnet wird
-window.adb.handleExportierenExportierenCollapseShown = function() {
+window.adb.handleExportierenExportierenCollapseShown = function(that) {
     'use strict';
-    var that = this,
-        filtereFuerExport = require('./adbModules/filtereFuerExport');
+    var filtereFuerExport = require('./adbModules/filtereFuerExport'),
+        fürAlt = false;
 
-    console.log('handleExportierenExportierenCollapseShown this', that);
-    
+    if (that.id === 'exportieren_alt_exportieren_collapse') {
+        fürAlt = true;
+    }
+
     // nur ausführen, wenn exportieren_exportieren_collapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
     if ($("#exportieren_exportieren_collapse").is(":visible")) {
         if (window.adb.handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
             // Tabelle und Herunterladen-Schaltfläche ausblenden
-            $("#exportieren_exportieren_tabelle").hide();
+            $(".exportieren_exportieren_tabelle").hide();
             $(".exportieren_exportieren_exportieren").hide();
             // filtert und baut danach die Vorschautabelle auf
-            filtereFuerExport($);
+            filtereFuerExport($, null, fürAlt);
         }
+    }
+    if ($("#exportieren_alt_exportieren_collapse").is(":visible")) {
+        // Tabelle und Herunterladen-Schaltfläche ausblenden
+        $(".exportieren_exportieren_tabelle").hide();
+        $(".exportieren_exportieren_exportieren").hide();
+        // filtert und baut danach die Vorschautabelle auf
+        filtereFuerExport($, null, fürAlt);
     }
 };
 
@@ -2013,57 +2028,62 @@ window.adb.filtereFürExport = function(direkt) {
 window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
     'use strict';
     // Alle Felder abfragen
-    var fTz = "false",
-        queryParam;
-    // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-    if (window.adb.fasseTaxonomienZusammen) {
-        fTz = "true";
-    }
-    if ($("#exportieren_synonym_infos").prop('checked')) {
-        queryParam = "export_alt_mit_synonymen_direkt/all_docs_mit_synonymen_fuer_alt?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+    var queryParam,
+        url,
+        uri = new Uri($(location).attr('href'));
+
+    // list-Funktion
+    if ($("#exportieren_alt_synonym_infos").prop('checked')) {
+        queryParam = "export_alt_mit_synonymen";
     } else {
-        queryParam = "export_alt_direkt/all_docs_fuer_alt?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+        queryParam = "export_alt";
     }
-    if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
-        // prüfen, ob mindestens ein Feld aus ds gewählt ist
-        // wenn ja: true, sonst false
-        queryParam += "&nur_objekte_mit_eigenschaften=true";
-    } else {
-        queryParam += "&nur_objekte_mit_eigenschaften=false";
-    }
+
+    // view und docs
+    queryParam += "/alt_arten_mit_synonymen?include_docs=true";
+
+    // Beziehungen in Zeilen oder in Spalte
     if ($("#export_bez_in_zeilen").prop('checked')) {
         queryParam += "&bez_in_zeilen=true";
     } else {
         queryParam += "&bez_in_zeilen=false";
     }
+
+    // Felder
+    queryParam += "&felder=" + JSON.stringify(gewählte_felder_objekt);
+
+    // URL aus bestehender Verbindung zusammensetzen
+    url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
+
     window.open('_list/' + queryParam);
 };
 
-window.adb.baueTabelleFürExportAuf = function() {
+window.adb.baueTabelleFürExportAuf = function(_alt) {
     'use strict';
     var hinweis = "",
-        erstelleTabelle = require('./adbModules/erstelleTabelle');
+        erstelleTabelle = require('./adbModules/erstelleTabelle'),
+        _alt = _alt || '';
 
     if (window.adb.exportieren_objekte.length > 0) {
-        erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle");
-        $(".exportieren_exportieren_exportieren").show();
+        erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle");
+        $(".exportieren" + _alt + "_exportieren_exportieren").show();
         // zur Tabelle scrollen
         $('html, body').animate({
-            scrollTop: $("#exportieren_exportieren_exportieren").offset().top
+            scrollTop: $("#exportieren" + _alt + "_exportieren_exportieren").offset().top
         }, 2000);
     } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
-        $("#exportieren_exportieren_error_text_text")
+        $("#exportieren" + _alt + "_exportieren_error_text_text")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
-        $("#exportieren_exportieren_error_text")
+        $("#exportieren" + _alt + "_exportieren_error_text")
             .alert()
             .show();
         $('html, body').animate({
-            scrollTop: $("#exportieren_exportieren_exportieren").offset().top
+            scrollTop: $("#exportieren" + _alt + "_exportieren_exportieren").offset().top
         }, 2000);
 
     }
     // Beschäftigungsmeldung verstecken
-    $("#exportieren_exportieren_hinweis_text")
+    $("#exportieren" + _alt + "_exportieren_hinweis_text")
         .alert()
         .hide();
 };
@@ -2316,16 +2336,16 @@ window.adb.sortKeysOfObject = function(o) {
     return sorted;
 };
 
-window.adb.exportZurücksetzen = function() {
+window.adb.exportZurücksetzen = function(_alt) {
     'use strict';
-    var $exportieren_exportieren_collapse = $("#exportieren_exportieren_collapse");
+    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse");
     // Export ausblenden, falls sie eingeblendet war
     if ($exportieren_exportieren_collapse.css("display") !== "none") {
         $exportieren_exportieren_collapse.collapse('hide');
     }
-    $("#exportieren_exportieren_tabelle").hide();
-    $(".exportieren_exportieren_exportieren").hide();
-    $("#exportieren_exportieren_error_text")
+    $("#exportieren" + _alt + "_exportieren_tabelle").hide();
+    $(".exportieren" + _alt + "_exportieren_exportieren").hide();
+    $("#exportieren" + _alt + "_exportieren_error_text")
         .alert()
         .hide();
 };
