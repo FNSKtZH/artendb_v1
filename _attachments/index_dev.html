@@ -805,7 +805,7 @@
 							<div class="panel-body">
 								<div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
-										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den vom Artenlistentool auswertbaren Gruppen (Flora und Fauna) vorkommen</li>
 										<li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
 										<li>...und fahren Sie danach mit "2. exportieren" weiter</li>
 									</ul>
@@ -904,7 +904,7 @@
 					<div class="panel panel-default" id="exportieren_diverses">
 						<div class="panel-heading panel-heading-gradient">
 							<h4 class="panel-title">
-								<a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="exportieren_alt_panel" href="#exportieren_diverses_collapse">Diverses</a>
+								<a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="admin_panel" href="#exportieren_diverses_collapse">Diverses</a>
 							</h4>
 						</div>
 						<div class="collapse in" id="exportieren_diverses_collapse">
@@ -1482,6 +1482,10 @@
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
                     // TODO: on exportieren_alt_exportieren_collapse shown
+                    .on('shown.bs.collapse', '#exportieren_alt_exportieren_collapse', function () {
+                    	// mitteilen, dass für alt exportiert wird
+                    	window.adb.handleExportierenExportierenCollapseShown('export_alt');
+                    })
                     .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function() {
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
                     })
@@ -1489,9 +1493,8 @@
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
                     })
                     // TODO: on exportieren_alt_felder_waehlen_collapse
-                    .on('shown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function() {
-                    	console.log('exportieren_alt_felder_waehlen_collapse shown');
-                        window.adb.handleExportierenAltObjekteWaehlenCollapseShown();
+                    .on('shown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function(event) {
+                    	event.preventDefault();
                     });
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);

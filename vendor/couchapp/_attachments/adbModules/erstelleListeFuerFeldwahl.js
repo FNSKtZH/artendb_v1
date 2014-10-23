@@ -10,9 +10,6 @@ var _ = require('underscore');
 // braucht $ wegen .alert
 var returnFunction = function ($, export_gruppen, formular) {
 
-    console.log('erstelleListeFuerFeldwahl: export_gruppen: ', export_gruppen);
-    console.log('erstelleListeFuerFeldwahl: formular: ', formular);
-
     var gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),

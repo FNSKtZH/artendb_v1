@@ -1224,6 +1224,9 @@ window.adb.handleExportierenExportierenCollapseShown = function() {
     'use strict';
     var that = this,
         filtereFuerExport = require('./adbModules/filtereFuerExport');
+
+    console.log('handleExportierenExportierenCollapseShown this', that);
+    
     // nur ausführen, wenn exportieren_exportieren_collapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
     if ($("#exportieren_exportieren_collapse").is(":visible")) {
@@ -1250,11 +1253,6 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function(that) {
     } else {
         return true;
     }
-};
-
-window.adb.handleExportierenAltObjekteWaehlenCollapseShown = function() {
-    var gruppen_gewählt = ['Fauna', 'Flora'];
-    require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt, 'export_alt');
 };
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
@@ -1924,8 +1922,11 @@ window.adb.öffneUri = function() {
         zeigeFormular('export');
     }
     if (exportieren_fuer_alt) {
-        zeigeFormular('export_alt');
-        require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
+        // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
+        if (!$('#export_alt').is(':visible')) {
+            zeigeFormular('export_alt');
+            require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
+        }
     }
     if (importieren_datensammlung) {
         zeigeFormular('importieren_ds');
