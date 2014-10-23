@@ -54,6 +54,10 @@ var returnFunction = function (formularname) {
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?exportieren=true");
             break;
+        case 'export_alt':
+            // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
+            history.pushState(null, null, "index.html?exportieren_fuer_artenlistentool=true");
+            break;
         case 'importieren_ds':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?importieren_datensammlung=true");

@@ -1883,6 +1883,7 @@ window.adb.öffneUri = function() {
     var uri = new Uri($(location).attr('href')),
         id = uri.getQueryParamValue('id'),
         exportieren = uri.getQueryParamValue('exportieren'),
+        exportieren_fuer_alt = uri.getQueryParamValue('exportieren_fuer_artenlistentool'),
         importieren_datensammlung = uri.getQueryParamValue('importieren_datensammlung'),
         importieren_beziehungssammlung = uri.getQueryParamValue('importieren_beziehungssammlung'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
@@ -1921,6 +1922,9 @@ window.adb.öffneUri = function() {
     // andere Seite mit eigener URL:
     if (exportieren) {
         zeigeFormular('export');
+    }
+    if (exportieren_fuer_alt) {
+        zeigeFormular('export_alt');
     }
     if (importieren_datensammlung) {
         zeigeFormular('importieren_ds');
