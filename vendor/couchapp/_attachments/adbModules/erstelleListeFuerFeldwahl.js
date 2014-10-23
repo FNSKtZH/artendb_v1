@@ -1,15 +1,15 @@
 // baut im Formular "export" die Liste aller Eigenschaften auf
 // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
-// bekommt den Namen der Gruppe
+// bekommt die Namen der Gruppen
+// formular ist im Standard export, wenn anders (z.B. export_alt), übergeben
 
 'use strict';
 
 var _ = require('underscore');
 
 // braucht $ wegen .alert
-var returnFunction = function ($) {
-    var export_gruppen = [],
-        gruppen = [],
+var returnFunction = function ($, export_gruppen, formular) {
+    var gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
         $exportieren_nur_objekte_mit_eigenschaften          = $("#exportieren_nur_objekte_mit_eigenschaften"),
@@ -44,11 +44,6 @@ var returnFunction = function ($) {
     // globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
     // globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
     var export_felder_arrays = [];
-    $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
-        if ($(this).prop('checked')) {
-            export_gruppen.push($(this).val());
-        }
-    });
     /*if (export_gruppen.length > 1) {
         // wenn mehrere Gruppen gewählt werden
         // Option exportieren_nur_objekte_mit_eigenschaften ausblenden

@@ -1486,8 +1486,11 @@
                     })
                     .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function() {
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
-                    });
+                    })
                     // TODO: on exportieren_alt_felder_waehlen_collapse
+                    .on('shown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function() {
+                        window.adb.handleExportierenAltObjekteWaehlenCollapseShown();
+                    });
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
 				// TODO: exportieren_alt_exportieren.on ergänzen

@@ -1096,7 +1096,8 @@ window.adb.handleFeldWählenAlleVonDs = function() {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
     'use strict';
-    require('./adbModules/erstelleListeFuerFeldwahl') ($);
+    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
+    require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
 };
 
 // ist nötig, weil index.html nicht requiren kann
@@ -1242,13 +1243,18 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function(that) {
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
-        require('./adbModules/erstelleListeFuerFeldwahl') ($);
+        require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
         // und den panel schliessen
         $(that).collapse('hide');
         return false;
     } else {
         return true;
     }
+};
+
+window.adb.handleExportierenAltObjekteWaehlenCollapseShown = function() {
+    var gruppen_gewählt = ['Fauna', 'Flora'];
+    require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt, 'export_alt');
 };
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
@@ -1263,15 +1269,9 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function(that
         $(that).html("Taxonomien einzeln behandeln");
     }
     // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-    $("#exportieren_objekte_waehlen_gruppen_collapse")
-        .find(".exportieren_ds_objekte_waehlen_gruppe")
-        .each(function() {
-            if ($(that).prop('checked')) {
-                gruppe_ist_gewählt = true;
-            }
-        });
-    if (gruppe_ist_gewählt) {
-        require('./adbModules/erstelleListeFuerFeldwahl') ($);
+    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
+    if (gruppen_gewählt.length > 0) {
+        require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
     }
 };
 
@@ -2068,13 +2068,13 @@ window.adb.baueTabelleFürExportAuf = function() {
 
 window.adb.fürExportGewählteGruppen = function() {
     'use strict';
-    var gruppen = [];
+    var export_gruppen = [];
     $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
         if ($(this).prop('checked')) {
-            gruppen.push($(this).attr('feldname'));
+            export_gruppen.push($(this).val());
         }
     });
-    return gruppen;
+    return export_gruppen;
 };
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
