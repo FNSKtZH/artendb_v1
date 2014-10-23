@@ -1882,15 +1882,21 @@ window.adb.öffneUri = function() {
     // parameter der uri holen
     var uri = new Uri($(location).attr('href')),
         id = uri.getQueryParamValue('id'),
+        exportieren = uri.getQueryParamValue('exportieren'),
+        importieren_datensammlung = uri.getQueryParamValue('importieren_datensammlung'),
+        importieren_beziehungssammlung = uri.getQueryParamValue('importieren_beziehungssammlung'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
         // dann muss die id durch die id in der hash ersetzt werden
         hash = uri.anchor(),
-        uri2;
+        uri2,
+        zeigeFormular = require('./adbModules/zeigeFormular');
 
     if (hash) {
         uri2 = new Uri(hash);
         id = uri2.getQueryParamValue('id');
     }
+
+    // wenn ein Objekt geöffnet wird
     if (id) {
         // Gruppe ermitteln
         var $db = $.couch.db("artendb");
@@ -1911,6 +1917,18 @@ window.adb.öffneUri = function() {
             }
         });
     }
+
+    // andere Seite mit eigener URL:
+    if (exportieren) {
+        zeigeFormular('export');
+    }
+    if (importieren_datensammlung) {
+        zeigeFormular('importieren_ds');
+    }
+    if (importieren_beziehungssammlung) {
+        zeigeFormular('importieren_bs');
+    }
+
     // dafür sorgen, dass die passenden Menus angezeigt werden
     window.adb.blendeMenus();
 };

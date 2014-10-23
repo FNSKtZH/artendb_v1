@@ -21,8 +21,10 @@
         },
         {
             "follow_symlinks": true,
-            "path": "vendor",
-            "file_exclude_patterns": ["artendb_browserified.js", "artendb_built.js", "artendb_built.js.map"]
+            "name": "vendor/couchapp/_attachments",
+            "path": "vendor/couchapp/_attachments",
+            "file_exclude_patterns": ["artendb_browserified.js", "artendb_built.js", "artendb_built.js.map"],
+            "folder_exclude_patterns": ["index_lib"]
         },
         {
             "follow_symlinks": true,

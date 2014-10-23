@@ -15,7 +15,7 @@ var returnFunction = function (formularname) {
 
     // zuerst alle Formulare ausblenden
     $("#forms").hide();
-    $form.each(function() {
+    $form.each(function () {
         $(this).hide();
     });
 
@@ -39,7 +39,7 @@ var returnFunction = function (formularname) {
             // Gruppe Schaltfläche deaktivieren
             $('#Gruppe').find('.active').removeClass('active');
         }
-        $form.each(function() {
+        $form.each(function () {
             var that = $(this);
             if (that.attr("id") === formularname) {
                 $("#forms").show();
@@ -47,8 +47,25 @@ var returnFunction = function (formularname) {
             }
         });
         $(window).scrollTop(0);
+
+        // weitere urls anpassen
+        switch (formularname) {
+        case 'export':
+            // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
+            history.pushState(null, null, "index.html?exportieren=true");
+            break;
+        case 'importieren_ds':
+            // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
+            history.pushState(null, null, "index.html?importieren_datensammlung=true");
+            break;
+        case 'importieren_bs':
+            // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
+            history.pushState(null, null, "index.html?importieren_beziehungssammlung=true");
+            break;
+        }
+
         // jetzt die Links im Menu (de)aktivieren
-        setzteLinksZuBilderUndWikipedia ();
+        setzteLinksZuBilderUndWikipedia();
         formular_angezeigt.resolve();
     }
     return formular_angezeigt.promise();
