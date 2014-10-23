@@ -95,7 +95,7 @@ var returnFunction = function ($) {
             .removeClass("alert-success")
             .addClass("alert-danger");
         // Felder entfernen
-        $("#exportieren_felder_waehlen_felderliste")
+        $("#export .exportieren_felder_waehlen_felderliste")
             .html("");
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .html("");

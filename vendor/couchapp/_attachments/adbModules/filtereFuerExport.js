@@ -84,7 +84,7 @@ var returnFunction = function ($, direkt) {
     // den array dem objekt zuweisen
     filterkriterien_objekt.filterkriterien = filterkriterien;
     // gewählte Felder ermitteln
-    $(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
+    $("#export .exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};
@@ -93,7 +93,7 @@ var returnFunction = function ($, direkt) {
             gewählte_felder.push(feldObjekt);
         }
     });
-    $("#exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
+    $("#export .exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};

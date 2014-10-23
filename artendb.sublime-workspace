@@ -1,0 +1,990 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"get",
+				"getHeaderForKml"
+			],
+			[
+				"lr",
+				"lr"
+			],
+			[
+				"üb",
+				"übergebeFilterFürExportMitVorschau"
+			],
+			[
+				"über",
+				"übergebeFilterFürDirektExport"
+			],
+			[
+				"Con",
+				"Content-Type"
+			],
+			[
+				"ini",
+				"initiiereIndex"
+			],
+			[
+				"tpop",
+				"tpop_id"
+			],
+			[
+				"nodeT",
+				"nodeText2"
+			],
+			[
+				"Inser",
+				"insertIntoTblAktionsplan"
+			],
+			[
+				"feldkontr",
+				"feldkontrZaehleinheit"
+			],
+			[
+				"node",
+				"nodeText"
+			],
+			[
+				"tpopf",
+				"tpopFeldkontrListe"
+			],
+			[
+				"tpopm",
+				"tpopMassnBerListe"
+			],
+			[
+				"str",
+				"strukturtyp"
+			],
+			[
+				"initiiereT",
+				"initiiereTPopFeldkontr"
+			],
+			[
+				"massnber",
+				"massnberVonPop"
+			],
+			[
+				"vor",
+				"voranzustellendeNullen"
+			],
+			[
+				"Z",
+				"ZielId"
+			],
+			[
+				"legene",
+				"legende_url"
+			],
+			[
+				"eigene_",
+				"eigene_ebenen_string"
+			],
+			[
+				"fea",
+				"features"
+			],
+			[
+				"strc",
+				"strict"
+			],
+			[
+				"rb",
+				"rgba()"
+			],
+			[
+				"popu",
+				"popup_id_array"
+			],
+			[
+				"overl",
+				"overlays"
+			],
+			[
+				"zeigeF",
+				"zeigeFeatureInfo"
+			],
+			[
+				"feat",
+				"feature"
+			],
+			[
+				"entfern",
+				"entferneApfloraLayer"
+			],
+			[
+				"my",
+				"my_label"
+			],
+			[
+				"marker_s",
+				"marker_style_markiert"
+			],
+			[
+				"zus",
+				"zusammenfassend"
+			],
+			[
+				"Ur",
+				"Ursprungsdatensammlung"
+			],
+			[
+				"beste",
+				"bestehende_es"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"hPr",
+				"hProjektListe"
+			],
+			[
+				"op",
+				"option"
+			],
+			[
+				"loc",
+				"localStorage"
+			],
+			[
+				"htmlC",
+				"HtmlContainerBody"
+			],
+			[
+				"user",
+				"user_kommt_vor"
+			],
+			[
+				"ind",
+				"indexpos_hierarchisch"
+			],
+			[
+				"index",
+				"indexpos_einfach"
+			],
+			[
+				"rem",
+				"removeDoc"
+			],
+			[
+				"sess",
+				"sessionStorage"
+			],
+			[
+				"table",
+				"table_id"
+			],
+			[
+				"hier",
+				"hierarchiestufe"
+			],
+			[
+				"löschePro",
+				"löscheProjekt_2"
+			],
+			[
+				"strin",
+				"stringify"
+			],
+			[
+				"qry",
+				"qryLrMethode"
+			],
+			[
+				"LrD",
+				"LrDocs"
+			],
+			[
+				"und",
+				"undelete"
+			],
+			[
+				"apziel_von",
+				"apziel_von_ordner_apziel"
+			],
+			[
+				"insertTPopFe",
+				"insertTPopFeldKontrKopie_3"
+			],
+			[
+				"deleteTPop",
+				"deleteTPopFeldKontr"
+			],
+			[
+				"insert",
+				"insertTPopFeldKontr_3"
+			],
+			[
+				"insertTPop",
+				"insertTPopFeldKontrKopie_2"
+			],
+			[
+				"ordne",
+				"ordneBeobachtungZu_3"
+			],
+			[
+				"ordn",
+				"ordneBeobachtungZu_2"
+			],
+			[
+				"fuege",
+				"fuegeTPopEin_3"
+			],
+			[
+				"getTPo",
+				"getTPopMassnBer"
+			],
+			[
+				"berj_",
+				"berj_ber_id"
+			],
+			[
+				"indber",
+				"indber_ind_kuerzel"
+			],
+			[
+				"löschen_m",
+				"löschen_meldung_meldung"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/F/Google Drive/artendb_admin/push.txt",
+			"settings":
+			{
+				"buffer_size": 2291,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "_attachments/index_dev.html",
+			"settings":
+			{
+				"buffer_size": 112139,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artendb.sublime-project",
+			"settings":
+			{
+				"buffer_size": 837,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 157.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"lint",
+				"SublimeLinter: Next Error"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 571.0
+	},
+	"console":
+	{
+		"height": 162.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/alex/artendb/_attachments"
+	],
+	"file_history":
+	[
+		"/C/Users/alex/artendb/updates/eigenschaft_objekt.js",
+		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen_standardfelder.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleExportfelder.js",
+		"/C/Users/alex/artendb/lists/lib/artendb_listfunctions.js",
+		"/C/Users/alex/artendb/_attachments/index_dev.html",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl.js",
+		"/C/Users/alex/artendb/_attachments/index.html",
+		"/C/Users/alex/artendb/lists/export_evab.js",
+		"/C/Users/alex/artendb/package.json",
+		"/C/Users/alex/apflora/src/apflora.js",
+		"/C/Users/alex/apflora/src/modules/getKmlForPop.js",
+		"/C/Users/alex/apflora/src/modules/getKmlForTpop.js",
+		"/C/Users/alex/apflora/.ftppass",
+		"/C/Users/alex/apflora/src/modules/removeKmlNogoStrings.js",
+		"/C/Users/alex/apflora/src/modules/getFooterForKml.js",
+		"/C/Users/alex/apflora/src/modules/getHeaderForKml.js",
+		"/C/Users/alex/apflora/src/modules/getKmlForPopMitNamen.js",
+		"/C/Users/alex/Downloads/ApFloraPopulationen_2014-10-21_12-49-30.kml",
+		"/C/Users/alex/Downloads/ApFloraPopulationen_2014-10-21_12-45-30.kml",
+		"/C/Users/alex/apflora/queries/exportPopFuerKml.js",
+		"/C/Users/alex/apflora/README.md",
+		"/C/Users/alex/apflora/queries/exportViewWhereIdIn.js",
+		"/C/Users/alex/apflora/queries/exportKontr.js",
+		"/C/Users/alex/artendb/views/alt_arten/map.js",
+		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/alex/artendb/views/evab_arten/map.js",
+		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen.js",
+		"/F/Google Drive/artendb_admin/rewrites.json",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_2.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_build_src.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_build_style.js",
+		"/C/Users/alex/gabriel/dist/styles/main_built.css",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_styles_images_to_dist.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_app_to_dist.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod.js",
+		"/C/Users/alex/gabriel/app/index.html",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_build_html.js",
+		"/C/Users/alex/gabriel/gulp-tasks/dev_copy_xampp.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_clean_dist.js",
+		"/C/Users/alex/gabriel/dist/index.html",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_fonts_to_dist.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_images_to_dist.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_3.js",
+		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_to_dist.js",
+		"/C/Users/alex/gabriel/app/.htaccess",
+		"/C/Users/alex/gabriel/gulp-tasks/dev_build_src.js",
+		"/C/Users/alex/gabriel/app/scripts/main_browserified.js",
+		"/F/Google Drive/gabriel_admin/push.txt",
+		"/C/Users/alex/gabriel/app/scripts/main_built.js",
+		"/C/Users/alex/gabriel/.tmp/concat/scripts/main.js",
+		"/C/Users/alex/gabriel/gulp-tasks/watch.js",
+		"/C/Users/alex/gabriel/gulp-tasks/dev_2.js",
+		"/C/Users/alex/gabriel/gulp-tasks/dev.js",
+		"/C/Users/alex/apflora/gulp-tasks/dev_2.js",
+		"/C/Users/alex/apflora/gulp-tasks/npmStart.js",
+		"/C/Users/alex/apflora/gulp-tasks/watch.js",
+		"/C/Users/alex/apflora/gulp-tasks/dev_src.js",
+		"/C/Users/alex/apflora/gulp-tasks/dev_when_watch_2.js",
+		"/C/Users/alex/apflora/gulp-tasks/dev_when_watch.js",
+		"/C/Users/alex/gabriel/.gitignore",
+		"/C/Users/alex/gabriel/gulp-tasks/browserify.js",
+		"/C/Users/alex/gabriel/gulp-tasks/dev_build_style.js",
+		"/C/Users/alex/gabriel/gulp-tasks/default.js",
+		"/C/Users/alex/gabriel/Gruntfile.js",
+		"/C/Users/alex/gabriel/gulp-tasks/dev_src.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_build_src.js",
+		"/C/Users/alex/gabriel/package.json",
+		"/C/Users/alex/gabriel/app/styles/jquery-ui.css",
+		"/C/Users/alex/gabriel/bower.json",
+		"/C/Users/alex/gabriel/readme.md",
+		"/C/Users/alex/gabriel/gulpfile.js",
+		"/C/Users/alex/artendb/gulp-tasks/browserify.js",
+		"/C/Users/alex/gabriel/app/scripts/main.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleListeFuerFeldwahl.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleBaum.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/entferneDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb_browserified.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereArt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/speichern.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleLrParentOptionenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/jsuri.js",
+		"/C/Users/alex/artendb/.gitignore",
+		"/C/Users/alex/artendb/.couchappignore",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/uebergebeFilterFuerExportMitVorschau.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/filtereFuerExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/uebergebeFilterFuerDirektExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/ergaenzeFelderObjekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleListeFuerFeldwahl2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereSuchfeld.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleExportfelder.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/entferneBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/importiereDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/importiereBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/meldeErfolgVonIdIdentifikation.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/meldeErfolgVonIdIdentifikation2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleTabelle.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/nenneDsUm.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleDsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/getHtmlForLrParentAuswahlliste.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleBsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleExportFeldFilternChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/holeDatenUrlFuerTreeOberstesLevel.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/holeDatenUrlFuerTreeUntereLevel.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereArt2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereSuchfeld2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/oeffneBaumZuId.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/oeffneNodeNachIdArray.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/setzteLinksZuBilderUndWikipedia.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/zeigeFormular.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/ersetzeUngueltigeZeichenInIdNamen.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerDatensammlungBeschreibung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerFeld.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleTree.js",
+		"/F/Google Drive/artendb_admin/couchPass.json",
+		"/C/Users/alex/apflora/php/export_kontr.php",
+		"/C/Users/alex/apflora/php/export_apber.php",
+		"/C/Users/alex/apflora/queries/adressen.js",
+		"/C/Users/alex/apflora/src/modules/getTimestamp.js",
+		"/C/Users/alex/apflora/serverMethods/adressen.js",
+		"/C/Users/alex/apflora/php/export_pop_fuer_kml_namen.php",
+		"/C/Users/alex/apflora/php/export_ap_anz_massn.php"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 117.0,
+		"where_history":
+		[
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\gabriel",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\lib",
+			"C:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\apflora\\vendor\\couchapp\\_attachments\\modules",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\apflora\\queries",
+			"C:\\Users\\alex\\apflora\\src\\modules",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\apflora\\src\\modules",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\apflora, -'\\.idea\\workspace.xml'",
+			"C:\\Users\\alex\\apflora, -\\.idea\\workspace.xml",
+			"C:\\Users\\alex\\apflora, -/.idea/workspace.xml",
+			"C:\\Users\\alex\\apflora, -'/.idea/workspace.xml'",
+			"C:\\Users\\alex\\apflora, -'/.idea/*'",
+			"C:\\Users\\alex\\apflora, -'/.idea*'",
+			"C:\\Users\\alex\\apflora, -'.idea\\workspace.xml'",
+			"C:\\Users\\alex\\apflora, -'/.idea\\workspace.xml'",
+			"C:\\Users\\alex\\apflora, -/.idea\\workspace.xml",
+			"C:\\Users\\alex\\apflora, -.idea\\workspace.xml",
+			"C:\\Users\\alex\\apflora -.idea\\workspace.xml",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\EvabMobile",
+			"C:\\Users\\alex\\ab",
+			"C:\\Users\\alex\\apflora, -main.js, -jquery.js, -jquery.jstree.js",
+			"C:\\Users\\alex\\apflora, -main.js, -jquery.js",
+			"C:\\Users\\alex\\apflora, -main.js, -jqery.js",
+			"C:\\Users\\alex\\apflora, -main.js",
+			"C:\\Users\\alex\\apflora\\php, -main.js",
+			"C:\\Users\\alex\\apflora, -main.js",
+			"C:\\Users\\alex\\apflora, -main.js, -C:\\Users\\alex\\apflora\\node_modules",
+			"C:\\Users\\alex\\apflora, -main.js, -\\node_modules",
+			"C:\\Users\\alex\\apflora, -main.js, -/node_modules",
+			"C:\\Users\\alex\\apflora, -main.js, -node_modules",
+			"C:\\Users\\alex\\apflora, -main.js",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\apflora,-main.js",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\artendb\\views",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\EvabMobile",
+			"C:\\Users\\alex\\artendb/views",
+			"C:\\Users\\alex\\EvabMobile",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\EvabMobile",
+			"C:\\Users\\alex\\artendb",
+			"C:\\Users\\alex\\artendb_import",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\apflora\\php",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\EvabMobile",
+			"C:\\Users\\alex\\apflora",
+			"C:\\Users\\alex\\artendb\\lists",
+			"C:\\Users\\alex\\artendb\\views",
+			"C:\\Users\\alex\\artendb"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"exportieren_exportieren_collapse",
+			"exportieren_exportieren_titel",
+			"exportieren_alt_exportieren",
+			"exportieren_exportieren",
+			"exportieren_felder_waehlen_felderliste",
+			"exportieren_felder_waehlen_objekt_feld",
+			"exportieren_felder_waehlen_objekt_id",
+			"exportieren_alt_synonym_infos",
+			"exportieren_synonym_infos",
+			"exportieren_alt_felder_waehlen_collapse",
+			"exportieren_felder_waehlen_collapse",
+			"exportieren_felder_waehlen_titel",
+			"exportieren_felder_waehlen",
+			"exportieren_alt_panel",
+			"exportieren_panel",
+			"Die Exportdatei hat das .csv-",
+			"exportieren_exportieren_exportieren_fuer_alt",
+			"export_objekt",
+			"ergänzeExportobjekteUmExportobjekt",
+			"gulp-sftp",
+			"window.apf.zeigeFormular",
+			"4000",
+			"pop",
+			"export_pop_fuer_kml_namen.php",
+			"window.apf.downloadFileFromView",
+			"exportView",
+			"export_pop_fuer_kml.php",
+			"export_popber.php",
+			"export_zielber_ohne_ziel.php",
+			"export_tpopmassnber.php",
+			"export_tpopber.php",
+			"export_tpop_anz_kontr.php",
+			"export_popmassnber_ohne_pop.php",
+			"export_popber_ohne_pop.php",
+			"export_pop_ohne_ap.php",
+			"export_pop.php",
+			"export_tpop.php",
+			"export_massn.php",
+			"export_kontr.php",
+			"exportView",
+			"window.apf.downloadFileFromView",
+			"export_kontr.php",
+			"exportView",
+			"objekt",
+			"exportObjekt.Artwert",
+			"exportObjekt.NameDeu",
+			"exportObjekt.NameLat",
+			"exportObjekt.Distanz",
+			"exportObjekt.GISLayer",
+			"exportObjekt.Ref",
+			"exportObjekt.Gruppe",
+			"\\t",
+			"gruppen",
+			"exportObjekt.Gruppe",
+			"\\t",
+			"evab_arten",
+			"exportObjekt.Status",
+			"exportObjekt.DeutscherArtname",
+			"idArt",
+			"exportObjekt.Nummer",
+			"exportObjekt.DeutscherArtname",
+			"exportObjekt.Nummer",
+			"export_evab",
+			"AllowOverride",
+			"Directory",
+			"zeige_google_karte",
+			"show_page",
+			"bower",
+			"\\t",
+			"modernizr",
+			"jquery",
+			"bootstrap",
+			"$db",
+			"$.ajax",
+			"$db",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2",
+			"window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren",
+			"window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren2",
+			"window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren_2",
+			"$",
+			"$.ajax",
+			"window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren",
+			"modules",
+			"$",
+			"window.adb.übergebeFilterFürExportMitVorschau",
+			"übergebeFilterFürExportMitVorschau",
+			"window.adb.übergebeFilterFürExportMitVorschau",
+			"dbParam",
+			"$.ajax",
+			"$",
+			"window.adb.übergebeFilterFürDirektExport",
+			"übergebeFilterFürDirektExport",
+			"window.adb.übergebeFilterFürDirektExport",
+			"$db",
+			"_",
+			"$",
+			"filtereFürExport",
+			"('this:",
+			"window.adb.filtereFürExport",
+			"$",
+			"window.adb.ergänzeFelderObjekt",
+			"$",
+			"window.adb.erstelleListeFürFeldwahl_2",
+			"export_felder_arrays",
+			"$",
+			"window.adb.erstelleListeFürFeldwahl",
+			"modules",
+			"$",
+			"$.ajax",
+			"window.adb.erstelleExportfelder",
+			"erstelleExportfelder",
+			"window.adb.erstelleExportfelder",
+			"modules",
+			"$",
+			"_",
+			"$",
+			"window.adb.importiereDatensammlung",
+			"$",
+			"$.ajax",
+			"$",
+			"_",
+			"window.adb.meldeErfolgVonIdIdentifikation_02",
+			"meldeErfolgVonIdIdentifikation2",
+			"window.adb.meldeErfolgVonIdIdentifikation_02",
+			"$",
+			"window.adb.meldeErfolgVonIdIdentifikation",
+			"$"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"exportieren_alt_exportieren_titel",
+			"exportieren_alt_exportieren",
+			"exportieren_alt_felder_waehlen_objekt_feld",
+			"exportieren_alt_felder_waehlen_objekt_id",
+			"exportieren_alt_synonym_infos",
+			"exportieren_alt_felder_waehlen_collapse",
+			"exportieren_alt_felder_waehlen_titel",
+			"exportieren_alt_felder_waehlen",
+			"exportieren_alt_panel",
+			"exportObjekt",
+			"tpop",
+			"doc",
+			"exportObjekt.artwert",
+			"exportObjekt.nameDeu",
+			"exportObjekt.nameLat",
+			"exportObjekt.distance",
+			"exportObjekt.gisLayer",
+			"exportObjekt.ref",
+			"    ",
+			"Objekt.Gruppe",
+			"    ",
+			"exportObjekt.status",
+			"exportObjekt.deutscherArtname",
+			"exportObjekt.nummer",
+			"exportObjekt.deutscherArtname",
+			"exportObjekt.nummer",
+			"window.gab.zeige_google_karte",
+			"window.gab.showPage",
+			"    ",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren2",
+			"uebergebeFilterFuerExportMitVorschau",
+			"listName",
+			"that",
+			"resp",
+			"this",
+			"    ",
+			"that",
+			"",
+			"history.pushState",
+			"ap=",
+			"'api/v1/ap='",
+			"'",
+			"window.apf.initiiereExporte",
+			"data",
+			"tpopId",
+			"popId",
+			"apId",
+			"massnId",
+			"localStorage.tpopmassn_id",
+			"massnId",
+			"tpopId",
+			"popId",
+			"apId",
+			"massnBerId",
+			"localStorage.tpopmassnber_id",
+			"massnBerId",
+			"data",
+			"tpopId",
+			"popId",
+			"apId",
+			"feldKontrId",
+			"localStorage.tpopfeldkontr_id",
+			"feldKontrId",
+			"tpopId",
+			"popId",
+			"apId",
+			"tpopBerId",
+			"localStorage.tpopber_id",
+			"tpopBerId",
+			"popId",
+			"apId",
+			"tpopId",
+			"localStorage.tpop_id",
+			"tpopId",
+			"popId",
+			"apId",
+			"popberId",
+			"localStorage.popber_id",
+			"popberId",
+			"popId",
+			"apId",
+			"massnberId",
+			"localStorage.popmassnber_id",
+			"massnberId",
+			"localStorage.pop_id",
+			"popId",
+			"apId",
+			"popId",
+			"localStorage.pop_id",
+			"popId",
+			"apId",
+			"zielberId",
+			"localStorage.zielber_id",
+			"zielberId",
+			"apId",
+			"apZielId",
+			"localStorage.apziel_id",
+			"apZielId",
+			"apId",
+			"erfkritId",
+			"localStorage.erfkrit_id",
+			"erfkritId",
+			"apId",
+			"uebId",
+			"localStorage.jber_uebersicht_id",
+			"localStorage.jber_id",
+			"apBerId",
+			"localStorage.ber_id",
+			"apBerId",
+			"apId",
+			"function (",
+			"initiiereAssozart",
+			"initiiereIdealbiotop",
+			"[0-9]{4}\\.[0-9]{1,2}\\.[0-9]{1,2}",
+			"    ",
+			"        ",
+			"            ",
+			"    ",
+			"popId",
+			"tpopKontrId",
+			"'yyyy.mm.dd'",
+			"elem.html(limit - chars);",
+			"returnFunction",
+			"wgs84InChX",
+			"ddInWgs84LängeSec",
+			"ddInWgs84LängeMin",
+			"ddInWgs84LängeGrad",
+			"ddInWgs84BreiteSec"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/F/Google Drive/artendb_admin/push.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2291,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								63,
+								7
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "_attachments/index_dev.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 112139,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								62284,
+								62316
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11304.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "artendb.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 837,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								271
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 34.0
+	},
+	"project": "artendb.sublime-project",
+	"replace":
+	{
+		"height": 74.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 277.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

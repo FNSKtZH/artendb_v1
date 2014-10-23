@@ -4,6 +4,7 @@
   // ".*~$"
   // ".*\\.swp$"
   // ".*\\.bak$"
+  "artendb.sublime-project",
   "node_modules$",
   "gulp-tasks$",
   "gulpfile.js",

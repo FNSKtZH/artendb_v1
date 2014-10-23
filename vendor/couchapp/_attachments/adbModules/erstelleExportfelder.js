@@ -129,19 +129,19 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     html_felder_wählen = '<hr>' + html_felder_wählen;
     html_filtern = '<hr>' + html_filtern;
     if (beziehungssammlungen) {
-        $("#exportieren_felder_waehlen_felderliste")
+        $("#export .exportieren_felder_waehlen_felderliste")
             .html(html_felder_wählen);
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .html(html_filtern);
         erstelleExportfelder (datensammlungen, beziehungssammlungen);
     } else if (datensammlungen) {
-        $("#exportieren_felder_waehlen_felderliste")
+        $("#export .exportieren_felder_waehlen_felderliste")
             .append(html_felder_wählen);
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .append(html_filtern);
         erstelleExportfelder (datensammlungen);
     } else {
-        $("#exportieren_felder_waehlen_felderliste")
+        $("#export .exportieren_felder_waehlen_felderliste")
             .append(html_felder_wählen);
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .append(html_filtern)

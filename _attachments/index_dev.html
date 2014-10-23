@@ -728,7 +728,7 @@
 										</label>
 									</div>
 								</div>
-								<div id="exportieren_felder_waehlen_felderliste"></div>
+								<div class="exportieren_felder_waehlen_felderliste"></div>
 							</div>
 						</div>
 					</div>
@@ -792,12 +792,119 @@
 				</div><!--panel-group-->	
 			</form>
 
+			<form id="export_alt" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
+				<div id="exportieren_alt_panel" class="panel-group">
+
+					<div class="panel panel-default" id="exportieren_alt_felder_waehlen">
+						<div class="panel-heading panel-heading-gradient">
+							<h4 class="panel-title">
+								<a id="exportieren_alt_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_felder_waehlen_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_felder_waehlen_collapse">1. Eigenschaften wählen</a>
+							</h4>
+						</div>
+						<div class="panel-collapse collapse" id="exportieren_alt_felder_waehlen_collapse">
+							<div class="panel-body">
+								<div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+									<ul class="adb-hidden">
+										<li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+										<li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
+										<li>...und fahren Sie danach mit "2. exportieren" weiter</li>
+									</ul>
+								</div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
+                                    </ul>
+                                </div>
+								<div class="checkbox" style="clear:both; padding-top:7px;">
+									<label>
+										<input type="checkbox" id="exportieren_alt_synonym_infos" checked>
+										<b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
+									</label>
+								</div>
+								<hr>
+								<h3>Art / Lebensraum</h3>
+								<div class="felderspalte">
+									<div class="checkbox">
+										<label>
+											<input id="exportieren_alt_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+										</label>
+									</div>
+								</div>
+								<div class="exportieren_felder_waehlen_felderliste"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="exportieren_alt_exportieren" class="panel panel-default">
+						<div class="panel-heading panel-heading-gradient">
+							<h4 class="panel-title">
+								<a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" data-parent="exportieren_alt_panel" href="#exportieren_exportieren_collapse">2. exportieren</a>
+							</h4>
+						</div>
+						<div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+									<ul class="adb-hidden">
+										<li>Der Server filtert und baut die Exportdaten auf</li>
+										<li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
+										<li>Danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
+										<li>...und es erscheinen Schaltflächen für den Download</li>
+									</ul>
+								</div>
+                                <div class="well well-sm"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die Exportdatei hat das .csv-Format:
+                                            <ul>
+                                                <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
+                                                <li>Die erste Zeile enthält die Feldnamen</li>
+                                                <li>Felder sind mit Kommas (,) getrennt</li>
+                                                <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
+                                            </ul>
+                                        </li>
+                                        <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a></li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Bitte nicht Excel verwenden</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a>.<br>Sie werten die Daten lieber in Excel aus? Speichern Sie die Datei anschliessend im Excel-Format.<br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
+                                        <li>In Microsoft Excel importieren Sie die Daten mit den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken).<br>Aber VORSICHT: Excel macht es einem schwer, die Daten korrekt und fehlerfrei zu erhalten! Beispiele:
+                                            <ul>
+                                                <li>Manchmal erkennt Excel Feldbegrenzungen nicht richtig, worauf es Daten eines Felds in falsche oder gar in mehrere Felder schreibt</li>
+                                                <li>Excel bestimmt ohne Rückfrage eigenmächtig Formate. Zum Beispiel wandelt es manchmal Zahlen in Datenformate um. Und zwar nicht in allen Zeilen der Tabelle, sondern nur in denjenigen, deren Daten es als Datum zu erkennen glaubt...</li>
+                                                <li>Excel geht davon aus, dass Sie US-English sprechen (yeah), weshalb es ohne Umstellen der Codierung Umlaute und Sonderzeichen in Datenmüll verwandelt (learn english, dude!)</li>
+                                            </ul>
+                                            Diese Fehler können schwer zu erkennen sein. Es besteht die Gefahr, dass Sie die Daten später nochmals mit Libre- oder OpenOffice importieren und ihre Auswertung wiederholen müssen.
+                                            <br>Oder schlimmer: Sie merken den Fehler nicht und ihre Auswertung enthält Fehler.<br>
+                                            <b>Für die eigentliche Auswertung ist Excel geeignet.</b>
+                                        </li>
+                                    </ul>
+                                </div>
+								<button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
+								<button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
+                                <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+								<div id="exportieren_exportieren_tabelle" class="tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
+								<div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
+								<div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <span id="exportieren_exportieren_error_text_text"></span>
+								</div>
+							</div><!--panel-body-->
+						</div><!--panel-collapse-->
+					</div><!--panel-->
+				</div><!--panel-group-->	
+			</form>
+
 			<form id="admin" class="form_admin form form-horizontal" action="#" method="get" autocomplete="off">
 				<div id="admin_panel" class="panel-group">
 					<div class="panel panel-default" id="exportieren_diverses">
 						<div class="panel-heading panel-heading-gradient">
 							<h4 class="panel-title">
-								<a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="exportieren_panel" href="#exportieren_diverses_collapse">Diverses</a>
+								<a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="exportieren_alt_panel" href="#exportieren_diverses_collapse">Diverses</a>
 							</h4>
 						</div>
 						<div class="collapse in" id="exportieren_diverses_collapse">
@@ -1375,13 +1482,15 @@
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
                     .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function() {
-                            window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
-                        })
+                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
+                    })
                     .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function() {
-                            window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
-                        });
+                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
+                    });
+                    // TODO: on exportieren_alt_felder_waehlen_collapse
 
 				$("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);
+				// TODO: exportieren_alt_exportieren.on ergänzen
 
 				$("#art")
                     .on("click", ".btn.lr_bearb", function(event) {

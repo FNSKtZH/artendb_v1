@@ -1061,7 +1061,7 @@ window.adb.handleFeldWählenChange = function() {
     if ($("#export_bez_in_zeilen").prop('checked')) {
         var bez_ds_checked = [],
             that = this;
-        $("#exportieren_felder_waehlen_felderliste")
+        $("#export .exportieren_felder_waehlen_felderliste")
             .find(".feld_waehlen")
             .each(function() {
                 if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
