@@ -2057,6 +2057,19 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
 
     // url anzeigen
     $('#exportieren_alt_exportieren_url').val(url);
+
+    // Vorschautabelle generieren
+    // TODO: limit number of data
+    $.ajax(url + '&limit=10', {
+        type: 'GET',
+        dataType: "json"
+    }).done(function (data) {
+        // alle Objekte in data window.adb.exportieren_objekte übergeben
+        window.adb.exportieren_objekte = data;
+        window.adb.baueTabelleFürExportAuf('_alt');
+    }).fail(function () {
+        console.log('error in $db.list');
+    });
 };
 
 window.adb.baueTabelleFürExportAuf = function(_alt) {
@@ -2068,20 +2081,18 @@ window.adb.baueTabelleFürExportAuf = function(_alt) {
     if (window.adb.exportieren_objekte.length > 0) {
         erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle");
         $(".exportieren" + _alt + "_exportieren_exportieren").show();
-        // zur Tabelle scrollen
-        $('html, body').animate({
-            scrollTop: $("#exportieren" + _alt + "_exportieren_exportieren").offset().top
-        }, 2000);
     } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
         $("#exportieren" + _alt + "_exportieren_error_text_text")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
         $("#exportieren" + _alt + "_exportieren_error_text")
             .alert()
             .show();
+    }
+    if (!_alt) {
+        // zur Tabelle scrollen
         $('html, body').animate({
             scrollTop: $("#exportieren" + _alt + "_exportieren_exportieren").offset().top
         }, 2000);
-
     }
     // Beschäftigungsmeldung verstecken
     $("#exportieren" + _alt + "_exportieren_hinweis_text")
