@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"export",
+				"export_alt"
+			],
+			[
+				"für",
+				"fürAlt"
+			],
+			[
 				"qu",
 				"queryParam"
 			],
@@ -263,7 +271,7 @@
 			"file": "/F/Google Drive/artendb_admin/push.txt",
 			"settings":
 			{
-				"buffer_size": 2518,
+				"buffer_size": 2809,
 				"line_ending": "Windows"
 			}
 		},
@@ -271,7 +279,7 @@
 			"file": "_attachments/style/artendb.css",
 			"settings":
 			{
-				"buffer_size": 17956,
+				"buffer_size": 18539,
 				"line_ending": "Windows"
 			}
 		},
@@ -279,15 +287,7 @@
 			"file": "vendor/couchapp/_attachments/artendb.js",
 			"settings":
 			{
-				"buffer_size": 109043,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lists/export_alt_mit_synonymen.js",
-			"settings":
-			{
-				"buffer_size": 3188,
+				"buffer_size": 110784,
 				"line_ending": "Windows"
 			}
 		},
@@ -295,15 +295,7 @@
 			"file": "_attachments/index_dev.html",
 			"settings":
 			{
-				"buffer_size": 109399,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
-			"settings":
-			{
-				"buffer_size": 8173,
+				"buffer_size": 127017,
 				"line_ending": "Windows"
 			}
 		}
@@ -349,24 +341,127 @@
 	"expanded_folders":
 	[
 		"/C/Users/alex/artendb/_attachments",
-		"/C/Users/alex/artendb/_attachments/style",
 		"/C/Users/alex/artendb/lists",
 		"/C/Users/alex/artendb/lists/lib",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules"
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adb_lib",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules",
+		"/C/Users/alex/artendb/views",
+		"/C/Users/alex/artendb/views/alt_arten_mit_synonymen"
 	],
 	"file_history":
 	[
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
-		"/C/Users/alex/artendb/lists/lib/artendb_listfunctions.js",
+		"/C/Users/alex/artendb/lists/export.js",
+		"/C/Users/alex/artendb/lists/export_alt.js",
 		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen.js",
-		"/C/Users/alex/artendb/_attachments/index_dev.html",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerExportMitVorschau.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleExportfelder.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTabelle.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleExportFeldFilternChange.js",
+		"/C/Users/alex/artendb/views/alt_arten/map.js",
+		"/C/Users/alex/artendb/lists/export_mit_synonymen.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleBaum.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
+		"/C/Users/alex/artendb/_attachments/index_dev.html",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.couch.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.js",
+		"/C/Users/alex/artendb/_attachments/style/artendb.css",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/FileSaver.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/zeigeFormular.js",
+		"/C/Users/alex/artendb/filters/dsimport",
+		"/C/Users/alex/artendb/lists/baum_flora.js",
+		"/C/Users/alex/artendb/lists/baum_fauna.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerExportMitVorschau.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/nenneDsUm.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/importiereDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/importiereBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleDsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleBsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/getHtmlForLrParentAuswahlliste.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTree.js",
+		"/C/Users/alex/artendb/lists/baum_lr.js",
+		"/C/Users/alex/artendb/lists/baum_macromycetes.js",
+		"/C/Users/alex/artendb/lists/baum_moose.js",
+		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen_standardfelder.js",
+		"/C/Users/alex/artendb/lists/export_apflora.js",
+		"/C/Users/alex/artendb/lists/export_direkt.js",
+		"/C/Users/alex/artendb/lists/export_evab.js",
+		"/C/Users/alex/artendb/lists/export_evm_arten.js",
+		"/C/Users/alex/artendb/lists/export_evm_artgruppen.js",
+		"/C/Users/alex/artendb/lists/export_mit_synonymen_direkt.js",
+		"/C/Users/alex/artendb/lists/lib/artendb_listfunctions.js",
+		"/C/Users/alex/artendb/updates/eigenschaft_objekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/ergaenzeFelderObjekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleExportfelder.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTabelle.js",
+		"/C/Users/alex/artendb/views/umbenennen_loeschen/map.js",
+		"/C/Users/alex/artendb/views/objekte/map.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.hotkeys.js",
+		"/C/Users/alex/artendb/views/moose_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/moose_gruppiert/map.js",
+		"/C/Users/alex/artendb/views/moose/map.js",
+		"/C/Users/alex/artendb/views/macromycetes_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/macromycetes_gruppiert/map.js",
+		"/C/Users/alex/artendb/views/macromycetes/map.js",
+		"/C/Users/alex/artendb/views/lr_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/lr_gruppiert/map.js",
+		"/C/Users/alex/artendb/views/lr/map.js",
+		"/C/Users/alex/artendb/views/hierarchie/map.js",
+		"/C/Users/alex/artendb/views/gruppe_id_taxonomieid/map.js",
+		"/C/Users/alex/artendb/views/flora_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/flora_gruppiert/map.js",
+		"/C/Users/alex/artendb/views/flora/map.js",
+		"/C/Users/alex/artendb/views/filtere_lr/map.js",
+		"/C/Users/alex/artendb/views/filtere_art/map.js",
+		"/C/Users/alex/artendb/views/felder/map.js",
+		"/C/Users/alex/artendb/views/fauna_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/fauna_gruppiert/map.js",
+		"/C/Users/alex/artendb/views/fauna/map.js",
+		"/C/Users/alex/artendb/views/evab_arten/map.js",
+		"/C/Users/alex/artendb/views/ds_von_objekten/map.js",
+		"/C/Users/alex/artendb/views/ds_guid/map.js",
+		"/C/Users/alex/artendb/views/ds_bs_guid/map.js",
+		"/C/Users/alex/artendb/views/bs_guid/map.js",
+		"/C/Users/alex/artendb/views/bezpartner/map.js",
+		"/C/Users/alex/artendb/views/baum_moose/map.js",
+		"/C/Users/alex/artendb/views/baum_macromycetes/map.js",
+		"/C/Users/alex/artendb/views/baum_lr/map.js",
+		"/C/Users/alex/artendb/views/baum_flora/map.js",
+		"/C/Users/alex/artendb/views/baum_fauna/map.js",
+		"/C/Users/alex/artendb/views/artgruppen/map.js",
+		"/C/Users/alex/artendb/views/alt_arten_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/all_docs_mit_synonymen/map.js",
+		"/C/Users/alex/artendb/views/all_docs_fuer_alt/map.js",
+		"/C/Users/alex/artendb/views/all_docs/map.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/validate.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/utils.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/redirect.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/path.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/list.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/docform.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/code.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/cache.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/profileReady/data.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/profileReady/after.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/noProfile/selectors/form/submit.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/noProfile/data.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/loggedIn.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/signupForm/selectors/form/submit.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loginForm/selectors/form/submit.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loggedIn/data.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loggedIn/after.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doSignup.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doLogin.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/_init.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/typeahead.js",
 		"/C/Users/alex/Downloads/jsUri-master/Uri.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jsuri.js",
 		"/C/Users/alex/artendb/artendb.sublime-project",
@@ -374,11 +469,7 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt2.js",
 		"/C/Users/alex/artendb/.couchappignore",
 		"/C/Users/alex/artendb/node_modules/gulp-concat/index.js",
-		"/C/Users/alex/artendb/updates/eigenschaft_objekt.js",
-		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen_standardfelder.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
 		"/C/Users/alex/artendb/_attachments/index.html",
-		"/C/Users/alex/artendb/lists/export_evab.js",
 		"/C/Users/alex/artendb/package.json",
 		"/C/Users/alex/apflora/src/apflora.js",
 		"/C/Users/alex/apflora/src/modules/getKmlForPop.js",
@@ -386,105 +477,7 @@
 		"/C/Users/alex/apflora/.ftppass",
 		"/C/Users/alex/apflora/src/modules/removeKmlNogoStrings.js",
 		"/C/Users/alex/apflora/src/modules/getFooterForKml.js",
-		"/C/Users/alex/apflora/src/modules/getHeaderForKml.js",
-		"/C/Users/alex/apflora/src/modules/getKmlForPopMitNamen.js",
-		"/C/Users/alex/Downloads/ApFloraPopulationen_2014-10-21_12-49-30.kml",
-		"/C/Users/alex/Downloads/ApFloraPopulationen_2014-10-21_12-45-30.kml",
-		"/C/Users/alex/apflora/queries/exportPopFuerKml.js",
-		"/C/Users/alex/apflora/README.md",
-		"/C/Users/alex/apflora/queries/exportViewWhereIdIn.js",
-		"/C/Users/alex/apflora/queries/exportKontr.js",
-		"/C/Users/alex/artendb/views/alt_arten/map.js",
-		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Users/alex/artendb/views/evab_arten/map.js",
-		"/F/Google Drive/artendb_admin/rewrites.json",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_2.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_build_src.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_build_style.js",
-		"/C/Users/alex/gabriel/dist/styles/main_built.css",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_styles_images_to_dist.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_app_to_dist.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod.js",
-		"/C/Users/alex/gabriel/app/index.html",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_build_html.js",
-		"/C/Users/alex/gabriel/gulp-tasks/dev_copy_xampp.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_clean_dist.js",
-		"/C/Users/alex/gabriel/dist/index.html",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_fonts_to_dist.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_images_to_dist.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_3.js",
-		"/C/Users/alex/gabriel/gulp-tasks/prod_copy_to_dist.js",
-		"/C/Users/alex/gabriel/app/.htaccess",
-		"/C/Users/alex/gabriel/gulp-tasks/dev_build_src.js",
-		"/C/Users/alex/gabriel/app/scripts/main_browserified.js",
-		"/F/Google Drive/gabriel_admin/push.txt",
-		"/C/Users/alex/gabriel/app/scripts/main_built.js",
-		"/C/Users/alex/gabriel/.tmp/concat/scripts/main.js",
-		"/C/Users/alex/gabriel/gulp-tasks/watch.js",
-		"/C/Users/alex/gabriel/gulp-tasks/dev_2.js",
-		"/C/Users/alex/gabriel/gulp-tasks/dev.js",
-		"/C/Users/alex/apflora/gulp-tasks/dev_2.js",
-		"/C/Users/alex/apflora/gulp-tasks/npmStart.js",
-		"/C/Users/alex/apflora/gulp-tasks/watch.js",
-		"/C/Users/alex/apflora/gulp-tasks/dev_src.js",
-		"/C/Users/alex/apflora/gulp-tasks/dev_when_watch_2.js",
-		"/C/Users/alex/apflora/gulp-tasks/dev_when_watch.js",
-		"/C/Users/alex/gabriel/.gitignore",
-		"/C/Users/alex/gabriel/gulp-tasks/browserify.js",
-		"/C/Users/alex/gabriel/gulp-tasks/dev_build_style.js",
-		"/C/Users/alex/gabriel/gulp-tasks/default.js",
-		"/C/Users/alex/gabriel/Gruntfile.js",
-		"/C/Users/alex/gabriel/gulp-tasks/dev_src.js",
-		"/C/Users/alex/artendb/gulp-tasks/dev_build_src.js",
-		"/C/Users/alex/gabriel/package.json",
-		"/C/Users/alex/gabriel/app/styles/jquery-ui.css",
-		"/C/Users/alex/gabriel/bower.json",
-		"/C/Users/alex/gabriel/readme.md",
-		"/C/Users/alex/gabriel/gulpfile.js",
-		"/C/Users/alex/artendb/gulp-tasks/browserify.js",
-		"/C/Users/alex/gabriel/app/scripts/main.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleListeFuerFeldwahl.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleBaum.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/entferneDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb_browserified.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereArt.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/speichern.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleLrParentOptionenChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/jsuri.js",
-		"/C/Users/alex/artendb/.gitignore",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/uebergebeFilterFuerExportMitVorschau.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/filtereFuerExport.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/uebergebeFilterFuerDirektExport.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/ergaenzeFelderObjekt.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleListeFuerFeldwahl2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereSuchfeld.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleExportfelder.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/entferneBeziehungssammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/importiereDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/importiereBeziehungssammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/meldeErfolgVonIdIdentifikation.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/meldeErfolgVonIdIdentifikation2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleTabelle.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/nenneDsUm.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleDsWaehlenChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/getHtmlForLrParentAuswahlliste.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleBsWaehlenChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/handleExportFeldFilternChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/holeDatenUrlFuerTreeOberstesLevel.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/holeDatenUrlFuerTreeUntereLevel.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereArt2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/initiiereSuchfeld2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/oeffneBaumZuId.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/oeffneNodeNachIdArray.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/setzteLinksZuBilderUndWikipedia.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/zeigeFormular.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/ersetzeUngueltigeZeichenInIdNamen.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerBeziehungssammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/modules/erstelleHtmlFuerDatensammlungBeschreibung.js"
+		"/C/Users/alex/apflora/src/modules/getHeaderForKml.js"
 	],
 	"find":
 	{
@@ -492,9 +485,12 @@
 	},
 	"find_in_files":
 	{
-		"height": 117.0,
+		"height": 108.0,
 		"where_history":
 		[
+			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js, -jquery.couch.js",
+			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js\n",
+			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, bootstrap.css",
@@ -584,6 +580,73 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"console.log('data:",
+			"handleFeldWählenAlleVonDs",
+			"window.adb.exportZurücksetzen",
+			"exportieren_exportieren",
+			"exportieren_alt_exportieren",
+			"listOptions",
+			"anz_ds_gewählt",
+			"gruppen_array",
+			"gruppen",
+			"filterkriterien_objekt",
+			"window.adb.übergebeFilterFürExportFürAlt",
+			"ergänzeDsBsVonSynonym_return",
+			"datensammlungen_aus_synonymen",
+			"beziehungssammlungen_aus_synonymen",
+			"$.ajax",
+			"erstelleBaum",
+			"entferneDatensammlung",
+			"entferneBeziehungssammlung",
+			"$.ajax",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren2",
+			"$.ajax",
+			"list",
+			"$.ajax",
+			"ajax",
+			"ajaxOptions",
+			"ajax",
+			"$.ajax",
+			"defaultAjaxOpts",
+			"$.ajax",
+			"function(",
+			"a",
+			"len",
+			"get",
+			"$.ajax",
+			"beforeSend",
+			"fullCommit",
+			"dataType: \"json\",",
+			"ajax",
+			"keine Daten für die Art erhalten",
+			"css3-multi-column",
+			"css3-multi-columns",
+			"exportieren",
+			"$.when",
+			"exportieren_felder_waehlen_collapse",
+			"öffneUri",
+			"_exportieren_tabelle",
+			"setzeTabelleZur",
+			"tabelleZuruecksetzen",
+			"tabelleZurücksetzen",
+			"_exportieren_hinweis_text",
+			"exportieren_alt_exportieren_hinweis_text",
+			"exportieren_alt_exportieren_tabelle",
+			"exportieren_alt_exportieren_collapse",
+			"scrollTop:",
+			"console.log('data:",
+			"window.adb.fasseTaxonomienZusammen",
+			"filtereFuerExport",
+			"Gewählte Filterkriterien:",
+			"#exportieren_panel div.adb-hidden",
+			"das dauert eine ganze Weile. Geduld bringt URL",
+			"erstelleTabelle",
+			"\\t",
+			"replace",
+			"exportieren_exportieren_exportieren",
+			"uebergebeFilterFuerExportMitVorschau",
+			"window.adb.übergebeFilterFürExportFürAlt",
+			"Die Daten werden vorbereitet...",
 			"2. exportieren",
 			"gruppen",
 			"console.log('queryParam: ', queryParam)",
@@ -644,74 +707,7 @@
 			"exportieren_exportieren_collapse",
 			"exportieren_alt_exportieren_collapse",
 			"filtereFuerExport",
-			"window.adb.handleExportierenExportierenCollapseShown",
-			"exportieren_exportieren_collapse",
-			"window.adb.öffneUri",
-			"öffneUri",
-			"window.adb.handleExportierenAltObjekteWaehlenCollapseShown",
-			"erstelleListeFuerFeldwahl: export_gruppen",
-			"Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen",
-			"exportieren_exportieren_collapse",
-			"exportieren_panel",
-			"exportieren_alt_felder_waehlen",
-			"exportieren_felder_waehlen",
-			"exportieren",
-			"exportieren_objekte_waehlen_ds_felderliste",
-			"exportieren_felder_waehlen_felderliste",
-			"handleExportierenAltObjekteWaehlenCollapseShown",
-			"öffneuri",
-			"URI",
-			"exportieren_alt_felder_waehlen_collapse",
-			"handleExportierenAltObjekteWaehlenCollapseShown",
-			"exportieren_alt_felder_waehlen_collapse",
-			"exportieren_felder_waehlen_collapse",
-			"exportieren_exportieren_tabelle",
-			"exportieren_alt_exportieren_tabelle",
-			"tabelle exportieren_exportieren_tabelle",
-			"scrollTop: $tabellen_div.offset().top",
-			"exportieren_objekte_waehlen_ds_felderliste",
-			"objekte_waehlen_ds_felderliste",
-			"exportieren_alt_objekte_waehlen_ds_felderliste",
-			"exportieren_objekte_waehlen_ds_felderliste",
-			"exportieren_objekte_waehlen_gruppen_hinweis_text",
-			"exportieren_exportieren_tabelle",
-			"exportieren_objekte_waehlen_gruppen_hinweis_text",
-			"export_gruppen.push($(this).val())",
-			"erstelleListeFuerFeldwahl",
-			"if (export_gruppen.length > 0) {",
-			"window.adb.fürExportGewählteGruppen",
-			"window.adb.handleExportierenObjekteWaehlenCollapseShown",
-			"exportieren_felder_waehlen_collapse",
-			"exportieren_felder_waehlen_titel",
-			"Uri",
-			"zeigeFormular",
-			"Uri",
-			"jsuri",
-			"history",
-			"export",
-			"PluginError",
-			"formatDate",
-			"exportieren_felder_waehlen_felderliste",
-			"export_alt",
-			"<form",
-			"exportieren",
-			"exportieren_alt",
-			"artendb_built.js.map",
-			"artendb_built.js",
-			"exportieren_exportieren_collapse",
-			"exportieren_exportieren_titel",
-			"exportieren_alt_exportieren",
-			"exportieren_exportieren",
-			"exportieren_felder_waehlen_felderliste",
-			"exportieren_felder_waehlen_objekt_feld",
-			"exportieren_felder_waehlen_objekt_id",
-			"exportieren_alt_synonym_infos",
-			"exportieren_synonym_infos",
-			"exportieren_alt_felder_waehlen_collapse",
-			"exportieren_felder_waehlen_collapse",
-			"exportieren_felder_waehlen_titel",
-			"exportieren_felder_waehlen",
-			"exportieren_alt_panel"
+			"window.adb.handleExportierenExportierenCollapseShown"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -719,6 +715,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"function (",
+			"    ",
 			"exportieren_alt_exportieren_collapse",
 			"exportieren_alt_exportieren_titel",
 			"exportieren_alt_exportieren",
@@ -844,9 +842,7 @@
 			"elem.html(limit - chars);",
 			"returnFunction",
 			"wgs84InChX",
-			"ddInWgs84LängeSec",
-			"ddInWgs84LängeMin",
-			"ddInWgs84LängeGrad"
+			"ddInWgs84LängeSec"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -857,7 +853,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -866,15 +862,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2518,
+						"buffer_size": 2809,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2517,
-								2331
+								675,
+								622
 							]
 						],
 						"settings":
@@ -882,10 +878,10 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1152.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -894,23 +890,24 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17956,
+						"buffer_size": 18539,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16029,
-								16061
+								16852,
+								16852
 							]
 						],
 						"settings":
 						{
+							"history_list_is_closing": true,
 							"syntax": "Packages/CSS/CSS.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18288.0,
+						"translation.y": 18721.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -922,15 +919,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 109043,
+						"buffer_size": 110784,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								77152,
-								77192
+								79385,
+								79385
 							]
 						],
 						"settings":
@@ -941,100 +938,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 48720.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "lists/export_alt_mit_synonymen.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3188,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								264,
-								264
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 49228.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "_attachments/index_dev.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 109399,
+						"buffer_size": 127017,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								62471,
-								62471
+								116762,
+								116790
 							]
 						],
 						"settings":
 						{
-							"history_list_is_closing": true,
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 22080.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8173,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7886,
-								7886
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3744.0,
+						"translation.y": 37248.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1042,7 +979,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 40.0
 	},
 	"input":
 	{
@@ -1110,7 +1047,7 @@
 	{
 	},
 	"show_minimap": false,
-	"show_open_files": false,
+	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 277.0,
