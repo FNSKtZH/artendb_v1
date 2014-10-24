@@ -23,7 +23,6 @@ var returnFunction = function ($, direkt, fürAlt) {
         html_filterkriterien,
         formular = 'export',
         _alt = '',
-        beschäftigungsMeldung = 'Die Daten werden vorbereitet...',
         übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport'),
         uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau');
 
@@ -39,12 +38,12 @@ var returnFunction = function ($, direkt, fürAlt) {
     }
 
     // Beschäftigung melden
-    if (!direkt) {
-        if (fürAlt) beschäftigungsMeldung = 'Die Vorschautabelle wird generiert...';
+    // nicht nötig für ALT, da sehr schnell
+    if (!direkt && !fürAlt) {
         $exportieren_exportieren_hinweis_text
             .alert()
             .show()
-            .html(beschäftigungsMeldung);
+            .html('Die Daten werden vorbereitet...');
         // zum Hinweistext scrollen
         $('html, body').animate({
             scrollTop: $exportieren_exportieren_hinweis_text.offset().top

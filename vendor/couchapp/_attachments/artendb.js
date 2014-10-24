@@ -2366,6 +2366,7 @@ window.adb.exportZurücksetzen = function(_alt) {
     $("#exportieren" + _alt + "_exportieren_error_text")
         .alert()
         .hide();
+    $('#exportieren_alt_exportieren_url').val('');
 };
 
 window.adb.öffneGruppe = function(Gruppe) {
