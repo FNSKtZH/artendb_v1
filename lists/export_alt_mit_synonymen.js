@@ -18,7 +18,7 @@ function(head, req) {
         objekt,
         exportObjekte = [],
         üVar = {
-            fasseTaxonomienZusammen: false,
+            fasseTaxonomienZusammen: true,
             filterkriterien: [],
             felder: [],
             nur_objekte_mit_eigenschaften: false,
@@ -39,7 +39,7 @@ function(head, req) {
     // Wichtige überschreiben:
     üVar.nur_objekte_mit_eigenschaften = false;
     üVar.filterkriterien = [];
-    üVar.fasseTaxonomienZusammen = false;
+    üVar.fasseTaxonomienZusammen = true;
 
 	// arrays für sammlungen aus synonymen gründen
 	beziehungssammlungen_aus_synonymen = [];

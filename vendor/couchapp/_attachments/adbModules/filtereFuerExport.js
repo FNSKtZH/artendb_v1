@@ -148,6 +148,7 @@ var returnFunction = function ($, direkt, fürAlt) {
 
     // html für filterkriterien aufbauen
     html_filterkriterien = "Gewählte Filterkriterien:<ul>";
+    if (fürAlt) html_filterkriterien = "Gewählte Option:<ul>";
     if ($("#exportieren_synonym_infos").prop('checked')) {
         html_filterkriterien += "<li>inklusive Informationen von Synonymen</li>";
     } else {
@@ -166,7 +167,7 @@ var returnFunction = function ($, direkt, fürAlt) {
             html_filterkriterien += "\"</li>";
         });
         html_filterkriterien += "</ul>";
-    } else if (anz_gewählte_felder_aus_dsbs > 0) {
+    } else if (anz_gewählte_felder_aus_dsbs > 0 && !fürAlt) {
         // wenn Filterkriterien erfasst wurde, werden sowieso nur Datensätze angezeigt, in denen Daten vorkommen
         // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
         // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden

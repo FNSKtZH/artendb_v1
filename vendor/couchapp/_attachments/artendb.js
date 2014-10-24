@@ -1940,6 +1940,7 @@ window.adb.öffneUri = function() {
         // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
         if (!$('#export_alt').is(':visible')) {
             zeigeFormular('export_alt');
+            window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
             require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
         }
     }
@@ -2055,16 +2056,20 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
     // URL aus bestehender Verbindung zusammensetzen
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
 
-    // url anzeigen
-    $('#exportieren_alt_exportieren_url').val(url);
+    // url anzeigen und markieren
+    $('#exportieren_alt_exportieren_url')
+        .val(url)
+        .focus()
+        .select();
+
+    // Feld markieren
 
     // Vorschautabelle generieren
-    // TODO: limit number of data
-    $.ajax(url + '&limit=10', {
+    // limit number of data
+    $.ajax(url + '&limit=11', {
         type: 'GET',
         dataType: "json"
     }).done(function (data) {
-        console.log('data: ', data);
         // alle Objekte in data window.adb.exportieren_objekte übergeben
         window.adb.exportieren_objekte = data;
         window.adb.baueTabelleFürExportAuf('_alt');
@@ -2080,7 +2085,7 @@ window.adb.baueTabelleFürExportAuf = function(_alt) {
         _alt = _alt || '';
 
     if (window.adb.exportieren_objekte.length > 0) {
-        erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle");
+        erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle", 'export_alt');
         $(".exportieren" + _alt + "_exportieren_exportieren").show();
     } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
         $("#exportieren" + _alt + "_exportieren_error_text_text")

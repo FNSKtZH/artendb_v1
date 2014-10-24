@@ -2,26 +2,32 @@
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
+// formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
 
 'use strict';
 
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (Datensätze, felder_div, tabellen_div) {
+var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) {
     var html = "",
         Feldname = "",
         html_ds_felder_div = "",
         erste_10_ds,
         $tabellen_div = $("#" + tabellen_div);
 
-    if (Datensätze.length > 10) {
-        html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
-    } else if (Datensätze.length > 1) {
-        html += "Vorschau der " + Datensätze.length + " Datensätze:";
-    } else {
-        html += "Vorschau des einzigen Datensatzes:";
+    if (!formular || formular !== 'export_alt') {
+        if (Datensätze.length > 10) {
+            html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
+        } else if (Datensätze.length > 1) {
+            html += "Vorschau der " + Datensätze.length + " Datensätze:";
+        } else {
+            html += "Vorschau des einzigen Datensatzes:";
+        }
+    } else if (formular && formular === 'export_alt') {
+        html += "Vorschau der ersten 10 Datensätze:";
     }
+        
     // Tabelle initiieren
     html += '<div class="table-responsive"><table class="table table-bordered table-striped table-condensed table-hover">';
     // Titelzeile aufbauen

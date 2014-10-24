@@ -773,7 +773,8 @@ a.show_next_hidden_export {
 	margin-left: -19px !important;
 }
 
-#exportieren_panel div.adb-hidden {
+#exportieren_panel div.adb-hidden,
+#exportieren_alt_exportieren_filterkriterien {
     margin-bottom: 20px;
     margin-top:   -10px;
     color: #8D8C8C;
