@@ -2064,6 +2064,7 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
         type: 'GET',
         dataType: "json"
     }).done(function (data) {
+        console.log('data: ', data);
         // alle Objekte in data window.adb.exportieren_objekte übergeben
         window.adb.exportieren_objekte = data;
         window.adb.baueTabelleFürExportAuf('_alt');

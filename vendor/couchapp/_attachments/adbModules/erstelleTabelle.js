@@ -14,6 +14,7 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div) {
         html_ds_felder_div = "",
         erste_10_ds,
         $tabellen_div = $("#" + tabellen_div);
+
     if (Datensätze.length > 10) {
         html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
     } else if (Datensätze.length > 1) {
@@ -33,8 +34,8 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div) {
             Feldname = "BsFelder";
         }
     }
-    html_ds_felder_div += '<label class="control-label" for="'+Feldname+'">Feld mit eindeutiger ID<br>in den Importdaten</label>';
-    html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="'+Feldname+'" style="height:' + ((Object.keys(Datensätze[0]).length*19)+9)  + 'px">';
+    html_ds_felder_div += '<label class="control-label" for="' + Feldname + '">Feld mit eindeutiger ID<br>in den Importdaten</label>';
+    html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(Datensätze[0]).length * 19) + 9)  + 'px">';
     html += "<thead><tr>";
 
     // durch die Felder des ersten Datensatzes zirkeln

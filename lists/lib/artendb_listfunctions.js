@@ -860,8 +860,11 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
     if (!exportObjekt) exportObjekt = {};
 
     // Felder ergänzen
+    // immer sicherstellen, dass das Feld existiert
+    exportObjekt.ref = '';
     exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
+    exportObjekt.gisLayer = '';
     var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
         return ds.Name === "ZH GIS";
     }) || {};
@@ -870,14 +873,17 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
         exportObjekt.gisLayer = ds_zh_gis.Eigenschaften["GIS-Layer"].substring(0, 50);
     }
 
+    exportObjekt.distance = '';
     if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
         exportObjekt.distance = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
     }
 
+    exportObjekt.nameLat = '';
     if (objekt.Taxonomie.Eigenschaften.Artname) {
         exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);    
     }
     
+    exportObjekt.nameDeu = '';
     if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
         exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
     }
@@ -886,6 +892,7 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
         return ds.Name === "ZH Artwert (1995)";
     }) || {};
 
+    exportObjekt.artwert = '';
     if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
         exportObjekt.artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
     }
