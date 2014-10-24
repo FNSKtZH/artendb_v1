@@ -1063,7 +1063,7 @@ window.adb.handleFeldWählenChange = function() {
             $('#meldung_zuviele_bs').modal();
             $(that).prop('checked', false);
         } else {
-            window.adb.exportZurücksetzen(_alt);
+            window.adb.exportZurücksetzen(null, _alt);
         }
     }
 };
@@ -1073,11 +1073,12 @@ window.adb.handleFeldWählenChange = function() {
 window.adb.handleFeldWählenAlleVonDs = function() {
     'use strict';
     var ds = $(this).attr('datensammlung'),
+        formular = $(this).closest('form').attr('id'),
         status = false;
     if ($(this).prop('checked')) {
         status = true;
     }
-    $('[datensammlung="' + ds + '"]').each(function() {
+    $('#' + formular + ' [datensammlung="' + ds + '"]').each(function() {
         $(this).prop('checked', status);
     });
 };
@@ -1543,7 +1544,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function () {
 
 window.adb.entferneDatensammlung = function() {
     'use strict';
-    require('./adbModules/entferneDatensammlung') ();
+    require('./adbModules/entferneDatensammlung') ($);
 };
 
 window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerungs_faktor) {
@@ -1589,7 +1590,7 @@ window.adb.entferneDatensammlungAusObjekt = function (ds_name, objekt) {
 
 window.adb.entferneBeziehungssammlung = function() {
     'use strict';
-    require('./adbModules/entferneBeziehungssammlung') ();
+    require('./adbModules/entferneBeziehungssammlung') ($);
 };
 
 window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzögerungs_faktor) {
@@ -1891,7 +1892,6 @@ window.adb.öffneUri = function() {
         var $db = $.couch.db("artendb");
         $db.openDoc(id, {
             success: function (objekt) {
-                console.log('öffneUri: objekt: ', objekt);
                 var erstelleBaum = require('./adbModules/erstelleBaum');
                 // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.Gruppe = objekt.Gruppe;
@@ -2008,32 +2008,47 @@ window.adb.filtereFürExport = function (direkt) {
     require('./adbModules/filtereFuerExport') ($, direkt);
 };
 
-window.adb.übergebeFilterFürExportFürAlt = function (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt) {
     'use strict';
     // Alle Felder abfragen
     var queryParam,
         url,
+        list,
+        view,
         uri = new Uri($(location).attr('href'));
 
-    // list-Funktion
     if ($("#exportieren_alt_synonym_infos").prop('checked')) {
+        // list
         queryParam = "export_alt_mit_synonymen";
+        list = 'artendb/export_alt_mit_synonymen';
+        // view
+        queryParam += "/alt_arten_mit_synonymen";
+        view = 'alt_arten_mit_synonymen';
     } else {
+        // list
         queryParam = "export_alt";
+        list = 'artendb/export_alt';
+        // view
+        queryParam += "/alt_arten";
+        view = 'alt_arten';
     }
 
-    // view und docs
-    queryParam += "/alt_arten_mit_synonymen?include_docs=true";
+    // include docs
+    queryParam += "?include_docs=true";
+    view += '?include_docs=true';
 
     // Beziehungen in Zeilen oder in Spalte
     if ($("#export_bez_in_zeilen").prop('checked')) {
         queryParam += "&bez_in_zeilen=true";
+        view += "&bez_in_zeilen=true";
     } else {
         queryParam += "&bez_in_zeilen=false";
+        view += "&bez_in_zeilen=false";
     }
 
     // Felder
     queryParam += "&felder=" + JSON.stringify(gewählte_felder_objekt);
+    view += "&felder=" + JSON.stringify(gewählte_felder_objekt);
 
     // URL aus bestehender Verbindung zusammensetzen
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
@@ -2048,15 +2063,17 @@ window.adb.übergebeFilterFürExportFürAlt = function (gruppen, gruppen_array, 
 
     // Vorschautabelle generieren
     // limit number of data
-    $.ajax(url + '&limit=11', {
-        type: 'GET',
-        dataType: "json"
-    }).done(function (data) {
-        // alle Objekte in data window.adb.exportieren_objekte übergeben
-        window.adb.exportieren_objekte = data;
-        window.adb.baueTabelleFürExportAuf('_alt');
-    }).fail(function () {
-        console.log('error in $db.list');
+    view += '&limit=11';
+    var $db = $.couch.db("artendb");
+    $db.list(list, view, {
+        success: function (data) {
+            // alle Objekte in data window.adb.exportieren_objekte übergeben
+            window.adb.exportieren_objekte = data;
+            window.adb.baueTabelleFürExportAuf('_alt');
+        },
+        error: function () {
+            console.log('übergebeFilterFürExportFürAlt: error in $db.list');
+        }
     });
 };
 
@@ -2336,9 +2353,11 @@ window.adb.sortKeysOfObject = function (o) {
     return sorted;
 };
 
-window.adb.exportZurücksetzen = function (_alt) {
+window.adb.exportZurücksetzen = function (event, _alt) {
     'use strict';
-    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse");
+    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse"),
+        _alt = _alt || '';
+
     // Export ausblenden, falls sie eingeblendet war
     if ($exportieren_exportieren_collapse.css("display") !== "none") {
         $exportieren_exportieren_collapse.collapse('hide');
@@ -2570,7 +2589,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, 
     'use strict';
     var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {
         $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
             type: 'GET',
@@ -2579,7 +2598,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, 
                 include_docs: true
             }
         }).done(function (lr) {
-            aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+            aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
         }).fail(function () {
             console.log('keine Daten erhalten');
         });

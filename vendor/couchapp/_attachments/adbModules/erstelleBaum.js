@@ -36,15 +36,16 @@ var returnFunction = function ($) {
         break;
     }
 
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
-        type: 'GET',
-        dataType: "json"
-    }).done(function (data) {
-        var anzahl_objekte = data.rows[0].value;
-        $("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
-        // eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
-    }).fail(function () {
-        console.log('keine Daten erhalten')
+    var $db = $.couch.db("artendb");
+    $db.view('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
+        success: function (data) {
+            var anzahl_objekte = data.rows[0].value;
+            $("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+            // eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
+        },
+        error: function () {
+            console.log('erstelleBaum: keine Daten erhalten');
+        }
     });
 
     $.when(erstelleTree($)).then(function() {

@@ -184,7 +184,7 @@ var returnFunction = function ($, direkt, fürAlt) {
     if (direkt === "direkt") {
         übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     } if (fürAlt) {
-        window.adb.übergebeFilterFürExportFürAlt(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        window.adb.übergebeFilterFürExportFürAlt(gewählte_felder_objekt);
     } else {
         uebergebeFilterFuerExportMitVorschau ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     }

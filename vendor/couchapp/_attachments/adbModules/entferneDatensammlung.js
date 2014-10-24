@@ -6,7 +6,7 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function () {
+var returnFunction = function ($) {
     var guid_array = [],
         guid_array_2 = [],
         guid,
@@ -41,29 +41,27 @@ var returnFunction = function () {
         }, 2000);
         if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
             // die Indexe aktualisieren
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
-                type: 'GET',
-                dataType: "json"
-            }).done(function () {
-                // melden, dass Indexe aktualisiert wurden
-                $importieren_ds_import_ausfuehren_hinweis
-                    .removeClass("alert-info")
-                    .removeClass("alert-danger")
-                    .addClass("alert-success");
-                rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
-                rückmeldung += "Die Indexe wurden aktualisiert.";
-                if (window.adb.rückmeldung_links) {
-                    rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    rückmeldung += window.adb.rückmeldung_links;
-                    delete window.adb.rückmeldung_links;
+            var $db = $.couch.db("artendb");
+            $db.view('http://localhost:5984/artendb/_design/artendb/_view/lr', {
+                success: function () {
+                    // melden, dass Indexe aktualisiert wurden
+                    $importieren_ds_import_ausfuehren_hinweis
+                        .removeClass("alert-info")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success");
+                    rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
+                    rückmeldung += "Die Indexe wurden aktualisiert.";
+                    if (window.adb.rückmeldung_links) {
+                        rückmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                        rückmeldung += window.adb.rückmeldung_links;
+                        delete window.adb.rückmeldung_links;
+                    }
+                    $importieren_ds_import_ausfuehren_hinweis_text
+                        .html(rückmeldung);
+                    $('html, body').animate({
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
+                    }, 2000);
                 }
-                $importieren_ds_import_ausfuehren_hinweis_text
-                    .html(rückmeldung);
-                $('html, body').animate({
-                    scrollTop: $importieren_ds_import_ausfuehren_hinweis_text.offset().top
-                }, 2000);
-            }).fail(function () {
-                console.log('keine Daten erhalten');
             });
         }
     });

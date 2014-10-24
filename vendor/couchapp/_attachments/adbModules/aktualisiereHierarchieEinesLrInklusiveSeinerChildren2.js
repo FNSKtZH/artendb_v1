@@ -4,7 +4,7 @@ var _ = require('underscore'),
     $ = require('jquery'),
     aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
 
-var returnFunction = function (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+var returnFunction = function ($, lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
         object_array = _.map(lr.rows, function (row) {
@@ -42,24 +42,24 @@ var returnFunction = function (lr, objekt, aktualisiereHierarchiefeld, einheit_i
         objekt.Taxonomie.Eigenschaften.Taxonomie = einheit_ist_taxonomiename;
     }
     // db aktualisieren
-    $.ajax('http://localhost:5984/artendb/' + objekt._id, {
-        type: 'PUT',
-        dataType: "json",
-        data: JSON.stringify(objekt)
-    }).done(function () {
-        var doc;
-        // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-        _.each(lr.rows, function (lr_row) {
-            doc = lr_row.doc;
-            if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
-                // das ist ein child
-                // auch aktualisieren
-                // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 (lr, doc, false, einheit_ist_taxonomiename);
-            }
-        });
-    }).fail(function () {
-        console.log('Datensatz nicht gespeichert');
+    var $db = $.couch.db("artendb");
+    $db.saveDoc(objekt, {
+        success: function() {
+            var doc;
+            // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
+            _.each(lr.rows, function (lr_row) {
+                doc = lr_row.doc;
+                if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
+                    // das ist ein child
+                    // auch aktualisieren
+                    // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
+                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, doc, false, einheit_ist_taxonomiename);
+                }
+            });
+        },
+        error: function() {
+            console.log('Datensatz nicht gespeichert');
+        }
     });
 };
 
