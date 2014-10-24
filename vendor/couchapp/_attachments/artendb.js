@@ -648,58 +648,51 @@ window.adb.handleMenuAdminClick = function() {
 window.adb.ergänzePilzeZhgis = function() {
     'use strict';
     $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
-
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/macromycetes', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            include_docs: true
-        }
-    }).done(function (data) {
-        var ds_zhgis = {},
-            ergänzt = 0,
-            fehler = 0,
-            zhgis_schon_da = 0;
-        ds_zhgis.Name = "ZH GIS";
-        ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
-        ds_zhgis.Datenstand = "dauernd nachgeführt";
-        ds_zhgis.Link = "http://www.naturschutz.zh.ch";
-        ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
-        ds_zhgis.Eigenschaften = {};
-        ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
-        _.each(data.rows, function (row) {
-            var pilz = row.doc,
-                zhgis_in_ds;
-            if (!pilz.Eigenschaftensammlungen) {
-                pilz.Eigenschaftensammlungen = [];
-            }
-            zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function (ds) {
-                return ds.Name === "ZH GIS";
+    var $db = $.couch.db("artendb");
+    $db.view('artendb/macromycetes?include_docs=true', {
+        success: function(data) {
+            var ds_zhgis = {},
+                ergänzt = 0,
+                fehler = 0,
+                zhgis_schon_da = 0;
+            ds_zhgis.Name = "ZH GIS";
+            ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
+            ds_zhgis.Datenstand = "dauernd nachgeführt";
+            ds_zhgis.Link = "http://www.naturschutz.zh.ch";
+            ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
+            ds_zhgis.Eigenschaften = {};
+            ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
+            _.each(data.rows, function(row) {
+                var pilz = row.doc,
+                    zhgis_in_ds;
+                if (!pilz.Eigenschaftensammlungen) {
+                    pilz.Eigenschaftensammlungen = [];
+                }
+                zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function(ds) {
+                    return ds.Name === "ZH GIS";
+                });
+                // nur ergänzen, wenn ZH GIS noch nicht existiert
+                if (!zhgis_in_ds) {
+                    pilz.Eigenschaftensammlungen.push(ds_zhgis);
+                    pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function(ds) {
+                        return ds.Name;
+                    });
+                    $db.saveDoc(pilz, {
+                        success: function() {
+                            ergänzt ++;
+                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                        },
+                        error: function() {
+                            fehler ++;
+                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                        }
+                    });
+                } else {
+                    zhgis_schon_da ++;
+                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                }
             });
-            // nur ergänzen, wenn ZH GIS noch nicht existiert
-            if (!zhgis_in_ds) {
-                pilz.Eigenschaftensammlungen.push(ds_zhgis);
-                pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function (ds) {
-                    return ds.Name;
-                });
-                $.ajax('http://localhost:5984/artendb/' + pilz._id, {
-                    type: 'PUT',
-                    dataType: "json",
-                    data: JSON.stringify(pilz)
-                }).done(function () {
-                    ergänzt ++;
-                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-                }).fail(function () {
-                    fehler ++;
-                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-                });
-            } else {
-                zhgis_schon_da ++;
-                $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-            }
-        });
-    }).fail(function () {
-        console.log('keine Daten erhalten');
+        }
     });
 };
 
@@ -1168,7 +1161,6 @@ window.adb.handleLrParentOptionenChange = function() {
     handleLrParentOptionenChange($, this);
 };
 
-// wenn rueckfrage_lr_loeschen_ja geklickt wird
 window.adb.handleRückfrageLrLöschenJaClick = function() {
     'use strict';
     // zuerst die id des Objekts holen
@@ -1182,32 +1174,29 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
         id = uri2.getQueryParamValue('id');
     }
     // Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/hierarchie', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            key: id,
-            include_docs: true
+    var $db = $.couch.db("artendb");
+    $db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
+        success: function(data) {
+            // daraus einen Array von docs machen
+            var doc_array = _.map(data.rows, function(row) {
+                return row.doc;
+            });
+            // und diese Dokumente nun löschen
+            window.adb.löscheMassenMitObjektArray(doc_array);
+            // vorigen node ermitteln
+            var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
+            // node des gelöschten LR entfernen
+            $.jstree._reference("#" + id).delete_node("#" + id);
+            // vorigen node öffnen
+            if (voriger_node) {
+                $.jstree._reference(voriger_node).select_node(voriger_node);
+            } else {
+                window.adb.öffneGruppe("Lebensräume");
+            }
+        },
+        error: function () {
+            console.log('handleRückfrageLrLöschenJaClick: keine Daten erhalten');
         }
-    }).done(function (data) {
-        // daraus einen Array von docs machen
-        var doc_array = _.map(data.rows, function (row) {
-            return row.doc;
-        });
-        // und diese Dokumente nun löschen
-        window.adb.löscheMassenMitObjektArray(doc_array);
-        // vorigen node ermitteln
-        var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
-        // node des gelöschten LR entfernen
-        $.jstree._reference("#" + id).delete_node("#" + id);
-        // vorigen node öffnen
-        if (voriger_node) {
-            $.jstree._reference(voriger_node).select_node(voriger_node);
-        } else {
-            window.adb.öffneGruppe("Lebensräume");
-        }
-    }).fail(function () {
-        console.log('keine Daten erhalten');
     });
 };
 
