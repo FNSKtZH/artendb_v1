@@ -2097,7 +2097,7 @@ window.adb.baueTabelleFürExportAuf = function(_alt) {
     if (!_alt) {
         // zur Tabelle scrollen
         $('html, body').animate({
-            scrollTop: $("#exportieren" + _alt + "_exportieren_exportieren").offset().top
+            scrollTop: $("#exportieren_exportieren_exportieren").offset().top
         }, 2000);
     }
     // Beschäftigungsmeldung verstecken

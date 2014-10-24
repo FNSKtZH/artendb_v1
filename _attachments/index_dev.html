@@ -1460,6 +1460,10 @@
                     .on('shown.bs.collapse', '#exportieren_alt_exportieren_collapse', function () {
                         // mitteilen, dass für alt exportiert wird
                         window.adb.handleExportierenExportierenCollapseShown(this);
+                    })
+                    // verhindern, dass bootstrap ganz nach oben scrollt
+                    .on("click", ".panel-heading a", function(event) {
+                        event.preventDefault();
                     });
 
                 $("#exportieren_exportieren").on("show", window.adb.handleExportierenExportierenShow);

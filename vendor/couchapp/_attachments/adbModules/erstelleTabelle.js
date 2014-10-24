@@ -102,9 +102,16 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
         // sichtbar stellen
         .show();
     // fenster scrollen
-    $('html, body').animate({
-        scrollTop: $tabellen_div.offset().top
-    }, 2000);
+    if (!formular) {
+        $('html, body').animate({
+            scrollTop: $tabellen_div.offset().top
+        }, 2000);
+    } else if (formular && formular === 'export_alt') {
+        console.log('scrolle');
+        $('html, body').animate({
+            scrollTop: $('#exportieren_alt_exportieren').offset().top
+        }, 2000);
+    }
 };
 
 module.exports = returnFunction;
