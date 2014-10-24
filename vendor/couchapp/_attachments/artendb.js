@@ -2055,7 +2055,8 @@ window.adb.übergebeFilterFürExportFürAlt = function(gruppen, gruppen_array, a
     // URL aus bestehender Verbindung zusammensetzen
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
 
-    window.open('_list/' + queryParam);
+    // url anzeigen
+    $('#exportieren_alt_exportieren_url').val(url);
 };
 
 window.adb.baueTabelleFürExportAuf = function(_alt) {

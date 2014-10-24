@@ -851,13 +851,12 @@
 								<div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
 									<ul class="adb-hidden">
 										<li>Der Server filtert und baut die Exportdaten auf</li>
-										<li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
+										<li><strong>...das dauert eine ganze Weile. Geduld bringt URL!</strong></li>
 										<li>Danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
 										<li>...und es erscheinen Schaltflächen für den Download</li>
 									</ul>
 								</div>
-								<button id="exportieren_alt_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
-								<button id="exportieren_alt_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
+								<textarea class="form-control" id="exportieren_alt_exportieren_url"></textarea>
                                 <div id="exportieren_alt_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
 								<div id="exportieren_alt_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
 								<div id="exportieren_alt_exportieren_hinweis_text" class="alert alert-info"></div>

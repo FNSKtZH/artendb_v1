@@ -38,11 +38,11 @@ var returnFunction = function ($, direkt, fürAlt) {
     }
 
     // Beschäftigung melden
-    if (!direkt) {
+    if (!direkt && !fürAlt) {
         $exportieren_exportieren_hinweis_text
             .alert()
             .show()
-            .html("Die Daten werden vorbereitet...");
+            .html('Die Daten werden vorbereitet...');
         // zum Hinweistext scrollen
         $('html, body').animate({
             scrollTop: $exportieren_exportieren_hinweis_text.offset().top
