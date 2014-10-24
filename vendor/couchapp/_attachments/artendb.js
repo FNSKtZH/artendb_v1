@@ -699,57 +699,54 @@ window.adb.ergänzePilzeZhgis = function() {
 window.adb.korrigiereArtwertnameInFlora = function() {
     'use strict';
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/flora', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            include_docs: true
-        }
-    }).done(function (data) {
-        var korrigiert = 0,
-            fehler = 0,
-            save;
-        _.each(data.rows, function (row) {
-            var art = row.doc,
-                ds_artwert,
-                daten = {};
-            if (art.Eigenschaftensammlungen) {
-                ds_artwert = _.find(art.Eigenschaftensammlungen, function (ds) {
-                   return ds.Name === "ZH Artwert (1995)";
-                });
-                //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
-                if (ds_artwert && ds_artwert.Eigenschaften) {
-                    save = false;
-                    // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
-                    _.each(ds_artwert.Eigenschaften, function (value, key) {
-                        if (key === "Artwert KT ZH") {
-                            key = "Artwert";
-                            save = true;
-                        }
-                        daten[key] = value;
+    var $db = $.couch.db("artendb");
+    $db.view('artendb/flora?include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    ds_artwert,
+                    daten = {};
+                if (art.Eigenschaftensammlungen) {
+                    ds_artwert = _.find(art.Eigenschaftensammlungen, function(ds) {
+                       return ds.Name === "ZH Artwert (1995)";
                     });
-                    if (save) {
-                        ds_artwert.Eigenschaften = daten;
-                        $.ajax('http://localhost:5984/artendb/' + art._id, {
-                            type: 'PUT',
-                            dataType: "json",
-                            data: JSON.stringify(art)
-                        }).done(function () {
-                            korrigiert ++;
-                            $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
-                        }).fail(function () {
-                            fehler ++;
-                            $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                    //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
+                    if (ds_artwert && ds_artwert.Eigenschaften) {
+                        save = false;
+                        // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
+                        _.each(ds_artwert.Eigenschaften, function(value, key) {
+                            if (key === "Artwert KT ZH") {
+                                key = "Artwert";
+                                save = true;
+                            }
+                            daten[key] = value;
                         });
+                        if (save) {
+                            ds_artwert.Eigenschaften = daten;
+                            $db.saveDoc(art, {
+                                success: function() {
+                                    korrigiert ++;
+                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                },
+                                error: function() {
+                                    fehler ++;
+                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                }
+                            });
+                        }
                     }
                 }
+            });
+            if (korrigiert === 0) {
+                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
             }
-        });
-        if (korrigiert === 0) {
-            $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
+        },
+        error: function () {
+            console.log('korrigiereArtwertnameInFlora: keine Daten erhalten');
         }
-    }).fail(function () {
-        console.log('keine Daten erhalten');
     });
 };
 
@@ -757,45 +754,41 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
     'use strict';
     var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
     $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
-
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/flora', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            include_docs: true
-        }
-    }).done(function (data) {
-        var korrigiert = 0,
-            fehler = 0,
-            save;
-        _.each(data.rows, function (row) {
-            var art = row.doc,
-                ds;
-            if (art.Eigenschaftensammlungen) {
-                ds = _.find(art.Eigenschaftensammlungen, function (ds) {
-                    return ds.Name === "CH Rote Liste (1991)";
-                });
-                if (ds) {
-                    ds.Name = "CH Rote Listen Flora (1991)";
-                    $.ajax('http://localhost:5984/artendb/' + art._id, {
-                        type: 'PUT',
-                        dataType: "json",
-                        data: JSON.stringify(art)
-                    }).done(function () {
-                        korrigiert ++;
-                        $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                    }).fail(function () {
-                        fehler ++;
-                        $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+    var $db = $.couch.db("artendb");
+    $db.view('artendb/flora?include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    ds;
+                if (art.Eigenschaftensammlungen) {
+                    ds = _.find(art.Eigenschaftensammlungen, function(ds) {
+                        return ds.Name === "CH Rote Liste (1991)";
                     });
+                    if (ds) {
+                        ds.Name = "CH Rote Listen Flora (1991)";
+                        $db.saveDoc(art, {
+                            success: function() {
+                                korrigiert ++;
+                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            },
+                            error: function() {
+                                fehler ++;
+                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            }
+                        });
+                    }
                 }
+            });
+            if (korrigiert === 0) {
+                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
             }
-        });
-        if (korrigiert === 0) {
-            $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
+        },
+        error: function () {
+            console.log('korrigiereDsNameFloraChRoteListe1991: keine Daten erhalten');
         }
-    }).fail(function () {
-        console.log('keine Daten erhalten');
     });
 };
 
@@ -807,78 +800,75 @@ window.adb.nenneDsUm = function() {
 
 window.adb.baueDsZuEigenschaftenUm = function() {
     'use strict';
-    var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung");
+    var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
+        $db = $.couch.db("artendb");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/umbenennen_loeschen', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            include_docs: true
-        }
-    }).done(function (data) {
-        var korrigiert = 0,
-            fehler = 0,
-            save;
-        if (data.rows.length === 0) {
-            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Keine Daten erhalten");
-            return;
-        }
-        _.each(data.rows, function (row) {
-            var art = row.doc,
-                datensammlungen,
-                beziehungssammlungen,
-                ds_daten,
-                tax_daten,
-                save = false;
-            // Datensammlungen umbenennen
-            // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
-            // damit die Reihenfolge bewahrt bleibt
-            if (art.Taxonomie && art.Taxonomie.Daten) {
-                tax_daten = art.Taxonomie.Daten;
-                delete art.Taxonomie.Daten;
-                art.Taxonomie.Eigenschaften = tax_daten;
-                save = true;
+    $db.view('artendb/all_docs?include_docs=true', {
+        success: function(data) {
+            var korrigiert = 0,
+                fehler = 0,
+                save;
+            if (data.rows.length === 0) {
+                $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Keine Daten erhalten");
+                return;
             }
-            if (art.Datensammlungen) {
-                datensammlungen = art.Datensammlungen;
-                _.each(datensammlungen, function (ds) {
-                    if (ds.Daten) {
-                        ds_daten = ds.Daten;
-                        delete ds.Daten;
-                        ds.Eigenschaften = ds_daten;
-                    }
-                });
-                delete art.Datensammlungen;
-                if (art.Beziehungssammlungen) {
-                    beziehungssammlungen = art.Beziehungssammlungen;
-                    delete art.Beziehungssammlungen;
-                } else {
-                    beziehungssammlungen = {};
+            _.each(data.rows, function(row) {
+                var art = row.doc,
+                    datensammlungen,
+                    beziehungssammlungen,
+                    ds_daten,
+                    tax_daten,
+                    save = false;
+                // Datensammlungen umbenennen
+                // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
+                // damit die Reihenfolge bewahrt bleibt
+                if (art.Taxonomie && art.Taxonomie.Daten) {
+                    tax_daten = art.Taxonomie.Daten;
+                    delete art.Taxonomie.Daten;
+                    art.Taxonomie.Eigenschaften = tax_daten;
+                    save = true;
                 }
-                art.Eigenschaftensammlungen = datensammlungen;
-                art.Beziehungssammlungen = beziehungssammlungen;
-                save = true;
-            }
-            if (save) {
-                $.ajax('http://localhost:5984/artendb/' + art._id, {
-                    type: 'PUT',
-                    dataType: "json",
-                    data: JSON.stringify(art)
-                }).done(function () {
-                    korrigiert ++;
-                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                }).fail(function () {
-                    fehler ++;
-                    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                });
-            }
+                if (art.Datensammlungen) {
+                    datensammlungen = art.Datensammlungen;
+                    _.each(datensammlungen, function(ds) {
+                        if (ds.Daten) {
+                            ds_daten = ds.Daten;
+                            delete ds.Daten;
+                            ds.Eigenschaften = ds_daten;
+                        }
+                    });
+                    delete art.Datensammlungen;
+                    if (art.Beziehungssammlungen) {
+                        beziehungssammlungen = art.Beziehungssammlungen;
+                        delete art.Beziehungssammlungen;
+                    } else {
+                        beziehungssammlungen = {};
+                    }
+                    art.Eigenschaftensammlungen = datensammlungen;
+                    art.Beziehungssammlungen = beziehungssammlungen;
+                    save = true;
+                }
+                if (save) {
+                    $db.saveDoc(art, {
+                        success: function() {
+                            korrigiert ++;
+                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        },
+                        error: function() {
+                            fehler ++;
+                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        }
+                    });
+                }
 
-        });
-        if (korrigiert === 0) {
-            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+            });
+            if (korrigiert === 0) {
+                $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+            }
+        },
+        error: function () {
+            console.log('baueDsZuEigenschaftenUm: keine Daten erhalten');
         }
-    }).fail(function () {
-        console.log('keine Daten erhalten');
     });
 };
 
@@ -1495,19 +1485,19 @@ window.adb.queryChanges = function (options) {
     });
 };
 
-window.adb.importiereBeziehungssammlung = function() {
+window.adb.importiereBeziehungssammlung = function () {
     'use strict';
     require('./adbModules/importiereBeziehungssammlung') ($);
 };
 
-window.adb.bereiteBeziehungspartnerFürImportVor = function() {
+window.adb.bereiteBeziehungspartnerFürImportVor = function () {
     'use strict';
     var alle_bez_partner_array = [],
         bez_partner_array,
         beziehungspartner_vorbereitet = $.Deferred();
     window.adb.bezPartner_objekt = {};
 
-    _.each(window.adb.bsDatensätze, function (bs_datensatz) {
+    _.each(window.adb.bsDatensätze, function(bs_datensatz) {
         if (bs_datensatz.Beziehungspartner) {
             // bs_datensatz.Beziehungspartner ist eine kommagetrennte Liste von guids
             // diese Liste in Array verwandeln
@@ -1518,38 +1508,34 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function() {
             alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
         }
     });
-    
     // jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
     // danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
-    $.ajax('http://localhost:5984/artendb/_design/artendb/_view/all_docs', {
-        type: 'GET',
-        dataType: "json",
-        data: {
-            keys: JSON.stringify(alle_bez_partner_array),
-            include_docs: true
-        }
-    }).done(function (data) {
-        var objekt,
-            bez_partner;
-        _.each(data.rows, function (data_row) {
-            objekt = data_row.doc;
-            bez_partner = {};
-            bez_partner.Gruppe = objekt.Gruppe;
-            if (objekt.Gruppe === "Lebensräume") {
-                bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
-                if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
-                    bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
+    var $db = $.couch.db("artendb");
+    $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
+        success: function(data) {
+            var objekt,
+                bez_partner;
+            _.each(data.rows, function(data_row) {
+                objekt = data_row.doc;
+                bez_partner = {};
+                bez_partner.Gruppe = objekt.Gruppe;
+                if (objekt.Gruppe === "Lebensräume") {
+                    bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
+                    if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
+                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
+                    } else {
+                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
+                    }
                 } else {
-                    bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
+                    bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
                 }
-            } else {
-                bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
-            }
-            bez_partner.GUID = objekt._id;
-            window.adb.bezPartner_objekt[objekt._id] = bez_partner;
-        });
-    }).fail(function () {
-        console.log('keine Daten erhalten');
+                bez_partner.GUID = objekt._id;
+                window.adb.bezPartner_objekt[objekt._id] = bez_partner;
+            });
+        },
+        error: function () {
+            console.log('bereiteBeziehungspartnerFürImportVor: keine Daten erhalten');
+        }
     });
     beziehungspartner_vorbereitet.resolve();
     return beziehungspartner_vorbereitet.promise();
