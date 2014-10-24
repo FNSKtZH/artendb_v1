@@ -2,7 +2,7 @@ function() {
   var elem = $(this);
   $$(this).userCtx = null;
   $.couch.session({
-    success : function(r) {
+    success : function (r) {
       var userCtx = r.userCtx;
       if (userCtx.name) {
         elem.trigger("loggedIn", [r]);

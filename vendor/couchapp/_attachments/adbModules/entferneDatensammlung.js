@@ -68,7 +68,7 @@ var returnFunction = function () {
         }
     });
 
-    _.each(window.adb.dsDatensätze, function(datensatz) {
+    _.each(window.adb.dsDatensätze, function (datensatz) {
         // zuerst die id in guid übersetzen
         if (window.adb.DsId === "guid") {
             // die in der Tabelle mitgelieferte id ist die guid
@@ -76,7 +76,7 @@ var returnFunction = function () {
         } else {
             // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
             // und die guid auslesen
-            guid = _.find(window.adb.ZuordbareDatensätze, function(datensatz) {
+            guid = _.find(window.adb.ZuordbareDatensätze, function (datensatz) {
                 return datensatz.Id == datensatz[window.adb.DsFelderId];
             }).Guid;
         }

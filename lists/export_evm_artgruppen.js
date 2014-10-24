@@ -1,5 +1,5 @@
 'use strict';
-function(head, req) {
+function (head, req) {
 
 	start({
 		"headers": {
@@ -36,7 +36,7 @@ function(head, req) {
 		// jetzt noch die Artgruppe unbekannt anfügen
 		export_json.docs.push(unbekannt);
 		// sortieren, damit unbekannt ans richtige Ort kommt
-		export_json.docs = _.sortBy(export_json.docs, function(ag) {
+		export_json.docs = _.sortBy(export_json.docs, function (ag) {
 			return ag.ArtGruppe;
 		});
 		// Daten schicken

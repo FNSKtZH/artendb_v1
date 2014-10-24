@@ -35,9 +35,9 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
     beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
 
     // jetzt für alle Beziehungen die Felder hinzufügen
-    _.each(beziehungssammlung.Beziehungen, function(beziehung, index) {
+    _.each(beziehungssammlung.Beziehungen, function (beziehung, index) {
         if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
-            _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
+            _.each(beziehung.Beziehungspartner, function (beziehungspartner) {
                 if (beziehungspartner.Taxonomie) {
                     name = beziehungspartner.Gruppe + ": " + beziehungspartner.Taxonomie + " > " + beziehungspartner.Name;
                 } else {
@@ -53,7 +53,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
             });
         }
         // Die Felder anzeigen
-        _.each(beziehung, function(feldwert, feldname) {
+        _.each(beziehung, function (feldwert, feldname) {
             if (feldname !== "Beziehungspartner") {
                 html += erstelleHtmlFuerFeld(feldname, feldwert, "Beziehungssammlung", beziehungssammlung.Name.replace(/"/g, "'"));
             }

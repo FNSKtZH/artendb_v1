@@ -5,7 +5,7 @@ var _ = require('underscore');
 // muss $ übernehmen wegen $.typeahead
 var returnFunction = function ($, such_objekte) {
 
-    such_objekte = _.map(such_objekte.rows, function(objekt) {
+    such_objekte = _.map(such_objekte.rows, function (objekt) {
         return objekt.value;
     });
 
@@ -15,7 +15,7 @@ var returnFunction = function ($, such_objekte) {
         local: such_objekte,
         limit: 20
     })
-    .on('typeahead:selected', function(e, datum) {
+    .on('typeahead:selected', function (e, datum) {
         var oeffneBaumZuId = require('./oeffneBaumZuId');
         oeffneBaumZuId ($, datum.id);
     });

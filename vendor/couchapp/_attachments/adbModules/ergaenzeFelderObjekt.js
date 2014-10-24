@@ -15,7 +15,7 @@ var returnFunction = function (felder_objekt, felder_array) {
         feldname,
         feldtyp;
 
-    _.each(felder_array, function(feld_objekt) {
+    _.each(felder_array, function (feld_objekt) {
         if (feld_objekt.key) {
             // Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
             ds_typ = feld_objekt.key[0];

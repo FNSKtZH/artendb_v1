@@ -26,7 +26,7 @@
 
   $.extend($.couch, {
     urlPrefix: '',
-    activeTasks: function(options) {
+    activeTasks: function (options) {
       ajax(
         {url: this.urlPrefix + "/_active_tasks"},
         options,
@@ -34,7 +34,7 @@
       );
     },
 
-    allDbs: function(options) {
+    allDbs: function (options) {
       ajax(
         {url: this.urlPrefix + "/_all_dbs"},
         options,
@@ -42,7 +42,7 @@
       );
     },
 
-    config: function(options, section, option, value) {
+    config: function (options, section, option, value) {
       var req = {url: this.urlPrefix + "/_config/"};
       if (section) {
         req.url += encodeURIComponent(section) + "/";
@@ -64,14 +64,14 @@
       );
     },
     
-    session: function(options) {
+    session: function (options) {
       options = options || {};
       $.ajax({
         type: "GET", url: this.urlPrefix + "/_session",
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader('Accept', 'application/json');
         },
-        complete: function(req) {
+        complete: function (req) {
           var resp = httpData(req, "json");
           if (req.status == 200) {
             if (options.success) options.success(resp);
@@ -84,25 +84,25 @@
       });
     },
 
-    userDb : function(callback) {
+    userDb : function (callback) {
       $.couch.session({
-        success : function(resp) {
+        success : function (resp) {
           var userDb = $.couch.db(resp.info.authentication_db);
           callback(userDb);
         }
       });
     },
 
-    signup: function(user_doc, password, options) {      
+    signup: function (user_doc, password, options) {      
       options = options || {};
       // prepare user doc based on name and password
       user_doc = this.prepareUserDoc(user_doc, password);
-      $.couch.userDb(function(db) {
+      $.couch.userDb(function (db) {
         db.saveDoc(user_doc, options);
       });
     },
 
-    prepareUserDoc: function(user_doc, new_password) {
+    prepareUserDoc: function (user_doc, new_password) {
       if (typeof hex_sha1 == "undefined") {
         alert("creating a user doc requires sha1.js to be loaded in the page");
         return;
@@ -121,15 +121,15 @@
       return user_doc;
     },
 
-    login: function(options) {
+    login: function (options) {
       options = options || {};
       $.ajax({
         type: "POST", url: this.urlPrefix + "/_session", dataType: "json",
         data: {name: options.name, password: options.password},
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader('Accept', 'application/json');
         },
-        complete: function(req) {
+        complete: function (req) {
           var resp = httpData(req, "json");
           if (req.status == 200) {
             if (options.success) options.success(resp);
@@ -141,15 +141,15 @@
         }
       });
     },
-    logout: function(options) {
+    logout: function (options) {
       options = options || {};
       $.ajax({
         type: "DELETE", url: this.urlPrefix + "/_session", dataType: "json",
         username : "_", password : "_",
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader('Accept', 'application/json');
         },
-        complete: function(req) {
+        complete: function (req) {
           var resp = httpData(req, "json");
           if (req.status == 200) {
             if (options.success) options.success(resp);
@@ -162,7 +162,7 @@
       });
     },
 
-    db: function(name, db_opts) {
+    db: function (name, db_opts) {
       db_opts = db_opts || {};
       var rawDocs = {};
       function maybeApplyVersion(doc) {
@@ -185,7 +185,7 @@
         name: name,
         uri: this.urlPrefix + "/" + encodeURIComponent(name) + "/",
 
-        compact: function(options) {
+        compact: function (options) {
           $.extend(options, {successStatus: 202});
           ajax({
               type: "POST", url: this.uri + "_compact",
@@ -195,7 +195,7 @@
             "The database could not be compacted"
           );
         },
-        viewCleanup: function(options) {
+        viewCleanup: function (options) {
           $.extend(options, {successStatus: 202});
           ajax({
               type: "POST", url: this.uri + "_view_cleanup",
@@ -205,7 +205,7 @@
             "The views could not be cleaned up"
           );
         },
-        compactView: function(groupname, options) {
+        compactView: function (groupname, options) {
           $.extend(options, {successStatus: 202});
           ajax({
               type: "POST", url: this.uri + "_compact/" + groupname,
@@ -215,7 +215,7 @@
             "The view could not be compacted"
           );
         },
-        create: function(options) {
+        create: function (options) {
           $.extend(options, {successStatus: 201});
           ajax({
               type: "PUT", url: this.uri, contentType: "application/json",
@@ -225,27 +225,27 @@
             "The database could not be created"
           );
         },
-        drop: function(options) {
+        drop: function (options) {
           ajax(
             {type: "DELETE", url: this.uri},
             options,
             "The database could not be deleted"
           );
         },
-        info: function(options) {
+        info: function (options) {
           ajax(
             {url: this.uri},
             options,
             "Database information could not be retrieved"
           );
         },
-        changes: function(since, options) {
+        changes: function (since, options) {
           options = options || {};
           // set up the promise object within a closure for this handler
           var timeout = 100, db = this, active = true,
             listeners = [],
             promise = {
-            onChange : function(fun) {
+            onChange : function (fun) {
               listeners.push(fun);
             },
             stop : function() {
@@ -259,7 +259,7 @@
             });
           };
           // when there is a change, call any listeners, then check for another change
-          options.success = function(resp) {
+          options.success = function (resp) {
             timeout = 100;
             if (active) {
               since = resp.last_seq;
@@ -290,7 +290,7 @@
             getChangesSince();
           } else {
             db.info({
-              success : function(info) {
+              success : function (info) {
                 since = info.update_seq;
                 getChangesSince();
               }
@@ -298,7 +298,7 @@
           }
           return promise;
         },
-        allDocs: function(options) {
+        allDocs: function (options) {
           var type = "GET";
           var data = null;
           if (options["keys"]) {
@@ -316,18 +316,18 @@
             "An error occurred retrieving a list of all documents"
           );
         },
-        allDesignDocs: function(options) {
+        allDesignDocs: function (options) {
           this.allDocs($.extend({startkey:"_design", endkey:"_design0"}, options));
         },
-        allApps: function(options) {
+        allApps: function (options) {
           options = options || {};
           var self = this;
           if (options.eachApp) {
             this.allDesignDocs({
-              success: function(resp) {
+              success: function (resp) {
                 $.each(resp.rows, function() {
                   self.openDoc(this.id, {
-                    success: function(ddoc) {
+                    success: function (ddoc) {
                       var index, appPath, appName = ddoc._id.split('/');
                       appName.shift();
                       appName = appName.join('/');
@@ -347,11 +347,11 @@
             alert("Please provide an eachApp function for allApps()");
           }
         },
-        openDoc: function(docId, options, ajaxOptions) {
+        openDoc: function (docId, options, ajaxOptions) {
           options = options || {};
           if (db_opts.attachPrevRev || options.attachPrevRev) {
             $.extend(options, {
-              beforeSuccess : function(req, doc) {
+              beforeSuccess : function (req, doc) {
                 rawDocs[doc._id] = {
                   rev : doc._rev,
                   raw : req.responseText
@@ -360,7 +360,7 @@
             });
           } else {
             $.extend(options, {
-              beforeSuccess : function(req, doc) {
+              beforeSuccess : function (req, doc) {
                 if (doc["jquery.couch.attachPrevRev"]) {
                   rawDocs[doc._id] = {
                     rev : doc._rev,
@@ -376,7 +376,7 @@
             ajaxOptions
           );
         },
-        saveDoc: function(doc, options) {
+        saveDoc: function (doc, options) {
           options = options || {};
           var db = this;
           var beforeSend = fullCommit(options);
@@ -393,7 +393,7 @@
             contentType: "application/json",
             dataType: "json", data: toJSON(doc),
             beforeSend : beforeSend,
-            complete: function(req) {
+            complete: function (req) {
               var resp = httpData(req, "json");
               if (req.status == 200 || req.status == 201 || req.status == 202) {
                 doc._id = resp.id;
@@ -401,7 +401,7 @@
                 if (versioned) {
                   db.openDoc(doc._id, {
                     attachPrevRev : true,
-                    success : function(d) {
+                    success : function (d) {
                       doc._attachments = d._attachments;
                       if (options.success) options.success(resp);
                     }
@@ -417,7 +417,7 @@
             }
           });
         },
-        bulkSave: function(docs, options) {
+        bulkSave: function (docs, options) {
           var beforeSend = fullCommit(options);
           $.extend(options, {successStatus: 201, beforeSend : beforeSend});
           ajax({
@@ -429,7 +429,7 @@
             "The documents could not be saved"
           );
         },
-        removeDoc: function(doc, options) {
+        removeDoc: function (doc, options) {
           ajax({
               type: "DELETE",
               url: this.uri +
@@ -440,9 +440,9 @@
             "The document could not be deleted"
           );
         },
-        bulkRemove: function(docs, options){
+        bulkRemove: function (docs, options){
           docs.docs = $.each(
-            docs.docs, function(i, doc){
+            docs.docs, function (i, doc){
               doc._deleted = true;
             }
           );
@@ -456,9 +456,9 @@
             "The documents could not be deleted"
           );
         },
-        copyDoc: function(docId, options, ajaxOptions) {
+        copyDoc: function (docId, options, ajaxOptions) {
           ajaxOptions = $.extend(ajaxOptions, {
-            complete: function(req) {
+            complete: function (req) {
               var resp = httpData(req, "json");
               if (req.status == 201) {
                 if (options.success) options.success(resp);
@@ -478,7 +478,7 @@
             ajaxOptions
           );
         },
-        query: function(mapFun, reduceFun, language, options) {
+        query: function (mapFun, reduceFun, language, options) {
           language = language || "javascript";
           if (typeof(mapFun) !== "string") {
             mapFun = mapFun.toSource ? mapFun.toSource() : "(" + mapFun.toString() + ")";
@@ -498,7 +498,7 @@
             "An error occurred querying the database"
           );
         },
-        list: function(list, view, options) {
+        list: function (list, view, options) {
           var list = list.split('/');
           var options = options || {};
           var type = 'GET';
@@ -518,7 +518,7 @@
               options, 'An error occured accessing the list'
           );
         },
-        view: function(name, options) {
+        view: function (name, options) {
           var name = name.split('/');
           var options = options || {};
           var type = "GET";
@@ -539,7 +539,7 @@
             options, "An error occurred accessing the view"
           );
         },
-        getDbProperty: function(propName, options, ajaxOptions) {
+        getDbProperty: function (propName, options, ajaxOptions) {
           ajax({url: this.uri + propName + encodeOptions(options)},
             options,
             "The property could not be retrieved",
@@ -547,7 +547,7 @@
           );
         },
 
-        setDbProperty: function(propName, propValue, options, ajaxOptions) {
+        setDbProperty: function (propName, propValue, options, ajaxOptions) {
           ajax({
             type: "PUT", 
             url: this.uri + propName + encodeOptions(options),
@@ -563,7 +563,7 @@
 
     encodeDocId: encodeDocId, 
 
-    info: function(options) {
+    info: function (options) {
       ajax(
         {url: this.urlPrefix + "/"},
         options,
@@ -571,7 +571,7 @@
       );
     },
 
-    replicate: function(source, target, ajaxOptions, repOpts) {
+    replicate: function (source, target, ajaxOptions, repOpts) {
       repOpts = $.extend({source: source, target: target}, repOpts);
       if (repOpts.continuous && !repOpts.cancel) {
         ajaxOptions.successStatus = 202;
@@ -586,13 +586,13 @@
       );
     },
 
-    newUUID: function(cacheNum) {
+    newUUID: function (cacheNum) {
       if (cacheNum === undefined) {
         cacheNum = 1;
       }
       if (!uuidCache.length) {
         ajax({url: this.urlPrefix + "/_uuids", data: {count: cacheNum}, async: false}, {
-            success: function(resp) {
+            success: function (resp) {
               uuidCache = resp.uuids;
             }
           },
@@ -638,14 +638,14 @@
       // aus msie false gemacht, damit mit modernen jquery kompatibel
       type: "GET", dataType: "json", cache : false,
       //type: "GET", dataType: "json", cache : !$.browser.msie,
-      beforeSend: function(xhr){
+      beforeSend: function (xhr){
         if(ajaxOptions && ajaxOptions.headers){
           for (var header in ajaxOptions.headers){
             xhr.setRequestHeader(header, ajaxOptions.headers[header]);
           }
         }
       },
-      complete: function(req) {
+      complete: function (req) {
         try {
           var resp = httpData(req, "json");
         } catch(e) {
@@ -676,7 +676,7 @@
     if (typeof options.ensure_full_commit !== "undefined") {
       var commit = options.ensure_full_commit;
       delete options.ensure_full_commit;
-      return function(xhr) {
+      return function (xhr) {
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.setRequestHeader("X-Couch-Full-Commit", commit.toString());
       };

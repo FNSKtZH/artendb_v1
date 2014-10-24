@@ -1,3 +1,3 @@
-function(e, p) {
+function (e, p) {
   return p
 }

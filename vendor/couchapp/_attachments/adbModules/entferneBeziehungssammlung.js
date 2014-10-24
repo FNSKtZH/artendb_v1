@@ -72,7 +72,7 @@ var returnFunction = function () {
         scrollTop: $importieren_bs_import_ausfuehren_hinweis_text.offset().top
     }, 2000);
 
-    _.each(window.adb.bsDatensätze, function(bs_datensatz) {
+    _.each(window.adb.bsDatensätze, function (bs_datensatz) {
         // zuerst die id in guid übersetzen
         if (window.adb.BsId === "guid") {
             // die in der Tabelle mitgelieferte id ist die guid

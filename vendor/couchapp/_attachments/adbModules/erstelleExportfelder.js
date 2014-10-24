@@ -30,7 +30,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     // Eigenschaftensammlungen vorbereiten
     // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
     // erst mal die nicht benötigten Werte entfernen
-    _.each(window.adb.ds_bs_von_objekten.rows, function(object_with_array_in_key) {
+    _.each(window.adb.ds_bs_von_objekten.rows, function (object_with_array_in_key) {
         dsbs_von_objekten.push([object_with_array_in_key.key[1], object_with_array_in_key.key[4]]);
     });
     // Struktur von dsbs_von_objekten ist jetzt: [ds.Name, felder_objekt]
@@ -52,7 +52,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
         html_felder_wählen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="show_next_hidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export' + _alt + '_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export' + _alt + '_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
         html_filtern += '<h3>Beziehungssammlungen</h3>';
     }
-    _.each(taxonomien, function(taxonomie, index) {
+    _.each(taxonomien, function (taxonomie, index) {
         if (index > 0) {
             html_felder_wählen += '<hr>';
             html_filtern += '<hr>';
@@ -61,7 +61,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
         html_felder_wählen += '<h5>' + taxonomie.Name;
         html_filtern += '<h5>' + taxonomie.Name;
         // informationen zur ds holen
-        dsbs_von_objekt = _.find(dsbs_von_objekten, function(array) {
+        dsbs_von_objekt = _.find(dsbs_von_objekten, function (array) {
             return array[0] === taxonomie.Name;
         });
         if (dsbs_von_objekt && dsbs_von_objekt[1]) {
@@ -74,7 +74,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
             html_felder_wählen += '<div class="adb-hidden">';
             html_filtern += '<div class="adb-hidden">';
             ds_felder_objekt = dsbs_von_objekt[1];
-            _.each(ds_felder_objekt, function(feldwert, feldname) {
+            _.each(ds_felder_objekt, function (feldwert, feldname) {
                 if (feldname === "zusammenfassend") {
                     // nicht sagen, woher die Infos stammen, weil das Objekt-abhängig ist
                     html = '<div class="ds_beschreibung_zeile"><div>Zus.-fassend:</div><div>Diese Datensammlung fasst die Daten mehrerer Eigenschaftensammlungen in einer zusammen</div></div>';

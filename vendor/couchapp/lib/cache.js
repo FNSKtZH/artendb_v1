@@ -1,10 +1,10 @@
-exports.get = function(db, docid, setFun, getFun) {
+exports.get = function (db, docid, setFun, getFun) {
   db.openDoc(docid, {
-    success : function(doc) {
+    success : function (doc) {
       getFun(doc.cache);
     },
     error : function() {
-      setFun(function(cache) {
+      setFun(function (cache) {
         db.saveDoc({
           _id : docid,
           cache : cache
@@ -15,9 +15,9 @@ exports.get = function(db, docid, setFun, getFun) {
   });
 };
 
-exports.clear = function(db, docid) {
+exports.clear = function (db, docid) {
   db.openDoc(docid, {
-    success : function(doc) {
+    success : function (doc) {
       db.removeDoc(doc);
     },
     error : function() {}

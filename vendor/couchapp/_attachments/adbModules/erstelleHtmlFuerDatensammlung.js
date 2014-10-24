@@ -33,7 +33,7 @@ var returnFunction = function (ds_typ, art, datensammlung) {
     if (ds_typ === "Taxonomie") {
         html_datensammlung += erstelleHtmlFuerFeld ("GUID", art._id, ds_typ, "Taxonomie");
     }
-    _.each(datensammlung.Eigenschaften, function(feldwert, feldname) {
+    _.each(datensammlung.Eigenschaften, function (feldwert, feldname) {
         if (feldname === "GUID") {
             // dieses Feld nicht anzeigen. Es wird _id verwendet
             // dieses Feld wird künftig nicht mehr importiert

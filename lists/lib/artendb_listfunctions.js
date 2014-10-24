@@ -22,7 +22,7 @@ exports.codiereFloraStatus = function (status) {
     }
 };
 
-exports.erstelleExportString = function(exportobjekte) {
+exports.erstelleExportString = function (exportobjekte) {
     var stringTitelzeile = "",
         stringZeilen = "",
         stringZeile;
@@ -69,7 +69,7 @@ exports.erstelleExportString = function(exportobjekte) {
     return stringTitelzeile + "\n" + stringZeilen;
 };
 
-exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergleichsoperator) {
+exports.filtereBeziehungspartner = function (beziehungspartner, Filterwert, Vergleichsoperator) {
     // Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
     // wessen Name die Bedingung erfüllt
     var bezPartner = [];
@@ -96,7 +96,7 @@ exports.filtereBeziehungspartner = function(beziehungspartner, Filterwert, Vergl
     return bezPartner;
 };
 
-exports.convertToCorrectType = function(feldWert) {
+exports.convertToCorrectType = function (feldWert) {
     var type = exports.myTypeOf(feldWert);
     if (type === "boolean") {
         return Boolean(feldWert);
@@ -115,7 +115,7 @@ exports.convertToCorrectType = function(feldWert) {
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
-exports.myTypeOf = function(Wert) {
+exports.myTypeOf = function (Wert) {
     if (typeof Wert === "boolean") {
         return "boolean";
     } else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
@@ -141,7 +141,7 @@ exports.myTypeOf = function(Wert) {
 // beurteilt, ob ein Objekt exportiert werden soll
 // indem er Feldwerte mit Filterkriterien vergleicht
 // das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
-exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoperator) {
+exports.beurteileFilterkriterien = function (feldwert, filterwert, vergleichsoperator) {
     if (vergleichsoperator === "kein" && feldwert == filterwert) {
         return true;
     } else if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) {
@@ -160,7 +160,7 @@ exports.beurteileFilterkriterien = function(feldwert, filterwert, vergleichsoper
     return false;
 };
 
-exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterkriterien) {
+exports.beurteileObInformationenEnthaltenSind = function (objekt, felder, filterkriterien) {
     // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
     // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
@@ -211,7 +211,7 @@ exports.beurteileObInformationenEnthaltenSind = function(objekt, felder, filterk
     return mindestens_ein_feld_hinzufügen;
 };
 
-exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
+exports.prüfeObObjektKriterienErfüllt = function (objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
     var objekt_hinzufügen = false,
         objekt_nicht_hinzufügen = false,
         ds_typ,
@@ -457,7 +457,7 @@ exports.prüfeObObjektKriterienErfüllt = function(objekt, felder, filterkriteri
     return objekt_hinzufügen && !objekt_nicht_hinzufügen;
 };
 
-exports.bereiteFilterkriterienVor = function(filterkriterien) {
+exports.bereiteFilterkriterienVor = function (filterkriterien) {
     if (filterkriterien && filterkriterien.length > 0) {
         _.each(filterkriterien, function (filterkriterium) {
             // die id darf nicht in Kleinschrift verwandelt werden
@@ -479,7 +479,7 @@ exports.bereiteFilterkriterienVor = function(filterkriterien) {
 };
 
 // ergänzt ein Objekt um fehlende Informationen seiner Synonyme
-exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
+exports.ergänzeObjektUmInformationenVonSynonymen = function (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
     // allfällige DS und BS aus Synonymen anhängen
     // zuerst DS
     // eine Liste der im objekt enthaltenen DsNamen erstellen
@@ -487,7 +487,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
         ds_aus_syn_name2,
         bsNamen = [];
     if (objekt.Eigenschaftensammlungen.length > 0) {
-        _.each(objekt.Eigenschaftensammlungen, function(datensammlung) {
+        _.each(objekt.Eigenschaftensammlungen, function (datensammlung) {
             if (datensammlung.Name) {
                 dsNamen.push(datensammlung.Name);
             }
@@ -495,7 +495,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
     }
     // nicht enthaltene Eigenschaftensammlungen ergänzen
     if (datensammlungen_aus_synonymen.length > 0) {
-        _.each(datensammlungen_aus_synonymen, function(datensammlung) {
+        _.each(datensammlungen_aus_synonymen, function (datensammlung) {
             ds_aus_syn_name2 = datensammlung.Name;
             if (dsNamen.length === 0 || ds_aus_syn_name2.indexOf(dsNamen) === -1) {
                 objekt.Eigenschaftensammlungen.push(datensammlung);
@@ -507,7 +507,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
     // jetzt BS aus Synonymen anhängen
     // eine Liste der im objekt enthaltenen BsNamen erstellen
     if (objekt.Beziehungssammlungen.length > 0) {
-        _.each(objekt.Beziehungssammlungen, function(beziehungssammlung) {
+        _.each(objekt.Beziehungssammlungen, function (beziehungssammlung) {
             if (beziehungssammlung.Name) {
                 bsNamen.push(beziehungssammlung.Name);
             }
@@ -516,7 +516,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
     // nicht enthaltene Beziehungssammlungen ergänzen
     var bs_aus_syn_name2;
     if (beziehungssammlungen_aus_synonymen.length > 0) {
-        _.each(beziehungssammlungen_aus_synonymen, function(beziehungssammlung) {
+        _.each(beziehungssammlungen_aus_synonymen, function (beziehungssammlung) {
             bs_aus_syn_name2 = beziehungssammlung.Name;
             if (bsNamen.length === 0 || bs_aus_syn_name2.indexOf(bsNamen) === -1) {
                 objekt.Beziehungssammlungen.push(beziehungssammlung);
@@ -531,7 +531,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function(objekt, datensammlu
 
 // liest übergebene Variabeln für Export aus
 // und bereitet sie für die Verwendung auf
-exports.holeÜbergebeneVariablen = function(query_objekt) {
+exports.holeÜbergebeneVariablen = function (query_objekt) {
     var ü_var = {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
@@ -541,7 +541,7 @@ exports.holeÜbergebeneVariablen = function(query_objekt) {
         },
         filterkriterien_objekt,
         felder_objekt;
-    _.each(query_objekt, function(value, key) {
+    _.each(query_objekt, function (value, key) {
         switch (key) {
             case "fasseTaxonomienZusammen":
                 // true oder false wird als String übergeben > umwandeln
@@ -574,20 +574,20 @@ exports.holeÜbergebeneVariablen = function(query_objekt) {
     return ü_var;
 };
 
-exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
+exports.ergänzeDsBsVonSynonym = function (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
     var ds_aus_syn_namen = [],
         bs_aus_syn_namen = [],
         ds_aus_syn_name,
         bs_aus_syn_name;
     if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
         if (datensammlungen_aus_synonymen.length > 0) {
-            _.each(datensammlungen_aus_synonymen, function(datensammlung) {
+            _.each(datensammlungen_aus_synonymen, function (datensammlung) {
                 if (datensammlung.Name) {
                     ds_aus_syn_namen.push(datensammlung.Name);
                 }
             });
         }
-        _.each(objekt.Eigenschaftensammlungen, function(datensammlung) {
+        _.each(objekt.Eigenschaftensammlungen, function (datensammlung) {
             ds_aus_syn_name = datensammlung.Name;
             if (ds_aus_syn_namen.length === 0 || ds_aus_syn_name.indexOf(ds_aus_syn_namen) === -1) {
                 datensammlungen_aus_synonymen.push(datensammlung);
@@ -598,13 +598,13 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
     }
     if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
         if (beziehungssammlungen_aus_synonymen.length > 0) {
-            _.each(beziehungssammlungen_aus_synonymen, function(beziehungssammlung) {
+            _.each(beziehungssammlungen_aus_synonymen, function (beziehungssammlung) {
                 if (beziehungssammlung.Name) {
                     bs_aus_syn_namen.push(beziehungssammlung.Name);
                 }
             });
         }
-        _.each(objekt.Beziehungssammlungen, function(beziehungssammlung) {
+        _.each(objekt.Beziehungssammlungen, function (beziehungssammlung) {
             bs_aus_syn_name = beziehungssammlung.Name;
             if (bs_aus_syn_namen.length === 0 || bs_aus_syn_name.indexOf(bs_aus_syn_namen) === -1) {
                 beziehungssammlungen_aus_synonymen.push(beziehungssammlung);
@@ -620,7 +620,7 @@ exports.ergänzeDsBsVonSynonym = function(objekt, datensammlungen_aus_synonymen,
 // benötigt Objekt und felder
 // retourniert schon_kopiert und exportObjekt
 // export_für: ermöglicht anpassungen für spezielle Exporte, z.b. für das Artenlistentool
-exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte, export_für) {
+exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte, export_für) {
     var exportObjekt = {},
         schon_kopiert = false;
 
@@ -636,15 +636,15 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         exportObjekt = fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
 
         // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
-        felder = _.reject(felder, function(feld) {
+        felder = _.reject(felder, function (feld) {
             return ["Artwert"].indexOf(feld.Feldname) >=0;
         });
     }
 
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
-    _.each(objekt, function(feldwert, feldname) {
+    _.each(objekt, function (feldwert, feldname) {
         if (typeof feldwert !== "Object" && feldname !== "_rev") {
-            _.each(felder, function(feld) {
+            _.each(felder, function (feld) {
                 if (feld.DsName === "Objekt" && feld.Feldname === feldname) {
                     exportObjekt[feldname] = feldwert;
                 }
@@ -655,7 +655,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
         }
     });
 
-    _.each(felder, function(feld) {
+    _.each(felder, function (feld) {
         var export_feldname = feld.DsName + ": " + feld.Feldname,
             feldwert;
         // Taxonomie: Felder übernehmen
@@ -683,7 +683,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
             exportObjekt[export_feldname] = "";
             if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
                 // Enthält das objekt diese Datensammlung?
-                var gesuchte_ds = _.find(objekt.Eigenschaftensammlungen, function(datensammlung) {
+                var gesuchte_ds = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
                     return datensammlung.Name && datensammlung.Name === feld.DsName;
                 });
                 if (gesuchte_ds) {
@@ -708,19 +708,19 @@ exports.ergänzeExportobjekteUmExportobjekt = function(objekt, felder, bez_in_ze
             if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
                 // suchen, ob das objekt diese Beziehungssammlungen hat
                 // suche im objekt die Beziehungssammlung mit Name = feld.DsName
-                var bs_mit_namen = _.find(objekt.Beziehungssammlungen, function(beziehungssammlung) {
+                var bs_mit_namen = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
                     return beziehungssammlung.Name && beziehungssammlung.Name === feld.DsName;
                 });
                 if (bs_mit_namen && bs_mit_namen.Beziehungen && bs_mit_namen.Beziehungen.length > 0) {
                     // Beziehungen, die exportiert werden sollen, in der Variablen "export_beziehungen" sammeln
                     // durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
                     var export_beziehungen = [];
-                    _.each(bs_mit_namen.Beziehungen, function(beziehung) {
+                    _.each(bs_mit_namen.Beziehungen, function (beziehung) {
                         if (typeof beziehung[feld.Feldname] !== "undefined") {
                             // das gesuchte Feld kommt in dieser Beziehung vor
                             feldwert = exports.convertToCorrectType(beziehung[feld.Feldname]);
                             if (filterkriterien && filterkriterien.length > 0) {
-                                _.each(filterkriterien, function(filterkriterium) {
+                                _.each(filterkriterien, function (filterkriterium) {
                                     var ds_typ = filterkriterium.DsTyp,
                                         ds_name = filterkriterium.DsName,
                                         feldname = filterkriterium.Feldname,
@@ -865,7 +865,7 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
     exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
     exportObjekt.gisLayer = '';
-    var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function(ds) {
+    var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === "ZH GIS";
     }) || {};
 
@@ -888,7 +888,7 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
         exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
     }
 
-    var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function(ds) {
+    var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === "ZH Artwert (1995)";
     }) || {};
 

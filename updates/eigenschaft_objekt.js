@@ -1,4 +1,4 @@
-function(doc, req) {
+function (doc, req) {
     'use strict';
 	var field = req.query.field,
         value = req.query.value,

@@ -1,4 +1,4 @@
-﻿function(doc) {
+﻿function (doc) {
     'use strict';
     var do_emit = false;
     if (doc.Taxonomie && doc.Taxonomie.Daten) do_emit = true;

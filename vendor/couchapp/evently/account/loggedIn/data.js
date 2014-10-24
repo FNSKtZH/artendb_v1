@@ -1,4 +1,4 @@
-function(e, r) {
+function (e, r) {
   return {
     name : r.userCtx.name,
     uri_name : encodeURIComponent(r.userCtx.name),

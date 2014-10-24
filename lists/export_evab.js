@@ -5,7 +5,7 @@
 
 'use strict';
 
-function(head, req) {
+function (head, req) {
 
     start({
         "headers": {
@@ -55,7 +55,7 @@ function(head, req) {
             exportObjekt.status = "A";
 
             // Datensammlung "ZH GIS" holen
-            var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
+            var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
                 return ds.Name === "ZH GIS";
             }) || {};
             

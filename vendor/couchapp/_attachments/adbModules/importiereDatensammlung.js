@@ -44,7 +44,7 @@ var returnFunction = function ($) {
     window.adb.queryChangesStartingNow();
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    $(document).bind('longpoll-data', function(event, data) {
+    $(document).bind('longpoll-data', function (event, data) {
         anzDsImportiert = anzDsImportiert + data.results.length;
         var prozent = Math.round(anzDsImportiert/anzDs*100);
         $("#DsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
@@ -91,7 +91,7 @@ var returnFunction = function ($) {
             });
         }
     });
-    _.each(window.adb.dsDatensätze, function(ds_datensatz) {
+    _.each(window.adb.dsDatensätze, function (ds_datensatz) {
         // Datensammlung als Objekt gründen
         datensammlung = {};
         datensammlung.Name = $DsName.val();
@@ -116,7 +116,7 @@ var returnFunction = function ($) {
         datensammlung.Eigenschaften = {};
         // Felder anfügen, wenn sie Werte enthalten
         anzahl_felder = 0;
-        _.each(ds_datensatz, function(feldwert, feldname) {
+        _.each(ds_datensatz, function (feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
             // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
             //if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
@@ -152,7 +152,7 @@ var returnFunction = function ($) {
                 // die in der Tabelle mitgelieferte id ist die guid
                 guid = ds_datensatz[window.adb.DsFelderId];
             } else {
-                var ds_datensatz_mit_richtiger_id = _.find(window.adb.ZuordbareDatensätze, function(datensatz) {
+                var ds_datensatz_mit_richtiger_id = _.find(window.adb.ZuordbareDatensätze, function (datensatz) {
                     return datensatz.Id == ds_datensatz[window.adb.DsFelderId];
                 });
                 guid = ds_datensatz_mit_richtiger_id.Guid;
@@ -170,7 +170,7 @@ var returnFunction = function ($) {
     } else {
         erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
     }
-    _.each(erste_10_ids, function(id, index) {
+    _.each(erste_10_ids, function (id, index) {
         nr = index + 1;
         rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
     });

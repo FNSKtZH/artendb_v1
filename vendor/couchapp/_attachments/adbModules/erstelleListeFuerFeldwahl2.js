@@ -17,7 +17,7 @@ var returnFunction = function ($, export_felder_arrays, formular) {
     // Mehrfacheinträge sollen entfernt werden
 
     // dazu muss zuerst die Gruppe entfernt werden
-    _.each(export_felder_arrays, function(export_felder) {
+    _.each(export_felder_arrays, function (export_felder) {
         export_felder.key.splice(0,1);
     });
 

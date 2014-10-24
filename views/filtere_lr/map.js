@@ -1,4 +1,4 @@
-function(doc) {
+function (doc) {
     'use strict';
 	var value = {},
         _ = require("views/lib/underscore");
@@ -8,7 +8,7 @@ function(doc) {
 		if (doc.Taxonomie.Eigenschaften.Einheit) {
 			var einheit_worte = doc.Taxonomie.Eigenschaften.Einheit.split(" ");
             value.tokens = _.union(value.tokens, einheit_worte);
-            /*_.each(einheit_worte, function(wort) {
+            /*_.each(einheit_worte, function (wort) {
                 value.tokens.push(wort);
             });*/
 		}

@@ -9,7 +9,7 @@
         <meta name=viewport content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style/main.css">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <script>!function (d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         <title>ArtenDb</title>
     </head>
     <body>
@@ -846,7 +846,7 @@
                                 <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b>
                                     <ul>
                                         <li>Die URL wurde generiert und zum Kopieren markiert</li>
-                                        <li><b>Kopieren Sie die URL, um sie im Arttenlistentool einzufügen</b></li>
+                                        <li><b>Kopieren Sie die URL, um sie im Artenlistentool einzufügen</b></li>
                                         <li>Eine Vorschau der ersten 10 Datensätze wird angezeigt</li>
                                     </ul>
                                 </div>
@@ -931,13 +931,13 @@
                 window.adb.browserDetect.init();
                 // zunächst mal den gröbsten Bock abfangen
                 if (window.adb.browserDetect.browser == 'Explorer' && window.adb.browserDetect.version < 9) {
-                    $('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>viele Felder exportieren</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren</li><li>Daten werden nicht optimal angezeigt</li><li>die Anwendung ist teilweise extrem langsam</li><li>...und dauernd erscheinen Fenster mit der Frage 'Ausführung des Skripts abbrechen?'</li></ul><br>Empfehlung: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
+                    $('#meldung_individuell_text').html("Ihr Browser unterstützt diverse Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>filtern</li><li>importieren</li><li>viele Felder exportieren</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren</li><li>Daten werden nicht optimal angezeigt</li><li>die Anwendung ist teilweise extrem langsam</li><li>...und dauernd erscheinen Fenster mit der Frage 'Ausführung des Skripts abbrechen?'</li></ul><br>Empfehlung: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
                     $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
                     $('#meldung_individuell_label').html("inkompatibler Browser");
                     $('#meldung_individuell').modal();
                     // jetzt den nächstgrössten Bock
                 } else if (window.adb.browserDetect.browser == 'Explorer' && window.adb.browserDetect.version === 9) {
-                    $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
+                    $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>filtern</li><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a> (empfohlen), <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a>.");
                     $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
                     $('#meldung_individuell_label').html("ungeeigneter Browser");
                     $('#meldung_individuell').modal();
@@ -979,12 +979,14 @@
                     test: Modernizr.csstransforms,
                     nope: 'style/artendb_ohne_mq.css'
                 });
+
+                /* ausgeschaltet, weil IE9 Zugriffsfehler meldete
                 Modernizr.load({
                     test: Modernizr.
                             csscolumns,
                     nope: 'vendor/couchapp/css3-multi-column.js'
                     // scheint nicht zu funktionieren, auf IE8 und IE9
-                });
+                });*/
 
                 // IE8 kennt trim nicht!
                 if (!String.prototype.trim)  {
@@ -993,7 +995,7 @@
                     };
                 } // IE8 kennt indexOf nicht!
                 if (!Array.prototype.indexOf) {
-                    Array.prototype.indexOf = function(obj, start) {
+                    Array.prototype.indexOf = function (obj, start) {
                         for (var i = (start || 0), j = this.length; i < j; i++) {
                             if (this[i] === obj) { return i; }
                         }
@@ -1039,7 +1041,7 @@
                                 dontEnumsLength = dontEnums.
                                         length;
                  
-                        return function(obj) {
+                        return function (obj) {
                             if (typeof obj !==
                                     'object' && typeof obj
                                     !== 'function' || obj
@@ -1087,41 +1089,37 @@
                     else var Blob = (function (view) {
                         "use strict";
 
-                        var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || view.MSBlobBuilder || (function(view) {
-                            var
-                                    get_class = function(object) {
-                                        return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
-                                    }
-                                    , FakeBlobBuilder = function BlobBuilder() {
-                                        this.data = [];
-                                    }
-                                    , FakeBlob = function Blob(data, type, encoding) {
-                                        this.data = data;
-                                        this.size = data.length;
-                                        this.type = type;
-                                        this.encoding = encoding;
-                                    }
-                                    , FBB_proto = FakeBlobBuilder.prototype
-                                    , FB_proto = FakeBlob.prototype
-                                    , FileReaderSync = view.FileReaderSync
-                                    , FileException = function(type) {
-                                        this.code = this[this.name = type];
-                                    }
-                                    , file_ex_codes = (
-                                            "NOT_FOUND_ERR SECURITY_ERR ABORT_ERR NOT_READABLE_ERR ENCODING_ERR "
-                                            + "NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR"
-                                            ).split(" ")
-                                    , file_ex_code = file_ex_codes.length
-                                    , real_URL = view.URL || view.webkitURL || view
-                                    , real_create_object_URL = real_URL.createObjectURL
-                                    , real_revoke_object_URL = real_URL.revokeObjectURL
-                                    , URL = real_URL
-                                    , btoa = view.btoa
-                                    , atob = view.atob
+                        var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || view.MSBlobBuilder || (function (view) {
+                            var get_class = function (object) {
+                                    return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
+                                },
+                                FakeBlobBuilder = function BlobBuilder() {
+                                    this.data = [];
+                                },
+                                FakeBlob = function Blob(data, type, encoding) {
+                                    this.data = data;
+                                    this.size = data.length;
+                                    this.type = type;
+                                    this.encoding = encoding;
+                                },
+                                FBB_proto = FakeBlobBuilder.prototype,
+                                FB_proto = FakeBlob.prototype,
+                                FileReaderSync = view.FileReaderSync,
+                                FileException = function (type) {
+                                    this.code = this[this.name = type];
+                                },
+                                file_ex_codes = ("NOT_FOUND_ERR SECURITY_ERR ABORT_ERR NOT_READABLE_ERR ENCODING_ERR " +
+                                    "NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR").split(" "),
+                                file_ex_code = file_ex_codes.length,
+                                real_URL = view.URL || view.webkitURL || view,
+                                real_create_object_URL = real_URL.createObjectURL,
+                                real_revoke_object_URL = real_URL.revokeObjectURL,
+                                URL = real_URL,
+                                btoa = view.btoa,
+                                atob = view.atob,
+                                ArrayBuffer = view.ArrayBuffer,
+                                Uint8Array = view.Uint8Array;
 
-                                    , ArrayBuffer = view.ArrayBuffer
-                                    , Uint8Array = view.Uint8Array
-                                    ;
                             FakeBlob.fake = FB_proto.fake = true;
                             while (file_ex_code--) {
                                 FileException.prototype[file_ex_codes[file_ex_code]] = file_ex_code + 1;
@@ -1129,11 +1127,9 @@
                             if (!real_URL.createObjectURL) {
                                 URL = view.URL = {};
                             }
-                            URL.createObjectURL = function(blob) {
-                                var
-                                        type = blob.type
-                                        , data_URI_header
-                                        ;
+                            URL.createObjectURL = function (blob) {
+                                var type = blob.type,
+                                	data_URI_header;
                                 if (type === null) {
                                     type = "application/octet-stream";
                                 }
@@ -1152,21 +1148,19 @@
                                     return real_create_object_URL.call(real_URL, blob);
                                 }
                             };
-                            URL.revokeObjectURL = function(object_URL) {
+                            URL.revokeObjectURL = function (object_URL) {
                                 if (object_URL.substring(0, 5) !== "data:" && real_revoke_object_URL) {
                                     real_revoke_object_URL.call(real_URL, object_URL);
                                 }
                             };
-                            FBB_proto.append = function(data/*, endings*/) {
+                            FBB_proto.append = function (data/*, endings*/) {
                                 var bb = this.data;
                                 // decode data to a binary string
                                 if (Uint8Array && (data instanceof ArrayBuffer || data instanceof Uint8Array)) {
-                                    var
-                                            str = ""
-                                            , buf = new Uint8Array(data)
-                                            , i = 0
-                                            , buf_len = buf.length
-                                            ;
+                                    var str = "", 
+                                    	buf = new Uint8Array(data),
+                                    	i = 0,
+                                    	buf_len = buf.length;
                                     for (; i < buf_len; i++) {
                                         str += String.fromCharCode(buf[i]);
                                     }
@@ -1195,7 +1189,7 @@
                                     bb.push(unescape(encodeURIComponent(data)));
                                 }
                             };
-                            FBB_proto.getBlob = function(type) {
+                            FBB_proto.getBlob = function (type) {
                                 if (!arguments.length) {
                                     type = null;
                                 }
@@ -1204,16 +1198,12 @@
                             FBB_proto.toString = function() {
                                 return "[object BlobBuilder]";
                             };
-                            FB_proto.slice = function(start, end, type) {
+                            FB_proto.slice = function (start, end, type) {
                                 var args = arguments.length;
                                 if (args < 3) {
                                     type = null;
                                 }
-                                return new FakeBlob(
-                                        this.data.slice(start, args > 1 ? end : this.data.length)
-                                        , type
-                                        , this.encoding
-                                );
+                                return new FakeBlob(this.data.slice(start, args > 1 ? end : this.data.length), type, this.encoding);
                             };
                             FB_proto.toString = function() {
                                 return "[object Blob]";
@@ -1240,6 +1230,14 @@
                     window.adb.öffneUri();
                 };
 
+                // Internet Explorer cached ALLES ohne zu fragen
+                // abschalten
+                //Disbable cache for all jQuery AJAX requests
+				$.ajaxSetup({
+					cache: false,
+					contentType: "application/json; charset=utf-8",
+				});
+
                 // wenn User noch angemeldet ist, UI anpassen
                 if (localStorage.Email) {
                     $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
@@ -1259,7 +1257,7 @@
                 // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
                 $("body")
                     .on("click", "#menu_btn", window.adb.handleMenuBtnClick)
-                    .on("click", ".show_next_hidden", function(event) {
+                    .on("click", ".show_next_hidden", function (event) {
                         var that = this;
                         event.preventDefault();
                         var $element_to_show = $(this)
@@ -1274,7 +1272,7 @@
                             $(that).text("...weniger");
                         }
                     })
-                    .on("click", ".show_next_hidden_export", function(event) {
+                    .on("click", ".show_next_hidden_export", function (event) {
                         var that = this;
                         event.preventDefault();
                         var $element_to_show = $(this)
@@ -1296,17 +1294,15 @@
                     // testen, ob der Browser das Importieren unterstützt
                     // wenn nein, Meldung bringen
                     .on("click", "#bs_importieren", window.adb.handleBs_ImportierenClick)
-                    .on("click", "#menu_admin",
-                        window.adb.handleMenuAdminClick)
-                    .on("click"
-                        , "#exportieren", window.adb.handleExportierenClick)
+                    .on("click", "#menu_admin", window.adb.handleMenuAdminClick)
+                    .on("click", "#exportieren", window.adb.handleExportierenClick)
                     .on("click", "#exportieren_alt", window.adb.handleExportierenAltClick);
 
                 $("#exportieren_diverses")
                     .on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis)
                     .on("click", "#admin_korrigiere_artwertname_in_flora", window.adb.korrigiereArtwertnameInFlora)
                     .on("click", "#admin_korrigiere_ds_name_ch_rote_liste_1991", window.adb.korrigiereDsNameFloraChRoteListe1991)
-                    .on("click", "#admin_korrigiere_ds_name", function(event) {
+                    .on("click", "#admin_korrigiere_ds_name", function (event) {
                             // dieser Event wurde bei jedem Laden der Seite ausgelöst!
                             if ($("#exportieren_diverses_collapse").is(':visible')) {
                                 window.adb.nenneDsUm();
@@ -1337,7 +1333,7 @@
                     .on("change", "#DsName", window.adb.handleDsNameChange)
                     .on("change", "#DsImportiertVon", window.adb.handleDsImportiertVonChange)
                     .on("change", "#DsZusammenfassend", window.adb.handleDsZusammenfassendChange)
-                    .on("change", "#DsFile", function(event) {
+                    .on("change", "#DsFile", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1346,19 +1342,19 @@
                     })
                     .on("change", "#DsFelder", window.adb.handleDsFelderChange)
                     .on("change", "#DsId", window.adb.handleDsIdChange)
-                    .on("click", "#DsLoeschen", function(event) {
+                    .on("click", "#DsLoeschen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.handleDsLöschenClick();
                     })
-                    .on("click", "#DsImportieren", function(event) {
+                    .on("click", "#DsImportieren", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.importiereDatensammlung();
                     })
-                    .on("click", "#DsEntfernen", function(event) {
+                    .on("click", "#DsEntfernen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1366,7 +1362,7 @@
                         window.adb.entferneDatensammlung();
                     })
                     // verhindern, dass bootstrap ganz nach oben scrollt
-                    .on("click", ".panel-heading a", function(event) {
+                    .on("click", ".panel-heading a", function (event) {
                         event.preventDefault();
                     });
 
@@ -1375,7 +1371,7 @@
                     .on("change", "#BsName", window.adb.handleBsNameChange)
                     .on("change", "#BsImportiertVon", window.adb.handleBsImportiertVonChange)
                     .on("change", "#BsZusammenfassend", window.adb.handleBsZusammenfassendChange)
-                    .on("change", "#BsFile", function(event) {
+                    .on("change", "#BsFile", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1384,21 +1380,21 @@
                     })
                     .on("change", "#BsId", window.adb.handleBsIdChange)
                     .on("change", "#BsFelder", window.adb.handleBsFelderChange)
-                    .on("click", "#BsImportieren", function(event) {
+                    .on("click", "#BsImportieren", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.importiereBeziehungssammlung()
                     })
-                    .on("click", "#BsLoeschen", function(event) {
+                    .on("click", "#BsLoeschen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.handleBsLöschenClick();
                     })
-                    .on("click", "#BsEntfernen", function(event) {
+                    .on("click", "#BsEntfernen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1413,7 +1409,7 @@
                     .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWählenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
                     .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZurücksetzen)
-                    .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function(event) {
+                    .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -1423,7 +1419,7 @@
                         window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
                         window.adb.handleExportierenDsObjekteWählenGruppeChange();
                     })
-                    .on("click", "#exportieren_exportieren_exportieren", function(event) {
+                    .on("click", "#exportieren_exportieren_exportieren", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -1431,12 +1427,12 @@
                         event.preventDefault();
                         window.adb.handleExportierenExportierenExportierenClick();
                     })
-                    .on("click", "#exportieren_exportieren_exportieren_direkt", function(event) {
+                    .on("click", "#exportieren_exportieren_exportieren_direkt", function (event) {
                         event.preventDefault();
                         window.adb.filtereFürExport("direkt");
                     })
                     // verhindern, dass bootstrap ganz nach oben scrollt
-                    .on("click", ".panel-heading a", function(event) {
+                    .on("click", ".panel-heading a", function (event) {
                         event.preventDefault();
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
@@ -1457,7 +1453,7 @@
                         window.adb.handleExportierenExportierenCollapseShown(this);
                     })
                     // verhindern, dass bootstrap ganz nach oben scrollt
-                    .on("click", ".panel-heading a", function(event) {
+                    .on("click", ".panel-heading a", function (event) {
                         event.preventDefault();
                     });
 
@@ -1465,7 +1461,7 @@
                 // TODO: exportieren_alt_exportieren.on ergänzen
 
                 $("#art")
-                    .on("click", ".btn.lr_bearb", function(event) {
+                    .on("click", ".btn.lr_bearb", function (event) {
                         event.preventDefault();
                     })
                     .on("click", ".btn.lr_bearb_bearb", window.adb.handleBtnLrBearbBearbKlick)
@@ -1481,7 +1477,7 @@
                     .on("keyup focus", "textarea", window.adb.handleTextareaKeyupFocus) // Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
                     .on("shown.bs.collapse", ".panel", window.adb.handlePanelShown)
                     // Klick auf Link zu Art steuern
-                    .on("click", ".LinkZuArtGleicherGruppe", function(event) {
+                    .on("click", ".LinkZuArtGleicherGruppe", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1492,14 +1488,14 @@
                 $(window).resize(window.adb.handleResize);
 
                 $(document)
-                    .on("click", "#rueckfrage_lr_loeschen_ja", function(event) {
+                    .on("click", "#rueckfrage_lr_loeschen_ja", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.handleRückfrageLrLöschenJaClick();
                     })
-                    .on("click", ".anmelden_btn", function(event) {
+                    .on("click", ".anmelden_btn", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1507,7 +1503,7 @@
                         // this übergeben, kommt sonst nicht mit!
                         window.adb.handleAnmeldenBtnClick(this);
                     })
-                    .on("click", ".abmelden_btn", function(event) {
+                    .on("click", ".abmelden_btn", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1518,7 +1514,7 @@
                     .on("keyup", ".Email", window.adb.handleEmailKeyup)
                     .on("keyup", ".Passwort", window.adb.handlePasswortKeyup)
                     .on("keyup", ".Passwort2", window.adb.handlePasswort2Keyup)
-                    .on("click", ".konto_erstellen_btn", function(event) {
+                    .on("click", ".konto_erstellen_btn", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -1526,7 +1522,7 @@
                         // this übergeben
                         window.adb.handleKontoErstellenBtnClick(this);
                     })
-                    .on("click", ".konto_speichern_btn", function(event) {
+                    .on("click", ".konto_speichern_btn", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht

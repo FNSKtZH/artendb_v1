@@ -1,4 +1,4 @@
-exports.ddoc = function(ddoc) {
+exports.ddoc = function (ddoc) {
   // only return the parts of the app that we use
   var i, j, path, key, obj, ref, out = {},
     resources = ddoc.couchapp && ddoc.couchapp.load && ddoc.couchapp.load.app || [];

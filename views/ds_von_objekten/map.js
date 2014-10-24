@@ -1,4 +1,4 @@
-﻿function(doc) {
+﻿function (doc) {
     'use strict';
 
 	var Felder,
@@ -9,7 +9,7 @@
         _ = require("views/lib/underscore");
 
 	if (doc.Eigenschaftensammlungen) {
-        _.each(doc.Eigenschaftensammlungen, function(es) {
+        _.each(doc.Eigenschaftensammlungen, function (es) {
             // ds_zusammenfassend ergänzen
             ds_zusammenfassend = !!es.zusammenfassend;
             Felder = {};
@@ -23,7 +23,7 @@
 	}
 
 	if (doc.Beziehungssammlungen) {
-        _.each(doc.Beziehungssammlungen, function(bs) {
+        _.each(doc.Beziehungssammlungen, function (bs) {
             // bs_zusammenfassend ergänzen
             bs_zusammenfassend = !!bs.zusammenfassend;
             Felder = {};

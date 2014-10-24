@@ -7,7 +7,7 @@ var _ = require('underscore'),
 var returnFunction = function (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
-        object_array = _.map(lr.rows, function(row) {
+        object_array = _.map(lr.rows, function (row) {
             return row.doc;
         });
     if (!objekt.Taxonomie) {
@@ -49,7 +49,7 @@ var returnFunction = function (lr, objekt, aktualisiereHierarchiefeld, einheit_i
     }).done(function () {
         var doc;
         // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-        _.each(lr.rows, function(lr_row) {
+        _.each(lr.rows, function (lr_row) {
             doc = lr_row.doc;
             if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
                 // das ist ein child

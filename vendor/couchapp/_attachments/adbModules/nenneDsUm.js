@@ -39,14 +39,14 @@ var returnFunction = function () {
             $admin_korrigiere_ds_name_ch_rückmeldung.html("Es gibt keine Datensammlung namens " + name_vorher);
             return;
         }
-        _.each(data.rows, function(row) {
+        _.each(data.rows, function (row) {
             var art = row.doc,
                 ds,
                 bs,
                 save = false;
             // Datensammlung mit diesem Namen suchen
             if (art.Eigenschaftensammlungen && art.Eigenschaftensammlungen.length > 0) {
-                ds = _.find(art.Eigenschaftensammlungen, function(ds_) {
+                ds = _.find(art.Eigenschaftensammlungen, function (ds_) {
                     if (ds_.Name) {
                         return ds_.Name === name_vorher;
                     }
@@ -58,7 +58,7 @@ var returnFunction = function () {
             }
             // Beziehungssammlung mit diesem Namen suchen
             if (art.Beziehungssammlungen && art.Beziehungssammlungen.length > 0) {
-                bs = _.find(art.Beziehungssammlungen, function(ds_) {
+                bs = _.find(art.Beziehungssammlungen, function (ds_) {
                     if (ds_.Name) {
                         return ds_.Name === name_vorher;
                     }

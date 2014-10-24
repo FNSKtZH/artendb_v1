@@ -45,7 +45,7 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
     html += "<thead><tr>";
 
     // durch die Felder des ersten Datensatzes zirkeln
-    _.each(Datensätze[0], function(feldwert, feldname) {
+    _.each(Datensätze[0], function (feldwert, feldname) {
         // Spalte anlegen
         html += "<th>" + feldname + "</th>";
         // Option für Feldliste anfügen
@@ -64,11 +64,11 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
     // nur die ersten 10 Datensätze anzeigen
     erste_10_ds = _.first(Datensätze, 10);
 
-    _.each(erste_10_ds, function(datensatz) {
+    _.each(erste_10_ds, function (datensatz) {
         // Zeile anlegen
         html += "<tr>";
         // durch die Felder zirkeln
-        _.each(datensatz, function(feldwert, feldname) {
+        _.each(datensatz, function (feldwert, feldname) {
             // Spalte anlegen
             html += "<td>";
             if (feldwert === null) {

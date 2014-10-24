@@ -8,17 +8,16 @@ var returnFunction = function ($, id) {
 
     $.ajax('http://localhost:5984/artendb/' + id, {
         type: 'GET',
+        //contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).done(function (art) {
         var html_art,
             art_eigenschaftensammlungen = art.Eigenschaftensammlungen,
             art_beziehungssammlungen = [],
             taxonomische_beziehungssammlungen = [],
-            len,
             guids_von_synonymen = [],
             eigenschaftensammlungen_von_synonymen = [],
             beziehungssammlungen_von_synonymen = [],
-            a, f, h, i, k, x,
             ds_namen = [],
             bez_namen = [],
             erstelleHtmlFuerDatensammlung = require('./erstelleHtmlFuerDatensammlung');
@@ -26,11 +25,11 @@ var returnFunction = function ($, id) {
         html_art = '<h4>Taxonomie:</h4>';
         // zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
         // gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-        html_art += erstelleHtmlFuerDatensammlung ("Taxonomie", art, art.Taxonomie);
+        html_art += erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
         // Datensammlungen muss nicht gepusht werden
         // aber Beziehungssammlungen aufteilen
         if (art.Beziehungssammlungen.length > 0) {
-            _.each(art.Beziehungssammlungen, function(beziehungssammlung) {
+            _.each(art.Beziehungssammlungen, function (beziehungssammlung) {
                 if (typeof beziehungssammlung.Typ === "undefined") {
                     art_beziehungssammlungen.push(beziehungssammlung);
                     // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
@@ -46,13 +45,13 @@ var returnFunction = function ($, id) {
         if (taxonomische_beziehungssammlungen.length > 0) {
             // Titel hinzufügen, falls Datensammlungen existieren
             html_art += "<h4>Taxonomische Beziehungen:</h4>";
-            _.each(taxonomische_beziehungssammlungen, function(beziehungssammlung) {
+            _.each(taxonomische_beziehungssammlungen, function (beziehungssammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "");
+                html_art += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "");
                 if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
-                    _.each(beziehungssammlung.Beziehungen, function(beziehung) {
+                    _.each(beziehungssammlung.Beziehungen, function (beziehung) {
                         if (beziehung.Beziehungspartner) {
-                            _.each(beziehung.Beziehungspartner, function(beziehungspartner) {
+                            _.each(beziehung.Beziehungspartner, function (beziehungspartner) {
                                 if (beziehungspartner.GUID) {
                                     guids_von_synonymen.push(beziehungspartner.GUID);
                                 }
@@ -66,9 +65,9 @@ var returnFunction = function ($, id) {
         if (art_eigenschaftensammlungen.length > 0) {
             // Titel hinzufügen
             html_art += "<h4>Eigenschaften:</h4>";
-            _.each(art_eigenschaftensammlungen, function(datensammlung) {
+            _.each(art_eigenschaftensammlungen, function (datensammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += erstelleHtmlFuerDatensammlung ("Datensammlung", art, datensammlung);
+                html_art += erstelleHtmlFuerDatensammlung("Datensammlung", art, datensammlung);
                 // dsNamen auflisten, um später zu vergleichen, ob sie schon dargestellt wird
                 ds_namen.push(datensammlung.Name);
             });
@@ -77,26 +76,30 @@ var returnFunction = function ($, id) {
         if (art_beziehungssammlungen.length > 0) {
             // Titel hinzufügen
             html_art += "<h4>Beziehungen:</h4>";
-            _.each(art_beziehungssammlungen, function(beziehungssammlung) {
+            _.each(art_beziehungssammlungen, function (beziehungssammlung) {
                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "");
+                html_art += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "");
             });
         }
         // Beziehungssammlungen von synonymen Arten
         if (guids_von_synonymen.length > 0) {
             $.ajax('http://localhost:5984/artendb/_design/artendb/_view/all_docs', {
                 type: 'GET',
+                contentType: "application/json",
                 dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Accept', 'application/json');
+                },
                 data: {
                     keys: JSON.stringify(guids_von_synonymen),
                     include_docs: true
                 }
             }).done(function (data) {
                 var synonyme_art;
-                _.each(data.rows, function(data_row) {
+                _.each(data.rows, function (data_row) {
                     synonyme_art = data_row.doc;
                     if (synonyme_art.Eigenschaftensammlungen && synonyme_art.Eigenschaftensammlungen.length > 0) {
-                        _.each(synonyme_art.Eigenschaftensammlungen, function(eigenschaftensammlungen) {
+                        _.each(synonyme_art.Eigenschaftensammlungen, function (eigenschaftensammlungen) {
                             if (ds_namen.indexOf(eigenschaftensammlungen.Name) === -1) {
                                 // diese Datensammlung wird noch nicht dargestellt
                                 eigenschaftensammlungen_von_synonymen.push(eigenschaftensammlungen);
@@ -108,7 +111,7 @@ var returnFunction = function ($, id) {
                         });
                     }
                     if (synonyme_art.Beziehungssammlungen && synonyme_art.Beziehungssammlungen.length > 0) {
-                        _.each(synonyme_art.Beziehungssammlungen, function(beziehungssammlung) {
+                        _.each(synonyme_art.Beziehungssammlungen, function (beziehungssammlung) {
                             if (bez_namen.indexOf(beziehungssammlung.Name) === -1 && beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
                                 // diese Beziehungssammlung wird noch nicht dargestellt
                                 // und sie ist nicht taxonomisch
@@ -121,22 +124,21 @@ var returnFunction = function ($, id) {
                                 // diese Beziehungssammlung wird schon dargestellt
                                 // kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
                                 var bs_der_synonymen_art = beziehungssammlung,
-                                    bs_der_originalart = _.find(art.Beziehungssammlungen, function(beziehungssammlung) {
+                                    bs_der_originalart = _.find(art.Beziehungssammlungen, function (beziehungssammlung) {
                                         return beziehungssammlung.Name === bs_der_synonymen_art.Name;
                                     });
 
                                 if (bs_der_synonymen_art.Beziehungen && bs_der_synonymen_art.Beziehungen.length > 0 && bs_der_originalart && bs_der_originalart.Beziehungen && bs_der_originalart.Beziehungen.length > 0) {
                                     // Beide Arten haben in derselben Beziehungssammlung Beziehungen
                                     // in der Originalart vorhandene Beziehungen aus dem Synonym entfernen
-                                    bs_der_synonymen_art.Beziehungen = _.reject(bs_der_synonymen_art.Beziehungen, function(beziehung_des_synonyms) {
+                                    bs_der_synonymen_art.Beziehungen = _.reject(bs_der_synonymen_art.Beziehungen, function (beziehung_des_synonyms) {
                                         // suche in Beziehungen der Originalart eine mit denselben Beziehungspartnern
-                                        var beziehung_der_originalart = _.find(bs_der_originalart.Beziehungen, function(beziehung_origart) {
+                                        var beziehung_der_originalart = _.find(bs_der_originalart.Beziehungen, function (beziehung_origart) {
                                             //return _.isEqual(beziehung_des_synonyms, beziehung_origart);  Wieso funktioniert das nicht?
                                             if (beziehung_des_synonyms.Beziehungspartner.length > 0 && beziehung_origart.Beziehungspartner.length > 0) {
                                                 return beziehung_des_synonyms.Beziehungspartner[0].GUID === beziehung_origart.Beziehungspartner[0].GUID;
-                                            } else {
-                                                return false;
                                             }
+                                            return false;
                                         });
                                         return !!beziehung_der_originalart;
                                     });
@@ -155,7 +157,7 @@ var returnFunction = function ($, id) {
                     eigenschaftensammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(eigenschaftensammlungen_von_synonymen);
                     // Titel hinzufügen
                     html_art += "<h4>Eigenschaften von Synonymen:</h4>";
-                    _.each(eigenschaftensammlungen_von_synonymen, function(datesammlung) {
+                    _.each(eigenschaftensammlungen_von_synonymen, function (datesammlung) {
                         // HTML für Datensammlung erstellen lassen und hinzufügen
                         html_art += erstelleHtmlFuerDatensammlung ("Datensammlung", art, datesammlung);
                     });
@@ -166,20 +168,20 @@ var returnFunction = function ($, id) {
                     beziehungssammlungen_von_synonymen = window.adb.sortiereObjektarrayNachName(beziehungssammlungen_von_synonymen);
                     // Titel hinzufügen
                     html_art += "<h4>Beziehungen von Synonymen:</h4>";
-                    _.each(beziehungssammlungen_von_synonymen, function(beziehungssammlung) {
+                    _.each(beziehungssammlungen_von_synonymen, function (beziehungssammlung) {
                         // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
                         html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "2");
                     });
                 }
-                initiiereArt2 ($, html_art, art);
+                initiiereArt2($, html_art, art);
             }).fail(function () {
-                console.log('keine Daten für Synonyme erhalten');
+                console.log('initiiereArt.js: keine Daten für Synonyme erhalten');
             });
         } else {
-            initiiereArt2 ($, html_art, art);
+            initiiereArt2($, html_art, art);
         }
     }).fail(function () {
-        console.log('keine Daten für die Art erhalten');
+        console.log('initiiereArt.js: keine Daten für die Art erhalten');
     });
 };
 

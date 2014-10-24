@@ -1,4 +1,4 @@
-﻿function(doc) {
+﻿function (doc) {
     'use strict';
 	var familie,
 		gattung,

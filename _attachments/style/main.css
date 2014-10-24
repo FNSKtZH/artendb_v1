@@ -6592,7 +6592,7 @@ a.show_next_hidden_export {
         max-height: -webkit-calc(100vh - 216px);
         max-height:      -o-calc(100vh - 216px);
         max-height:         calc(100vh - 216px);
-        overflow-y: scroll;
+        overflow-y:                      scroll;
     }
 
 @media screen and (min-width: 1001px) {

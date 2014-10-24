@@ -10,7 +10,7 @@
  * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
 */
 
-(function(jQuery){
+(function (jQuery){
 	
 	jQuery.hotkeys = {
 		version: "0.8",

@@ -29,10 +29,10 @@ var returnFunction = function ($, that) {
         $DsAnzDs.html("");
         $DsAnzDs_label.html("");
         if (ds_name) {
-            _.each(window.adb.ds_von_objekten.rows, function(ds_von_objekten_row) {
+            _.each(window.adb.ds_von_objekten.rows, function (ds_von_objekten_row) {
                 if (ds_von_objekten_row.key[1] === ds_name) {
                     $DsName.val(ds_name);
-                    _.each(ds_von_objekten_row.key[4], function(feldwert, feldname) {
+                    _.each(ds_von_objekten_row.key[4], function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
                             $("#DsUrsprungsDs").val(feldwert);
                         } else if (feldname !== "importiert von") {

@@ -1,4 +1,4 @@
-function(doc) {
+function (doc) {
     'use strict';
 
 	var value = {},
@@ -21,7 +21,7 @@ function(doc) {
 
 		// Artnamen vollständig auftrennen
 		artname_vollständig_worte = artname_vollständig.split(" ");
-        _.each(artname_vollständig_worte, function(wort) {
+        _.each(artname_vollständig_worte, function (wort) {
             // Klammern entfernen. Sonst findet die Suche nach "Erd" keine Erdkröte (nur die Suche nach "(Erd")
             value.tokens.push(wort.replace("\(", "", "g").replace("\)", "", "g"));
         });

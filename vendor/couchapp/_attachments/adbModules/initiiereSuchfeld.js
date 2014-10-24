@@ -11,6 +11,7 @@ var returnFunction = function ($) {
         } else {
             $.ajax('http://localhost:5984/artendb/_design/artendb/_view/filtere_lr', {
                 type: 'GET',
+                contentType: "application/json",
                 dataType: "json",
                 data: {
                     startkey: '["' + window.adb.Gruppe + '"]',
@@ -29,6 +30,7 @@ var returnFunction = function ($) {
         } else {
             $.ajax('http://localhost:5984/artendb/_design/artendb/_view/filtere_art', {
                 type: 'GET',
+                contentType: "application/json",
                 dataType: "json",
                 data: {
                     startkey: '["' + window.adb.Gruppe + '"]',

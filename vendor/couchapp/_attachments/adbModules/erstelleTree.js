@@ -14,7 +14,7 @@ var returnFunction = function ($) {
         "json_data": { 
             ajax: {
                 type: 'GET',
-                url: function(node) {
+                url: function (node) {
                     if (node == -1) {
                         return holeDatenUrlFuerTreeOberstesLevel($);
                     } else {
@@ -30,11 +30,11 @@ var returnFunction = function ($) {
                         return holeDatenUrlFuerTreeUntereLevel($, level, filter, gruppe, id);
                     }
                 },
-                success: function(data) {
+                success: function (data) {
                     //console.log("erstelleTree meldet: ajax success");
                     return data;
                 },
-                error: function(data) {
+                error: function (data) {
                     //console.log("erstelleTree meldet: ajax failure");
                 }
             }
@@ -50,7 +50,7 @@ var returnFunction = function ($) {
                 "loading": "hole Daten..."
             }
         },
-        "sort": function(a, b) {
+        "sort": function (a, b) {
             return this.get_text(a) > this.get_text(b) ? 1 : -1;
         },
         "themes": {
@@ -58,7 +58,7 @@ var returnFunction = function ($) {
         },
         "plugins" : ["ui", "themes", "json_data", "sort"]
     })
-    .bind("select_node.jstree", function(e, data) {
+    .bind("select_node.jstree", function (e, data) {
         'use strict';
         var node = data.rslt.obj,
         initiiereArt = require('./initiiereArt');

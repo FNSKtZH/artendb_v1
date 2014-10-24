@@ -30,10 +30,10 @@ var returnFunction = function ($, that) {
         $BsAnzDs.html("");
         $BsAnzDs_label.html("");
         if (bs_name) {
-            _.each(window.adb.bs_von_objekten.rows, function(bs_row) {
+            _.each(window.adb.bs_von_objekten.rows, function (bs_row) {
                 if (bs_row.key[1] === bs_name) {
                     $BsName.val(bs_name);
-                    _.each(bs_row, function(feldwert, feldname) {
+                    _.each(bs_row, function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
                             $("#BsUrsprungsBs").val(feldwert);
                         } else if (feldname !== "importiert von") {

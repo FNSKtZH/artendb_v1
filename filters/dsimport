@@ -1,10 +1,10 @@
-function(doc, req) {
+function (doc, req) {
     'use strict';
     // Zweck: Filter für Changes-Feed für importierte Eigenschaftensammlungen,
     // in dem nur die vom aktuellen User importierten / gelöschten Objekte erscheinen
     var dsname = req.query.dsname;
     if (doc.Eigenschaftensammlungen && doc.Eigenschaftensammlungen.length > 0 && dsname) {
-        doc.Eigenschaftensammlungen.forEach(function(ds) {
+        doc.Eigenschaftensammlungen.forEach(function (ds) {
            if (ds.Name === dsname && ds["importiert von"] == req.userCtx.name) {
                return true;
            }

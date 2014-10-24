@@ -1,4 +1,4 @@
-function(e, name, pass) {
+function (e, name, pass) {
   var elem = $(this);
   $.couch.signup({
     name : name

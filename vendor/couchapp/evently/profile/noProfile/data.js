@@ -1,3 +1,3 @@
-function(e, userCtx) {
+function (e, userCtx) {
   return userCtx;
 }

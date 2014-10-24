@@ -17,7 +17,7 @@ var returnFunction = function ($, gruppen, gruppen_array, anz_ds_gewählt, filte
     window.adb.exportieren_objekte = [];
     // in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
-    _.each(gruppen_array, function(gruppe) {
+    _.each(gruppen_array, function (gruppe) {
         if ($("#exportieren_synonym_infos").prop('checked')) {
             listName = "export_mit_synonymen";
             queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;

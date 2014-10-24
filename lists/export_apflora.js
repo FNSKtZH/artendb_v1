@@ -1,5 +1,5 @@
 'use strict';
-function(head, req) {
+function (head, req) {
 
 	start({
 		"headers": {
@@ -54,14 +54,14 @@ function(head, req) {
 
 		if (Objekt.Eigenschaftensammlungen.length > 0) {
 
-			dsArtwert = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
+			dsArtwert = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
 				return ds.Name === "ZH Artwert (1995)";
 			});
 			if (dsArtwert && dsArtwert.Eigenschaften && dsArtwert.Eigenschaften.Artwert) {
 				exportObjekt.Artwert = dsArtwert.Eigenschaften.Artwert;
 			}
 
-			dsKef = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
+			dsKef = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
 				return ds.Name === "ZH KEF";
 			});
 			if (dsKef && dsKef.Eigenschaften && dsKef.Eigenschaften["Art ist KEF-Kontrollindikator"]) {
@@ -73,7 +73,7 @@ function(head, req) {
 				exportObjekt.KefKontrolljahr = dsKef.Eigenschaften["Erstes Kontrolljahr"];
 			}
 
-			dsJahresarten = _.find(Objekt.Eigenschaftensammlungen, function(ds) {
+			dsJahresarten = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
 				return ds.Name === "ZH Jahresarten";
 			});
 			if (dsJahresarten && dsJahresarten.Eigenschaften && dsJahresarten.Eigenschaften.Jahr) {
@@ -85,7 +85,7 @@ function(head, req) {
 		exportObjekte.push(exportObjekt);
 	}
 	// leere Objekte entfernen
-	var exportObjekte_ohne_leere = _.reject(exportObjekte, function(object) {
+	var exportObjekte_ohne_leere = _.reject(exportObjekte, function (object) {
 		return _.isEmpty(object);
 	});
 

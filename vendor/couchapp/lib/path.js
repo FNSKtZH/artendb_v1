@@ -31,7 +31,7 @@ function makePath(array) {
     // it's a params hash
     options = array.pop();
   }
-  path = array.map(function(item) {return encodeURIComponent(item)}).join('/');
+  path = array.map(function (item) {return encodeURIComponent(item)}).join('/');
   if (options) {
     return path + encodeOptions(options);
   } else {
@@ -39,7 +39,7 @@ function makePath(array) {
   }
 };
 
-exports.init = function(req) {
+exports.init = function (req) {
   return {
     asset : function() {
       var p = req.path, parts = ['', p[0], p[1] , p[2]];
@@ -61,7 +61,7 @@ exports.init = function(req) {
       var p = req.path, parts = ['', p[0], p[1] , p[2], '_update'];
       return makePath(concatArgs(parts, arguments));
     },
-    limit : function(limit) {
+    limit : function (limit) {
       var query = req.query;
       var l = query.limit;
       query.limit = limit;
@@ -71,7 +71,7 @@ exports.init = function(req) {
       query.limit = l;
       return link;
     },
-    older : function(key) {
+    older : function (key) {
       if (!typeof key == "undefined") return null;
       var query = req.query;
       query.startkey = key;
@@ -80,7 +80,7 @@ exports.init = function(req) {
       var list = req.path[req.path.length - 2];
       return this.list(list, view, query);
     },
-    absolute : function(path) {
+    absolute : function (path) {
       return 'http://' + req.headers.Host + path;
     }
   }

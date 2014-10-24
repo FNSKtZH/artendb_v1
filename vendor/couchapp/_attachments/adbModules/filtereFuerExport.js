@@ -154,7 +154,7 @@ var returnFunction = function ($, direkt, fürAlt) {
         html_filterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
     }
     if (filterkriterien.length > 0) {
-        _.each(filterkriterien, function(filterkriterium) {
+        _.each(filterkriterien, function (filterkriterium) {
             html_filterkriterien += "<li>";
             html_filterkriterien += "Feld \"" + filterkriterium.Feldname + "\" ";
             if (filterkriterium.Vergleichsoperator !== "kein") {

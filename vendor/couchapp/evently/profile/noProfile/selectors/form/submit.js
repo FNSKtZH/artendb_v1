@@ -17,10 +17,10 @@ function() {
   }
 
   // store the user profile on the user account document
-  $.couch.userDb(function(db) {
+  $.couch.userDb(function (db) {
     var userDocId = "org.couchdb.user:"+name;
     db.openDoc(userDocId, {
-      success : function(userDoc) {
+      success : function (userDoc) {
         userDoc["couch.app.profile"] = newProfile;
         db.saveDoc(userDoc, {
           success : function() {

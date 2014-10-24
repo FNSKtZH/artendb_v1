@@ -117,7 +117,7 @@ var returnFunction = function ($) {
                 beziehungssammlung_vorlage["importiert von"] = localStorage.Email;
                 beziehungssammlung_vorlage.Beziehungen = [];
                 // zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
-                var bs_datensätze_objekt = _.groupBy(window.adb.bsDatensätze, function(objekt) {
+                var bs_datensätze_objekt = _.groupBy(window.adb.bsDatensätze, function (objekt) {
                     // id in guid umwandeln
                     var guid;
                     if (window.adb.BsId === "guid") {
@@ -137,17 +137,17 @@ var returnFunction = function ($) {
                     return objekt.GUID;
                 });
                 // jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
-                $.each(bs_datensätze_objekt, function(importdaten_objekt_id, importdaten_felder_array) {
+                $.each(bs_datensätze_objekt, function (importdaten_objekt_id, importdaten_felder_array) {
                     var beziehungen = [];
                     anzahl_beziehungssammlungen += 1;
                     // Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
                     beziehungssammlung = jQuery.extend(true, {}, beziehungssammlung_vorlage);
-                    _.each(importdaten_felder_array, function(importdaten_feld) {
+                    _.each(importdaten_felder_array, function (importdaten_feld) {
                         // durch die Felder der Beziehungen loopen
                         anzahl_felder = 0;
                         // Felder der Beziehungssammlung als Objekt gründen
                         var beziehung = {};
-                        _.each(importdaten_feld, function(feldwert, feldname) {
+                        _.each(importdaten_feld, function (feldwert, feldname) {
                             // durch die Felder der Beziehung loopen
                             // nicht importiert wird die GUID und leere Felder
                             if (feldname !== "GUID" && feldwert !== "" && feldwert !== null) {
@@ -168,7 +168,7 @@ var returnFunction = function ($) {
                                 } else if (feldname == "Beziehungspartner") {
                                     beziehung[feldname] = [];
                                     // durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
-                                    _.each(feldwert, function(beziehungspartner_feld) {
+                                    _.each(feldwert, function (beziehungspartner_feld) {
                                         beziehung[feldname].push(window.adb.bezPartner_objekt[beziehungspartner_feld]);
                                     });
                                 } else {
@@ -197,7 +197,7 @@ var returnFunction = function ($) {
                 } else {
                     erste_10_ids = _.pluck(_.first(window.adb.ZuordbareDatensätze, 10), "Guid");
                 }
-                _.each(erste_10_ids, function(id, index) {
+                _.each(erste_10_ids, function (id, index) {
                     nr = index +1;
                     rückmeldung_links += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
                 });

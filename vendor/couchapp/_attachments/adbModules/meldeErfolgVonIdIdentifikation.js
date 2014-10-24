@@ -41,12 +41,12 @@ var returnFunction = function ($, dbs) {
             }).done(function (data) {
                 var name_des_id_felds = window.adb[dbs+"FelderId"];
                 // durch die importierten Datensätze loopen
-                _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function(import_datensatz) {
+                _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function (import_datensatz) {
                     if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                         // diese ID wurde noch nicht hinzugefügt > hinzufügen
                         ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
                         // prüfen, ob die ID zugeordnet werden kann
-                        var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
+                        var zugehöriges_objekt = _.find(data.rows, function (objekt_row) {
                             return objekt_row.key === import_datensatz[name_des_id_felds];
                         });
                         if (zugehöriges_objekt) {
@@ -75,12 +75,12 @@ var returnFunction = function ($, dbs) {
             }).done(function (data) {
                 var name_des_id_felds = window.adb[dbs+"FelderId"];
                 // durch die importierten Datensätze loopen
-                _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function(import_datensatz) {
+                _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function (import_datensatz) {
                     if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                         // diese ID wurde noch nicht hinzugefügt > hinzufügen
                         ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
                         // prüfen, ob die ID zugeordnet werden kann
-                        var zugehöriges_objekt = _.find(data.rows, function(objekt_row) {
+                        var zugehöriges_objekt = _.find(data.rows, function (objekt_row) {
                             return objekt_row.key[2] === import_datensatz[name_des_id_felds];
                         });
                         if (zugehöriges_objekt) {

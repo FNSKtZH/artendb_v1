@@ -1,4 +1,4 @@
-function(doc) {
+function (doc) {
     'use strict';
 	if (doc.Gruppe && doc.Gruppe === "Lebensräume" && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Einheit) {
 		if (doc.Taxonomie.Eigenschaften.Label) {

@@ -1,5 +1,5 @@
 'use strict';
-function(head, req) {
+function (head, req) {
 
 	start({
 		"headers": {

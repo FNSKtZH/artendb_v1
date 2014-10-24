@@ -1,5 +1,5 @@
 'use strict';
-function(head, req) {
+function (head, req) {
 	// specify that we're providing a JSON response
     provides('json', function() {
 		var row,

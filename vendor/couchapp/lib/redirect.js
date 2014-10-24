@@ -1,4 +1,4 @@
-exports.permanent = function(redirect) {
+exports.permanent = function (redirect) {
   return {
     code : 301,
     headers : {

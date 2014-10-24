@@ -25,11 +25,11 @@ module.exports = function (taxonomie_name, callback) {
             html = "",
             i;
         // reduzieren auf die LR der Taxonomie
-        taxonomie_objekte = _.filter(lr.rows, function(row) {
+        taxonomie_objekte = _.filter(lr.rows, function (row) {
             return row.doc.Taxonomie.Name === taxonomie_name;
         });
         // einen Array von Objekten schaffen mit id und Name
-        taxonomie_objekte = _.map(taxonomie_objekte, function(row) {
+        taxonomie_objekte = _.map(taxonomie_objekte, function (row) {
             object = {};
             object.id = row.doc._id;
             if (row.doc.Taxonomie.Eigenschaften && row.doc.Taxonomie.Eigenschaften.Einheit) {
@@ -50,7 +50,7 @@ module.exports = function (taxonomie_name, callback) {
             return object;
         });
         // jetzt nach Name sortieren
-        taxonomie_objekte = _.sortBy(taxonomie_objekte, function(objekt) {
+        taxonomie_objekte = _.sortBy(taxonomie_objekte, function (objekt) {
             return objekt.Sortier;
         });
         neue_taxonomie = {};

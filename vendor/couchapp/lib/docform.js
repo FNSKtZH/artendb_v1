@@ -25,7 +25,7 @@ function docForm(formSelector, opts) {
   // {"author":{"email":"quentin@example.com"}}
   function formToDeepJSON(form, fields, doc) {
     form = $(form);
-    fields.forEach(function(field) {
+    fields.forEach(function (field) {
       var element = form.find("[name="+field+"]"),
           parts = field.split('-'),
           frontObj = doc, frontName = parts.shift();
@@ -52,14 +52,14 @@ function docForm(formSelector, opts) {
   }
   
   // Apply the behavior
-  $(formSelector).submit(function(e) {
+  $(formSelector).submit(function (e) {
     e.preventDefault();
     if (opts.validate && opts.validate() == false) { return false;}
     // formToDeepJSON acts on localFormDoc by reference
     formToDeepJSON(this, opts.fields, localFormDoc);
     if (opts.beforeSave) {opts.beforeSave(localFormDoc);}
     db.saveDoc(localFormDoc, {
-      success : function(resp) {
+      success : function (resp) {
         if (opts.success) {opts.success(resp, localFormDoc);}
       }
     });
@@ -71,7 +71,7 @@ function docForm(formSelector, opts) {
   function docToForm(doc) {
     var form = $(formSelector);
     // fills in forms
-    opts.fields.forEach(function(field) {
+    opts.fields.forEach(function (field) {
       var parts = field.split('-');
       var run = true, frontObj = doc, frontName = parts.shift();
       while (frontObj && parts.length > 0) {                
@@ -95,7 +95,7 @@ function docForm(formSelector, opts) {
       error: function() {
         if (opts.error) {opts.error.apply(opts, arguments);}
       },
-      success: function(doc) {
+      success: function (doc) {
         if (opts.load || opts.onLoad) {(opts.load || opts.onLoad)(doc);}
         localFormDoc = doc;
         docToForm(doc);
@@ -106,7 +106,7 @@ function docForm(formSelector, opts) {
     docToForm(localFormDoc);
   }
   var instance = {
-    deleteDoc : function(opts) {
+    deleteDoc : function (opts) {
       opts = opts || {};
       if (confirm("Really delete this document?")) {                
         db.removeDoc(localFormDoc, opts);
