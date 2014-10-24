@@ -1916,6 +1916,7 @@ window.adb.öffneUri = function() {
         var $db = $.couch.db("artendb");
         $db.openDoc(id, {
             success: function (objekt) {
+                console.log('öffneUri: objekt: ', objekt);
                 var erstelleBaum = require('./adbModules/erstelleBaum');
                 // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.Gruppe = objekt.Gruppe;

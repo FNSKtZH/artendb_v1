@@ -2,13 +2,27 @@
 
 var _ = require('underscore');
 
+require('http');
+
 var returnFunction = function ($, id) {
     var initiiereArt2 = require('./initiiereArt2'),
-        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
+        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung'),
+        httpOptions;
 
-    var $db = $.couch.db("artendb");
-    $db.openDoc(id, {
-        success: function (art) {
+    httpOptions = {
+        host: 'http://localhost',
+        port: '5984',
+        path: '/artendb/' + id,
+        method: 'get',
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        }
+    };
+
+    http.request(httpOptions, function (resp) {
+        resp.setEncoding('utf8');
+        resp.on('data', function (art) {
             var html_art,
                 art_eigenschaftensammlungen = art.Eigenschaftensammlungen,
                 art_beziehungssammlungen = [],
@@ -153,7 +167,7 @@ var returnFunction = function ($, id) {
                         html_art += "<h4>Eigenschaften von Synonymen:</h4>";
                         _.each(eigenschaftensammlungen_von_synonymen, function (datesammlung) {
                             // HTML für Datensammlung erstellen lassen und hinzufügen
-                            html_art += erstelleHtmlFuerDatensammlung("Datensammlung", art, datesammlung);
+                            html_art += erstelleHtmlFuerDatensammlung ("Datensammlung", art, datesammlung);
                         });
                     }
                     // bez von Synonymen darstellen
@@ -164,7 +178,7 @@ var returnFunction = function ($, id) {
                         html_art += "<h4>Beziehungen von Synonymen:</h4>";
                         _.each(beziehungssammlungen_von_synonymen, function (beziehungssammlung) {
                             // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                            html_art += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "2");
+                            html_art += erstelleHtmlFuerBeziehungssammlung (art, beziehungssammlung, "2");
                         });
                     }
                     initiiereArt2($, html_art, art);
@@ -174,10 +188,9 @@ var returnFunction = function ($, id) {
             } else {
                 initiiereArt2($, html_art, art);
             }
-        },
-        error: function () {
-            console.log('initiiereArt.js: keine Daten für die Art erhalten');
-        }
+        });
+    }).on('error', function (e) {
+        console.log("Fehler: " + e.message);
     });
 };
 
