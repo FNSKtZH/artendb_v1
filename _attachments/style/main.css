@@ -6588,6 +6588,21 @@ a.show_next_hidden_export {
     margin-left: -24px;
 }
 
+#exportieren_alt_felder_waehlen_collapse .panel-body {
+        max-height: -webkit-calc(100vh - 216px);
+        max-height:      -o-calc(100vh - 216px);
+        max-height:         calc(100vh - 216px);
+        overflow-y: scroll;
+    }
+
+@media screen and (min-width: 1001px) {
+    body:not(.force-mobile) #exportieren_alt_felder_waehlen_collapse .panel-body {
+        max-height: -webkit-calc(100vh - 118px);
+        max-height:      -o-calc(100vh - 118px);
+        max-height:         calc(100vh - 118px);
+    }
+}
+
 
 
 

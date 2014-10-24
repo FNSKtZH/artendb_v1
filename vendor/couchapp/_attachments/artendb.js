@@ -1939,7 +1939,13 @@ window.adb.öffneUri = function() {
     if (exportieren_fuer_alt) {
         // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
         if (!$('#export_alt').is(':visible')) {
-            zeigeFormular('export_alt');
+            $.when(zeigeFormular('export_alt')).then(function () {
+                /*// verzögert und langsam 'Eigenschaften wählen' öffnen
+                setTimeout(function() {
+                    $('#exportieren_alt_felder_waehlen_collapse')
+                        .collapse('show');
+                }, 1000);*/
+            });
             window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
             require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
         }
