@@ -1,6 +1,5 @@
+/*jslint node: true */
 'use strict';
-
-//$ = require('jquery')
 
 var returnFunction = function ($, level, filter, gruppe, id) {
     var startkey,
@@ -15,13 +14,13 @@ var returnFunction = function ($, level, filter, gruppe, id) {
         startkey = filter.slice();
         endkey = filter.slice();
     }
-    
+
     switch (gruppe) {
     case "fauna":
         if (level > 4) {
             return null;
         }
-        for (a=5; a>=level; a--) {
+        for (a = 5; a >= level; a--) {
             endkey.push({});
         }
         // im untersten level einen level mehr anzeigen, damit id vorhanden ist
@@ -38,7 +37,7 @@ var returnFunction = function ($, level, filter, gruppe, id) {
         if (level > 3) {
             return null;
         }
-        for (a=4; a>=level; a--) {
+        for (a = 4; a >= level; a--) {
             endkey.push({});
         }
         // im untersten level einen level mehr anzeigen, damit id vorhanden ist
@@ -51,7 +50,7 @@ var returnFunction = function ($, level, filter, gruppe, id) {
         if (level > 4) {
             return null;
         }
-        for (a=5; a>=level; a--) {
+        for (a = 5; a >= level; a--) {
             endkey.push({});
         }
         // im untersten level einen level mehr anzeigen, damit id vorhanden ist
@@ -64,7 +63,7 @@ var returnFunction = function ($, level, filter, gruppe, id) {
         if (level > 2) {
             return null;
         }
-        for (a=3; a>=level; a--) {
+        for (a = 3; a >= level; a--) {
             endkey.push({});
         }
         // im untersten level einen level mehr anzeigen, damit id vorhanden ist

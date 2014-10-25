@@ -4,12 +4,13 @@
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 // formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
 
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) {
+var returnFunction = function (datensätze, felder_div, tabellen_div, formular) {
     var html = "",
         Feldname = "",
         html_ds_felder_div = "",
@@ -17,10 +18,10 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
         $tabellen_div = $("#" + tabellen_div);
 
     if (!formular || formular !== 'export_alt') {
-        if (Datensätze.length > 10) {
-            html += "Vorschau der ersten 10 von " + Datensätze.length + " Datensätzen:";
-        } else if (Datensätze.length > 1) {
-            html += "Vorschau der " + Datensätze.length + " Datensätze:";
+        if (datensätze.length > 10) {
+            html += "Vorschau der ersten 10 von " + datensätze.length + " Datensätzen:";
+        } else if (datensätze.length > 1) {
+            html += "Vorschau der " + datensätze.length + " Datensätze:";
         } else {
             html += "Vorschau des einzigen Datensatzes:";
         }
@@ -41,11 +42,11 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
         }
     }
     html_ds_felder_div += '<label class="control-label" for="' + Feldname + '">Feld mit eindeutiger ID<br>in den Importdaten</label>';
-    html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(Datensätze[0]).length * 19) + 9)  + 'px">';
+    html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(datensätze[0]).length * 19) + 9)  + 'px">';
     html += "<thead><tr>";
 
     // durch die Felder des ersten Datensatzes zirkeln
-    _.each(Datensätze[0], function (feldwert, feldname) {
+    _.each(datensätze[0], function (feldwert, feldname) {
         // Spalte anlegen
         html += "<th>" + feldname + "</th>";
         // Option für Feldliste anfügen
@@ -62,7 +63,7 @@ var returnFunction = function (Datensätze, felder_div, tabellen_div, formular) 
 
     // Tabellenzeilen aufbauen
     // nur die ersten 10 Datensätze anzeigen
-    erste_10_ds = _.first(Datensätze, 10);
+    erste_10_ds = _.first(datensätze, 10);
 
     _.each(erste_10_ds, function (datensatz) {
         // Zeile anlegen

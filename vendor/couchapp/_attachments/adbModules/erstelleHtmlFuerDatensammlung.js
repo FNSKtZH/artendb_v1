@@ -1,6 +1,7 @@
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende Datensammlung
 
+/*jslint node: true */
 'use strict';
 
 var returnFunction = function (ds_typ, art, datensammlung) {
@@ -11,7 +12,7 @@ var returnFunction = function (ds_typ, art, datensammlung) {
         ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
-    ds_name = ersetzeUngueltigeZeichenInIdNamen (datensammlung.Name);
+    ds_name = ersetzeUngueltigeZeichenInIdNamen(datensammlung.Name);
     // Accordion-Gruppe und -heading anfügen
     html_datensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
     // bei LR: Symbolleiste einfügen
@@ -27,11 +28,11 @@ var returnFunction = function (ds_typ, art, datensammlung) {
     // body beginnen
     html_datensammlung += '<div id="collapse' + ds_name + '" class="panel-collapse collapse ' + art.Gruppe + ' ' + ds_typ + '"><div class="panel-body">';
     // Datensammlung beschreiben
-    html_datensammlung += erstelleHtmlFuerDatensammlungBeschreibung (datensammlung);
+    html_datensammlung += erstelleHtmlFuerDatensammlungBeschreibung(datensammlung);
     // Felder anzeigen
     // zuerst die GUID, aber nur bei der Taxonomie
     if (ds_typ === "Taxonomie") {
-        html_datensammlung += erstelleHtmlFuerFeld ("GUID", art._id, ds_typ, "Taxonomie");
+        html_datensammlung += erstelleHtmlFuerFeld("GUID", art._id, ds_typ, "Taxonomie");
     }
     _.each(datensammlung.Eigenschaften, function (feldwert, feldname) {
         if (feldname === "GUID") {

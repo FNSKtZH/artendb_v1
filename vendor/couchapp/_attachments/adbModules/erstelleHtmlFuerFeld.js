@@ -1,6 +1,7 @@
 // übernimmt Feldname und Feldwert
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
 
+/*jslint node: true */
 'use strict';
 
 var returnFunction = function (feldname, feldwert, ds_typ, ds_name) {

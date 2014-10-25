@@ -3,6 +3,7 @@
 // bekommt die Namen der Gruppen
 // formular ist im Standard export, wenn anders (z.B. export_alt), übergeben
 
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');

@@ -1,5 +1,5 @@
-'use strict';
 function (head, req) {
+	'use strict';
 
 	start({
 		"headers": {
@@ -12,9 +12,12 @@ function (head, req) {
 	var row, Objekt,
 		exportObjekte = [],
 		exportObjekt,
-		dsTaxonomie, dsArtwert, dsKef, dsJahresarten;
-	var _ = require("lists/lib/underscore");
-	var _a = require("lists/lib/artendb_listfunctions");
+		dsTaxonomie,
+		dsArtwert,
+		dsKef,
+		dsJahresarten,
+		_ = require("lists/lib/underscore"),
+		_a = require("lists/lib/artendb_listfunctions");
 
 	// list wird mit view flora abgerufen
 	while (row = getRow()) {
@@ -27,13 +30,13 @@ function (head, req) {
 		exportObjekt.GUID = Objekt._id;
 
 		// zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
-		exportObjekt.TaxonomieId = null;
-		exportObjekt.Artname = null;
-		exportObjekt.NameDeutsch = null;
-		exportObjekt.Status = null;
-		exportObjekt.Artwert = null;
-		exportObjekt.KefArt = null;
-		exportObjekt.KefKontrolljahr = null;
+		exportObjekt.TaxonomieId      = null;
+		exportObjekt.Artname          = null;
+		exportObjekt.NameDeutsch      = null;
+		exportObjekt.Status           = null;
+		exportObjekt.Artwert          = null;
+		exportObjekt.KefArt           = null;
+		exportObjekt.KefKontrolljahr  = null;
 		exportObjekt.FnsJahresartJahr = null;
 
 		// Felder aktualisieren, wo Daten vorhanden

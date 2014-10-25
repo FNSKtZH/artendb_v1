@@ -1,46 +1,37 @@
+/*jslint node: true */
 'use strict';
 
 var initiiereSuchfeld2 = require('./initiiereSuchfeld2');
 
 var returnFunction = function ($) {
-
+    var $db = $.couch.db("artendb");
     // zuerst mal die benötigten Daten holen
     if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
         if (window.adb.filtere_lr) {
-            initiiereSuchfeld2 ($, window.adb.filtere_lr);
+            initiiereSuchfeld2($, window.adb.filtere_lr);
         } else {
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/filtere_lr', {
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                data: {
-                    startkey: '["' + window.adb.Gruppe + '"]',
-                    endkey: '["' + window.adb.Gruppe + '",{},{},{}]'
+            $db.view('artendb/filtere_lr?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{},{},{}]', {
+                success: function (data) {
+                    window.adb.filtere_lr = data;
+                    initiiereSuchfeld2($, data);
+                },
+                error: function () {
+                    console.log('initiiereSuchfeld: keine Daten erhalten');
                 }
-            }).done(function (data) {
-                window.adb.filtere_lr = data;
-                initiiereSuchfeld2 ($, data);
-            }).fail(function () {
-                console.log('keine Daten erhalten');
             });
         }
     } else if (window.adb.Gruppe) {
         if (window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
-            initiiereSuchfeld2 ($, window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]);
+            initiiereSuchfeld2($, window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]);
         } else {
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/filtere_art', {
-                type: 'GET',
-                contentType: "application/json",
-                dataType: "json",
-                data: {
-                    startkey: '["' + window.adb.Gruppe + '"]',
-                    endkey: '["' + window.adb.Gruppe + '",{}]'
+            $db.view('artendb/filtere_art?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{}]', {
+                success: function (data) {
+                    window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
+                    initiiereSuchfeld2($, data);
+                },
+                error: function () {
+                    console.log('initiiereSuchfeld: keine Daten erhalten');
                 }
-            }).done(function (data) {
-                window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
-                initiiereSuchfeld2 ($, data);
-            }).fail(function () {
-                console.log('keine Daten erhalten');
             });
         }
     }

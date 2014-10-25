@@ -1,5 +1,6 @@
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 
+/*jslint node: true */
 'use strict';
 
 // $ wird benütigt für $.modal und $.couch
@@ -49,26 +50,26 @@ var returnFunction = function ($, that) {
     }
     object.Taxonomie.Eigenschaften.Parent = parent;
     // in die DB schreiben
-    $.ajax('http://localhost:5984/artendb/' + object._id, {
-        type: 'PUT',
-        dataType: "json",
-        data: JSON.stringify(object)
-    }).done(function (resp) {
-        var erstelleBaum = require('./erstelleBaum');
-        object._rev = resp.rev;
-        if (parent_id !== "0") {
-            // die Hierarchie aufbauen und setzen
-            // bei der Wurzel ist sie schon gesetzt
-            window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
-        } else {
-            $.when(erstelleBaum($)).then(function() {
-                var oeffneBaumZuId = require('./oeffneBaumZuId');
-                oeffneBaumZuId ($, object._id);
-                $('#lr_parent_waehlen').modal('hide');
-            });
+    var $db = $.couch.db("artendb");
+    $db.saveDoc(object, {
+        success: function (resp) {
+            var erstelleBaum = require('./erstelleBaum');
+            object._rev = resp.rev;
+            if (parent_id !== "0") {
+                // die Hierarchie aufbauen und setzen
+                // bei der Wurzel ist sie schon gesetzt
+                window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
+            } else {
+                $.when(erstelleBaum($)).then(function () {
+                    var oeffneBaumZuId = require('./oeffneBaumZuId');
+                    oeffneBaumZuId($, object._id);
+                    $('#lr_parent_waehlen').modal('hide');
+                });
+            }
+        },
+        error: function () {
+            console.log('handleLrParentOptionenChange: Datensatz nicht gespeichert');
         }
-    }).fail(function () {
-        console.log('Datensatz nicht gespeichert');
     });
 };
 

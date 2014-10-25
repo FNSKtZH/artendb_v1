@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 // braucht $ wegen $.jstree
@@ -27,9 +28,9 @@ var returnFunction = function ($, id) {
         case "Flora":
             // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
             // oberste Ebene aufbauen nicht nötig, die gibt es schon
-            $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "']"), function() {
+            $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "']"), function () {
                 $.jstree._reference("#treeFlora").open_node($("[filter='" + objekt.Taxonomie.Eigenschaften.Familie + "," + objekt.Taxonomie.Eigenschaften.Gattung + "']"), function() {
-                    $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function() {}, false);
+                    $.jstree._reference("#treeFlora").select_node($("#" + objekt._id), function () {}, false);
                 }, true);
             }, true);
             // Anmeldung verstecken, wenn nicht Lebensräume

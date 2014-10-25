@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var _ = require("lists/lib/underscore");
@@ -17,9 +18,8 @@ exports.codiereFloraStatus = function (status) {
     };
     if (codierteWerte[status]) {
         return codierteWerte[status];
-    } else {
-        return null;
     }
+    return null;
 };
 
 exports.erstelleExportString = function (exportobjekte) {
@@ -98,65 +98,38 @@ exports.filtereBeziehungspartner = function (beziehungspartner, Filterwert, Verg
 
 exports.convertToCorrectType = function (feldWert) {
     var type = exports.myTypeOf(feldWert);
-    if (type === "boolean") {
-        return Boolean(feldWert);
-    } else if (type === "float") {
-        return parseFloat(feldWert);
-    } else if (type === "integer") {
-        return parseInt(feldWert, 10);
-    } else if (type === "string") {
-        // string jetzt kleinschreiben, damit das nicht später erfolgen muss
-        return feldWert.toLowerCase();
-    } else {
-        // object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
-        return feldWert;
-    }
+    if (type === "boolean") return Boolean(feldWert);
+    if (type === "float")   return parseFloat(feldWert);
+    if (type === "integer") return parseInt(feldWert, 10);
+    if (type === "string")  return feldWert.toLowerCase(); // string jetzt kleinschreiben, damit das nicht später erfolgen muss
+    // object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
+    return feldWert;
 };
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
 exports.myTypeOf = function (Wert) {
-    if (typeof Wert === "boolean") {
-        return "boolean";
-    } else if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) {
-        // es ist eine Float
-        return "float";
+    if (typeof Wert === "boolean")   return "boolean";
+    if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) return "float";
     // verhindern, dass führende Nullen abgeschnitten werden
-    } else if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") {
-        // es ist eine Integer
-        return "integer";
-    } else if (typeof Wert === "object") {
-        // es ist ein Objekt
-        return "object";
-    } else if (typeof Wert === "string") {
-        // als String behandeln
-        return "string";
-    } else if (typeof Wert === "undefined") {
-        return "undefined";
-    } else if (typeof Wert === "function") {
-        return "function";
-    }
+    if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") return "integer";
+    if (typeof Wert === "object")    return "object";
+    if (typeof Wert === "string")    return "string";
+    if (typeof Wert === "undefined") return "undefined";
+    if (typeof Wert === "function")  return "function";
 };
 
 // beurteilt, ob ein Objekt exportiert werden soll
 // indem er Feldwerte mit Filterkriterien vergleicht
 // das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
 exports.beurteileFilterkriterien = function (feldwert, filterwert, vergleichsoperator) {
-    if (vergleichsoperator === "kein" && feldwert == filterwert) {
-        return true;
-    } else if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) {
-        return true;
-    } else if (vergleichsoperator === "=" && feldwert == filterwert) {
-        return true;
-    } else if (vergleichsoperator === ">" && feldwert > filterwert) {
-        return true;
-    } else if (vergleichsoperator === ">=" && feldwert >= filterwert) {
-        return true;
-    } else if (vergleichsoperator === "<" && feldwert < filterwert) {
-        return true;
-    } else if (vergleichsoperator === "<=" && feldwert <= filterwert) {
-        return true;
-    }
+    if (vergleichsoperator === "kein" && feldwert == filterwert) return true;
+    if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) return true;
+    if (vergleichsoperator === "=" && feldwert == filterwert)    return true;
+    if (vergleichsoperator === ">" && feldwert > filterwert)     return true;
+    if (vergleichsoperator === ">=" && feldwert >= filterwert)   return true;
+    if (vergleichsoperator === "<" && feldwert < filterwert)     return true;
+    if (vergleichsoperator === "<=" && feldwert <= filterwert)   return true;
     return false;
 };
 
@@ -174,6 +147,7 @@ exports.beurteileObInformationenEnthaltenSind = function (objekt, felder, filter
         bez_mit_feldname,
         ds_mit_name,
         ds_name;
+
     if (felder && felder.length > 0) {
         _.each(felder, function (feld) {
             ds_typ = feld.DsTyp;
@@ -238,7 +212,7 @@ exports.prüfeObObjektKriterienErfüllt = function (objekt, felder, filterkriter
     for (var z=0; z<filterkriterien.length; z++) {
         ds_typ = filterkriterien[z].DsTyp;
         ds_name = filterkriterien[z].DsName;
-        feldname = filterkriterien[z].Feldname,
+        feldname = filterkriterien[z].Feldname;
         filterwert = filterkriterien[z].Filterwert;
         if (feldname === "GUID") {
             // die ID darf nicht in Kleinschrift verwandelt werden
@@ -643,13 +617,13 @@ exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_z
 
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
     _.each(objekt, function (feldwert, feldname) {
-        if (typeof feldwert !== "Object" && feldname !== "_rev") {
+        if (typeof feldwert !== "object" && feldname !== "_rev") {
             _.each(felder, function (feld) {
                 if (feld.DsName === "Objekt" && feld.Feldname === feldname) {
                     exportObjekt[feldname] = feldwert;
                 }
                 if (feld.DsName === "Objekt" && feld.Feldname === "GUID" && feldname === "_id") {
-                    exportObjekt["GUID"] = feldwert;
+                    exportObjekt.GUID = feldwert;
                 }
             });
         }
@@ -826,9 +800,9 @@ exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_z
                                     } else {
                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
                                         if (!exportObjekt[feld.DsName + ": " + feldname]) {
-                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '\(Komma\)');
+                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '(Komma)');
                                         } else {
-                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '\(Komma\)');
+                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '(Komma)');
                                         }
                                     }
                                 });

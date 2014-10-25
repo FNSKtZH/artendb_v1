@@ -1,11 +1,11 @@
+/*jslint node: true */
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    initiiereArt2 = require('./initiiereArt2'),
+    erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
 
 var returnFunction = function ($, id) {
-    var initiiereArt2 = require('./initiiereArt2'),
-        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
-
     $.ajax('http://localhost:5984/artendb/' + id, {
         cache: false,
         type: 'get',

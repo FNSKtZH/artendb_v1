@@ -2,11 +2,13 @@
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält.
 // Wenn ja: reklamieren und rückgängig machen
 
+/*jslint node: true */
 'use strict';
 
 // braucht $ wegen .modal
 var returnFunction = function ($, that) {
-    var $that = $(that);
+    var $that = $(that),
+        bez_ds_filtered = [];
     // die Checkboxen sollen drei Werte annehmen können:
     if (that.type === "checkbox") {
         if (that.readOnly) {
@@ -23,10 +25,9 @@ var returnFunction = function ($, that) {
         }
     }
 
-    var bez_ds_filtered = [];
     $("#exportieren_objekte_waehlen_ds_collapse")
         .find(".export_feld_filtern")
-        .each(function() {
+        .each(function () {
             if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
                 bez_ds_filtered.push($(this).attr('eigenschaft'));
             }

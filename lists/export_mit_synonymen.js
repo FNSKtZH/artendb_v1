@@ -1,6 +1,6 @@
-'use strict';
 function (head, req) {
-
+    'use strict';
+    
 	start({
 		"headers": {
 			"Accept-Charset": "utf-8",
@@ -24,7 +24,7 @@ function (head, req) {
 		beziehungssammlungen_aus_synonymen,
         datensammlungen_aus_synonymen,
         ergänzeDsBsVonSynonym_return,
-        _ = require("lists/lib/underscore"),
+        _   = require("lists/lib/underscore"),
         adb = require("lists/lib/artendb_listfunctions");
 
     // übergebene Variablen extrahieren
@@ -78,5 +78,6 @@ function (head, req) {
             datensammlungen_aus_synonymen = [];
         }
     }
+
     send(JSON.stringify(export_objekte));
 }

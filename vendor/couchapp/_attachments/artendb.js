@@ -1135,7 +1135,7 @@ window.adb.handleBtnLrBearbNeuClick = function() {
     var html,
         getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');
     if (!$(this).hasClass('disabled')) {
-        getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
+        getHtmlForLrParentAuswahlliste($, $("#Taxonomie").val(), function (html) {
             $("#lr_parent_waehlen_optionen").html(html);
             // jetzt das modal aufrufen
             // höhe Anpassen funktioniert leider nicht über css mit calc

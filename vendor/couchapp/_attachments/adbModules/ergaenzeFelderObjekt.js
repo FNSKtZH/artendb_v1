@@ -5,6 +5,7 @@
 // retourniert das ergänzte FelderObjekt
 // das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');

@@ -18,7 +18,7 @@ var returnFunction = function ($, export_felder_arrays, formular) {
 
     // dazu muss zuerst die Gruppe entfernt werden
     _.each(export_felder_arrays, function (export_felder) {
-        export_felder.key.splice(0,1);
+        export_felder.key.splice(0, 1);
     });
 
     // jetzt nur noch eineindeutige Array-Objekte (=Eigenschaftensammlungen) belassen

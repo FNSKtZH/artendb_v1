@@ -1,6 +1,6 @@
-'use strict';
 function (head, req) {
-
+    'use strict';
+    
 	start({
 		"headers": {
 			"Content-Type": "text/csv",

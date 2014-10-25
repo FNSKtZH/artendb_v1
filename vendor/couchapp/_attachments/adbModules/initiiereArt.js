@@ -1,12 +1,13 @@
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');
 
 var returnFunction = function ($, id) {
     var initiiereArt2 = require('./initiiereArt2'),
+        $db = $.couch.db("artendb"),
         erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
 
-    var $db = $.couch.db("artendb");
     $db.openDoc(id, {
         success: function (art) {
             var html_art,

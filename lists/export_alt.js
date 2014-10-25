@@ -3,9 +3,8 @@
  * produziert die API für ALT gemäss Vorgaben der EBP
  */
 
- 'use strict';
-
 function (head, req) {
+     'use strict';
 
     start({
         "headers": {
@@ -18,10 +17,7 @@ function (head, req) {
         objekt,
         exportObjekte = [],
         üVar = {
-            fasseTaxonomienZusammen: true,
-            filterkriterien: [],
             felder: [],
-            nur_objekte_mit_eigenschaften: false,
             bez_in_zeilen: true
         },
         filterkriterien_objekt = {"filterkriterien": []},

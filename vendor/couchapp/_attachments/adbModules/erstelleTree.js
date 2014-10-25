@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var returnFunction = function ($) {
@@ -11,31 +12,29 @@ var returnFunction = function ($) {
         initiiereSuchfeld = require('./initiiereSuchfeld');
 
     $("#tree" + window.adb.Gruppe).jstree({
-        "json_data": { 
+        "json_data": {
             ajax: {
                 type: 'GET',
                 url: function (node) {
-                    if (node == -1) {
+                    if (node === -1) {
                         return holeDatenUrlFuerTreeOberstesLevel($);
-                    } else {
-                        level = parseInt(node.attr('level'), 10) + 1;
-                        gruppe = node.attr('gruppe');
-                        if (node.attr('filter')) {
-                            filter = node.attr('filter').split(",");
-                            id = "";
-                        } else {
-                            filter = "";
-                            id = node.attr('id');
-                        }
-                        return holeDatenUrlFuerTreeUntereLevel($, level, filter, gruppe, id);
                     }
+                    level = parseInt(node.attr('level'), 10) + 1;
+                    gruppe = node.attr('gruppe');
+                    if (node.attr('filter')) {
+                        filter = node.attr('filter').split(",");
+                        id = "";
+                    } else {
+                        filter = "";
+                        id = node.attr('id');
+                    }
+                    return holeDatenUrlFuerTreeUntereLevel($, level, filter, gruppe, id);
                 },
                 success: function (data) {
-                    //console.log("erstelleTree meldet: ajax success");
                     return data;
                 },
-                error: function (data) {
-                    //console.log("erstelleTree meldet: ajax failure");
+                error: function () {
+                    //console.log("erstelleTree meldet: ajax failure");  // KOMISCH: MELDET FEHLER, obwohl daten erhalten wurden
                 }
             }
         },
@@ -57,25 +56,21 @@ var returnFunction = function ($) {
             "icons": false
         },
         "plugins" : ["ui", "themes", "json_data", "sort"]
-    })
-    .bind("select_node.jstree", function (e, data) {
-        'use strict';
+    }).bind("select_node.jstree", function (e, data) {
         var node = data.rslt.obj,
-        initiiereArt = require('./initiiereArt');
+            initiiereArt = require('./initiiereArt');
         $.jstree._reference(node).open_node(node);
         if (node.attr("id")) {
             // verhindern, dass bereits offene Seiten nochmals geöffnet werden
             if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
                 localStorage.art_id = node.attr("id");
                 // Anzeige im Formular initiieren. ID und Datensammlung übergeben
-                initiiereArt ($, node.attr("id"));
+                initiiereArt($, node.attr("id"));
             }
         }
-    })
-    .bind("loaded.jstree", function() {
-        'use strict';
+    }).bind("loaded.jstree", function () {
         jstree_erstellt.resolve();
-        $("#suchen"+window.adb.Gruppe).css("display", "table");
+        $("#suchen" + window.adb.Gruppe).css("display", "table");
         $("#treeMitteilung").hide();
         $("#tree" + window.adb.Gruppe).show();
         $("#tree" + window.adb.Gruppe + "Beschriftung").show();

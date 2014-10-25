@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');
@@ -14,12 +15,11 @@ var returnFunction = function ($, such_objekte) {
         valueKey: 'Name',
         local: such_objekte,
         limit: 20
-    })
-    .on('typeahead:selected', function (e, datum) {
+    }).on('typeahead:selected', function (e, datum) {
         var oeffneBaumZuId = require('./oeffneBaumZuId');
-        oeffneBaumZuId ($, datum.id);
+        oeffneBaumZuId($, datum.id);
     });
-    $("#suchfeld"+window.adb.Gruppe).focus();
+    $("#suchfeld" + window.adb.Gruppe).focus();
 };
 
 module.exports = returnFunction;

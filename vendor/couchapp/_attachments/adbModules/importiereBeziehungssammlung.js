@@ -1,6 +1,7 @@
 // bekommt das Objekt mit den Datensätzen (window.adb.bsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');
@@ -141,7 +142,7 @@ var returnFunction = function ($) {
                     var beziehungen = [];
                     anzahl_beziehungssammlungen += 1;
                     // Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
-                    beziehungssammlung = jQuery.extend(true, {}, beziehungssammlung_vorlage);
+                    beziehungssammlung = $.extend(true, {}, beziehungssammlung_vorlage);
                     _.each(importdaten_felder_array, function (importdaten_feld) {
                         // durch die Felder der Beziehungen loopen
                         anzahl_felder = 0;

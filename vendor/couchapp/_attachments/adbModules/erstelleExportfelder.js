@@ -2,6 +2,7 @@
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 // formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)
 
+/*jslint node: true */
 'use strict';
 
 var _          = require('underscore'),

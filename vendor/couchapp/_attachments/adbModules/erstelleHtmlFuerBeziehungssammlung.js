@@ -4,6 +4,7 @@
 // Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen,
 // sonst geht nur die erste auf
 
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore'),
@@ -13,7 +14,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
     var html,
         name,
         ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        bs_name = ersetzeUngueltigeZeichenInIdNamen (beziehungssammlung.Name) + alt_name,
+        bs_name = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name,
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
 
@@ -29,7 +30,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
     html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
 
     // Datensammlung beschreiben
-    html += erstelleHtmlFuerDatensammlungBeschreibung (beziehungssammlung);
+    html += erstelleHtmlFuerDatensammlungBeschreibung(beziehungssammlung);
 
     // die Beziehungen sortieren
     beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);

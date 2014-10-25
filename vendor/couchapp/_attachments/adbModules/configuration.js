@@ -2,6 +2,7 @@
  * Hier werden zentral alle Konfigurationsparameter gesammelt
  */
 
+/*jslint node: true */
 'use strict';
 
 var config = {},

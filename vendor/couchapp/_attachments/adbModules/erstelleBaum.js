@@ -1,12 +1,12 @@
+/*jslint node: true */
 'use strict';
-
-//var $ = require('jquery');
 
 // erhält $, weil jquery.couch.js nicht nod-fähig ist
 var returnFunction = function ($) {
     var gruppe,
         gruppenbezeichnung,
         baum_erstellt = $.Deferred(),
+        $db = $.couch.db("artendb"),
         erstelleTree = require('./erstelleTree');
     // alle Bäume ausblenden
     $(".baum").hide();
@@ -36,8 +36,7 @@ var returnFunction = function ($) {
         break;
     }
 
-    var $db = $.couch.db("artendb");
-    $db.view('http://localhost:5984/artendb/_design/artendb/_view/' + gruppe + '_gruppiert', {
+    $db.view('artendb/' + gruppe + '_gruppiert', {
         success: function (data) {
             var anzahl_objekte = data.rows[0].value;
             $("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
@@ -48,7 +47,7 @@ var returnFunction = function ($) {
         }
     });
 
-    $.when(erstelleTree($)).then(function() {
+    $.when(erstelleTree($)).then(function () {
         baum_erstellt.resolve();
     });
 

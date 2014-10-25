@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 //var $ = require('jquery');
@@ -26,7 +27,7 @@ var returnFunction = function ($) {
     if (window.adb.Gruppe === "Lebensräume") {
         url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[1]&endkey=[1,{},{},{},{},{}]&group_level=6";
     } else {
-        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_"+gruppe+"/baum_"+gruppe+"?group_level=1";
+        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?group_level=1";
     }
     return url;
 };

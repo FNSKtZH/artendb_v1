@@ -3,10 +3,9 @@
  * produziert die API für ALT gemäss Vorgaben der EBP
  */
 
-'use strict';
-
 function (head, req) {
-
+    'use strict';
+    
     start({
         "headers": {
             "Accept-Charset": "utf-8",
