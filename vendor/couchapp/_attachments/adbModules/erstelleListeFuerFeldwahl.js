@@ -66,24 +66,20 @@ var returnFunction = function ($, export_gruppen, formular) {
         gruppen = export_gruppen;
         _.each(gruppen, function (gruppe) {
             // Felder abfragen
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/felder', {
-                type: 'GET',
-                dataType: "json",
-                data: {
-                    group_level: 5,
-                    startkey: '["' + gruppe + '"]',
-                    endkey: '["' + gruppe + '",{},{},{},{}]'
+            var $db = $.couch.db("artendb");
+            $db.view('artendb/felder?group_level=5&startkey=["' + gruppe + '"]&endkey=["' + gruppe + '",{},{},{},{}]', {
+                success: function (data) {
+                    export_felder_arrays = _.union(export_felder_arrays, data.rows);
+                    // eine Gruppe aus export_gruppen entfernen
+                    export_gruppen.splice(0, 1);
+                    if (export_gruppen.length === 0) {
+                        // alle Gruppen sind verarbeitet
+                        require('./erstelleListeFuerFeldwahl2')($, export_felder_arrays, formular);
+                    }
+                },
+                error: function () {
+                    console.log('erstelleListeFuerFeldwahl: keine Daten erhalten');
                 }
-            }).done(function (data) {
-                export_felder_arrays = _.union(export_felder_arrays, data.rows);
-                // eine Gruppe aus export_gruppen entfernen
-                export_gruppen.splice(0,1);
-                if (export_gruppen.length === 0) {
-                    // alle Gruppen sind verarbeitet
-                    require('./erstelleListeFuerFeldwahl2')($, export_felder_arrays, formular);
-                }
-            }).fail(function () {
-                console.log('keine Daten erhalten');
             });
         });
     } else {
