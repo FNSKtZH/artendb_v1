@@ -157,7 +157,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
                 .append(html_felder_wählen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .append(html_filtern)
-                .find("input[type='checkbox']").each(function() {
+                .find("input[type='checkbox']").each(function () {
                    this.indeterminate = true;
                 });
         }

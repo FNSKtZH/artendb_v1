@@ -1,4 +1,4 @@
-function() {
+function () {
   var elem = $(this);
   $$(this).userCtx = null;
   $.couch.session({

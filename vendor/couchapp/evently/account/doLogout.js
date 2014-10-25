@@ -1,7 +1,7 @@
-function() {
+function () {
   var elem = $(this);
   $.couch.logout({
-    success : function() {
+    success : function () {
       elem.trigger("_init");
     }
   });

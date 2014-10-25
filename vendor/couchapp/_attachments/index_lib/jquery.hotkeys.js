@@ -50,7 +50,7 @@
 		var origHandler = handleObj.handler,
 			keys = handleObj.data.toLowerCase().split(" ");
 	
-		handleObj.handler = function( event ) {
+		handleObj.handler = function ( event ) {
 			// Don't fire in text-accepting inputs that we didn't directly bind to
 			if ( this !== event.target && (/textarea|select/i.test( event.target.nodeName ) ||
 				 event.target.type === "text") ) {
@@ -101,7 +101,7 @@
 		};
 	}
 
-	jQuery.each([ "keydown", "keyup", "keypress" ], function() {
+	jQuery.each([ "keydown", "keyup", "keypress" ], function () {
 		jQuery.event.special[ this ] = { add: keyHandler };
 	});
 

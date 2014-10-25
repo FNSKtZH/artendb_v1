@@ -1,4 +1,4 @@
-function() {
+function () {
   var md5 = $$(this).app.require("vendor/couchapp/lib/md5");
   
   // TODO this can be cleaned up with docForm?
@@ -23,7 +23,7 @@ function() {
       success : function (userDoc) {
         userDoc["couch.app.profile"] = newProfile;
         db.saveDoc(userDoc, {
-          success : function() {
+          success : function () {
             newProfile.name = userDoc.name;
             $$(widget).profile = newProfile;
             widget.trigger("profileReady", [newProfile]);

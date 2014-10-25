@@ -92,7 +92,7 @@ function docForm(formSelector, opts) {
   if (opts.id) {
     db.openDoc(opts.id, {
       attachPrevRev : opts.attachPrevRev,
-      error: function() {
+      error: function () {
         if (opts.error) {opts.error.apply(opts, arguments);}
       },
       success: function (doc) {
@@ -112,7 +112,7 @@ function docForm(formSelector, opts) {
         db.removeDoc(localFormDoc, opts);
       }
     },
-    localDoc : function() {
+    localDoc : function () {
       formToDeepJSON(formSelector, opts.fields, localFormDoc);
       return localFormDoc;
     }

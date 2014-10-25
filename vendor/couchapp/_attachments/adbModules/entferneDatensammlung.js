@@ -22,7 +22,7 @@ var returnFunction = function ($) {
         $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-    $(document).bind('adb.ds_entfernt', function() {
+    $(document).bind('adb.ds_entfernt', function () {
         anz_vorkommen_von_ds_entfernt++;
         var prozent = Math.round((anz_vorkommen_von_ds - anz_vorkommen_von_ds_entfernt) / anz_vorkommen_von_ds * 100);
         $("#DsImportierenProgressbar")

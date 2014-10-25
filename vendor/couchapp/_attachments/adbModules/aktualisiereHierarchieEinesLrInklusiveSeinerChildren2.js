@@ -2,15 +2,16 @@
 'use strict';
 
 var _ = require('underscore'),
-    $ = require('jquery'),
-    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+    $ = require('jquery');
 
-var returnFunction = function ($, lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function ($, lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
         object_array = _.map(lr.rows, function (row) {
             return row.doc;
-        });
+        }),
+        $db = $.couch.db("artendb");
+
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};
     }
@@ -43,9 +44,8 @@ var returnFunction = function ($, lr, objekt, aktualisiereHierarchiefeld, einhei
         objekt.Taxonomie.Eigenschaften.Taxonomie = einheit_ist_taxonomiename;
     }
     // db aktualisieren
-    var $db = $.couch.db("artendb");
     $db.saveDoc(objekt, {
-        success: function() {
+        success: function () {
             var doc;
             // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
             _.each(lr.rows, function (lr_row) {
@@ -54,14 +54,14 @@ var returnFunction = function ($, lr, objekt, aktualisiereHierarchiefeld, einhei
                     // das ist ein child
                     // auch aktualisieren
                     // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, doc, false, einheit_ist_taxonomiename);
+                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, doc, false, einheit_ist_taxonomiename);
                 }
             });
         },
-        error: function() {
+        error: function () {
             console.log('Datensatz nicht gespeichert');
         }
     });
 };
 
-module.exports = returnFunction;
+module.exports = aktualisiereHierarchieEinesLrInklusiveSeinerChildren2;

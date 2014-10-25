@@ -15,7 +15,7 @@ exports.init = function (newDoc, oldDoc, userCtx, secObj) {
     if (!should) v.forbidden(message);
   }
   
-  v.isAdmin = function() {
+  v.isAdmin = function () {
     return userCtx.roles.indexOf('_admin') != -1
   };
   
@@ -23,7 +23,7 @@ exports.init = function (newDoc, oldDoc, userCtx, secObj) {
     return userCtx.roles.indexOf(role) != -1
   };
 
-  v.require = function() {
+  v.require = function () {
     for (var i=0; i < arguments.length; i++) {
       var field = arguments[i];
       message = "The '"+field+"' field is required.";

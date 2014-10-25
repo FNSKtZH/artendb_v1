@@ -56,7 +56,7 @@ var returnFunction = function ($) {
     });*/
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    $(document).bind('adb.ds_hinzugefügt', function() {
+    $(document).bind('adb.ds_hinzugefügt', function () {
         anz_ds_importiert++;
         var prozent = Math.round(anz_ds_importiert/anz_ds*100),
             rückmeldung;

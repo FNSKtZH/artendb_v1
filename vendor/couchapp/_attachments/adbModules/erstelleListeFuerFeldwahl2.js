@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');
@@ -54,7 +55,7 @@ var returnFunction = function ($, export_felder_arrays, formular) {
         }
     });
 
-    $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function() {
+    $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function () {
         require('./erstelleExportfelder') (taxonomien, datensammlungen, beziehungssammlungen, formular);
     });
 

@@ -3,7 +3,7 @@ exports.get = function (db, docid, setFun, getFun) {
     success : function (doc) {
       getFun(doc.cache);
     },
-    error : function() {
+    error : function () {
       setFun(function (cache) {
         db.saveDoc({
           _id : docid,
@@ -20,6 +20,6 @@ exports.clear = function (db, docid) {
     success : function (doc) {
       db.removeDoc(doc);
     },
-    error : function() {}
+    error : function () {}
   });
 };

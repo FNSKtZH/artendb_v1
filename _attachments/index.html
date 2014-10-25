@@ -926,7 +926,7 @@
 
             window.adb = window.adb || {};
 
-            $(document).ready(function() {
+            $(document).ready(function () {
 
                 window.adb.browserDetect.init();
                 // zunächst mal den gröbsten Bock abfangen
@@ -990,7 +990,7 @@
 
                 // IE8 kennt trim nicht!
                 if (!String.prototype.trim)  {
-                    String.prototype.trim = function() {
+                    String.prototype.trim = function () {
                         return this.replace(/^\s+|\s+$/g, '');
                     };
                 } // IE8 kennt indexOf nicht!
@@ -1006,7 +1006,7 @@
                 // das hier war der Versuch, es erst später aufzurufen (natürlich in script tag ausgeschaltet)
 
                 // hat aber nicht geklappt
-                /*setTimeout(function() {
+                /*setTimeout(function () {
                     $.getScript('vendor/couchapp/FileSaver.js');
                 }, 100);*/
 
@@ -1015,14 +1015,14 @@
 
                 // Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
                 if (window.addEventListener) {
-                    window.addEventListener('popstate', function() {
+                    window.addEventListener('popstate', function () {
                         window.adb.öffneUri();
                     });
                 }
 
                 // IE8 kennt Object.keys nicht
                 if (!Object.keys) {
-                    Object.keys = (function() {
+                    Object.keys = (function () {
                         var hasOwnProperty
                                         = Object.prototype.hasOwnProperty,
                                 hasDontEnumBug = !({toString: null}).
@@ -1195,7 +1195,7 @@
                                 }
                                 return new FakeBlob(this.data.join(""), type, "raw");
                             };
-                            FBB_proto.toString = function() {
+                            FBB_proto.toString = function () {
                                 return "[object BlobBuilder]";
                             };
                             FB_proto.slice = function (start, end, type) {
@@ -1205,7 +1205,7 @@
                                 }
                                 return new FakeBlob(this.data.slice(start, args > 1 ? end : this.data.length), type, this.encoding);
                             };
-                            FB_proto.toString = function() {
+                            FB_proto.toString = function () {
                                 return "[object Blob]";
                             };
                             return FakeBlobBuilder;
@@ -1226,7 +1226,7 @@
 
                 // Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
                 // daher öffneUri nochmals auslösen
-                window.onload = function() {
+                window.onload = function () {
                     window.adb.öffneUri();
                 };
 
@@ -1439,10 +1439,10 @@
                         event.preventDefault();
                     })
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', window.adb.handleExportierenExportierenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function() {
+                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function () {
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
                     })
-                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function() {
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function () {
                         window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
                     });
 

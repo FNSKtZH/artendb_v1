@@ -13,6 +13,6 @@ var requireDir = require('require-dir');
 
 requireDir('../gulp-tasks', {recurse: true});
 
-return gulp.task('prod', ['browserify'], function() {
+return gulp.task('prod', ['browserify'], function () {
     gulp.start('prod_2');
 });

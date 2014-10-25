@@ -41,23 +41,23 @@ function makePath(array) {
 
 exports.init = function (req) {
   return {
-    asset : function() {
+    asset : function () {
       var p = req.path, parts = ['', p[0], p[1] , p[2]];
       return makePath(concatArgs(parts, arguments));
     },
-    attachment : function() {
+    attachment : function () {
       var p = req.path, parts = ['', p[0]];
       return makePath(concatArgs(parts, arguments));
     },
-    show : function() {
+    show : function () {
       var p = req.path, parts = ['', p[0], p[1] , p[2], '_show'];
       return makePath(concatArgs(parts, arguments));
     },
-    list : function() {
+    list : function () {
       var p = req.path, parts = ['', p[0], p[1] , p[2], '_list'];
       return makePath(concatArgs(parts, arguments));
     },
-    update : function() {
+    update : function () {
       var p = req.path, parts = ['', p[0], p[1] , p[2], '_update'];
       return makePath(concatArgs(parts, arguments));
     },

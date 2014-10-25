@@ -77,10 +77,10 @@ var returnFunction = function ($) {
         window.adb.setzeTreehöhe();
         initiiereSuchfeld($);
     })
-    .bind("after_open.jstree", function() {
+    .bind("after_open.jstree", function () {
         window.adb.setzeTreehöhe();
     })
-    .bind("after_close.jstree", function() {
+    .bind("after_close.jstree", function () {
         window.adb.setzeTreehöhe();
     });
     return jstree_erstellt.promise();

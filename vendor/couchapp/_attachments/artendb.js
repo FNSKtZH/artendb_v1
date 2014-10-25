@@ -151,7 +151,7 @@ window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, ds_typ, ds_n
 };
 
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
-window.adb.setzeTreehöhe = function() {
+window.adb.setzeTreehöhe = function () {
     'use strict';
     var window_height = $(window).height();
     if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
@@ -204,25 +204,25 @@ window.adb.validiereSignup = function (woher) {
     // prüfen
     if (!email) {
         $("#Emailhinweis_"+woher).show();
-        setTimeout(function() {
+        setTimeout(function () {
             $("#Email_"+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     } else if (!passwort) {
         $("#Passworthinweis_"+woher).show();
-        setTimeout(function() {
+        setTimeout(function () {
             $("#Passwort_"+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     } else if (!passwort2) {
         $("#Passwort2hinweis_"+woher).show();
-        setTimeout(function() {
+        setTimeout(function () {
             $("#Passwort2_"+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     } else if (passwort !== passwort2) {
         $("#Passwort2hinweisFalsch_"+woher).show();
-        setTimeout(function() {
+        setTimeout(function () {
             $("#Passwort2_"+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
@@ -237,7 +237,7 @@ window.adb.erstelleKonto = function (woher) {
         name: $('#Email_'+woher).val()
     },
     $('#Passwort_'+woher).val(), {
-        success : function() {
+        success : function () {
             localStorage.Email = $('#Email_'+woher).val();
             if (woher === "art") {
                 window.adb.bearbeiteLrTaxonomie();
@@ -248,7 +248,7 @@ window.adb.erstelleKonto = function (woher) {
             $("#Passwort_"+woher).val("");
             $("#Passwort2_"+woher).val("");
         },
-        error : function() {
+        error : function () {
             var praefix = "importieren_";
             if (woher === "art") {
                 praefix = "";
@@ -289,7 +289,7 @@ window.adb.meldeUserAn = function (woher) {
                 }
                 window.adb.blendeMenus();
             },
-            error: function() {
+            error: function () {
                 var präfix = "importieren_";
                 if (woher === "art") {
                     präfix = "";
@@ -305,7 +305,7 @@ window.adb.meldeUserAn = function (woher) {
     }
 };
 
-window.adb.blendeMenus = function() {
+window.adb.blendeMenus = function () {
     'use strict';
     if (localStorage.admin) {
         $("#menu_btn")
@@ -318,7 +318,7 @@ window.adb.blendeMenus = function() {
     }
 };
 
-window.adb.meldeUserAb = function() {
+window.adb.meldeUserAb = function () {
     'use strict';
     // IE8 kann nicht deleten
     try {
@@ -380,7 +380,7 @@ window.adb.passeUiFürAngemeldetenUserAn = function (woher) {
 window.adb.pruefeAnmeldung = function (woher) {
     'use strict';
     if (!localStorage.Email) {
-        setTimeout(function() {
+        setTimeout(function () {
             window.adb.zurueckZurAnmeldung(woher);
         }, 600);
         return false;
@@ -418,13 +418,13 @@ window.adb.validiereUserAnmeldung = function (woher) {
     var email = $('#Email_'+woher).val(),
         passwort = $('#Passwort_'+woher).val();
     if (!email) {
-        setTimeout(function() {
+        setTimeout(function () {
             $('#Email_'+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         $("#Emailhinweis_"+woher).show();
         return false;
     } else if (!passwort) {
-        setTimeout(function() {
+        setTimeout(function () {
             $('#Passwort_'+woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         $("#Passworthinweis_"+woher).show();
@@ -437,7 +437,7 @@ window.adb.validiereUserAnmeldung = function (woher) {
 // suchen, ob schon eine Datensammlung mit diesem Namen existiert
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
-window.adb.handleBsNameChange = function() {
+window.adb.handleBsNameChange = function () {
     'use strict';
     var that = this,
         bs_key = _.find(window.adb.ds_namen_eindeutig, function (key) {
@@ -451,7 +451,7 @@ window.adb.handleBsNameChange = function() {
             .addClass("alert-info")
             .show();
         $("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-        setTimeout(function() {
+        setTimeout(function () {
             $("#importieren_bs_ds_beschreiben_hinweis2")
                 .alert()
                 .hide();
@@ -468,7 +468,7 @@ window.adb.handleBsNameChange = function() {
 
 // Wenn DsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
-window.adb.handleDsImportiertVonChange = function() {
+window.adb.handleDsImportiertVonChange = function () {
     'use strict';
     var $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
     $("#DsImportiertVon").val(localStorage.Email);
@@ -476,7 +476,7 @@ window.adb.handleDsImportiertVonChange = function() {
         .alert()
         .show()
         .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-    setTimeout(function() {
+    setTimeout(function () {
         $importieren_ds_ds_beschreiben_hinweis2
             .alert()
             .hide();
@@ -485,7 +485,7 @@ window.adb.handleDsImportiertVonChange = function() {
 
 // Wenn BsImportiertVon geändert wird
 // Kontrollieren, dass es die email der angemeldeten Person ist
-window.adb.handleBsImportiertVonChange = function() {
+window.adb.handleBsImportiertVonChange = function () {
     'use strict';
     $("#BsImportiertVon").val(localStorage.Email);
     $("#importieren_bs_ds_beschreiben_hinweis2")
@@ -495,7 +495,7 @@ window.adb.handleBsImportiertVonChange = function() {
         .addClass("alert-info")
         .show();
     $("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-    setTimeout(function() {
+    setTimeout(function () {
         $("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()
             .hide();
@@ -504,7 +504,7 @@ window.adb.handleBsImportiertVonChange = function() {
 
 // wenn BsZusammenfassend geändert wird
 // BsUrsprungsBs_div zeigen oder verstecken
-window.adb.handleBsZusammenfassendChange = function() {
+window.adb.handleBsZusammenfassendChange = function () {
     'use strict';
     if ($(this).prop('checked')) {
         $("#BsUrsprungsBs_div").show();
@@ -515,7 +515,7 @@ window.adb.handleBsZusammenfassendChange = function() {
 
 // wenn DsZusammenfassend geändert wird
 // DsUrsprungsDs zeigen oder verstecken
-window.adb.handleDsZusammenfassendChange = function() {
+window.adb.handleDsZusammenfassendChange = function () {
     'use strict';
     if ($(this).prop('checked')) {
         $("#DsUrsprungsDs_div").show();
@@ -525,14 +525,14 @@ window.adb.handleDsZusammenfassendChange = function() {
 };
 
 // Wenn BsWählen geändert wird
-window.adb.handleBsWählenChange = function() {
+window.adb.handleBsWählenChange = function () {
     'use strict';
     var handleBsWaehlenChange = require('./adbModules/handleBsWaehlenChange');
     handleBsWaehlenChange ($, this);
 };
 
 // wenn DsFile geändert wird
-window.adb.handleDsFileChange = function() {
+window.adb.handleDsFileChange = function () {
     'use strict';
     var erstelleTabelle = require('./adbModules/erstelleTabelle');
     if (typeof event.target.files[0] === "undefined") {
@@ -554,7 +554,7 @@ window.adb.handleDsFileChange = function() {
 };
 
 // wenn BsFile geändert wird
-window.adb.handleBsFileChange = function() {
+window.adb.handleBsFileChange = function () {
     'use strict';
     var erstelleTabelle = require('./adbModules/erstelleTabelle');
     if (typeof event.target.files[0] === "undefined") {
@@ -575,7 +575,7 @@ window.adb.handleBsFileChange = function() {
 };
 
 // wenn btn_resize geklickt wird
-window.adb.handleBtnResizeClick = function() {
+window.adb.handleBtnResizeClick = function () {
     'use strict';
     var windowHeight = $(window).height(),
         $body = $("body");
@@ -598,7 +598,7 @@ window.adb.handleBtnResizeClick = function() {
 
 // wenn menu_btn geklickt wird
 // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
-window.adb.handleMenuBtnClick = function() {
+window.adb.handleMenuBtnClick = function () {
     'use strict';
     if (localStorage.art_id) {
         $("#GoogleBilderLink_li").removeClass("disabled");
@@ -612,7 +612,7 @@ window.adb.handleMenuBtnClick = function() {
 // wenn ds_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-window.adb.handleDs_ImportierenClick = function() {
+window.adb.handleDs_ImportierenClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
     if(window.adb.isFileAPIAvailable()) {
@@ -627,7 +627,7 @@ window.adb.handleDs_ImportierenClick = function() {
 // wenn bs_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-window.adb.handleBs_ImportierenClick = function() {
+window.adb.handleBs_ImportierenClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
     if(window.adb.isFileAPIAvailable()) {
@@ -639,18 +639,18 @@ window.adb.handleBs_ImportierenClick = function() {
     }
 };
 
-window.adb.handleMenuAdminClick = function() {
+window.adb.handleMenuAdminClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
     zeigeFormular ("admin");
 };
 
-window.adb.ergänzePilzeZhgis = function() {
+window.adb.ergänzePilzeZhgis = function () {
     'use strict';
     $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
     var $db = $.couch.db("artendb");
     $db.view('artendb/macromycetes?include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             var ds_zhgis = {},
                 ergänzt = 0,
                 fehler = 0,
@@ -662,27 +662,27 @@ window.adb.ergänzePilzeZhgis = function() {
             ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
             ds_zhgis.Eigenschaften = {};
             ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
-            _.each(data.rows, function(row) {
+            _.each(data.rows, function (row) {
                 var pilz = row.doc,
                     zhgis_in_ds;
                 if (!pilz.Eigenschaftensammlungen) {
                     pilz.Eigenschaftensammlungen = [];
                 }
-                zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function(ds) {
+                zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function (ds) {
                     return ds.Name === "ZH GIS";
                 });
                 // nur ergänzen, wenn ZH GIS noch nicht existiert
                 if (!zhgis_in_ds) {
                     pilz.Eigenschaftensammlungen.push(ds_zhgis);
-                    pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function(ds) {
+                    pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function (ds) {
                         return ds.Name;
                     });
                     $db.saveDoc(pilz, {
-                        success: function() {
+                        success: function () {
                             ergänzt ++;
                             $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
                         },
-                        error: function() {
+                        error: function () {
                             fehler ++;
                             $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
                         }
@@ -696,28 +696,28 @@ window.adb.ergänzePilzeZhgis = function() {
     });
 };
 
-window.adb.korrigiereArtwertnameInFlora = function() {
+window.adb.korrigiereArtwertnameInFlora = function () {
     'use strict';
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
     var $db = $.couch.db("artendb");
     $db.view('artendb/flora?include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             var korrigiert = 0,
                 fehler = 0,
                 save;
-            _.each(data.rows, function(row) {
+            _.each(data.rows, function (row) {
                 var art = row.doc,
                     ds_artwert,
                     daten = {};
                 if (art.Eigenschaftensammlungen) {
-                    ds_artwert = _.find(art.Eigenschaftensammlungen, function(ds) {
+                    ds_artwert = _.find(art.Eigenschaftensammlungen, function (ds) {
                        return ds.Name === "ZH Artwert (1995)";
                     });
                     //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
                     if (ds_artwert && ds_artwert.Eigenschaften) {
                         save = false;
                         // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
-                        _.each(ds_artwert.Eigenschaften, function(value, key) {
+                        _.each(ds_artwert.Eigenschaften, function (value, key) {
                             if (key === "Artwert KT ZH") {
                                 key = "Artwert";
                                 save = true;
@@ -727,11 +727,11 @@ window.adb.korrigiereArtwertnameInFlora = function() {
                         if (save) {
                             ds_artwert.Eigenschaften = daten;
                             $db.saveDoc(art, {
-                                success: function() {
+                                success: function () {
                                     korrigiert ++;
                                     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
                                 },
-                                error: function() {
+                                error: function () {
                                     fehler ++;
                                     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
                                 }
@@ -750,31 +750,31 @@ window.adb.korrigiereArtwertnameInFlora = function() {
     });
 };
 
-window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
+window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
     'use strict';
     var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
     $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
     var $db = $.couch.db("artendb");
     $db.view('artendb/flora?include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             var korrigiert = 0,
                 fehler = 0,
                 save;
-            _.each(data.rows, function(row) {
+            _.each(data.rows, function (row) {
                 var art = row.doc,
                     ds;
                 if (art.Eigenschaftensammlungen) {
-                    ds = _.find(art.Eigenschaftensammlungen, function(ds) {
+                    ds = _.find(art.Eigenschaftensammlungen, function (ds) {
                         return ds.Name === "CH Rote Liste (1991)";
                     });
                     if (ds) {
                         ds.Name = "CH Rote Listen Flora (1991)";
                         $db.saveDoc(art, {
-                            success: function() {
+                            success: function () {
                                 korrigiert ++;
                                 $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                             },
-                            error: function() {
+                            error: function () {
                                 fehler ++;
                                 $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                             }
@@ -792,19 +792,19 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {
     });
 };
 
-window.adb.nenneDsUm = function() {
+window.adb.nenneDsUm = function () {
     'use strict';
     var nenneDsUm = require('./adbModules/nenneDsUm');
     nenneDsUm ();
 };
 
-window.adb.baueDsZuEigenschaftenUm = function() {
+window.adb.baueDsZuEigenschaftenUm = function () {
     'use strict';
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
         $db = $.couch.db("artendb");
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
     $db.view('artendb/all_docs?include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             var korrigiert = 0,
                 fehler = 0,
                 save;
@@ -812,7 +812,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Keine Daten erhalten");
                 return;
             }
-            _.each(data.rows, function(row) {
+            _.each(data.rows, function (row) {
                 var art = row.doc,
                     datensammlungen,
                     beziehungssammlungen,
@@ -830,7 +830,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 }
                 if (art.Datensammlungen) {
                     datensammlungen = art.Datensammlungen;
-                    _.each(datensammlungen, function(ds) {
+                    _.each(datensammlungen, function (ds) {
                         if (ds.Daten) {
                             ds_daten = ds.Daten;
                             delete ds.Daten;
@@ -850,11 +850,11 @@ window.adb.baueDsZuEigenschaftenUm = function() {
                 }
                 if (save) {
                     $db.saveDoc(art, {
-                        success: function() {
+                        success: function () {
                             korrigiert ++;
                             $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         },
-                        error: function() {
+                        error: function () {
                             fehler ++;
                             $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         }
@@ -873,7 +873,7 @@ window.adb.baueDsZuEigenschaftenUm = function() {
 };
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
-window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
+window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
     'use strict';
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
     window.adb.bereiteImportieren_ds_beschreibenVor("ds");
@@ -881,7 +881,7 @@ window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {
 };
 
 // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
-window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
+window.adb.handleImportierenBsDsBeschreibenCollapseShown = function () {
     'use strict';
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
     window.adb.bereiteImportieren_bs_beschreibenVor("bs");
@@ -889,7 +889,7 @@ window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {
 };
 
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
-window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
+window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
@@ -902,7 +902,7 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {
 };
 
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
-window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
+window.adb.handleImportierenBsDatenUpladenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
@@ -915,7 +915,7 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {
 };
 
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
-window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
+window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
@@ -926,7 +926,7 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {
 };
 
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
-window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
+window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
@@ -937,7 +937,7 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {
 };
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenDsImportAusführenCollapseShown = function() {
+window.adb.handleImportierenDsImportAusführenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
@@ -948,7 +948,7 @@ window.adb.handleImportierenDsImportAusführenCollapseShown = function() {
 };
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenBsImportAusführenCollapseShown = function() {
+window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
     'use strict';
     if (!window.adb.pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
@@ -959,7 +959,7 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function() {
 };
 
 // wenn DsWählen geändert wird
-window.adb.handleDsWählenChange = function() {
+window.adb.handleDsWählenChange = function () {
     'use strict';
     var handleDsWaehlenChange = require('./adbModules/handleDsWaehlenChange');
     handleDsWaehlenChange ($, this);
@@ -969,7 +969,7 @@ window.adb.handleDsWählenChange = function() {
 // suchen, ob schon eine Datensammlung mit diesem Namen existiert
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
-window.adb.handleDsNameChange = function() {
+window.adb.handleDsNameChange = function () {
     'use strict';
     var that = this,
         ds_key = _.find(window.adb.ds_namen_eindeutig, function (key) {
@@ -981,7 +981,7 @@ window.adb.handleDsNameChange = function() {
             .alert()
             .show()
             .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-        setTimeout(function() {
+        setTimeout(function () {
             $importieren_ds_ds_beschreiben_hinweis2
                 .alert()
                 .hide();
@@ -997,7 +997,7 @@ window.adb.handleDsNameChange = function() {
 };
 
 // wenn DsLöschen geklickt wird
-window.adb.handleDsLöschenClick = function() {
+window.adb.handleDsLöschenClick = function () {
     'use strict';
     // Rückmeldung anzeigen
     $("#importieren_ds_ds_beschreiben_hinweis")
@@ -1008,7 +1008,7 @@ window.adb.handleDsLöschenClick = function() {
 };
 
 // wenn BsLoeschen geklickt wird
-window.adb.handleBsLöschenClick = function() {
+window.adb.handleBsLöschenClick = function () {
     'use strict';
     // Rückmeldung anzeigen
     $("#importieren_bs_ds_beschreiben_hinweis")
@@ -1022,7 +1022,7 @@ window.adb.handleBsLöschenClick = function() {
 };
 
 // wenn exportieren geklickt wird
-window.adb.handleExportierenClick = function() {
+window.adb.handleExportierenClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
     zeigeFormular ("export");
@@ -1030,7 +1030,7 @@ window.adb.handleExportierenClick = function() {
 };
 
 // wenn exportieren_alt geklickt wird
-window.adb.handleExportierenAltClick = function() {
+window.adb.handleExportierenAltClick = function () {
     'use strict';
     window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
 };
@@ -1039,7 +1039,7 @@ window.adb.handleExportierenAltClick = function() {
 // kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 // und pro Beziehung eine Zeile ausgegeben wird. 
 // Wenn ja: reklamieren und rückgängig machen
-window.adb.handleFeldWählenChange = function() {
+window.adb.handleFeldWählenChange = function () {
     'use strict';
     var that = this,
         formular = $(that).closest('form').attr('id'),
@@ -1052,7 +1052,7 @@ window.adb.handleFeldWählenChange = function() {
             that = this;
         $("#export" + _alt + " .exportieren_felder_waehlen_felderliste")
             .find(".feld_waehlen")
-            .each(function() {
+            .each(function () {
                 if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
                     bez_ds_checked.push($(this).attr('datensammlung'));
                 }
@@ -1070,7 +1070,7 @@ window.adb.handleFeldWählenChange = function() {
 
 // wenn .feld_waehlen_alle_von_ds geändert wird
 // wenn checked: alle unchecken, sonst alle checken
-window.adb.handleFeldWählenAlleVonDs = function() {
+window.adb.handleFeldWählenAlleVonDs = function () {
     'use strict';
     var ds = $(this).attr('datensammlung'),
         formular = $(this).closest('form').attr('id'),
@@ -1078,20 +1078,20 @@ window.adb.handleFeldWählenAlleVonDs = function() {
     if ($(this).prop('checked')) {
         status = true;
     }
-    $('#' + formular + ' [datensammlung="' + ds + '"]').each(function() {
+    $('#' + formular + ' [datensammlung="' + ds + '"]').each(function () {
         $(this).prop('checked', status);
     });
 };
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
-window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {
+window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
     'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
 };
 
 // ist nötig, weil index.html nicht requiren kann
-window.adb.handleExportFeldFilternChange = function() {
+window.adb.handleExportFeldFilternChange = function () {
     'use strict';
     var that = this,
         handleExportFeldFilternChange = require('./adbModules/handleExportFeldFilternChange');
@@ -1100,7 +1100,7 @@ window.adb.handleExportFeldFilternChange = function() {
 
 // wenn exportieren_exportieren angezeigt wird
 // zur Schaltfläche Vorschau scrollen
-window.adb.handleExportierenExportierenShow = function() {
+window.adb.handleExportierenExportierenShow = function () {
     'use strict';
     // Fehlermeldung verstecken, falls sie noch offen war
     $("#exportieren_exportieren_error_text")
@@ -1112,7 +1112,7 @@ window.adb.handleExportierenExportierenShow = function() {
 };
 
 // wenn .btn.lr_bearb_bearb geklickt wird
-window.adb.handleBtnLrBearbBearbKlick = function() {
+window.adb.handleBtnLrBearbBearbKlick = function () {
     'use strict';
     if (!$(this).hasClass('disabled')) {
         window.adb.bearbeiteLrTaxonomie();
@@ -1120,7 +1120,7 @@ window.adb.handleBtnLrBearbBearbKlick = function() {
 };
 
 // wenn .btn.lr_bearb_schuetzen geklickt wird
-window.adb.handleBtnLrBearbSchuetzenClick = function() {
+window.adb.handleBtnLrBearbSchuetzenClick = function () {
     'use strict';
     if (!$(this).hasClass('disabled')) {
         window.adb.schuetzeLrTaxonomie();
@@ -1130,7 +1130,7 @@ window.adb.handleBtnLrBearbSchuetzenClick = function() {
 };
 
 // wenn .btn.lr_bearb_neu geklickt wird
-window.adb.handleBtnLrBearbNeuClick = function() {
+window.adb.handleBtnLrBearbNeuClick = function () {
     'use strict';
     var html,
         getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');
@@ -1146,13 +1146,13 @@ window.adb.handleBtnLrBearbNeuClick = function() {
 };
 
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
-window.adb.handleLrParentOptionenChange = function() {
+window.adb.handleLrParentOptionenChange = function () {
     'use strict';
     var handleLrParentOptionenChange = require('./adbModules/handleLrParentOptionenChange');
     handleLrParentOptionenChange($, this);
 };
 
-window.adb.handleRückfrageLrLöschenJaClick = function() {
+window.adb.handleRückfrageLrLöschenJaClick = function () {
     'use strict';
     // zuerst die id des Objekts holen
     var uri = new Uri($(location).attr('href')),
@@ -1167,9 +1167,9 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
     // Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
     var $db = $.couch.db("artendb");
     $db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             // daraus einen Array von docs machen
-            var doc_array = _.map(data.rows, function(row) {
+            var doc_array = _.map(data.rows, function (row) {
                 return row.doc;
             });
             // und diese Dokumente nun löschen
@@ -1192,13 +1192,13 @@ window.adb.handleRückfrageLrLöschenJaClick = function() {
 };
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
-window.adb.handleLrTaxonomieControlsChange = function() {
+window.adb.handleLrTaxonomieControlsChange = function () {
     'use strict';
-    window.adb.speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));
+    require('./adbModules/speichern') ($, $(this).val(), this.id);
 };
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
-window.adb.handlePanelbodyLrTaxonomieShown = function() {
+window.adb.handlePanelbodyLrTaxonomieShown = function () {
     'use strict';
     if (localStorage.lr_bearb == "true") {
         window.adb.bearbeiteLrTaxonomie();
@@ -1269,7 +1269,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 };
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
-window.adb.handleExportierenExportierenExportierenClick = function() {
+window.adb.handleExportierenExportierenExportierenClick = function () {
     'use strict';
     if (window.adb.isFileAPIAvailable()) {
         var exportstring = window.adb.erstelleExportString(window.adb.exportieren_objekte),
@@ -1284,9 +1284,9 @@ window.adb.handleExportierenExportierenExportierenClick = function() {
 
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
-window.adb.handlePanelShown = function() {
+window.adb.handlePanelShown = function () {
     'use strict';
-    $(this).find('textarea').each(function() {
+    $(this).find('textarea').each(function () {
         window.adb.fitTextareaToContent(this.id);
     });
 };
@@ -1303,11 +1303,11 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
 };
 
 // wenn Fenstergrösse verändert wird
-window.adb.handleResize = function() {
+window.adb.handleResize = function () {
     'use strict';
     window.adb.setzeTreehöhe();
     // Höhe der Textareas korrigieren
-    $('#forms').find('textarea').each(function() {
+    $('#forms').find('textarea').each(function () {
         window.adb.fitTextareaToContent(this.id);
     });
 };
@@ -1324,21 +1324,21 @@ window.adb.handleAnmeldenBtnClick = function (that) {
 };
 
 // wenn .Email keyup
-window.adb.handleEmailKeyup = function() {
+window.adb.handleEmailKeyup = function () {
     'use strict';
     //allfällig noch vorhandenen Hinweis ausblenden
     $(".Emailhinweis").hide();
 };
 
 // wenn .Passwort keyup
-window.adb.handlePasswortKeyup = function() {
+window.adb.handlePasswortKeyup = function () {
     'use strict';
     //allfällig noch vorhandenen Hinweis ausblenden
     $(".Passworthinweis").hide();
 };
 
 // wenn .Passwort2 keyup
-window.adb.handlePasswort2Keyup = function() {
+window.adb.handlePasswort2Keyup = function () {
     'use strict';
     //allfällig noch vorhandenen Hinweis ausblenden
     $(".Passworthinweis2").hide();
@@ -1357,7 +1357,7 @@ window.adb.handleKontoErstellenBtnClick = function (that) {
     $(".konto_erstellen_btn").hide();
     $(".konto_speichern_btn").show();
     $(".importieren_anmelden_fehler").hide();
-    setTimeout(function() {
+    setTimeout(function () {
         $("#Email_" + bs_ds).focus();
     }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 };
@@ -1381,42 +1381,42 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 };
 
 // wenn .gruppe geklickt wird
-window.adb.handleÖffneGruppeClick = function() {
+window.adb.handleÖffneGruppeClick = function () {
     'use strict';
     window.adb.öffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
-window.adb.handleDsFelderChange = function() {
+window.adb.handleDsFelderChange = function () {
     'use strict';
     require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
 };
 
 // wenn #BsFelder geändert wird
-window.adb.handleBsFelderChange = function() {
+window.adb.handleBsFelderChange = function () {
     'use strict';
     require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
 };
 
 // wenn #DsId geändert wird
-window.adb.handleDsIdChange = function() {
+window.adb.handleDsIdChange = function () {
     'use strict';
     require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
 };
 
 // wenn #BsId geändert wird
-window.adb.handleBsIdChange = function() {
+window.adb.handleBsIdChange = function () {
     'use strict';
     require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
 };
 
 // wenn in textarea keyup oder focus
-window.adb.handleTextareaKeyupFocus = function() {
+window.adb.handleTextareaKeyupFocus = function () {
     'use strict';
     window.adb.fitTextareaToContent(this.id);
 };
 
-window.adb.importiereDatensammlung = function() {
+window.adb.importiereDatensammlung = function () {
     'use strict';
     require('./adbModules/importiereDatensammlung') ($);
 };
@@ -1498,7 +1498,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function () {
         beziehungspartner_vorbereitet = $.Deferred();
     window.adb.bezPartner_objekt = {};
 
-    _.each(window.adb.bsDatensätze, function(bs_datensatz) {
+    _.each(window.adb.bsDatensätze, function (bs_datensatz) {
         if (bs_datensatz.Beziehungspartner) {
             // bs_datensatz.Beziehungspartner ist eine kommagetrennte Liste von guids
             // diese Liste in Array verwandeln
@@ -1513,10 +1513,10 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function () {
     // danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
     var $db = $.couch.db("artendb");
     $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
-        success: function(data) {
+        success: function (data) {
             var objekt,
                 bez_partner;
-            _.each(data.rows, function(data_row) {
+            _.each(data.rows, function (data_row) {
                 objekt = data_row.doc;
                 bez_partner = {};
                 bez_partner.Gruppe = objekt.Gruppe;
@@ -1542,7 +1542,7 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function () {
     return beziehungspartner_vorbereitet.promise();
 };
 
-window.adb.entferneDatensammlung = function() {
+window.adb.entferneDatensammlung = function () {
     'use strict';
     require('./adbModules/entferneDatensammlung') ($);
 };
@@ -1550,7 +1550,7 @@ window.adb.entferneDatensammlung = function() {
 window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
-    setTimeout(function() {
+    setTimeout(function () {
         var $db = $.couch.db("artendb");
         $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
             success: function (data) {
@@ -1588,7 +1588,7 @@ window.adb.entferneDatensammlungAusObjekt = function (ds_name, objekt) {
     }
 };
 
-window.adb.entferneBeziehungssammlung = function() {
+window.adb.entferneBeziehungssammlung = function () {
     'use strict';
     require('./adbModules/entferneBeziehungssammlung') ($);
 };
@@ -1596,7 +1596,7 @@ window.adb.entferneBeziehungssammlung = function() {
 window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
-    setTimeout(function() {
+    setTimeout(function () {
         var $db = $.couch.db("artendb");
         $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
             success: function (data) {
@@ -1729,7 +1729,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {
             anz_vorkommen_von_ds = data.rows.length;
 
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-            $(document).bind('adb.ds_entfernt', function() {
+            $(document).bind('adb.ds_entfernt', function () {
                 anz_vorkommen_von_ds_entfernt++;
                 rückmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
                 $importieren_ds_ds_beschreiben_hinweis
@@ -1741,7 +1741,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {
                 if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
                     // die Indexe aktualisieren
                     $db.view('artendb/lr', {
-                        success: function() {
+                        success: function () {
                             // melden, dass Indexe aktualisiert wurden
                             rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
                             rückmeldung += "Die Indexe wurden aktualisiert.";
@@ -1782,7 +1782,7 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function (bs_name) {
         success: function (data) {
             anz_vorkommen_von_bs = data.rows.length;
             // listener einrichten, der meldet, wenn ein Datensatz entfernt wurde
-            $(document).bind('adb.bs_entfernt', function() {
+            $(document).bind('adb.bs_entfernt', function () {
                 anz_vorkommen_von_bs_entfernt++;
                 $importieren_bs_ds_beschreiben_hinweis
                     .removeClass("alert-success")
@@ -1796,7 +1796,7 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function (bs_name) {
                 if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
                     // die Indexe aktualisieren
                     $db.view('artendb/lr', {
-                        success: function() {
+                        success: function () {
                             // melden, dass Indexe aktualisiert wurden
                             $importieren_bs_ds_beschreiben_hinweis
                                 .removeClass("alert-info")
@@ -1866,7 +1866,7 @@ window.adb.entferneBeziehungssammlungAusDokument = function (id, bs_name) {
 };
 
 // prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt
-window.adb.öffneUri = function() {
+window.adb.öffneUri = function () {
     'use strict';
     // parameter der uri holen
     var uri = new Uri($(location).attr('href')),
@@ -1900,7 +1900,7 @@ window.adb.öffneUri = function() {
                 $('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
                 $("#Gruppe_label").html("Gruppe:");
                 // tree aufbauen, danach Datensatz initiieren
-                $.when(erstelleBaum($)).then(function() {
+                $.when(erstelleBaum($)).then(function () {
                     var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                     oeffneBaumZuId ($, id);
                 });
@@ -1917,7 +1917,7 @@ window.adb.öffneUri = function() {
         if (!$('#export_alt').is(':visible')) {
             $.when(zeigeFormular('export_alt')).then(function () {
                 /*// verzögert und langsam 'Eigenschaften wählen' öffnen
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#exportieren_alt_felder_waehlen_collapse')
                         .collapse('show');
                 }, 1000);*/
@@ -1985,7 +1985,7 @@ window.adb.erstelleExportString = function (exportobjekte) {
 
 // holt eine Liste aller Datensammlungen, wenn nötig
 // speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann
-window.adb.holeDatensammlungenFürExportfelder = function() {
+window.adb.holeDatensammlungenFürExportfelder = function () {
     'use strict';
     var exfe_geholt = $.Deferred();
     if (window.adb.ds_bs_von_objekten) {
@@ -2105,10 +2105,10 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
         .hide();
 };
 
-window.adb.fürExportGewählteGruppen = function() {
+window.adb.fürExportGewählteGruppen = function () {
     'use strict';
     var export_gruppen = [];
-    $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
+    $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
         if ($(this).prop('checked')) {
             export_gruppen.push($(this).val());
         }
@@ -2141,7 +2141,7 @@ window.adb.bereiteImportieren_ds_beschreibenVor = function (woher) {
 
 // DsNamen in Auswahlliste stellen
 // veränderbare sind normal, übrige grau
-window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {
+window.adb.bereiteImportieren_ds_beschreibenVor_02 = function () {
     'use strict';
     var html,
         ds_namen = [];
@@ -2211,7 +2211,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor = function (woher) {
     }
 };
 
-window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
+window.adb.bereiteImportieren_bs_beschreibenVor_02 = function () {
     'use strict';
     var html,
         bs_namen = [];
@@ -2257,7 +2257,7 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {
     $("#BsUrsprungsBs").html(html);
 };
 
-window.adb.isFileAPIAvailable = function() {
+window.adb.isFileAPIAvailable = function () {
     'use strict';
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -2393,12 +2393,6 @@ window.adb.öffneGruppe = function (Gruppe) {
     delete localStorage.art_id;
 };
 
-
-window.adb.speichern = function (feldwert, feldname, ds_name, ds_typ) {
-    'use strict';
-    require('./adbModules/speichern') ($, feldwert, feldname, ds_name, ds_typ);
-};
-
 window.adb.convertToCorrectType = function (feldwert) {
     'use strict';
     var type = window.adb.myTypeOf(feldwert);
@@ -2432,7 +2426,7 @@ window.adb.myTypeOf = function (wert) {
     }
 };
 
-window.adb.bearbeiteLrTaxonomie = function() {
+window.adb.bearbeiteLrTaxonomie = function () {
     'use strict';
     // Benutzer muss anmelden
     if (!window.adb.pruefeAnmeldung("art")) {
@@ -2447,7 +2441,7 @@ window.adb.bearbeiteLrTaxonomie = function() {
     $("#art_anmelden").show();
 
     // alle Felder schreibbar setzen
-    $(".Lebensräume.Taxonomie").find(".controls").each(function() {
+    $(".Lebensräume.Taxonomie").find(".controls").each(function () {
         // einige Felder nicht bearbeiten
         if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
             var parent = $(this).parent();
@@ -2467,10 +2461,10 @@ window.adb.bearbeiteLrTaxonomie = function() {
     $(".lr_bearb_bearb").addClass('disabled');
 };
 
-window.adb.schuetzeLrTaxonomie = function() {
+window.adb.schuetzeLrTaxonomie = function () {
     'use strict';
     // alle Felder schreibbar setzen
-    $(".Lebensräume.Taxonomie .controls").each(function() {
+    $(".Lebensräume.Taxonomie .controls").each(function () {
         var parent = $(this).parent();
         $(this).attr('readonly', true);
         if (parent.attr('href')) {
@@ -2559,15 +2553,15 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
     // save ohne open: _rev wurde zuvor übernommen
     var $db = $.couch.db("artendb");
     $db.saveDoc(object, {
-        success: function() {
+        success: function () {
             var erstelleBaum = require('./adbModules/erstelleBaum');
-            $.when(erstelleBaum($)).then(function() {
+            $.when(erstelleBaum($)).then(function () {
                 var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                 oeffneBaumZuId ($, object._id);
                 $('#lr_parent_waehlen').modal('hide');
             });
         },
-        error: function() {
+        error: function () {
             var initiiereArt = require('./adbModules/initiiereArt');
             $("#meldung_individuell_label").html("Fehler");
             $("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
@@ -2587,20 +2581,18 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     'use strict';
-    var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+    var $db = $.couch.db("artendb"),
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {
-        $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
-            type: 'GET',
-            dataType: "json",
-            data: {
-                include_docs: true
+        $db.view('artendb/lr?include_docs=true', {
+            success: function (lr) {
+                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+            },
+            error: function () {
+                console.log('aktualisiereHierarchieEinesLrInklusiveSeinerChildren: keine Daten erhalten');
             }
-        }).done(function (lr) {
-            aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
-        }).fail(function () {
-            console.log('keine Daten erhalten');
         });
     }
 };
@@ -2620,11 +2612,10 @@ window.adb.ergänzeParentZuLrHierarchie = function (objekt_array, parentGUID, Hi
                 // die Hierarchie ist noch nicht zu Ende - weitermachen
                 hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
                 return Hierarchie;
-            } else {
-                // jetzt ist die Hierarchie vollständig
-                // sie ist aber verkehrt - umkehren
-                return Hierarchie.reverse();
             }
+            // jetzt ist die Hierarchie vollständig
+            // sie ist aber verkehrt - umkehren
+            return Hierarchie.reverse();
         }
     });
 };
@@ -2646,14 +2637,10 @@ window.adb.erstelleLrLabelNameAusObjekt = function (objekt) {
 
 window.adb.erstelleLrLabelName = function (label, einheit) {
     'use strict';
-    if (label && einheit) {
-        return label + ": " + einheit;
-    } else if (einheit) {
-        return einheit;
-    } else {
-        // aha, ein neues Objekt, noch ohne Label und Einheit
-        return "unbenannte Einheit";
-    }
+    if (label && einheit) return label + ": " + einheit;
+    if (einheit)          return                einheit;
+    // aha, ein neues Objekt, noch ohne Label und Einheit
+    return "unbenannte Einheit";
 };
 
 // löscht Datensätze in Massen
@@ -2733,7 +2720,7 @@ window.adb.ermittleVergleichsoperator = function (filterwert) {
 // kontrolliert den verwendeten Browser
 // Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
 window.adb.browserDetect = {
-    init: function() {
+    init: function () {
         this.browser = this.searchString(this.dataBrowser) || "Other";
         this.version = this.searchVersion(navigator.userAgent) ||       this.searchVersion(navigator.appVersion) || "Unknown";
     },
@@ -2777,4 +2764,4 @@ window.adb.browserDetect = {
 * Copyright 2012 Twitter, Inc.
 * //apache.org/licenses/LICENSE-2.0.txt
 */
-!function (e){var t=function (t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function(){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function (e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function (e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function (e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function (e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function (e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function (n){return this.each(function(){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function (t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery);
+!function (e){var t=function (t,n){this.$element=e(t),this.type=this.$element.data("uploadtype")||(this.$element.find(".thumbnail").length>0?"image":"file"),this.$input=this.$element.find(":file");if(this.$input.length===0)return;this.name=this.$input.attr("name")||n.name,this.$hidden=this.$element.find('input[type=hidden][name="'+this.name+'"]'),this.$hidden.length===0&&(this.$hidden=e('<input type="hidden" />'),this.$element.prepend(this.$hidden)),this.$preview=this.$element.find(".fileupload-preview");var r=this.$preview.css("height");this.$preview.css("display")!="inline"&&r!="0px"&&r!="none"&&this.$preview.css("line-height",r),this.original={exists:this.$element.hasClass("fileupload-exists"),preview:this.$preview.html(),hiddenVal:this.$hidden.val()},this.$remove=this.$element.find('[data-dismiss="fileupload"]'),this.$element.find('[data-trigger="fileupload"]').on("click.fileupload",e.proxy(this.trigger,this)),this.listen()};t.prototype={listen:function (){this.$input.on("change.fileupload",e.proxy(this.change,this)),e(this.$input[0].form).on("reset.fileupload",e.proxy(this.reset,this)),this.$remove&&this.$remove.on("click.fileupload",e.proxy(this.clear,this))},change:function (e,t){if(t==="clear")return;var n=e.target.files!==undefined?e.target.files[0]:e.target.value?{name:e.target.value.replace(/^.+\\/,"")}:null;if(!n){this.clear();return}this.$hidden.val(""),this.$hidden.attr("name",""),this.$input.attr("name",this.name);if(this.type==="image"&&this.$preview.length>0&&(typeof n.type!="undefined"?n.type.match("image.*"):n.name.match(/\.(gif|png|jpe?g)$/i))&&typeof FileReader!="undefined"){var r=new FileReader,i=this.$preview,s=this.$element;r.onload=function (e){i.html('<img src="'+e.target.result+'" '+(i.css("max-height")!="none"?'style="max-height: '+i.css("max-height")+';"':"")+" />"),s.addClass("fileupload-exists").removeClass("fileupload-new")},r.readAsDataURL(n)}else this.$preview.text(n.name),this.$element.addClass("fileupload-exists").removeClass("fileupload-new")},clear:function (e){this.$hidden.val(""),this.$hidden.attr("name",this.name),this.$input.attr("name","");if(navigator.userAgent.match(/msie/i)){var t=this.$input.clone(!0);this.$input.after(t),this.$input.remove(),this.$input=t}else this.$input.val("");this.$preview.html(""),this.$element.addClass("fileupload-new").removeClass("fileupload-exists"),e&&(this.$input.trigger("change",["clear"]),e.preventDefault ? e.preventDefault() : e.returnValue = false)},reset:function (e){this.clear(),this.$hidden.val(this.original.hiddenVal),this.$preview.html(this.original.preview),this.original.exists?this.$element.addClass("fileupload-exists").removeClass("fileupload-new"):this.$element.addClass("fileupload-new").removeClass("fileupload-exists")},trigger:function (e){this.$input.trigger("click"),e.preventDefault ? e.preventDefault() : e.returnValue = false}},e.fn.fileupload=function (n){return this.each(function (){var r=e(this),i=r.data("fileupload");i||r.data("fileupload",i=new t(this,n)),typeof n=="string"&&i[n]()})},e.fn.fileupload.Constructor=t,e(document).on("click.fileupload.data-api",'[data-provides="fileupload"]',function (t){var n=e(this);if(n.data("fileupload"))return;n.fileupload(n.data());var r=e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');r.length>0&&(r.trigger("click.fileupload"),t.preventDefault())})}(window.jQuery);

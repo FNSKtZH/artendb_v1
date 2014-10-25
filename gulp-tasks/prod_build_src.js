@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify');
 
-gulp.task('prod_build_src', function() {
+gulp.task('prod_build_src', function () {
     return gulp.src([
 	    	'vendor/couchapp/_attachments/index_lib/underscore.js',
 	    	'vendor/couchapp/_attachments/index_lib/typeahead.js',

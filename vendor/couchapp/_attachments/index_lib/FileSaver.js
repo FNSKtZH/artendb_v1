@@ -27,7 +27,7 @@ var saveAs = saveAs
 	var
 		  doc = view.document
 		  // only get URL when necessary in case BlobBuilder.js hasn't overridden it yet
-		, get_URL = function() {
+		, get_URL = function () {
 			return view.URL || view.webkitURL || view;
 		}
 		, URL = view.URL || view.webkitURL || view
@@ -44,14 +44,14 @@ var saveAs = saveAs
 		, webkit_req_fs = view.webkitRequestFileSystem
 		, req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem
 		, throw_outside = function (ex) {
-			(view.setImmediate || view.setTimeout)(function() {
+			(view.setImmediate || view.setTimeout)(function () {
 				throw ex;
 			}, 0);
 		}
 		, force_saveable_type = "application/octet-stream"
 		, fs_min_size = 0
 		, deletion_queue = []
-		, process_deletion_queue = function() {
+		, process_deletion_queue = function () {
 			var i = deletion_queue.length;
 			while (i--) {
 				var file = deletion_queue[i];
@@ -85,16 +85,16 @@ var saveAs = saveAs
 				, blob_changed = false
 				, object_url
 				, target_view
-				, get_object_url = function() {
+				, get_object_url = function () {
 					var object_url = get_URL().createObjectURL(blob);
 					deletion_queue.push(object_url);
 					return object_url;
 				}
-				, dispatch_all = function() {
+				, dispatch_all = function () {
 					dispatch(filesaver, "writestart progress write writeend".split(" "));
 				}
 				// on any filesys errors revert to saving with object URLs
-				, fs_error = function() {
+				, fs_error = function () {
 					// don't create more object URLs than needed
 					if (blob_changed || !object_url) {
 						object_url = get_object_url(blob);
@@ -108,7 +108,7 @@ var saveAs = saveAs
 					dispatch_all();
 				}
 				, abortable = function (func) {
-					return function() {
+					return function () {
 						if (filesaver.readyState !== filesaver.DONE) {
 							return func.apply(this, arguments);
 						}
@@ -165,7 +165,7 @@ var saveAs = saveAs
 			fs_min_size += blob.size;
 			req_fs(view.TEMPORARY, fs_min_size, abortable(function (fs) {
 				fs.root.getDirectory("saved", create_if_not_found, abortable(function (dir) {
-					var save = function() {
+					var save = function () {
 						dir.getFile(name, create_if_not_found, abortable(function (file) {
 							file.createWriter(abortable(function (writer) {
 								writer.onwriteend = function (event) {
@@ -174,7 +174,7 @@ var saveAs = saveAs
 									filesaver.readyState = filesaver.DONE;
 									dispatch(filesaver, "writeend", event);
 								};
-								writer.onerror = function() {
+								writer.onerror = function () {
 									var error = writer.error;
 									if (error.code !== error.ABORT_ERR) {
 										fs_error();
@@ -184,7 +184,7 @@ var saveAs = saveAs
 									writer["on" + event] = filesaver["on" + event];
 								});
 								writer.write(blob);
-								filesaver.abort = function() {
+								filesaver.abort = function () {
 									writer.abort();
 									filesaver.readyState = filesaver.DONE;
 								};
@@ -211,7 +211,7 @@ var saveAs = saveAs
 			return new FileSaver(blob, name);
 		}
 	;
-	FS_proto.abort = function() {
+	FS_proto.abort = function () {
 		var filesaver = this;
 		filesaver.readyState = filesaver.DONE;
 		dispatch(filesaver, "abort");
@@ -230,7 +230,7 @@ var saveAs = saveAs
 		null;
 
 	view.addEventListener("unload", process_deletion_queue, false);
-	saveAs.unload = function() {
+	saveAs.unload = function () {
 		process_deletion_queue();
 		view.removeEventListener("unload", process_deletion_queue, false);
 	};

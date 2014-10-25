@@ -47,7 +47,7 @@ var returnFunction = function ($) {
     }, 2000);
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    $(document).bind('adb.bs_hinzugefügt', function() {
+    $(document).bind('adb.bs_hinzugefügt', function () {
         anz_bs_importiert++;
         var prozent = Math.round(anz_bs_importiert/anzahl_beziehungssammlungen*100);
         $("#BsImportierenProgressbar")
@@ -93,8 +93,8 @@ var returnFunction = function ($) {
 
     // zuerst: Veranlassen, dass die Beziehungspartner in window.adb.bsDatensätze in einen Array der richtigen Form umgewandelt werden
     $.when(window.adb.bereiteBeziehungspartnerFürImportVor())
-        .then(function() {
-            setTimeout(function() {
+        .then(function () {
+            setTimeout(function () {
                 anzahl_beziehungssammlungen = 0;
                 var beziehungssammlung,
                     beziehungssammlung_vorlage = {};

@@ -3,7 +3,7 @@ function (e, name, pass) {
   $.couch.signup({
     name : name
   }, pass, {
-    success : function() {
+    success : function () {
       elem.trigger("doLogin", [name, pass]);
     }
   });

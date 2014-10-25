@@ -3,7 +3,7 @@ var gulp       = require('gulp'),
     rename     = require("gulp-rename"),
     notify     = require('gulp-notify');
 
-gulp.task('prod_build_html', function() {
+gulp.task('prod_build_html', function () {
     return gulp.src('_attachments/index_dev.html')
         .pipe(minifyHTML())
         .pipe(rename('index.html'))

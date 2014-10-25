@@ -14,6 +14,6 @@ var requireDir = require('require-dir');
 requireDir('../gulp-tasks', {recurse: true});
 
 // zuerst mal Module einbinden
-return gulp.task('dev', ['browserify'], function() {
+return gulp.task('dev', ['browserify'], function () {
     gulp.start('dev_2');
 });

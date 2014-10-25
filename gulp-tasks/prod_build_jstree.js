@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify');
 
-gulp.task('prod_build_jstree', function() {
+gulp.task('prod_build_jstree', function () {
     return gulp.src([
 	    	'vendor/couchapp/_attachments/jquery.jstree.js'
     	])

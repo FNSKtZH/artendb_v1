@@ -13,7 +13,7 @@ var gulp         = require('gulp');
 var handleErrors = require('../vendor/couchapp/_attachments/adb_lib/handleErrors');
 var source       = require('vinyl-source-stream');
 
-gulp.task('browserify', function() {
+gulp.task('browserify', function () {
     var bundler = browserify({
         // Required watchify args
         cache: {}, packageCache: {}, fullPaths: true,
@@ -25,7 +25,7 @@ gulp.task('browserify', function() {
         debug: true
     });
 
-    var bundle = function() {
+    var bundle = function () {
         // Log when bundling starts
         bundleLogger.start();
 

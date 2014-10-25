@@ -24,7 +24,7 @@ var returnFunction = function ($) {
         $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text");
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-    $(document).bind('adb.bs_entfernt', function() {
+    $(document).bind('adb.bs_entfernt', function () {
         anz_vorkommen_von_bs_entfernt++;
         var prozent = Math.round((anz_vorkommen_von_bs-anz_vorkommen_von_bs_entfernt)/anz_vorkommen_von_bs*100);
         $("#BsImportierenProgressbar")

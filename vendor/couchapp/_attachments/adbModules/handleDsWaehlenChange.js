@@ -24,7 +24,7 @@ var returnFunction = function ($, that) {
     }
     if (wählbar) {
         // zuerst alle Felder leeren
-        $('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function() {
+        $('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
             $(this).val('');
         });
         $DsAnzDs.html("");
@@ -62,7 +62,7 @@ var returnFunction = function ($, that) {
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importieren_ds')
                         .find('textarea')
-                        .each(function() {
+                        .each(function () {
                             window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
                         });
                     $DsName.focus();

@@ -1,6 +1,7 @@
 // managt die Links zu Google Bilder und Wikipedia
 // erwartet das Objekt mit der Art
 
+/*jslint node: true */
 'use strict';
 
 var $ = require('jquery');

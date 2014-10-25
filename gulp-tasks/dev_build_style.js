@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat-sourcemap'),
     notify = require('gulp-notify');
 
-gulp.task('dev_build_style', function() {
+gulp.task('dev_build_style', function () {
     return gulp.src([
 	    	'_attachments/style/bootstrap.css',
 	    	'_attachments/style/artendb.css'

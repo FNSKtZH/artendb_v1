@@ -53,7 +53,7 @@ var returnFunction = function ($, direkt, fürAlt) {
 
     // gewählte Gruppen ermitteln
     if (!fürAlt) {
-        $(".exportieren_ds_objekte_waehlen_gruppe").each(function() {
+        $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
             if ($(this).prop('checked')) {
                 gruppen_array.push($(this).attr('view'));
                 if (gruppen) {
@@ -73,7 +73,7 @@ var returnFunction = function ($, direkt, fürAlt) {
         // durch alle Filterfelder loopen
         // aber nur, wenn nicht für ALT exportiert wird
         // wenn ein Feld einen Wert enthält, danach filtern
-        $("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function() {
+        $("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function () {
             var that = this,
                 $this = $(this);
             if (that.type === "checkbox") {
@@ -106,7 +106,7 @@ var returnFunction = function ($, direkt, fürAlt) {
     filterkriterien_objekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
-    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function() {
+    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};
@@ -115,7 +115,7 @@ var returnFunction = function ($, direkt, fürAlt) {
             gewählte_felder.push(feldObjekt);
         }
     });
-    $("#" + formular).find(".exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function() {
+    $("#" + formular).find(".exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt = {};

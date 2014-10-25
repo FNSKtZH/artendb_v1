@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-return gulp.task('watch', function() {
+return gulp.task('watch', function () {
     gulp.watch([
     	'_attachments/*',
     	'vendor/couchapp/_attachments/*',
