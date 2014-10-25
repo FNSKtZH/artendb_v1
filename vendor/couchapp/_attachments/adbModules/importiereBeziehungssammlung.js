@@ -49,7 +49,9 @@ var returnFunction = function ($) {
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
     $(document).bind('adb.bs_hinzugefügt', function () {
         anz_bs_importiert++;
-        var prozent = Math.round(anz_bs_importiert/anzahl_beziehungssammlungen*100);
+        var prozent = Math.round(anz_bs_importiert/anzahl_beziehungssammlungen * 100),
+            $db = $.couch.db("artendb");
+
         $("#BsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
@@ -66,27 +68,27 @@ var returnFunction = function ($) {
         }, 2000);
         if (anz_bs_importiert === anzahl_beziehungssammlungen) {
             // Indices aktualisieren
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
-                type: 'GET',
-                dataType: "json"
-            }).done(function () {
-                // melden, dass Indexe aktualisiert wurden
-                $importieren_bs_import_ausfuehren_hinweis
-                    .removeClass("alert-info")
-                    .removeClass("alert-danger")
-                    .addClass("alert-success")
-                    .show();
-                rückmeldung = "Die Daten wurden importiert.<br>";
-                rückmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
-                rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                $importieren_bs_import_ausfuehren_hinweis_text.html(rückmeldung + rückmeldung_links);
-                // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
-                window.adb.rückmeldung_links = rückmeldung_links;
-                $('html, body').animate({
-                    scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
-                }, 2000);
-            }).fail(function () {
-                console.log('keine Daten erhalten');
+            $db.view('artendb/lr', {
+                success: function () {
+                    // melden, dass Indexe aktualisiert wurden
+                    $importieren_bs_import_ausfuehren_hinweis
+                        .removeClass("alert-info")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success")
+                        .show();
+                    rückmeldung = "Die Daten wurden importiert.<br>";
+                    rückmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
+                    rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    $importieren_bs_import_ausfuehren_hinweis_text.html(rückmeldung + rückmeldung_links);
+                    // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
+                    window.adb.rückmeldung_links = rückmeldung_links;
+                    $('html, body').animate({
+                        scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
+                    }, 2000);
+                },
+                error: function () {
+                    console.log('importiereBeziehungssammlung: keine Daten erhalten');
+                }
             });
         }
     });

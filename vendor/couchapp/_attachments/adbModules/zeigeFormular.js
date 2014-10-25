@@ -4,6 +4,7 @@
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 
+/*jslint node: true */
 'use strict';
 
 var $ = require('jquery');
@@ -25,8 +26,7 @@ var returnFunction = function (formularname) {
             // IE8 kann nicht deleten
             try {
                 delete localStorage.art_id;
-            }
-            catch (e) {
+            } catch (e) {
                 localStorage.art_id = undefined;
             }
             // URL anpassen, damit kein Objekt angezeigt wird

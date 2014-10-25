@@ -64,16 +64,15 @@ var returnFunction = function () {
                 }
                 // Datensatz speichern, wenn nötig
                 if (save) {
-                    $.ajax('http://localhost:5984/artendb/' + art._id, {
-                        type: 'PUT',
-                        dataType: "json",
-                        data: JSON.stringify(art)
-                    }).done(function () {
-                        korrigiert ++;
-                        $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                    }).fail(function () {
-                        fehler ++;
-                        $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                    $db.saveDoc(art, {
+                        success: function () {
+                            korrigiert ++;
+                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        },
+                        error: function () {
+                            fehler ++;
+                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                        }
                     });
                 }
             });

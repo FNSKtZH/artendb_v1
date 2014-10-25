@@ -2662,10 +2662,13 @@ window.adb.löscheMassenMitObjektArray = function (object_array) {
     objekte_mit_objekte = {};
     objekte_mit_objekte.docs = objekte;
     $.ajax({
+        cache: false,
         type: "POST",
         url: "../../_bulk_docs",
-        contentType: "application/json", 
+        contentType: "application/json; charset=utf-8", 
         data: JSON.stringify(objekte_mit_objekte)
+    }).fail(function () {
+        console.log('löscheMassenMitObjektArray: Daten wurde nicht gelöscht');
     });
 };
 

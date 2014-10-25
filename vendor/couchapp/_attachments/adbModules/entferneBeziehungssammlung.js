@@ -20,6 +20,7 @@ var returnFunction = function ($) {
         anz_vorkommen_von_bs_entfernt = 0,
         anz_vorkommen_von_bs = window.adb.ZuordbareDatensätze.length,
         rückmeldung,
+        $db = $.couch.db("artendb"),
         $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis"),
         $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text");
 
@@ -35,8 +36,7 @@ var returnFunction = function ($) {
 
         if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
             // die Indexe aktualisieren
-            var $db = $.couch.db("artendb");
-            $db.view('http://localhost:5984/artendb/_design/artendb/_view/lr', {
+            $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
                     $importieren_bs_import_ausfuehren_hinweis

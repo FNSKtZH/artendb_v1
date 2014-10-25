@@ -59,7 +59,9 @@ var returnFunction = function ($) {
     $(document).bind('adb.ds_hinzugefügt', function () {
         anz_ds_importiert++;
         var prozent = Math.round(anz_ds_importiert/anz_ds*100),
-            rückmeldung;
+            rückmeldung,
+            $db = $.couch.db("artendb");
+
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
@@ -72,23 +74,23 @@ var returnFunction = function ($) {
         }, 2000);
         if (anz_ds_importiert === anz_ds) {
             // die Indexe aktualisieren
-            $.ajax('http://localhost:5984/artendb/_design/artendb/_view/lr', {
-                type: 'GET',
-                dataType: "json"
-            }).done(function () {
-                // melden, dass views aktualisiert wurden
-                $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
-                rückmeldung = "Die Daten wurden importiert.<br>";
-                rückmeldung += "Die Indexe wurden aktualisiert.<br><br>";
-                rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung + rückmeldung_links);
-                // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
-                window.adb.rückmeldung_links = rückmeldung_links;
-                $('html, body').animate({
-                    scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
-                }, 2000);
-            }).fail(function () {
-                console.log('keine Daten erhalten');
+            $db.view('artendb/lr', {
+                success: function (data) {
+                    // melden, dass views aktualisiert wurden
+                    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
+                    rückmeldung = "Die Daten wurden importiert.<br>";
+                    rückmeldung += "Die Indexe wurden aktualisiert.<br><br>";
+                    rückmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    $importieren_ds_import_ausfuehren_hinweis_text.html(rückmeldung + rückmeldung_links);
+                    // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
+                    window.adb.rückmeldung_links = rückmeldung_links;
+                    $('html, body').animate({
+                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+                    }, 2000);
+                },
+                error: function () {
+                    console.log('importiereDatensammlung: keine Daten erhalten');
+                }
             });
         }
     });

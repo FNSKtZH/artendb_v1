@@ -1230,17 +1230,6 @@
                     window.adb.öffneUri();
                 };
 
-                // Internet Explorer cached ALLES ohne zu fragen
-                // abschalten
-                //Disbable cache for all jQuery AJAX requests
-				$.ajaxSetup({
-					cache: false,
-					contentType: "application/json; charset=utf-8",
-					beforeSend: function (xhr) {
-			            xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
-			        }
-				});
-
                 // wenn User noch angemeldet ist, UI anpassen
                 if (localStorage.Email) {
                     $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");

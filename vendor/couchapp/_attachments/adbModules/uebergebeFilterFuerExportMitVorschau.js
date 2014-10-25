@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var _ = require('underscore');
@@ -8,7 +9,9 @@ var returnFunction = function ($, gruppen, gruppen_array, anz_ds_gewählt, filte
     var fTz = "false",
         anz_gruppen_abgefragt = 0,
         listName,
-        queryParam;
+        queryParam,
+        $db = $.couch.db("artendb");
+
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
         fTz = "true";
@@ -19,10 +22,10 @@ var returnFunction = function ($, gruppen, gruppen_array, anz_ds_gewählt, filte
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
     _.each(gruppen_array, function (gruppe) {
         if ($("#exportieren_synonym_infos").prop('checked')) {
-            listName = "export_mit_synonymen";
+            listName = "artendb/export_mit_synonymen";
             queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         } else {
-            listName = "export";
+            listName = "artendb/export";
             queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
         if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
@@ -38,25 +41,25 @@ var returnFunction = function ($, gruppen, gruppen_array, anz_ds_gewählt, filte
             queryParam += "&bez_in_zeilen=false";
         }
 
-        $.ajax('http://localhost:5984/artendb/_design/artendb/_list/' + listName + '/' + queryParam, {
-            type: 'GET',
-            dataType: "json"
-        }).done(function (data) {
-            // alle Objekte in data in window.adb.exportieren_objekte anfügen
-            window.adb.exportieren_objekte = _.union(window.adb.exportieren_objekte, data);
-            // speichern, dass eine Gruppe abgefragt wurde
-            anz_gruppen_abgefragt++;
-            if (anz_gruppen_abgefragt === gruppen_array.length) {
-                // alle Gruppen wurden abgefragt, jetzt kann es weitergehen
-                // Ergebnis rückmelden
-                $("#exportieren_exportieren_hinweis_text")
-                    .alert()
-                    .show()
-                    .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
-                window.adb.baueTabelleFürExportAuf();
+        $db.list(listName, queryParam, {
+            success: function (data) {
+                // alle Objekte in data in window.adb.exportieren_objekte anfügen
+                window.adb.exportieren_objekte = _.union(window.adb.exportieren_objekte, data);
+                // speichern, dass eine Gruppe abgefragt wurde
+                anz_gruppen_abgefragt++;
+                if (anz_gruppen_abgefragt === gruppen_array.length) {
+                    // alle Gruppen wurden abgefragt, jetzt kann es weitergehen
+                    // Ergebnis rückmelden
+                    $("#exportieren_exportieren_hinweis_text")
+                        .alert()
+                        .show()
+                        .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
+                    window.adb.baueTabelleFürExportAuf();
+                }
+            },
+            error: function () {
+                console.log('uebergebeFilterFuerExportMitVorschau: keine Daten erhalten');
             }
-        }).fail(function () {
-            console.log('error in $db.list');
         });
     });
 };

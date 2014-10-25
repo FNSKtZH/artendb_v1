@@ -24,7 +24,8 @@ var returnFunction = function ($) {
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.ds_entfernt', function () {
         anz_vorkommen_von_ds_entfernt++;
-        var prozent = Math.round((anz_vorkommen_von_ds - anz_vorkommen_von_ds_entfernt) / anz_vorkommen_von_ds * 100);
+        var prozent = Math.round((anz_vorkommen_von_ds - anz_vorkommen_von_ds_entfernt) / anz_vorkommen_von_ds * 100),
+            $db = $.couch.db("artendb");
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);
@@ -42,8 +43,7 @@ var returnFunction = function ($) {
         }, 2000);
         if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
             // die Indexe aktualisieren
-            var $db = $.couch.db("artendb");
-            $db.view('http://localhost:5984/artendb/_design/artendb/_view/lr', {
+            $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
                     $importieren_ds_import_ausfuehren_hinweis
