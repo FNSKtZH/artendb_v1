@@ -2094,8 +2094,7 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
     'use strict';
     var hinweis = "",
         erstelleTabelle = require('./adbModules/erstelleTabelle'),
-        _alt = _alt || '',
-        $element_to_scroll;
+        _alt = _alt || '';
 
     if (window.adb.exportieren_objekte.length > 0) {
         erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle", 'export_alt');
@@ -2107,16 +2106,10 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
             .alert()
             .show();
     }
-
-    if (_alt) {
-        $element_to_scroll = $("#exportieren_alt_exportieren");
-    } else {
-        $element_to_scroll = $("#exportieren_exportieren");
-    }
     if (!_alt) {
-        // Panel-Titel an oberen Rand scrollen
+        // Panel-Titel an oberen Rand scrollen (bei alt schon ausgelöst)
         $('html, body').animate({
-            scrollTop: $element_to_scroll.offset().top -6
+            scrollTop: $("#exportieren_exportieren").offset().top -6
         }, 2000);
     }
 

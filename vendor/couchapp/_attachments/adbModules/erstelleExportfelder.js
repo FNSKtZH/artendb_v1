@@ -141,19 +141,19 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     // html anfügen
     if (!formular || formular === 'export') {
         if (beziehungssammlungen) {
-            $("#export .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_felder_waehlen_felderliste")
                 .html(html_felder_wählen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .html(html_filtern);
-            erstelleExportfelder (datensammlungen, beziehungssammlungen);
+            erstelleExportfelder(datensammlungen, beziehungssammlungen);
         } else if (datensammlungen) {
-            $("#export .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_felder_waehlen_felderliste")
                 .append(html_felder_wählen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .append(html_filtern);
-            erstelleExportfelder (datensammlungen);
+            erstelleExportfelder(datensammlungen);
         } else {
-            $("#export .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_felder_waehlen_felderliste")
                 .append(html_felder_wählen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .append(html_filtern)
@@ -164,16 +164,19 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     }
     if (formular === 'export_alt') {
         if (beziehungssammlungen) {
-            $("#export_alt .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_alt_felder_waehlen_felderliste")
                 .html(html_felder_wählen);
-            erstelleExportfelder (datensammlungen, beziehungssammlungen, null, 'export_alt');
+            erstelleExportfelder(datensammlungen, beziehungssammlungen, null, 'export_alt');
         } else if (datensammlungen) {
-            $("#export_alt .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_alt_felder_waehlen_felderliste")
                 .append(html_felder_wählen);
-            erstelleExportfelder (datensammlungen, null, null, 'export_alt');
+            erstelleExportfelder(datensammlungen, null, null, 'export_alt');
         } else {
-            $("#export_alt .exportieren_felder_waehlen_felderliste")
+            $("#exportieren_alt_felder_waehlen_felderliste")
                 .append(html_felder_wählen);
+            // Rückmeldung ausblenden
+            $("#exportieren_alt_felder_waehlen_hinweis_text")
+                .hide();
         }
     }   
 };

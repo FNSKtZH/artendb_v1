@@ -40,7 +40,7 @@ var returnFunction = function ($, direkt, fürAlt) {
 
     // Beschäftigung melden
     // nicht nötig für ALT, da sehr schnell
-    if (!direkt && !fürAlt) {
+    if (!direkt) {
         $exportieren_exportieren_hinweis_text
             .alert()
             .show()

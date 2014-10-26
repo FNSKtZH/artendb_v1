@@ -75,7 +75,6 @@ var returnFunction = function ($, export_felder_arrays, formular) {
             .show()
             .html(hinweis_taxonomien);
     }
-    
 };
 
 module.exports = returnFunction;

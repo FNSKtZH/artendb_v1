@@ -43,6 +43,12 @@ var returnFunction = function ($, export_gruppen, formular) {
         $('html, body').animate({
             scrollTop: $exportieren_objekte_waehlen_gruppen_hinweis_text.offset().top
         }, 2000);
+    } else {
+        // für alt
+        // Beschäftigung melden
+        $('#exportieren_alt_felder_waehlen_hinweis_text')
+            .alert()
+            .show();
     }
 
     // gewählte Gruppen ermitteln
