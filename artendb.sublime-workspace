@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"include_docs"
+			],
+			[
 				"ers",
 				"erstelleListeFuerFeldwahl"
 			],
@@ -275,7 +279,7 @@
 			"file": "/F/Google Drive/artendb_admin/push.txt",
 			"settings":
 			{
-				"buffer_size": 2809,
+				"buffer_size": 2819,
 				"line_ending": "Windows"
 			}
 		},
@@ -283,41 +287,7 @@
 			"file": "_attachments/style/artendb.css",
 			"settings":
 			{
-				"buffer_size": 18539,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "vendor/couchapp/_attachments/adbModules/handleLrParentOptionenChange.js",
-			"settings":
-			{
-				"buffer_size": 3032,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Searching 251 files for \"'use strict';\" (case sensitive)\n\nC:\\Users\\alex\\artendb\\filters\\dsimport:\n    1  function (doc, req) {\n    2:     'use strict';\n    3      // Zweck: Filter für Changes-Feed für importierte Eigenschaftensammlungen,\n    4      // in dem nur die vom aktuellen User importierten / gelöschten Objekte erscheinen\n\nC:\\Users\\alex\\artendb\\gulp-tasks\\build_couchapp.js:\n    1  /*jslint node: true */\n    2: 'use strict';\n    3  \n    4  var gulp = require('gulp'),\n\nC:\\Users\\alex\\artendb\\gulp-tasks\\dev.js:\n    7  \n    8  /*jslint node: true */\n    9: 'use strict';\n   10  \n   11  var gulp = require('gulp');\n\nC:\\Users\\alex\\artendb\\gulp-tasks\\prod.js:\n    7  \n    8  /*jslint node: true */\n    9: 'use strict';\n   10  \n   11  var gulp = require('gulp');\n\nC:\\Users\\alex\\artendb\\lists\\baum_fauna.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4      start({\n\nC:\\Users\\alex\\artendb\\lists\\baum_flora.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4      start({\n\nC:\\Users\\alex\\artendb\\lists\\baum_lr.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4      start({\n\nC:\\Users\\alex\\artendb\\lists\\baum_macromycetes.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4      start({\n\nC:\\Users\\alex\\artendb\\lists\\baum_moose.js:\n    1  function (head, req) {\n    2: 	'use strict';\n    3  \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4      start({\n\nC:\\Users\\alex\\artendb\\lists\\export_alt.js:\n    5  \n    6  function (head, req) {\n    7:      'use strict';\n    8  \n    9      start({\n\nC:\\Users\\alex\\artendb\\lists\\export_alt_mit_synonymen.js:\n    5  \n    6   function (head, req) {\n    7:     'use strict';\n    8  \n    9      start({\n\nC:\\Users\\alex\\artendb\\lists\\export_alt_mit_synonymen_standardfelder.js:\n    5  \n    6  function (head, req) {\n    7:     'use strict';\n    8  \n    9  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_apflora.js:\n    1  function (head, req) {\n    2: 	'use strict';\n    3  \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_direkt.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3  \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_evab.js:\n    5  \n    6  function (head, req) {\n    7:     'use strict';\n    8      \n    9      start({\n\nC:\\Users\\alex\\artendb\\lists\\export_evm_arten.js:\n    1  function (head, req) {\n    2: 	'use strict';\n    3  \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_evm_artgruppen.js:\n    1  function (head, req) {\n    2: 	'use strict';\n    3  \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_mit_synonymen.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3      \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\export_mit_synonymen_direkt.js:\n    1  function (head, req) {\n    2:     'use strict';\n    3      \n    4  	start({\n\nC:\\Users\\alex\\artendb\\lists\\lib\\artendb_listfunctions.js:\n    1  /*jslint node: true */\n    2: 'use strict';\n    3  \n    4  var _ = require(\"lists/lib/underscore\");\n\nC:\\Users\\alex\\artendb\\updates\\eigenschaft_objekt.js:\n    1  function (doc, req) {\n    2:     'use strict';\n    3  	var field = req.query.field,\n    4          value = req.query.value,\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\_vorlage.js:\n    1  /*jslint node: true */\n    2: 'use strict';\n    3  \n    4  var returnFunction = function () {\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js:\n    1  /*jslint node: true */\n    2: 'use strict';\n    3  \n    4  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\configuration.js:\n    3   */\n    4  \n    5: 'use strict';\n    6  \n    7  var config = {},\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\entferneBeziehungssammlung.js:\n    2  // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung\n    3  \n    4: 'use strict';\n    5  \n    6  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\entferneDatensammlung.js:\n    2  // holt sich selber den in den Feldern erfassten Namen der Datensammlung\n    3  \n    4: 'use strict';\n    5  \n    6  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\ergaenzeFelderObjekt.js:\n    6  // das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte\n    7  \n    8: 'use strict';\n    9  \n   10  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\ersetzeUngueltigeZeichenInIdNamen.js:\n    1: 'use strict';\n    2  \n    3  module.exports = function (idname) {\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleBaum.js:\n    1: 'use strict';\n    2  \n    3  //var $ = require('jquery');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleExportfelder.js:\n    3  // formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)\n    4  \n    5: 'use strict';\n    6  \n    7  var _          = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleHtmlFuerBeziehungssammlung.js:\n    5  // sonst geht nur die erste auf\n    6  \n    7: 'use strict';\n    8  \n    9  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleHtmlFuerDatensammlung.js:\n    2  // benötigt von der art bzw. den lr die entsprechende Datensammlung\n    3  \n    4: 'use strict';\n    5  \n    6  var returnFunction = function (ds_typ, art, datensammlung) {\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleHtmlFuerDatensammlungBeschreibung.js:\n    1: 'use strict';\n    2  \n    3  var Autolinker = require('autolinker');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleHtmlFuerFeld.js:\n    2  // generiert daraus und retourniert html für die Darstellung im passenden Feld\n    3  \n    4: 'use strict';\n    5  \n    6  var returnFunction = function (feldname, feldwert, ds_typ, ds_name) {\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleListeFuerFeldwahl.js:\n    4  // formular ist im Standard export, wenn anders (z.B. export_alt), übergeben\n    5  \n    6: 'use strict';\n    7  \n    8  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleListeFuerFeldwahl2.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleTabelle.js:\n    5  // formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt\n    6  \n    7: 'use strict';\n    8  \n    9  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\erstelleTree.js:\n    1: 'use strict';\n    2  \n    3  var returnFunction = function ($) {\n    .\n   60      })\n   61      .bind(\"select_node.jstree\", function (e, data) {\n   62:         'use strict';\n   63          var node = data.rslt.obj,\n   64          initiiereArt = require('./initiiereArt');\n   ..\n   74      })\n   75      .bind(\"loaded.jstree\", function() {\n   76:         'use strict';\n   77          jstree_erstellt.resolve();\n   78          $(\"#suchen\"+window.adb.Gruppe).css(\"display\", \"table\");\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\filtereFuerExport.js:\n    2  // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt\n    3  \n    4: 'use strict';\n    5  \n    6  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\getHtmlForLrParentAuswahlliste.js:\n    4  // plus man soll auch einen neue Taxonomie beginnen können\n    5  \n    6: 'use strict';\n    7  \n    8  var $ = require('jquery'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\handleBsWaehlenChange.js:\n    1  // Wenn BsWählen geändert wird\n    2  \n    3: 'use strict';\n    4  \n    5  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\handleDsWaehlenChange.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\handleExportFeldFilternChange.js:\n    3  // Wenn ja: reklamieren und rückgängig machen\n    4  \n    5: 'use strict';\n    6  \n    7  // braucht $ wegen .modal\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\handleLrParentOptionenChange.js:\n    2  \n    3  /*jslint node: true */\n    4: 'use strict';\n    5  \n    6  // $ wird benütigt für $.modal und $.couch\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\holeDatenUrlFuerTreeOberstesLevel.js:\n    1: 'use strict';\n    2  \n    3  //var $ = require('jquery');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\holeDatenUrlFuerTreeUntereLevel.js:\n    1: 'use strict';\n    2  \n    3  //$ = require('jquery')\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\importiereBeziehungssammlung.js:\n    2  // holt sich selber die in den Feldern erfassten Infos der Datensammlung\n    3  \n    4: 'use strict';\n    5  \n    6  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\importiereDatensammlung.js:\n    2  // holt sich selber die in den Feldern erfassten Infos der Datensammlung\n    3  \n    4: 'use strict';\n    5  \n    6  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereArt.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereArt2.js:\n    1: 'use strict';\n    2  \n    3  // $ muss übernommen werden, wegen .collapse\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereArt_$.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereArt_http.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereSuchfeld.js:\n    1: 'use strict';\n    2  \n    3  var initiiereSuchfeld2 = require('./initiiereSuchfeld2');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\initiiereSuchfeld2.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\meldeErfolgVonIdIdentifikation.js:\n    1  // erhält dbs = \"Ds\" oder \"Bs\"\n    2  \n    3: 'use strict';\n    4  \n    5  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\meldeErfolgVonIdIdentifikation2.js:\n    1: 'use strict';\n    2  \n    3  // braucht $ wegen .alert\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\nenneDsUm.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore'),\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\oeffneBaumZuId.js:\n    1: 'use strict';\n    2  \n    3  // braucht $ wegen $.jstree\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\oeffneNodeNachIdArray.js:\n    3  // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts\n    4  \n    5: 'use strict';\n    6  \n    7  var oeffneNodeNachIdArray = function ($, idArray) {\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\setzteLinksZuBilderUndWikipedia.js:\n    2  // erwartet das Objekt mit der Art\n    3  \n    4: 'use strict';\n    5  \n    6  var $ = require('jquery');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\speichern.js:\n    2  // wird vorläufig nur für LR Taxonomie verwendet\n    3  \n    4: 'use strict';\n    5  \n    6  var Uri = require('jsuri');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\uebergebeFilterFuerDirektExport.js:\n    1: 'use strict';\n    2  \n    3  var $ = require('jquery');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\uebergebeFilterFuerExportMitVorschau.js:\n    1: 'use strict';\n    2  \n    3  var _ = require('underscore');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\zeigeFormular.js:\n    5  // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst\n    6  \n    7: 'use strict';\n    8  \n    9  var $ = require('jquery');\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n    2  \n    3  window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function (hierarchie_array) {\n    4:     'use strict';\n    5      if (!_.isArray(hierarchie_array)) {\n    6          return \"\";\n    .\n   19  // generiert den html-Inhalt für einzelne Links in Flora\n   20  window.adb.generiereHtmlFürLinkZuGleicherGruppe = function (feld_name, id, artname) {\n   21:     'use strict';\n   22      var html_container;\n   23      html_container = '<div class=\"form-group\"><label class=\"control-label\">';\n   ..\n   33  // generiert den html-Inhalt für Serien von Links in Flora\n   34  window.adb.generiereHtmlFürLinksZuGleicherGruppe = function (feldname, objekt_liste) {\n   35:     'use strict';\n   36      var html_container;\n   37      html_container = '<div class=\"form-group\"><label class=\"control-label\">';\n   ..\n   54  // generiert den html-Inhalt für einzelne Links in Flora\n   55  window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, ds_typ, ds_name) {\n   56:     'use strict';\n   57      var html_container;\n   58      html_container = '<div class=\"form-group\">\\n\\t<label class=\"control-label\" for=\"';\n   ..\n   79  // generiert den html-Inhalt für einzelne Links in Flora\n   80  window.adb.generiereHtmlFürObjektlink = function (feldname, feldwert, url) {\n   81:     'use strict';\n   82      var html_container;\n   83      html_container = '<div class=\"form-group\"><label class=\"control-label\">';\n   ..\n   95  // generiert den html-Inhalt für Textinputs\n   96  window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ, ds_typ, ds_name) {\n   97:     'use strict';\n   98      var html_container;\n   99      html_container = '<div class=\"form-group\">\\n\\t<label class=\"control-label\" for=\"';\n  ...\n  115  // generiert den html-Inhalt für Textarea\n  116  window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, ds_typ, ds_name) {\n  117:     'use strict';\n  118      var html_container;\n  119      html_container = '<div class=\"form-group\"><label class=\"control-label\" for=\"';\n  ...\n  133  // generiert den html-Inhalt für ja/nein-Felder\n  134  window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, ds_typ, ds_name) {\n  135:     'use strict';\n  136      var html_container;\n  137      html_container = '<div class=\"form-group\"><label class=\"control-label\" for=\"';\n  ...\n  153  // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig\n  154  window.adb.setzeTreehöhe = function() {\n  155:     'use strict';\n  156      var window_height = $(window).height();\n  157      if ($(window).width() > 1000 && !$(\"body\").hasClass(\"force-mobile\")) {\n  ...\n  165  // setzt die Höhe von textareas so, dass der Text genau rein passt\n  166  window.adb.fitTextareaToContent = function (id, max_height) {\n  167:     'use strict';\n  168      var text = id && id.style ? id : document.getElementById(id);\n  169      max_height = max_height || document.documentElement.clientHeight;\n  ...\n  192  // wenn ja wird true retourniert, sonst false\n  193  window.adb.validiereSignup = function (woher) {\n  194:     'use strict';\n  195      var email,\n  196          passwort,\n  ...\n  232  \n  233  window.adb.erstelleKonto = function (woher) {\n  234:     'use strict';\n  235      // User in _user eintragen\n  236      $.couch.signup({\n  ...\n  263  \n  264  window.adb.meldeUserAn = function (woher) {\n  265:     'use strict';\n  266      var email = $('#Email_'+woher).val(),\n  267          passwort = $('#Passwort_'+woher).val();\n  ...\n  307  \n  308  window.adb.blendeMenus = function() {\n  309:     'use strict';\n  310      if (localStorage.admin) {\n  311          $(\"#menu_btn\")\n  ...\n  320  \n  321  window.adb.meldeUserAb = function() {\n  322:     'use strict';\n  323      // IE8 kann nicht deleten\n  324      try {\n  ...\n  349  \n  350  window.adb.passeUiFürAngemeldetenUserAn = function (woher) {\n  351:     'use strict';\n  352      var präfix = \"importieren_\";\n  353      if (woher === \"art\") {\n  ...\n  379  // darum erwartet die Funktion den parameter woher\n  380  window.adb.pruefeAnmeldung = function (woher) {\n  381:     'use strict';\n  382      if (!localStorage.Email) {\n  383          setTimeout(function() {\n  ...\n  390  \n  391  window.adb.zurueckZurAnmeldung = function (woher) {\n  392:     'use strict';\n  393      var präfix = \"importieren_\";\n  394  \n  ...\n  415  \n  416  window.adb.validiereUserAnmeldung = function (woher) {\n  417:     'use strict';\n  418      var email = $('#Email_'+woher).val(),\n  419          passwort = $('#Passwort_'+woher).val();\n  ...\n  439  // und sie nicht zusammenfassend ist\n  440  window.adb.handleBsNameChange = function() {\n  441:     'use strict';\n  442      var that = this,\n  443          bs_key = _.find(window.adb.ds_namen_eindeutig, function (key) {\n  ...\n  470  // kontrollieren, dass es die email der angemeldeten Person ist\n  471  window.adb.handleDsImportiertVonChange = function() {\n  472:     'use strict';\n  473      var $importieren_ds_ds_beschreiben_hinweis2 = $(\"#importieren_ds_ds_beschreiben_hinweis2\");\n  474      $(\"#DsImportiertVon\").val(localStorage.Email);\n  ...\n  487  // Kontrollieren, dass es die email der angemeldeten Person ist\n  488  window.adb.handleBsImportiertVonChange = function() {\n  489:     'use strict';\n  490      $(\"#BsImportiertVon\").val(localStorage.Email);\n  491      $(\"#importieren_bs_ds_beschreiben_hinweis2\")\n  ...\n  506  // BsUrsprungsBs_div zeigen oder verstecken\n  507  window.adb.handleBsZusammenfassendChange = function() {\n  508:     'use strict';\n  509      if ($(this).prop('checked')) {\n  510          $(\"#BsUrsprungsBs_div\").show();\n  ...\n  517  // DsUrsprungsDs zeigen oder verstecken\n  518  window.adb.handleDsZusammenfassendChange = function() {\n  519:     'use strict';\n  520      if ($(this).prop('checked')) {\n  521          $(\"#DsUrsprungsDs_div\").show();\n  ...\n  527  // Wenn BsWählen geändert wird\n  528  window.adb.handleBsWählenChange = function() {\n  529:     'use strict';\n  530      var handleBsWaehlenChange = require('./adbModules/handleBsWaehlenChange');\n  531      handleBsWaehlenChange ($, this);\n  ...\n  534  // wenn DsFile geändert wird\n  535  window.adb.handleDsFileChange = function() {\n  536:     'use strict';\n  537      var erstelleTabelle = require('./adbModules/erstelleTabelle');\n  538      if (typeof event.target.files[0] === \"undefined\") {\n  ...\n  556  // wenn BsFile geändert wird\n  557  window.adb.handleBsFileChange = function() {\n  558:     'use strict';\n  559      var erstelleTabelle = require('./adbModules/erstelleTabelle');\n  560      if (typeof event.target.files[0] === \"undefined\") {\n  ...\n  577  // wenn btn_resize geklickt wird\n  578  window.adb.handleBtnResizeClick = function() {\n  579:     'use strict';\n  580      var windowHeight = $(window).height(),\n  581          $body = $(\"body\");\n  ...\n  600  // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird\n  601  window.adb.handleMenuBtnClick = function() {\n  602:     'use strict';\n  603      if (localStorage.art_id) {\n  604          $(\"#GoogleBilderLink_li\").removeClass(\"disabled\");\n  ...\n  614  // wenn nein, Meldung bringen (macht die aufgerufene Funktion)\n  615  window.adb.handleDs_ImportierenClick = function() {\n  616:     'use strict';\n  617      var zeigeFormular = require('./adbModules/zeigeFormular');\n  618      if(window.adb.isFileAPIAvailable()) {\n  ...\n  629  // wenn nein, Meldung bringen (macht die aufgerufene Funktion)\n  630  window.adb.handleBs_ImportierenClick = function() {\n  631:     'use strict';\n  632      var zeigeFormular = require('./adbModules/zeigeFormular');\n  633      if(window.adb.isFileAPIAvailable()) {\n  ...\n  641  \n  642  window.adb.handleMenuAdminClick = function() {\n  643:     'use strict';\n  644      var zeigeFormular = require('./adbModules/zeigeFormular');\n  645      zeigeFormular (\"admin\");\n  ...\n  647  \n  648  window.adb.ergänzePilzeZhgis = function() {\n  649:     'use strict';\n  650      $(\"#admin_pilze_zhgis_ergänzen_rückmeldung\").html(\"Daten werden analysiert...\");\n  651      var $db = $.couch.db(\"artendb\");\n  ...\n  698  \n  699  window.adb.korrigiereArtwertnameInFlora = function() {\n  700:     'use strict';\n  701      $(\"#admin_korrigiere_artwertname_in_flora_rückmeldung\").html(\"Daten werden analysiert...\");\n  702      var $db = $.couch.db(\"artendb\");\n  ...\n  752  \n  753  window.adb.korrigiereDsNameFloraChRoteListe1991 = function() {\n  754:     'use strict';\n  755      var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $(\"#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung\");\n  756      $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html(\"Daten werden analysiert...\");\n  ...\n  794  \n  795  window.adb.nenneDsUm = function() {\n  796:     'use strict';\n  797      var nenneDsUm = require('./adbModules/nenneDsUm');\n  798      nenneDsUm ();\n  ...\n  800  \n  801  window.adb.baueDsZuEigenschaftenUm = function() {\n  802:     'use strict';\n  803      var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $(\"#admin_baue_ds_zu_eigenschaften_um_rückmeldung\"),\n  804          $db = $.couch.db(\"artendb\");\n  ...\n  875  // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird\n  876  window.adb.handleImportierenDsDsBeschreibenCollapseShown = function() {\n  877:     'use strict';\n  878      // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss\n  879      window.adb.bereiteImportieren_ds_beschreibenVor(\"ds\");\n  ...\n  883  // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird\n  884  window.adb.handleImportierenBsDsBeschreibenCollapseShown = function() {\n  885:     'use strict';\n  886      // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss\n  887      window.adb.bereiteImportieren_bs_beschreibenVor(\"bs\");\n  ...\n  891  // wenn importieren_ds_daten_uploaden_collapse geöffnet wird\n  892  window.adb.handleImportierenDsDatenUploadenCollapseShown = function() {\n  893:     'use strict';\n  894      if (!window.adb.pruefeAnmeldung(\"ds\")) {\n  895          $(this).collapse('hide');\n  ...\n  904  // wenn importieren_bs_daten_uploaden_collapse geöffnet wird\n  905  window.adb.handleImportierenBsDatenUpladenCollapseShown = function() {\n  906:     'use strict';\n  907      if (!window.adb.pruefeAnmeldung(\"bs\")) {\n  908          $(this).collapse('hide');\n  ...\n  917  // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird\n  918  window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function() {\n  919:     'use strict';\n  920      if (!window.adb.pruefeAnmeldung(\"ds\")) {\n  921          $(this).collapse('hide');\n  ...\n  928  // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird\n  929  window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function() {\n  930:     'use strict';\n  931      if (!window.adb.pruefeAnmeldung(\"bs\")) {\n  932          $(this).collapse('hide');\n  ...\n  939  // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird\n  940  window.adb.handleImportierenDsImportAusführenCollapseShown = function() {\n  941:     'use strict';\n  942      if (!window.adb.pruefeAnmeldung(\"ds\")) {\n  943          $(this).collapse('hide');\n  ...\n  950  // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird\n  951  window.adb.handleImportierenBsImportAusführenCollapseShown = function() {\n  952:     'use strict';\n  953      if (!window.adb.pruefeAnmeldung(\"bs\")) {\n  954          $(this).collapse('hide');\n  ...\n  961  // wenn DsWählen geändert wird\n  962  window.adb.handleDsWählenChange = function() {\n  963:     'use strict';\n  964      var handleDsWaehlenChange = require('./adbModules/handleDsWaehlenChange');\n  965      handleDsWaehlenChange ($, this);\n  ...\n  971  // und sie nicht zusammenfassend ist\n  972  window.adb.handleDsNameChange = function() {\n  973:     'use strict';\n  974      var that = this,\n  975          ds_key = _.find(window.adb.ds_namen_eindeutig, function (key) {\n  ...\n  999  // wenn DsLöschen geklickt wird\n 1000  window.adb.handleDsLöschenClick = function() {\n 1001:     'use strict';\n 1002      // Rückmeldung anzeigen\n 1003      $(\"#importieren_ds_ds_beschreiben_hinweis\")\n ....\n 1010  // wenn BsLoeschen geklickt wird\n 1011  window.adb.handleBsLöschenClick = function() {\n 1012:     'use strict';\n 1013      // Rückmeldung anzeigen\n 1014      $(\"#importieren_bs_ds_beschreiben_hinweis\")\n ....\n 1024  // wenn exportieren geklickt wird\n 1025  window.adb.handleExportierenClick = function() {\n 1026:     'use strict';\n 1027      var zeigeFormular = require('./adbModules/zeigeFormular');\n 1028      zeigeFormular (\"export\");\n ....\n 1032  // wenn exportieren_alt geklickt wird\n 1033  window.adb.handleExportierenAltClick = function() {\n 1034:     'use strict';\n 1035      window.open(\"_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true\");\n 1036  };\n ....\n 1041  // Wenn ja: reklamieren und rückgängig machen\n 1042  window.adb.handleFeldWählenChange = function() {\n 1043:     'use strict';\n 1044      var that = this,\n 1045          formular = $(that).closest('form').attr('id'),\n ....\n 1072  // wenn checked: alle unchecken, sonst alle checken\n 1073  window.adb.handleFeldWählenAlleVonDs = function() {\n 1074:     'use strict';\n 1075      var ds = $(this).attr('datensammlung'),\n 1076          formular = $(this).closest('form').attr('id'),\n ....\n 1086  // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird\n 1087  window.adb.handleExportierenDsObjekteWählenGruppeChange = function() {\n 1088:     'use strict';\n 1089      var gruppen_gewählt = window.adb.fürExportGewählteGruppen();\n 1090      require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);\n ....\n 1093  // ist nötig, weil index.html nicht requiren kann\n 1094  window.adb.handleExportFeldFilternChange = function() {\n 1095:     'use strict';\n 1096      var that = this,\n 1097          handleExportFeldFilternChange = require('./adbModules/handleExportFeldFilternChange');\n ....\n 1102  // zur Schaltfläche Vorschau scrollen\n 1103  window.adb.handleExportierenExportierenShow = function() {\n 1104:     'use strict';\n 1105      // Fehlermeldung verstecken, falls sie noch offen war\n 1106      $(\"#exportieren_exportieren_error_text\")\n ....\n 1114  // wenn .btn.lr_bearb_bearb geklickt wird\n 1115  window.adb.handleBtnLrBearbBearbKlick = function() {\n 1116:     'use strict';\n 1117      if (!$(this).hasClass('disabled')) {\n 1118          window.adb.bearbeiteLrTaxonomie();\n ....\n 1122  // wenn .btn.lr_bearb_schuetzen geklickt wird\n 1123  window.adb.handleBtnLrBearbSchuetzenClick = function() {\n 1124:     'use strict';\n 1125      if (!$(this).hasClass('disabled')) {\n 1126          window.adb.schuetzeLrTaxonomie();\n ....\n 1132  // wenn .btn.lr_bearb_neu geklickt wird\n 1133  window.adb.handleBtnLrBearbNeuClick = function() {\n 1134:     'use strict';\n 1135      var html,\n 1136          getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');\n ....\n 1148  // wenn #lr_parent_waehlen_optionen [name=\"parent_optionen\"] geändert wird\n 1149  window.adb.handleLrParentOptionenChange = function() {\n 1150:     'use strict';\n 1151      var handleLrParentOptionenChange = require('./adbModules/handleLrParentOptionenChange');\n 1152      handleLrParentOptionenChange($, this);\n ....\n 1154  \n 1155  window.adb.handleRückfrageLrLöschenJaClick = function() {\n 1156:     'use strict';\n 1157      // zuerst die id des Objekts holen\n 1158      var uri = new Uri($(location).attr('href')),\n ....\n 1194  // Wenn #art .Lebensräume.Taxonomie .controls geändert wird\n 1195  window.adb.handleLrTaxonomieControlsChange = function() {\n 1196:     'use strict';\n 1197      window.adb.speichern($(this).val(), this.id, $(this).attr('dsName'), $(this).attr('dsTyp'));\n 1198  };\n ....\n 1200  // wenn .Lebensräume.Taxonomie geöffnet wird\n 1201  window.adb.handlePanelbodyLrTaxonomieShown = function() {\n 1202:     'use strict';\n 1203      if (localStorage.lr_bearb == \"true\") {\n 1204          window.adb.bearbeiteLrTaxonomie();\n ....\n 1208  // wenn #exportieren_exportieren_collapse geöffnet wird\n 1209  window.adb.handleExportierenExportierenCollapseShown = function (that) {\n 1210:     'use strict';\n 1211      var filtereFuerExport = require('./adbModules/filtereFuerExport'),\n 1212          fürAlt = false;\n ....\n 1238  \n 1239  window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {\n 1240:     'use strict';\n 1241      var gruppen_gewählt = window.adb.fürExportGewählteGruppen();\n 1242      if (gruppen_gewählt.length === 0) {\n ....\n 1253  // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird\n 1254  window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {\n 1255:     'use strict';\n 1256      var gruppe_ist_gewählt = false;\n 1257      if ($(that).hasClass(\"active\")) {\n ....\n 1271  // wenn #exportieren_exportieren_exportieren geklickt wird\n 1272  window.adb.handleExportierenExportierenExportierenClick = function() {\n 1273:     'use strict';\n 1274      if (window.adb.isFileAPIAvailable()) {\n 1275          var exportstring = window.adb.erstelleExportString(window.adb.exportieren_objekte),\n ....\n 1286  // Höhe der textareas an Textgrösse anpassen\n 1287  window.adb.handlePanelShown = function() {\n 1288:     'use strict';\n 1289      $(this).find('textarea').each(function() {\n 1290          window.adb.fitTextareaToContent(this.id);\n ....\n 1294  // wenn .LinkZuArtGleicherGruppe geklickt wird\n 1295  window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {\n 1296:     'use strict';\n 1297      $(\".suchen\").val(\"\");\n 1298      $(\"#tree\" + window.adb.Gruppe)\n ....\n 1305  // wenn Fenstergrösse verändert wird\n 1306  window.adb.handleResize = function() {\n 1307:     'use strict';\n 1308      window.adb.setzeTreehöhe();\n 1309      // Höhe der Textareas korrigieren\n ....\n 1315  // wenn .anmelden_btn geklickt wird\n 1316  window.adb.handleAnmeldenBtnClick = function (that) {\n 1317:     'use strict';\n 1318      // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann\n 1319      var bs_ds = that.id.substring(that.id.length-2);\n ....\n 1326  // wenn .Email keyup\n 1327  window.adb.handleEmailKeyup = function() {\n 1328:     'use strict';\n 1329      //allfällig noch vorhandenen Hinweis ausblenden\n 1330      $(\".Emailhinweis\").hide();\n ....\n 1333  // wenn .Passwort keyup\n 1334  window.adb.handlePasswortKeyup = function() {\n 1335:     'use strict';\n 1336      //allfällig noch vorhandenen Hinweis ausblenden\n 1337      $(\".Passworthinweis\").hide();\n ....\n 1340  // wenn .Passwort2 keyup\n 1341  window.adb.handlePasswort2Keyup = function() {\n 1342:     'use strict';\n 1343      //allfällig noch vorhandenen Hinweis ausblenden\n 1344      $(\".Passworthinweis2\").hide();\n ....\n 1347  // wenn .konto_erstellen_btn geklickt wird\n 1348  window.adb.handleKontoErstellenBtnClick = function (that) {\n 1349:     'use strict';\n 1350      var bs_ds = that.id.substring(that.id.length-2);\n 1351      if (bs_ds === \"rt\") {\n ....\n 1365  // wenn .konto_speichern_btn geklickt wird\n 1366  window.adb.handleKontoSpeichernBtnClick = function (that) {\n 1367:     'use strict';\n 1368      var bs_ds = that.id.substring(that.id.length-2);\n 1369      if (bs_ds === \"rt\") {\n ....\n 1383  // wenn .gruppe geklickt wird\n 1384  window.adb.handleÖffneGruppeClick = function() {\n 1385:     'use strict';\n 1386      window.adb.öffneGruppe($(this).attr(\"Gruppe\"));\n 1387  };\n ....\n 1389  // wenn #DsFelder geändert wird\n 1390  window.adb.handleDsFelderChange = function() {\n 1391:     'use strict';\n 1392      require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');\n 1393  };\n ....\n 1395  // wenn #BsFelder geändert wird\n 1396  window.adb.handleBsFelderChange = function() {\n 1397:     'use strict';\n 1398      require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');\n 1399  };\n ....\n 1401  // wenn #DsId geändert wird\n 1402  window.adb.handleDsIdChange = function() {\n 1403:     'use strict';\n 1404      require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');\n 1405  };\n ....\n 1407  // wenn #BsId geändert wird\n 1408  window.adb.handleBsIdChange = function() {\n 1409:     'use strict';\n 1410      require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');\n 1411  };\n ....\n 1413  // wenn in textarea keyup oder focus\n 1414  window.adb.handleTextareaKeyupFocus = function() {\n 1415:     'use strict';\n 1416      window.adb.fitTextareaToContent(this.id);\n 1417  };\n 1418  \n 1419  window.adb.importiereDatensammlung = function() {\n 1420:     'use strict';\n 1421      require('./adbModules/importiereDatensammlung') ($);\n 1422  };\n ....\n 1424  // wird momentan nicht benutzt\n 1425  window.adb.queryChangesStartingNow = function (options) {\n 1426:     'use strict';\n 1427      options = options || {};\n 1428      options.since = \"now\";\n ....\n 1468  // wird momentan nicht benutzt\n 1469  window.adb.queryChanges = function (options) {\n 1470:     'use strict';\n 1471      options = options || {};\n 1472      options.since = options.since || \"now\";\n ....\n 1488  \n 1489  window.adb.importiereBeziehungssammlung = function () {\n 1490:     'use strict';\n 1491      require('./adbModules/importiereBeziehungssammlung') ($);\n 1492  };\n 1493  \n 1494  window.adb.bereiteBeziehungspartnerFürImportVor = function () {\n 1495:     'use strict';\n 1496      var alle_bez_partner_array = [],\n 1497          bez_partner_array,\n ....\n 1544  \n 1545  window.adb.entferneDatensammlung = function() {\n 1546:     'use strict';\n 1547      require('./adbModules/entferneDatensammlung') ($);\n 1548  };\n 1549  \n 1550  window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerungs_faktor) {\n 1551:     'use strict';\n 1552      // alle docs holen\n 1553      setTimeout(function() {\n ....\n 1566  \n 1567  window.adb.entferneDatensammlungAusObjekt = function (ds_name, objekt) {\n 1568:     'use strict';\n 1569      if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {\n 1570          /* hat nicht funktioniert\n ....\n 1590  \n 1591  window.adb.entferneBeziehungssammlung = function() {\n 1592:     'use strict';\n 1593      require('./adbModules/entferneBeziehungssammlung') ($);\n 1594  };\n 1595  \n 1596  window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzögerungs_faktor) {\n 1597:     'use strict';\n 1598      // alle docs holen\n 1599      setTimeout(function() {\n ....\n 1613  \n 1614  window.adb.entferneBeziehungssammlungAusObjekt = function (bs_name, objekt) {\n 1615:     'use strict';\n 1616      if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {\n 1617          for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {\n ....\n 1631  // wenn dieselbe schon vorkommt, wird sie überschrieben\n 1632  window.adb.fügeDatensammlungZuObjekt = function (guid, datensammlung) {\n 1633:     'use strict';\n 1634      var $db = $.couch.db(\"artendb\");\n 1635      $db.openDoc(guid, {\n ....\n 1661  // wenn dieselbe schon vorkommt, wird sie überschrieben\n 1662  window.adb.fügeBeziehungenZuObjekt = function (guid, beziehungssammlung, beziehungen) {\n 1663:     'use strict';\n 1664      var $db = $.couch.db(\"artendb\");\n 1665      $db.openDoc(guid, {\n ....\n 1718  // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung\n 1719  window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {\n 1720:     'use strict';\n 1721      var ds_entfernt = $.Deferred(),\n 1722          anz_vorkommen_von_ds,\n ....\n 1771  // öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung\n 1772  window.adb.entferneBeziehungssammlungAusAllenObjekten = function (bs_name) {\n 1773:     'use strict';\n 1774      var bs_entfernt = $.Deferred(),\n 1775          anz_vorkommen_von_bs_entfernt = 0,\n ....\n 1828  // entfernt die Datensammlung\n 1829  window.adb.entferneDatensammlungAusDokument = function (id, ds_name) {\n 1830:     'use strict';\n 1831      var $db = $.couch.db(\"artendb\");\n 1832      $db.openDoc(id, {\n ....\n 1849  // entfernt die Beziehungssammlung\n 1850  window.adb.entferneBeziehungssammlungAusDokument = function (id, bs_name) {\n 1851:     'use strict';\n 1852      var $db = $.couch.db(\"artendb\");\n 1853      $db.openDoc(id, {\n ....\n 1868  // prüft die URL. wenn eine id übergeben wurde, wird das entprechende Objekt angezeigt\n 1869  window.adb.öffneUri = function() {\n 1870:     'use strict';\n 1871      // parameter der uri holen\n 1872      var uri = new Uri($(location).attr('href')),\n ....\n 1939  \n 1940  window.adb.erstelleExportString = function (exportobjekte) {\n 1941:     'use strict';\n 1942      var string_titelzeile = \"\",\n 1943          string_zeilen = \"\",\n ....\n 1987  // speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann\n 1988  window.adb.holeDatensammlungenFürExportfelder = function() {\n 1989:     'use strict';\n 1990      var exfe_geholt = $.Deferred();\n 1991      if (window.adb.ds_bs_von_objekten) {\n ....\n 2005  \n 2006  window.adb.filtereFürExport = function (direkt) {\n 2007:     'use strict';\n 2008      require('./adbModules/filtereFuerExport') ($, direkt);\n 2009  };\n 2010  \n 2011  window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt) {\n 2012:     'use strict';\n 2013      // Alle Felder abfragen\n 2014      var queryParam,\n ....\n 2079  \n 2080  window.adb.baueTabelleFürExportAuf = function (_alt) {\n 2081:     'use strict';\n 2082      var hinweis = \"\",\n 2083          erstelleTabelle = require('./adbModules/erstelleTabelle'),\n ....\n 2107  \n 2108  window.adb.fürExportGewählteGruppen = function() {\n 2109:     'use strict';\n 2110      var export_gruppen = [];\n 2111      $(\".exportieren_ds_objekte_waehlen_gruppe\").each(function() {\n ....\n 2119  // woher wird bloss benötigt, wenn angemeldet werden muss\n 2120  window.adb.bereiteImportieren_ds_beschreibenVor = function (woher) {\n 2121:     'use strict';\n 2122      if (!window.adb.pruefeAnmeldung(\"woher\")) {\n 2123          $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');\n ....\n 2143  // veränderbare sind normal, übrige grau\n 2144  window.adb.bereiteImportieren_ds_beschreibenVor_02 = function() {\n 2145:     'use strict';\n 2146      var html,\n 2147          ds_namen = [];\n ....\n 2189  // woher wird bloss benötigt, wenn angemeldet werden muss\n 2190  window.adb.bereiteImportieren_bs_beschreibenVor = function (woher) {\n 2191:     'use strict';\n 2192      if (!window.adb.pruefeAnmeldung(\"woher\")) {\n 2193          $('#importieren_bs_ds_beschreiben_collapse').collapse('hide');\n ....\n 2213  \n 2214  window.adb.bereiteImportieren_bs_beschreibenVor_02 = function() {\n 2215:     'use strict';\n 2216      var html,\n 2217          bs_namen = [];\n ....\n 2259  \n 2260  window.adb.isFileAPIAvailable = function() {\n 2261:     'use strict';\n 2262      // Check for the various File API support.\n 2263      if (window.File && window.FileReader && window.FileList && window.Blob) {\n ....\n 2286  \n 2287  window.adb.sortiereObjektarrayNachName = function (objektarray) {\n 2288:     'use strict';\n 2289      // Beziehungssammlungen bzw. Datensammlungen nach Name sortieren\n 2290      objektarray.sort(function (a, b) {\n ....\n 2303  // gibt diesen sortiert zurück\n 2304  window.adb.sortiereBeziehungenNachName = function (beziehungen) {\n 2305:     'use strict';\n 2306  // Beziehungen nach Name sortieren\n 2307      beziehungen.sort(function (a, b) {\n ....\n 2335  // resultat nicht garantiert!\n 2336  window.adb.sortKeysOfObject = function (o) {\n 2337:     'use strict';\n 2338      var sorted = {},\n 2339          key,\n ....\n 2355  \n 2356  window.adb.exportZurücksetzen = function (event, _alt) {\n 2357:     'use strict';\n 2358      var $exportieren_exportieren_collapse = $(\"#exportieren\" + _alt + \"_exportieren_collapse\"),\n 2359          _alt = _alt || '';\n ....\n 2372  \n 2373  window.adb.öffneGruppe = function (Gruppe) {\n 2374:     'use strict';\n 2375      var erstelleBaum = require('./adbModules/erstelleBaum');\n 2376      // Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird\n ....\n 2396  \n 2397  window.adb.speichern = function (feldwert, feldname, ds_name, ds_typ) {\n 2398:     'use strict';\n 2399      require('./adbModules/speichern') ($, feldwert, feldname, ds_name, ds_typ);\n 2400  };\n 2401  \n 2402  window.adb.convertToCorrectType = function (feldwert) {\n 2403:     'use strict';\n 2404      var type = window.adb.myTypeOf(feldwert);\n 2405      if (type === \"boolean\") {\n ....\n 2417  // typeof gibt bei input-Feldern immer String zurück!\n 2418  window.adb.myTypeOf = function (wert) {\n 2419:     'use strict';\n 2420      if (typeof wert === \"boolean\") {\n 2421          return \"boolean\";\n ....\n 2434  \n 2435  window.adb.bearbeiteLrTaxonomie = function() {\n 2436:     'use strict';\n 2437      // Benutzer muss anmelden\n 2438      if (!window.adb.pruefeAnmeldung(\"art\")) {\n ....\n 2469  \n 2470  window.adb.schuetzeLrTaxonomie = function() {\n 2471:     'use strict';\n 2472      // alle Felder schreibbar setzen\n 2473      $(\".Lebensräume.Taxonomie .controls\").each(function() {\n ....\n 2496  // Momentan nicht verwendet\n 2497  window.adb.aktualisiereHierarchieEinerLrTaxonomie = function (object_array) {\n 2498:     'use strict';\n 2499      var object,\n 2500          hierarchie,\n ....\n 2519  // manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!\n 2520  window.adb.aktualisiereHierarchieEinesNeuenLr = function (lr, object, aktualisiere_hierarchiefeld) {\n 2521:     'use strict';\n 2522      if (lr) {\n 2523          window.adb.aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);\n ....\n 2533  \n 2534  window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {\n 2535:     'use strict';\n 2536      var object_array,\n 2537          hierarchie = [],\n ....\n 2587  // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird\n 2588  window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {\n 2589:     'use strict';\n 2590      var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');\n 2591      if (lr) {\n ....\n 2610  // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist\n 2611  window.adb.ergänzeParentZuLrHierarchie = function (objekt_array, parentGUID, Hierarchie) {\n 2612:     'use strict';\n 2613      var parent_objekt,\n 2614          hierarchie_ergänzt;\n ....\n 2631  \n 2632  window.adb.erstelleHierarchieobjektAusObjekt = function (objekt) {\n 2633:     'use strict';\n 2634      var hierarchieobjekt = {};\n 2635      hierarchieobjekt.Name = window.adb.erstelleLrLabelNameAusObjekt(objekt);\n ....\n 2639  \n 2640  window.adb.erstelleLrLabelNameAusObjekt = function (objekt) {\n 2641:     'use strict';\n 2642      var label = objekt.Taxonomie.Eigenschaften.Label || \"\",\n 2643          einheit = objekt.Taxonomie.Eigenschaften.Einheit || \"\";\n ....\n 2646  \n 2647  window.adb.erstelleLrLabelName = function (label, einheit) {\n 2648:     'use strict';\n 2649      if (label && einheit) {\n 2650          return label + \": \" + einheit;\n ....\n 2662  // aktualisiert die Objekte mit einer einzigen Operation\n 2663  window.adb.löscheMassenMitObjektArray = function (object_array) {\n 2664:     'use strict';\n 2665      var objekte_mit_objekte,\n 2666          objekte = [],\n ....\n 2687  // retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert\n 2688  window.adb.ermittleVergleichsoperator = function (filterwert) {\n 2689:     'use strict';\n 2690      var vergleichsoperator;\n 2691      if (filterwert.indexOf(\">=\") === 0) {\n\nC:\\Users\\alex\\artendb\\views\\all_docs\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	emit(doc._id);\n    4  }\n\nC:\\Users\\alex\\artendb\\views\\all_docs_fuer_alt\\map.js:\n    2  // sowie ihre Synonyme\n    3  function (doc) {\n    4:     'use strict';\n    5      var _ = require(\"views/lib/underscore\");\n    6      if (doc.Gruppe) {\n\nC:\\Users\\alex\\artendb\\views\\all_docs_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe) {\n\nC:\\Users\\alex\\artendb\\views\\alt_arten\\map.js:\n    2  // sowie ihre Synonyme\n    3  function (doc) {\n    4:     'use strict';\n    5      var _ = require(\"views/lib/underscore\");\n    6  	if (doc.Gruppe) {\n\nC:\\Users\\alex\\artendb\\views\\alt_arten_mit_synonymen\\map.js:\n    2  // sowie ihre Synonyme\n    3  function (doc) {\n    4:     'use strict';\n    5      var _ = require(\"views/lib/underscore\");\n    6  	if (doc.Gruppe) {\n\nC:\\Users\\alex\\artendb\\views\\artgruppen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var gis_layer,\n    4          ds_mit_gislayer,\n\nC:\\Users\\alex\\artendb\\views\\baum_fauna\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var klasse,\n    4  		ordnung,\n\nC:\\Users\\alex\\artendb\\views\\baum_flora\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var familie,\n    4  		gattung,\n\nC:\\Users\\alex\\artendb\\views\\baum_lr\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Lebensräume\" && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Einheit) {\n    4  		if (doc.Taxonomie.Eigenschaften.Label) {\n\nC:\\Users\\alex\\artendb\\views\\baum_macromycetes\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var gattung,\n    4  		artname_vollständig;\n\nC:\\Users\\alex\\artendb\\views\\baum_moose\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var klasse,\n    4  		familie,\n\nC:\\Users\\alex\\artendb\\views\\bezpartner\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	// dieser View wird benutzt, wenn ein Objekt aktualisiert wird, um die entsprechenden Informationen (Name und ev. Taxonomie) allen Beziehungen weiterzuleiten\n    4      var _ = require(\"views/lib/underscore\");\n\nC:\\Users\\alex\\artendb\\views\\bs_guid\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Beziehungssammlungen) {\n\nC:\\Users\\alex\\artendb\\views\\ds_bs_guid\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Beziehungssammlungen) {\n\nC:\\Users\\alex\\artendb\\views\\ds_guid\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Eigenschaftensammlungen) {\n\nC:\\Users\\alex\\artendb\\views\\ds_von_objekten\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  \n    4  	var Felder,\n\nC:\\Users\\alex\\artendb\\views\\evab_arten\\map.js:\n    2  \n    3  function (doc) {\n    4:     'use strict';\n    5  	if (doc.Typ && doc.Typ === \"Objekt\" && doc.Gruppe && (doc.Gruppe === \"Fauna\" || doc.Gruppe === \"Flora\" || doc.Gruppe === \"Moose\")) {\n    6  		emit(doc._id, null);\n\nC:\\Users\\alex\\artendb\\views\\fauna\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Fauna\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\fauna_gruppiert\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Fauna\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\fauna_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe && doc.Gruppe === \"Fauna\") {\n\nC:\\Users\\alex\\artendb\\views\\felder\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  \n    4  	var _ = require(\"views/lib/underscore\");\n\nC:\\Users\\alex\\artendb\\views\\filtere_art\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  \n    4  	var value = {},\n\nC:\\Users\\alex\\artendb\\views\\filtere_lr\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	var value = {},\n    4          _ = require(\"views/lib/underscore\");\n\nC:\\Users\\alex\\artendb\\views\\flora\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Flora\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\flora_gruppiert\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Flora\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\flora_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe && doc.Gruppe === \"Flora\") {\n\nC:\\Users\\alex\\artendb\\views\\gruppe_id_taxonomieid\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften[\"Taxonomie ID\"]) {\n    4  		emit([doc.Gruppe, doc._id, doc.Taxonomie.Eigenschaften[\"Taxonomie ID\"]], null);\n\nC:\\Users\\alex\\artendb\\views\\hierarchie\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Typ && doc.Typ === \"Objekt\" && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Hierarchie && doc.Taxonomie.Eigenschaften.Hierarchie.length > 0) {\n\nC:\\Users\\alex\\artendb\\views\\lr\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Lebensräume\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\lr_gruppiert\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Lebensräume\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\lr_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe && doc.Gruppe === \"Lebensräume\") {\n\nC:\\Users\\alex\\artendb\\views\\macromycetes\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Macromycetes\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\macromycetes_gruppiert\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Macromycetes\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\macromycetes_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe && doc.Gruppe === \"Macromycetes\") {\n\nC:\\Users\\alex\\artendb\\views\\moose\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Moose\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\moose_gruppiert\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Gruppe && doc.Gruppe === \"Moose\") {\n    4  		emit([doc._id, doc._rev]);\n\nC:\\Users\\alex\\artendb\\views\\moose_mit_synonymen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var _ = require(\"views/lib/underscore\");\n    4  	if (doc.Gruppe && doc.Gruppe === \"Moose\") {\n\nC:\\Users\\alex\\artendb\\views\\objekte\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3  	if (doc.Typ && doc.Typ === \"Objekt\") {\n    4  		emit([doc._id, doc._rev], null);\n\nC:\\Users\\alex\\artendb\\views\\umbenennen_loeschen\\map.js:\n    1  function (doc) {\n    2:     'use strict';\n    3      var do_emit = false;\n    4      if (doc.Taxonomie && doc.Taxonomie.Daten) do_emit = true;\n\n237 matches across 105 files\n",
-			"settings":
-			{
-				"buffer_size": 51831,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
-			"settings":
-			{
-				"buffer_size": 1584,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 2455,
+				"buffer_size": 18962,
 				"line_ending": "Windows"
 			}
 		},
@@ -325,7 +295,25 @@
 			"file": "_attachments/index_dev.html",
 			"settings":
 			{
-				"buffer_size": 127017,
+				"buffer_size": 126870,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 248 files for \"übergebeFilterFürExportFürAlt: error in $db.list\" (case sensitive)\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n 2073          },\n 2074          error: function () {\n 2075:             console.log('übergebeFilterFürExportFürAlt: error in $db.list');\n 2076          }\n 2077      });\n\n1 match in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 345,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "vendor/couchapp/_attachments/artendb.js",
+			"settings":
+			{
+				"buffer_size": 110780,
 				"line_ending": "Windows"
 			}
 		}
@@ -371,50 +359,91 @@
 	"expanded_folders":
 	[
 		"/C/Users/alex/artendb/_attachments",
-		"/C/Users/alex/artendb/lists",
-		"/C/Users/alex/artendb/views",
-		"/C/Users/alex/artendb/views/alt_arten",
-		"/C/Users/alex/artendb/views/alt_arten_mit_synonymen"
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules"
 	],
 	"file_history":
 	[
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt_http.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt_$.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt2.js",
+		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
+		"/C/Users/alex/artendb/_attachments/index_dev.html",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt_$.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/importiereDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/importiereBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerExportMitVorschau.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneBaumZuId.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/nenneDsUm.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleLrParentOptionenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/zeigeFormular.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerDirektExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/speichern.js",
+		"/C/Users/alex/artendb/gulp-tasks/browserify.js",
+		"/C/Users/alex/artendb/gulp-tasks/default.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_2.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_build_html.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_build_src.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_build_style.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod_2.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod_build_html.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod_build_jstree.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod_build_src.js",
+		"/C/Users/alex/artendb/gulp-tasks/prod_build_style.js",
+		"/C/Users/alex/artendb/gulp-tasks/watch.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adb_lib/bundleLogger.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adb_lib/handleErrors.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleExportfelder.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTree.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleBsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleDsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/FileSaver.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.hotkeys.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/_init.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doLogout.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doSignup.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loginForm/after.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/account/signupForm/after.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/loggedOut/after.js",
+		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/noProfile/selectors/form/submit.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/cache.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/docform.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/list.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/path.js",
+		"/C/Users/alex/artendb/vendor/couchapp/lib/validate.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/configuration.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/setzteLinksZuBilderUndWikipedia.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneNodeNachIdArray.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt_http.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/holeDatenUrlFuerTreeUntereLevel.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/holeDatenUrlFuerTreeOberstesLevel.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleExportFeldFilternChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleDsWaehlenChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleBsWaehlenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/getHtmlForLrParentAuswahlliste.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/filtereFuerExport.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTree.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTabelle.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerFeld.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerDatensammlungBeschreibung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerDatensammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerBeziehungssammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleExportfelder.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleBaum.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/ersetzeUngueltigeZeichenInIdNamen.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/ergaenzeFelderObjekt.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/configuration.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/_vorlage.js",
 		"/C/Users/alex/artendb/lists/lib/artendb_listfunctions.js",
 		"/C/Users/alex/artendb/lists/baum_moose.js",
 		"/C/Users/alex/artendb/lists/baum_fauna.js",
-		"/C/Users/alex/artendb/gulp-tasks/prod.js",
-		"/C/Users/alex/artendb/gulp-tasks/dev.js",
 		"/C/Users/alex/artendb/gulp-tasks/build_couchapp.js",
-		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
 		"/C/Users/alex/artendb/lists/export_alt.js",
 		"/C/Users/alex/artendb/lists/export_mit_synonymen_direkt.js",
 		"/C/Users/alex/artendb/lists/export_direkt.js",
@@ -434,22 +463,12 @@
 		"/C/Users/alex/artendb/lists/baum_lr.js",
 		"/C/Users/alex/artendb/filters/dsimport",
 		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
-		"/C/Users/alex/artendb/_attachments/index_dev.html",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.couch.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.js",
 		"/C/Users/alex/artendb/_attachments/style/artendb.css",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/FileSaver.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/zeigeFormular.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerExportMitVorschau.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/nenneDsUm.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
 		"/C/Users/alex/artendb/updates/eigenschaft_objekt.js",
 		"/C/Users/alex/artendb/views/umbenennen_loeschen/map.js",
 		"/C/Users/alex/artendb/views/objekte/map.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.hotkeys.js",
 		"/C/Users/alex/artendb/views/moose_mit_synonymen/map.js",
 		"/C/Users/alex/artendb/views/moose_gruppiert/map.js",
 		"/C/Users/alex/artendb/views/moose/map.js",
@@ -472,40 +491,7 @@
 		"/C/Users/alex/artendb/views/fauna/map.js",
 		"/C/Users/alex/artendb/views/evab_arten/map.js",
 		"/C/Users/alex/artendb/views/ds_von_objekten/map.js",
-		"/C/Users/alex/artendb/views/ds_guid/map.js",
-		"/C/Users/alex/artendb/views/ds_bs_guid/map.js",
-		"/C/Users/alex/artendb/views/bs_guid/map.js",
-		"/C/Users/alex/artendb/views/bezpartner/map.js",
-		"/C/Users/alex/artendb/views/baum_moose/map.js",
-		"/C/Users/alex/artendb/views/baum_macromycetes/map.js",
-		"/C/Users/alex/artendb/views/baum_lr/map.js",
-		"/C/Users/alex/artendb/views/baum_flora/map.js",
-		"/C/Users/alex/artendb/views/baum_fauna/map.js",
-		"/C/Users/alex/artendb/views/artgruppen/map.js",
-		"/C/Users/alex/artendb/views/alt_arten_mit_synonymen/map.js",
-		"/C/Users/alex/artendb/views/all_docs_mit_synonymen/map.js",
-		"/C/Users/alex/artendb/views/all_docs_fuer_alt/map.js",
-		"/C/Users/alex/artendb/views/all_docs/map.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/validate.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/utils.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/redirect.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/path.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/list.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/docform.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/code.js",
-		"/C/Users/alex/artendb/vendor/couchapp/lib/cache.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/profileReady/data.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/profileReady/after.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/noProfile/selectors/form/submit.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/noProfile/data.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/profile/loggedIn.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/signupForm/selectors/form/submit.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loginForm/selectors/form/submit.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loggedIn/data.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/loggedIn/after.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doSignup.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/doLogin.js",
-		"/C/Users/alex/artendb/vendor/couchapp/evently/account/_init.js"
+		"/C/Users/alex/artendb/views/ds_guid/map.js"
 	],
 	"find":
 	{
@@ -513,9 +499,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 309.0,
+		"height": 108.0,
 		"where_history":
 		[
+			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js, -jquery.couch.js, -path.js",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js, -jquery.couch.js",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js\n",
 			"C:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js",
@@ -608,6 +595,33 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"<form",
+			"Daten für Export wählen",
+			"Daten für den Export wählen",
+			"media",
+			"export_alt",
+			"übergebeFilterFürExportFürAlt: error in $db.list",
+			"ungeeigneter Browser",
+			"$.ajax",
+			"$db.view('http",
+			"$db.view('http://localhost:5984/artendb/_design/artendb/_view/lr', {",
+			"$.ajax",
+			"'use strict';",
+			"function(",
+			"'use strict';",
+			"window.adb.erstelleHierarchieobjektAusObjekt",
+			"if (objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 ($, lr, doc, false, einheit_ist_taxonomiename)",
+			"window.adb.speichern",
+			"speichern",
+			"function(",
+			"'use strict';",
+			"function(",
+			"'use strict';",
+			"erstelleTree meldet: ajax failure",
+			"'use strict';",
+			"filtere_art",
+			"filtereArt",
 			"Datensätze",
 			"'use strict';",
 			"Achtung: Synonym von",
@@ -708,34 +722,7 @@
 			"bez_in_zeilen",
 			"export_bez_in_zeilen",
 			"exportieren_synonym_infos",
-			"uebergebeFilterFuerExportMitVorschau",
-			"window.adb.baueTabelleFürExportAuf",
-			"exportieren_exportieren_hinweis_text",
-			"exportieren_alt_felder_waehlen_objekt_id",
-			"guid",
-			"handleExportierenExportierenCollapseShown",
-			"window.adb.exportZurücksetzen",
-			"export_bez_in_zeilen",
-			"window.adb.handleFeldWählenChange",
-			"window.adb.exportZurücksetzen",
-			"collapse('hide')",
-			"handleExportierenObjekteWaehlenCollapseShown",
-			"handleExportierenExportierenCollapseShown",
-			"exportieren_exportieren_collapse",
-			"handleExportierenObjekteWaehlenCollapseShown",
-			"collapse('hide')",
-			"#exportieren_alt_felder_waehlen_collapse",
-			"exportieren_alt_panel",
-			"exportieren_alt_felder_waehlen",
-			"übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport')",
-			"öffneURI",
-			"_exportieren_error_text_text",
-			"exportieren_ds_objekte_waehlen_gruppe",
-			"exportieren_exportieren_hinweis_text",
-			"exportieren_alt_exportieren_collapse",
-			"exportieren_exportieren_collapse",
-			"exportieren_exportieren_exportieren",
-			"exportieren_exportieren_tabelle"
+			"uebergebeFilterFuerExportMitVorschau"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -743,6 +730,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"function (",
 			"datensätze",
 			"beziehungssammlung_offizielle_art",
 			"beziehungssammlung_akzeptierte_referenz",
@@ -869,19 +857,18 @@
 			"    ",
 			"        ",
 			"            ",
-			"    ",
-			"popId"
+			"    "
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": false
 	},
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -890,15 +877,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2809,
+						"buffer_size": 2819,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								675,
-								622
+								748,
+								676
 							]
 						],
 						"settings":
@@ -909,7 +896,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -918,15 +905,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18539,
+						"buffer_size": 18962,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16852,
-								16852
+								17206,
+								17206
 							]
 						],
 						"settings":
@@ -936,40 +923,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2353.0,
+						"translation.y": 18864.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "vendor/couchapp/_attachments/adbModules/handleLrParentOptionenChange.js",
+					"file": "_attachments/index_dev.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3032,
+						"buffer_size": 126870,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								99,
-								76
+								53094,
+								53099
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 14736.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -977,7 +964,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 51831,
+						"buffer_size": 345,
 						"regions":
 						{
 							"match":
@@ -986,952 +973,8 @@
 								"regions":
 								[
 									[
-										138,
-										151
-									],
-									[
-										421,
-										434
-									],
-									[
-										565,
-										578
-									],
-									[
-										710,
-										723
-									],
-									[
-										852,
-										865
-									],
-									[
-										978,
-										991
-									],
-									[
-										1101,
-										1114
-									],
-									[
-										1234,
-										1247
-									],
-									[
-										1357,
-										1370
-									],
-									[
-										1476,
-										1489
-									],
-									[
-										1611,
-										1624
-									],
-									[
-										1760,
-										1773
-									],
-									[
-										1923,
-										1936
-									],
-									[
-										2047,
-										2060
-									],
-									[
-										2173,
-										2186
-									],
-									[
-										2305,
-										2318
-									],
-									[
-										2438,
-										2451
-									],
-									[
-										2569,
-										2582
-									],
-									[
-										2702,
-										2715
-									],
-									[
-										2846,
-										2859
-									],
-									[
-										2984,
-										2997
-									],
-									[
-										3148,
-										3161
-									],
-									[
-										3352,
-										3365
-									],
-									[
-										3574,
-										3587
-									],
-									[
-										3741,
-										3754
-									],
-									[
-										3981,
-										3994
-									],
-									[
-										4225,
-										4238
-									],
-									[
-										4469,
-										4482
-									],
-									[
-										4637,
-										4650
-									],
-									[
-										4790,
-										4803
-									],
-									[
-										5054,
-										5067
-									],
-									[
-										5279,
-										5292
-									],
-									[
-										5526,
-										5539
-									],
-									[
-										5732,
-										5745
-									],
-									[
-										5990,
-										6003
-									],
-									[
-										6281,
-										6294
-									],
-									[
-										6442,
-										6455
-									],
-									[
-										6700,
-										6713
-									],
-									[
-										6847,
-										6860
-									],
-									[
-										7007,
-										7020
-									],
-									[
-										7201,
-										7214
-									],
-									[
-										7507,
-										7520
-									],
-									[
-										7746,
-										7759
-									],
-									[
-										7944,
-										7957
-									],
-									[
-										8100,
-										8113
-									],
-									[
-										8325,
-										8338
-									],
-									[
-										8521,
-										8534
-									],
-									[
-										8701,
-										8714
-									],
-									[
-										8865,
-										8878
-									],
-									[
-										9109,
-										9122
-									],
-									[
-										9355,
-										9368
-									],
-									[
-										9502,
-										9515
-									],
-									[
-										9650,
-										9663
-									],
-									[
-										9813,
-										9826
-									],
-									[
-										9965,
-										9978
-									],
-									[
-										10117,
-										10130
-									],
-									[
-										10297,
-										10310
-									],
-									[
-										10508,
-										10521
-									],
-									[
-										10674,
-										10687
-									],
-									[
-										10813,
-										10826
-									],
-									[
-										10962,
-										10975
-									],
-									[
-										11205,
-										11218
-									],
-									[
-										11442,
-										11455
-									],
-									[
-										11646,
-										11659
-									],
-									[
-										11809,
-										11822
-									],
-									[
-										11976,
-										11989
-									],
-									[
-										12217,
-										12230
-									],
-									[
-										12457,
-										12470
-									],
-									[
-										12718,
-										12731
-									],
-									[
-										13025,
-										13038
-									],
-									[
-										13329,
-										13342
-									],
-									[
-										13633,
-										13646
-									],
-									[
-										13937,
-										13950
-									],
-									[
-										14236,
-										14249
-									],
-									[
-										14536,
-										14549
-									],
-									[
-										14813,
-										14826
-									],
-									[
-										15120,
-										15133
-									],
-									[
-										15409,
-										15422
-									],
-									[
-										15548,
-										15561
-									],
-									[
-										15704,
-										15717
-									],
-									[
-										15892,
-										15905
-									],
-									[
-										16043,
-										16056
-									],
-									[
-										16204,
-										16217
-									],
-									[
-										16422,
-										16435
-									],
-									[
-										16597,
-										16610
-									],
-									[
-										16746,
-										16759
-									],
-									[
-										16977,
-										16990
-									],
-									[
-										17247,
-										17260
-									],
-									[
-										17571,
-										17584
-									],
-									[
-										17830,
-										17843
-									],
-									[
-										18060,
-										18073
-									],
-									[
-										18272,
-										18285
-									],
-									[
-										18521,
-										18534
-									],
-									[
-										18777,
-										18790
-									],
-									[
-										19039,
-										19052
-									],
-									[
-										19317,
-										19330
-									],
-									[
-										19581,
-										19594
-									],
-									[
-										19860,
-										19873
-									],
-									[
-										20072,
-										20085
-									],
-									[
-										20268,
-										20281
-									],
-									[
-										20505,
-										20518
-									],
-									[
-										20761,
-										20774
-									],
-									[
-										21084,
-										21097
-									],
-									[
-										21267,
-										21280
-									],
-									[
-										21606,
-										21619
-									],
-									[
-										21931,
-										21944
-									],
-									[
-										22256,
-										22269
-									],
-									[
-										22526,
-										22539
-									],
-									[
-										22805,
-										22818
-									],
-									[
-										23084,
-										23097
-									],
-									[
-										23360,
-										23373
-									],
-									[
-										23636,
-										23649
-									],
-									[
-										23852,
-										23865
-									],
-									[
-										24109,
-										24122
-									],
-									[
-										24340,
-										24353
-									],
-									[
-										24555,
-										24568
-									],
-									[
-										24773,
-										24786
-									],
-									[
-										25015,
-										25028
-									],
-									[
-										25288,
-										25301
-									],
-									[
-										25527,
-										25540
-									],
-									[
-										25816,
-										25829
-									],
-									[
-										26122,
-										26135
-									],
-									[
-										26394,
-										26407
-									],
-									[
-										26651,
-										26664
-									],
-									[
-										26897,
-										26910
-									],
-									[
-										27130,
-										27143
-									],
-									[
-										27430,
-										27443
-									],
-									[
-										27684,
-										27697
-									],
-									[
-										27949,
-										27962
-									],
-									[
-										28211,
-										28224
-									],
-									[
-										28485,
-										28498
-									],
-									[
-										28716,
-										28729
-									],
-									[
-										29034,
-										29047
-									],
-									[
-										29297,
-										29310
-									],
-									[
-										29579,
-										29592
-									],
-									[
-										29846,
-										29859
-									],
-									[
-										30042,
-										30055
-									],
-									[
-										30261,
-										30274
-									],
-									[
-										30554,
-										30567
-									],
-									[
-										30766,
-										30779
-									],
-									[
-										30983,
-										30996
-									],
-									[
-										31232,
-										31245
-									],
-									[
-										31473,
-										31486
-									],
-									[
-										31690,
-										31703
-									],
-									[
-										31883,
-										31896
-									],
-									[
-										32094,
-										32107
-									],
-									[
-										32297,
-										32310
-									],
-									[
-										32500,
-										32513
-									],
-									[
-										32720,
-										32733
-									],
-									[
-										32873,
-										32886
-									],
-									[
-										33081,
-										33094
-									],
-									[
-										33274,
-										33287
-									],
-									[
-										33463,
-										33476
-									],
-									[
-										33646,
-										33659
-									],
-									[
-										33818,
-										33831
-									],
-									[
-										34021,
-										34034
-									],
-									[
-										34205,
-										34218
-									],
-									[
-										34439,
-										34452
-									],
-									[
-										34652,
-										34665
-									],
-									[
-										34841,
-										34854
-									],
-									[
-										35176,
-										35189
-									],
-									[
-										35440,
-										35453
-									],
-									[
-										35721,
-										35734
-									],
-									[
-										36022,
-										36035
-									],
-									[
-										36261,
-										36274
-									],
-									[
-										36490,
-										36503
-									],
-									[
-										36730,
-										36743
-									],
-									[
-										36931,
-										36944
-									],
-									[
-										37194,
-										37207
-									],
-									[
-										37381,
-										37394
-									],
-									[
-										37576,
-										37589
-									],
-									[
-										37739,
-										37752
-									],
-									[
-										37939,
-										37952
-									],
-									[
-										38220,
-										38233
-									],
-									[
-										38505,
-										38518
-									],
-									[
-										38728,
-										38741
-									],
-									[
-										38973,
-										38986
-									],
-									[
-										39115,
-										39128
-									],
-									[
-										39366,
-										39379
-									],
-									[
-										39630,
-										39643
-									],
-									[
-										39838,
-										39851
-									],
-									[
-										39989,
-										40002
-									],
-									[
-										40217,
-										40230
-									],
-									[
-										40494,
-										40507
-									],
-									[
-										40687,
-										40700
-									],
-									[
-										40916,
-										40929
-									],
-									[
-										41086,
-										41099
-									],
-									[
-										41268,
-										41281
-									],
-									[
-										41530,
-										41543
-									],
-									[
-										41815,
-										41828
-									],
-									[
-										42061,
-										42074
-									],
-									[
-										42403,
-										42416
-									],
-									[
-										42791,
-										42804
-									],
-									[
-										42969,
-										42982
-									],
-									[
-										43199,
-										43212
-									],
-									[
-										43444,
-										43457
-									],
-									[
-										43693,
-										43706
-									],
-									[
-										43936,
-										43949
-									],
-									[
-										44115,
-										44128
-									],
-									[
-										44281,
-										44294
-									],
-									[
-										44471,
-										44484
-									],
-									[
-										44675,
-										44688
-									],
-									[
-										44893,
-										44906
-									],
-									[
-										45068,
-										45081
-									],
-									[
-										45220,
-										45233
-									],
-									[
-										45355,
-										45368
-									],
-									[
-										45488,
-										45501
-									],
-									[
-										45868,
-										45881
-									],
-									[
-										46016,
-										46029
-									],
-									[
-										46151,
-										46164
-									],
-									[
-										46463,
-										46476
-									],
-									[
-										46652,
-										46665
-									],
-									[
-										46838,
-										46851
-									],
-									[
-										47035,
-										47048
-									],
-									[
-										47168,
-										47181
-									],
-									[
-										47431,
-										47444
-									],
-									[
-										47621,
-										47634
-									],
-									[
-										47815,
-										47828
-									],
-									[
-										48009,
-										48022
-									],
-									[
-										48164,
-										48177
-									],
-									[
-										48293,
-										48306
-									],
-									[
-										48461,
-										48474
-									],
-									[
-										48651,
-										48664
-									],
-									[
-										48845,
-										48858
-									],
-									[
-										49057,
-										49070
-									],
-									[
-										49364,
-										49377
-									],
-									[
-										49695,
-										49708
-									],
-									[
-										49888,
-										49901
-									],
-									[
-										50085,
-										50098
-									],
-									[
-										50294,
-										50307
-									],
-									[
-										50498,
-										50511
-									],
-									[
-										50706,
-										50719
-									],
-									[
-										50909,
-										50922
-									],
-									[
-										51099,
-										51112
-									],
-									[
-										51293,
-										51306
-									],
-									[
-										51491,
-										51504
-									],
-									[
-										51686,
-										51699
+										242,
+										290
 									]
 								],
 								"scope": ""
@@ -1940,8 +983,8 @@
 						"selection":
 						[
 							[
-								10126,
-								10126
+								265,
+								265
 							]
 						],
 						"settings":
@@ -1957,27 +1000,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8007.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
+					"file": "vendor/couchapp/_attachments/artendb.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1584,
+						"buffer_size": 110780,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								666,
-								666
+								79650,
+								79650
 							]
 						],
 						"settings":
@@ -1987,70 +1030,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 49348.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2455,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1335,
-								1335
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 240.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "_attachments/index_dev.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 127017,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3747,
-								3747
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1176.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
