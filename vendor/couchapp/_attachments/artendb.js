@@ -1220,9 +1220,11 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
     if ($("#exportieren_exportieren_collapse").is(":visible")) {
         if (window.adb.handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
+
             // Tabelle und Herunterladen-Schaltfläche ausblenden
             $(".exportieren_exportieren_tabelle").hide();
             $(".exportieren_exportieren_exportieren").hide();
+
             // filtert und baut danach die Vorschautabelle auf
             filtereFuerExport($, null, fürAlt);
         }
@@ -1236,6 +1238,15 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
     }
 };
 
+// scrollt das übergebene Element nach oben
+// minus die übergebene Anzahl Pixel
+window.adb.scrollThisToTop = function (that, minus) {
+    minus = minus || 0;
+    $('html, body').animate({
+        scrollTop: $(that).parent().offset().top - minus
+    }, 2000);
+};
+
 window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
     'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
@@ -1246,8 +1257,9 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
         $(that).collapse('hide');
         return false;
     }
+    // nach oben scrollen, damit der Bildschirm optimal genutzt wird
     $('html, body').animate({
-        scrollTop: $(that).parent().offset().top - 8
+        scrollTop: $(that).parent().offset().top - 6
     }, 2000);
     return true;
 };
@@ -1904,7 +1916,7 @@ window.adb.öffneUri = function () {
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum($)).then(function () {
                     var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
-                    oeffneBaumZuId ($, id);
+                    oeffneBaumZuId($, id);
                 });
             }
         });
@@ -1917,13 +1929,7 @@ window.adb.öffneUri = function () {
     if (exportieren_fuer_alt) {
         // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
         if (!$('#export_alt').is(':visible')) {
-            $.when(zeigeFormular('export_alt')).then(function () {
-                /*// verzögert und langsam 'Eigenschaften wählen' öffnen
-                setTimeout(function () {
-                    $('#exportieren_alt_felder_waehlen_collapse')
-                        .collapse('show');
-                }, 1000);*/
-            });
+            zeigeFormular('export_alt');
             window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
             require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
         }
@@ -2017,6 +2023,7 @@ window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt)
         url,
         list,
         view,
+        $exportieren_alt_exportieren_url = $('#exportieren_alt_exportieren_url'),
         uri = new Uri($(location).attr('href'));
 
     if ($("#exportieren_alt_synonym_infos").prop('checked')) {
@@ -2056,10 +2063,14 @@ window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt)
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
 
     // url anzeigen und markieren
-    $('#exportieren_alt_exportieren_url')
-        .val(url)
-        .focus()
-        .select();
+    $exportieren_alt_exportieren_url
+        .val(url);
+    // ..aber erst verzögert markieren, sonst springt das Fenster
+    setTimeout(function () {
+        $exportieren_alt_exportieren_url
+            .focus()
+            .select();
+    }, 2000);
 
     // Feld markieren
 
@@ -2083,7 +2094,8 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
     'use strict';
     var hinweis = "",
         erstelleTabelle = require('./adbModules/erstelleTabelle'),
-        _alt = _alt || '';
+        _alt = _alt || '',
+        $element_to_scroll;
 
     if (window.adb.exportieren_objekte.length > 0) {
         erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle", 'export_alt');
@@ -2095,12 +2107,19 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
             .alert()
             .show();
     }
+
+    if (_alt) {
+        $element_to_scroll = $("#exportieren_alt_exportieren");
+    } else {
+        $element_to_scroll = $("#exportieren_exportieren");
+    }
     if (!_alt) {
-        // zur Tabelle scrollen
+        // Panel-Titel an oberen Rand scrollen
         $('html, body').animate({
-            scrollTop: $("#exportieren_exportieren_exportieren").offset().top
+            scrollTop: $element_to_scroll.offset().top -6
         }, 2000);
     }
+
     // Beschäftigungsmeldung verstecken
     $("#exportieren" + _alt + "_exportieren_hinweis_text")
         .alert()

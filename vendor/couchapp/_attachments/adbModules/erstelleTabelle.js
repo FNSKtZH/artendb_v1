@@ -107,10 +107,6 @@ var returnFunction = function (datensätze, felder_div, tabellen_div, formular) 
         $('html, body').animate({
             scrollTop: $tabellen_div.offset().top
         }, 2000);
-    } else if (formular && formular === 'export_alt') {
-        $('html, body').animate({
-            scrollTop: $('#exportieren_alt_exportieren').offset().top
-        }, 2000);
     }
 };
 

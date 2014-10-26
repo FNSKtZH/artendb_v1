@@ -90,7 +90,7 @@ var returnFunction = function ($, export_gruppen, formular) {
             .removeClass("alert-success")
             .addClass("alert-danger");
         // Felder entfernen
-        $("#export .exportieren_felder_waehlen_felderliste")
+        $("#export").find(".exportieren_felder_waehlen_felderliste")
             .html("");
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .html("");
