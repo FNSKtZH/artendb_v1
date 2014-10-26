@@ -1245,9 +1245,11 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
         // und den panel schliessen
         $(that).collapse('hide');
         return false;
-    } else {
-        return true;
     }
+    $('html, body').animate({
+        scrollTop: $(that).parent().offset().top - 8
+    }, 2000);
+    return true;
 };
 
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
