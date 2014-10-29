@@ -53,7 +53,7 @@ function (head, req) {
 			exportObjekt = {};
 
 			// Für das ALT obligatorische Felder hinzufügen
-			exportObjekt = adb.fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
+			exportObjekt = adb.fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt);
 
 			// Objekt zu Exportobjekten hinzufügen
 			exportObjekte.push(exportObjekt);

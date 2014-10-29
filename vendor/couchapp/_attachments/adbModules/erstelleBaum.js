@@ -1,4 +1,5 @@
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 // erhält $, weil jquery.couch.js nicht nod-fähig ist

@@ -1,12 +1,10 @@
-/*jslint node: true */
-'use strict';
-
 var _ = require("lists/lib/underscore");
 
 // bekommt einen der existierenden Werte für Status bei Flora
 // retourniert den einstelligen Code
 // wird benötigt von EvAB
 exports.codiereFloraStatus = function (status) {
+    'use strict';
     var codierteWerte = {
         "eigenständige Art aber im Index nicht enthalten":                  "?",
         "akzeptierter Name":                                                "A",
@@ -23,6 +21,7 @@ exports.codiereFloraStatus = function (status) {
 };
 
 exports.erstelleExportString = function (exportobjekte) {
+    'use strict';
     var stringTitelzeile = "",
         stringZeilen = "",
         stringZeile;
@@ -70,6 +69,7 @@ exports.erstelleExportString = function (exportobjekte) {
 };
 
 exports.filtereBeziehungspartner = function (beziehungspartner, Filterwert, Vergleichsoperator) {
+    'use strict';
     // Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
     // wessen Name die Bedingung erfüllt
     var bezPartner = [];
@@ -97,6 +97,7 @@ exports.filtereBeziehungspartner = function (beziehungspartner, Filterwert, Verg
 };
 
 exports.convertToCorrectType = function (feldWert) {
+    'use strict';
     var type = exports.myTypeOf(feldWert);
     if (type === "boolean") return Boolean(feldWert);
     if (type === "float")   return parseFloat(feldWert);
@@ -109,6 +110,7 @@ exports.convertToCorrectType = function (feldWert) {
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
 exports.myTypeOf = function (Wert) {
+    'use strict';
     if (typeof Wert === "boolean")   return "boolean";
     if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) return "float";
     // verhindern, dass führende Nullen abgeschnitten werden
@@ -123,6 +125,7 @@ exports.myTypeOf = function (Wert) {
 // indem er Feldwerte mit Filterkriterien vergleicht
 // das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
 exports.beurteileFilterkriterien = function (feldwert, filterwert, vergleichsoperator) {
+    'use strict';
     if (vergleichsoperator === "kein" && feldwert == filterwert) return true;
     if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) return true;
     if (vergleichsoperator === "=" && feldwert == filterwert)    return true;
@@ -134,6 +137,7 @@ exports.beurteileFilterkriterien = function (feldwert, filterwert, vergleichsope
 };
 
 exports.beurteileObInformationenEnthaltenSind = function (objekt, felder, filterkriterien) {
+    'use strict';
     // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
     // also müssen wir durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
     // wenn ja und Feld aus DS/BS und kein Filter gesetzt: objektHinzufügen = true
@@ -186,6 +190,7 @@ exports.beurteileObInformationenEnthaltenSind = function (objekt, felder, filter
 };
 
 exports.prüfeObObjektKriterienErfüllt = function (objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
+    'use strict';
     var objekt_hinzufügen = false,
         objekt_nicht_hinzufügen = false,
         ds_typ,
@@ -432,6 +437,7 @@ exports.prüfeObObjektKriterienErfüllt = function (objekt, felder, filterkriter
 };
 
 exports.bereiteFilterkriterienVor = function (filterkriterien) {
+    'use strict';
     if (filterkriterien && filterkriterien.length > 0) {
         _.each(filterkriterien, function (filterkriterium) {
             // die id darf nicht in Kleinschrift verwandelt werden
@@ -454,6 +460,7 @@ exports.bereiteFilterkriterienVor = function (filterkriterien) {
 
 // ergänzt ein Objekt um fehlende Informationen seiner Synonyme
 exports.ergänzeObjektUmInformationenVonSynonymen = function (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
+    'use strict';
     // allfällige DS und BS aus Synonymen anhängen
     // zuerst DS
     // eine Liste der im objekt enthaltenen DsNamen erstellen
@@ -506,6 +513,7 @@ exports.ergänzeObjektUmInformationenVonSynonymen = function (objekt, datensamml
 // liest übergebene Variabeln für Export aus
 // und bereitet sie für die Verwendung auf
 exports.holeÜbergebeneVariablen = function (query_objekt) {
+    'use strict';
     var ü_var = {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
@@ -549,6 +557,7 @@ exports.holeÜbergebeneVariablen = function (query_objekt) {
 };
 
 exports.ergänzeDsBsVonSynonym = function (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen) {
+    'use strict';
     var ds_aus_syn_namen = [],
         bs_aus_syn_namen = [],
         ds_aus_syn_name,
@@ -595,6 +604,7 @@ exports.ergänzeDsBsVonSynonym = function (objekt, datensammlungen_aus_synonymen
 // retourniert schon_kopiert und exportObjekt
 // export_für: ermöglicht anpassungen für spezielle Exporte, z.b. für das Artenlistentool
 exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, export_objekte, export_für) {
+    'use strict';
     var exportObjekt = {},
         schon_kopiert = false;
 
@@ -607,7 +617,7 @@ exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_z
     // wenn der Export für das Artenlistentool erstellt wird: Obligatorische Felder einfügen
     if (export_für && export_für === "alt") {
         // Für das ALT obligatorische Felder hinzufügen
-        exportObjekt = fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt);
+        exportObjekt = exports.fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt);
 
         // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
         felder = _.reject(felder, function (feld) {
@@ -826,19 +836,18 @@ exports.ergänzeExportobjekteUmExportobjekt = function (objekt, felder, bez_in_z
 // und entfernt diese aus dem übergebenen exportObjekt, falls sie schon darin enthalten waren
 // erhält das Objekt und das exportObjekt
 // retourniert das angepasste exportObjekt
-exports.fuegeObligatorischeFelderFuerAltEin = fuegeObligatorischeFelderFuerAltEin();
-
-function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
+exports.fuegeObligatorischeFelderFuerAltEin = function (objekt, exportObjekt) {
+    'use strict';
     // übergebene Variabeln prüfen
     if (!objekt) return {};
+    if (!objekt.Taxonomie) return {};
+    if (!objekt.Taxonomie.Eigenschaften) return {};
     if (!exportObjekt) exportObjekt = {};
 
     // Felder ergänzen
     // immer sicherstellen, dass das Feld existiert
-    exportObjekt.ref = '';
     exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
-    exportObjekt.gisLayer = '';
     var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === "ZH GIS";
     }) || {};
@@ -847,29 +856,21 @@ function fuegeObligatorischeFelderFuerAltEin (objekt, exportObjekt) {
         exportObjekt.gisLayer = ds_zh_gis.Eigenschaften["GIS-Layer"].substring(0, 50);
     }
 
-    exportObjekt.distance = '';
     if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"]) {
         exportObjekt.distance = ds_zh_gis.Eigenschaften["Betrachtungsdistanz (m)"];
     }
 
-    exportObjekt.nameLat = '';
-    if (objekt.Taxonomie.Eigenschaften.Artname) {
-        exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);    
-    }
-    
-    exportObjekt.nameDeu = '';
-    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
-        exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
-    }
+    if (objekt.Taxonomie.Eigenschaften.Artname) exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);
+
+    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
 
     var ds_zh_artwert_1995 = _.find(objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === "ZH Artwert (1995)";
     }) || {};
 
-    exportObjekt.artwert = '';
     if (ds_zh_artwert_1995 && ds_zh_artwert_1995.Eigenschaften && (ds_zh_artwert_1995.Eigenschaften.Artwert || ds_zh_artwert_1995.Eigenschaften.Artwert === 0)) {
         exportObjekt.artwert = ds_zh_artwert_1995.Eigenschaften.Artwert;
     }
 
     return exportObjekt;
-}
+};

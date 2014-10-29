@@ -1,7 +1,8 @@
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende Datensammlung
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var returnFunction = function (ds_typ, art, datensammlung) {

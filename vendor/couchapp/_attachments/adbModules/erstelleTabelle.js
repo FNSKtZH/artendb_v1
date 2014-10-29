@@ -4,7 +4,8 @@
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 // formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var _ = require('underscore'),
@@ -45,8 +46,25 @@ var returnFunction = function (datensätze, felder_div, tabellen_div, formular) 
     html_ds_felder_div += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(datensätze[0]).length * 19) + 9)  + 'px">';
     html += "<thead><tr>";
 
+    // Tabellenzeilen aufbauen
+    // nur die ersten 10 Datensätze anzeigen
+    erste_10_ds = _.first(datensätze, 10);
+
+    if (formular === 'export_alt') {
+        // die obligatorischen Felder müssen immer enthalten sein
+        // sonst fehlen in der Tabelle oder Titelzeile Zellen
+        _.each(erste_10_ds, function (ds) {
+            if (!ds.ref) ds.ref = '';
+            if (!ds.gisLayer) ds.gisLayer = '';
+            if (!ds.distance) ds.distance = '';
+            if (!ds.nameLat) ds.nameLat = '';
+            if (!ds.nameDeu) ds.nameDeu = '';
+            if (!ds.artwert) ds.artwert = '';
+        });
+    }
+
     // durch die Felder des ersten Datensatzes zirkeln
-    _.each(datensätze[0], function (feldwert, feldname) {
+    _.each(erste_10_ds[0], function (feldwert, feldname) {
         // Spalte anlegen
         html += "<th>" + feldname + "</th>";
         // Option für Feldliste anfügen
@@ -62,9 +80,6 @@ var returnFunction = function (datensätze, felder_div, tabellen_div, formular) 
     }
 
     // Tabellenzeilen aufbauen
-    // nur die ersten 10 Datensätze anzeigen
-    erste_10_ds = _.first(datensätze, 10);
-
     _.each(erste_10_ds, function (datensatz) {
         // Zeile anlegen
         html += "<tr>";

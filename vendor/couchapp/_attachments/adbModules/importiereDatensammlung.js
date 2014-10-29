@@ -1,7 +1,8 @@
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var _ = require('underscore');

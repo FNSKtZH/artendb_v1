@@ -2,7 +2,8 @@
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var oeffneNodeNachIdArray = function ($, idArray) {

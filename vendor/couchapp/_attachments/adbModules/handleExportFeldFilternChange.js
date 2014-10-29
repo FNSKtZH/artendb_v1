@@ -2,7 +2,8 @@
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält.
 // Wenn ja: reklamieren und rückgängig machen
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 // braucht $ wegen .modal

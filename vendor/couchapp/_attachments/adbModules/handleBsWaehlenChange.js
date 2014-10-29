@@ -1,6 +1,7 @@
 // Wenn BsWählen geändert wird
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var _ = require('underscore');

@@ -27,8 +27,8 @@
 		beziehungssammlungen_aus_synonymen,
         datensammlungen_aus_synonymen,
         ergänzeDsBsVonSynonym_return,
-        _   = require ("lists/lib/underscore"),
-        adb = require ("lists/lib/artendb_listfunctions");
+        _   = require("lists/lib/underscore"),
+        adb = require("lists/lib/artendb_listfunctions");
 
     // übergebene Variablen extrahieren
     üVar = adb.holeÜbergebeneVariablen(req.query);
@@ -49,7 +49,7 @@
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
+            ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
             datensammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[0];
             beziehungssammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[1];
 
@@ -60,13 +60,13 @@
             objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
 			// allfällige DS und BS aus Synonymen anhängen
-            objekt = adb.ergänzeObjektUmInformationenVonSynonymen (objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
+            objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
 
             // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen
 
             // Exportobjekte um das Objekt ergänzen
             // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-            exportObjekte = adb.ergänzeExportobjekteUmExportobjekt (objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+            exportObjekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
             
 			// arrays für sammlungen aus synonymen zurücksetzen
 			beziehungssammlungen_aus_synonymen = [];

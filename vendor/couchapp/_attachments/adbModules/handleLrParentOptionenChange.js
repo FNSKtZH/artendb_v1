@@ -1,6 +1,7 @@
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 // $ wird benütigt für $.modal und $.couch

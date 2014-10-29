@@ -1,4 +1,5 @@
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 // braucht $ wegen $.jstree

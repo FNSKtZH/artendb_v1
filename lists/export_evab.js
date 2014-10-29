@@ -68,7 +68,7 @@ function (head, req) {
             if (dsTaxonomie.Status) {
                 // Status codieren
                 floraStatusCodiert = _a.codiereFloraStatus(dsTaxonomie.Status);
-                exportObjekt.status = floraStatusCodiert;
+                if (floraStatusCodiert) exportObjekt.status = floraStatusCodiert;
             }
             // GIS-Layer ist bei Flora immer Flora
             exportObjekt.klasse = "Flora";

@@ -1,7 +1,8 @@
 // schreibt Änderungen in Feldern in die Datenbank
 // wird vorläufig nur für LR Taxonomie verwendet
 
-/*jslint node: true */
+/*jslint node: true, browser: true */
+
 'use strict';
 
 var Uri = require('jsuri');
