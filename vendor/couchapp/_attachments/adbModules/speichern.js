@@ -1,7 +1,8 @@
 // schreibt Änderungen in Feldern in die Datenbank
 // wird vorläufig nur für LR Taxonomie verwendet
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

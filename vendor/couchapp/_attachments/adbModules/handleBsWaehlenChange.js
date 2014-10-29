@@ -1,6 +1,7 @@
 // Wenn BsWählen geändert wird
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

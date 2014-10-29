@@ -5,7 +5,8 @@
 // retourniert das ergänzte FelderObjekt
 // das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

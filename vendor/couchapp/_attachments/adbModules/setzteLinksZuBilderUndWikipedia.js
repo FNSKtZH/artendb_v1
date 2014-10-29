@@ -1,7 +1,8 @@
 // managt die Links zu Google Bilder und Wikipedia
 // erwartet das Objekt mit der Art
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

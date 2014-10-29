@@ -4,7 +4,8 @@
 // Hier kann dieselbe DS zwei mal vorkommen und sollte nicht gleich heissen,
 // sonst geht nur die erste auf
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

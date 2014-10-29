@@ -3,7 +3,8 @@
 // In der Auswahlliste sollen nur LR aus derselben Taxonomie gewählt werden können
 // plus man soll auch einen neue Taxonomie beginnen können
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 

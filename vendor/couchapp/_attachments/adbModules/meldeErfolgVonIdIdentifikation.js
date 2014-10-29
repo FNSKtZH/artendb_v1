@@ -1,6 +1,7 @@
 // erhält dbs = "Ds" oder "Bs"
 
-/*jslint node: true, browser: true */
+/*jslint node: true, browser: true, nomen: true */
+
 
 'use strict';
 
