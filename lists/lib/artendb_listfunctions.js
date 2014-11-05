@@ -846,6 +846,7 @@ exports.fuegeObligatorischeFelderFuerAltEin = function (objekt, exportObjekt) {
 
     // Felder ergänzen
     // immer sicherstellen, dass das Feld existiert
+    exportObjekt.idArt = "{" + objekt._id + "}";
     exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
 
     var ds_zh_gis = _.find(objekt.Eigenschaftensammlungen, function (ds) {

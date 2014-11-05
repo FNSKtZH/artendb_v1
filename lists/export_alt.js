@@ -41,7 +41,7 @@ function (head, req) {
 
         // Exportobjekte um das Objekt ergänzen
         // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-        exportObjekte = adb.ergänzeExportobjekteUmExportobjekt (objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+        exportObjekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
 	}
 
     send(JSON.stringify(exportObjekte));
