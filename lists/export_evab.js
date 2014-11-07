@@ -9,7 +9,8 @@ function (head, req) {
     start({
         "headers": {
             "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;"
+            "Content-Type": "json; charset=utf-8;",
+            "Accept-Encoding": "gzip,deflate"
         }
     });
 

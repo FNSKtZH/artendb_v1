@@ -203,7 +203,7 @@ Das Menu ermöglicht:
 - Importe
 - Bildersuche in Google
 - Suche in Wikipedia
-- Informationen über die arteigenschaften.ch: Projektbeschrieb, letze Änderungen an der Anwendung, Link auf GitHub zur Code-Ablage
+- Informationen über arteigenschaften.ch: Projektbeschrieb, letze Änderungen an der Anwendung, Link auf GitHub zur Code-Ablage
 - Rückmeldungen an den Entwickler
 
 **Mobilfähigkeit**
@@ -239,6 +239,10 @@ Neue Eigenschaftensammlungen sind in der aktuellen Access-Datenbank viel umstän
 Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile exportieren (dafür nur die Informationen einer Beziehungssammlung). Oder die Informationen eines Felds aus mehreren Beziehungen kommagetrennt hintereinander im selben Feld exportieren (dafür die Informationen aus beliebig vielen Beziehungen gleichzeitig). Es können beliebige Informationen aus Taxonomie und Eigenschaftensammlungen hinzugefügt werden.
 
 Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
+
+###Daten für die Auswertung mit dem Artenlistentool auswählen (ab: Ende 2014)
+
+Mit dem [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content) der Fachstelle Naturschutz des Kantons Zürich können Artbeobachtungen räumlich ausgewertet werden. Die Beobachtungen einer Auswertung können für die Auswertung in ein Excel-File exportiert werden. Wenn der Benutzer will, wird er auf arteigenschaften.ch geleitet. Genau genommen: Auf eine für diesen Zweck angepasste Version der Export-Seite. Hier kann er Felder auswählen. Er erhält eine URL, die er dem Artenlistentool übergibt. Anschliessend werden die gewählten Daten gemeinsam mit den Daten der Beobachtungen exportiert.
 
 ###Daten bearbeiten
 Grundsätzlich müssen keine Daten in arteigenschaften.ch bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die arteigenschaften.ch importiert.
