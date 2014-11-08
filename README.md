@@ -240,7 +240,7 @@ Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile expor
 
 Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
 
-###Daten für die Auswertung mit dem Artenlistentool auswählen (ab: Ende 2014)
+###Daten für die Auswertung mit dem Artenlistentool auswählen### (ab Ende 2014)
 
 Mit dem [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content) der Fachstelle Naturschutz des Kantons Zürich können Artbeobachtungen räumlich ausgewertet werden. Die Resultate können in ein Excel-File exportiert werden. Der Benutzer kann sich auf eine für diesen Zweck angepasste Version der Export-Seite von arteigenschaften.ch leiten lassen. Hier kann er Felder auswählen. Er erhält eine URL, die er dem Artenlistentool übergibt. Anschliessend werden die gewählten Felder gemeinsam mit den Daten der Beobachtungen exportiert und stehen für die weitere Auswertung zur Verfügung.
 
