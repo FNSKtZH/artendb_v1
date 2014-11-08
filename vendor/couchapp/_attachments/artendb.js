@@ -1900,6 +1900,13 @@ window.adb.öffneUri = function () {
         id = uri2.getQueryParamValue('id');
     }
 
+    // Menu ist ausgeblendet
+    // Grund: exportierren_fuer_artenlistentool
+    // Menu einblenden, wenn exportierren_fuer_artenlistentool nicht aufgerufen wird
+    if (!exportieren_fuer_alt) {
+        $('.menu').show();
+    }
+
     // wenn ein Objekt geöffnet wird
     if (id) {
         // Gruppe ermitteln

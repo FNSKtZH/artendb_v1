@@ -1,5 +1,933 @@
-<!doctype html><html lang=de><head><link rel=apple-touch-icon href=style/images/aster_144.png><meta name=msapplication-TileColor content=#FF0000><meta name=msapplication-TileImage content=style/images/aster_144.png><link rel=icon href=style/images/aster.ico><meta charset=utf-8><meta name=viewport content="width=device-width, initial-scale=1"><link rel=stylesheet href=style/main.css><link href=//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css rel=stylesheet><script>!function (d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><title>ArtenDb</title></head><body><div id=menu_btn class=btn-group><button type=button class="btn btn-sm btn-default dropdown-toggle" data-toggle=dropdown>Menu <span class=caret></span></button><ul class=dropdown-menu role=menu><li role=presentation class=dropdown-header>Mehr Infos zur Art:</li><li id=GoogleBilderLink_li class="disabled externer_menu_link"><a id=GoogleBilderLink target=_blank>Auf google.ch Bilder suchen</a></li><li id=WikipediaLink_li class="disabled externer_menu_link"><a id=WikipediaLink target=_blank>Auf wikipedia.org suchen</a></li><li role=presentation class=divider></li><li role=presentation class=dropdown-header>Exportieren:</li><li><a id=exportieren href=#>Eigenschaften</a></li><li role=presentation class=divider></li><li role=presentation class=dropdown-header>Importieren oder löschen:</li><li><a id=ds_importieren href=#>Eigenschaften</a></li><li><a id=bs_importieren href=#>Beziehungen</a></li><li role=presentation class=divider></li><li class=admin><a id=menu_admin href=#>Administration</a></li><li role=presentation class="divider admin"></li><li role=presentation class=dropdown-header>Über arteigenschaften.ch:</li><li><a href=//github.com/FNSKtZH/artendb/blob/master/README.md target=_blank>Projektbeschreibung</a></li><li><a href=//github.com/FNSKtZH/artendb target=_blank>Code</a></li><li><a href=//github.com/FNSKtZH/artendb/commits/master target=_blank>Letzte Änderungen</a></li><li><a href=mailto:alex@gabriel-software.ch>Email an Autor</a></li><li><a href=https://twitter.com/arteigenschaft class=twitter-follow-button data-lang=de data-dnt=true>@arteigenschaft folgen</a></li></ul></div><fieldset id=menu><div><button id=btn_resize type=button class="btn btn-sm btn-default pull-right" data-toggle=tooltip data-placement=left title="ganze Breite nutzen"><span class="glyphicon glyphicon-resize-horizontal"></span></button><div id=menu-div><div id=gruppe_label>Gruppe wählen:</div></div><div id=Gruppe class=btn-group data-toggle=buttons><label class="btn btn-primary gruppe" gruppe=Fauna><input type=radio>Fauna</label> <label class="btn btn-primary gruppe" gruppe=Flora><input type=radio>Flora</label> <label class="btn btn-primary gruppe" gruppe=Moose><input type=radio>Moose</label> <label class="btn btn-primary gruppe" gruppe=Macromycetes><input type=radio>Pilze</label> <label class="btn btn-primary gruppe" gruppe=Lebensräume><input type=radio>Lebensräume</label></div></div><div id=suchenFauna class="input-group input-group-xs suchen"><input id=suchfeldFauna class="form-control input-sm suchfeld" type=text placeholder=filtern></div><div id=suchenFlora class="input-group input-group-xs suchen"><input id=suchfeldFlora class="form-control input-sm suchfeld" type=text placeholder=filtern></div><div id=suchenMoose class="input-group input-group-xs suchen"><input id=suchfeldMoose class="form-control input-sm suchfeld" type=text placeholder=filtern></div><div id=suchenMacromycetes class="input-group input-group-xs suchen"><input id=suchfeldMacromycetes class="form-control input-sm suchfeld" type=text placeholder=filtern></div><div id=suchenLebensräume class="input-group input-group-xs suchen"><input id=suchfeldLebensräume class="form-control input-sm suchfeld" type=text placeholder=filtern></div><div id=treeMitteilung style=display:none;>hole Daten...</div><div id=treeFaunaBeschriftung class=treeBeschriftung></div><div id=treeFloraBeschriftung class=treeBeschriftung></div><div id=treeMooseBeschriftung class=treeBeschriftung></div><div id=treeMacromycetesBeschriftung class=treeBeschriftung></div><div id=treeLebensräumeBeschriftung class=treeBeschriftung></div><div id=treeFauna class=baum></div><div id=treeFlora class=baum></div><div id=treeMoose class=baum></div><div id=treeMacromycetes class=baum></div><div id=treeLebensräume class=baum></div></fieldset><fieldset id=forms><form id=art class="form_art form form-horizontal" action=# method=get autocomplete=off><div id=panel_art class=panel-group><div id=art_anmelden class="panel panel-default" style=display:none;><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=art_anmelden_titel class="art_anmelden_titel accordion-toggle" data-toggle=collapse data-parent=panel_art href=#art_anmelden_collapse>Anmelden</a></h4></div><div id=art_anmelden_collapse class="panel-collapse collapse anmelden"><div class=panel-body><div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, um ein Login zu erhalten.</div><div class=form-group><label class="control-label Email" for=Email_art>Email</label> <input type=email id=Email_art class="controls form-control Email" placeholder=Email required><div id=Emailhinweis_art class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div></div><div class=form-group><label class="control-label Passwort" for=Passwort_art>Passwort</label> <input type=password id=Passwort_art class="controls form-control Passwort" placeholder=Passwort required><div id=Passworthinweis_art class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div><div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div><div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div><div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div></div><div class="form-group signup"><label class=control-label for=Passwort2_art>Passwort bestätigen</label> <input type=password id=Passwort2_art class="controls form-control Passwort2" placeholder="Passwort bestätigen" required><div id=Passwort2hinweis_art class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div><div id=Passwort2hinweisFalsch_art class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div></div><div class="controls feld" style=padding-bottom:6px;><button id=anmelden_btn_art class="btn btn-primary anmelden_btn">anmelden</button> <button id=abmelden_btn_art class="btn btn-primary abmelden_btn" style=display:none;>abmelden</button> <button id=konto_erstellen_btn_art class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button> <button id=konto_speichern_btn_art class="btn btn-primary konto_speichern_btn" style=display:none;>neues Konto speichern</button></div><div id=art_anmelden_fehler_text class="importieren_anmelden_fehler_text alert alert-danger feld"></div><div id=art_anmelden_hinweis_text class="importieren_anmelden_hinweis_text alert alert-warning feld"></div></div></div></div><div id=art_inhalt></div></div></form><form id=importieren_ds class="form_importieren_ds form form-horizontal import" action=# method=get autocomplete=off><div class=panel-group id=importieren_ds_panel><h4>Eigenschaften importieren:</h4><div id=importieren_ds_anmelden class="panel panel-default importieren_anmelden"><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=importieren_ds_anmelden_titel class="importieren_anmelden_titel accordion-toggle" data-toggle=collapse data-parent=importieren_ds_panel href=#importieren_ds_anmelden_collapse>1. Anmelden</a></h4></div><div id=importieren_ds_anmelden_collapse class="collapse importieren_anmelden_collapse anmelden"><div class=panel-body><div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, um ein Login zu erhalten.</div><div class="form-group Email"><label class="control-label Email" for=Email_ds>Email</label> <input type=email id=Email_ds class="controls form-control Email" placeholder=Email required><div id=Emailhinweis_ds class="controls hinweis alert alert-danger Emailhinweis feld_in_formgroup">Bitte Email erfassen</div></div><div class="form-group Passwort"><label class="control-label Passwort" for=Passwort_ds>Passwort</label> <input type=password id=Passwort_ds class="controls form-control Passwort" placeholder=Passwort required><div id=Passworthinweis_ds class="controls hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div><div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div><div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div><div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div></div><div class="form-group signup"><label class=control-label for=Passwort2_ds>Passwort bestätigen</label> <input type=password id=Passwort2_ds class="controls form-control Passwort2" placeholder="Passwort bestätigen" required><div id=Passwort2hinweis_ds class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweis">Bitte Passwort bestätigen</div><div id=Passwort2hinweisFalsch_ds class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div></div><div class="controls feld" style=padding-bottom:6px;><button id=anmelden_btn_ds class="btn btn-primary anmelden_btn">anmelden</button> <button id=abmelden_btn_ds class="btn btn-primary abmelden_btn" style=display:none;>abmelden</button> <button id=konto_erstellen_btn_ds class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button> <button id=konto_speichern_btn_ds class="btn btn-primary konto_speichern_btn" style=display:none;>neues Konto speichern</button></div><div id=importieren_ds_anmelden_fehler_text class="importieren_anmelden_fehler_text alert alert-danger feld"></div><div id=importieren_ds_anmelden_hinweis_text class="importieren_anmelden_hinweis_text alert alert-warning feld"></div></div></div></div><div class="panel panel-default" id=importieren_ds_ds_beschreiben><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class="accordion-toggle accordion-toggle" data-toggle=collapse data-parent=importieren_ds_panel href=#importieren_ds_ds_beschreiben_collapse>2. Eigenschaftensammlung beschreiben</a></h4></div><div class="panel-collapse collapse" id=importieren_ds_ds_beschreiben_collapse><div class=panel-body><div class="well well-sm"><a href=//youtu.be/nqd-v6YxkOY target=_blank><b>Screencast sehen</b></a></div><div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Der Name sollte ungefähr dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li><li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li><li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn"</li><li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Eigenschaftensammlung enthält. Beispiel: "Eigenschaften von 207 Tierarten und 885 Pflanzenarten"</li><li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li><li>Im Datenstand ist erkenntlich, wann die Eigenschaftensammlung zuletzt aktualisiert wurde</li><li>Besonders hilfreich ist es, wenn die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li></ul></div><div class="well well-sm"><b>Für eine zusammenfassende Eigenschaftensammlung importieren Sie die Daten zwei mal</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>zuerst in die Ursprungs-Eigenschaftensammlung</li><li>dann in die zusammenfassende. Bitte die Ursprungs-Eigenschaftensammlung angeben</li><li>Mehr Infos <a href=//github.com/FNSKtZH/artendb#zusammenfassende_datensammlungen target=_blank>hier</a></li></ul></div><div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li><li>Dafür verantwortlich ist, wer Daten importiert</li></ul></div><div class=form-group><label class=control-label for=DsWaehlen>Bestehende wählen</label><select class="form-control controls" id=DsWaehlen></select></div><div class="controls feld"><button type=button class="btn btn-primary btn-default" id=DsLoeschen style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button><div id=importieren_ds_ds_beschreiben_hinweis class="alert alert-info"></div></div><hr><div class=form-group><label class=control-label for=DsName>Name</label> <input type=text class="form-control controls input-sm" id=DsName></div><div class=form-group><label class=control-label for=DsBeschreibung>Beschreibung</label> <textarea class="form-control controls" id=DsBeschreibung></textarea></div><div class=form-group><label class=control-label for=DsDatenstand>Datenstand</label> <textarea class="form-control controls" id=DsDatenstand></textarea></div><div class=form-group><label class=control-label for=DsLink>Link</label> <textarea class="form-control controls" id=DsLink></textarea></div><div class=form-group><label class=control-label for=DsImportiertVon>importiert von</label> <input type=text class="form-control controls input-sm" id=DsImportiertVon></div><div class=form-group><label class=control-label for=DsZusammenfassend>zusammenfassend</label> <input type=checkbox id=DsZusammenfassend></div><div class=form-group id=DsUrsprungsDs_div style=display:none;><label class="control-label DsUrsprungsDs" for=DsUrsprungsDs id=DsUrsprungsDs_label>Ursprungs-Eigenschaftensammlung</label><select class="form-control controls DsUrsprungsDs input-sm" id=DsUrsprungsDs></select></div><div class=form-group><label class=control-label for=DsAnzDs id=DsAnzDs_label></label><div id=DsAnzDs class="feldtext controls"></div></div><div id=importieren_ds_ds_beschreiben_hinweis2 class="alert alert-info"></div><div id=importieren_ds_ds_beschreiben_error class="alert alert-danger"><button type=button class=close data-dismiss=alert>&times;</button><div id=importieren_ds_ds_beschreiben_error_text></div></div></div></div></div><div class="panel panel-default" id=importieren_ds_daten_uploaden><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_ds_panel href=#importieren_ds_daten_uploaden_collapse>3. Eigenschaften laden</a></h4></div><div class="panel-collapse collapse" id=importieren_ds_daten_uploaden_collapse><div class=panel-body><div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Die erste Zeile enthält die Feldnamen</li><li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. die Eigenschaften für die betreffende Art oder den Lebensraum</li><li>Alle Zeilen sollten dieselbe Anzahl Felder bzw. Spalten enthalten</li><li>Zeilen werden mit einem Zeilenumbruch getrennt</li><li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Artwert"</li><li>Ausnahmen: Zahlen und true/false-Werte brauchen keine Anführungs- und Schlusszeichen (es macht aber nichts, wenn sie sie haben)</li><li>Felder sind mit Komma getrennt</li><li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li><li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href=//de.wikipedia.org/wiki/CSV_(Dateiformat)>"csv"-Formats</a></li></ul></div><div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li><li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Eigenschaftensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li><li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li><li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li><li>ArtenDb setzt beim Export von Daten den Namen der Eigenschaftensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Eigenschaftensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li></ul></div><label class=sr-only for=DsFile>Datei wählen</label> <input type=file class=form-control id=DsFile><div id=DsTabelleEigenschaften class=tabelle></div></div></div></div><div class="panel panel-default" id=importieren_ds_ids_identifizieren><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_ds_panel href=#importieren_ds_ids_identifizieren_collapse>4. ID's identifizieren</a></h4></div><div class="panel-collapse collapse" id=importieren_ds_ids_identifizieren_collapse><div class=panel-body><div id=DsFelder_div class=form-group></div><div class=form-group><label class=control-label for=DsId>zugehörige ID<br>in ArtenDb</label><select multiple class="form-control controls input-sm" id=DsId style=height:101px;><option value=guid>GUID der ArtenDb</option><option value=Fauna>ID der Info Fauna (NUESP)</option><option value=Flora>ID der Info Flora (SISF-NR)</option><option value=Moose>ID des Datenzentrums Moose Schweiz (TAXONNO)</option><option value=Macromycetes>ID von Swissfungi (TaxonId)</option></select></div><div id=importieren_ds_ids_identifizieren_hinweis_text class="alert alert-info feld"></div></div></div></div><div class="panel panel-default" id=importieren_ds_import_ausfuehren><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_ds_panel href=#importieren_ds_import_ausfuehren_collapse>5. Import ausführen</a></h4></div><div class="panel-collapse collapse" id=importieren_ds_import_ausfuehren_collapse><div class=panel-body><button type=button class="btn btn-primary" id=DsImportieren style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften importieren</button> <button type=button class="btn btn-primary" id=DsEntfernen style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button><div class=progress><div id=DsImportierenProgressbar class=progress-bar role=progressbar aria-valuenow=0 aria-valuemin=0 aria-valuemax=100><span id=DsImportierenProgressbarText></span></div></div><div id=importieren_ds_import_ausfuehren_hinweis class="alert alert-info"><button type=button class=close data-dismiss=alert>&times;</button><div id=importieren_ds_import_ausfuehren_hinweis_text></div></div></div></div></div></div></form><form id=importieren_bs class="form_importieren_bs form form-horizontal import" action=# method=get autocomplete=off><div id=importieren_bs_panel class=panel-group><h4>Beziehungen importieren:</h4><div id=importieren_bs_anmelden class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=importieren_bs_anmelden_titel class="importieren_anmelden_titel accordion-toggle" data-toggle=collapse data-parent=importieren_bs_panel href=#importieren_bs_anmelden_collapse>1. Anmelden</a></h4></div><div id=importieren_bs_anmelden_collapse class="collapse anmelden"><div class=panel-body><div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, um ein Login zu erhalten.</div><div class=form-group><label class="control-label Email" for=Email_bs>Email</label> <input type=email id=Email_bs class="controls form-control Email" placeholder=Email required><div id=Emailhinweis_bs class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div></div><div class=form-group><label class="control-label Passwort" for=Passwort_bs>Passwort</label> <input type=password id=Passwort_bs class="controls form-control Passwort" placeholder=Passwort required><div id=Passworthinweis_bs class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div><div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div><div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div><div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href=mailto:alex@gabriel-software.ch>Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div></div><div class="form-group signup"><label class=control-label for=Passwort2_bs>Passwort bestätigen</label> <input type=password id=Passwort2_bs class="controls form-control Passwort2" placeholder="Passwort bestätigen" required><div id=Passwort2hinweis_bs class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div><div id=Passwort2hinweisFalsch_bs class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div></div><div class="controls feld" style=padding-bottom:6px;><button id=anmelden_btn_bs class="btn btn-primary anmelden_btn">anmelden</button> <button id=abmelden_btn_bs class="btn btn-primary abmelden_btn" style=display:none;>abmelden</button> <button id=konto_erstellen_btn_bs class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button> <button id=konto_speichern_btn_bs class="btn btn-primary konto_speichern_btn" style=display:none;>neues Konto speichern</button></div><div id=importieren_bs_anmelden_fehler_text class="importieren_anmelden_fehler_text alert alert-danger feld"></div><div id=importieren_bs_anmelden_hinweis_text class="importieren_anmelden_hinweis_text alert alert-warning feld"></div></div></div></div><div class="panel panel-default" id=importieren_bs_ds_beschreiben><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_bs_panel href=#importieren_bs_ds_beschreiben_collapse>2. Beziehungssammlung beschreiben</a></h4></div><div class="panel-collapse collapse" id=importieren_bs_ds_beschreiben_collapse><div class=panel-body><div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Der erste Teil des Namens sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Delarze (2008)"</li><li>Danach sollte der Namen die Art der Beziehung ausdrücken. Beispiel: "Delarze (2008): Art charakterisiert Lebensraum"</li><li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "CH Delarze (2008): Art charakterisiert Lebensraum"</li><li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz"</li><li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Datensammlung enthält. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten"</li><li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li><li>Im Datenstand ist erkenntlich, wann die Datensammlung zuletzt aktualisiert wurde</li><li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li></ul></div><div class="well well-sm"><b>Für eine zusammenfassende Beziehungssammlung importieren Sie die Daten zwei mal</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>zuerst in die Ursprungs-Beziehungssammlung</li><li>dann in die zusammenfassende. Bitte die Ursprungs-Beziehungssammlung angeben</li></ul></div><div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li><li>Dafür verantwortlich ist, wer Daten importiert</li></ul></div><div class=form-group><label class=control-label for=BsWaehlen>Bestehende wählen</label><select class="form-control controls" id=BsWaehlen></select></div><div class="controls feld"><button type=button class="btn btn-primary" id=BsLoeschen style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button><div id=importieren_bs_ds_beschreiben_hinweis class="alert alert-info"><button type=button class=close data-dismiss=alert>&times;</button><div id=importieren_bs_ds_beschreiben_hinweis_text></div></div></div><hr><div class=form-group><label class=control-label for=BsName>Name</label> <input type=text class="form-control controls input-sm" id=BsName></div><div class=form-group><label class=control-label for=BsBeschreibung>Beschreibung</label> <textarea class="form-control controls" id=BsBeschreibung></textarea></div><div class=form-group><label class=control-label for=BsDatenstand>Datenstand</label> <textarea class="form-control controls" id=BsDatenstand></textarea></div><div class=form-group><label class=control-label for=BsLink>Link</label> <textarea class="form-control controls" id=BsLink></textarea></div><div class=form-group><label class=control-label for=BsImportiertVon>importiert von</label> <input type=text class="form-control controls input-sm" id=BsImportiertVon></div><div class=form-group><label class=control-label for=BsZusammenfassend>zusammenfassend</label> <input type=checkbox id=BsZusammenfassend></div><div class=form-group id=BsUrsprungsBs_div style=display:none;><label class="control-label BsUrsprungsBs" for=BsUrsprungsBs id=BsUrsprungsBs_label>Ursprungs-Datensammlung</label><select class="form-control controls BsUrsprungsBs" id=BsUrsprungsBs></select></div><div class=form-group><label class=control-label for=BsAnzDs id=BsAnzDs_label></label><div id=BsAnzDs class="feldtext controls"></div></div><div id=importieren_bs_ds_beschreiben_hinweis2 class="alert alert-info"><button type=button class=close data-dismiss=alert>&times;</button><div id=importieren_bs_ds_beschreiben_hinweis2_text></div></div></div></div></div><div class="panel panel-default" id=importieren_bs_daten_uploaden><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_bs_panel href=#importieren_bs_daten_uploaden_collapse>3. Beziehungen laden</a></h4></div><div class="panel-collapse collapse" id=importieren_bs_daten_uploaden_collapse><div class=panel-body><div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Die erste Zeile enthält die Feldnamen</li><li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. eine Beziehung für die betreffende Art oder den Lebensraum</li><li>Alle Zeilen sollten dieselbe Anzahl Felder bzw. Spalten enthalten</li><li>Zeilen werden mit einem Zeilenumbruch getrennt</li><li>Der Inhalt eines Felds bzw. einer Spalte sollte NICHT in Anführungs- und Schlusszeichen eingefasst sein. Felder sollten aber keine Kommas enthalten</li><li>Felder sind mit Komma getrennt</li><li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li></ul></div><div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Um die zu beschreibende Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li><li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li><li>Es braucht ein Feld namens "Beziehungspartner". Dieses muss jeweils ein oder mehrere GUID's der ArtenDb enthalten (andere ID's werden hier - zumindest vorläufig - nicht erkannt)</li><li>Es können beliebig viele weitere, die Beziehung beschreibende Felder enthalten sein</li><li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li><li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li><li>ArtenDb setzt beim Export von Daten den Namen der Beziehungssammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li></ul></div><label class=sr-only for=BsFile>Datei wählen</label> <input type=file class=form-control id=BsFile><div id=BsTabelleEigenschaften class=tabelle></div></div></div></div><div class="panel panel-default" id=importieren_bs_ids_identifizieren><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_bs_panel href=#importieren_bs_ids_identifizieren_collapse>4. ID's identifizieren</a></h4></div><div class="panel-collapse collapse" id=importieren_bs_ids_identifizieren_collapse><div class=panel-body><div id=BsFelder_div class=form-group></div><div class=form-group><label class=control-label for=BsId>zugehörige ID in ArtenDb</label><select multiple class="form-control controls" id=BsId style=height:101px;><option value=guid>GUID der ArtenDb</option><option value=Fauna>ID der Info Fauna (NUESP)</option><option value=Flora>ID der Info Flora (SISF-NR)</option><option value=Moose>ID des Datenzentrums Moose Schweiz (TAXONNO)</option><option value=Macromycetes>ID von Swissfungi (TaxonId)</option></select></div><div id=importieren_bs_ids_identifizieren_hinweis_text class="alert alert-info feld"></div></div></div></div><div class="panel panel-default" id=importieren_bs_import_ausfuehren><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a class=accordion-toggle data-toggle=collapse data-parent=importieren_bs_panel href=#importieren_bs_import_ausfuehren_collapse>5. Import ausführen</a></h4></div><div class="panel-collapse collapse" id=importieren_bs_import_ausfuehren_collapse><div class=panel-body><button type=button class="btn btn-primary" id=BsImportieren style=margin-bottom:6px;>Beziehungssammlung mit allen Eigenschaften importieren</button> <button type=button class="btn btn-primary" id=BsEntfernen style=margin-bottom:6px;>Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button><div class=progress><div id=BsImportierenProgressbar class=progress-bar role=progressbar aria-valuenow=0 aria-valuemin=0 aria-valuemax=100><span id=BsImportierenProgressbarText></span></div></div><div id=importieren_bs_import_ausfuehren_hinweis class="alert alert-info"><button type=button class=close data-dismiss=alert>&times;</button><div id=importieren_bs_import_ausfuehren_hinweis_text></div></div></div></div></div></div></form><form id=export class="form_export form form-horizontal" action=# method=get autocomplete=off><div id=exportieren_panel class=panel-group><h4>Eigenschaften exportieren:</h4><div class="panel panel-default" id=exportieren_objekte_waehlen_gruppen><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_objekte_waehlen_gruppen_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_objekte_waehlen_gruppen_collapse data-parent=exportieren_panel href=#exportieren_objekte_waehlen_gruppen_collapse>1. Gruppe(n) wählen</a></h4></div><div class="collapse in" id=exportieren_objekte_waehlen_gruppen_collapse><div class=panel-body><div class="well well-sm"><b>So geht's</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Wählen Sie eine oder mehrere Gruppen...</li><li>...dann werden die Eigenschaften der Gruppe(n) aufgebaut...</li><li>...und Sie können filtern und Eigenschaften wählen</li><li><a href=//youtu.be/J13wS88pYC8 target=_blank>Screencast sehen</a></li></ul></div><div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet<ul><li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.<br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li><li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li></ul></li><li>Möchten Sie individuelle Felder für das <a href=//www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content target=_blank>Artenlistentool</a> exportieren? Wählen Sie die Gruppen "Fauna" und "Flora". Dann wird Ihnen im letzten Schritt ein Export für das Artenlistentool angeboten (noch nicht umgesetzt)</li></ul></div><div class=checkbox><label><input class=exportieren_ds_objekte_waehlen_gruppe type=checkbox view=fauna value=Fauna> Fauna</label></div><div class=checkbox><label><input class=exportieren_ds_objekte_waehlen_gruppe type=checkbox view=flora value=Flora> Flora</label></div><div class=checkbox><label><input class=exportieren_ds_objekte_waehlen_gruppe type=checkbox view=moose value=Moose> Moose</label></div><div class=checkbox><label><input class=exportieren_ds_objekte_waehlen_gruppe type=checkbox view=macromycetes value=Macromycetes> Pilze</label></div><div class=checkbox style=margin-bottom:5px;><label><input class=exportieren_ds_objekte_waehlen_gruppe type=checkbox view=lr value=Lebensräume> Lebensräume</label></div><button id=exportieren_objekte_Taxonomien_zusammenfassen type=button class="btn btn-primary" data-toggle=button style=margin-bottom:9px;>Alle Taxonomien zusammenfassen</button><div id=exportieren_objekte_waehlen_gruppen_hinweis_text class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text"></div></div></div></div><div class="panel panel-default" id=exportieren_objekte_waehlen_ds><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_objekte_waehlen_ds_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_objekte_waehlen_ds_collapse data-parent=exportieren_panel href=#exportieren_objekte_waehlen_ds_collapse>2. filtern</a></h4></div><div class="panel-collapse collapse" id=exportieren_objekte_waehlen_ds_collapse><div class=panel-body><div class="well well-sm" style=margin-bottom:15px;><b>So geht's</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li><li>Erfassen Sie in den Eigenschaften Ihrer Wahl die gewünschten Kriterien...</li><li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li></ul></div><div class="well well-sm last-well" style=margin-bottom:15px;><b>Tipps und Tricks</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"<br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li><li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte zusammen</li><li>Es kommt nicht auf Gross-/Kleinschreibung an<br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li><li>Sie können nach einem Teil des Feldinhalts filtern (wenn Sie keine Vergleichsoperatoren verwenden)<br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li><li>Sie können die folgenden Vergleichsoperatoren verwenden: "=", ">", ">=", "<", "<="
-                                            <br>Beispiel 1: Schreiben Sie im Feld ">5", werden Arten mit Artwert ab 6 gefunden<br>Beispiel 2: Schreiben Sie "=Vogel", wird nur "Vogel" gefunden, nicht aber "Eisvogel"</",></li><li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Eigenschaften derselben Beziehungssammlung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate. Filtern Sie hier also bloss nach einer Eigenschaft und im exportierten Resultat nach der zweiten</li></ul></div><h3>Art / Lebensraum</h3><div class=form-group><label class=control-label for=exportieren_objekte_waehlen_ds_guid>GUID</label> <input class="controls form-control export_feld_filtern input-sm" type=text id=exportieren_objekte_waehlen_ds_guid eigenschaft=Objekt feld=GUID></div><div id=exportieren_objekte_waehlen_ds_felderliste></div></div></div></div><div class="panel panel-default" id=exportieren_felder_waehlen><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_felder_waehlen_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_felder_waehlen_collapse data-parent=exportieren_panel href=#exportieren_felder_waehlen_collapse>3. Eigenschaften wählen</a></h4></div><div class="panel-collapse collapse" id=exportieren_felder_waehlen_collapse><div class=panel-body><div class="well well-sm" style=margin-bottom:15px;><b>So geht's</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li><li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li><li>...und fahren Sie danach mit "4. exportieren" weiter</li></ul></div><div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li></ul></div><div id=exportieren_nur_objekte_mit_eigenschaften_checkbox class=checkbox><label><input type=checkbox id=exportieren_nur_objekte_mit_eigenschaften checked> <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten</label></div><div class=checkbox style="clear:both; padding-top:7px;"><label><input type=checkbox id=exportieren_synonym_infos checked> <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden</label></div><hr><h3>Art / Lebensraum</h3><div class=felderspalte><div class=checkbox><label><input id=exportieren_felder_waehlen_objekt_id class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type=checkbox feldname=GUID value=GUID checked>GUID</label></div><div class=checkbox><label><input id=exportieren_felder_waehlen_objekt_gruppe class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type=checkbox feldname=Gruppe value=Gruppe>Gruppe</label></div></div><div id=exportieren_felder_waehlen_felderliste class=exportieren_felder_waehlen_felderliste></div></div></div></div><div id=exportieren_exportieren class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_exportieren_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_exportieren_collapse data-parent=exportieren_panel href=#exportieren_exportieren_collapse>4. exportieren</a></h4></div><div id=exportieren_exportieren_collapse class="panel-collapse collapse"><div class=panel-body><div class="well well-sm" style=margin-bottom:9px;><b>So geht's</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Der Server filtert und baut die Exportdaten auf</li><li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li><li>Danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li><li>...und es erscheinen Schaltflächen für den Download</li></ul></div><div class="well well-sm"><b>Tipps und Tricks</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Die Exportdatei hat das .csv-Format:<ul><li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li><li>Die erste Zeile enthält die Feldnamen</li><li>Felder sind mit Kommas (,) getrennt</li><li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li></ul></li><li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target=_blank>OpenOffice</a> oder <a href="http://de.libreoffice.org/" target=_blank>LibreOffice</a></li></ul></div><div class="well well-sm last-well"><b>Bitte nicht mit Excel öffnen</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target=_blank>OpenOffice</a> oder <a href="http://de.libreoffice.org/" target=_blank>LibreOffice</a>.</li><li><b>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.</b><br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li><li>In Microsoft Excel importieren Sie die .csv-Datei mit den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken).<br>Aber VORSICHT: Excel macht es einem schwer, die Daten korrekt und fehlerfrei zu erhalten! Beispiele:<ul><li>Manchmal erkennt Excel Feldbegrenzungen nicht richtig, worauf es Daten eines Felds in falsche oder gar in mehrere Felder schreibt</li><li>Excel bestimmt ohne Rückfrage eigenmächtig Formate. Zum Beispiel wandelt es manchmal Zahlen in Datenformate um. Und zwar nicht in allen Zeilen der Tabelle, sondern nur in denjenigen, deren Daten es als Datum zu erkennen glaubt...</li><li>Excel geht davon aus, dass Sie US-English schreiben (yeah). Daher verwandelt es Sonderzeichen in Datenmüll, wenn Sie beim Import nicht die richtige Codierung wählen (learn english, dude!)</li></ul>Diese Fehler können schwer zu erkennen sein. Es besteht die Gefahr, dass Sie die Daten später nochmals mit Libre- oder OpenOffice importieren und ihre Auswertung wiederholen müssen.<br>Oder schlimmer: Sie merken nichts und ihre Auswertung ist fehlerhaft!<br></li></ul></div><button id=exportieren_exportieren_exportieren class="btn btn-primary exportieren_exportieren_exportieren" style=display:none;>direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button> <button id=exportieren_exportieren_exportieren_direkt class="btn btn-primary exportieren_exportieren_exportieren" style=display:none;>vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button><div id=exportieren_exportieren_filterkriterien class=adb-hidden style="margin-top: 10px"></div><div id=exportieren_exportieren_tabelle class="tabelle exportieren_exportieren_tabelle" style=padding-top:7px;margin-bottom:7px;></div><div id=exportieren_exportieren_hinweis_text class="alert alert-info"></div><div id=exportieren_exportieren_error_text class="alert alert-danger alert-dismissable"><button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button> <span id=exportieren_exportieren_error_text_text></span></div></div></div></div></div></form><form id=export_alt class="form_export form form-horizontal" action=# method=get autocomplete=off><div id=exportieren_alt_panel class=panel-group><h4>Eigenschaften für das Artenlistentool wählen:</h4><div class="panel panel-default" id=exportieren_alt_felder_waehlen><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_alt_felder_waehlen_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_alt_felder_waehlen_collapse data-parent=exportieren_alt_panel href=#exportieren_alt_felder_waehlen_collapse>1. Eigenschaften wählen</a></h4></div><div class="panel-collapse collapse in" id=exportieren_alt_felder_waehlen_collapse><div class=panel-body><div class="well well-sm" style=margin-bottom:15px;><b>So geht's</b> <a href=# class=show_next_hidden>...mehr</a><ul class=adb-hidden><li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den vom Artenlistentool auswertbaren Gruppen (Flora und Fauna) vorkommen</li><li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li><li>...und fahren Sie danach mit "2. URL generieren" weiter</li></ul></div><div class=checkbox style="clear:both; padding-top:7px;"><label><input type=checkbox id=exportieren_alt_synonym_infos checked> <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden</label></div><hr><h3>Art / Lebensraum</h3><div class=felderspalte><div class=checkbox><label><input id=exportieren_alt_felder_waehlen_objekt_id class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type=checkbox feldname=GUID value=GUID checked>GUID</label></div><div class=checkbox><label><input id=exportieren_alt_felder_waehlen_objekt_gruppe class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type=checkbox feldname=Gruppe value=Gruppe>Gruppe</label></div></div><div id=exportieren_alt_felder_waehlen_felderliste class=exportieren_felder_waehlen_felderliste></div><div id=exportieren_alt_felder_waehlen_hinweis_text class="alert alert-info">Eigenschaften werden ermittelt...</div></div></div></div><div id=exportieren_alt_exportieren class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_alt_exportieren_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_alt_exportieren_collapse data-parent=exportieren_alt_panel href=#exportieren_alt_exportieren_collapse>2. URL generieren</a></h4></div><div id=exportieren_alt_exportieren_collapse class="panel-collapse collapse"><div class=panel-body><div class="well well-sm" style=margin-bottom:9px;><b>So geht's</b><ul><li>Die URL wurde generiert und zum Kopieren markiert</li><li><b>Kopieren Sie die URL, um sie im Artenlistentool einzufügen</b></li><li>Eine Vorschau der ersten 10 Datensätze wird angezeigt</li></ul></div><div>URL:</div><textarea class=form-control id=exportieren_alt_exportieren_url></textarea><div id=exportieren_alt_exportieren_filterkriterien class=adb-hidden style="margin-top: 10px"></div><div id=exportieren_alt_exportieren_tabelle class="tabelle exportieren_exportieren_tabelle"></div><div id=exportieren_alt_exportieren_hinweis_text class="alert alert-info"></div><div id=exportieren_alt_exportieren_error_text class="alert alert-danger alert-dismissable"><button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button> <span id=exportieren_alt_exportieren_error_text_text></span></div></div></div></div></div></form><form id=admin class="form_admin form form-horizontal" action=# method=get autocomplete=off><div id=admin_panel class=panel-group><h4>Administration:</h4><div class="panel panel-default" id=exportieren_diverses><div class="panel-heading panel-heading-gradient"><h4 class=panel-title><a id=exportieren_diverses_titel class=accordion-toggle data-toggle=collapse data-target=#exportieren_diverses_collapse data-parent=admin_panel href=#exportieren_diverses_collapse>Diverses</a></h4></div><div class="collapse in" id=exportieren_diverses_collapse><div class=panel-body><button id=admin_pilze_zhgis_ergänzen type=button class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Eigenschaftensammlung "ZH GIS" ergänzen</button> <span id=admin_pilze_zhgis_ergänzen_rückmeldung></span><hr><button id=admin_korrigiere_artwertname_in_flora type=button class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button> <span id=admin_korrigiere_artwertname_in_flora_rückmeldung></span><hr><button id=admin_korrigiere_ds_name_ch_rote_liste_1991 type=button class="btn btn-primary">Eigenschaftensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button> <span id=admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung></span><hr><fieldset><p style=font-weight:bold;>Eigenschaften- oder Beziehungssammlung umbenennen</p><div class=form-group><label class="control-label col-sm-1" for=admin_korrigiere_ds_name_name_vorher>Name vorher</label><div class=col-sm-11><input type=text class=form-control id=admin_korrigiere_ds_name_name_vorher style=max-width:400px></div></div><div class=form-group><label class="control-label col-sm-1" for=admin_korrigiere_ds_name_name_nachher>Name nachher</label><div class=col-sm-11><input type=text class=form-control id=admin_korrigiere_ds_name_name_nachher style=max-width:400px></div></div><div class=form-group><div class="col-sm-offset-1 col-sm-11"><button id=admin_korrigiere_ds_name type=button class="btn btn-primary">umbenennen</button> <span id=admin_korrigiere_ds_name_rückmeldung></span></div></div><hr><button id=admin_baue_ds_zu_eigenschaften_um type=button class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button> <span id=admin_baue_ds_zu_eigenschaften_um_rückmeldung></span></fieldset></div></div></div></div></form></fieldset><script type=text/javascript src=//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js></script><script>window.jQuery || document.write('<script src="vendor/couchapp/jquery.js" type="text/javascript"><\/script>');</script><script src=vendor/couchapp/artendb_built.js></script><script src=vendor/couchapp/jquery.jstree.min.js></script><script src=vendor/couchapp/modernizr.js></script><script>
+<!doctype html>
+<html lang="de">
+    <head>
+        <link rel="apple-touch-icon" href="style/images/aster_144.png">
+        <meta name="msapplication-TileColor" content="#FF0000">
+        <meta name="msapplication-TileImage" content="style/images/aster_144.png">
+        <link rel="icon" href="style/images/aster.ico">
+        <meta charset="utf-8">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style/main.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <script>!function (d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <title>ArtenDb</title>
+    </head>
+    <body>
+        <div id="menu_btn" class="btn-group menu" style="display:none;">
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                Menu
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header">Mehr Infos zur Art:</li>
+                <li id="GoogleBilderLink_li" class="disabled externer_menu_link"><a id="GoogleBilderLink" href="" target="_blank">Auf google.ch Bilder suchen</a></li>
+                <li id="WikipediaLink_li" class="disabled externer_menu_link"><a id="WikipediaLink" href="" target="_blank">Auf wikipedia.org suchen</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Exportieren:</li>
+                <li><a id="exportieren" href="#">Eigenschaften</a></li>
+                <!--li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Vordefiniert exportieren:</li>
+                <li><a id="exportieren_alt" href="#">Export für Artenlistentool</a></li-->
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Importieren oder löschen:</li>        
+                <li><a id="ds_importieren" href="#">Eigenschaften</a></li>
+                <li><a id="bs_importieren" href="#">Beziehungen</a></li>
+                <li role="presentation" class="divider"></li>
+                <li class="admin"><a id="menu_admin" href="#">Administration</a></li>
+                <li role="presentation" class="divider admin"></li>
+                <li role="presentation" class="dropdown-header">Über arteigenschaften.ch:</li>
+                <li><a href="//github.com/FNSKtZH/artendb/blob/master/README.md" target="_blank">Projektbeschreibung</a></li>
+                <li><a href="//github.com/FNSKtZH/artendb" target="_blank">Code</a></li>
+                <li><a href="//github.com/FNSKtZH/artendb/commits/master" target="_blank">Letzte Änderungen</a></li>
+                <li><a href="mailto:alex@gabriel-software.ch">Email an Autor</a></li>
+                <li><a href="https://twitter.com/arteigenschaft" class="twitter-follow-button" data-lang="de" data-dnt="true">@arteigenschaft folgen</a></li>
+            </ul>
+        </div>
+        <fieldset id="menu" class="menu" style="display:none;">
+            <div>
+                <button id="btn_resize" type="button" class="btn btn-sm btn-default pull-right" data-toggle="tooltip" data-placement="left" title="ganze Breite nutzen"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
+                <div id="menu-div">
+                    <div id="gruppe_label">Gruppe wählen:</div>
+                </div>
+                <div id="Gruppe" class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary gruppe" Gruppe="Fauna">
+                        <input type="radio">Fauna
+                    </label>
+                    <label class="btn btn-primary gruppe" Gruppe="Flora">
+                        <input type="radio">Flora
+                    </label>
+                    <label class="btn btn-primary gruppe" Gruppe="Moose">
+                        <input type="radio">Moose
+                    </label>
+                    <label class="btn btn-primary gruppe" Gruppe="Macromycetes">
+                        <input type="radio">Pilze
+                    </label>
+                    <label class="btn btn-primary gruppe" Gruppe="Lebensräume">
+                        <input type="radio">Lebensräume
+                    </label>
+                </div>
+            </div>
+            <div id="suchenFauna" class="input-group input-group-xs suchen">
+                <!--span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span-->
+                <input id="suchfeldFauna" class="form-control input-sm suchfeld" type="text" placeholder="filtern">
+            </div>
+            <div id="suchenFlora" class="input-group input-group-xs suchen">
+                <!--span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span-->
+                <input id="suchfeldFlora" class="form-control input-sm suchfeld" type="text" placeholder="filtern">
+            </div>
+            <div id="suchenMoose" class="input-group input-group-xs suchen">
+                <!--span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span-->
+                <input id="suchfeldMoose" class="form-control input-sm suchfeld" type="text" placeholder="filtern">
+            </div>
+            <div id="suchenMacromycetes" class="input-group input-group-xs suchen">
+                <!--span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span-->
+                <input id="suchfeldMacromycetes" class="form-control input-sm suchfeld" type="text" placeholder="filtern">
+            </div>
+            <div id="suchenLebensräume" class="input-group input-group-xs suchen">
+                <!--span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span-->
+                <input id="suchfeldLebensräume" class="form-control input-sm suchfeld" type="text" placeholder="filtern">
+            </div>
+            <div id="treeMitteilung" style="display:none;">hole Daten...</div>
+            <div id="treeFaunaBeschriftung" class="treeBeschriftung"></div>
+            <div id="treeFloraBeschriftung" class="treeBeschriftung"></div>
+            <div id="treeMooseBeschriftung" class="treeBeschriftung"></div>
+            <div id="treeMacromycetesBeschriftung" class="treeBeschriftung"></div>
+            <div id="treeLebensräumeBeschriftung" class="treeBeschriftung"></div>
+            <div id="treeFauna" class="baum"></div>
+            <div id="treeFlora" class="baum"></div>
+            <div id="treeMoose" class="baum"></div>
+            <div id="treeMacromycetes" class="baum"></div>
+            <div id="treeLebensräume" class="baum"></div>
+        </fieldset>
+
+        <fieldset id="forms">
+
+            <form id="art" class="form_art form form-horizontal" action="#" method="get" autocomplete="off">
+                <div id="panel_art" class="panel-group">
+                    <div id="art_anmelden" class="panel panel-default" style="display:none;">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="art_anmelden_titel" class="art_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="panel_art" href="#art_anmelden_collapse">Anmelden</a>
+                            </h4>
+                        </div>
+                        <div id="art_anmelden_collapse" class="panel-collapse collapse anmelden">
+                            <div class="panel-body">
+                                <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+                                <div class="form-group">
+                                    <label class="control-label Email" for="Email_art">Email</label>
+                                    <input type="email" id="Email_art" class="controls form-control Email" placeholder="Email" required>
+                                    <div id="Emailhinweis_art" class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label Passwort" for="Passwort_art">Passwort</label>
+                                    <input type="password" id="Passwort_art" class="controls form-control Passwort" placeholder="Passwort" required>
+                                    <div id="Passworthinweis_art" class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                </div>
+                                <div class="form-group signup">
+                                    <label class="control-label" for="Passwort2_art">Passwort bestätigen</label>
+                                    <input type="password" id="Passwort2_art" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="Passwort2hinweis_art" class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div>
+                                    <div id="Passwort2hinweisFalsch_art" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div>
+                                </div>
+                                <div class="controls feld" style="padding-bottom:6px;">
+                                    <button id="anmelden_btn_art" class="btn btn-primary anmelden_btn">anmelden</button>
+                                    <button id="abmelden_btn_art" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
+                                    <button id="konto_erstellen_btn_art" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_speichern_btn_art" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                </div>
+                                <div id="art_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
+                                <div id="art_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="art_inhalt"></div>
+                </div>
+            </form>
+            
+            <form id="importieren_ds" class="form_importieren_ds form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div class="panel-group" id="importieren_ds_panel">
+                    <h4>Eigenschaften importieren:</h4>
+                    <div id="importieren_ds_anmelden" class="panel panel-default importieren_anmelden">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="importieren_ds_anmelden_titel" class="importieren_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_anmelden_collapse">1. Anmelden</a>
+                            </h4>
+                        </div>
+                        <div id="importieren_ds_anmelden_collapse" class="collapse importieren_anmelden_collapse anmelden">
+                            <div class="panel-body">
+                                <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+                                <div class="form-group Email">
+                                    <label class="control-label Email" for="Email_ds">Email</label>
+                                    <input type="email" id="Email_ds" class="controls form-control Email" placeholder="Email" required>
+                                    <div id="Emailhinweis_ds" class="controls hinweis alert alert-danger Emailhinweis feld_in_formgroup">Bitte Email erfassen</div>
+                                </div>
+                                <div class="form-group Passwort">
+                                    <label class="control-label Passwort" for="Passwort_ds">Passwort</label>
+                                    <input type="password" id="Passwort_ds" class="controls form-control Passwort" placeholder="Passwort" required>
+                                    <div id="Passworthinweis_ds" class="controls hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                </div>
+                                <div class="form-group signup">
+                                    <label class="control-label" for="Passwort2_ds">Passwort bestätigen</label>
+                                    <input type="password" id="Passwort2_ds" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="Passwort2hinweis_ds" class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweis">Bitte Passwort bestätigen</div>
+                                    <div id="Passwort2hinweisFalsch_ds" class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
+                                </div>
+                                <div class="controls feld" style="padding-bottom:6px;">
+                                    <button id="anmelden_btn_ds" class="btn btn-primary anmelden_btn">anmelden</button>
+                                    <button id="abmelden_btn_ds" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
+                                    <button id="konto_erstellen_btn_ds" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_speichern_btn_ds" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                </div>
+                                <div id="importieren_ds_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
+                                <div id="importieren_ds_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_ds_ds_beschreiben">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_ds_beschreiben_collapse">2. Eigenschaftensammlung beschreiben</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_ds_ds_beschreiben_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm"><a href="//youtu.be/nqd-v6YxkOY" target="_blank"><b>Screencast sehen</b></a></div>
+                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Der Name sollte ungefähr dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li>
+                                        <li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li>
+                                        <li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Gigon A. et al. (1998): Blaue Listen der erfolgreich erhaltenen oder geförderten Tier- und Pflanzenarten der Roten Listen. Methodik und Anwendung in der nördlichen Schweiz. Veröff. Geobot. Inst. ETH, Stiftung Rübel, Zürich 129: 1-137 + 180 pp. Appendicesn"</li>
+                                        <li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Eigenschaftensammlung enthält. Beispiel: "Eigenschaften von 207 Tierarten und 885 Pflanzenarten"</li>
+                                        <li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li>
+                                        <li>Im Datenstand ist erkenntlich, wann die Eigenschaftensammlung zuletzt aktualisiert wurde</li>
+                                        <li>Besonders hilfreich ist es, wenn die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm"><b>Für eine zusammenfassende Eigenschaftensammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>zuerst in die Ursprungs-Eigenschaftensammlung</li>
+                                        <li>dann in die zusammenfassende. Bitte die Ursprungs-Eigenschaftensammlung angeben</li>
+                                        <li>Mehr Infos <a href="//github.com/FNSKtZH/artendb#zusammenfassende_datensammlungen" target="_blank">hier</a></li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
+                                        <li>Dafür verantwortlich ist, wer Daten importiert</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsWaehlen">Bestehende wählen</label>
+                                    <select class="form-control controls" id="DsWaehlen"></select>
+                                </div>
+                                <div class="controls feld">
+                                    <button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+                                <div id="importieren_ds_ds_beschreiben_hinweis" class="alert alert-info"></div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsName">Name</label>
+                                    <input type="text" class="form-control controls input-sm" id="DsName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsBeschreibung">Beschreibung</label>
+                                    <textarea class="form-control controls" id="DsBeschreibung"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsDatenstand">Datenstand</label>
+                                    <textarea class="form-control controls" id="DsDatenstand"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsLink">Link</label>
+                                    <textarea class="form-control controls" id="DsLink"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsImportiertVon">importiert von</label>
+                                    <input type="text" class="form-control controls input-sm" id="DsImportiertVon">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsZusammenfassend">zusammenfassend</label>
+                                    <input type="checkbox" id="DsZusammenfassend">
+                                </div>
+                                <div class="form-group" id="DsUrsprungsDs_div" style="display:none;">
+                                    <label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Eigenschaftensammlung</label>
+                                    <select class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsAnzDs" id="DsAnzDs_label"></label>
+                                    <div id="DsAnzDs" class="feldtext controls"></div>
+                                </div>
+                                <div id="importieren_ds_ds_beschreiben_hinweis2" class="alert alert-info"></div>
+                                <div id="importieren_ds_ds_beschreiben_error" class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_ds_ds_beschreiben_error_text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_ds_daten_uploaden">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_daten_uploaden_collapse">3. Eigenschaften laden</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_ds_daten_uploaden_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die erste Zeile enthält die Feldnamen</li>
+                                        <li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. die Eigenschaften für die betreffende Art oder den Lebensraum</li>
+                                        <li>Alle Zeilen sollten dieselbe Anzahl Felder bzw. Spalten enthalten</li>
+                                        <li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
+                                        <li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Artwert"</li>
+                                        <li>Ausnahmen: Zahlen und true/false-Werte brauchen keine Anführungs- und Schlusszeichen (es macht aber nichts, wenn sie sie haben)</li>
+                                        <li>Felder sind mit Komma getrennt</li>
+                                        <li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
+                                        <li>Die oben beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="//de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
+                                        <li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Eigenschaftensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
+                                        <li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li>
+                                        <li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li>
+                                        <li>ArtenDb setzt beim Export von Daten den Namen der Eigenschaftensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Eigenschaftensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
+                                    </ul>
+                                </div>
+                                <label class="sr-only" for="DsFile">Datei wählen</label>
+                                <input type="file" class="form-control" id="DsFile">
+                                <div id="DsTabelleEigenschaften" class="tabelle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_ds_ids_identifizieren">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_ids_identifizieren_collapse">4. ID's identifizieren</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_ds_ids_identifizieren_collapse">
+                            <div class="panel-body">
+                                <div id="DsFelder_div" class="form-group"></div>
+                                <div class="form-group">
+                                    <label class="control-label" for="DsId">zugehörige ID<br>in ArtenDb</label>
+                                    <select multiple class="form-control controls input-sm" id="DsId" style="height:101px;">
+                                        <option value="guid">GUID der ArtenDb</option>
+                                        <option value="Fauna">ID der Info Fauna (NUESP)</option>
+                                        <option value="Flora">ID der Info Flora (SISF-NR)</option>
+                                        <option value="Moose">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
+                                        <option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
+                                    </select>
+                                </div>
+                                <div id="importieren_ds_ids_identifizieren_hinweis_text" class="alert alert-info feld"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_ds_import_ausfuehren">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_import_ausfuehren_collapse">5. Import ausführen</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_ds_import_ausfuehren_collapse">
+                            <div class="panel-body">
+                                <button type="button" class="btn btn-primary" id="DsImportieren" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften importieren</button>
+                                <button type="button" class="btn btn-primary" id="DsEntfernen" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+                                <div class="progress">
+                                    <div id="DsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id="DsImportierenProgressbarText"></span>
+                                    </div>
+                                </div>
+                                <div id="importieren_ds_import_ausfuehren_hinweis" class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_ds_import_ausfuehren_hinweis_text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </form>
+
+            <form id="importieren_bs" class="form_importieren_bs form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div id="importieren_bs_panel" class="panel-group">
+                    <h4>Beziehungen importieren:</h4>
+                    <div id="importieren_bs_anmelden" class="panel panel-default">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="importieren_bs_anmelden_titel" class="importieren_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_anmelden_collapse">1. Anmelden</a>
+                            </h4>
+                        </div>
+                        <div id="importieren_bs_anmelden_collapse" class="collapse anmelden">
+                            <div class="panel-body">
+                                <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
+                                <div class="form-group">
+                                    <label class="control-label Email" for="Email_bs">Email</label>
+                                    <input type="email" id="Email_bs" class="controls form-control Email" placeholder="Email" required>
+                                    <div id="Emailhinweis_bs" class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label Passwort" for="Passwort_bs">Passwort</label>
+                                    <input type="password" id="Passwort_bs" class="controls form-control Passwort" placeholder="Passwort" required>
+                                    <div id="Passworthinweis_bs" class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                </div>
+                                <div class="form-group signup">
+                                    <label class="control-label" for="Passwort2_bs">Passwort bestätigen</label>
+                                    <input type="password" id="Passwort2_bs" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="Passwort2hinweis_bs" class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div>
+                                    <div id="Passwort2hinweisFalsch_bs" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div>
+                                </div>
+                                <div class="controls feld" style="padding-bottom:6px;">
+                                    <button id="anmelden_btn_bs" class="btn btn-primary anmelden_btn">anmelden</button>
+                                    <button id="abmelden_btn_bs" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
+                                    <button id="konto_erstellen_btn_bs" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_speichern_btn_bs" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                </div>
+                                <div id="importieren_bs_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
+                                <div id="importieren_bs_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_bs_ds_beschreiben">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_ds_beschreiben_collapse">2. Beziehungssammlung beschreiben</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_bs_ds_beschreiben_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Der erste Teil des Namens sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Delarze (2008)"</li>
+                                        <li>Danach sollte der Namen die Art der Beziehung ausdrücken. Beispiel: "Delarze (2008): Art charakterisiert Lebensraum"</li>
+                                        <li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "CH Delarze (2008): Art charakterisiert Lebensraum"</li>
+                                        <li>Die Beschreibung sollte im ersten Teil etwa einem klassischen Literaturzitat entsprechen. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz"</li>
+                                        <li>In einem zweiten Teil sollte beschrieben werden, welche Informationen die Datensammlung enthält. Beispiel: "Delarze R. & Gonseth Y. (2008): Lebensräume der Schweiz. 791 Beziehungen zwischen 279 Lebensräumen und Tierarten"</li>
+                                        <li>Es kann hilfreich sein, den Zweck zu beschreiben, für den die Informationen zusammengestellt wurden</li>
+                                        <li>Im Datenstand ist erkenntlich, wann die Datensammlung zuletzt aktualisiert wurde</li>
+                                        <li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm"><b>Für eine zusammenfassende Beziehungssammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>zuerst in die Ursprungs-Beziehungssammlung</li>
+                                        <li>dann in die zusammenfassende. Bitte die Ursprungs-Beziehungssammlung angeben</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
+                                        <li>Dafür verantwortlich ist, wer Daten importiert</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsWaehlen">Bestehende wählen</label>
+                                    <select class="form-control controls" id="BsWaehlen"></select>
+                                </div>
+                                <div class="controls feld">
+                                    <button type="button" class="btn btn-primary" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+                                    <div id="importieren_bs_ds_beschreiben_hinweis" class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_bs_ds_beschreiben_hinweis_text"></div>
+                                </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsName">Name</label>
+                                    <input type="text" class="form-control controls input-sm" id="BsName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsBeschreibung">Beschreibung</label>
+                                    <textarea class="form-control controls" id="BsBeschreibung"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsDatenstand">Datenstand</label>
+                                    <textarea class="form-control controls" id="BsDatenstand"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsLink">Link</label>
+                                    <textarea class="form-control controls" id="BsLink"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsImportiertVon">importiert von</label>
+                                    <input type="text" class="form-control controls input-sm" id="BsImportiertVon">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsZusammenfassend">zusammenfassend</label>
+                                    <input type="checkbox" id="BsZusammenfassend">
+                                </div>
+                                <div class="form-group" id="BsUrsprungsBs_div" style="display:none;">
+                                    <label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
+                                    <select class="form-control controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
+                                    <div id="BsAnzDs" class="feldtext controls"></div>
+                                </div>
+                                <div id="importieren_bs_ds_beschreiben_hinweis2" class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_bs_ds_beschreiben_hinweis2_text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_bs_daten_uploaden">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_daten_uploaden_collapse">3. Beziehungen laden</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_bs_daten_uploaden_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die erste Zeile enthält die Feldnamen</li>
+                                        <li>Die weiteren Zeilen enthalten je einen Datensatz, d.h. eine Beziehung für die betreffende Art oder den Lebensraum</li>
+                                        <li>Alle Zeilen sollten dieselbe Anzahl Felder bzw. Spalten enthalten</li>
+                                        <li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
+                                        <li>Der Inhalt eines Felds bzw. einer Spalte sollte NICHT in Anführungs- und Schlusszeichen eingefasst sein. Felder sollten aber keine Kommas enthalten</li>
+                                        <li>Felder sind mit Komma getrennt</li>
+                                        <li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Um die zu beschreibende Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
+                                        <li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
+                                        <li>Es braucht ein Feld namens "Beziehungspartner". Dieses muss jeweils ein oder mehrere GUID's der ArtenDb enthalten (andere ID's werden hier - zumindest vorläufig - nicht erkannt)</li>
+                                        <li>Es können beliebig viele weitere, die Beziehung beschreibende Felder enthalten sein</li>
+                                        <li>Achten Sie bitte darauf, die Feldnamen und die enthaltenen Werte uncodiert und aussagekräftig zu gestalten. Auch Nutzer ohne Spezialwissen sollten sie verstehen können</li>
+                                        <li>Sind für Ihre Daten Codierungen wichtig? Dann importieren Sie die Daten doch einfach in zwei Felder: Eines codiert, das andere uncodiert. Und ergänzen Sie Ihre Feldnamen mit den Zusätzen "codiert" bzw. "uncodiert"</li>
+                                        <li>ArtenDb setzt beim Export von Daten den Namen der Beziehungssammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
+                                    </ul>
+                                </div>
+                                <label class="sr-only" for="BsFile">Datei wählen</label>
+                                <input type="file" class="form-control" id="BsFile">
+                                <div id="BsTabelleEigenschaften" class="tabelle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_bs_ids_identifizieren">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_ids_identifizieren_collapse">4. ID's identifizieren</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_bs_ids_identifizieren_collapse">
+                            <div class="panel-body">
+                                <div id="BsFelder_div" class="form-group"></div>
+                                <div class="form-group">
+                                    <label class="control-label" for="BsId">zugehörige ID in ArtenDb</label>
+                                    <select multiple class="form-control controls" id="BsId" style="height:101px;">
+                                        <option value="guid">GUID der ArtenDb</option>
+                                        <option value="Fauna">ID der Info Fauna (NUESP)</option>
+                                        <option value="Flora">ID der Info Flora (SISF-NR)</option>
+                                        <option value="Moose">ID des Datenzentrums Moose Schweiz (TAXONNO)</option>
+                                        <option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
+                                    </select>
+                                </div>
+                                <div id="importieren_bs_ids_identifizieren_hinweis_text" class="alert alert-info feld"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="importieren_bs_import_ausfuehren">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_import_ausfuehren_collapse">5. Import ausführen</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="importieren_bs_import_ausfuehren_collapse">
+                            <div class="panel-body">
+                                <button type="button" class="btn btn-primary" id="BsImportieren" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften importieren</button>
+                                <button type="button" class="btn btn-primary" id="BsEntfernen" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+                                <div class="progress">
+                                    <div id="BsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <span id="BsImportierenProgressbarText"></span>
+                                    </div>
+                                </div>
+                                <div id="importieren_bs_import_ausfuehren_hinweis" class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <div id="importieren_bs_import_ausfuehren_hinweis_text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </form>
+
+            <form id="export" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
+                <div id="exportieren_panel" class="panel-group">
+                    <h4>Eigenschaften exportieren:</h4>
+                    <div class="panel panel-default" id="exportieren_objekte_waehlen_gruppen">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_gruppen_collapse" data-parent="exportieren_panel" href="#exportieren_objekte_waehlen_gruppen_collapse">1. Gruppe(n) wählen</a>
+                            </h4>
+                        </div>
+                        <div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Wählen Sie eine oder mehrere Gruppen...</li>
+                                        <li>...dann werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
+                                        <li>...und Sie können filtern und Eigenschaften wählen</li>
+                                        <li><a href="//youtu.be/J13wS88pYC8" target="_blank">Screencast sehen</a></li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet
+                                            <ul>
+                                                <li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.
+                                                    <br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
+                                                <li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
+                                            </ul>
+                                        </li>
+                                        <li>Möchten Sie individuelle Felder für das <a href="//www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content" target="_blank">Artenlistentool</a> exportieren? Wählen Sie die Gruppen "Fauna" und "Flora". Dann wird Ihnen im letzten Schritt ein Export für das Artenlistentool angeboten (noch nicht umgesetzt)</li>
+                                    </ul>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="fauna" value="Fauna">
+                                        Fauna
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="flora" value="Flora">
+                                        Flora
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="moose" value="Moose">
+                                        Moose
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                               view="macromycetes" value="Macromycetes">
+                                        Pilze
+                                    </label>
+                                </div>
+                                <div class="checkbox" style="margin-bottom:5px;">
+                                    <label>
+                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="lr"
+                                               value="Lebensräume">
+                                        Lebensräume
+                                    </label>
+                                </div>
+                                <button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
+                                <div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="exportieren_objekte_waehlen_ds">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_ds_collapse" data-parent="exportieren_panel" href="#exportieren_objekte_waehlen_ds_collapse">2. filtern</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="exportieren_objekte_waehlen_ds_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+                                        <li>Erfassen Sie in den Eigenschaften Ihrer Wahl die gewünschten Kriterien...</li>
+                                        <li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well" style="margin-bottom:15px;"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"
+                                            <br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
+                                        <li>Sie möchten nach "Schmetterlinge" oder "Vögel" suchen? Exportieren Sie zuerst "Schmetterlinge", danach die "Vögel" und setzen die zwei Exporte zusammen</li>
+                                        <li>Es kommt nicht auf Gross-/Kleinschreibung an
+                                            <br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
+                                        <li>Sie können nach einem Teil des Feldinhalts filtern (wenn Sie keine Vergleichsoperatoren verwenden)
+                                            <br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
+                                        <li>Sie können die folgenden Vergleichsoperatoren verwenden: "=", ">", ">=", "<", "<="
+                                            <br>Beispiel 1: Schreiben Sie im Feld "Artwert" ">5", werden Arten mit Artwert ab 6 gefunden
+                                            <br>Beispiel 2: Schreiben Sie "=Vogel", wird nur "Vogel" gefunden, nicht aber "Eisvogel"</li>
+                                        <li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Eigenschaften derselben Beziehungssammlung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate. Filtern Sie hier also bloss nach einer Eigenschaft und im exportierten Resultat nach der zweiten</li>
+                                    </ul>
+                                </div>
+                                <h3>Art / Lebensraum</h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="exportieren_objekte_waehlen_ds_guid">GUID</label>
+                                    <input class="controls form-control export_feld_filtern input-sm" type="text" id="exportieren_objekte_waehlen_ds_guid" Eigenschaft="Objekt" Feld="GUID">
+                                </div>
+                                <div id="exportieren_objekte_waehlen_ds_felderliste"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="exportieren_felder_waehlen">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_collapse" data-parent="exportieren_panel" href="#exportieren_felder_waehlen_collapse">3. Eigenschaften wählen</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
+                                        <li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
+                                        <li>...und fahren Sie danach mit "4. exportieren" weiter</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
+                                    </ul>
+                                </div>
+                                <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
+                                        <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
+                                    </label>
+                                </div>
+                                <div class="checkbox" style="clear:both; padding-top:7px;">
+                                    <label>
+                                        <input type="checkbox" id="exportieren_synonym_infos" checked>
+                                        <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
+                                    </label>
+                                </div>
+                                <hr>
+                                <h3>Art / Lebensraum</h3>
+                                <div class="felderspalte">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                        </label>
+                                    </div>
+                                </div>
+                                <div id="exportieren_felder_waehlen_felderliste" class="exportieren_felder_waehlen_felderliste"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="exportieren_exportieren" class="panel panel-default">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" data-parent="exportieren_panel" href="#exportieren_exportieren_collapse">4. exportieren</a>
+                            </h4>
+                        </div>
+                        <div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Der Server filtert und baut die Exportdaten auf</li>
+                                        <li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
+                                        <li>Danach wird eine Vorschau der ersten 10 Datensätze angezeigt</li>
+                                        <li>...und es erscheinen Schaltflächen für den Download</li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Die Exportdatei hat das .csv-Format:
+                                            <ul>
+                                                <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
+                                                <li>Die erste Zeile enthält die Feldnamen</li>
+                                                <li>Felder sind mit Kommas (,) getrennt</li>
+                                                <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
+                                            </ul>
+                                        </li>
+                                        <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a></li>
+                                    </ul>
+                                </div>
+                                <div class="well well-sm last-well"><b>Bitte nicht mit Excel öffnen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a>.</li>
+                                        <li><b>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.</b><br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
+                                        <li>In Microsoft Excel importieren Sie die .csv-Datei mit den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken).<br>Aber VORSICHT: Excel macht es einem schwer, die Daten korrekt und fehlerfrei zu erhalten! Beispiele:
+                                            <ul>
+                                                <li>Manchmal erkennt Excel Feldbegrenzungen nicht richtig, worauf es Daten eines Felds in falsche oder gar in mehrere Felder schreibt</li>
+                                                <li>Excel bestimmt ohne Rückfrage eigenmächtig Formate. Zum Beispiel wandelt es manchmal Zahlen in Datenformate um. Und zwar nicht in allen Zeilen der Tabelle, sondern nur in denjenigen, deren Daten es als Datum zu erkennen glaubt...</li>
+                                                <li>Excel geht davon aus, dass Sie US-English schreiben (yeah). Daher verwandelt es Sonderzeichen in Datenmüll, wenn Sie beim Import nicht die richtige Codierung wählen (learn english, dude!)</li>
+                                            </ul>
+                                            Diese Fehler können schwer zu erkennen sein. Es besteht die Gefahr, dass Sie die Daten später nochmals mit Libre- oder OpenOffice importieren und ihre Auswertung wiederholen müssen.
+                                            <br>Oder schlimmer: Sie merken nichts und ihre Auswertung ist fehlerhaft!<br>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
+                                <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
+                                <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+                                <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
+                                <div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
+                                <div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <span id="exportieren_exportieren_error_text_text"></span>
+                                </div>
+                            </div><!--panel-body-->
+                        </div><!--panel-collapse-->
+                    </div><!--panel-->
+                </div><!--panel-group-->
+            </form>
+
+            <form id="export_alt" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
+                <div id="exportieren_alt_panel" class="panel-group">
+                    <h4>Eigenschaften für das Artenlistentool wählen:</h4>
+                    <div class="panel panel-default" id="exportieren_alt_felder_waehlen">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_alt_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_felder_waehlen_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_felder_waehlen_collapse">1. Eigenschaften wählen</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in" id="exportieren_alt_felder_waehlen_collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den vom Artenlistentool auswertbaren Gruppen (Flora und Fauna) vorkommen</li>
+                                        <li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
+                                        <li>...und fahren Sie danach mit "2. URL generieren" weiter</li>
+                                    </ul>
+                                </div>
+                                <div class="checkbox" style="clear:both; padding-top:7px;">
+                                    <label>
+                                        <input type="checkbox" id="exportieren_alt_synonym_infos" checked>
+                                        <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
+                                    </label>
+                                </div>
+                                <hr>
+                                <h3>Art / Lebensraum</h3>
+                                <div class="felderspalte">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="exportieren_alt_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="exportieren_alt_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                        </label>
+                                    </div>
+                                </div>
+                                <div id="exportieren_alt_felder_waehlen_felderliste" class="exportieren_felder_waehlen_felderliste"></div>
+                                <div id="exportieren_alt_felder_waehlen_hinweis_text" class="alert alert-info">Eigenschaften werden ermittelt...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="exportieren_alt_exportieren" class="panel panel-default">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_exportieren_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_exportieren_collapse">2. URL generieren</a>
+                            </h4>
+                        </div>
+                        <div id="exportieren_alt_exportieren_collapse" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b>
+                                    <ul>
+                                        <li>Die URL wurde generiert und zum Kopieren markiert</li>
+                                        <li><b>Kopieren Sie die URL, um sie im Artenlistentool einzufügen</b></li>
+                                        <li>Eine Vorschau der ersten 10 Datensätze wird angezeigt</li>
+                                    </ul>
+                                </div>
+                                <div>URL:</div>
+                                <textarea class="form-control" id="exportieren_alt_exportieren_url"></textarea>
+                                <div id="exportieren_alt_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+                                <div id="exportieren_alt_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle"></div>
+                                <div id="exportieren_alt_exportieren_hinweis_text" class="alert alert-info"></div>
+                                <div id="exportieren_alt_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <span id="exportieren_alt_exportieren_error_text_text"></span>
+                                </div>
+                            </div><!--panel-body-->
+                        </div><!--panel-collapse-->
+                    </div><!--panel-->
+                </div><!--panel-group-->    
+            </form>
+
+            <form id="admin" class="form_admin form form-horizontal" action="#" method="get" autocomplete="off">
+                <div id="admin_panel" class="panel-group">
+                    <h4>Administration:</h4>
+                    <div class="panel panel-default" id="exportieren_diverses">
+                        <div class="panel-heading panel-heading-gradient">
+                            <h4 class="panel-title">
+                                <a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_diverses_collapse" data-parent="admin_panel" href="#exportieren_diverses_collapse">Diverses</a>
+                            </h4>
+                        </div>
+                        <div class="collapse in" id="exportieren_diverses_collapse">
+                            <div class="panel-body">
+                                <button id="admin_pilze_zhgis_ergänzen" type="button" class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Eigenschaftensammlung "ZH GIS" ergänzen</button>
+                                <span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
+                                <hr>
+                                <button id="admin_korrigiere_artwertname_in_flora" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
+                                <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
+                                <hr>
+                                <button id="admin_korrigiere_ds_name_ch_rote_liste_1991" type="button" class="btn btn-primary">Eigenschaftensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
+                                <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung"></span>
+                                <hr>
+                                <fieldset>
+                                    <p style="font-weight:bold;">Eigenschaften- oder Beziehungssammlung umbenennen</p>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_vorher">Name vorher</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_vorher" style="max-width:400px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_nachher">Name nachher</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_nachher" style="max-width:400px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-1 col-sm-11">
+                                            <button id="admin_korrigiere_ds_name" type="button" class="btn btn-primary">umbenennen</button>
+                                            <span id="admin_korrigiere_ds_name_rückmeldung"></span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button>
+                                    <span id="admin_baue_ds_zu_eigenschaften_um_rückmeldung"></span>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--panel-group-->    
+            </form>
+
+        </fieldset>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="vendor/couchapp/jquery.js" type="text/javascript"><\/script>');</script>
+        <script src="vendor/couchapp/artendb_built.js"></script>
+        <script src="vendor/couchapp/jquery.jstree.min.js"></script>
+        <script src="vendor/couchapp/modernizr.js"></script>
+
+        <script>
 
             window.adb = window.adb || {};
 
@@ -607,4 +1535,104 @@
                 $('#btn_resize').tooltip();
             });
 
-        </script></body><div id=Meldung></div><div id=meldung_kompatibilität class="modal fade"><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h3>inkompatibler Browser</h3></div><div class=modal-body><p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Verwenden Sie eine aktuelle Version von z.B. <a href="//google.de/chrome/">Google Chrome</a>, <a href="//mozilla.org/de/firefox/new/">Mozilla Firefox</a> oder den <a href=http://windows.microsoft.com/de-de/internet-explorer/download-ie>Internet Explorer (ab Version 10)</a>.</p></div></div></div></div><div id=fileApiMeldung class="modal fade" tabindex=-1 role=dialog aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>×</button><h3>inkompatibler Browser</h3></div><div class=modal-body><p id=fileApiMeldungText>One fine body…</p></div><div class=modal-footer><button type=button class="btn btn-primary" data-dismiss=modal aria-hidden=true>schliessen</button></div></div></div></div><div id=meldung_zuviele_bs class="modal fade" tabindex=-1 role=dialog aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>×</button><h3>Zuviele Beziehungssammlungen gewählt</h3></div><div class=modal-body><p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p></div><div class=modal-footer><button type=button class="btn btn-primary" data-dismiss=modal aria-hidden=true>schliessen</button></div></div></div></div><div id=meldung_individuell class="modal fade" tabindex=-1 role=dialog aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>×</button><h3 id=meldung_individuell_label>Beispielstext</h3></div><div class=modal-body><p id=meldung_individuell_text>Beispielstext</p></div><div class=modal-footer><button type=button class="btn btn-primary" data-dismiss=modal aria-hidden=true id=meldung_individuell_schliessen>schliessen</button></div></div></div></div><div id=rueckfrage_lr_loeschen class="modal fade"><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h3 id=rueckfrage_lr_loeschen_label>Sicher?</h3></div><div class=modal-body><p id=rueckfrage_lr_loeschen_text>Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p></div><div class=modal-footer><button type=button class="btn btn-default" data-dismiss=modal id=rueckfrage_lr_loeschen_abbrechen>nein, abbrechen</button> <button type=button class="btn btn-primary" id=rueckfrage_lr_loeschen_ja data-dismiss=modal>ja, löschen</button></div></div></div></div><div id=lr_parent_waehlen class="modal fade" tabindex=-1 role=dialog aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h3>Hierarchie</h3></div><div id=lr_parent_waehlen_optionen class=modal-body style=margin-bottom:5px;></div></div></div></div></html>
+        </script>
+    </body>
+    <div id="Meldung"></div>
+
+    <div id="meldung_kompatibilität" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>inkompatibler Browser</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Ihr Browser unterstützt nicht alle Funktionen, die ArtenDb voraussetzt.<br><br>Verwenden Sie eine aktuelle Version von z.B. <a href='//google.de/chrome/'>Google Chrome</a>, <a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a> oder den <a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer (ab Version 10)</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="fileApiMeldung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>inkompatibler Browser</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="fileApiMeldungText">One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="meldung_zuviele_bs" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>Zuviele Beziehungssammlungen gewählt</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Es können nur Daten aus einer Beziehungssammlung gleichzeitig exportiert werden.<br>Grund: Für jede Beziehung wird eine neue Zeile erstellt</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="meldung_individuell" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="meldung_individuell_label">Beispielstext</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="meldung_individuell_text">Beispielstext</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="meldung_individuell_schliessen">schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="rueckfrage_lr_loeschen" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 id="rueckfrage_lr_loeschen_label">Sicher?</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="rueckfrage_lr_loeschen_text">Wollen Sie diesen Lebensraum wirklich löschen?<br>Alle hierarchisch darunter liegenden werden mit gelöscht!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="rueckfrage_lr_loeschen_abbrechen">nein, abbrechen</button>
+                    <button type="button" class="btn btn-primary" id="rueckfrage_lr_loeschen_ja" data-dismiss="modal">ja, löschen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lr_parent_waehlen" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Hierarchie</h3>
+                </div>
+                <div id="lr_parent_waehlen_optionen" class="modal-body" style="margin-bottom:5px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

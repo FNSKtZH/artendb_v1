@@ -803,20 +803,18 @@ a.show_next_hidden_export {
 }
 
 #exportieren_objekte_waehlen_ds .panel-body,
-#exportieren_felder_waehlen .panel-body,
-#exportieren_alt_felder_waehlen .panel-body {
+#exportieren_felder_waehlen .panel-body {
     max-height: -webkit-calc(100vh - 114px);
     max-height:      -o-calc(100vh - 114px);
     max-height:         calc(100vh - 114px);
     overflow-y:                      scroll;
 }
 
-@media screen and (min-width: 1001px) {
-    body:not(.force-mobile) #exportieren_alt_felder_waehlen .panel-body {
-        max-height: -webkit-calc(100vh - 140px);
-        max-height:      -o-calc(100vh - 140px);
-        max-height:         calc(100vh - 140px);
-    }
+#exportieren_alt_felder_waehlen .panel-body {
+    max-height: -webkit-calc(100vh - 140px);
+    max-height:      -o-calc(100vh - 140px);
+    max-height:         calc(100vh - 140px);
+    overflow-y:                      scroll;
 }
 
 
