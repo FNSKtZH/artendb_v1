@@ -1036,9 +1036,11 @@ window.adb.handleExportierenAltClick = function () {
 };
 
 // wenn .feld_waehlen geändert wird
-// kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
-// und pro Beziehung eine Zeile ausgegeben wird. 
-// Wenn ja: reklamieren und rückgängig machen
+// 1.: kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
+//     und pro Beziehung eine Zeile ausgegeben wird. 
+//     Wenn ja: reklamieren und rückgängig machen
+// 2.: kontrollieren, ob mehr als 50 Felder gewählt wurden
+//     wenn ja: reklamieren und rückgängig machen
 window.adb.handleFeldWählenChange = function () {
     'use strict';
     var that = this,
@@ -1047,24 +1049,65 @@ window.adb.handleFeldWählenChange = function () {
 
     if (formular === 'export_alt') _alt = '_alt';
 
+    if ($(that).prop('checked')) {
+        // wenn das Feld hinzugefügt wurde: prüfen, ob zuviele Felder gewählt sind...
+        if (window.adb.prüfeObZuvieleExportfelderGewähltSind(that, _alt)) return false;
+        // ...oder zuviele Beziehungen
+        if (window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind(that, _alt)) return false;
+    }
+
+    // alles i.o.
+    // da ein Feld verändert wurde, allfälligen Export zurücksetzen
+    window.adb.exportZurücksetzen(null, _alt);
+    return true;
+};
+
+window.adb.prüfeObZuvieleExportfelderGewähltSind = function (that, _alt) {
+    var count = 0;
+    $("#export" + _alt)
+        .find(".exportieren_felder_waehlen_felderliste")
+        .find(".feld_waehlen")
+        .each(function () {
+            if ($(this).prop('checked')) {
+                // gewähltes Feld > zählen
+                count++;
+            }
+        });
+
+    console.log('count: ', count);
+
+    // Anzahl Felder kontrollieren
+    if (count > 50) {
+        // zuviele gewählt
+        $('#meldung_zuviele_exportfelder').modal();
+        $(that).prop('checked', false);
+        return true;
+    }
+    return false;
+};
+
+window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind = function (that, _alt) {
     if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
-        var bez_ds_checked = [],
-            that = this;
-        $("#export" + _alt + " .exportieren_felder_waehlen_felderliste")
+        var bez_ds_checked = [];
+        $("#export" + _alt)
+            .find(" .exportieren_felder_waehlen_felderliste")
             .find(".feld_waehlen")
             .each(function () {
-                if ($(this).prop('checked') && $(this).attr('dstyp') === "Beziehung") {
-                    bez_ds_checked.push($(this).attr('datensammlung'));
+                if ($(this).prop('checked')) {
+                    if ($(this).attr('dstyp') === "Beziehung") {
+                        bez_ds_checked.push($(this).attr('datensammlung'));
+                    }
                 }
             });
+
         // eindeutige Liste der dsTypen erstellen
         bez_ds_checked = _.union(bez_ds_checked);
         if (bez_ds_checked && bez_ds_checked.length > 1) {
             $('#meldung_zuviele_bs').modal();
             $(that).prop('checked', false);
-        } else {
-            window.adb.exportZurücksetzen(null, _alt);
+            return true;
         }
+        return false;
     }
 };
 
@@ -1072,22 +1115,38 @@ window.adb.handleFeldWählenChange = function () {
 // wenn checked: alle unchecken, sonst alle checken
 window.adb.handleFeldWählenAlleVonDs = function () {
     'use strict';
-    var ds = $(this).attr('datensammlung'),
-        formular = $(this).closest('form').attr('id'),
-        status = false;
-    if ($(this).prop('checked')) {
-        status = true;
-    }
+    var that = this,
+        ds = $(that).attr('datensammlung'),
+        formular = $(that).closest('form').attr('id'),
+        _alt = '',
+        status = $(that).prop('checked');
+
+    console.log('status: ', status);
+
+    if (formular === 'export_alt') _alt = '_alt';
+
     $('#' + formular + ' [datensammlung="' + ds + '"]').each(function () {
+        if (status) {
+            // Wenn ein Feld dazugefügt wurde...
+            // ...kontrollieren, ob zuviele Beziehungen gewählt sind
+            if (window.adb.prüfeObZuvieleExportfelderGewähltSind(this, _alt) || window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind(this, _alt)) {
+                // oops, zu viele Felder gewählt oder zu viele Beziehungen > aufhören
+                return;
+            }
+        }
         $(this).prop('checked', status);
     });
+
+    // alles i.o.
+    // da ein Feld verändert wurde, allfälligen Export zurücksetzen
+    window.adb.exportZurücksetzen(null, _alt);
 };
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
     'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
-    require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
+    require('./adbModules/erstelleListeFuerFeldwahl')($, gruppen_gewählt);
 };
 
 // ist nötig, weil index.html nicht requiren kann

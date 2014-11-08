@@ -1397,8 +1397,7 @@
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
                         window.adb.entferneBeziehungssammlung($);
-                    })
-                ;
+                    });
 
                 $("#export")
                     .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
@@ -1566,6 +1565,24 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="meldung_zuviele_exportfelder" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>Zuviele Exportfelder gewählt</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Sie haben mehr als 50 Exportfelder gewählt.<br><br>Wenn Sie zuviele Daten exportieren, können schlimme Dinge passieren. Zum Beispiel:
+                    <ul><li>kann der Server explodieren,</li><li>das Netzwerkkabel schmelzen,</li><li>der Browser abstürzen</li><li>...oder Ihr PC sich in Rauch auflösen!</li></ul>Daher dürfen maximal 50 Felder exportiert werden.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">o.k.</button>
                 </div>
             </div>
         </div>
