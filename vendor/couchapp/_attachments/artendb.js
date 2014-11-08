@@ -1074,8 +1074,6 @@ window.adb.prüfeObZuvieleExportfelderGewähltSind = function (that, _alt) {
             }
         });
 
-    console.log('count: ', count);
-
     // Anzahl Felder kontrollieren
     if (count > 50) {
         // zuviele gewählt
@@ -1120,8 +1118,6 @@ window.adb.handleFeldWählenAlleVonDs = function () {
         formular = $(that).closest('form').attr('id'),
         _alt = '',
         status = $(that).prop('checked');
-
-    console.log('status: ', status);
 
     if (formular === 'export_alt') _alt = '_alt';
 
