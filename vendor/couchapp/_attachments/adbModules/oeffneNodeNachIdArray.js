@@ -2,7 +2,7 @@
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 
-/*jslint node: true, browser: true, nomen: true */
+/*jslint node: true, browser: true, nomen: true, todo: true */
 
 
 'use strict';

@@ -1,3 +1,5 @@
+/*jslint node: true, browser: true, nomen: true, todo: true */
+
 var _ = require("lists/lib/underscore");
 
 // bekommt einen der existierenden Werte für Status bei Flora
@@ -99,10 +101,10 @@ exports.filtereBeziehungspartner = function (beziehungspartner, Filterwert, Verg
 exports.convertToCorrectType = function (feldWert) {
     'use strict';
     var type = exports.myTypeOf(feldWert);
-    if (type === "boolean") return Boolean(feldWert);
-    if (type === "float")   return parseFloat(feldWert);
-    if (type === "integer") return parseInt(feldWert, 10);
-    if (type === "string")  return feldWert.toLowerCase(); // string jetzt kleinschreiben, damit das nicht später erfolgen muss
+    if (type === "boolean") { return Boolean(feldWert); }
+    if (type === "float")   { return parseFloat(feldWert); }
+    if (type === "integer") { return parseInt(feldWert, 10); }
+    if (type === "string")  { return feldWert.toLowerCase(); } // string jetzt kleinschreiben, damit das nicht später erfolgen muss
     // object nicht umwandeln. Man muss beim Vergleichen unterscheiden können, ob es ein Object war
     return feldWert;
 };
@@ -110,29 +112,31 @@ exports.convertToCorrectType = function (feldWert) {
 // Hilfsfunktion, die typeof ersetzt und ergänzt
 // typeof gibt bei input-Feldern immer String zurück!
 exports.myTypeOf = function (Wert) {
+    /*jslint white: true */
     'use strict';
-    if (typeof Wert === "boolean")   return "boolean";
-    if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) return "float";
+    if (typeof Wert === "boolean")   { return "boolean"; }
+    if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) { return "float"; }
     // verhindern, dass führende Nullen abgeschnitten werden
-    if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10)/10)) || Wert == "0") return "integer";
-    if (typeof Wert === "object")    return "object";
-    if (typeof Wert === "string")    return "string";
-    if (typeof Wert === "undefined") return "undefined";
-    if (typeof Wert === "function")  return "function";
+    if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10) / 10)) || Wert == "0") { return "integer"; }
+    if (typeof Wert === "object")    { return "object"; }
+    if (typeof Wert === "string")    { return "string"; }
+    if (Wert === undefined)          { return "undefined"; }
+    if (typeof Wert === "function")  { return "function"; }
 };
 
 // beurteilt, ob ein Objekt exportiert werden soll
 // indem er Feldwerte mit Filterkriterien vergleicht
 // das Filterkriterium besteht aus einem Vergleichsoperator (oder auch nicht) und einem Filterwert
 exports.beurteileFilterkriterien = function (feldwert, filterwert, vergleichsoperator) {
+    /*jslint white: true */
     'use strict';
-    if (vergleichsoperator === "kein" && feldwert == filterwert) return true;
-    if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) return true;
-    if (vergleichsoperator === "=" && feldwert == filterwert)    return true;
-    if (vergleichsoperator === ">" && feldwert > filterwert)     return true;
-    if (vergleichsoperator === ">=" && feldwert >= filterwert)   return true;
-    if (vergleichsoperator === "<" && feldwert < filterwert)     return true;
-    if (vergleichsoperator === "<=" && feldwert <= filterwert)   return true;
+    if (vergleichsoperator === "kein" && feldwert == filterwert) { return true; }
+    if (vergleichsoperator === "kein" && exports.myTypeOf(feldwert) === "string" && feldwert.indexOf(filterwert) >= 0) { return true; }
+    if (vergleichsoperator === "=" && feldwert == filterwert)    { return true; }
+    if (vergleichsoperator === ">" && feldwert > filterwert)     { return true; }
+    if (vergleichsoperator === ">=" && feldwert >= filterwert)   { return true; }
+    if (vergleichsoperator === "<" && feldwert < filterwert)     { return true; }
+    if (vergleichsoperator === "<=" && feldwert <= filterwert)   { return true; }
     return false;
 };
 
@@ -525,32 +529,32 @@ exports.holeÜbergebeneVariablen = function (query_objekt) {
         felder_objekt;
     _.each(query_objekt, function (value, key) {
         switch (key) {
-            case "fasseTaxonomienZusammen":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.fasseTaxonomienZusammen = (value === 'true');
-                break;
-            case "filter":
-                filterkriterien_objekt = JSON.parse(value);
-                ü_var.filterkriterien = filterkriterien_objekt.filterkriterien || [];
-                // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
-                // damit das später nicht dauern wiederholt werden muss
-                ü_var.filterkriterien = exports.bereiteFilterkriterienVor(ü_var.filterkriterien);
-                break;
-            case "felder":
-                felder_objekt = JSON.parse(value);
-                ü_var.felder = felder_objekt.felder || [];
-                break;
-            case "gruppen":
-                ü_var.gruppen = value.split(",");
-                break;
-            case "nur_objekte_mit_eigenschaften":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.nur_objekte_mit_eigenschaften = (value == 'true');
-                break;
-            case "bez_in_zeilen":
-                // true oder false wird als String übergeben > umwandeln
-                ü_var.bez_in_zeilen = (value === 'true');
-                break;
+        case "fasseTaxonomienZusammen":
+            // true oder false wird als String übergeben > umwandeln
+            ü_var.fasseTaxonomienZusammen = (value === 'true');
+            break;
+        case "filter":
+            filterkriterien_objekt = JSON.parse(value);
+            ü_var.filterkriterien = filterkriterien_objekt.filterkriterien || [];
+            // jetzt strings in Kleinschrift und Nummern in Zahlen verwandeln
+            // damit das später nicht dauern wiederholt werden muss
+            ü_var.filterkriterien = exports.bereiteFilterkriterienVor(ü_var.filterkriterien);
+            break;
+        case "felder":
+            felder_objekt = JSON.parse(value);
+            ü_var.felder = felder_objekt.felder || [];
+            break;
+        case "gruppen":
+            ü_var.gruppen = value.split(",");
+            break;
+        case "nur_objekte_mit_eigenschaften":
+            // true oder false wird als String übergeben > umwandeln
+            ü_var.nur_objekte_mit_eigenschaften = (value == 'true');
+            break;
+        case "bez_in_zeilen":
+            // true oder false wird als String übergeben > umwandeln
+            ü_var.bez_in_zeilen = (value === 'true');
+            break;
         }
     });
     return ü_var;

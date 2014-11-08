@@ -1,7 +1,7 @@
 // erstellt die HTML für eine Datensammlung
 // benötigt von der art bzw. den lr die entsprechende Datensammlung
 
-/*jslint node: true, browser: true, nomen: true */
+/*jslint node: true, browser: true, nomen: true, todo: true */
 
 
 'use strict';

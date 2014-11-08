@@ -2,7 +2,7 @@
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält.
 // Wenn ja: reklamieren und rückgängig machen
 
-/*jslint node: true, browser: true, nomen: true */
+/*jslint node: true, browser: true, nomen: true, todo: true */
 
 
 'use strict';

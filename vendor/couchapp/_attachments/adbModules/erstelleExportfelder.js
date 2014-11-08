@@ -2,7 +2,7 @@
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
 // formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)
 
-/*jslint node: true, browser: true, nomen: true */
+/*jslint node: true, browser: true, nomen: true, todo: true */
 
 
 'use strict';

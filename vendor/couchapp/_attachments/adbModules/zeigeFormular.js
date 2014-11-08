@@ -4,7 +4,7 @@
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 
-/*jslint node: true, browser: true, nomen: true */
+/*jslint node: true, browser: true, nomen: true, todo: true */
 
 
 'use strict';
@@ -59,9 +59,7 @@ var returnFunction = function (formularname) {
         case 'export_alt':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?exportieren_fuer_artenlistentool=true");
-            // menu ausblenden
-            $('.menu').hide();
-            // ganze Breite nutzen
+            // ganze Breite nutzen (menu bleibt ausgeblendet)
             $("body").toggleClass("force-mobile");
             break;
         case 'importieren_ds':
