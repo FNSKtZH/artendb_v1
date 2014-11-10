@@ -598,6 +598,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"felderspalte",
 			"feld_waehlen_alle_von_ds",
 			"meldung_zuviele_bs",
 			"handleFeldWählenChange",
@@ -724,8 +725,7 @@
 			"keine Daten für die Art erhalten",
 			"css3-multi-column",
 			"css3-multi-columns",
-			"exportieren",
-			"$.when"
+			"exportieren"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -871,7 +871,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -887,8 +887,8 @@
 						"selection":
 						[
 							[
-								395,
-								395
+								3070,
+								3070
 							]
 						],
 						"settings":
@@ -896,7 +896,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1608.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -929,7 +929,7 @@
 						"translation.y": 40329.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -945,8 +945,8 @@
 						"selection":
 						[
 							[
-								17099,
-								17099
+								10129,
+								9780
 							]
 						],
 						"settings":
@@ -956,10 +956,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 18720.0,
+						"translation.y": 10488.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -986,10 +986,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 27264.0,
+						"translation.y": 24744.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

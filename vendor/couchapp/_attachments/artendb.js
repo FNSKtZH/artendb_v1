@@ -261,50 +261,6 @@ window.adb.erstelleKonto = function (woher) {
     });
 };
 
-window.adb.meldeUserAn = function (woher) {
-    'use strict';
-    var email = $('#Email_'+woher).val(),
-        passwort = $('#Passwort_'+woher).val();
-    if (window.adb.validiereUserAnmeldung(woher)) {
-        $.couch.login({
-            name : email,
-            password : passwort,
-            success : function (r) {
-                localStorage.Email = $('#Email_'+woher).val();
-                if (woher === "art") {
-                    window.adb.bearbeiteLrTaxonomie();
-                }
-                window.adb.passeUiFürAngemeldetenUserAn(woher);
-                // Werte aus Feldern entfernen
-                $("#Email_"+woher).val("");
-                $("#Passwort_"+woher).val("");
-                $("#art_anmelden").show();
-                // admin-Funktionen
-                if (r.roles.indexOf("_admin") !== -1) {
-                    // das ist ein admin
-                    console.log("hallo admin");
-                    localStorage.admin = true;
-                } else {
-                    delete localStorage.admin;
-                }
-                window.adb.blendeMenus();
-            },
-            error: function () {
-                var präfix = "importieren_";
-                if (woher === "art") {
-                    präfix = "";
-                }
-                // zuerst allfällige bestehende Hinweise ausblenden
-                $(".hinweis").hide();
-                $("#"+präfix+woher+"_anmelden_fehler_text")
-                    .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
-                    .alert()
-                    .show();
-            }
-        });
-    }
-};
-
 window.adb.blendeMenus = function () {
     'use strict';
     if (localStorage.admin) {
@@ -1384,12 +1340,13 @@ window.adb.handleResize = function () {
 // wenn .anmelden_btn geklickt wird
 window.adb.handleAnmeldenBtnClick = function (that) {
     'use strict';
+    var meldeUserAn = require('./adbModules/meldeUserAn');
     // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
     var bs_ds = that.id.substring(that.id.length-2);
     if (bs_ds === "rt") {
         bs_ds = "art";
     }
-    window.adb.meldeUserAn(bs_ds);
+    meldeUserAn(bs_ds);
 };
 
 // wenn .Email keyup
