@@ -1,7 +1,7 @@
 // wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
 // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

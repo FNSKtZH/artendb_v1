@@ -3,7 +3,7 @@
 // bekommt die Namen der Gruppen
 // formular ist im Standard export, wenn anders (z.B. export_alt), übergeben
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

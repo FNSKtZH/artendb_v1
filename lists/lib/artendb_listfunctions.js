@@ -1,4 +1,4 @@
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 var _ = require("lists/lib/underscore");
 

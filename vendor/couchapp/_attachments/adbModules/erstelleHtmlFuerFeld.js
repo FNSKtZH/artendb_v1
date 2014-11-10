@@ -1,7 +1,7 @@
 // übernimmt Feldname und Feldwert
 // generiert daraus und retourniert html für die Darstellung im passenden Feld
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

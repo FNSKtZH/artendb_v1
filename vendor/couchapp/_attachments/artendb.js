@@ -274,33 +274,9 @@ window.adb.blendeMenus = function () {
     }
 };
 
+// wird in index.html benutzt
 window.adb.meldeUserAb = function () {
-    'use strict';
-    // IE8 kann nicht deleten
-    try {
-        delete localStorage.Email;
-    }
-    catch (e) {
-        localStorage.Email = undefined;
-    }
-    $(".art_anmelden_titel").text("Anmelden");
-    $(".importieren_anmelden_titel").text("1. Anmelden");
-    $(".alert").hide();
-    $(".hinweis").hide();
-    $(".well.anmelden").show();
-    $(".Email").show();
-    $(".Passwort").show();
-    $(".anmelden_btn").show();
-    $(".abmelden_btn").hide();
-    // ausschalten, soll später bei Organisation möglich werden
-    // $(".konto_erstellen_btn").show();
-    $(".konto_speichern_btn").hide();
-    $("#art_anmelden").hide();
-    window.adb.schuetzeLrTaxonomie();
-    // falls dieser User admin war: vergessen
-    delete localStorage.admin;
-    // für diesen Nutzer passende Menus anzeigen
-    window.adb.blendeMenus();
+    require('./adbModules/meldeUserAb')();
 };
 
 window.adb.passeUiFürAngemeldetenUserAn = function (woher) {
@@ -601,109 +577,14 @@ window.adb.handleMenuAdminClick = function () {
     zeigeFormular ("admin");
 };
 
+// wird in index.html benutzt
 window.adb.ergänzePilzeZhgis = function () {
-    'use strict';
-    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
-    $db.view('artendb/macromycetes?include_docs=true', {
-        success: function (data) {
-            var ds_zhgis = {},
-                ergänzt = 0,
-                fehler = 0,
-                zhgis_schon_da = 0;
-            ds_zhgis.Name = "ZH GIS";
-            ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
-            ds_zhgis.Datenstand = "dauernd nachgeführt";
-            ds_zhgis.Link = "http://www.naturschutz.zh.ch";
-            ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
-            ds_zhgis.Eigenschaften = {};
-            ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
-            _.each(data.rows, function (row) {
-                var pilz = row.doc,
-                    zhgis_in_ds;
-                if (!pilz.Eigenschaftensammlungen) {
-                    pilz.Eigenschaftensammlungen = [];
-                }
-                zhgis_in_ds = _.find(pilz.Eigenschaftensammlungen, function (ds) {
-                    return ds.Name === "ZH GIS";
-                });
-                // nur ergänzen, wenn ZH GIS noch nicht existiert
-                if (!zhgis_in_ds) {
-                    pilz.Eigenschaftensammlungen.push(ds_zhgis);
-                    pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function (ds) {
-                        return ds.Name;
-                    });
-                    $db.saveDoc(pilz, {
-                        success: function () {
-                            ergänzt ++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-                        },
-                        error: function () {
-                            fehler ++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-                        }
-                    });
-                } else {
-                    zhgis_schon_da ++;
-                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
-                }
-            });
-        }
-    });
+    require('./adbModules/admin/ergaenzePilzeZhgis')();
 };
 
 window.adb.korrigiereArtwertnameInFlora = function () {
     'use strict';
-    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
-    $db.view('artendb/flora?include_docs=true', {
-        success: function (data) {
-            var korrigiert = 0,
-                fehler = 0,
-                save;
-            _.each(data.rows, function (row) {
-                var art = row.doc,
-                    ds_artwert,
-                    daten = {};
-                if (art.Eigenschaftensammlungen) {
-                    ds_artwert = _.find(art.Eigenschaftensammlungen, function (ds) {
-                       return ds.Name === "ZH Artwert (1995)";
-                    });
-                    //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
-                    if (ds_artwert && ds_artwert.Eigenschaften) {
-                        save = false;
-                        // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
-                        _.each(ds_artwert.Eigenschaften, function (value, key) {
-                            if (key === "Artwert KT ZH") {
-                                key = "Artwert";
-                                save = true;
-                            }
-                            daten[key] = value;
-                        });
-                        if (save) {
-                            ds_artwert.Eigenschaften = daten;
-                            $db.saveDoc(art, {
-                                success: function () {
-                                    korrigiert ++;
-                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
-                                },
-                                error: function () {
-                                    fehler ++;
-                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-            if (korrigiert === 0) {
-                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
-            }
-        },
-        error: function () {
-            console.log('korrigiereArtwertnameInFlora: keine Daten erhalten');
-        }
-    });
+    
 };
 
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {

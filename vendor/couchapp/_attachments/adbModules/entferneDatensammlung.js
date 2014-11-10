@@ -1,7 +1,7 @@
 // bekommt das Objekt mit den Datensätzen (window.adb.dsDatensätze) und die Liste der zu aktualisierenden Datensätze (window.adb.ZuordbareDatensätze)
 // holt sich selber den in den Feldern erfassten Namen der Datensammlung
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

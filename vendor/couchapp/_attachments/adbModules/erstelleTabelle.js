@@ -4,7 +4,7 @@
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
 // formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

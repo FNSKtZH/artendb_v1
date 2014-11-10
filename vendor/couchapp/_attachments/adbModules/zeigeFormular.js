@@ -4,7 +4,7 @@
 // und alle anderen ausgeblendet
 // zusätzlich wird die Höhe von textinput-Feldern an den Textinhalt angepasst
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 
 
 'use strict';

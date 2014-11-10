@@ -1,12 +1,9 @@
-/*jslint node: true, browser: true, nomen: true, todo: true */
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
 var $ = require('jquery');
 
 var returnFunction = function (woher) {
-
-    console.log('melde user an');
-
     var email = $('#Email_' + woher).val(),
         passwort = $('#Passwort_' + woher).val();
 
