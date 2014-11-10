@@ -1811,7 +1811,8 @@ window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt)
         list,
         view,
         $exportieren_alt_exportieren_url = $('#exportieren_alt_exportieren_url'),
-        uri = new Uri($(location).attr('href'));
+        uri = new Uri($(location).attr('href')),
+        baueTabelleFuerExportAuf = require('./adbModules/export/baueTabelleFuerExportAuf');
 
     if ($("#exportieren_alt_synonym_infos").prop('checked')) {
         // list
@@ -1859,8 +1860,6 @@ window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt)
             .select();
     }, 2000);
 
-    // Feld markieren
-
     // Vorschautabelle generieren
     // limit number of data
     view += '&limit=11';
@@ -1869,45 +1868,12 @@ window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt)
         success: function (data) {
             // alle Objekte in data window.adb.exportieren_objekte übergeben
             window.adb.exportieren_objekte = data;
-            window.adb.baueTabelleFürExportAuf('_alt');
+            baueTabelleFuerExportAuf('_alt');
         },
         error: function () {
             console.log('übergebeFilterFürExportFürAlt: error in $db.list');
         }
     });
-};
-
-window.adb.baueTabelleFürExportAuf = function (_alt) {
-    'use strict';
-    var hinweis = "",
-        erstelleTabelle = require('./adbModules/erstelleTabelle'),
-        _alt = _alt || '';
-
-    if (window.adb.exportieren_objekte.length > 0) {
-        if (_alt) {
-            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
-        } else {
-            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle", null);
-        }
-        $(".exportieren" + _alt + "_exportieren_exportieren").show();
-    } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
-        $("#exportieren" + _alt + "_exportieren_error_text_text")
-            .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
-        $("#exportieren" + _alt + "_exportieren_error_text")
-            .alert()
-            .show();
-    }
-    if (!_alt) {
-        // Panel-Titel an oberen Rand scrollen (bei alt schon ausgelöst)
-        $('html, body').animate({
-            scrollTop: $("#exportieren_exportieren").offset().top -6
-        }, 2000);
-    }
-
-    // Beschäftigungsmeldung verstecken
-    $("#exportieren" + _alt + "_exportieren_hinweis_text")
-        .alert()
-        .hide();
 };
 
 window.adb.fürExportGewählteGruppen = function () {

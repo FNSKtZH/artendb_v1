@@ -11,7 +11,8 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
         anz_gruppen_abgefragt = 0,
         listName,
         queryParam,
-        $db = $.couch.db("artendb");
+        $db = $.couch.db("artendb"),
+        baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
@@ -55,7 +56,7 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
                         .alert()
                         .show()
                         .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
-                    window.adb.baueTabelleFürExportAuf();
+                    baueTabelleFuerExportAuf();
                 }
             },
             error: function () {
