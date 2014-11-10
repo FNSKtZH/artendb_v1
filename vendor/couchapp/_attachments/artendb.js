@@ -1068,8 +1068,9 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function () {
     'use strict';
+    var erstelleExportString = require('./adbModules/export/erstelleExportString');
     if (window.adb.isFileAPIAvailable()) {
-        var exportstring = window.adb.erstelleExportString(window.adb.exportieren_objekte),
+        var exportstring = erstelleExportString(window.adb.exportieren_objekte),
             blob = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
             d = new Date(),
             month = d.getMonth()+1,
@@ -1730,52 +1731,6 @@ window.adb.öffneUri = function () {
 
     // dafür sorgen, dass die passenden Menus angezeigt werden
     window.adb.blendeMenus();
-};
-
-window.adb.erstelleExportString = function (exportobjekte) {
-    'use strict';
-    var string_titelzeile = "",
-        string_zeilen = "",
-        string_zeile;
-    _.each(exportobjekte, function (exportobjekt) {
-        // aus unerklärlichem Grund blieb stringTitelzeile leer, wenn nur ein Datensatz gefiltert wurde
-        // daher bei jedem Datensatz prüfen, ob eine Titelzeile erstellt wurde und wenn nötig ergänzen
-        if (string_titelzeile === "" || string_titelzeile === ",") {
-            string_titelzeile = "";
-            // durch Spalten loopen
-            _.each(exportobjekt, function (feld, index) {
-                if (string_titelzeile !== "") {
-                    string_titelzeile += ',';
-                }
-                string_titelzeile += '"' + index + '"';
-            });
-        }
-
-        if (string_zeilen !== "") {
-            string_zeilen += '\n';
-        }
-        string_zeile = "";
-        // durch die Felder loopen
-        _.each(exportobjekt, function (feld) {
-            if (string_zeile !== "") {
-                string_zeile += ',';
-            }
-            // null-Werte als leere Werte
-            if (feld === null) {
-                string_zeile += "";
-            } else if (typeof feld === "number") {
-                // Zahlen ohne Anführungs- und Schlusszeichen exportieren
-                string_zeile += feld;
-            } else if (typeof feld === "object") {
-                // Anführungszeichen sind Feldtrenner und müssen daher ersetzt werden
-                string_zeile += '"' + JSON.stringify(feld).replace(/"/g, "'") + '"';
-            } else {
-                string_zeile += '"' + feld + '"';
-            }
-        });
-        string_zeilen += string_zeile;
-    });
-    return string_titelzeile + "\n" + string_zeilen;
 };
 
 // holt eine Liste aller Datensammlungen, wenn nötig
