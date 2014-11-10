@@ -593,7 +593,7 @@ window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
 
 // wird in index.html benutzt
 window.adb.nenneDsUm = function () {
-    require('./adbModules/nenneDsUm')();
+    require('./adbModules/admin/nenneDsUm')();
 };
 
 // wird in index.html benutzt
@@ -1180,32 +1180,27 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 
 // wenn .gruppe geklickt wird
 window.adb.handleÖffneGruppeClick = function () {
-    'use strict';
     window.adb.öffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function () {
-    'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation')('Ds');
+    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function () {
-    'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation')('Bs');
+    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function () {
-    'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation')('Ds');
+    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function () {
-    'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation')('Bs');
+    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn in textarea keyup oder focus

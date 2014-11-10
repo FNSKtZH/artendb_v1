@@ -3,11 +3,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery'),
+var _                               = require('underscore'),
+    $                               = require('jquery'),
     meldeErfolgVonIdIdentifikation2 = require('./meldeErfolgVonIdIdentifikation2');
 
-// $ wird benötigt wegen $.alert
 var returnFunction = function (dbs) {
     var $dbsFelderSelected       = $("#" + dbs + "Felder option:selected"),
         $dbsIdSelected           = $("#" + dbs + "Id option:selected"),
