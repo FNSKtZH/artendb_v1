@@ -1356,7 +1356,7 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.entferneDatensammlung($);
+                        window.adb.entferneDatensammlung();
                     })
                     // verhindern, dass bootstrap ganz nach oben scrollt
                     .on("click", ".panel-heading a", function (event) {
@@ -1396,7 +1396,7 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.entferneBeziehungssammlung($);
+                        window.adb.entferneBeziehungssammlung();
                     });
 
                 $("#export")

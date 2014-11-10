@@ -3,9 +3,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
-var returnFunction = function ($, that) {
+var returnFunction = function (that) {
     var bs_name        = that.value,
         wählbar        = false,
         $BsAnzDs       = $("#BsAnzDs"),

@@ -60,7 +60,7 @@ var returnFunction = function ($, that) {
                 // bei der Wurzel ist sie schon gesetzt
                 window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
             } else {
-                $.when(erstelleBaum($)).then(function () {
+                $.when(erstelleBaum()).then(function () {
                     var oeffneBaumZuId = require('./oeffneBaumZuId');
                     oeffneBaumZuId($, object._id);
                     $('#lr_parent_waehlen').modal('hide');

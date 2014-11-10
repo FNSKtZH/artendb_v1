@@ -7,7 +7,7 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function ($) {
+var returnFunction = function () {
     var guid_array = [],
         guid_array_2 = [],
         guid,

@@ -1,8 +1,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// erhält $, weil jquery.couch.js nicht nod-fähig ist
-var returnFunction = function ($) {
+var $ = require('jquery');
+
+var returnFunction = function () {
     var gruppe,
         gruppenbezeichnung,
         baum_erstellt = $.Deferred(),

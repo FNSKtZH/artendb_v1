@@ -1,10 +1,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // braucht $ wegen .alert
-var returnFunction = function ($, export_felder_arrays, formular) {
+var returnFunction = function (export_felder_arrays, formular) {
     var felder_objekt = {},
         hinweis_taxonomien,
         taxonomien,

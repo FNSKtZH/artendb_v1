@@ -4,7 +4,7 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function ($, lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
         object_array = _.map(lr.rows, function (row) {
@@ -54,7 +54,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function ($, lr, obj
                     // das ist ein child
                     // auch aktualisieren
                     // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, doc, false, einheit_ist_taxonomiename);
+                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, doc, false, einheit_ist_taxonomiename);
                 }
             });
         },

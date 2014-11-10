@@ -9,7 +9,7 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-module.exports = function ($, taxonomie_name, callback) {
+module.exports = function (taxonomie_name, callback) {
 
     // lr holen
     var $db = $.couch.db("artendb");

@@ -457,10 +457,9 @@ window.adb.handleDsZusammenfassendChange = function () {
 };
 
 // Wenn BsWählen geändert wird
+// wird in index.html benutzt
 window.adb.handleBsWählenChange = function () {
-    'use strict';
-    var handleBsWaehlenChange = require('./adbModules/handleBsWaehlenChange');
-    handleBsWaehlenChange ($, this);
+    require('./adbModules/handleBsWaehlenChange')(this);
 };
 
 // wenn DsFile geändert wird
@@ -920,7 +919,7 @@ window.adb.handleBtnLrBearbNeuClick = function () {
     var html,
         getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');
     if (!$(this).hasClass('disabled')) {
-        getHtmlForLrParentAuswahlliste($, $("#Taxonomie").val(), function (html) {
+        getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
             $("#lr_parent_waehlen_optionen").html(html);
             // jetzt das modal aufrufen
             // höhe Anpassen funktioniert leider nicht über css mit calc
@@ -1342,9 +1341,9 @@ window.adb.bereiteBeziehungspartnerFürImportVor = function () {
     return beziehungspartner_vorbereitet.promise();
 };
 
+// wird in index.html benutzt
 window.adb.entferneDatensammlung = function () {
-    'use strict';
-    require('./adbModules/entferneDatensammlung') ($);
+    require('./adbModules/entferneDatensammlung')();
 };
 
 window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerungs_faktor) {
@@ -1388,9 +1387,9 @@ window.adb.entferneDatensammlungAusObjekt = function (ds_name, objekt) {
     }
 };
 
+// wird in index.html benutzt
 window.adb.entferneBeziehungssammlung = function () {
-    'use strict';
-    require('./adbModules/entferneBeziehungssammlung') ($);
+    require('./adbModules/entferneBeziehungssammlung')();
 };
 
 window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzögerungs_faktor) {
@@ -1707,7 +1706,7 @@ window.adb.öffneUri = function () {
                 $('[gruppe="'+objekt.Gruppe+'"]').button('toggle');
                 $("#Gruppe_label").html("Gruppe:");
                 // tree aufbauen, danach Datensatz initiieren
-                $.when(erstelleBaum($)).then(function () {
+                $.when(erstelleBaum()).then(function () {
                     var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                     oeffneBaumZuId($, id);
                 });
@@ -2195,7 +2194,7 @@ window.adb.öffneGruppe = function (Gruppe) {
     $("#treeMitteilung")
         .html(treeMitteilung)
         .show();
-    erstelleBaum($);
+    erstelleBaum();
     // keine Art mehr aktiv
     delete localStorage.art_id;
 };
@@ -2362,9 +2361,9 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
     $db.saveDoc(object, {
         success: function () {
             var erstelleBaum = require('./adbModules/erstelleBaum');
-            $.when(erstelleBaum($)).then(function () {
+            $.when(erstelleBaum()).then(function () {
                 var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
-                oeffneBaumZuId ($, object._id);
+                oeffneBaumZuId($, object._id);
                 $('#lr_parent_waehlen').modal('hide');
             });
         },
@@ -2391,11 +2390,11 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, 
     var $db = $.couch.db("artendb"),
         aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {
         $db.view('artendb/lr?include_docs=true', {
             success: function (lr) {
-                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2($, lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
+                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
             },
             error: function () {
                 console.log('aktualisiereHierarchieEinesLrInklusiveSeinerChildren: keine Daten erhalten');
