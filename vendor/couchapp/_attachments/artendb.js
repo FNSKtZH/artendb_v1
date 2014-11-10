@@ -582,131 +582,24 @@ window.adb.ergänzePilzeZhgis = function () {
     require('./adbModules/admin/ergaenzePilzeZhgis')();
 };
 
+// wird in index.html benutzt
 window.adb.korrigiereArtwertnameInFlora = function () {
-    'use strict';
-    
+    require('./adbModules/admin/korrigiereArtwertnameInFlora')();
 };
 
+// wird in index.html benutzt
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
-    'use strict';
-    var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
-    $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
-    $db.view('artendb/flora?include_docs=true', {
-        success: function (data) {
-            var korrigiert = 0,
-                fehler = 0,
-                save;
-            _.each(data.rows, function (row) {
-                var art = row.doc,
-                    ds;
-                if (art.Eigenschaftensammlungen) {
-                    ds = _.find(art.Eigenschaftensammlungen, function (ds) {
-                        return ds.Name === "CH Rote Liste (1991)";
-                    });
-                    if (ds) {
-                        ds.Name = "CH Rote Listen Flora (1991)";
-                        $db.saveDoc(art, {
-                            success: function () {
-                                korrigiert ++;
-                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                            },
-                            error: function () {
-                                fehler ++;
-                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                            }
-                        });
-                    }
-                }
-            });
-            if (korrigiert === 0) {
-                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
-            }
-        },
-        error: function () {
-            console.log('korrigiereDsNameFloraChRoteListe1991: keine Daten erhalten');
-        }
-    });
+    require('./adbModules/admin/korrigiereDsNameFloraChRoteListe1991')();
 };
 
+// wird in index.html benutzt
 window.adb.nenneDsUm = function () {
-    'use strict';
-    var nenneDsUm = require('./adbModules/nenneDsUm');
-    nenneDsUm ();
+    require('./adbModules/nenneDsUm')();
 };
 
+// wird in index.html benutzt
 window.adb.baueDsZuEigenschaftenUm = function () {
-    'use strict';
-    var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
-        $db = $.couch.db("artendb");
-    $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
-    $db.view('artendb/all_docs?include_docs=true', {
-        success: function (data) {
-            var korrigiert = 0,
-                fehler = 0,
-                save;
-            if (data.rows.length === 0) {
-                $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Keine Daten erhalten");
-                return;
-            }
-            _.each(data.rows, function (row) {
-                var art = row.doc,
-                    datensammlungen,
-                    beziehungssammlungen,
-                    ds_daten,
-                    tax_daten,
-                    save = false;
-                // Datensammlungen umbenennen
-                // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
-                // damit die Reihenfolge bewahrt bleibt
-                if (art.Taxonomie && art.Taxonomie.Daten) {
-                    tax_daten = art.Taxonomie.Daten;
-                    delete art.Taxonomie.Daten;
-                    art.Taxonomie.Eigenschaften = tax_daten;
-                    save = true;
-                }
-                if (art.Datensammlungen) {
-                    datensammlungen = art.Datensammlungen;
-                    _.each(datensammlungen, function (ds) {
-                        if (ds.Daten) {
-                            ds_daten = ds.Daten;
-                            delete ds.Daten;
-                            ds.Eigenschaften = ds_daten;
-                        }
-                    });
-                    delete art.Datensammlungen;
-                    if (art.Beziehungssammlungen) {
-                        beziehungssammlungen = art.Beziehungssammlungen;
-                        delete art.Beziehungssammlungen;
-                    } else {
-                        beziehungssammlungen = {};
-                    }
-                    art.Eigenschaftensammlungen = datensammlungen;
-                    art.Beziehungssammlungen = beziehungssammlungen;
-                    save = true;
-                }
-                if (save) {
-                    $db.saveDoc(art, {
-                        success: function () {
-                            korrigiert ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                        },
-                        error: function () {
-                            fehler ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
-                        }
-                    });
-                }
-
-            });
-            if (korrigiert === 0) {
-                $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
-            }
-        },
-        error: function () {
-            console.log('baueDsZuEigenschaftenUm: keine Daten erhalten');
-        }
-    });
+    require('./adbModules/admin/baueDsZuEigenschaftenUm')();
 };
 
 // wenn importieren_ds_ds_beschreiben_collapse geöffnet wird

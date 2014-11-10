@@ -2,8 +2,6 @@
 // holt sich selber die in den Feldern erfassten Infos der Datensammlung
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore');

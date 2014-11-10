@@ -2,8 +2,6 @@
 // wird vorläufig nur für LR Taxonomie verwendet
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var Uri = require('jsuri');

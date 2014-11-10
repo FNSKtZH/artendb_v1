@@ -2,8 +2,6 @@
 // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore');
@@ -26,8 +24,8 @@ var returnFunction = function ($, direkt, fürAlt) {
         html_filterkriterien,
         formular = 'export',
         _alt = '',
-        übergebeFilterFürDirektExport = require('./uebergebeFilterFuerDirektExport'),
-        uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau');
+        übergebeFilterFürDirektExport = require('./export/uebergebeFilterFuerDirektExport'),
+        uebergebeFilterFuerExportMitVorschau = require('./export/uebergebeFilterFuerExportMitVorschau');
 
     if (fürAlt) {
         formular = 'export_alt';

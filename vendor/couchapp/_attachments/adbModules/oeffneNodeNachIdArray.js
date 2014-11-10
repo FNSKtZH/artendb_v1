@@ -3,8 +3,6 @@
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var oeffneNodeNachIdArray = function ($, idArray) {

@@ -2,8 +2,6 @@
 // benötigt von der art bzw. den lr die entsprechende Datensammlung
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var returnFunction = function (ds_typ, art, datensammlung) {

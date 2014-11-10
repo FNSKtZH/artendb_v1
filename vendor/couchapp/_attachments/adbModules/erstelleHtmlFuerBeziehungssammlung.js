@@ -5,8 +5,6 @@
 // sonst geht nur die erste auf
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore'),

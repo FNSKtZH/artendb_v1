@@ -3,8 +3,6 @@
 // formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _          = require('underscore'),

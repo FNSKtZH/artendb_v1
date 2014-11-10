@@ -4,8 +4,6 @@
 // plus man soll auch einen neue Taxonomie beginnen können
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var $ = require('jquery'),

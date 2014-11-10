@@ -6,8 +6,6 @@
 // das FelderObjekt enthält alle gewünschten Felder. Darin sind nullwerte
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore');

@@ -3,8 +3,6 @@
 // Wenn ja: reklamieren und rückgängig machen
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 // braucht $ wegen .modal

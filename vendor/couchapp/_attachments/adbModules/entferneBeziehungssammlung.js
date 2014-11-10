@@ -2,8 +2,6 @@
 // holt sich selber den in den Feldern erfassten Namen der Beziehungssammlung
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore'),

@@ -5,8 +5,6 @@
 // formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore'),

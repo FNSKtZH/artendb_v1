@@ -1,8 +1,6 @@
 // erhält dbs = "Ds" oder "Bs"
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-
-
 'use strict';
 
 var _ = require('underscore'),
