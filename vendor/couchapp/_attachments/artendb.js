@@ -993,7 +993,7 @@ window.adb.handlePanelbodyLrTaxonomieShown = function () {
 // wenn #exportieren_exportieren_collapse geöffnet wird
 window.adb.handleExportierenExportierenCollapseShown = function (that) {
     'use strict';
-    var filtereFuerExport = require('./adbModules/filtereFuerExport'),
+    var filtereFuerExport = require('./adbModules/export/filtereFuerExport'),
         fürAlt = false;
 
     if (that.id === 'exportieren_alt_exportieren_collapse') {
@@ -1011,7 +1011,7 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
             $(".exportieren_exportieren_exportieren").hide();
 
             // filtert und baut danach die Vorschautabelle auf
-            filtereFuerExport($, null, fürAlt);
+            filtereFuerExport(null, fürAlt);
         }
     }
     if ($("#exportieren_alt_exportieren_collapse").is(":visible")) {
@@ -1019,7 +1019,7 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
         $(".exportieren_exportieren_tabelle").hide();
         $(".exportieren_exportieren_exportieren").hide();
         // filtert und baut danach die Vorschautabelle auf
-        filtereFuerExport($, null, fürAlt);
+        filtereFuerExport(null, fürAlt);
     }
 };
 
@@ -1804,9 +1804,9 @@ window.adb.holeDatensammlungenFürExportfelder = function () {
     return exfe_geholt.promise();
 };
 
+// wird in index.html benutzt
 window.adb.filtereFürExport = function (direkt) {
-    'use strict';
-    require('./adbModules/filtereFuerExport') ($, direkt);
+    require('./adbModules/export/filtereFuerExport')(direkt);
 };
 
 window.adb.übergebeFilterFürExportFürAlt = function (gewählte_felder_objekt) {
@@ -2479,52 +2479,10 @@ window.adb.löscheMassenMitObjektArray = function (object_array) {
     });
 };
 
-// erhält einen filterwert
-// dieser kann zuvorderst einen Vergleichsoperator enthalten oder auch nicht
-// retourniert einen Array mit 0 Vergleichsoperator und 1 filterwert
+
 window.adb.ermittleVergleichsoperator = function (filterwert) {
     'use strict';
-    var vergleichsoperator;
-    if (filterwert.indexOf(">=") === 0) {
-        vergleichsoperator = ">=";
-        if (filterwert.indexOf(" ") === 2) {
-            filterwert = filterwert.slice(3);
-        } else {
-            filterwert = filterwert.slice(2);
-        }
-    } else if (filterwert.indexOf("<=") === 0) {
-        vergleichsoperator = "<=";
-        if (filterwert.indexOf(" ") === 2) {
-            filterwert = filterwert.slice(3);
-        } else {
-            filterwert = filterwert.slice(2);
-        }
-    } else if (filterwert.indexOf(">") === 0) {
-        vergleichsoperator = ">";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
-    } else if (filterwert.indexOf("<") === 0) {
-        vergleichsoperator = "<";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
-    } else if (filterwert.indexOf("=") === 0) {
-        // abfangen, falls jemand "=" eingibt
-        vergleichsoperator = "=";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
-    } else {
-        vergleichsoperator = "kein";
-    }
-    return [vergleichsoperator, filterwert];
+    
 };
 
 // kontrolliert den verwendeten Browser

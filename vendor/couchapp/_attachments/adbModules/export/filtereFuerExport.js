@@ -4,10 +4,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // $ wird benötigt wegen .alert
-var returnFunction = function ($, direkt, fürAlt) {
+var returnFunction = function (direkt, fürAlt) {
     // Array von Filterobjekten bilden
     var filterkriterien = [],
         // Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
@@ -24,8 +25,9 @@ var returnFunction = function ($, direkt, fürAlt) {
         html_filterkriterien,
         formular = 'export',
         _alt = '',
-        übergebeFilterFürDirektExport = require('./export/uebergebeFilterFuerDirektExport'),
-        uebergebeFilterFuerExportMitVorschau = require('./export/uebergebeFilterFuerExportMitVorschau');
+        übergebeFilterFürDirektExport        = require('./uebergebeFilterFuerDirektExport'),
+        uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau'),
+        ermittleVergleichsoperator           = require('./ermittleVergleichsoperator');
 
     if (fürAlt) {
         formular = 'export_alt';
@@ -95,8 +97,8 @@ var returnFunction = function ($, direkt, fürAlt) {
                 filter_objekt.DsName = $this.attr('eigenschaft');
                 filter_objekt.Feldname = $this.attr('feld');
                 // Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFürExport später auch in Kleinschrift verwandelt)
-                filter_objekt.Filterwert = window.adb.ermittleVergleichsoperator(this.value)[1];
-                filter_objekt.Vergleichsoperator = window.adb.ermittleVergleichsoperator(this.value)[0];
+                filter_objekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
+                filter_objekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
                 filterkriterien.push(filter_objekt);
             }
         });
