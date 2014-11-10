@@ -61,7 +61,7 @@ var returnFunction = function () {
         anz_ds_importiert++;
         var prozent = Math.round(anz_ds_importiert/anz_ds*100),
             rückmeldung,
-            $db = $.couch.db("artendb");
+            $db = $.couch.db('artendb');
 
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')

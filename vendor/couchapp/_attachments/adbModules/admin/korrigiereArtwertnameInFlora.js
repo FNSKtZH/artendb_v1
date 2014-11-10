@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 var returnFunction = function () {
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     $db.view('artendb/flora?include_docs=true', {
         success: function (data) {
             var korrigiert = 0,

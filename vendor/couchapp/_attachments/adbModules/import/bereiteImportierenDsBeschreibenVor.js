@@ -6,7 +6,7 @@
 var $ = require('jquery');
 
 var returnFunction = function (woher) {
-    var $db = $.couch.db("artendb"),
+    var $db = $.couch.db('artendb'),
         bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02');
     if (!window.adb.pruefeAnmeldung(woher)) {
         $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');

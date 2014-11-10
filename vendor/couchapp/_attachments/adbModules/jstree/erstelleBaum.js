@@ -7,7 +7,7 @@ var returnFunction = function () {
     var gruppe,
         gruppenbezeichnung,
         baum_erstellt = $.Deferred(),
-        $db           = $.couch.db("artendb"),
+        $db           = $.couch.db('artendb'),
         erstelleTree  = require('./erstelleTree');
     // alle Bäume ausblenden
     $(".baum").hide();

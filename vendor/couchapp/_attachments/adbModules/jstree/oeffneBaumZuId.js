@@ -5,7 +5,7 @@ var $ = require('jquery');
 
 var returnFunction = function (id) {
     // Hierarchie der id holen
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     $db.openDoc(id, {
         success: function (objekt) {
             var $filter_klasse = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),

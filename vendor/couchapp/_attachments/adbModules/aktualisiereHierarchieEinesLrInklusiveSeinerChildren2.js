@@ -10,7 +10,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         object_array = _.map(lr.rows, function (row) {
             return row.doc;
         }),
-        $db = $.couch.db("artendb");
+        $db = $.couch.db('artendb');
 
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};

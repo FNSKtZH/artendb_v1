@@ -16,7 +16,7 @@ var returnFunction = function (feldwert, feldname) {
         hash = uri.anchor(),
         uri2,
         neuer_nodetext,
-        $db = $.couch.db("artendb");
+        $db = $.couch.db('artendb');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {

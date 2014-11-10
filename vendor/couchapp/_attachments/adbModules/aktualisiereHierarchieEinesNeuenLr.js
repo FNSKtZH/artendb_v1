@@ -11,7 +11,7 @@
 var $ = require('jquery');
 
 var returnFunction = function (lr, object, aktualisiere_hierarchiefeld) {
-    var $db = $.couch.db("artendb"),
+    var $db = $.couch.db('artendb'),
         aktualisiereHierarchieEinesNeuenLr_2 = require('./aktualisiereHierarchieEinesNeuenLr_2');
 
     if (lr) {

@@ -75,7 +75,7 @@ var returnFunction = function (export_gruppen, formular) {
         gruppen = export_gruppen;
         _.each(gruppen, function (gruppe) {
             // Felder abfragen
-            var $db = $.couch.db("artendb");
+            var $db = $.couch.db('artendb');
             $db.view('artendb/felder?group_level=5&startkey=["' + gruppe + '"]&endkey=["' + gruppe + '",{},{},{},{}]', {
                 success: function (data) {
                     export_felder_arrays = _.union(export_felder_arrays, data.rows);

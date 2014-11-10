@@ -13,7 +13,7 @@ var returnFunction = function (dbs) {
         ids_von_datensätzen      = [],
         mehrfach_vorkommende_ids = [],
         ids_von_nicht_importierbaren_datensätzen = [],
-        $db = $.couch.db("artendb");
+        $db = $.couch.db('artendb');
 
     if ($dbsFelderSelected.length && $dbsIdSelected.length) {
         // beide ID's sind gewählt

@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 var returnFunction = function () {
     $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     $db.view('artendb/macromycetes?include_docs=true', {
         success: function (data) {
             var ds_zhgis = {},

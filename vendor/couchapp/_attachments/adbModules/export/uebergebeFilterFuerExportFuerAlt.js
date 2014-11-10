@@ -11,7 +11,7 @@ var returnFunction = function (gewaehlteFelderObjekt) {
         list,
         view,
         $exportieren_alt_exportieren_url = $('#exportieren_alt_exportieren_url'),
-        $db = $.couch.db("artendb"),
+        $db = $.couch.db('artendb'),
         uri = new Uri($(location).attr('href')),
         baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
 

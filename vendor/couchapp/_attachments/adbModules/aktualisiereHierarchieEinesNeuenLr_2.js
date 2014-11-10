@@ -8,7 +8,7 @@ var returnFunction = function (LR, object) {
     var object_array,
         hierarchie     = [],
         parent_object,
-        $db            = $.couch.db("artendb"),
+        $db            = $.couch.db('artendb'),
         oeffneBaumZuId = require('./jstree/oeffneBaumZuId'),
         erstelleBaum   = require('./jstree/erstelleBaum'),
         initiiereArt   = require('./initiiereArt');

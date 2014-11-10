@@ -12,7 +12,7 @@ var $ = require('jquery'),
 module.exports = function (taxonomie_name, callback) {
 
     // lr holen
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     $db.view('artendb/lr?include_docs=true', {
         success: function (lr) {
             var taxonomie_objekte,

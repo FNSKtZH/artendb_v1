@@ -51,7 +51,7 @@ var returnFunction = function () {
     $(document).bind('adb.bs_hinzugefügt', function () {
         anz_bs_importiert++;
         var prozent = Math.round(anz_bs_importiert/anzahl_beziehungssammlungen * 100),
-            $db = $.couch.db("artendb");
+            $db = $.couch.db('artendb');
 
         $("#BsImportierenProgressbar")
             .css('width', prozent +'%')

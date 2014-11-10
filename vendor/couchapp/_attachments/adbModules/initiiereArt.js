@@ -6,7 +6,7 @@ var _ = require('underscore'),
 
 var returnFunction = function (id) {
     var initiiereArt2 = require('./initiiereArt2'),
-        $db = $.couch.db("artendb"),
+        $db = $.couch.db('artendb'),
         erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
 
     $db.openDoc(id, {

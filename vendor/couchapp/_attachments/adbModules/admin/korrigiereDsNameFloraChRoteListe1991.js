@@ -7,7 +7,7 @@ var $ = require('jquery'),
 var returnFunction = function () {
     var $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung");
     $admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung.html("Daten werden analysiert...");
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     $db.view('artendb/flora?include_docs=true', {
         success: function (data) {
             var korrigiert = 0,

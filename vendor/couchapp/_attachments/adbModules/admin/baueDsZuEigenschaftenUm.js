@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 var returnFunction = function () {
     var $admin_baue_ds_zu_eigenschaften_um_rückmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rückmeldung"),
-        $db = $.couch.db("artendb");
+        $db = $.couch.db('artendb');
     $admin_baue_ds_zu_eigenschaften_um_rückmeldung.html("Daten werden analysiert...");
     $db.view('artendb/all_docs?include_docs=true', {
         success: function (data) {

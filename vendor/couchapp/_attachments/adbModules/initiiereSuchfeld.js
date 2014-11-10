@@ -4,7 +4,7 @@
 var initiiereSuchfeld2 = require('./initiiereSuchfeld2');
 
 var returnFunction = function ($) {
-    var $db = $.couch.db("artendb");
+    var $db = $.couch.db('artendb');
     // zuerst mal die benötigten Daten holen
     if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
         if (window.adb.filtere_lr) {

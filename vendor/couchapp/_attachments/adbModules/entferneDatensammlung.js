@@ -25,7 +25,7 @@ var returnFunction = function () {
     $(document).bind('adb.ds_entfernt', function () {
         anz_vorkommen_von_ds_entfernt++;
         var prozent = Math.round((anz_vorkommen_von_ds - anz_vorkommen_von_ds_entfernt) / anz_vorkommen_von_ds * 100),
-            $db = $.couch.db("artendb");
+            $db = $.couch.db('artendb');
         $("#DsImportierenProgressbar")
             .css('width', prozent +'%')
             .attr('aria-valuenow', prozent);

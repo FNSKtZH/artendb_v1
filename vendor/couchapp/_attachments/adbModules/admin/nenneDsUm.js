@@ -10,7 +10,7 @@ var returnFunction = function () {
         $admin_korrigiere_ds_name_name_nachher = $("#admin_korrigiere_ds_name_name_nachher"),
         name_vorher = $admin_korrigiere_ds_name_name_vorher.val(),
         name_nachher = $admin_korrigiere_ds_name_name_nachher.val(),
-        $db = $.couch.db("artendb");
+        $db = $.couch.db('artendb');
     
     if (!name_vorher) {
         $admin_korrigiere_ds_name_ch_rückmeldung.html("Bitte Name vorher erfassen");
