@@ -12,7 +12,7 @@ var _          = require('underscore'),
 var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssammlungen, formular) {
     var html_felder_wählen = '',
         html_filtern = '',
-        ds_typ,
+        dsTyp,
         x,
         dsbs_von_objekten = [],
         dsbs_von_objekt,
@@ -28,25 +28,25 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
     }
 
     // Eigenschaftensammlungen vorbereiten
-    // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [ds_typ, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
+    // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [dsTyp, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
     // erst mal die nicht benötigten Werte entfernen
     _.each(window.adb.ds_bs_von_objekten.rows, function (object_with_array_in_key) {
         dsbs_von_objekten.push([object_with_array_in_key.key[1], object_with_array_in_key.key[4]]);
     });
-    // Struktur von dsbs_von_objekten ist jetzt: [ds.Name, felder_objekt]
+    // Struktur von dsbs_von_objekten ist jetzt: [ds.Name, felderObjekt]
     // jetzt gibt es Mehrfacheinträge, diese entfernen
     dsbs_von_objekten = _.union(dsbs_von_objekten);
 
     if (taxonomien && datensammlungen && beziehungssammlungen) {
-        ds_typ = "Taxonomie";
+        dsTyp = "Taxonomie";
         html_felder_wählen += '<h3>Taxonomie</h3>';
         html_filtern += '<h3>Taxonomie</h3>';
     } else if (taxonomien && datensammlungen) {
-        ds_typ = "Datensammlung";
+        dsTyp = "Datensammlung";
         html_felder_wählen += '<h3>Eigenschaftensammlungen</h3>';
         html_filtern += '<h3>Eigenschaftensammlungen</h3>';
     } else {
-        ds_typ = "Beziehung";
+        dsTyp = "Beziehung";
         // bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
         // das muss auch erklärt sein
         html_felder_wählen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="show_next_hidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export' + _alt + '_bez_in_zeilen" checked="checked" name="export_bez_wie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export' + _alt + '_bez_in_feldern" name="export_bez_wie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
@@ -98,7 +98,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         // aber nur, wenn mehr als 1 Feld existieren
         if ((taxonomie.Eigenschaften && _.size(taxonomie.Eigenschaften) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
             html_felder_wählen += '<div class="checkbox"><label>';
-            html_felder_wählen += '<input class="feld_waehlen_alle_von_ds' + _alt + '" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
+            html_felder_wählen += '<input class="feld_waehlen_alle_von_ds' + _alt + '" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
             html_felder_wählen += '</div></label>';
         }
         html_felder_wählen += '<div class="felderspalte">';
@@ -108,7 +108,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         for (var x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
             // felder wählen
             html_felder_wählen += '<div class="checkbox"><label>';
-            html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+ds_typ+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
+            html_felder_wählen += '<input class="feld_waehlen" type="checkbox" DsTyp="'+dsTyp+'" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
             html_felder_wählen += '</div></label>';
             // filtern
             html_filtern += '<div class="form-group">';
@@ -122,10 +122,10 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
             if ((taxonomie.Eigenschaften && (taxonomie.Eigenschaften[x] === "boolean")) || (taxonomie.Beziehungen && (taxonomie.Beziehungen[x] === "boolean"))) {
                 // in einer checkbox darstellen
                 // readonly markiert, dass kein Wert erfasst wurde
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control" type="checkbox" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + dsTyp + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '" readonly>';
             } else {
                 // in einem input-feld darstellen
-                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + ds_typ + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
+                html_filtern += '<input class="controls form-control export_feld_filtern form-control input-sm" type="text" id="exportieren_objekte_waehlen_ds_' + ersetzeUngueltigeZeichenInIdNamen (x) + '" DsTyp="' + dsTyp + '" Eigenschaft="' + taxonomie.Name + '" Feld="' + x + '">';
             }
             html_filtern += '</div>';
         }

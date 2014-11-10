@@ -19,15 +19,16 @@ function (head, req) {
         exportObjekte = [],
         exportObjekt,
         gruppen,
-        beziehungssammlungen_aus_synonymen,
-        datensammlungen_aus_synonymen,
+        beziehungssammlungenAusSynonymen,
+        datensammlungenAusSynonymen,
         ergänzeDsBsVonSynonym_return,
-        _   = require("lists/lib/underscore"),
-        adb = require("lists/lib/artendb_listfunctions");
+        ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
+        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
+        fuegeObligatorischeFelderFuerAltEin       = require('lists/lib/fuegeObligatorischeFelderFuerAltEin');
 
     // arrays für sammlungen aus synonymen gründen
-    beziehungssammlungen_aus_synonymen = [];
-    datensammlungen_aus_synonymen = [];
+    beziehungssammlungenAusSynonymen = [];
+    datensammlungenAusSynonymen = [];
 
     while (row = getRow()) {
         objekt = row.doc;
@@ -35,11 +36,11 @@ function (head, req) {
         if (row.key[1] === 0) {
             // das ist ein Synonym
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
-            // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
+            // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
-            datensammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[0];
-            beziehungssammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[1];
+            ergänzeDsBsVonSynonym_return = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[0];
+            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[1];
 
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
@@ -48,20 +49,20 @@ function (head, req) {
             objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
             // allfällige DS und BS aus Synonymen anhängen
-            objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
+            objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
 
             // exportobjekt gründen bzw. zurücksetzen
             exportObjekt = {};
 
             // Für das ALT obligatorische Felder hinzufügen
-            exportObjekt = adb.fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt);
+            exportObjekt = fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt);
 
             // Objekt zu Exportobjekten hinzufügen
             exportObjekte.push(exportObjekt);
 
             // arrays für sammlungen aus synonymen zurücksetzen
-            beziehungssammlungen_aus_synonymen = [];
-            datensammlungen_aus_synonymen = [];
+            beziehungssammlungenAusSynonymen = [];
+            datensammlungenAusSynonymen = [];
         }
     }
 

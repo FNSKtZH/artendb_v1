@@ -10,7 +10,7 @@ function (head, req) {
 
     var row,
         objekt,
-        objekt_array = [],
+        objektArray = [],
         level = parseInt(req.query.group_level),
         filter,
         i;
@@ -34,8 +34,8 @@ function (head, req) {
             objekt.attr.id = row.key[level];
         }
         objekt.state = "closed";
-        objekt_array.push(objekt);
+        objektArray.push(objekt);
     }
 
-    send(JSON.stringify(objekt_array));
+    send(JSON.stringify(objektArray));
 }

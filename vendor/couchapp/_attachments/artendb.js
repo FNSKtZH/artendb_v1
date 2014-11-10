@@ -52,7 +52,7 @@ window.adb.generiereHtmlFürLinksZuGleicherGruppe = function (feldname, objekt_l
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, ds_typ, ds_name) {
+window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group">\n\t<label class="control-label" for="';
@@ -63,7 +63,7 @@ window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, ds_typ, ds_n
     // jetzt Link beginnen, damit das Feld klickbar wird
     html_container += '<p><a href="';
     html_container += feldwert;
-    html_container += '"><input class="controls form-control input-sm" dsTyp="'+ds_typ+'" dsName="'+ds_name+'" id="';
+    html_container += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
     html_container += feldname;
     html_container += '" name="';
     html_container += feldname;
@@ -93,7 +93,7 @@ window.adb.generiereHtmlFürObjektlink = function (feldname, feldwert, url) {
 };
 
 // generiert den html-Inhalt für Textinputs
-window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ, ds_typ, ds_name) {
+window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group">\n\t<label class="control-label" for="';
@@ -108,12 +108,12 @@ window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ,
     html_container += input_typ;
     html_container += '" value="';
     html_container += feldwert;
-    html_container += '" readonly="readonly" dsTyp="'+ds_typ+'" dsName="'+ds_name+'">\n</div>';
+    html_container += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
     return html_container;
 };
 
 // generiert den html-Inhalt für Textarea
-window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, ds_typ, ds_name) {
+window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label" for="';
@@ -124,14 +124,14 @@ window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, ds_typ, ds_
     html_container += feldname;
     html_container += '" name="';
     html_container += feldname;
-    html_container += '" readonly="readonly" dsTyp="'+ds_typ+'" dsName="'+ds_name+'">';
+    html_container += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">';
     html_container += feldwert;
     html_container += '</textarea></div>';
     return html_container;
 };
 
 // generiert den html-Inhalt für ja/nein-Felder
-window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, ds_typ, ds_name) {
+window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label" for="';
@@ -146,7 +146,7 @@ window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, ds_typ, ds_n
     if (feldwert === true) {
         html_container += ' checked="true"';
     }
-    html_container += '" readonly="readonly" disabled="disabled" dsTyp="'+ds_typ+'" dsName="'+ds_name+'"></div>';
+    html_container += '" readonly="readonly" disabled="disabled" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
     return html_container;
 };
 
@@ -605,7 +605,7 @@ window.adb.baueDsZuEigenschaftenUm = function () {
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
     'use strict';
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-    window.adb.bereiteImportieren_ds_beschreibenVor("ds");
+    require('./adbModules/import/bereiteImportierenDsBeschreibenVor')("ds");
     $("#DsImportiertVon").val(localStorage.Email);
 };
 
@@ -1340,7 +1340,7 @@ window.adb.entferneDatensammlung = function () {
     require('./adbModules/entferneDatensammlung')();
 };
 
-window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerungs_faktor) {
+window.adb.entferneDatensammlung_2 = function (dsName, guid_array, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
     setTimeout(function () {
@@ -1350,25 +1350,25 @@ window.adb.entferneDatensammlung_2 = function (ds_name, guid_array, verzögerung
                 var Objekt;
                 _.each(data.rows, function (data_row) {
                     Objekt = data_row.doc;
-                    window.adb.entferneDatensammlungAusObjekt(ds_name, Objekt);
+                    window.adb.entferneDatensammlungAusObjekt(dsName, Objekt);
                 });
             }
         });
     }, verzögerungs_faktor*40);
 };
 
-window.adb.entferneDatensammlungAusObjekt = function (ds_name, objekt) {
+window.adb.entferneDatensammlungAusObjekt = function (dsName, objekt) {
     'use strict';
     if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
         /* hat nicht funktioniert
         var datensammlung = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
-            return datensammlung.Name === ds_name;
+            return datensammlung.Name === dsName;
         });
         objekt.Eigenschaftensammlungen = _.without(Objekt.Eigenschaftensammlungen, datensammlung);
         $db = $.couch.db("artendb");
         $db.saveDoc(objekt);*/
         for (var i=0; i<objekt.Eigenschaftensammlungen.length; i++) {
-            if (objekt.Eigenschaftensammlungen[i].Name === ds_name) {
+            if (objekt.Eigenschaftensammlungen[i].Name === dsName) {
                 objekt.Eigenschaftensammlungen.splice(i,1);
                 var $db = $.couch.db("artendb");
                 $db.saveDoc(objekt);
@@ -1509,7 +1509,7 @@ window.adb.fügeBeziehungenZuObjekt = function (guid, beziehungssammlung, bezieh
 
 // übernimmt den Namen einer Datensammlung
 // öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
-window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {
+window.adb.entferneDatensammlungAusAllenObjekten = function (dsName) {
     'use strict';
     var ds_entfernt = $.Deferred(),
         anz_vorkommen_von_ds,
@@ -1517,7 +1517,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {
         $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
         $db = $.couch.db("artendb"),
         rückmeldung;
-    $db.view('artendb/ds_guid?startkey=["' + ds_name + '"]&endkey=["' + ds_name + '",{}]', {
+    $db.view('artendb/ds_guid?startkey=["' + dsName + '"]&endkey=["' + dsName + '",{}]', {
         success: function (data) {
             anz_vorkommen_von_ds = data.rows.length;
 
@@ -1552,7 +1552,7 @@ window.adb.entferneDatensammlungAusAllenObjekten = function (ds_name) {
             // Eigenschaftensammlungen entfernen
             _.each(data.rows, function (data_row) {
                 // guid und DsName übergeben
-                window.adb.entferneDatensammlungAusDokument(data_row.key[1], ds_name);
+                window.adb.entferneDatensammlungAusDokument(data_row.key[1], dsName);
             });
             ds_entfernt.resolve();
         }
@@ -1619,14 +1619,14 @@ window.adb.entferneBeziehungssammlungAusAllenObjekten = function (bs_name) {
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
-window.adb.entferneDatensammlungAusDokument = function (id, ds_name) {
+window.adb.entferneDatensammlungAusDokument = function (id, dsName) {
     'use strict';
     var $db = $.couch.db("artendb");
     $db.openDoc(id, {
         success: function (doc) {
             // Datensammlung entfernen
             doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function (datensammlung) {
-                return datensammlung.Name === ds_name
+                return datensammlung.Name === dsName
             });
             // in artendb speichern
             $db.saveDoc(doc);
@@ -1884,7 +1884,11 @@ window.adb.baueTabelleFürExportAuf = function (_alt) {
         _alt = _alt || '';
 
     if (window.adb.exportieren_objekte.length > 0) {
-        erstelleTabelle (window.adb.exportieren_objekte, "", "exportieren" + _alt + "_exportieren_tabelle", 'export_alt');
+        if (_alt) {
+            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
+        } else {
+            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle", null);
+        }
         $(".exportieren" + _alt + "_exportieren_exportieren").show();
     } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
         $("#exportieren" + _alt + "_exportieren_error_text_text")
@@ -1917,74 +1921,10 @@ window.adb.fürExportGewählteGruppen = function () {
     return export_gruppen;
 };
 
-// woher wird bloss benötigt, wenn angemeldet werden muss
-window.adb.bereiteImportieren_ds_beschreibenVor = function (woher) {
-    'use strict';
-    if (!window.adb.pruefeAnmeldung("woher")) {
-        $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
-    } else {
-        $("#DsName").focus();
-        // Daten holen, wenn nötig
-        if (window.adb.ds_von_objekten) {
-            window.adb.bereiteImportieren_ds_beschreibenVor_02();
-        } else {
-            var $db = $.couch.db("artendb");
-            $db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
-                success: function (data) {
-                    // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
-                    window.adb.ds_von_objekten = data;
-                    window.adb.bereiteImportieren_ds_beschreibenVor_02();
-                }
-            });
-        }
-    }
-};
 
-// DsNamen in Auswahlliste stellen
-// veränderbare sind normal, übrige grau
-window.adb.bereiteImportieren_ds_beschreibenVor_02 = function () {
+window.adb.bereiteImportierenDsBeschreibenVor_02 = function () {
     'use strict';
-    var html,
-        ds_namen = [];
-    // in diesem Array werden alle keys gesammelt
-    // diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-    window.adb.DsKeys = _.map(window.adb.ds_von_objekten.rows, function (row) {
-        return row.key;
-    });
-    // brauche nur drei keys
-    // email: leider gibt es Null-Werte
-    window.adb.ds_namen_eindeutig = _.map(window.adb.DsKeys, function (ds_key) {
-        return [ds_key[1], ds_key[2], ds_key[3] || "alex@gabriel-software.ch"];
-    });
-    // Objektarray reduzieren auf eindeutige Namen
-    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function (objekt) {
-        var position_in_ds_namen = _.indexOf(ds_namen, objekt[0]);
-        if (position_in_ds_namen === -1) {
-            ds_namen.push(objekt[0]);
-            return false;
-        } else {
-            return true;
-        }
-    });
-    // nach DsNamen sortieren
-    window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function (key) {
-        return key[0];
-    });
-    // mit leerer Zeile beginnen
-    html = "<option value='' waehlbar=true></option>";
-    // Namen der Datensammlungen als Optionen anfügen
-    _.each(window.adb.ds_namen_eindeutig, function (ds_name_eindeutig) {
-        // veränderbar sind nur selbst importierte und zusammenfassende
-        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
-            // veränderbare sind normal = schwarz
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
-        } else {
-            // nicht veränderbare sind grau
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
-        }
-    });
-    $("#DsWaehlen").html(html);
-    $("#DsUrsprungsDs").html(html);
+    
 };
 
 // woher wird bloss benötigt, wenn angemeldet werden muss
@@ -2334,17 +2274,17 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, 
 // Baut den Hierarchiepfad für einen Lebensraum auf
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
-window.adb.ergänzeParentZuLrHierarchie = function (objekt_array, parentGUID, Hierarchie) {
+window.adb.ergänzeParentZuLrHierarchie = function (objektArray, parentGUID, Hierarchie) {
     'use strict';
     var parent_objekt,
         hierarchie_ergänzt;
-    _.each(objekt_array, function (object) {
+    _.each(objektArray, function (object) {
         if (object._id === parentGUID) {
             parent_objekt = window.adb.erstelleHierarchieobjektAusObjekt(object);
             Hierarchie.push(parent_objekt);
             if (object.Taxonomie.Eigenschaften.Parent.GUID !== object._id) {
                 // die Hierarchie ist noch nicht zu Ende - weitermachen
-                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objekt_array, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
+                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objektArray, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
                 return Hierarchie;
             }
             // jetzt ist die Hierarchie vollständig

@@ -10,60 +10,60 @@
 
 var _ = require('underscore');
 
-var returnFunction = function (felder_objekt, felder_array) {
-    var ds_typ,
-        ds_name,
+var returnFunction = function (felderObjekt, felder_array) {
+    var dsTyp,
+        dsName,
         feldname,
         feldtyp;
 
     _.each(felder_array, function (feld_objekt) {
         if (feld_objekt.key) {
             // Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
-            ds_typ = feld_objekt.key[0];
-            ds_name = feld_objekt.key[1];
+            dsTyp = feld_objekt.key[0];
+            dsName = feld_objekt.key[1];
             feldname = feld_objekt.key[2];
             feldtyp = feld_objekt.key[3];
-            if (ds_typ === "Objekt") {
+            if (dsTyp === "Objekt") {
                 // das ist eine Eigenschaft des Objekts
                 //FelderObjekt[FeldName] = null;    // NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
-            } else if (window.adb.fasseTaxonomienZusammen && ds_typ === "Taxonomie") {
+            } else if (window.adb.fasseTaxonomienZusammen && dsTyp === "Taxonomie") {
                 // Datensammlungen werden zusammengefasst. DsTyp muss "Taxonomie(n)" heissen und die Felder aller Taxonomien sammeln
                 // Wenn Datensammlung noch nicht existiert, gründen
-                if (!felder_objekt["Taxonomie(n)"]) {
-                    felder_objekt["Taxonomie(n)"] = {};
-                    felder_objekt["Taxonomie(n)"].Typ = ds_typ;
-                    felder_objekt["Taxonomie(n)"].Name = "Taxonomie(n)";
-                    felder_objekt["Taxonomie(n)"].Eigenschaften = {};
+                if (!felderObjekt["Taxonomie(n)"]) {
+                    felderObjekt["Taxonomie(n)"] = {};
+                    felderObjekt["Taxonomie(n)"].Typ = dsTyp;
+                    felderObjekt["Taxonomie(n)"].Name = "Taxonomie(n)";
+                    felderObjekt["Taxonomie(n)"].Eigenschaften = {};
                 }
                 // Feld ergänzen
                 // als Feldwert den Feldtyp übergeben
-                felder_objekt["Taxonomie(n)"].Eigenschaften[feldname] = feldtyp;
-            } else if (ds_typ === "Datensammlung" || ds_typ === "Taxonomie") {
+                felderObjekt["Taxonomie(n)"].Eigenschaften[feldname] = feldtyp;
+            } else if (dsTyp === "Datensammlung" || dsTyp === "Taxonomie") {
                 // Wenn Datensammlung oder Taxonomie noch nicht existiert, gründen
-                if (!felder_objekt[ds_name]) {
-                    felder_objekt[ds_name] = {};
-                    felder_objekt[ds_name].Typ = ds_typ;
-                    felder_objekt[ds_name].Name = ds_name;
-                    felder_objekt[ds_name].Eigenschaften = {};
+                if (!felderObjekt[dsName]) {
+                    felderObjekt[dsName] = {};
+                    felderObjekt[dsName].Typ = dsTyp;
+                    felderObjekt[dsName].Name = dsName;
+                    felderObjekt[dsName].Eigenschaften = {};
                 }
                 // Feld ergänzen
                 // als Feldwert den Feldtyp übergeben
-                felder_objekt[ds_name].Eigenschaften[feldname] = feldtyp;
-            } else if (ds_typ === "Beziehung") {
+                felderObjekt[dsName].Eigenschaften[feldname] = feldtyp;
+            } else if (dsTyp === "Beziehung") {
                 // Wenn Beziehungstyp noch nicht existiert, gründen
-                if (!felder_objekt[ds_name]) {
-                    felder_objekt[ds_name] = {};
-                    felder_objekt[ds_name].Typ = ds_typ;
-                    felder_objekt[ds_name].Name = ds_name;
-                    felder_objekt[ds_name].Beziehungen = {};
+                if (!felderObjekt[dsName]) {
+                    felderObjekt[dsName] = {};
+                    felderObjekt[dsName].Typ = dsTyp;
+                    felderObjekt[dsName].Name = dsName;
+                    felderObjekt[dsName].Beziehungen = {};
                 }
                 // Feld ergänzen
                 // als Feldwert den Feldtyp übergeben
-                felder_objekt[ds_name].Beziehungen[feldname] = feldtyp;
+                felderObjekt[dsName].Beziehungen[feldname] = feldtyp;
             }
         }
     });
-    return felder_objekt;
+    return felderObjekt;
 };
 
 module.exports = returnFunction;

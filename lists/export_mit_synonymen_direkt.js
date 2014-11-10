@@ -11,38 +11,41 @@ function (head, req) {
 
     var row,
         objekt,
-        export_objekte = [],
-        ü_var = {
+        exportObjekte = [],
+        ueVar = {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
             felder: [],
             nur_objekte_mit_eigenschaften: true,
             bez_in_zeilen: true
         },
-        filterkriterien_objekt = {"filterkriterien": []},
-        felder_objekt,
-        objekt_hinzufügen,
-        beziehungssammlungen_aus_synonymen,
-        datensammlungen_aus_synonymen,
+        objektHinzufuegen,
+        beziehungssammlungenAusSynonymen,
+        datensammlungenAusSynonymen,
         ergänzeDsBsVonSynonym_return,
-        _ = require("lists/lib/underscore"),
-        adb = require("lists/lib/artendb_listfunctions");
+        erstelleExportString                      = require('lists/lib/erstelleExportString'),
+        beurteileObInformationenEnthaltenSind     = require('lists/lib/beurteileObInformationenEnthaltenSind'),
+        pruefeObObjektKriterienErfuellt           = require('lists/lib/pruefeObObjektKriterienErfuellt'),
+        ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
+        holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
+        ergaenzeExportobjekteUmExportobjekt       = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
 
     // übergebene Variablen extrahieren
-    ü_var = adb.holeÜbergebeneVariablen(req.query);
+    ueVar = holeUebergebeneVariablen(req.query);
 
     // arrays für sammlungen aus synonymen gründen
-    beziehungssammlungen_aus_synonymen = [];
-    datensammlungen_aus_synonymen = [];
+    beziehungssammlungenAusSynonymen = [];
+    datensammlungenAusSynonymen = [];
 
     while (row = getRow()) {
         objekt = row.doc;
 
         // Prüfen, ob Gruppen übergeben wurden
         // ist hier nötig, weil nicht pro gewählte Gruppe eine list aufgerufen werden kann
-        if (ü_var.gruppen && ü_var.gruppen.length > 0) {
+        if (ueVar.gruppen && ueVar.gruppen.length > 0) {
             // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
-            if (ü_var.gruppen.indexOf(objekt.Gruppe) === -1) {
+            if (ueVar.gruppen.indexOf(objekt.Gruppe) === -1) {
                 // diese Gruppe wollen wir nicht > weiter mit nächstem objekt
                 continue;
             }
@@ -51,11 +54,11 @@ function (head, req) {
         if (row.key[1] === 0) {
             // das ist ein Synonym
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
-            // nämlich: datensammlungen_aus_synonymen und beziehungssammlungen_aus_synonymen
+            // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonym_return = adb.ergänzeDsBsVonSynonym(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
-            datensammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[0];
-            beziehungssammlungen_aus_synonymen = ergänzeDsBsVonSynonym_return[1];
+            ergänzeDsBsVonSynonym_return = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[0];
+            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[1];
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
             // sicherstellen, dass DS und BS existieren
@@ -63,29 +66,29 @@ function (head, req) {
             objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
             // allfällige DS und BS aus Synonymen anhängen
-            objekt = adb.ergänzeObjektUmInformationenVonSynonymen(objekt, datensammlungen_aus_synonymen, beziehungssammlungen_aus_synonymen);
+            objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
 
             // prüfen, ob das Objekt die Kriterien erfüllt
-            objekt_hinzufügen = adb.prüfeObObjektKriterienErfüllt(objekt, ü_var.felder, ü_var.filterkriterien, ü_var.fasseTaxonomienZusammen, ü_var.nur_objekte_mit_eigenschaften);
+            objektHinzufuegen = pruefeObObjektKriterienErfuellt(objekt, ueVar.felder, ueVar.filterkriterien, ueVar.fasseTaxonomienZusammen, ueVar.nur_objekte_mit_eigenschaften);
 
-            if (ü_var.nur_objekte_mit_eigenschaften && objekt_hinzufügen && ü_var.filterkriterien.length === 0) {
+            if (ueVar.nur_objekte_mit_eigenschaften && objektHinzufuegen && ueVar.filterkriterien.length === 0) {
                 // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
                 // also müssen wir bei hinzuzufügenden Objekten durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
-                // wenn ja und Feld aus DS/BS: objekt_hinzufügen = true
+                // wenn ja und Feld aus DS/BS: objektHinzufuegen = true
                 // wenn ein Filter gesetzt wurde, wird eh nur angezeigt, wo daten sind - also ignorieren
-                objekt_hinzufügen = adb.beurteileObInformationenEnthaltenSind(objekt, ü_var.felder, ü_var.filterkriterien);
+                objektHinzufuegen = beurteileObInformationenEnthaltenSind(objekt, ueVar.felder, ueVar.filterkriterien);
             }
 
-            if (objekt_hinzufügen) {
+            if (objektHinzufuegen) {
                 // alle Kriterien sind erfüllt
                 // jetzt das Exportobjekt aufbauen
-                export_objekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, ü_var.felder, ü_var.bez_in_zeilen, ü_var.fasseTaxonomienZusammen, ü_var.filterkriterien, export_objekte);
+                exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bez_in_zeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
             }
 
             // arrays für sammlungen aus synonymen zurücksetzen
-            beziehungssammlungen_aus_synonymen = [];
-            datensammlungen_aus_synonymen = [];
+            beziehungssammlungenAusSynonymen = [];
+            datensammlungenAusSynonymen = [];
         }
     }
-    send(adb.erstelleExportString(export_objekte));
+    send(erstelleExportString(exportObjekte));
 }

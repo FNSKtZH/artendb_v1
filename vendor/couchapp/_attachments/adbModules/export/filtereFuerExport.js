@@ -12,7 +12,7 @@ var returnFunction = function (direkt, fürAlt) {
     // Array von Filterobjekten bilden
     var filterkriterien = [],
         // Objekt bilden, in das die Filterkriterien integriert werden, da ein array schlecht über die url geliefert wird
-        filterkriterien_objekt = {},
+        filterkriterienObjekt = {},
         filter_objekt,
         gruppen_array = [],
         gruppen = "",
@@ -105,7 +105,7 @@ var returnFunction = function (direkt, fürAlt) {
     }
 
     // den array dem objekt zuweisen
-    filterkriterien_objekt.filterkriterien = filterkriterien;
+    filterkriterienObjekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
     $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function () {
@@ -185,11 +185,11 @@ var returnFunction = function (direkt, fürAlt) {
 
     // jetzt das filterObjekt übergeben
     if (direkt === "direkt") {
-        übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt);
     } if (fürAlt) {
         window.adb.übergebeFilterFürExportFürAlt(gewählte_felder_objekt);
     } else {
-        uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt);
     }
 };
 

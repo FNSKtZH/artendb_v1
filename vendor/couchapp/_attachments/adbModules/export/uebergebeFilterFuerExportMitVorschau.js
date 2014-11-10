@@ -5,7 +5,7 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 // braucht $ wegen .alert
-var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt) {
     // Alle Felder abfragen
     var fTz = "false",
         anz_gruppen_abgefragt = 0,
@@ -24,10 +24,10 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
     _.each(gruppen_array, function (gruppe) {
         if ($("#exportieren_synonym_infos").prop('checked')) {
             listName = "artendb/export_mit_synonymen";
-            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         } else {
             listName = "artendb/export";
-            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterien_objekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
         if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
             // prüfen, ob mindestens ein Feld aus ds gewählt ist

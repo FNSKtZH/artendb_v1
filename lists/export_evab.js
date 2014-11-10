@@ -16,12 +16,12 @@ function (head, req) {
 
     var row,
         Objekt,
-        exportObjekte = [],
+        exportObjekte      = [],
         exportObjekt,
-        dsTaxonomie = {},
+        dsTaxonomie        = {},
         floraStatusCodiert,
-        _ = require("lists/lib/underscore"),
-        _a = require("lists/lib/artendb_listfunctions");
+        _                  = require("lists/lib/underscore"),
+        codiereFloraStatus = require('lists/lib/codiereFloraStatus');
 
     while (row = getRow()) {
         Objekt = row.doc;
@@ -55,12 +55,12 @@ function (head, req) {
             exportObjekt.status = "A";
 
             // Datensammlung "ZH GIS" holen
-            var ds_zh_gis = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
+            var dsZhGis = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
                 return ds.Name === "ZH GIS";
             }) || {};
             
-            if (ds_zh_gis && ds_zh_gis.Eigenschaften && ds_zh_gis.Eigenschaften["GIS-Layer"]) {
-                exportObjekt.klasse = ds_zh_gis.Eigenschaften["GIS-Layer"].substring(0, 50);    // klasse darf max. 50 Zeichen lang sein
+            if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften["GIS-Layer"]) {
+                exportObjekt.klasse = dsZhGis.Eigenschaften["GIS-Layer"].substring(0, 50);    // klasse darf max. 50 Zeichen lang sein
             }
             break;
 
@@ -68,7 +68,7 @@ function (head, req) {
             // Felder aktualisieren, wo Daten vorhanden
             if (dsTaxonomie.Status) {
                 // Status codieren
-                floraStatusCodiert = _a.codiereFloraStatus(dsTaxonomie.Status);
+                floraStatusCodiert = codiereFloraStatus(dsTaxonomie.Status);
                 if (floraStatusCodiert) exportObjekt.status = floraStatusCodiert;
             }
             // GIS-Layer ist bei Flora immer Flora

@@ -16,8 +16,7 @@ function (head, req) {
         dsArtwert,
         dsKef,
         dsJahresarten,
-        _ = require("lists/lib/underscore"),
-        _a = require("lists/lib/artendb_listfunctions");
+        erstelleExportString = require('lists/lib/erstelleExportString');
 
     // list wird mit view flora abgerufen
     while (row = getRow()) {
@@ -92,5 +91,5 @@ function (head, req) {
         return _.isEmpty(object);
     });
 
-    send(_a.erstelleExportString(exportObjekte_ohne_leere));
+    send(erstelleExportString(exportObjekte_ohne_leere));
 }

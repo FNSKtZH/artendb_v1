@@ -5,7 +5,7 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 var returnFunction = function (that) {
-    var ds_name        = that.value,
+    var dsName        = that.value,
         wählbar        = false,
         $DsAnzDs       = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
@@ -29,10 +29,10 @@ var returnFunction = function (that) {
         });
         $DsAnzDs.html("");
         $DsAnzDs_label.html("");
-        if (ds_name) {
+        if (dsName) {
             _.each(window.adb.ds_von_objekten.rows, function (ds_von_objekten_row) {
-                if (ds_von_objekten_row.key[1] === ds_name) {
-                    $DsName.val(ds_name);
+                if (ds_von_objekten_row.key[1] === dsName) {
+                    $DsName.val(dsName);
                     _.each(ds_von_objekten_row.key[4], function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
                             $("#DsUrsprungsDs").val(feldwert);

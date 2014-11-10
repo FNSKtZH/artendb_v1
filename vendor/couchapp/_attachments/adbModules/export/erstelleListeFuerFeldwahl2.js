@@ -6,7 +6,7 @@ var _ = require('underscore'),
 
 // braucht $ wegen .alert
 var returnFunction = function (export_felder_arrays, formular) {
-    var felder_objekt = {},
+    var felderObjekt = {},
         hinweis_taxonomien,
         taxonomien,
         datensammlungen,
@@ -32,11 +32,11 @@ var returnFunction = function (export_felder_arrays, formular) {
     });
 
     // Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
-    felder_objekt = ergaenzeFelderObjekt(felder_objekt, export_felder_arrays);
+    felderObjekt = ergaenzeFelderObjekt(felderObjekt, export_felder_arrays);
 
     // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
-    if (felder_objekt["Taxonomie(n)"] && felder_objekt["Taxonomie(n)"].Eigenschaften) {
-        felder_objekt["Taxonomie(n)"].Eigenschaften = window.adb.sortKeysOfObject(felder_objekt["Taxonomie(n)"].Eigenschaften);
+    if (felderObjekt["Taxonomie(n)"] && felderObjekt["Taxonomie(n)"].Eigenschaften) {
+        felderObjekt["Taxonomie(n)"].Eigenschaften = window.adb.sortKeysOfObject(felderObjekt["Taxonomie(n)"].Eigenschaften);
     }
 
     // Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
@@ -44,7 +44,7 @@ var returnFunction = function (export_felder_arrays, formular) {
     datensammlungen = [];
     beziehungssammlungen = [];
 
-    _.each(felder_objekt, function (ds) {
+    _.each(felderObjekt, function (ds) {
         if (typeof ds === "object" && ds.Typ) {
             // das ist Datensammlung oder Taxonomie
             if (ds.Typ === "Datensammlung") {

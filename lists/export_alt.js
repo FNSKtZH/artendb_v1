@@ -21,15 +21,12 @@ function (head, req) {
             felder: [],
             bez_in_zeilen: true
         },
-        filterkriterien_objekt = {"filterkriterien": []},
-        felder_objekt,
-        objekt_hinzufügen,
         exportObjekt,
-        _   = require ("lists/lib/underscore"),
-        adb = require ("lists/lib/artendb_listfunctions");
+        holeUebergebeneVariablen            = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeExportobjekteUmExportobjekt = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
 
     // übergebene Variablen extrahieren
-    üVar = adb.holeÜbergebeneVariablen(req.query);
+    üVar = holeUebergebeneVariablen(req.query);
     // Wichtige überschreiben:
     üVar.nur_objekte_mit_eigenschaften = false;
     üVar.filterkriterien = [];
@@ -42,7 +39,7 @@ function (head, req) {
 
         // Exportobjekte um das Objekt ergänzen
         // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-        exportObjekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+        exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
     }
 
     send(JSON.stringify(exportObjekte));
