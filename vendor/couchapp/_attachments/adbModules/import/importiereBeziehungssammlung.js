@@ -4,10 +4,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // $ wird benötigt wegen .alert
-var returnFunction = function ($) {
+var returnFunction = function () {
     var anzahl_felder,
         anzahl_beziehungssammlungen = window.adb.bsDatensätze.length,
         anz_bs_importiert = 0,

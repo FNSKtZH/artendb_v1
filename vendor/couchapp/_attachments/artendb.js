@@ -1216,9 +1216,9 @@ window.adb.handleTextareaKeyupFocus = function () {
     window.adb.fitTextareaToContent(this.id);
 };
 
+// wird in index.html benutzt
 window.adb.importiereDatensammlung = function () {
-    'use strict';
-    require('./adbModules/importiereDatensammlung') ($);
+    require('./adbModules/import/importiereDatensammlung')();
 };
 
 // wird momentan nicht benutzt
@@ -1286,9 +1286,9 @@ window.adb.queryChanges = function (options) {
     });
 };
 
+// wird in index.html benutzt
 window.adb.importiereBeziehungssammlung = function () {
-    'use strict';
-    require('./adbModules/importiereBeziehungssammlung') ($);
+    require('./adbModules/import/importiereBeziehungssammlung')();
 };
 
 window.adb.bereiteBeziehungspartnerFürImportVor = function () {

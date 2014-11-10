@@ -7,7 +7,7 @@ var returnFunction = function ($) {
         gruppenbezeichnung,
         baum_erstellt = $.Deferred(),
         $db = $.couch.db("artendb"),
-        erstelleTree = require('./erstelleTree');
+        erstelleTree = require('./jstree/erstelleTree');
     // alle Bäume ausblenden
     $(".baum").hide();
     // alle Beschriftungen ausblenden
@@ -47,7 +47,7 @@ var returnFunction = function ($) {
         }
     });
 
-    $.when(erstelleTree($)).then(function () {
+    $.when(erstelleTree()).then(function () {
         baum_erstellt.resolve();
     });
 

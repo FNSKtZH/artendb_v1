@@ -4,10 +4,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // $ wird benötigt wegen .modal
-var returnFunction = function ($) {
+var returnFunction = function () {
     var datensammlung,
         anzahl_felder,
         anz_ds = window.adb.dsDatensätze.length,

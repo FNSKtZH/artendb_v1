@@ -1,7 +1,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var returnFunction = function ($, level, filter, gruppe, id) {
+var $ = require('jquery');
+
+var returnFunction = function (level, filter, gruppe, id) {
     var startkey,
         // flag, um mitzuliefern, ob die id angezeigt werden soll
         id2 = false,

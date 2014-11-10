@@ -1,15 +1,18 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var returnFunction = function ($) {
+var $ = require('jquery');
+
+var returnFunction = function () {
     var level,
         gruppe,
         filter,
         id,
         jstree_erstellt = $.Deferred(),
         holeDatenUrlFuerTreeOberstesLevel = require('./holeDatenUrlFuerTreeOberstesLevel'),
-        holeDatenUrlFuerTreeUntereLevel = require('./holeDatenUrlFuerTreeUntereLevel'),
-        initiiereSuchfeld = require('./initiiereSuchfeld');
+        holeDatenUrlFuerTreeUntereLevel   = require('./holeDatenUrlFuerTreeUntereLevel'),
+        initiiereSuchfeld                 = require('../initiiereSuchfeld'),
+        initiiereArt                      = require('../initiiereArt');
 
     $("#tree" + window.adb.Gruppe).jstree({
         "json_data": {
@@ -17,7 +20,7 @@ var returnFunction = function ($) {
                 type: 'GET',
                 url: function (node) {
                     if (node === -1) {
-                        return holeDatenUrlFuerTreeOberstesLevel($);
+                        return holeDatenUrlFuerTreeOberstesLevel();
                     }
                     level = parseInt(node.attr('level'), 10) + 1;
                     gruppe = node.attr('gruppe');
@@ -28,7 +31,7 @@ var returnFunction = function ($) {
                         filter = "";
                         id = node.attr('id');
                     }
-                    return holeDatenUrlFuerTreeUntereLevel($, level, filter, gruppe, id);
+                    return holeDatenUrlFuerTreeUntereLevel(level, filter, gruppe, id);
                 },
                 success: function (data) {
                     return data;
@@ -57,8 +60,7 @@ var returnFunction = function ($) {
         },
         "plugins" : ["ui", "themes", "json_data", "sort"]
     }).bind("select_node.jstree", function (e, data) {
-        var node = data.rslt.obj,
-            initiiereArt = require('./initiiereArt');
+        var node = data.rslt.obj;
         $.jstree._reference(node).open_node(node);
         if (node.attr("id")) {
             // verhindern, dass bereits offene Seiten nochmals geöffnet werden
