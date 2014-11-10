@@ -459,7 +459,7 @@ window.adb.handleDsZusammenfassendChange = function () {
 // Wenn BsWählen geändert wird
 // wird in index.html benutzt
 window.adb.handleBsWählenChange = function () {
-    require('./adbModules/handleBsWaehlenChange')(this);
+    require('./adbModules/import/handleBsWaehlenChange')(this);
 };
 
 // wenn DsFile geändert wird
@@ -690,7 +690,7 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
 // wenn DsWählen geändert wird
 // wird in index.html benutzt
 window.adb.handleDsWählenChange = function () {
-    require('./adbModules/handleDsWaehlenChange')(this);
+    require('./adbModules/import/handleDsWaehlenChange')(this);
 };
 
 // wenn DsName geändert wird
@@ -876,7 +876,7 @@ window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
 // ist nötig, weil index.html nicht requiren kann
 // wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
-    require('./adbModules/handleExportFeldFilternChange')(this);
+    require('./adbModules/export/handleExportFeldFilternChange')(this);
 };
 
 // wenn exportieren_exportieren angezeigt wird
