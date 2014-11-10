@@ -10,7 +10,7 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (lr, object, aktualisiere_hierarchiefeld) {
+module.exports = function (lr, object, aktualisiere_hierarchiefeld) {
     var $db = $.couch.db('artendb'),
         aktualisiereHierarchieEinesNeuenLr_2 = require('./aktualisiereHierarchieEinesNeuenLr_2');
 
@@ -24,5 +24,3 @@ var returnFunction = function (lr, object, aktualisiere_hierarchiefeld) {
         });
     }
 };
-
-module.exports = returnFunction;

@@ -8,9 +8,9 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (bsName) {
-    var bs_entfernt = $.Deferred(),
-        anz_vorkommen_von_bs_entfernt = 0,
-        anz_vorkommen_von_bs,
+    var bsEntfernt = $.Deferred(),
+        anzVorkommenVonBsEntfernt = 0,
+        anzVorkommenVonBs,
         $importieren_bs_ds_beschreiben_hinweis = $("#importieren_bs_ds_beschreiben_hinweis"),
         $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text"),
         $db = $.couch.db('artendb'),
@@ -18,10 +18,10 @@ module.exports = function (bsName) {
 
     $db.view('artendb/bs_guid?startkey=["' + bsName + '"]&endkey=["' + bsName + '",{}]', {
         success: function (data) {
-            anz_vorkommen_von_bs = data.rows.length;
+            anzVorkommenVonBs = data.rows.length;
             // listener einrichten, der meldet, wenn ein Datensatz entfernt wurde
-            $(document).bind('adb.bs_entfernt', function () {
-                anz_vorkommen_von_bs_entfernt++;
+            $(document).bind('adb.bsEntfernt', function () {
+                anzVorkommenVonBsEntfernt++;
                 $importieren_bs_ds_beschreiben_hinweis
                     .removeClass("alert-success")
                     .removeClass("alert-danger")
@@ -31,7 +31,7 @@ module.exports = function (bsName) {
                 $('html, body').animate({
                     scrollTop: $importieren_bs_ds_beschreiben_hinweis_text.offset().top
                 }, 2000);
-                if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
+                if (anzVorkommenVonBsEntfernt === anzVorkommenVonBs) {
                     // die Indexe aktualisieren
                     $db.view('artendb/lr', {
                         success: function () {
@@ -55,8 +55,8 @@ module.exports = function (bsName) {
                 // guid und DsName übergeben
                 window.adb.entferneBeziehungssammlungAusDokument(data_row.key[1], bsName);
             });
-            bs_entfernt.resolve();
+            bsEntfernt.resolve();
         }
     });
-    return bs_entfernt.promise();
+    return bsEntfernt.promise();
 };

@@ -3,19 +3,19 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs) {
+module.exports = function (mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs) {
     var $importieren_dbs_ids_identifizieren_hinweis_text = $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_hinweis_text");
     $importieren_dbs_ids_identifizieren_hinweis_text.alert();
     // rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
-    if (mehrfach_vorkommende_ids.length && dbs !== "Bs") {
+    if (mehrfachVorkommendeIds.length && dbs !== "Bs") {
         $importieren_dbs_ids_identifizieren_hinweis_text
-            .html("Die folgenden ID's kommen mehrfach vor: " + mehrfach_vorkommende_ids + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen")
+            .html("Die folgenden ID's kommen mehrfach vor: " + mehrfachVorkommendeIds + "<br>Bitte entfernen oder korrigieren Sie die entsprechenden Zeilen")
             .removeClass("alert-info")
             .removeClass("alert-success")
             .addClass("alert-danger");
-    } else if (window.adb.ZuordbareDatensätze.length < ids_von_datensätzen.length) {
+    } else if (window.adb.zuordbareDatensaetze.length < idsVonDatensaetzen.length) {
         // rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden
-        if (window.adb.ZuordbareDatensätze.length > 0) {
+        if (window.adb.zuordbareDatensaetze.length > 0) {
             // ein Teil der Datensätze kann importiert werden. Als Hinweis melden
             $importieren_dbs_ids_identifizieren_hinweis_text
                 .removeClass("alert-danger")
@@ -29,9 +29,9 @@ var returnFunction = function (mehrfach_vorkommende_ids, ids_von_datensätzen, i
                 .addClass("alert-danger");
         }
         if (dbs === "Bs") {
-            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Beziehungen von " + ids_von_datensätzen.length + " Arten:<br>Beziehungen von " + ids_von_datensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + ids_von_nicht_importierbaren_datensätzen.length + " Arten mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + ids_von_nicht_importierbaren_datensätzen);
+            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Beziehungen von " + idsVonDatensaetzen.length + " Arten:<br>Beziehungen von " + idsVonDatensaetzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.zuordbareDatensaetze.length + " können zugeordnet und importiert werden<br>ACHTUNG: Beziehungen von " + idsVonNichtImportierbarenDatensaetzen.length + " Arten mit den folgenden Werten im Feld \"" + window.adb[dbs + "FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + idsVonNichtImportierbarenDatensaetzen);
         } else {
-            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Datensätze:<br>" + ids_von_datensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + ids_von_nicht_importierbaren_datensätzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window.adb[dbs+"FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + ids_von_nicht_importierbaren_datensätzen);
+            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Datensätze:<br>" + idsVonDatensaetzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.zuordbareDatensaetze.length + " können zugeordnet und importiert werden<br>ACHTUNG: " + idsVonNichtImportierbarenDatensaetzen.length + " Datensätze mit den folgenden Werten im Feld \"" + window.adb[dbs + "FelderId"] + "\" können NICHT zugeordnet und importiert werden: " + idsVonNichtImportierbarenDatensaetzen);
         }
         $("#" + dbs + "Importieren").show();
         $("#" + dbs + "Entfernen").show();
@@ -42,9 +42,9 @@ var returnFunction = function (mehrfach_vorkommende_ids, ids_von_datensätzen, i
             .removeClass("alert-danger")
             .addClass("alert-success");
         if (dbs === "Bs") {
-            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase()+"Datensätze"].length + " Beziehungen von " + ids_von_datensätzen.length + " Arten:<br>Beziehungen von " + ids_von_datensätzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>Beziehungen von " + window.adb.ZuordbareDatensätze.length + " Arten können zugeordnet und importiert werden");
+            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Beziehungen von " + idsVonDatensaetzen.length + " Arten:<br>Beziehungen von " + idsVonDatensaetzen.length + " Arten enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>Beziehungen von " + window.adb.zuordbareDatensaetze.length + " Arten können zugeordnet und importiert werden");
         } else {
-            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Datensätze:<br>" + ids_von_datensätzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.ZuordbareDatensätze.length + " können zugeordnet und importiert werden");
+            $importieren_dbs_ids_identifizieren_hinweis_text.html("Die Importtabelle enthält " + window.adb[dbs.toLowerCase() + "Datensätze"].length + " Datensätze:<br>" + idsVonDatensaetzen.length + " enthalten einen Wert im Feld \"" + window.adb[dbs + "FelderId"] + "\"<br>" + window.adb.zuordbareDatensaetze.length + " können zugeordnet und importiert werden");
         }
         $("#" + dbs + "Importieren").show();
         $("#" + dbs + "Entfernen").show();
@@ -54,5 +54,3 @@ var returnFunction = function (mehrfach_vorkommende_ids, ids_von_datensätzen, i
         scrollTop: $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_collapse").offset().top
     }, 2000);
 };
-
-module.exports = returnFunction;

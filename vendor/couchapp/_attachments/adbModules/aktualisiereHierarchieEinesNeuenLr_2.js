@@ -4,7 +4,7 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-var returnFunction = function (LR, object) {
+module.exports = function (LR, object) {
     var object_array,
         hierarchie     = [],
         parent_object,
@@ -47,5 +47,3 @@ var returnFunction = function (LR, object) {
         }
     });
 };
-
-module.exports = returnFunction;

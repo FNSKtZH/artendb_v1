@@ -8,20 +8,20 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (dsName) {
-    var ds_entfernt = $.Deferred(),
-        anz_vorkommen_von_ds,
-        anz_vorkommen_von_ds_entfernt = 0,
+    var dsEntfernt = $.Deferred(),
+        anzVorkommenVonDs,
+        anzVorkommenVonDsEntfernt = 0,
         $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
         $db = $.couch.db('artendb'),
         rueckmeldung;
 
     $db.view('artendb/ds_guid?startkey=["' + dsName + '"]&endkey=["' + dsName + '",{}]', {
         success: function (data) {
-            anz_vorkommen_von_ds = data.rows.length;
+            anzVorkommenVonDs = data.rows.length;
 
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-            $(document).bind('adb.ds_entfernt', function () {
-                anz_vorkommen_von_ds_entfernt++;
+            $(document).bind('adb.dsEntfernt', function () {
+                anzVorkommenVonDsEntfernt++;
                 rueckmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
                 $importieren_ds_ds_beschreiben_hinweis
                     .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
@@ -29,7 +29,7 @@ module.exports = function (dsName) {
                 $('html, body').animate({
                     scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
                 }, 2000);
-                if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
+                if (anzVorkommenVonDsEntfernt === anzVorkommenVonDs) {
                     // die Indexe aktualisieren
                     $db.view('artendb/lr', {
                         success: function () {
@@ -52,8 +52,8 @@ module.exports = function (dsName) {
                 // guid und DsName übergeben
                 window.adb.entferneDatensammlungAusDokument(data_row.key[1], dsName);
             });
-            ds_entfernt.resolve();
+            dsEntfernt.resolve();
         }
     });
-    return ds_entfernt.promise();
+    return dsEntfernt.promise();
 };

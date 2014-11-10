@@ -7,12 +7,12 @@ var _                               = require('underscore'),
     $                               = require('jquery'),
     meldeErfolgVonIdIdentifikation2 = require('./meldeErfolgVonIdIdentifikation2');
 
-var returnFunction = function (dbs) {
+module.exports = function (dbs) {
     var $dbsFelderSelected       = $("#" + dbs + "Felder option:selected"),
         $dbsIdSelected           = $("#" + dbs + "Id option:selected"),
-        ids_von_datensätzen      = [],
-        mehrfach_vorkommende_ids = [],
-        ids_von_nicht_importierbaren_datensätzen = [],
+        idsVonDatensaetzen       = [],
+        mehrfachVorkommendeIds = [],
+        idsVonNichtImportierbarenDatensaetzen = [],
         $db = $.couch.db('artendb');
 
     if ($dbsFelderSelected.length && $dbsIdSelected.length) {
@@ -21,7 +21,7 @@ var returnFunction = function (dbs) {
         window.adb.DsId = $dbsIdSelected.val();
         window.adb[dbs + "Id"] = $dbsIdSelected.val();
         // das hier wird später noch für den Inmport gebraucht > globale Variable machen
-        window.adb.ZuordbareDatensätze = [];
+        window.adb.zuordbareDatensaetze = [];
         $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_hinweis_text")
             .alert()
             .html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...")
@@ -39,28 +39,29 @@ var returnFunction = function (dbs) {
         if (window.adb.DsId === "guid") {
             $db.view('artendb/all_docs', {
                 success: function (data) {
-                    var name_des_id_felds = window.adb[dbs+"FelderId"];
+                    var name_des_id_felds = window.adb[dbs + "FelderId"],
+                        zugehoerigesObjekt;
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function (import_datensatz) {
-                        if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                        if (idsVonDatensaetzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
-                            ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
+                            idsVonDatensaetzen.push(import_datensatz[name_des_id_felds]);
                             // prüfen, ob die ID zugeordnet werden kann
-                            var zugehöriges_objekt = _.find(data.rows, function (objekt_row) {
+                            zugehoerigesObjekt = _.find(data.rows, function (objekt_row) {
                                 return objekt_row.key === import_datensatz[name_des_id_felds];
                             });
-                            if (zugehöriges_objekt) {
-                                window.adb.ZuordbareDatensätze.push(import_datensatz[name_des_id_felds]);
+                            if (zugehoerigesObjekt) {
+                                window.adb.zuordbareDatensaetze.push(import_datensatz[name_des_id_felds]);
                             } else {
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-                                ids_von_nicht_importierbaren_datensätzen.push(import_datensatz[name_des_id_felds]);
+                                idsVonNichtImportierbarenDatensaetzen.push(import_datensatz[name_des_id_felds]);
                             }
                         } else {
                             // diese ID wurden schon hinzugefügt > mehrfach!
-                            mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
+                            mehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-                    meldeErfolgVonIdIdentifikation2(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
+                    meldeErfolgVonIdIdentifikation2(mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs);
                 },
                 error: function () {
                     console.log('meldeErfolgVonIdentifikation: keine Daten erhalten');
@@ -69,31 +70,32 @@ var returnFunction = function (dbs) {
         } else {
             $db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.DsId + '"]&endkey=["' + window.adb.DsId + '",{},{}]', {
                 success: function (data) {
-                    var name_des_id_felds = window.adb[dbs+"FelderId"];
+                    var name_des_id_felds = window.adb[dbs + "FelderId"],
+                        objekt;
                     // durch die importierten Datensätze loopen
-                    _.each(window.adb[dbs.toLowerCase()+"Datensätze"], function (import_datensatz) {
-                        if (ids_von_datensätzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
+                    _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function (import_datensatz) {
+                        if (idsVonDatensaetzen.indexOf(import_datensatz[name_des_id_felds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
-                            ids_von_datensätzen.push(import_datensatz[name_des_id_felds]);
+                            idsVonDatensaetzen.push(import_datensatz[name_des_id_felds]);
                             // prüfen, ob die ID zugeordnet werden kann
-                            var zugehöriges_objekt = _.find(data.rows, function (objekt_row) {
+                            var zugehoerigesObjekt = _.find(data.rows, function (objekt_row) {
                                 return objekt_row.key[2] === import_datensatz[name_des_id_felds];
                             });
-                            if (zugehöriges_objekt) {
-                                var Objekt = {};
-                                Objekt.Id = parseInt(import_datensatz[name_des_id_felds], 10);
-                                Objekt.Guid = zugehöriges_objekt.key[1];
-                                window.adb.ZuordbareDatensätze.push(Objekt);
+                            if (zugehoerigesObjekt) {
+                                objekt = {};
+                                objekt.Id = parseInt(import_datensatz[name_des_id_felds], 10);
+                                objekt.Guid = zugehoerigesObjekt.key[1];
+                                window.adb.zuordbareDatensaetze.push(objekt);
                             } else {
                                 // diese ID konnte nicht hinzugefügt werden. In die Liste der nicht hinzugefügten aufnehmen
-                                ids_von_nicht_importierbaren_datensätzen.push(import_datensatz[name_des_id_felds]);
+                                idsVonNichtImportierbarenDatensaetzen.push(import_datensatz[name_des_id_felds]);
                             }
                         } else {
                             // diese ID wurden schon hinzugefügt > mehrfach!
-                            mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
+                            mehrfachVorkommendeIds.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-                    meldeErfolgVonIdIdentifikation2(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
+                    meldeErfolgVonIdIdentifikation2(mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs);
                 },
                 error: function () {
                     console.log('meldeErfolgVonIdentifikation: keine Daten erhalten');
@@ -102,5 +104,3 @@ var returnFunction = function (dbs) {
         }
     }
 };
-
-module.exports = returnFunction;

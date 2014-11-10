@@ -477,8 +477,8 @@ window.adb.handleDsFileChange = function () {
             reader = new FileReader();
 
         reader.onload = function (event) {
-            window.adb.dsDatensätze = $.csv.toObjects(event.target.result);
-            erstelleTabelle (window.adb.dsDatensätze, "DsFelder_div", "DsTabelleEigenschaften");
+            window.adb.dsDatensaetze = $.csv.toObjects(event.target.result);
+            erstelleTabelle (window.adb.dsDatensaetze, "DsFelder_div", "DsTabelleEigenschaften");
         };
         reader.readAsText(file);
     }
@@ -498,8 +498,8 @@ window.adb.handleBsFileChange = function () {
         var file = event.target.files[0],
             reader = new FileReader();
         reader.onload = function (event) {
-            window.adb.bsDatensätze = $.csv.toObjects(event.target.result);
-            erstelleTabelle (window.adb.bsDatensätze, "BsFelder_div", "BsTabelleEigenschaften");
+            window.adb.bsDatensaetze = $.csv.toObjects(event.target.result);
+            erstelleTabelle (window.adb.bsDatensaetze, "BsFelder_div", "BsTabelleEigenschaften");
         };
         reader.readAsText(file);
     }
@@ -1287,19 +1287,19 @@ window.adb.importiereBeziehungssammlung = function () {
     require('./adbModules/import/importiereBeziehungssammlung')();
 };
 
-window.adb.bereiteBeziehungspartnerFürImportVor = function () {
+window.adb.bereiteBeziehungspartnerFuerImportVor = function () {
     'use strict';
     var alle_bez_partner_array = [],
         bez_partner_array,
         beziehungspartner_vorbereitet = $.Deferred();
     window.adb.bezPartner_objekt = {};
 
-    _.each(window.adb.bsDatensätze, function (bs_datensatz) {
+    _.each(window.adb.bsDatensaetze, function (bs_datensatz) {
         if (bs_datensatz.Beziehungspartner) {
             // bs_datensatz.Beziehungspartner ist eine kommagetrennte Liste von guids
             // diese Liste in Array verwandeln
             bez_partner_array = bs_datensatz.Beziehungspartner.split(", ");
-            // und in window.adb.bsDatensätze nachführen
+            // und in window.adb.bsDatensaetze nachführen
             bs_datensatz.Beziehungspartner = bez_partner_array;
             // und vollständige Liste aller Beziehungspartner nachführen
             alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
@@ -1343,12 +1343,12 @@ window.adb.entferneDatensammlung = function () {
     require('./adbModules/entferneDatensammlung')();
 };
 
-window.adb.entferneDatensammlung_2 = function (dsName, guid_array, verzögerungs_faktor) {
+window.adb.entferneDatensammlung_2 = function (dsName, guidArray, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
     setTimeout(function () {
         var $db = $.couch.db('artendb');
-        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
+        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
             success: function (data) {
                 var Objekt;
                 _.each(data.rows, function (data_row) {
@@ -1376,7 +1376,7 @@ window.adb.entferneDatensammlungAusObjekt = function (dsName, objekt) {
                 var $db = $.couch.db('artendb');
                 $db.saveDoc(objekt);
                 // mitteilen, dass eine ds entfernt wurde
-                $(document).trigger('adb.ds_entfernt');
+                $(document).trigger('adb.dsEntfernt');
                 // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
                 break;
             }
@@ -1389,12 +1389,12 @@ window.adb.entferneBeziehungssammlung = function () {
     require('./adbModules/entferneBeziehungssammlung')();
 };
 
-window.adb.entferneBeziehungssammlung_2 = function (bsName, guid_array, verzögerungs_faktor) {
+window.adb.entferneBeziehungssammlung_2 = function (bsName, guidArray, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
     setTimeout(function () {
         var $db = $.couch.db('artendb');
-        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guid_array)) + '&include_docs=true', {
+        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
             success: function (data) {
                 var objekt,
                     f;
@@ -1416,7 +1416,7 @@ window.adb.entferneBeziehungssammlungAusObjekt = function (bsName, objekt) {
                 var $db = $.couch.db('artendb');
                 $db.saveDoc(objekt);
                 // mitteilen, dass eine bs entfernt wurde
-                $(document).trigger('adb.bs_entfernt');
+                $(document).trigger('adb.bsEntfernt');
                 break;
             }
         }
@@ -1425,7 +1425,7 @@ window.adb.entferneBeziehungssammlungAusObjekt = function (bsName, objekt) {
 
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
-window.adb.fügeDatensammlungZuObjekt = function (guid, datensammlung) {
+window.adb.fuegeDatensammlungZuObjekt = function (guid, datensammlung) {
     'use strict';
     var $db = $.couch.db('artendb');
     $db.openDoc(guid, {
@@ -1468,7 +1468,7 @@ window.adb.entferneDatensammlungAusDokument = function (id, dsName) {
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass eine ds entfernt wurde
-            $(document).trigger('adb.ds_entfernt');
+            $(document).trigger('adb.dsEntfernt');
             // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
         }
     });
@@ -1489,7 +1489,7 @@ window.adb.entferneBeziehungssammlungAusDokument = function (id, bsName) {
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass eine ds entfernt wurde
-            $(document).trigger('adb.bs_entfernt');
+            $(document).trigger('adb.bsEntfernt');
             // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
         }
     });
