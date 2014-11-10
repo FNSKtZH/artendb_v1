@@ -1673,7 +1673,8 @@ window.adb.öffneUri = function () {
         hash                           = uri.anchor(),
         uri2,
         zeigeFormular                  = require('./adbModules/zeigeFormular'),
-        erstelleListeFuerFeldwahl      = require('./adbModules/export/erstelleListeFuerFeldwahl');
+        erstelleListeFuerFeldwahl      = require('./adbModules/export/erstelleListeFuerFeldwahl'),
+        oeffneBaumZuId                 = require('./adbModules/jstree/oeffneBaumZuId');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -1702,7 +1703,6 @@ window.adb.öffneUri = function () {
                 $("#Gruppe_label").html("Gruppe:");
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum()).then(function () {
-                    var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                     oeffneBaumZuId(id);
                 });
             }
@@ -2302,73 +2302,6 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function (object_array) {
         if (parent) {
             object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
             $db.saveDoc(object);
-        }
-    });
-};
-
-// aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
-// ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
-// diese Funktion wird benötigt, wenn ein neuer LR erstellt wird
-// LR kann mitgegeben werden, muss aber nicht
-// wird mitgegeben, wenn an den betreffenden lr nichts ändert und nicht jedes mal die LR aus der DB neu abgerufen werden sollen
-// manchmal ist es aber nötig, die LR neu zu holen, wenn dazwischen an LR geändert wird!
-window.adb.aktualisiereHierarchieEinesNeuenLr = function (lr, object, aktualisiere_hierarchiefeld) {
-    'use strict';
-    if (lr) {
-        window.adb.aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);
-    } else {
-        var $db = $.couch.db("artendb");
-        $db.view('artendb/lr?include_docs=true', {
-            success: function (data) {
-                window.adb.aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiere_hierarchiefeld);
-            }
-        });
-    }
-};
-
-window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
-    'use strict';
-    var object_array,
-        hierarchie = [],
-        parent_object;
-
-    object_array = _.map(LR.rows, function (row) {
-        return row.doc;
-    });
-    if (!object.Taxonomie) {
-        object.Taxonomie = {};
-    }
-    if (!object.Taxonomie.Eigenschaften) {
-        object.Taxonomie.Eigenschaften = {};
-    }
-    parent_object = _.find(object_array, function (obj) {
-        return obj._id === object.Taxonomie.Eigenschaften.Parent.GUID;
-    });
-    // object.Name setzen
-    object.Taxonomie.Name = parent_object.Taxonomie.Name;
-    // object.Taxonomie.Eigenschaften.Taxonomie setzen
-    object.Taxonomie.Eigenschaften.Taxonomie = parent_object.Taxonomie.Eigenschaften.Taxonomie;
-    // als Start sich selben zur Hierarchie hinzufügen
-    hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
-    object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
-    // save ohne open: _rev wurde zuvor übernommen
-    var $db = $.couch.db("artendb");
-    $db.saveDoc(object, {
-        success: function () {
-            var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
-            $.when(erstelleBaum()).then(function () {
-                var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
-                oeffneBaumZuId(object._id);
-                $('#lr_parent_waehlen').modal('hide');
-            });
-        },
-        error: function () {
-            var initiiereArt = require('./adbModules/initiiereArt');
-            $("#meldung_individuell_label").html("Fehler");
-            $("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
-            $("#meldung_individuell_schliessen").html("schliessen");
-            $('#meldung_individuell').modal();
-            initiiereArt(object._id);
         }
     });
 };

@@ -16,7 +16,7 @@ var returnFunction = function (such_objekte) {
         local: such_objekte,
         limit: 20
     }).on('typeahead:selected', function (e, datum) {
-        var oeffneBaumZuId = require('./oeffneBaumZuId');
+        var oeffneBaumZuId = require('./jstree/oeffneBaumZuId');
         oeffneBaumZuId(datum.id);
     });
     $("#suchfeld" + window.adb.Gruppe).focus();

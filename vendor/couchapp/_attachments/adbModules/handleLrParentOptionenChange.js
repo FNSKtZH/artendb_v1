@@ -7,13 +7,14 @@ var $ = require('jquery');
 
 var returnFunction = function (that) {
     // prüfen, ob oberster Node gewählt wurde
-    var parent_name = $(that).val(),
-        parent_id = that.id,
-        parent = {},
-        object = {},
-        $db = $.couch.db("artendb"),
-        erstelleBaum = require('./jstree/erstelleBaum'),
-        oeffneBaumZuId = require('./oeffneBaumZuId');
+    var parent_name                        = $(that).val(),
+        parent_id                          = that.id,
+        parent                             = {},
+        object                             = {},
+        $db                                = $.couch.db("artendb"),
+        erstelleBaum                       = require('./jstree/erstelleBaum'),
+        oeffneBaumZuId                     = require('./jstree/oeffneBaumZuId'),
+        aktualisiereHierarchieEinesNeuenLr = require('./aktualisiereHierarchieEinesNeuenLr');
 
     // zuerst eine id holen
     object._id = $.couch.newUUID(1);
@@ -61,7 +62,7 @@ var returnFunction = function (that) {
             if (parent_id !== "0") {
                 // die Hierarchie aufbauen und setzen
                 // bei der Wurzel ist sie schon gesetzt
-                window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
+                aktualisiereHierarchieEinesNeuenLr(null, object, true);
             } else {
                 $.when(erstelleBaum()).then(function () {
                     oeffneBaumZuId(object._id);
