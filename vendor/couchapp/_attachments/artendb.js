@@ -1,23 +1,23 @@
 window.adb = window.adb || {};
 
-window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray = function (hierarchie_array) {
+window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray = function (hierarchie_array) {
     'use strict';
     if (!_.isArray(hierarchie_array)) {
         return "";
     }
     // Namen kommagetrennt anzeigen
-    var hierarchie_string = "";
+    var hierarchieString = "";
     _.each(hierarchie_array, function (hierarchie_objekt, index) {
         if (index > 0) {
-            hierarchie_string += "\n";
+            hierarchieString += "\n";
         }
-        hierarchie_string += hierarchie_objekt.Name;
+        hierarchieString += hierarchie_objekt.Name;
     });
-    return hierarchie_string;
+    return hierarchieString;
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFürLinkZuGleicherGruppe = function (feld_name, id, artname) {
+window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function (feld_name, id, artname) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label">';
@@ -31,7 +31,7 @@ window.adb.generiereHtmlFürLinkZuGleicherGruppe = function (feld_name, id, artn
 };
 
 // generiert den html-Inhalt für Serien von Links in Flora
-window.adb.generiereHtmlFürLinksZuGleicherGruppe = function (feldname, objekt_liste) {
+window.adb.generiereHtmlFuerLinksZuGleicherGruppe = function (feldname, objekt_liste) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label">';
@@ -52,7 +52,7 @@ window.adb.generiereHtmlFürLinksZuGleicherGruppe = function (feldname, objekt_l
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerWwwLink = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group">\n\t<label class="control-label" for="';
@@ -77,7 +77,7 @@ window.adb.generiereHtmlFürWwwLink = function (feldname, feldwert, dsTyp, dsNam
 };
 
 // generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFürObjektlink = function (feldname, feldwert, url) {
+window.adb.generiereHtmlFuerObjektlink = function (feldname, feldwert, url) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label">';
@@ -93,7 +93,7 @@ window.adb.generiereHtmlFürObjektlink = function (feldname, feldwert, url) {
 };
 
 // generiert den html-Inhalt für Textinputs
-window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ, dsTyp, dsName) {
+window.adb.generiereHtmlFuerTextinput = function (feldname, feldwert, input_typ, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group">\n\t<label class="control-label" for="';
@@ -113,7 +113,7 @@ window.adb.generiereHtmlFürTextinput = function (feldname, feldwert, input_typ,
 };
 
 // generiert den html-Inhalt für Textarea
-window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerTextarea = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label" for="';
@@ -131,7 +131,7 @@ window.adb.generiereHtmlFürTextarea = function (feldname, feldwert, dsTyp, dsNa
 };
 
 // generiert den html-Inhalt für ja/nein-Felder
-window.adb.generiereHtmlFürBoolean = function (feldname, feldwert, dsTyp, dsName) {
+window.adb.generiereHtmlFuerBoolean = function (feldname, feldwert, dsTyp, dsName) {
     'use strict';
     var html_container;
     html_container = '<div class="form-group"><label class="control-label" for="';
@@ -1463,7 +1463,7 @@ window.adb.entferneDatensammlungAusDokument = function (id, dsName) {
         success: function (doc) {
             // Datensammlung entfernen
             doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function (datensammlung) {
-                return datensammlung.Name === dsName
+                return datensammlung.Name === dsName;
             });
             // in artendb speichern
             $db.saveDoc(doc);
@@ -1855,7 +1855,7 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function (object_array) {
         // als Start sich selben zur Hierarchie hinzufügen
         hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
         if (parent) {
-            object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, object._id, hierarchie);
+            object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(object_array, object._id, hierarchie);
             $db.saveDoc(object);
         }
     });
@@ -1889,7 +1889,7 @@ window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, 
 // Baut den Hierarchiepfad für einen Lebensraum auf
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
-window.adb.ergänzeParentZuLrHierarchie = function (objektArray, parentGUID, Hierarchie) {
+window.adb.ergaenzeParentZuLrHierarchie = function (objektArray, parentGUID, Hierarchie) {
     'use strict';
     var parent_objekt,
         hierarchie_ergänzt;
@@ -1899,7 +1899,7 @@ window.adb.ergänzeParentZuLrHierarchie = function (objektArray, parentGUID, Hie
             Hierarchie.push(parent_objekt);
             if (object.Taxonomie.Eigenschaften.Parent.GUID !== object._id) {
                 // die Hierarchie ist noch nicht zu Ende - weitermachen
-                hierarchie_ergänzt = window.adb.ergänzeParentZuLrHierarchie(objektArray, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
+                hierarchie_ergänzt = window.adb.ergaenzeParentZuLrHierarchie(objektArray, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
                 return Hierarchie;
             }
             // jetzt ist die Hierarchie vollständig

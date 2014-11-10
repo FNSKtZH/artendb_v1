@@ -11,7 +11,7 @@ module.exports = function (dbs) {
     var $dbsFelderSelected       = $("#" + dbs + "Felder option:selected"),
         $dbsIdSelected           = $("#" + dbs + "Id option:selected"),
         idsVonDatensaetzen       = [],
-        mehrfachVorkommendeIds = [],
+        mehrfachVorkommendeIds   = [],
         idsVonNichtImportierbarenDatensaetzen = [],
         $db = $.couch.db('artendb');
 

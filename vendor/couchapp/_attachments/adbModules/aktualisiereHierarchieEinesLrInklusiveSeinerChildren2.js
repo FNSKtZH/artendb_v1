@@ -21,19 +21,19 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
     // als Start sich selber zur Hierarchie hinzufügen
     hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
     if (parent.GUID !== objekt._id) {
-        objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergänzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
+        objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     } else {
         // aha, das ist die Wurzel des Baums
         objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
     }
     if (aktualisiereHierarchiefeld) {
-        $("#Hierarchie").val(window.adb.erstelleHierarchieFürFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
+        $("#Hierarchie").val(window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
     }
     // jetzt den parent aktualisieren
     if (objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {
         // es gibt höhere Ebenen
         // das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
-        objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[objekt.Taxonomie.Eigenschaften.Hierarchie.length-2];
+        objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[objekt.Taxonomie.Eigenschaften.Hierarchie.length - 2];
     } else if (objekt.Taxonomie.Eigenschaften.Hierarchie.length === 1) {
         // das ist die oberste Ebene
         objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[0];

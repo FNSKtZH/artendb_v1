@@ -10,13 +10,13 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (art, beziehungssammlung, alt_name) {
+var returnFunction = function (art, beziehungssammlung, altName) {
     var html,
         name,
-        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        bsName = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name,
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
-        erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
+        erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
+        ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
+        bsName                                    = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + altName;
 
     // Accordion-Gruppe und -heading anfügen
     html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
@@ -47,9 +47,9 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
                 // Partner darstellen
                 if (beziehungspartner.Rolle) {
                     // Feld soll mit der Rolle beschriftet werden
-                    html += window.adb.generiereHtmlFürObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += window.adb.generiereHtmlFuerObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 } else {
-                    html += window.adb.generiereHtmlFürObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 }
             });
         }
@@ -60,7 +60,7 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
             }
         });
         // Am Schluss eine Linie, nicht aber bei der letzten Beziehung
-        if (index < (beziehungssammlung.Beziehungen.length-1)) {
+        if (index < (beziehungssammlung.Beziehungen.length - 1)) {
             html += "<hr>";
         }
     });

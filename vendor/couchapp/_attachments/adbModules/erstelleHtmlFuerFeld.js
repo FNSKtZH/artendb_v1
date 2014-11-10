@@ -5,22 +5,22 @@
 'use strict';
 
 var returnFunction = function (feldname, feldwert, dsTyp, dsName) {
-    var html_datensammlung = "";
+    var htmlDatensammlung = "";
     if ((typeof feldwert === "string" && feldwert.slice(0, 7) === "http://") || (typeof feldwert === "string" && feldwert.slice(0, 8) === "https://") || (typeof feldwert === "string" && feldwert.slice(0, 2) === "//")) {
         // www-Links als Link darstellen
-        html_datensammlung += window.adb.generiereHtmlFürWwwLink(feldname, feldwert, dsTyp, dsName);
+        htmlDatensammlung += window.adb.generiereHtmlFuerWwwLink(feldname, feldwert, dsTyp, dsName);
     } else if (typeof feldwert === "string" && feldwert.length < 45) {
-        html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "text", dsTyp, dsName);
+        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
     } else if (typeof feldwert === "string" && feldwert.length >= 45) {
-        html_datensammlung += window.adb.generiereHtmlFürTextarea(feldname, feldwert, dsTyp);
+        htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(feldname, feldwert, dsTyp);
     } else if (typeof feldwert === "number") {
-        html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "number", dsTyp, dsName);
+        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "number", dsTyp, dsName);
     } else if (typeof feldwert === "boolean") {
-        html_datensammlung += window.adb.generiereHtmlFürBoolean(feldname, feldwert, dsTyp, dsName);
+        htmlDatensammlung += window.adb.generiereHtmlFuerBoolean(feldname, feldwert, dsTyp, dsName);
     } else {
-        html_datensammlung += window.adb.generiereHtmlFürTextinput(feldname, feldwert, "text", dsTyp, dsName);
+        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
     }
-    return html_datensammlung;
+    return htmlDatensammlung;
 };
 
 module.exports = returnFunction;
