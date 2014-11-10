@@ -9,8 +9,8 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (formularname) {
-    var formular_angezeigt = $.Deferred(),
+module.exports = function (formularname) {
+    var formularAngezeigt = $.Deferred(),
         $form = $('form'),
         setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia');
 
@@ -72,9 +72,7 @@ var returnFunction = function (formularname) {
 
         // jetzt die Links im Menu (de)aktivieren
         setzteLinksZuBilderUndWikipedia();
-        formular_angezeigt.resolve();
+        formularAngezeigt.resolve();
     }
-    return formular_angezeigt.promise();
+    return formularAngezeigt.promise();
 };
-
-module.exports = returnFunction;

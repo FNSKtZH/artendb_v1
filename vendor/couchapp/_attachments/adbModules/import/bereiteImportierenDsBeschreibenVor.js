@@ -5,26 +5,25 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (woher) {
-    var $db = $.couch.db('artendb'),
+module.exports = function (woher) {
+    var $db                                   = $.couch.db('artendb'),
         bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02');
+
     if (!window.adb.pruefeAnmeldung(woher)) {
         $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
     } else {
         $("#DsName").focus();
         // Daten holen, wenn nötig
-        if (window.adb.ds_von_objekten) {
+        if (window.adb.dsVonObjekten) {
             bereiteImportierenDsBeschreibenVor_02();
         } else {
             $db.view('artendb/ds_von_objekten?startkey=["Datensammlung"]&endkey=["Datensammlung",{},{},{},{}]&group_level=5', {
                 success: function (data) {
                     // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
-                    window.adb.ds_von_objekten = data;
+                    window.adb.dsVonObjekten = data;
                     bereiteImportierenDsBeschreibenVor_02();
                 }
             });
         }
     }
 };
-
-module.exports = returnFunction;

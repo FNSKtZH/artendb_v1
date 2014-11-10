@@ -7,7 +7,7 @@
 var Uri = require('jsuri'),
     $   = require('jquery');
 
-var returnFunction = function (feldwert, feldname) {
+module.exports = function (feldwert, feldname) {
     // zuerst die id des Objekts holen
     var uri = new Uri($(location).attr('href')),
         id = uri.getQueryParamValue('id'),
@@ -15,8 +15,10 @@ var returnFunction = function (feldwert, feldname) {
         // dann muss die id durch die id in der hash ersetzt werden
         hash = uri.anchor(),
         uri2,
-        neuer_nodetext,
-        $db = $.couch.db('artendb');
+        neuerNodetext,
+        $db                               = $.couch.db('artendb'),
+        initiiereArt                      = require('./initiiereArt'),
+        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {
@@ -51,8 +53,6 @@ var returnFunction = function (feldwert, feldname) {
 
             $db.saveDoc(object, {
                 success: function (data) {
-                    var initiiereArt = require('./initiiereArt'),
-                        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen');
                     object._rev = data.rev;
                     // prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
                     if (feldname === "Label" || feldname === "Einheit") {
@@ -73,12 +73,12 @@ var returnFunction = function (feldwert, feldname) {
                         // node umbenennen
                         if (feldname === "Label") {
                             // object hat noch den alten Wert für Label, neuen verwenden
-                            neuer_nodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
+                            neuerNodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
                         } else {
                             // object hat noch den alten Wert für Einheit, neuen verwenden
-                            neuer_nodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
+                            neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
                         }
-                        $("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuer_nodetext);
+                        $("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
                     }
                 },
                 error: function () {
@@ -91,5 +91,3 @@ var returnFunction = function (feldwert, feldname) {
         }
     });
 };
-
-module.exports = returnFunction;

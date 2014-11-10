@@ -151,7 +151,7 @@ window.adb.generiereHtmlFuerBoolean = function (feldname, feldwert, dsTyp, dsNam
 };
 
 // begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
-window.adb.setzeTreehöhe = function () {
+window.adb.setzeTreehoehe = function () {
     'use strict';
     var window_height = $(window).height();
     if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
@@ -242,7 +242,7 @@ window.adb.erstelleKonto = function (woher) {
             if (woher === "art") {
                 window.adb.bearbeiteLrTaxonomie();
             }
-            window.adb.passeUiFürAngemeldetenUserAn(woher);
+            window.adb.passeUiFuerAngemeldetenUserAn(woher);
             // Werte aus Feldern entfernen
             $("#Email_"+woher).val("");
             $("#Passwort_"+woher).val("");
@@ -279,16 +279,16 @@ window.adb.meldeUserAb = function () {
     require('./adbModules/meldeUserAb')();
 };
 
-window.adb.passeUiFürAngemeldetenUserAn = function (woher) {
+window.adb.passeUiFuerAngemeldetenUserAn = function (woher) {
     'use strict';
-    var präfix = "importieren_";
+    var praefix = "importieren_";
     if (woher === "art") {
-        präfix = "";
+        praefix = "";
     }
     $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
     $(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
     if (woher !== "art") {
-        $("#" + präfix + woher + "_anmelden_collapse").collapse('hide');
+        $("#" + praefix + woher + "_anmelden_collapse").collapse('hide');
         $("#importieren_" + woher + "_ds_beschreiben_collapse").collapse('show');
     }
     $(".alert").hide();
@@ -322,20 +322,20 @@ window.adb.pruefeAnmeldung = function (woher) {
 
 window.adb.zurueckZurAnmeldung = function (woher) {
     'use strict';
-    var präfix = "importieren_";
+    var praefix = "importieren_";
 
     // Bei LR muss der Anmeldungsabschnitt eingeblendet werden
     if (woher === "art") {
-        präfix = "";
+        praefix = "";
         $("#art_anmelden").show();
     }
 
     // Mitteilen, dass Anmeldung nötig ist
-    $("#"+präfix+woher+"_anmelden_hinweis")
+    $("#"+praefix+woher+"_anmelden_hinweis")
         .alert()
         .show();
-    $("#"+präfix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
-    $("#"+präfix+woher+"_anmelden_collapse").collapse('show');
+    $("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
+    $("#"+praefix+woher+"_anmelden_collapse").collapse('show');
     $(".anmelden_btn").show();
     $(".abmelden_btn").hide();
     // ausschalten, soll später bei Organisationen möglich werden
@@ -372,7 +372,7 @@ window.adb.validiereUserAnmeldung = function (woher) {
 window.adb.handleBsNameChange = function () {
     'use strict';
     var that = this,
-        bs_key = _.find(window.adb.ds_namen_eindeutig, function (key) {
+        bs_key = _.find(window.adb.dsNamenEindeutig, function (key) {
             return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
         });
     if (bs_key) {
@@ -700,7 +700,7 @@ window.adb.handleDsWählenChange = function () {
 window.adb.handleDsNameChange = function () {
     'use strict';
     var that = this,
-        ds_key = _.find(window.adb.ds_namen_eindeutig, function (key) {
+        ds_key = _.find(window.adb.dsNamenEindeutig, function (key) {
             return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
         }),
         $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
@@ -1105,7 +1105,7 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function () {
     'use strict';
-    window.adb.setzeTreehöhe();
+    window.adb.setzeTreehoehe();
     // Höhe der Textareas korrigieren
     $('#forms').find('textarea').each(function () {
         window.adb.fitTextareaToContent(this.id);
@@ -1312,8 +1312,8 @@ window.adb.bereiteBeziehungspartnerFuerImportVor = function () {
         success: function (data) {
             var objekt,
                 bez_partner;
-            _.each(data.rows, function (data_row) {
-                objekt = data_row.doc;
+            _.each(data.rows, function (dataRow) {
+                objekt = dataRow.doc;
                 bez_partner = {};
                 bez_partner.Gruppe = objekt.Gruppe;
                 if (objekt.Gruppe === "Lebensräume") {
@@ -1351,8 +1351,8 @@ window.adb.entferneDatensammlung_2 = function (dsName, guidArray, verzögerungs_
         $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
             success: function (data) {
                 var Objekt;
-                _.each(data.rows, function (data_row) {
-                    Objekt = data_row.doc;
+                _.each(data.rows, function (dataRow) {
+                    Objekt = dataRow.doc;
                     window.adb.entferneDatensammlungAusObjekt(dsName, Objekt);
                 });
             }
@@ -1398,8 +1398,8 @@ window.adb.entferneBeziehungssammlung_2 = function (bsName, guidArray, verzöger
             success: function (data) {
                 var objekt,
                     f;
-                _.each(data.rows, function (data_row) {
-                    objekt = data_row.doc;
+                _.each(data.rows, function (dataRow) {
+                    objekt = dataRow.doc;
                     window.adb.entferneBeziehungssammlungAusObjekt(bsName, objekt);
                 });
             }
@@ -1578,11 +1578,11 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function () {
     });
 
     // brauche nur drei keys
-    window.adb.ds_namen_eindeutig = _.map(window.adb.BsKeys, function (bs_key) {
+    window.adb.dsNamenEindeutig = _.map(window.adb.BsKeys, function (bs_key) {
         return [bs_key[1], bs_key[2], bs_key[3]];
     });
     // Objektarray reduzieren auf eindeutige Namen
-    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function (objekt) {
+    window.adb.dsNamenEindeutig = _.reject(window.adb.dsNamenEindeutig, function (objekt) {
         var position_in_bs_namen = _.indexOf(bs_namen, objekt[0]);
         if (position_in_bs_namen === -1) {
             bs_namen.push(objekt[0]);
@@ -1593,13 +1593,13 @@ window.adb.bereiteImportieren_bs_beschreibenVor_02 = function () {
     });
 
     // nach DsNamen sortieren
-    window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function (key) {
+    window.adb.dsNamenEindeutig = _.sortBy(window.adb.dsNamenEindeutig, function (key) {
         return key[0];
     });
     // mit leerer Zeile beginnen
     html = "<option value='' waehlbar=true></option>";
     // Namen der Datensammlungen als Optionen anfügen
-    _.each(window.adb.ds_namen_eindeutig, function (ds_name_eindeutig) {
+    _.each(window.adb.dsNamenEindeutig, function (ds_name_eindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
         if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz

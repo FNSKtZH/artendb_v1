@@ -30,7 +30,7 @@ var returnFunction = function (that) {
         $DsAnzDs.html("");
         $DsAnzDs_label.html("");
         if (dsName) {
-            _.each(window.adb.ds_von_objekten.rows, function (ds_von_objekten_row) {
+            _.each(window.adb.dsVonObjekten.rows, function (ds_von_objekten_row) {
                 if (ds_von_objekten_row.key[1] === dsName) {
                     $DsName.val(dsName);
                     _.each(ds_von_objekten_row.key[4], function (feldwert, feldname) {

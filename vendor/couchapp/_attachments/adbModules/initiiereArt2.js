@@ -1,12 +1,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// $ muss übernommen werden, wegen .collapse
-var returnFunction = function ($, html_art, art) {
+var $ = require('jquery');
+
+module.exports = function (htmlArt, art) {
     var setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia'),
-        zeigeFormular = require('./zeigeFormular');
+        zeigeFormular                   = require('./zeigeFormular');
     // panel beenden
-    $("#art_inhalt").html(html_art);
+    $("#art_inhalt").html(htmlArt);
     // richtiges Formular anzeigen
     zeigeFormular("art");
     // Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
@@ -25,5 +26,3 @@ var returnFunction = function ($, html_art, art) {
     // und die URL anpassen
     history.pushState(null, null, "index.html?id=" + art._id);
 };
-
-module.exports = returnFunction;

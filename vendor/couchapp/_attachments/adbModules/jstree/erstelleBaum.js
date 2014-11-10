@@ -6,9 +6,9 @@ var $ = require('jquery');
 var returnFunction = function () {
     var gruppe,
         gruppenbezeichnung,
-        baum_erstellt = $.Deferred(),
-        $db           = $.couch.db('artendb'),
-        erstelleTree  = require('./erstelleTree');
+        baumErstellt = $.Deferred(),
+        $db          = $.couch.db('artendb'),
+        erstelleTree = require('./erstelleTree');
     // alle Bäume ausblenden
     $(".baum").hide();
     // alle Beschriftungen ausblenden
@@ -49,10 +49,10 @@ var returnFunction = function () {
     });
 
     $.when(erstelleTree()).then(function () {
-        baum_erstellt.resolve();
+        baumErstellt.resolve();
     });
 
-    return baum_erstellt.promise();
+    return baumErstellt.promise();
 };
 
 module.exports = returnFunction;

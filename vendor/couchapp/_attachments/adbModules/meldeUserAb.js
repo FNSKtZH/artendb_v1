@@ -3,7 +3,7 @@
 
 var $ = require('jquery');
 
-var returnFunction = function () {
+module.exports = function () {
     // IE8 kann nicht deleten
     try {
         delete localStorage.Email;
@@ -29,5 +29,3 @@ var returnFunction = function () {
     // für diesen Nutzer passende Menus anzeigen
     window.adb.blendeMenus();
 };
-
-module.exports = returnFunction;

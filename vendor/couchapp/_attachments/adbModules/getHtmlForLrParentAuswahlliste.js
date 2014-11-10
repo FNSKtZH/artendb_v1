@@ -9,24 +9,24 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-module.exports = function (taxonomie_name, callback) {
+module.exports = function (taxonomieName, callback) {
 
     // lr holen
     var $db = $.couch.db('artendb');
     $db.view('artendb/lr?include_docs=true', {
         success: function (lr) {
-            var taxonomie_objekte,
+            var taxonomieObjekte,
                 object,
-                neue_taxonomie,
-                object_html,
+                neueTaxonomie,
+                objectHtml,
                 html = "",
                 i;
             // reduzieren auf die LR der Taxonomie
-            taxonomie_objekte = _.filter(lr.rows, function (row) {
-                return row.doc.Taxonomie.Name === taxonomie_name;
+            taxonomieObjekte = _.filter(lr.rows, function (row) {
+                return row.doc.Taxonomie.Name === taxonomieName;
             });
             // einen Array von Objekten schaffen mit id und Name
-            taxonomie_objekte = _.map(taxonomie_objekte, function (row) {
+            taxonomieObjekte = _.map(taxonomieObjekte, function (row) {
                 object = {};
                 object.id = row.doc._id;
                 if (row.doc.Taxonomie.Eigenschaften && row.doc.Taxonomie.Eigenschaften.Einheit) {
@@ -47,30 +47,30 @@ module.exports = function (taxonomie_name, callback) {
                 return object;
             });
             // jetzt nach Name sortieren
-            taxonomie_objekte = _.sortBy(taxonomie_objekte, function (objekt) {
+            taxonomieObjekte = _.sortBy(taxonomieObjekte, function (objekt) {
                 return objekt.Sortier;
             });
-            neue_taxonomie = {};
-            neue_taxonomie.id = 0;
-            neue_taxonomie.Name = "Neue Taxonomie beginnen";
+            neueTaxonomie = {};
+            neueTaxonomie.id = 0;
+            neueTaxonomie.Name = "Neue Taxonomie beginnen";
             // neueTaxonomie als erstes Objekt in den Array einfügen
-            taxonomie_objekte.unshift(neue_taxonomie);
+            taxonomieObjekte.unshift(neueTaxonomie);
 
             // jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
-            for (i = 0; i < taxonomie_objekte.length; i++) {
-                object_html = '';
+            for (i = 0; i < taxonomieObjekte.length; i++) {
+                objectHtml = '';
                 if (i === 1) {
-                    object_html += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
+                    objectHtml += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
                 }
-                object_html += '<div class="radio"><label>';
-                object_html += '<input type="radio" name="parent_optionen" id="';
-                object_html += taxonomie_objekte[i].id;
-                object_html += '" value="';
-                object_html += taxonomie_objekte[i].Name;
-                object_html += '">';
-                object_html += taxonomie_objekte[i].Name;
-                object_html += '</label></div>';
-                html += object_html;
+                objectHtml += '<div class="radio"><label>';
+                objectHtml += '<input type="radio" name="parent_optionen" id="';
+                objectHtml += taxonomieObjekte[i].id;
+                objectHtml += '" value="';
+                objectHtml += taxonomieObjekte[i].Name;
+                objectHtml += '">';
+                objectHtml += taxonomieObjekte[i].Name;
+                objectHtml += '</label></div>';
+                html += objectHtml;
             }
 
             return callback(html);

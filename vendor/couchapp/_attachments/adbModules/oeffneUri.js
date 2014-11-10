@@ -8,21 +8,21 @@ var $   = require('jquery'),
 
 module.exports = function () {
     // parameter der uri holen
-    var uri                            = new Uri($(location).attr('href')),
-        id                             = uri.getQueryParamValue('id'),
-        exportieren                    = uri.getQueryParamValue('exportieren'),
-        exportieren_fuer_alt           = uri.getQueryParamValue('exportieren_fuer_artenlistentool'),
-        importieren_datensammlung      = uri.getQueryParamValue('importieren_datensammlung'),
-        importieren_beziehungssammlung = uri.getQueryParamValue('importieren_beziehungssammlung'),
+    var uri                           = new Uri($(location).attr('href')),
+        id                            = uri.getQueryParamValue('id'),
+        exportieren                   = uri.getQueryParamValue('exportieren'),
+        exportierenFuerAlt            = uri.getQueryParamValue('exportieren_fuer_artenlistentool'),
+        importierenDatensammlung      = uri.getQueryParamValue('importieren_datensammlung'),
+        importierenBeziehungssammlung = uri.getQueryParamValue('importieren_beziehungssammlung'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
         // dann muss die id durch die id in der hash ersetzt werden
-        hash                           = uri.anchor(),
+        hash                          = uri.anchor(),
         uri2,
-        $db                            = $.couch.db('artendb'),
-        zeigeFormular                  = require('./zeigeFormular'),
-        erstelleListeFuerFeldwahl      = require('./export/erstelleListeFuerFeldwahl'),
-        oeffneBaumZuId                 = require('./jstree/oeffneBaumZuId'),
-        erstelleBaum                   = require('./jstree/erstelleBaum');
+        $db                           = $.couch.db('artendb'),
+        zeigeFormular                 = require('./zeigeFormular'),
+        erstelleListeFuerFeldwahl     = require('./export/erstelleListeFuerFeldwahl'),
+        oeffneBaumZuId                = require('./jstree/oeffneBaumZuId'),
+        erstelleBaum                  = require('./jstree/erstelleBaum');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -32,7 +32,7 @@ module.exports = function () {
     // Menu ist ausgeblendet
     // Grund: exportierren_fuer_artenlistentool
     // Menu einblenden, wenn exportierren_fuer_artenlistentool nicht aufgerufen wird
-    if (!exportieren_fuer_alt) {
+    if (!exportierenFuerAlt) {
         $('.menu').show();
     }
 
@@ -59,7 +59,7 @@ module.exports = function () {
     if (exportieren) {
         zeigeFormular('export');
     }
-    if (exportieren_fuer_alt) {
+    if (exportierenFuerAlt) {
         // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
         if (!$('#export_alt').is(':visible')) {
             zeigeFormular('export_alt');
@@ -67,10 +67,10 @@ module.exports = function () {
             erstelleListeFuerFeldwahl(['Fauna', 'Flora'], 'export_alt');
         }
     }
-    if (importieren_datensammlung) {
+    if (importierenDatensammlung) {
         zeigeFormular('importieren_ds');
     }
-    if (importieren_beziehungssammlung) {
+    if (importierenBeziehungssammlung) {
         zeigeFormular('importieren_bs');
     }
 

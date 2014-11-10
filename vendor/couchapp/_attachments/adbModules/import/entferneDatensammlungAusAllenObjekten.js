@@ -48,9 +48,9 @@ module.exports = function (dsName) {
             });
 
             // Eigenschaftensammlungen entfernen
-            _.each(data.rows, function (data_row) {
+            _.each(data.rows, function (dataRow) {
                 // guid und DsName übergeben
-                window.adb.entferneDatensammlungAusDokument(data_row.key[1], dsName);
+                window.adb.entferneDatensammlungAusDokument(dataRow.key[1], dsName);
             });
             dsEntfernt.resolve();
         }

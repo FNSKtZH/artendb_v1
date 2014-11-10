@@ -3,12 +3,12 @@
 
 var $ = require('jquery');
 
-var returnFunction = function () {
+module.exports = function () {
     var level,
         gruppe,
         filter,
         id,
-        jstree_erstellt = $.Deferred(),
+        jstreeErstellt                    = $.Deferred(),
         holeDatenUrlFuerTreeOberstesLevel = require('./holeDatenUrlFuerTreeOberstesLevel'),
         holeDatenUrlFuerTreeUntereLevel   = require('./holeDatenUrlFuerTreeUntereLevel'),
         initiiereSuchfeld                 = require('../initiiereSuchfeld'),
@@ -71,21 +71,17 @@ var returnFunction = function () {
             }
         }
     }).bind("loaded.jstree", function () {
-        jstree_erstellt.resolve();
+        jstreeErstellt.resolve();
         $("#suchen" + window.adb.Gruppe).css("display", "table");
         $("#treeMitteilung").hide();
         $("#tree" + window.adb.Gruppe).show();
         $("#tree" + window.adb.Gruppe + "Beschriftung").show();
-        window.adb.setzeTreehöhe();
-        initiiereSuchfeld($);
-    })
-    .bind("after_open.jstree", function () {
-        window.adb.setzeTreehöhe();
-    })
-    .bind("after_close.jstree", function () {
-        window.adb.setzeTreehöhe();
+        window.adb.setzeTreehoehe();
+        initiiereSuchfeld();
+    }).bind("after_open.jstree", function () {
+        window.adb.setzeTreehoehe();
+    }).bind("after_close.jstree", function () {
+        window.adb.setzeTreehoehe();
     });
-    return jstree_erstellt.promise();
+    return jstreeErstellt.promise();
 };
-
-module.exports = returnFunction;

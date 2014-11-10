@@ -51,9 +51,9 @@ module.exports = function (bsName) {
                 }
             });
 
-            _.each(data.rows, function (data_row) {
+            _.each(data.rows, function (dataRow) {
                 // guid und DsName übergeben
-                window.adb.entferneBeziehungssammlungAusDokument(data_row.key[1], bsName);
+                window.adb.entferneBeziehungssammlungAusDokument(dataRow.key[1], bsName);
             });
             bsEntfernt.resolve();
         }

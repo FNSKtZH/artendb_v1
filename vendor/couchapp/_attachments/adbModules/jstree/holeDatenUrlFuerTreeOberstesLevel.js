@@ -3,7 +3,7 @@
 
 var $ = require('jquery');
 
-var returnFunction = function () {
+module.exports = function () {
     var gruppe,
         url;
     // wie sicherstellen, dass nicht dieselben nodes mehrmals angehängt werden?
@@ -31,5 +31,3 @@ var returnFunction = function () {
     }
     return url;
 };
-
-module.exports = returnFunction;

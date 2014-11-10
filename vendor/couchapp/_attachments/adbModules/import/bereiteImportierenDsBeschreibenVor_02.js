@@ -7,47 +7,45 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-var returnFunction = function () {
+module.exports = function () {
     var html,
-        ds_namen = [];
+        dsNamen = [];
     // in diesem Array werden alle keys gesammelt
     // diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-    window.adb.DsKeys = _.map(window.adb.ds_von_objekten.rows, function (row) {
+    window.adb.DsKeys = _.map(window.adb.dsVonObjekten.rows, function (row) {
         return row.key;
     });
     // brauche nur drei keys
     // email: leider gibt es Null-Werte
-    window.adb.ds_namen_eindeutig = _.map(window.adb.DsKeys, function (ds_key) {
-        return [ds_key[1], ds_key[2], ds_key[3] || "alex@gabriel-software.ch"];
+    window.adb.dsNamenEindeutig = _.map(window.adb.DsKeys, function (dsKey) {
+        return [dsKey[1], dsKey[2], dsKey[3] || "alex@gabriel-software.ch"];
     });
     // Objektarray reduzieren auf eindeutige Namen
-    window.adb.ds_namen_eindeutig = _.reject(window.adb.ds_namen_eindeutig, function (objekt) {
-        var position_in_ds_namen = _.indexOf(ds_namen, objekt[0]);
-        if (position_in_ds_namen === -1) {
-            ds_namen.push(objekt[0]);
+    window.adb.dsNamenEindeutig = _.reject(window.adb.dsNamenEindeutig, function (objekt) {
+        var positionInDsNamen = _.indexOf(dsNamen, objekt[0]);
+        if (positionInDsNamen === -1) {
+            dsNamen.push(objekt[0]);
             return false;
         }
         return true;
     });
     // nach DsNamen sortieren
-    window.adb.ds_namen_eindeutig = _.sortBy(window.adb.ds_namen_eindeutig, function (key) {
+    window.adb.dsNamenEindeutig = _.sortBy(window.adb.dsNamenEindeutig, function (key) {
         return key[0];
     });
     // mit leerer Zeile beginnen
     html = "<option value='' waehlbar=true></option>";
     // Namen der Datensammlungen als Optionen anfügen
-    _.each(window.adb.ds_namen_eindeutig, function (ds_name_eindeutig) {
+    _.each(window.adb.dsNamenEindeutig, function (dsNameEindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
-        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
+        if (dsNameEindeutig[2] === localStorage.Email || dsNameEindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
         } else {
             // nicht veränderbare sind grau
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
         }
     });
     $("#DsWaehlen").html(html);
     $("#DsUrsprungsDs").html(html);
 };
-
-module.exports = returnFunction;

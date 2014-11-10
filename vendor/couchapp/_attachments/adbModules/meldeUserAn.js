@@ -3,7 +3,7 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (woher) {
+module.exports = function (woher) {
     var email = $('#Email_' + woher).val(),
         passwort = $('#Passwort_' + woher).val();
 
@@ -16,10 +16,10 @@ var returnFunction = function (woher) {
                 if (woher === "art") {
                     window.adb.bearbeiteLrTaxonomie();
                 }
-                window.adb.passeUiFürAngemeldetenUserAn(woher);
+                window.adb.passeUiFuerAngemeldetenUserAn(woher);
                 // Werte aus Feldern entfernen
-                $("#Email_"+woher).val("");
-                $("#Passwort_"+woher).val("");
+                $("#Email_" + woher).val("");
+                $("#Passwort_" + woher).val("");
                 $("#art_anmelden").show();
                 // admin-Funktionen
                 if (r.roles.indexOf("_admin") !== -1) {
@@ -32,13 +32,13 @@ var returnFunction = function (woher) {
                 window.adb.blendeMenus();
             },
             error: function () {
-                var präfix = "importieren_";
+                var praefix = "importieren_";
                 if (woher === "art") {
-                    präfix = "";
+                    praefix = "";
                 }
                 // zuerst allfällige bestehende Hinweise ausblenden
                 $(".hinweis").hide();
-                $("#" + präfix + woher + "_anmelden_fehler_text")
+                $("#" + praefix + woher + "_anmelden_fehler_text")
                     .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
                     .alert()
                     .show();
@@ -46,5 +46,3 @@ var returnFunction = function (woher) {
         });
     }
 };
-
-module.exports = returnFunction;

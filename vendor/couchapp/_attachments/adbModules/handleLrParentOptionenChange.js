@@ -7,8 +7,8 @@ var $ = require('jquery');
 
 var returnFunction = function (that) {
     // prüfen, ob oberster Node gewählt wurde
-    var parent_name                        = $(that).val(),
-        parent_id                          = that.id,
+    var parentName                         = $(that).val(),
+        parentId                           = that.id,
         parent                             = {},
         object                             = {},
         $db                                = $.couch.db('artendb'),
@@ -25,16 +25,16 @@ var returnFunction = function (that) {
     object.Taxonomie.Eigenschaften = {};
     object.Taxonomie.Eigenschaften.Taxonomie = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
     // wenn keine Wurzel: Label anzeigen
-    if (parent_id !== "0") {
+    if (parentId !== "0") {
         object.Taxonomie.Eigenschaften.Label = "";
     }
     object.Taxonomie.Eigenschaften.Einheit = "unbeschriebener Lebensraum";
-    if (parent_id === "0") {
+    if (parentId === "0") {
         object.Taxonomie.Eigenschaften.Einheit = "neue Taxonomie";
     }
     /*Einheit-Nr FNS wird nicht mehr benötigt, bzw. unabhängig führen
     object.Taxonomie.Eigenschaften["Einheit-Nr FNS"] = "";
-    if (parent_id === "0") {
+    if (parentId === "0") {
         object.Taxonomie.Eigenschaften["Einheit-Nrn FNS von"] = "";
         object.Taxonomie.Eigenschaften["Einheit-Nrn FNS bis"] = "";
     }*/
@@ -43,7 +43,7 @@ var returnFunction = function (that) {
     object.Beziehungssammlungen = [];
     // jetzt den parent erstellen
     // geht nicht vorher, weil die id bekannt sein muss
-    if (parent_id === "0") {
+    if (parentId === "0") {
         // das ist die Wurzel der Taxonomie
         parent.Name = "neue Taxonomie";
         parent.GUID = object._id;
@@ -51,15 +51,15 @@ var returnFunction = function (that) {
         object.Taxonomie.Eigenschaften.Hierarchie = [];
         object.Taxonomie.Eigenschaften.Hierarchie.push(parent);
     } else {
-        parent.Name = parent_name;
-        parent.GUID = parent_id;
+        parent.Name = parentName;
+        parent.GUID = parentId;
     }
     object.Taxonomie.Eigenschaften.Parent = parent;
     // in die DB schreiben
     $db.saveDoc(object, {
         success: function (resp) {
             object._rev = resp.rev;
-            if (parent_id !== "0") {
+            if (parentId !== "0") {
                 // die Hierarchie aufbauen und setzen
                 // bei der Wurzel ist sie schon gesetzt
                 aktualisiereHierarchieEinesNeuenLr(null, object, true);

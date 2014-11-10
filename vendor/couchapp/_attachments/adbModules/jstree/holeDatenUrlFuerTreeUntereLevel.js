@@ -3,7 +3,7 @@
 
 var $ = require('jquery');
 
-var returnFunction = function (level, filter, gruppe, id) {
+module.exports = function (level, filter, gruppe, id) {
     var startkey,
         // flag, um mitzuliefern, ob die id angezeigt werden soll
         id2 = false,
@@ -14,7 +14,7 @@ var returnFunction = function (level, filter, gruppe, id) {
     if (filter) {
         // bei lr gibt es keinen filter und das erzeugt einen fehler
         startkey = filter.slice();
-        endkey = filter.slice();
+        endkey   = filter.slice();
     }
 
     switch (gruppe) {
@@ -85,5 +85,3 @@ var returnFunction = function (level, filter, gruppe, id) {
     }
     return url;
 };
-
-module.exports = returnFunction;

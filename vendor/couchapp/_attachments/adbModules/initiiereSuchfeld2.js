@@ -4,16 +4,16 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (such_objekte) {
+module.exports = function (suchObjekte) {
 
-    such_objekte = _.map(such_objekte.rows, function (objekt) {
+    suchObjekte = _.map(suchObjekte.rows, function (objekt) {
         return objekt.value;
     });
 
     $('#suchfeld' + window.adb.Gruppe).typeahead({
         name: window.adb.Gruppe,
         valueKey: 'Name',
-        local: such_objekte,
+        local: suchObjekte,
         limit: 20
     }).on('typeahead:selected', function (e, datum) {
         var oeffneBaumZuId = require('./jstree/oeffneBaumZuId');
@@ -21,5 +21,3 @@ var returnFunction = function (such_objekte) {
     });
     $("#suchfeld" + window.adb.Gruppe).focus();
 };
-
-module.exports = returnFunction;

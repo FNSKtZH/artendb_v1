@@ -1,16 +1,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $ = require('jquery'),
+    _ = require('underscore');
 
-var returnFunction = function (id) {
+module.exports = function (id) {
     // Hierarchie der id holen
     var $db = $.couch.db('artendb');
     $db.openDoc(id, {
         success: function (objekt) {
-            var $filter_klasse = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
-                $art_anmelden = $("#art_anmelden"),
-                id_array = [],
+            var $filter_klasse        = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
+                $art_anmelden         = $("#art_anmelden"),
+                id_array              = [],
                 oeffneNodeNachIdArray = require('./oeffneNodeNachIdArray');
 
             switch (objekt.Gruppe) {
@@ -73,5 +74,3 @@ var returnFunction = function (id) {
         }
     });
 };
-
-module.exports = returnFunction;
