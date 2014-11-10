@@ -1,14 +1,14 @@
 ﻿function (doc) {
     'use strict';
 
-	var Felder,
-		ds_zusammenfassend,
-		bs_zusammenfassend,
-		x,
+    var Felder,
+        ds_zusammenfassend,
+        bs_zusammenfassend,
+        x,
         y,
         _ = require("views/lib/underscore");
 
-	if (doc.Eigenschaftensammlungen) {
+    if (doc.Eigenschaftensammlungen) {
         _.each(doc.Eigenschaftensammlungen, function (es) {
             // ds_zusammenfassend ergänzen
             ds_zusammenfassend = !!es.zusammenfassend;
@@ -20,9 +20,9 @@
             }
             emit(["Datensammlung", es.Name, ds_zusammenfassend, es["importiert von"], Felder], doc._id);
         });
-	}
+    }
 
-	if (doc.Beziehungssammlungen) {
+    if (doc.Beziehungssammlungen) {
         _.each(doc.Beziehungssammlungen, function (bs) {
             // bs_zusammenfassend ergänzen
             bs_zusammenfassend = !!bs.zusammenfassend;
@@ -34,6 +34,6 @@
             }
             emit(["Beziehungssammlung", bs.Name, bs_zusammenfassend, bs["importiert von"], Felder], doc._id);
         });
-	}
-	
+    }
+    
 }

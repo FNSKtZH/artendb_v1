@@ -14,7 +14,7 @@ function (head, req) {
         }
     });
 
-	var row,
+    var row,
         objekt,
         exportObjekte = [],
         üVar = {
@@ -24,7 +24,7 @@ function (head, req) {
         filterkriterien_objekt = {"filterkriterien": []},
         felder_objekt,
         objekt_hinzufügen,
-		exportObjekt,
+        exportObjekt,
         _   = require ("lists/lib/underscore"),
         adb = require ("lists/lib/artendb_listfunctions");
 
@@ -35,15 +35,15 @@ function (head, req) {
     üVar.filterkriterien = [];
     üVar.fasseTaxonomienZusammen = true;
 
-	while (row = getRow ()) {
-		objekt = row.doc;
+    while (row = getRow ()) {
+        objekt = row.doc;
 
         // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen
 
         // Exportobjekte um das Objekt ergänzen
         // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
         exportObjekte = adb.ergänzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
-	}
+    }
 
     send(JSON.stringify(exportObjekte));
 }

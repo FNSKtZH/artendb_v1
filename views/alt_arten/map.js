@@ -3,7 +3,7 @@
 function (doc) {
     'use strict';
     var _ = require("views/lib/underscore");
-	if (doc.Gruppe) {
+    if (doc.Gruppe) {
         if (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora") {
             // sicherstellen, dass GIS-Layer und Betrachtungsdistanz existieren
             if (doc.Eigenschaftensammlungen && doc.Eigenschaftensammlungen.length > 0) {
@@ -18,5 +18,5 @@ function (doc) {
                 });
             }
         }
-	}
+    }
 }

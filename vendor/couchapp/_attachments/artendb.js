@@ -1189,25 +1189,25 @@ window.adb.handleÖffneGruppeClick = function () {
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function () {
     'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
+    require('./adbModules/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function () {
     'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
+    require('./adbModules/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function () {
     'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Ds');
+    require('./adbModules/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function () {
     'use strict';
-    require('./adbModules/meldeErfolgVonIdIdentifikation') ($, 'Bs');
+    require('./adbModules/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn in textarea keyup oder focus

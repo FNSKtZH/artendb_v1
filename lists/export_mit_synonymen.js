@@ -1,16 +1,16 @@
 function (head, req) {
     'use strict';
     
-	start({
-		"headers": {
-			"Accept-Charset": "utf-8",
-			"Content-Type": "json; charset=utf-8;"
-		}
-	});
+    start({
+        "headers": {
+            "Accept-Charset": "utf-8",
+            "Content-Type": "json; charset=utf-8;"
+        }
+    });
 
-	var row,
+    var row,
         objekt,
-		export_objekte = [],
+        export_objekte = [],
         ü_var = {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
@@ -18,10 +18,10 @@ function (head, req) {
             nur_objekte_mit_eigenschaften: true,
             bez_in_zeilen: true
         },
-		filterkriterien_objekt = {"filterkriterien": []},
-		felder_objekt,
-		objekt_hinzufügen,
-		beziehungssammlungen_aus_synonymen,
+        filterkriterien_objekt = {"filterkriterien": []},
+        felder_objekt,
+        objekt_hinzufügen,
+        beziehungssammlungen_aus_synonymen,
         datensammlungen_aus_synonymen,
         ergänzeDsBsVonSynonym_return,
         _   = require("lists/lib/underscore"),

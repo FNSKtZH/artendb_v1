@@ -1,17 +1,17 @@
 function (doc) {
     'use strict';
 
-	var _ = require("views/lib/underscore");
+    var _ = require("views/lib/underscore");
 
-	if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt") {
+    if (doc.Gruppe && doc.Typ && doc.Typ === "Objekt") {
 
-		if (doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
+        if (doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
             _.each(doc.Taxonomie.Eigenschaften, function (feldwert, feldname) {
                 emit([doc.Gruppe, "Taxonomie", doc.Taxonomie.Name, feldname, typeof feldwert], doc._id);
             });
-		}
+        }
 
-		if (doc.Eigenschaftensammlungen) {
+        if (doc.Eigenschaftensammlungen) {
             _.each(doc.Eigenschaftensammlungen, function (datensammlung) {
                 if (datensammlung.Eigenschaften) {
                     _.each(datensammlung.Eigenschaften, function (feldwert, feldname) {
@@ -19,9 +19,9 @@ function (doc) {
                     });
                 }
             });
-		}
-		
-		if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
+        }
+        
+        if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
             _.each(doc.Beziehungssammlungen, function (beziehungssammlung) {
                 if (beziehungssammlung.Beziehungen && beziehungssammlung.Beziehungen.length > 0) {
                     _.each(beziehungssammlung.Beziehungen, function (beziehung) {
@@ -35,6 +35,6 @@ function (doc) {
                     });
                 }
             });
-		}
-	}
+        }
+    }
 }

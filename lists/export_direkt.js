@@ -1,15 +1,15 @@
 function (head, req) {
     'use strict';
 
-	start({
-		"headers": {
-			"Content-Type": "text/csv; charset=utf-8;",
-			"Content-disposition": "attachment;filename=arteigenschaften.csv",
-			"Accept-Charset": "utf-8"
-		}
-	});
+    start({
+        "headers": {
+            "Content-Type": "text/csv; charset=utf-8;",
+            "Content-disposition": "attachment;filename=arteigenschaften.csv",
+            "Accept-Charset": "utf-8"
+        }
+    });
 
-	var row,
+    var row,
         objekt,
         export_objekte = [],
         ü_var = {
@@ -19,9 +19,9 @@ function (head, req) {
             nur_objekte_mit_eigenschaften: true,
             bez_in_zeilen: true
         },
-		filterkriterien_objekt = {"filterkriterien": []},
-		felder_objekt,
-		objekt_hinzufügen,
+        filterkriterien_objekt = {"filterkriterien": []},
+        felder_objekt,
+        objekt_hinzufügen,
         _   = require("lists/lib/underscore"),
         adb = require("lists/lib/artendb_listfunctions");
 

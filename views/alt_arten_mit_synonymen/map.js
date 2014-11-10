@@ -3,7 +3,7 @@
 function (doc) {
     'use strict';
     var _ = require("views/lib/underscore");
-	if (doc.Gruppe) {
+    if (doc.Gruppe) {
         if (doc.Gruppe === "Fauna" || doc.Gruppe === "Flora") {
             // sicherstellen, dass Taxonomie-ID existiert
             if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften["Taxonomie ID"]) {
@@ -41,5 +41,5 @@ function (doc) {
                 }
             }
         }
-	}
+    }
 }

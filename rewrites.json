@@ -1,19 +1,19 @@
 [
-	{
-		"from": "",
-		"to": "index.html"
-	},
-	{
-		"description": "Zugang zur Datenbank",
-		"from" : "artendb/*",
-		"to" : "../../*"
-	},
-	{
-		"from" : "artendb/",
-		"to" : "../../"
-	},
-	{
-		"from": "/*",
-		"to": "*"
-	}
+    {
+        "from": "",
+        "to": "index.html"
+    },
+    {
+        "description": "Zugang zur Datenbank",
+        "from" : "artendb/*",
+        "to" : "../../*"
+    },
+    {
+        "from" : "artendb/",
+        "to" : "../../"
+    },
+    {
+        "from": "/*",
+        "to": "*"
+    }
 ]

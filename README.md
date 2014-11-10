@@ -281,8 +281,8 @@ Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email a
 Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Eigenschaftensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
 {
-	"_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
-	"Gruppe": "Fauna"
+    "_id": "2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
+    "Gruppe": "Fauna"
 }
 ```
 - _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
@@ -299,27 +299,27 @@ Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
 Ihre Eigenschaften sind unter "Eigenschaften" aufgelistet:
 ```javascript
 "Taxonomie": {
-		"Name":"CSCF (2009)",
-		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
-		"Datenstand":"2009",
-		"Link":"http://www.cscf.ch/",
-		"Eigenschaften": {
-			"Taxonomie ID": 70150,
-			"Klasse":"Reptilia",
-			"Ordnung":"Chelonii",
-			"Familie":"Emydidae",
-			"Gattung":"Emys",
-			"Art":"orbicularis",
-			"Autor":"Linnaeus, 1758",
-			"Artname":"Emys orbicularis Linnaeus, 1758",
-			"Artname vollständig":"Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
-			"Name Deutsch":"Europ. Sumpfschildkröte",
-			"Name Französisch":"Cistude d&#39;Europe",
-			"Name Italienisch":"Emide europea",
-			"Name Romanisch":"Tartaruga da palì",
-			"Name Englisch":"European pond terrapin",
-			"Schutz CH":"Schutz gemäss NHG"
-		}
+        "Name":"CSCF (2009)",
+        "Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
+        "Datenstand":"2009",
+        "Link":"http://www.cscf.ch/",
+        "Eigenschaften": {
+            "Taxonomie ID": 70150,
+            "Klasse":"Reptilia",
+            "Ordnung":"Chelonii",
+            "Familie":"Emydidae",
+            "Gattung":"Emys",
+            "Art":"orbicularis",
+            "Autor":"Linnaeus, 1758",
+            "Artname":"Emys orbicularis Linnaeus, 1758",
+            "Artname vollständig":"Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
+            "Name Deutsch":"Europ. Sumpfschildkröte",
+            "Name Französisch":"Cistude d&#39;Europe",
+            "Name Italienisch":"Emide europea",
+            "Name Romanisch":"Tartaruga da palì",
+            "Name Englisch":"European pond terrapin",
+            "Schutz CH":"Schutz gemäss NHG"
+        }
 }
 ```
 Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet.
@@ -330,33 +330,33 @@ Die JSON-Eigenschaft "Eigenschaftensammlungen" enthält alle Eigenschaftensammlu
 Hier ein Auszug mit nur einer Eigenschaftensammlung:
 ```javascript
 "Eigenschaftensammlungen": [
-	{
-		"Name":"CH Agroscope Zielart (2008)",
-		"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
-		"Datenstand":"2008",
-		"Link":"http://www.agroscope.admin.ch",
-		"Eigenschaften": {
-			"1_1 West-Jura": false,
-			"1_2 Nord-Jura": false,
-			"1_3 Nordostschweiz": false,
-			"2_1 West-Mittelland": true,
-			"2_2 Ost-Mittelland": true,
-			"3_1 West-Nordalpen": true,
-			"3_2 Ost-Nordalpen": false,
-			"4_1 West-Zentralalpen": false,
-			"4_2 Ost-Zentralalpen": false,
-			"4_3 Engadin": false,
-			"5 Südalpen": true,
-			"Collin": true,
-			"Montan": false,
-			"Subalpin": false,
-			"Alpin": false,
-			"Rote Liste CH":"ausgestorben oder verschollen",
-			"Aufwand für Erfolg":"sehr gross",
-			"Beobachtbarkeit":"Die Art ist relativ einfach nachweisbar",
-			"Verbreitung Lebensraum Massnahmen":"Unterhalb 500-600 m; der Status der Sumpfschildkröte in der Schweiz ist nicht vollständig geklärt, da es immer wieder Aussetzungen und Umsiedlungen gab, allerdings werden einige Vorkommen als autochthon betrachtet; sich reproduzierende Populationen gibt es in den Kantonen GE, AG, TG. Lebensraum: stehende Gewässer mit starker Ufer- und Wasservegetation und schlammigem Untergrund; Kleinseen, Weiher und Altwässer mit deckungsreicher Ufervegetation. Massnahmen sollten in Absprache mit Fachpersonen (KARCH) erfolgen. Hinweis: Aussetzungen, Wiederansiedlungen und Umsiedlungen sind bewilligungspflichtig! In Regionen, die für eine offizielle Wiederansiedlung geeignet sein könnten, ist sie als Zielart durchaus denkbar, z.B. Gebiete mit vielen stehenden Gewässern und Feuchtzonen."
-		}
-	}
+    {
+        "Name":"CH Agroscope Zielart (2008)",
+        "Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
+        "Datenstand":"2008",
+        "Link":"http://www.agroscope.admin.ch",
+        "Eigenschaften": {
+            "1_1 West-Jura": false,
+            "1_2 Nord-Jura": false,
+            "1_3 Nordostschweiz": false,
+            "2_1 West-Mittelland": true,
+            "2_2 Ost-Mittelland": true,
+            "3_1 West-Nordalpen": true,
+            "3_2 Ost-Nordalpen": false,
+            "4_1 West-Zentralalpen": false,
+            "4_2 Ost-Zentralalpen": false,
+            "4_3 Engadin": false,
+            "5 Südalpen": true,
+            "Collin": true,
+            "Montan": false,
+            "Subalpin": false,
+            "Alpin": false,
+            "Rote Liste CH":"ausgestorben oder verschollen",
+            "Aufwand für Erfolg":"sehr gross",
+            "Beobachtbarkeit":"Die Art ist relativ einfach nachweisbar",
+            "Verbreitung Lebensraum Massnahmen":"Unterhalb 500-600 m; der Status der Sumpfschildkröte in der Schweiz ist nicht vollständig geklärt, da es immer wieder Aussetzungen und Umsiedlungen gab, allerdings werden einige Vorkommen als autochthon betrachtet; sich reproduzierende Populationen gibt es in den Kantonen GE, AG, TG. Lebensraum: stehende Gewässer mit starker Ufer- und Wasservegetation und schlammigem Untergrund; Kleinseen, Weiher und Altwässer mit deckungsreicher Ufervegetation. Massnahmen sollten in Absprache mit Fachpersonen (KARCH) erfolgen. Hinweis: Aussetzungen, Wiederansiedlungen und Umsiedlungen sind bewilligungspflichtig! In Regionen, die für eine offizielle Wiederansiedlung geeignet sein könnten, ist sie als Zielart durchaus denkbar, z.B. Gebiete mit vielen stehenden Gewässern und Feuchtzonen."
+        }
+    }
 ]
 ```
 
@@ -364,26 +364,26 @@ Hier ein Auszug mit nur einer Eigenschaftensammlung:
 Beziehungssammlungen werden ähnlich aufgebaut wie Eigenschaftensammlungen. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
 "Beziehungssammlungen": [
-	{
-		"Name":"ZH AP FM (2010): Art ist an Lebensraum gebunden",
-		"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
-		"Datenstand":"2010",
-		"Link":"http://www.naturschutz.zh.ch",
-		"Art der Beziehungen":"Art ist an Lebensraum gebunden",
-		"Beziehungen": [
-			{
-				"Beziehungspartner": [
-					{
-						"Gruppe":"Lebensräume",
-						"Taxonomie":"ZH FNS (1977): Feuchtgebietskartierung, Lebensräume",
-						"Name":"02: Röhricht",
-						"GUID":"BF31ECDD-A540-4BA9-956C-BE51C3AA346E"
-					}
-				],
-				"Biotopbindung":"7"
-			}
-		]
-	}
+    {
+        "Name":"ZH AP FM (2010): Art ist an Lebensraum gebunden",
+        "Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
+        "Datenstand":"2010",
+        "Link":"http://www.naturschutz.zh.ch",
+        "Art der Beziehungen":"Art ist an Lebensraum gebunden",
+        "Beziehungen": [
+            {
+                "Beziehungspartner": [
+                    {
+                        "Gruppe":"Lebensräume",
+                        "Taxonomie":"ZH FNS (1977): Feuchtgebietskartierung, Lebensräume",
+                        "Name":"02: Röhricht",
+                        "GUID":"BF31ECDD-A540-4BA9-956C-BE51C3AA346E"
+                    }
+                ],
+                "Biotopbindung":"7"
+            }
+        ]
+    }
 ]
 
 ```
@@ -398,254 +398,254 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Eigenschaftensammlu
 <a name="JsonBeispiel"></a>
 ```javascript
 {
-	"_id":"2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
-	"_rev":"12-4bde606882a8e9c4f449166c3849963e",
-	"Gruppe":"Fauna",
-	"Typ":"Objekt",
-	"Taxonomie":{
-		"Name":"CSCF (2009)",
-		"Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
-		"Datenstand":"2009",
-		"Link":"http://www.cscf.ch/",
-		"Eigenschaften":{
-			"Taxonomie ID": 70150,
-			"Klasse":"Reptilia",
-			"Ordnung":"Chelonii",
-			"Familie":"Emydidae",
-			"Gattung":"Emys",
-			"Art":"orbicularis",
-			"Autor":"Linnaeus, 1758",
-			"Artname":"Emys orbicularis Linnaeus, 1758",
-			"Artname vollständig":"Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
-			"Name Deutsch":"Europ. Sumpfschildkröte",
-			"Name Französisch":"Cistude d&#39;Europe",
-			"Name Italienisch":"Emide europea",
-			"Name Romanisch":"Tartaruga da palì",
-			"Name Englisch":"European pond terrapin",
-			"Schutz CH":"Schutz gemäss NHG"
-		}
-	},
-	"Eigenschaftensammlungen": [
-		{
-			"Name":"CH Agroscope Zielart (2008)",
-			"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
-			"Datenstand":"2008",
-			"Link":"http://www.agroscope.admin.ch",
-			"Eigenschaften":{
-				"1_1 West-Jura": false,
-				"1_2 Nord-Jura": false,
-				"1_3 Nordostschweiz": false,
-				"2_1 West-Mittelland": true,
-				"2_2 Ost-Mittelland": true,
-				"3_1 West-Nordalpen": true,
-				"3_2 Ost-Nordalpen": false,
-				"4_1 West-Zentralalpen": false,
-				"4_2 Ost-Zentralalpen": false,
-				"4_3 Engadin": false,
-				"5 Südalpen": true,
-				"Collin": true,
-				"Montan": false,
-				"Subalpin": false,
-				"Alpin": false,
-				"Rote Liste CH":"ausgestorben oder verschollen",
-				"Aufwand für Erfolg":"sehr gross",
-				"Beobachtbarkeit":"Die Art ist relativ einfach nachweisbar",
-				"Verbreitung Lebensraum Massnahmen":"Unterhalb 500-600 m; der Status der Sumpfschildkröte in der Schweiz ist nicht vollständig geklärt, da es immer wieder Aussetzungen und Umsiedlungen gab, allerdings werden einige Vorkommen als autochthon betrachtet; sich reproduzierende Populationen gibt es in den Kantonen GE, AG, TG. Lebensraum: stehende Gewässer mit starker Ufer- und Wasservegetation und schlammigem Untergrund; Kleinseen, Weiher und Altwässer mit deckungsreicher Ufervegetation. Massnahmen sollten in Absprache mit Fachpersonen (KARCH) erfolgen. Hinweis: Aussetzungen, Wiederansiedlungen und Umsiedlungen sind bewilligungspflichtig! In Regionen, die für eine offizielle Wiederansiedlung geeignet sein könnten, ist sie als Zielart durchaus denkbar, z.B. Gebiete mit vielen stehenden Gewässern und Feuchtzonen."
-			}
-		},
-		{
-			"Name":"CH Prioritäten (2011)",
-			"Beschreibung":"BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
-			"Datenstand":"2012.01",
-			"Link":"http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
-			"Eigenschaften":{
-				"Priorität":"hoch",
-				"Gefährdung":"vom Aussterben bedroht",
-				"Verantwortung":"geringe Verantwortung",
-				"Massnahmenbedarf":"klar",
-				"Bestände überwachen":"nötig",
-				"Kenntnisse vorhanden":"ausreichend",
-				"Techniken bekannt":"erfolgreiche Techniken sind bekannt",
-				"Verbreitung Jura":"nicht vorhanden",
-				"Verbreitung Mittelland":"(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
-				"Verbreitung Nordalpen":"nicht vorhanden",
-				"Verbreitung westliche Zentralalpen":"nicht vorhanden",
-				"Verbreitung östliche Zentralalpen":"nicht vorhanden",
-				"Verbreitung Südalpen":"(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
-				"Verbreitung kollin":"letzter Fund aus den Jahren 2000 bis 2010",
-				"Verbreitung montan":"nicht vorhanden",
-				"Verbreitung subalpin":"nicht vorhanden",
-				"Verbreitung alpin":"nicht vorhanden",
-				"Verbreitung Kt Zürich":"nicht vorhanden"
-			}
-		},
-		{
-			"Name":"CH Rote Listen (unterschiedliche Jahre)",
-			"Beschreibung":"Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
-			"Datenstand":"unterschiedlich",
-			"Eigenschaften":{
-				"Europa Smaragd": true,
-				"Europa":"potentiell gefährdet (NT)",
-				"Schweiz aktuell":"vom Aussterben bedroht (CR)",
-				"Schweiz Kriterien":"B2a, B2b(iii)",
-				"Nordschweiz":"ausgestorben oder verschollen",
-				"Kt Zürich":"ausgestorben oder verschollen",
-				"Quelle":"BAFU 2005 (CH), älter (Regionen)"
-			}
-		},
-		{
-			"Name":"ZH AP FM (2010)",
-			"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
-			"Datenstand":"2010",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Eigenschaften":{
-				"Art ist für AP FM relevant": true,
-				"Bindung an Flachmoore": 7,
-				"Artwert AP FM": 18,
-				"An Strukturen gebunden": true,
-				"Bemerkungen":"Ob die Art im Kanton Zürich noch autochthone Bestände besitzt, bleibt nach wie vor fraglich. Die meisten der beobachteten Tiere sind vermutlich auf illegale Aussetzungen zurückzuführen. Nach heutigem Kenntnisstand ist es dennoch nicht ganz auszuschliessen, dass vereinzelt autochthone (Teil-) Populationen oder vereinzelte Individuen überlebt haben könnten.\nAnzahl Populationen: Es ist nach wie vor unbekannt, ob reproduktionsfähige Populationen existieren (eher nicht) und ob noch autochthone Individuen überlebt haben (möglich aber eher unwahrscheinlich).",
-				"Artwertberechnung Areal weltweit":"mittel (2 Punkte)",
-				"Artwertberechnung Anteil am CH-Bestand":"mittel: 1/4-1/2 (2 Punkte)",
-				"Artwertberechnung Gefährdung EU Punkte": 0,
-				"Artwertberechnung Gefährdung CH Punkte": 4,
-				"Artwertberechnung Gefährdung ZH Punkte": 3,
-				"Artwertberechnung neuer Artwert": 11,
-				"Artwertberechnung verwendeter Artwert": 11,
-				"Ansprüche ans Moor":"Kein eigentlicher Moorbewohner, obwohl sehr gern (v.a. als Jungtier fast obligat) im Schilfröhricht. Eiablagestellen nur an mikroklimatisch begünstigten Stellen (v.a. Böschungen mit xerothermophiler, lückiger Vegetation).",
-				"Kleine überlebensfähige Populationen, Anzahl angestrebt":"5+",
-				"Ansprüche für Kriterium überlebensfähig":"regelmässige Reproduktion",
-				"Regional fördern": true,
-				"Regional fördern wo":" Glatt, Thur, Greifensee, Päffikersee, Katzensee",
-				"Massnahmen":"Spezialprogramm (muss noch definiert werden)."
-			}
-		},
-		{
-			"Name":"ZH AP Grundlagen (1995)",
-			"Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
-			"Datenstand":"ca. 1995",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Eigenschaften":{
-				"Dringlichkeit Aktionsplan":"nicht beurteilt",
-				"Priorität nach Naturschutz-Gesamtkonzept 1990":"nicht beurteilt",
-				"Bestandesentwicklung 1985-2000":"Abnahme",
-				"Keine Bestandesabnahme aber Population bedroht":"nicht beurteilt",
-				"Fördermassnahmen bekannt":"ja",
-				"Geeignete Lebensräume vohanden oder herstellbar":"nein",
-				"Überlebensfähige Populationen vorhanden":"nein",
-				"Etablierungs-Potential gut":"nein",
-				"Ausbreitungs-Potential gut":"ja",
-				"Erfolgsaussichten vorhanden":"ja",
-				"Nationales Artenschutzprogramm":"nicht beurteilt",
-				"Höchste Dringlichkeit":"nicht beurteilt",
-				"Verhältnis Aufwand-Ertrag günstig":"nicht beurteilt",
-				"Umbrella- oder flagship-species":"nicht beurteilt",
-				"Bereits irgendwo Artenschutzprogramme":"nicht beurteilt",
-				"Dringlichkeit":"nicht beurteilt",
-				"Schutz":"Schutz gemäss Bundesgesetz über die Jagd"
-			}
-		},
-		{
-			"Name":"ZH Artengruppen",
-			"Beschreibung":"Artengruppen Kt. Zürich. Eigenschaften von allen Arten",
-			"Datenstand":"2012",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Eigenschaften":{
-				"GIS-Layer":"Reptilien",
-				"Artengruppen-ID in EvAB": 12
-			}
-		},
-		{
-			"Name":"ZH Artwert (1995)",
-			"Beschreibung":"Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
-			"Datenstand":"ca. 1995",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Eigenschaften":{
-				"Artwert": 11,
-				"Artwertberechnung Areal weltweit":"gross (0 Punkte)",
-				"Artwertberechnung Anteil am CH-Bestand":"klein: <1/4 (0 Punkte)"
-			}
-		},
-		{
-			"Name":"ZH GIS",
-			"Beschreibung":"GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften von allen Arten",
-			"Datenstand":"2012",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Eigenschaften":{
-				"Betrachtungsdistanz (m)": 500,
-				"Kriterien für Bestimmung der Betrachtungsdistanz":"5 (500m als Minimalwert zugeteilt)"
-			}
-		}
-	],
-	"Beziehungssammlungen": [
-		{
-			"Name":"CH Agroscope Zielart (2008): Ziel-/Leitart für Lebensraum",
-			"Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
-			"Datenstand":"2008",
-			"Link":"http://www.agroscope.admin.ch",
-			"Art der Beziehungen":"Ziel-/Leitart für Lebensraum",
-			"Beziehungen": [
-				{
-					"Beziehungspartner": [
-						{
-							"Gruppe":"Lebensräume",
-							"Taxonomie":"CH Agroscope (2008): Ziel- und Leitarten",
-							"Name":"06: Weiher, Tümpel, Pfütze",
-							"GUID":"98DDA55D-7C24-4590-BEDE-9A1B02D77592"
-						}
-					]
-				}
-			]
-		},
-		{
-			"Name":"ZH AP FM (2010): Art ist an Lebensraum gebunden",
-			"Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
-			"Datenstand":"2010",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Art der Beziehungen":"Art ist an Lebensraum gebunden",
-			"Beziehungssammlungen": [
-				{
-					"Beziehungspartner": [
-						{
-							"Gruppe":"Lebensräume",
-							"Taxonomie":"ZH FNS (1977): Feuchtgebietskartierung, Lebensräume",
-							"Name":"02: Röhricht",
-							"GUID":"BF31ECDD-A540-4BA9-956C-BE51C3AA346E"
-						}
-					],
-					"Biotopbindung":"7"
-				}
-			]
-		},
-		{
-			"Name":"ZH AP Grundlagen (1995): Art kommt in Lebensraum vor",
-			"Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
-			"Datenstand":"ca. 1995",
-			"Link":"http://www.naturschutz.zh.ch",
-			"Art der Beziehungen":"Art kommt in Lebensraum vor",
-			"Beziehungssammlungen": [
-				{
-					"Beziehungspartner": [
-						{
-							"Gruppe":"Lebensräume",
-							"Taxonomie":"ZH FNS (1995)",
-							"Name":"03: Seen",
-							"GUID":"A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
-						}
-					]
-				},
-				{
-					"Beziehungspartner": [
-						{
-							"Gruppe":"Lebensräume",
-							"Taxonomie":"ZH FNS (1995)",
-							"Name":"04: Weiher, Teiche",
-							"GUID":"8B07E4E6-E768-4CE9-84D6-E490432FD140"
-						}
-					]
-				}
-			]
-		}
-	]
+    "_id":"2B945AD0-F66B-48AD-810C-C2A84BFF6C3E",
+    "_rev":"12-4bde606882a8e9c4f449166c3849963e",
+    "Gruppe":"Fauna",
+    "Typ":"Objekt",
+    "Taxonomie":{
+        "Name":"CSCF (2009)",
+        "Beschreibung":"Index der Info Fauna (2009). Eigenschaften von 21542 Tierarten",
+        "Datenstand":"2009",
+        "Link":"http://www.cscf.ch/",
+        "Eigenschaften":{
+            "Taxonomie ID": 70150,
+            "Klasse":"Reptilia",
+            "Ordnung":"Chelonii",
+            "Familie":"Emydidae",
+            "Gattung":"Emys",
+            "Art":"orbicularis",
+            "Autor":"Linnaeus, 1758",
+            "Artname":"Emys orbicularis Linnaeus, 1758",
+            "Artname vollständig":"Emys orbicularis Linnaeus, 1758 (Europ. Sumpfschildkröte)",
+            "Name Deutsch":"Europ. Sumpfschildkröte",
+            "Name Französisch":"Cistude d&#39;Europe",
+            "Name Italienisch":"Emide europea",
+            "Name Romanisch":"Tartaruga da palì",
+            "Name Englisch":"European pond terrapin",
+            "Schutz CH":"Schutz gemäss NHG"
+        }
+    },
+    "Eigenschaftensammlungen": [
+        {
+            "Name":"CH Agroscope Zielart (2008)",
+            "Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
+            "Datenstand":"2008",
+            "Link":"http://www.agroscope.admin.ch",
+            "Eigenschaften":{
+                "1_1 West-Jura": false,
+                "1_2 Nord-Jura": false,
+                "1_3 Nordostschweiz": false,
+                "2_1 West-Mittelland": true,
+                "2_2 Ost-Mittelland": true,
+                "3_1 West-Nordalpen": true,
+                "3_2 Ost-Nordalpen": false,
+                "4_1 West-Zentralalpen": false,
+                "4_2 Ost-Zentralalpen": false,
+                "4_3 Engadin": false,
+                "5 Südalpen": true,
+                "Collin": true,
+                "Montan": false,
+                "Subalpin": false,
+                "Alpin": false,
+                "Rote Liste CH":"ausgestorben oder verschollen",
+                "Aufwand für Erfolg":"sehr gross",
+                "Beobachtbarkeit":"Die Art ist relativ einfach nachweisbar",
+                "Verbreitung Lebensraum Massnahmen":"Unterhalb 500-600 m; der Status der Sumpfschildkröte in der Schweiz ist nicht vollständig geklärt, da es immer wieder Aussetzungen und Umsiedlungen gab, allerdings werden einige Vorkommen als autochthon betrachtet; sich reproduzierende Populationen gibt es in den Kantonen GE, AG, TG. Lebensraum: stehende Gewässer mit starker Ufer- und Wasservegetation und schlammigem Untergrund; Kleinseen, Weiher und Altwässer mit deckungsreicher Ufervegetation. Massnahmen sollten in Absprache mit Fachpersonen (KARCH) erfolgen. Hinweis: Aussetzungen, Wiederansiedlungen und Umsiedlungen sind bewilligungspflichtig! In Regionen, die für eine offizielle Wiederansiedlung geeignet sein könnten, ist sie als Zielart durchaus denkbar, z.B. Gebiete mit vielen stehenden Gewässern und Feuchtzonen."
+            }
+        },
+        {
+            "Name":"CH Prioritäten (2011)",
+            "Beschreibung":"BAFU (2011): Liste der National Prioritären Arten. Eigenschaften von 607 Tierarten, 2595 Pflanzenarten, 934 Pilzarten und 415 Moosarten",
+            "Datenstand":"2012.01",
+            "Link":"http://www.bafu.admin.ch/publikationen/publikation/01607/index.html?lang=de",
+            "Eigenschaften":{
+                "Priorität":"hoch",
+                "Gefährdung":"vom Aussterben bedroht",
+                "Verantwortung":"geringe Verantwortung",
+                "Massnahmenbedarf":"klar",
+                "Bestände überwachen":"nötig",
+                "Kenntnisse vorhanden":"ausreichend",
+                "Techniken bekannt":"erfolgreiche Techniken sind bekannt",
+                "Verbreitung Jura":"nicht vorhanden",
+                "Verbreitung Mittelland":"(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
+                "Verbreitung Nordalpen":"nicht vorhanden",
+                "Verbreitung westliche Zentralalpen":"nicht vorhanden",
+                "Verbreitung östliche Zentralalpen":"nicht vorhanden",
+                "Verbreitung Südalpen":"(aktuell) nicht beurteilbar: bisher kein Fund in der betreffenden Region/Kanton/Höhenstufe nachgewiesen",
+                "Verbreitung kollin":"letzter Fund aus den Jahren 2000 bis 2010",
+                "Verbreitung montan":"nicht vorhanden",
+                "Verbreitung subalpin":"nicht vorhanden",
+                "Verbreitung alpin":"nicht vorhanden",
+                "Verbreitung Kt Zürich":"nicht vorhanden"
+            }
+        },
+        {
+            "Name":"CH Rote Listen (unterschiedliche Jahre)",
+            "Beschreibung":"Aktuellster Stand pro Artengruppe der Roten Listen. Eigenschaften von 2284 Tierarten",
+            "Datenstand":"unterschiedlich",
+            "Eigenschaften":{
+                "Europa Smaragd": true,
+                "Europa":"potentiell gefährdet (NT)",
+                "Schweiz aktuell":"vom Aussterben bedroht (CR)",
+                "Schweiz Kriterien":"B2a, B2b(iii)",
+                "Nordschweiz":"ausgestorben oder verschollen",
+                "Kt Zürich":"ausgestorben oder verschollen",
+                "Quelle":"BAFU 2005 (CH), älter (Regionen)"
+            }
+        },
+        {
+            "Name":"ZH AP FM (2010)",
+            "Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
+            "Datenstand":"2010",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Eigenschaften":{
+                "Art ist für AP FM relevant": true,
+                "Bindung an Flachmoore": 7,
+                "Artwert AP FM": 18,
+                "An Strukturen gebunden": true,
+                "Bemerkungen":"Ob die Art im Kanton Zürich noch autochthone Bestände besitzt, bleibt nach wie vor fraglich. Die meisten der beobachteten Tiere sind vermutlich auf illegale Aussetzungen zurückzuführen. Nach heutigem Kenntnisstand ist es dennoch nicht ganz auszuschliessen, dass vereinzelt autochthone (Teil-) Populationen oder vereinzelte Individuen überlebt haben könnten.\nAnzahl Populationen: Es ist nach wie vor unbekannt, ob reproduktionsfähige Populationen existieren (eher nicht) und ob noch autochthone Individuen überlebt haben (möglich aber eher unwahrscheinlich).",
+                "Artwertberechnung Areal weltweit":"mittel (2 Punkte)",
+                "Artwertberechnung Anteil am CH-Bestand":"mittel: 1/4-1/2 (2 Punkte)",
+                "Artwertberechnung Gefährdung EU Punkte": 0,
+                "Artwertberechnung Gefährdung CH Punkte": 4,
+                "Artwertberechnung Gefährdung ZH Punkte": 3,
+                "Artwertberechnung neuer Artwert": 11,
+                "Artwertberechnung verwendeter Artwert": 11,
+                "Ansprüche ans Moor":"Kein eigentlicher Moorbewohner, obwohl sehr gern (v.a. als Jungtier fast obligat) im Schilfröhricht. Eiablagestellen nur an mikroklimatisch begünstigten Stellen (v.a. Böschungen mit xerothermophiler, lückiger Vegetation).",
+                "Kleine überlebensfähige Populationen, Anzahl angestrebt":"5+",
+                "Ansprüche für Kriterium überlebensfähig":"regelmässige Reproduktion",
+                "Regional fördern": true,
+                "Regional fördern wo":" Glatt, Thur, Greifensee, Päffikersee, Katzensee",
+                "Massnahmen":"Spezialprogramm (muss noch definiert werden)."
+            }
+        },
+        {
+            "Name":"ZH AP Grundlagen (1995)",
+            "Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
+            "Datenstand":"ca. 1995",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Eigenschaften":{
+                "Dringlichkeit Aktionsplan":"nicht beurteilt",
+                "Priorität nach Naturschutz-Gesamtkonzept 1990":"nicht beurteilt",
+                "Bestandesentwicklung 1985-2000":"Abnahme",
+                "Keine Bestandesabnahme aber Population bedroht":"nicht beurteilt",
+                "Fördermassnahmen bekannt":"ja",
+                "Geeignete Lebensräume vohanden oder herstellbar":"nein",
+                "Überlebensfähige Populationen vorhanden":"nein",
+                "Etablierungs-Potential gut":"nein",
+                "Ausbreitungs-Potential gut":"ja",
+                "Erfolgsaussichten vorhanden":"ja",
+                "Nationales Artenschutzprogramm":"nicht beurteilt",
+                "Höchste Dringlichkeit":"nicht beurteilt",
+                "Verhältnis Aufwand-Ertrag günstig":"nicht beurteilt",
+                "Umbrella- oder flagship-species":"nicht beurteilt",
+                "Bereits irgendwo Artenschutzprogramme":"nicht beurteilt",
+                "Dringlichkeit":"nicht beurteilt",
+                "Schutz":"Schutz gemäss Bundesgesetz über die Jagd"
+            }
+        },
+        {
+            "Name":"ZH Artengruppen",
+            "Beschreibung":"Artengruppen Kt. Zürich. Eigenschaften von allen Arten",
+            "Datenstand":"2012",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Eigenschaften":{
+                "GIS-Layer":"Reptilien",
+                "Artengruppen-ID in EvAB": 12
+            }
+        },
+        {
+            "Name":"ZH Artwert (1995)",
+            "Beschreibung":"Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
+            "Datenstand":"ca. 1995",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Eigenschaften":{
+                "Artwert": 11,
+                "Artwertberechnung Areal weltweit":"gross (0 Punkte)",
+                "Artwertberechnung Anteil am CH-Bestand":"klein: <1/4 (0 Punkte)"
+            }
+        },
+        {
+            "Name":"ZH GIS",
+            "Beschreibung":"GIS-Layer und Projektrelevanzen im Kanton Zürich. Eigenschaften von allen Arten",
+            "Datenstand":"2012",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Eigenschaften":{
+                "Betrachtungsdistanz (m)": 500,
+                "Kriterien für Bestimmung der Betrachtungsdistanz":"5 (500m als Minimalwert zugeteilt)"
+            }
+        }
+    ],
+    "Beziehungssammlungen": [
+        {
+            "Name":"CH Agroscope Zielart (2008): Ziel-/Leitart für Lebensraum",
+            "Beschreibung":"Agroscope (2008). Eigenschaften von 207 Tierarten",
+            "Datenstand":"2008",
+            "Link":"http://www.agroscope.admin.ch",
+            "Art der Beziehungen":"Ziel-/Leitart für Lebensraum",
+            "Beziehungen": [
+                {
+                    "Beziehungspartner": [
+                        {
+                            "Gruppe":"Lebensräume",
+                            "Taxonomie":"CH Agroscope (2008): Ziel- und Leitarten",
+                            "Name":"06: Weiher, Tümpel, Pfütze",
+                            "GUID":"98DDA55D-7C24-4590-BEDE-9A1B02D77592"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name":"ZH AP FM (2010): Art ist an Lebensraum gebunden",
+            "Beschreibung":"Aktionsplan Flachmoore des Kantons Zürich (2010). Eigenschaften von 728 Tierarten, 3500 Pflanzenarten, 57 Moosarten und 60 Lebensräumen. 10219 Beziehungen zwischen Tierarten und Lebensräumen. 664 Beziehungen zwischen Pflanzenarten und Lebensräumen. 79 Beziehungen zwischen Moosarten und Lebensräumen",
+            "Datenstand":"2010",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Art der Beziehungen":"Art ist an Lebensraum gebunden",
+            "Beziehungssammlungen": [
+                {
+                    "Beziehungspartner": [
+                        {
+                            "Gruppe":"Lebensräume",
+                            "Taxonomie":"ZH FNS (1977): Feuchtgebietskartierung, Lebensräume",
+                            "Name":"02: Röhricht",
+                            "GUID":"BF31ECDD-A540-4BA9-956C-BE51C3AA346E"
+                        }
+                    ],
+                    "Biotopbindung":"7"
+                }
+            ]
+        },
+        {
+            "Name":"ZH AP Grundlagen (1995): Art kommt in Lebensraum vor",
+            "Beschreibung":"Einstufung von Arten im Kanton Zürich. Eigenschaften von 682 Tierarten und 3156 Pflanzenarten",
+            "Datenstand":"ca. 1995",
+            "Link":"http://www.naturschutz.zh.ch",
+            "Art der Beziehungen":"Art kommt in Lebensraum vor",
+            "Beziehungssammlungen": [
+                {
+                    "Beziehungspartner": [
+                        {
+                            "Gruppe":"Lebensräume",
+                            "Taxonomie":"ZH FNS (1995)",
+                            "Name":"03: Seen",
+                            "GUID":"A0FC1442-784E-44BA-9FAD-8749AF9D7DCA"
+                        }
+                    ]
+                },
+                {
+                    "Beziehungspartner": [
+                        {
+                            "Gruppe":"Lebensräume",
+                            "Taxonomie":"ZH FNS (1995)",
+                            "Name":"04: Weiher, Teiche",
+                            "GUID":"8B07E4E6-E768-4CE9-84D6-E490432FD140"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
 ```
 Das kann auch ein Laie direkt lesen, obwohl es maschinenlesbare Rohdaten sind. Man muss bloss einen Editor verwenden, der die Struktur von JSON-Daten optisch umsetzt.

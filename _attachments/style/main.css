@@ -5809,12 +5809,12 @@ button.close {
 
 
 /*--------------------------------*\
-	1. #GRUNDSTRUKTUR
+    1. #GRUNDSTRUKTUR
 \*--------------------------------*/
 
 body {
-	padding: 8px 8px 8px 7px !important;
-	/* Silbentrennung einschalten */
+    padding: 8px 8px 8px 7px !important;
+    /* Silbentrennung einschalten */
     -webkit-hyphens: auto;
        -moz-hyphens: auto;
         -ms-hyphens: auto;
@@ -5823,23 +5823,23 @@ body {
 }
 
 #menu_btn {
-	position: absolute;
-	top:  18px;
-	left: 16px;
-	/* vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken */
-	z-index: 5;
+    position: absolute;
+    top:  18px;
+    left: 16px;
+    /* vor den Gruppe-Label setzen, sonst kann man den btn nicht klicken */
+    z-index: 5;
 }
 
 #forms {
-	/* wenn forms unter menu kommt muss ein margin vorhanden sein */
-	margin:0 0 7px 0;
-	/* bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren */
-	border: none;
-	padding: 0 0 0 0;
-	position: relative;
-	width: 100%;
-	/* zu Beginn nicht anzeigen */
-	display: none;
+    /* wenn forms unter menu kommt muss ein margin vorhanden sein */
+    margin:0 0 7px 0;
+    /* bootstrap-glyphicons.css vergibt Eigenschaften > korrigieren */
+    border: none;
+    padding: 0 0 0 0;
+    position: relative;
+    width: 100%;
+    /* zu Beginn nicht anzeigen */
+    display: none;
 }
 
 /*
@@ -5848,70 +5848,70 @@ body {
 * iPhone ignoriert handheld leider
 */
 #menu {
-	left: 7px;
-	/* right: 0; ausgeschaltet - unnötig */
-	/* float: left; ausgeschaltet - unnötig */
-	/*width: -webkit-calc(100% - 2px);
-	width:      -o-calc(100% - 2px);
-	width:         calc(100% - 2px);*/
+    left: 7px;
+    /* right: 0; ausgeschaltet - unnötig */
+    /* float: left; ausgeschaltet - unnötig */
+    /*width: -webkit-calc(100% - 2px);
+    width:      -o-calc(100% - 2px);
+    width:         calc(100% - 2px);*/
     width: 100%;
-	padding: 8px 8px 8px 8px;
-	margin-bottom: 10px;
-	overflow: visible;
-	border: 1px solid #e5e5e5;
-	border-radius: 6px;
-	background-color: #FFFFF0;
-	/* auf chrome liegt Menu ohne z-index unter Accordion */
-	z-index: 1;
+    padding: 8px 8px 8px 8px;
+    margin-bottom: 10px;
+    overflow: visible;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background-color: #FFFFF0;
+    /* auf chrome liegt Menu ohne z-index unter Accordion */
+    z-index: 1;
 }
 
 /* über 1000px nebeneinander
   force-mobile: damit kann die Mobil-Sicht manuell gewählt werden */
 @media screen and (min-width: 1001px) {
 
-	body:not(.force-mobile) #menu {
-		width: 383px;
-		position: fixed;
-	}
+    body:not(.force-mobile) #menu {
+        width: 383px;
+        position: fixed;
+    }
 
-	body:not(.force-mobile) #menu_btn {
-		position: fixed;
-	}
+    body:not(.force-mobile) #menu_btn {
+        position: fixed;
+    }
 
-	body:not(.force-mobile) #forms {
-		/* nach rechts schieben */
-		    -ms-transform: translate(391px,0px);
-		-webkit-transform: translate(391px,0px);
-		     -o-transform: translate(391px,0px);
-		   -moz-transform: translate(391px,0px);
-		        transform: translate(391px,0px);
+    body:not(.force-mobile) #forms {
+        /* nach rechts schieben */
+            -ms-transform: translate(391px,0px);
+        -webkit-transform: translate(391px,0px);
+             -o-transform: translate(391px,0px);
+           -moz-transform: translate(391px,0px);
+                transform: translate(391px,0px);
 
-		/* Breite berechnen */
-		width: -webkit-calc(100% - 391px);
-		width:      -o-calc(100% - 391px);
-		width:         calc(100% - 391px);
-	}
+        /* Breite berechnen */
+        width: -webkit-calc(100% - 391px);
+        width:      -o-calc(100% - 391px);
+        width:         calc(100% - 391px);
+    }
 
-	/* In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div! */
-	body:not(.force-mobile) #menu [level="1"] {
-		width: 320px;
-	}
+    /* In Chrome ab 7.2013 verbreitert node-Text im Baum das menu-div! */
+    body:not(.force-mobile) #menu [level="1"] {
+        width: 320px;
+    }
 
-	body:not(.force-mobile) #menu [level="2"] {
-		width: 302px;
-	}
+    body:not(.force-mobile) #menu [level="2"] {
+        width: 302px;
+    }
 
-	body:not(.force-mobile) #menu [level="3"] {
-		width: 284px;
-	}
+    body:not(.force-mobile) #menu [level="3"] {
+        width: 284px;
+    }
 
-	body:not(.force-mobile) #menu [level="4"] {
-		width: 266px;
-	}
+    body:not(.force-mobile) #menu [level="4"] {
+        width: 266px;
+    }
 
-	body:not(.force-mobile) #menu [level="5"] {
-		width: 248px;
-	}
+    body:not(.force-mobile) #menu [level="5"] {
+        width: 248px;
+    }
 }
 
 
@@ -5919,23 +5919,23 @@ body {
 
 
 /*--------------------------------*\
-	2. #MENU
-	   #allgemein / querbeet
+    2. #MENU
+       #allgemein / querbeet
 \*--------------------------------*/
 
 #menu-div {
-	line-height: 30px;
+    line-height: 30px;
 }
 
 /* Symbol auffälliger machen
   und zentrieren */
 #menu .glyphicon {
-	font-weight: 800;
-	top: 2px;
+    font-weight: 800;
+    top: 2px;
 }
 
 #menu button {
-	margin-right: 7px;
+    margin-right: 7px;
 }
 
 #menu_btn iframe {
@@ -5948,8 +5948,8 @@ body {
 }
 
 #menu .suchen {
-	margin-bottom: 2px;
-	display: none;
+    margin-bottom: 2px;
+    display: none;
 }
 
 /*
@@ -5957,114 +5957,114 @@ body {
 **weil twitter typeahead sie sonst verändert
 */
 #menu .suchfeld {
-	/* Styling mit Lupe links im Suchfeld
-	width: 319px;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;*/
+    /* Styling mit Lupe links im Suchfeld
+    width: 319px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;*/
 
-	/* Styling ohne Lupe links im Suchfeld */
-	width: 354px;
-	border-radius: 3px;
-	background-color: #FFFFFF !important;
-	font-size: 14px !important;
+    /* Styling ohne Lupe links im Suchfeld */
+    width: 354px;
+    border-radius: 3px;
+    background-color: #FFFFFF !important;
+    font-size: 14px !important;
 
-	text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 /* gesuchte Einträge formattieren */
 .jstree-search {
-	color: #CC012A !important;
+    color: #CC012A !important;
 }
 
 /* Text umbrechen lassen */
 #menu .jstree a {
-	white-space: normal;
-	height: auto;
-	padding: 4px 1px;
+    white-space: normal;
+    height: auto;
+    padding: 4px 1px;
 }
 
 .baum {
-	overflow:   auto;
-	overflow-x: hidden;
-	/* verhindern, das Text hinter dem Scrollbalken verschwindet */
-	padding-right: 15px;
+    overflow:   auto;
+    overflow-x: hidden;
+    /* verhindern, das Text hinter dem Scrollbalken verschwindet */
+    padding-right: 15px;
 }
 
 .baum li > ins {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 .baum .jstree-hovered, .baum .jstree-clicked {
-	border: 0;
+    border: 0;
 }
 
 .baum a ins {
-	height: 20px;
-	width:  20px;
-	background-position: -56px -17px;
+    height: 20px;
+    width:  20px;
+    background-position: -56px -17px;
 }
 
 #vakata-contextmenu {
-	width: 230px;
+    width: 230px;
 }
 
 #Gruppe {
-	margin-top:    5px;
-	margin-bottom: 5px;
-	margin-left:   0;
-	position: relative;
+    margin-top:    5px;
+    margin-bottom: 5px;
+    margin-left:   0;
+    position: relative;
 }
 
 #Gruppe .active {
-	background-color: #222 !important;
+    background-color: #222 !important;
 }
 
 #gruppe_label {
-	position: relative;
-	left: 68px;
-	top:   8px;
-	/* sonst überlappt es das Formular rechts davon! */
-	width: 250px;
+    position: relative;
+    left: 68px;
+    top:   8px;
+    /* sonst überlappt es das Formular rechts davon! */
+    width: 250px;
 }
 
 .treeBeschriftung {
-	margin-bottom: 1px;
+    margin-bottom: 1px;
 }
 
 
 
 
 /*--------------------------------*\
-	2. #MENU
-	   #Twitter typeahead
+    2. #MENU
+       #Twitter typeahead
 \*--------------------------------*/
 
 .twitter-typeahead {
-	background-color: #FFF !important;
-	font-size: 14px !important;
-	width: 300px !important;
-	white-space:nowrap !important;
+    background-color: #FFF !important;
+    font-size: 14px !important;
+    width: 300px !important;
+    white-space:nowrap !important;
 }
 
 /*
 **der hint darf nicht sichtbar sein
 */
 #menu .twitter-typeahead .tt-hint {
-	opacity: 0;
+    opacity: 0;
 }
 
 .tt-dropdown-menu {
-	width: 535px !important;
-	white-space:nowrap !important;
+    width: 535px !important;
+    white-space:nowrap !important;
 }
 
 .tt-dataset-filtern {
-	width: 535px !important;
-	white-space: nowrap !important;
+    width: 535px !important;
+    white-space: nowrap !important;
 }
 
 .tt-suggestion {
-	white-space: nowrap !important;
+    white-space: nowrap !important;
 }
 
 /* nötig, damit twitter typeahead in bootstrap korrekt dargestellt wird */
@@ -6087,8 +6087,8 @@ body {
     -webkit-border-radius: 6px;
        -moz-border-radius: 6px;
             border-radius: 6px;
-	   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-	      -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+       -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
                box-shadow: 0 5px 10px rgba(0,0,0,.2);
   -webkit-background-clip: padding-box;
      -moz-background-clip: padding-box;
@@ -6125,53 +6125,53 @@ body {
 
 
 /*--------------------------------*\
-	3. #FORMS
-	   allgemein / querbeet
+    3. #FORMS
+       allgemein / querbeet
 \*--------------------------------*/
 
 .panel {
-	margin-bottom: 2px;
+    margin-bottom: 2px;
 }
 
 .panel-heading {
-	padding-top:    6px;
-	padding-bottom: 6px;
-	border: none;
+    padding-top:    6px;
+    padding-bottom: 6px;
+    border: none;
 }
 
 .panel-heading a {
-	font-size: 17px;
-	color: #944600;
-	font-weight: bold;
+    font-size: 17px;
+    color: #944600;
+    font-weight: bold;
 }
 
 .panel-heading h4.panel-title {
-	font-size: 17px;
-	color: #944600;
-	font-weight: bold;
-	padding-left:   0;
-	padding-top:    3px;
-	padding-bottom: 3px;
-	margin-bottom:  0;
+    font-size: 17px;
+    color: #944600;
+    font-weight: bold;
+    padding-left:   0;
+    padding-top:    3px;
+    padding-bottom: 3px;
+    margin-bottom:  0;
 }
 
 /* Gradient, um die panels zu stylen */
 .panel-heading-gradient {
-	background-color: #FFFFD8; 
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
-	background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
-	background-image:    -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image:     -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
-	background-image:      -o-linear-gradient(top, #FFFFE0, #FFFFD8);
+    background-color: #FFFFD8; 
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFE0), to(#FFFFD8));
+    background-image: -webkit-linear-gradient(top, #FFFFE0, #FFFFD8); 
+    background-image:    -moz-linear-gradient(top, #FFFFE0, #FFFFD8);
+    background-image:     -ms-linear-gradient(top, #FFFFE0, #FFFFD8);
+    background-image:      -o-linear-gradient(top, #FFFFE0, #FFFFD8);
 }
 
 .panel-body {
-	background-color: #FFFFF0;
-	border-top: 1px solid #e5e5e5;
+    background-color: #FFFFF0;
+    border-top: 1px solid #e5e5e5;
 }
 
 .panel-body hr {
-	margin: 11px 0;
+    margin: 11px 0;
 }
 
 input[readonly="readonly"], textarea[readonly="readonly"] {
@@ -6182,22 +6182,22 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 #importieren_ds label,
 #importieren_bs label,
 #export .form-group label {
-	width: 200px;
-	color: #555555;
-	margin-right: 7px;
-	/* bootstrap.css macht font-weight bold */
-	font-weight: normal;
-	/* vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist */
-	margin-bottom: 0;
+    width: 200px;
+    color: #555555;
+    margin-right: 7px;
+    /* bootstrap.css macht font-weight bold */
+    font-weight: normal;
+    /* vertikalen Abstand vermindern, wenn der Text des Labels umgebrochen ist */
+    margin-bottom: 0;
 }
 
 a {
-	color: #016ca2;
+    color: #016ca2;
 }
 
 .form input[type="radio"], .form input[type="checkbox"] {
-	margin-top:  8px !important;
-	margin-left: 4px !important;
+    margin-top:  8px !important;
+    margin-left: 4px !important;
 }
 
 label+input[type="radio"], label+input[type="checkbox"] {
@@ -6206,12 +6206,12 @@ label+input[type="radio"], label+input[type="checkbox"] {
 
 /*VORLÄUFIG KONTEN ERSTELLEN AUSBLENDEN*/
 .konto_erstellen_btn {
-	display: none !important;
+    display: none !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	/* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
-	font-weight: bold !important;
+    /* wird von bootstrap auf 500 gesetzt, was nicht fett ist */
+    font-weight: bold !important;
 }
 
 h5 a {
@@ -6248,222 +6248,222 @@ h5 a {
 }
 
 .felderspalte {
-	/* Breite */
-	   -moz-column-width: 450px;
-	-webkit-column-width: 450px;
-	        column-width: 450px;
-	/* bootstrap setzt -15px */
-	margin-left: 0;
-	/* Trennung */
-	-webkit-column-break-inside: avoid;
-	   -moz-column-break-inside: avoid;
-	     -o-column-break-inside: avoid;
-	    -ms-column-break-inside: avoid;
-	        column-break-inside: avoid;
+    /* Breite */
+       -moz-column-width: 450px;
+    -webkit-column-width: 450px;
+            column-width: 450px;
+    /* bootstrap setzt -15px */
+    margin-left: 0;
+    /* Trennung */
+    -webkit-column-break-inside: avoid;
+       -moz-column-break-inside: avoid;
+         -o-column-break-inside: avoid;
+        -ms-column-break-inside: avoid;
+            column-break-inside: avoid;
 }
 
 .felderspalte .form-group {
-	/* bootstrap setzt -15px */
-	margin-left: 0;
-	-webkit-column-break-inside: avoid;
-	-moz-column-break-inside: avoid;
-	-o-column-break-inside: avoid;
-	-ms-column-break-inside: avoid;
-	column-break-inside: avoid;
+    /* bootstrap setzt -15px */
+    margin-left: 0;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    -o-column-break-inside: avoid;
+    -ms-column-break-inside: avoid;
+    column-break-inside: avoid;
 }
 
 /* ohne das werden checkboxen z.T. von ihrem Label getrennt, in Chrome */
 .felderspalte .checkbox {
-	-webkit-column-break-inside: avoid;
-	   -moz-column-break-inside: avoid;
-	     -o-column-break-inside: avoid;
-	    -ms-column-break-inside: avoid;
-	        column-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+       -moz-column-break-inside: avoid;
+         -o-column-break-inside: avoid;
+        -ms-column-break-inside: avoid;
+            column-break-inside: avoid;
 }
 
 a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 #art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
-	color: #6F6F66;
-	font-weight: bold;
-	margin: 0 0 7px 0;
+    color: #6F6F66;
+    font-weight: bold;
+    margin: 0 0 7px 0;
 }
 
 .controls {
-	/* Breite fix setzen für Browser, die calc nicht unterstützen */
-	width: 1000px;
-	/* Breite fix setzen für Browser, die calc unterstützen */
-	width: -webkit-calc(100% - 230px) !important;
-	width:      -o-calc(100% - 230px) !important;
-	width:         calc(100% - 230px) !important;
-	font-size: 14px !important;
+    /* Breite fix setzen für Browser, die calc nicht unterstützen */
+    width: 1000px;
+    /* Breite fix setzen für Browser, die calc unterstützen */
+    width: -webkit-calc(100% - 230px) !important;
+    width:      -o-calc(100% - 230px) !important;
+    width:         calc(100% - 230px) !important;
+    font-size: 14px !important;
 }
 
 .feld_in_formgroup {
-	margin-left: 210px;
+    margin-left: 210px;
 }
 
 .feld {
-	margin-left: 192px;
+    margin-left: 192px;
 }
 
 .feldtext {
-	margin-top: 4px;
+    margin-top: 4px;
 }
 
 .Datensammlung {
-	color: #944600;
+    color: #944600;
 }
 
 .tabelle {
-	overflow:   auto;
-	overflow-y: hidden;
+    overflow:   auto;
+    overflow-y: hidden;
 }
 
 .table {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .alert {
-	/* wird erst sichtbar geschaltet, wenn benötigt */
-	display: none;
+    /* wird erst sichtbar geschaltet, wenn benötigt */
+    display: none;
     margin-bottom: 0px !important;
 }
 
 .modal-backdrop.fade.in {
-	/* bootstrap macht schwarz, das ist hässlich */
-	opacity: 0.8;
+    /* bootstrap macht schwarz, das ist hässlich */
+    opacity: 0.8;
 }
 
 .btn.disabled {
-	/* bootstrap macht 0.85, das ist nur schwer sichtbar */
-	opacity: 0.5;
+    /* bootstrap macht 0.85, das ist nur schwer sichtbar */
+    opacity: 0.5;
 }
 
 .BeschreibungDatensammlung {
-	padding-bottom: 0.9em;
-	/* sehr lange links müssen im Wort umbrechen können */
-	word-wrap: break-word;
+    padding-bottom: 0.9em;
+    /* sehr lange links müssen im Wort umbrechen können */
+    word-wrap: break-word;
 }
 
 /* alle Datenfelder links ausrichten */
 .Datenfelder {
-	float: left;
-	margin: 0 5px 10px 0;
+    float: left;
+    margin: 0 5px 10px 0;
 }
 
 /* ausrichten wie die Felder */
 .form-horizontal .form-actions {
-	padding-left: 190px;
+    padding-left: 190px;
 }
 
 .form-control {
-	display: inline-block !important;
+    display: inline-block !important;
 }
 
 /* Titel für Eigenschaften und Beziehungen stylen */
 .form h4 {
-	padding-left: 15px;
-	margin-bottom: 3px;
-	color: #424242;
-	font-size: 18px;
-	font-weight: bold;
+    padding-left: 15px;
+    margin-bottom: 3px;
+    color: #424242;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .form h4:first-child {
-	margin-top: 3px;
+    margin-top: 3px;
 }
 
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-	color: #424242;
+    color: #424242;
 }
 
 .form {
-	margin-left: auto;
-	/* verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt */
-	display: none;
+    margin-left: auto;
+    /* verhindern, dass auf dem Handy beim Erstaufruf das Formular aufblitzt */
+    display: none;
 }
 
 /* vertikalen Abstand zwischen Feldern verkleinern */
 #art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
-	margin-bottom: 5px;
-	-webkit-column-break-inside: avoid;
-	   -moz-column-break-inside: avoid;
-	     -o-column-break-inside: avoid;
-	    -ms-column-break-inside: avoid;
-	        column-break-inside: avoid;
+    margin-bottom: 5px;
+    -webkit-column-break-inside: avoid;
+       -moz-column-break-inside: avoid;
+         -o-column-break-inside: avoid;
+        -ms-column-break-inside: avoid;
+            column-break-inside: avoid;
 }
 
 [type=number] {
-	width: 100px;
+    width: 100px;
 }
 
 .form-control-static {
-	margin-left: 207px;
-	padding-top: 0 !important;
+    margin-left: 207px;
+    padding-top: 0 !important;
 }
 
 input[type=file] {
-	margin-left: 0 !important;
+    margin-left: 0 !important;
 }
 
 .input-group-xs > .input-group-addon {
-	/* aus unbekanntem Grund stimmt die Höhe nicht */
-	height: 20px;
+    /* aus unbekanntem Grund stimmt die Höhe nicht */
+    height: 20px;
 }
 
 label {
-	/* nicht nötig, wenn checkbox mit label beschrieben wird*/
-	line-height: 15px !important;
-	float: left !important;
+    /* nicht nötig, wenn checkbox mit label beschrieben wird*/
+    line-height: 15px !important;
+    float: left !important;
 }
 
 option {
-	white-space: pre;
+    white-space: pre;
 }
 
 .modal-header {
-	padding: 5px 20px 5px 20px;
+    padding: 5px 20px 5px 20px;
 }
 
 .modal-footer {
-	padding: 10px 15px 10px 15px;
+    padding: 10px 15px 10px 15px;
 }
 
 .hinweis {
-	/* wird erst eingeblendet, wenn ein Anliegen besteht */
-	display: none;
-	margin-left:  210px;
-	margin-top:     7px;
-	margin-bottom:  7px !important;
-	padding-top:    7px;
-	padding-bottom: 7px;
+    /* wird erst eingeblendet, wenn ein Anliegen besteht */
+    display: none;
+    margin-left:  210px;
+    margin-top:     7px;
+    margin-bottom:  7px !important;
+    padding-top:    7px;
+    padding-bottom: 7px;
 }
 
 .alert {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .signup {
-	/* wird erst bei signup eingeblendet */
-	display: none;
+    /* wird erst bei signup eingeblendet */
+    display: none;
 }
 
 /* Bootstrap übersteuern */
 .form-actions {
-	background-color: transparent;
-	border-top: none;
-	margin-top:    0;
-	margin-bottom: 0;
-	padding: 5px 20px 0;
+    background-color: transparent;
+    border-top: none;
+    margin-top:    0;
+    margin-bottom: 0;
+    padding: 5px 20px 0;
 }
 
 .well {
     background-color: #FFFFF0 !important;
-	padding: 9px 9px 4px 9px;
-	margin-bottom: 10px !important;
+    padding: 9px 9px 4px 9px;
+    margin-bottom: 10px !important;
 }
 
 .last-well {
@@ -6480,44 +6480,44 @@ a.show_next_hidden_export {
 
 
 /*--------------------------------*\
-	3. #FORMS
-	   #art
+    3. #FORMS
+       #art
 \*--------------------------------*/
 
 #art textarea {
-	/* textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso */
-	/*margin-left: 4px;*/
+    /* textinputs muss man im Artformular weiter nach rechts schieben, unklar wieso */
+    /*margin-left: 4px;*/
 }
 
 .bearb_toolbar {
-	position: absolute;
-	margin-top: -3px;
-	right: 23px;
+    position: absolute;
+    margin-top: -3px;
+    right: 23px;
 }
 
 #lr_parent_waehlen .modal-content {
-	background-color: #FFFFF0;
+    background-color: #FFFFF0;
 }
 
 #lr_parent_waehlen .modal-dialog {
-	display: block;
-	/*max-width: -webkit-calc(100% - 20px);
-	max-width: -o-calc(100% - 20px);
-	max-width: calc(100% - 20px);*/
+    display: block;
+    /*max-width: -webkit-calc(100% - 20px);
+    max-width: -o-calc(100% - 20px);
+    max-width: calc(100% - 20px);*/
 }
 
 #lr_parent_waehlen .modal-body {
-	overflow-y: auto !important;
-	padding-top:    0;
-	padding-bottom: 0;
+    overflow-y: auto !important;
+    padding-top:    0;
+    padding-bottom: 0;
 }
 
 #lr_parent_waehlen .modal-header {
-	padding: 0 15px 0 15px;
+    padding: 0 15px 0 15px;
 }
 
 #lr_parent_waehlen h3 {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 
@@ -6525,38 +6525,38 @@ a.show_next_hidden_export {
 
 
 /*--------------------------------*\
-	3. #FORMS
-	   #exportieren
+    3. #FORMS
+       #exportieren
 \*--------------------------------*/
 
 #export .panel-body hr,
 #export_alt .panel-body hr {
-	margin-bottom: 0;
-	margin-top:   16px;
+    margin-bottom: 0;
+    margin-top:   16px;
 }
 
 #export .checkbox,
 #export_alt .checkbox {
-	padding-top:   0;
-	margin-bottom: 5px;
+    padding-top:   0;
+    margin-bottom: 5px;
 }
 
 .export_zum_titel_gehoerig {
-	margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 #export input[type="radio"], #export input[type="checkbox"],
 #export_alt input[type="radio"], #export input[type="checkbox"] {
-	margin-top:    1px !important;
-	margin-left: -19px !important;
+    margin-top:    1px !important;
+    margin-left: -19px !important;
 }
 
 #exportieren_felder_waehlen input[type="radio"],
 #exportieren_alt_felder_waehlen input[type="radio"],
 #exportieren_felder_waehlen input[type="checkbox"],
 #exportieren_alt_felder_waehlen input[type="checkbox"] {
-	margin-top:    1px !important;
-	margin-left: -19px !important;
+    margin-top:    1px !important;
+    margin-left: -19px !important;
 }
 
 #exportieren_panel div.adb-hidden,
@@ -6607,8 +6607,8 @@ a.show_next_hidden_export {
 
 
 /*--------------------------------*\
-	3. #FORMS
-	   #importieren
+    3. #FORMS
+       #importieren
 \*--------------------------------*/
 
 /*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
@@ -6636,9 +6636,9 @@ a.show_next_hidden_export {
 }
 
 #importieren_ds_ids_identifizieren .alert {
-	margin-left: 192px;
-	margin-right:  7px;
-	margin-top:    6px;
+    margin-left: 192px;
+    margin-right:  7px;
+    margin-top:    6px;
 }
 
 
@@ -6646,8 +6646,8 @@ a.show_next_hidden_export {
 
 
 /*--------------------------------*\
-	3. #FORMS
-	   #admin
+    3. #FORMS
+       #admin
 \*--------------------------------*/
 
 #admin label {
@@ -6660,7 +6660,7 @@ a.show_next_hidden_export {
 
 
 /*--------------------------------*\
-	4. #TOOLS/QUERBEET
+    4. #TOOLS/QUERBEET
 \*--------------------------------*/
 
 /*Vorsicht: hidden geht nicht - das wird von bootstrap benutzt*/
@@ -6673,12 +6673,12 @@ a.show_next_hidden_export {
 }
 
 .btn-primary {
-	background-color: #414141 !important;
-	border-color:        #222 !important;
+    background-color: #414141 !important;
+    border-color:        #222 !important;
 }
 
 .btn-primary:hover {
-	background-color: #222 !important;
+    background-color: #222 !important;
 }
 
 /*# sourceMappingURL=main.css.map */

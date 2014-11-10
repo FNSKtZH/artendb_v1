@@ -5,8 +5,8 @@ var gulp = require('gulp'),
 
 gulp.task('prod_build_jstree', function () {
     return gulp.src([
-	    	'vendor/couchapp/_attachments/jquery.jstree.js'
-    	])
+        'vendor/couchapp/_attachments/jquery.jstree.js'
+    ])
         .pipe(concat('jquery.jstree.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('vendor/couchapp/_attachments'))

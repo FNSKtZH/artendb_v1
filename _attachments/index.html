@@ -1134,7 +1134,7 @@
                             }
                             URL.createObjectURL = function (blob) {
                                 var type = blob.type,
-                                	data_URI_header;
+                                    data_URI_header;
                                 if (type === null) {
                                     type = "application/octet-stream";
                                 }
@@ -1163,9 +1163,9 @@
                                 // decode data to a binary string
                                 if (Uint8Array && (data instanceof ArrayBuffer || data instanceof Uint8Array)) {
                                     var str = "", 
-                                    	buf = new Uint8Array(data),
-                                    	i = 0,
-                                    	buf_len = buf.length;
+                                        buf = new Uint8Array(data),
+                                        i = 0,
+                                        buf_len = buf.length;
                                     for (; i < buf_len; i++) {
                                         str += String.fromCharCode(buf[i]);
                                     }
