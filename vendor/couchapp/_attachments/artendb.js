@@ -870,7 +870,7 @@ window.adb.handleFeldWählenAlleVonDs = function () {
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
     'use strict';
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
-    require('./adbModules/erstelleListeFuerFeldwahl')($, gruppen_gewählt);
+    require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppen_gewählt);
 };
 
 // ist nötig, weil index.html nicht requiren kann
@@ -1029,10 +1029,12 @@ window.adb.scrollThisToTop = function (that, minus) {
 
 window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
     'use strict';
-    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
+    var gruppen_gewählt = window.adb.fürExportGewählteGruppen(),
+        erstelleListeFuerFeldwahl = require('./adbModules/export/erstelleListeFuerFeldwahl');
+
     if (gruppen_gewählt.length === 0) {
         // keine Gruppe gewählt
-        require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
+        erstelleListeFuerFeldwahl(gruppen_gewählt);
         // und den panel schliessen
         $(that).collapse('hide');
         return false;
@@ -1047,7 +1049,8 @@ window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
 // wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {
     'use strict';
-    var gruppe_ist_gewählt = false;
+    var gruppe_ist_gewählt = false,
+        erstelleListeFuerFeldwahl = require('./adbModules/export/erstelleListeFuerFeldwahl');
     if ($(that).hasClass("active")) {
         window.adb.fasseTaxonomienZusammen = false;
         $(that).html("Alle Taxonomien zusammenfassen");
@@ -1058,7 +1061,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
     // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
     var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
     if (gruppen_gewählt.length > 0) {
-        require('./adbModules/erstelleListeFuerFeldwahl') ($, gruppen_gewählt);
+        erstelleListeFuerFeldwahl(gruppen_gewählt);
     }
 };
 
@@ -1664,17 +1667,18 @@ window.adb.entferneBeziehungssammlungAusDokument = function (id, bs_name) {
 window.adb.öffneUri = function () {
     'use strict';
     // parameter der uri holen
-    var uri = new Uri($(location).attr('href')),
-        id = uri.getQueryParamValue('id'),
-        exportieren = uri.getQueryParamValue('exportieren'),
-        exportieren_fuer_alt = uri.getQueryParamValue('exportieren_fuer_artenlistentool'),
-        importieren_datensammlung = uri.getQueryParamValue('importieren_datensammlung'),
+    var uri                            = new Uri($(location).attr('href')),
+        id                             = uri.getQueryParamValue('id'),
+        exportieren                    = uri.getQueryParamValue('exportieren'),
+        exportieren_fuer_alt           = uri.getQueryParamValue('exportieren_fuer_artenlistentool'),
+        importieren_datensammlung      = uri.getQueryParamValue('importieren_datensammlung'),
         importieren_beziehungssammlung = uri.getQueryParamValue('importieren_beziehungssammlung'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
         // dann muss die id durch die id in der hash ersetzt werden
-        hash = uri.anchor(),
+        hash                           = uri.anchor(),
         uri2,
-        zeigeFormular = require('./adbModules/zeigeFormular');
+        zeigeFormular                  = require('./adbModules/zeigeFormular'),
+        erstelleListeFuerFeldwahl      = require('./adbModules/export/erstelleListeFuerFeldwahl');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -1719,7 +1723,7 @@ window.adb.öffneUri = function () {
         if (!$('#export_alt').is(':visible')) {
             zeigeFormular('export_alt');
             window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
-            require('./adbModules/erstelleListeFuerFeldwahl') ($, ['Fauna', 'Flora'], 'export_alt');
+            erstelleListeFuerFeldwahl(['Fauna', 'Flora'], 'export_alt');
         }
     }
     if (importieren_datensammlung) {

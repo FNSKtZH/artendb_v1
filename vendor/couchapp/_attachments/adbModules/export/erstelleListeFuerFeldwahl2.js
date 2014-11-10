@@ -11,7 +11,8 @@ var returnFunction = function (export_felder_arrays, formular) {
         taxonomien,
         datensammlungen,
         beziehungssammlungen,
-        ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt');
+        ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt'),
+        erstelleExportfelder = require('./erstelleExportfelder');
 
     // in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
@@ -57,7 +58,7 @@ var returnFunction = function (export_felder_arrays, formular) {
     });
 
     $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function () {
-        require('./erstelleExportfelder') (taxonomien, datensammlungen, beziehungssammlungen, formular);
+        erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen, formular);
     });
 
     if (!formular || formular === 'export') {

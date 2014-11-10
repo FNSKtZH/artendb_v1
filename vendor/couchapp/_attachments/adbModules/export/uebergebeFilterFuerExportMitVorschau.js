@@ -1,10 +1,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // braucht $ wegen .alert
-var returnFunction = function ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
+var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt) {
     // Alle Felder abfragen
     var fTz = "false",
         anz_gruppen_abgefragt = 0,

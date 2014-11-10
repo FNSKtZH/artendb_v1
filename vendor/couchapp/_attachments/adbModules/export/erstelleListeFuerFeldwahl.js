@@ -6,10 +6,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
 // braucht $ wegen .alert
-var returnFunction = function ($, export_gruppen, formular) {
+var returnFunction = function (export_gruppen, formular) {
 
     var gruppen = [],
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
@@ -17,7 +18,8 @@ var returnFunction = function ($, export_gruppen, formular) {
         $exportieren_nur_objekte_mit_eigenschaften          = $("#exportieren_nur_objekte_mit_eigenschaften"),
         $exportieren_exportieren_collapse                   = $("#exportieren_exportieren_collapse"),
         $exportieren_felder_waehlen_collapse                = $("#exportieren_felder_waehlen_collapse"),
-        $exportieren_objekte_waehlen_ds_collapse            = $("#exportieren_objekte_waehlen_ds_collapse");
+        $exportieren_objekte_waehlen_ds_collapse            = $("#exportieren_objekte_waehlen_ds_collapse"),
+        erstelleListeFuerFeldwahl2                          = require('./erstelleListeFuerFeldwahl2');
 
     // falls noch offen: folgende Bereiche schliessen
     if ($exportieren_exportieren_collapse.is(':visible')) {
@@ -81,7 +83,7 @@ var returnFunction = function ($, export_gruppen, formular) {
                     export_gruppen.splice(0, 1);
                     if (export_gruppen.length === 0) {
                         // alle Gruppen sind verarbeitet
-                        require('./erstelleListeFuerFeldwahl2')(export_felder_arrays, formular);
+                        erstelleListeFuerFeldwahl2(export_felder_arrays, formular);
                     }
                 },
                 error: function () {

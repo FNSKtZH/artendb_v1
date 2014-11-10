@@ -9,7 +9,7 @@ var _          = require('underscore'),
     Autolinker = require('autolinker'),
     $          = require('jquery');
 
-var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen, formular) {
+var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssammlungen, formular) {
     var html_felder_wählen = '',
         html_filtern = '',
         ds_typ,
@@ -19,8 +19,7 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
         ds_felder_objekt,
         html,
         _alt = '',
-        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        erstelleExportfelder = require('./erstelleExportfelder');
+        ersetzeUngueltigeZeichenInIdNamen = require('../ersetzeUngueltigeZeichenInIdNamen');
 
     if (formular === 'export_alt') {
         _alt = '_alt';
@@ -181,4 +180,4 @@ var returnFunction = function (taxonomien, datensammlungen, beziehungssammlungen
     }   
 };
 
-module.exports = returnFunction;
+module.exports = erstelleExportfelder;
