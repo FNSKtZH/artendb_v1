@@ -3,8 +3,6 @@
 
 var $ = require('jquery');
 
-var returnFunction = function () {
+module.exports = function () {
 
 };
-
-module.exports = returnFunction;

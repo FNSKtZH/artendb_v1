@@ -11,7 +11,7 @@ var returnFunction = function () {
     var guid_array = [],
         guid_array_2 = [],
         guid,
-        bs_name = $("#BsName").val(),
+        bsName = $("#BsName").val(),
         bs_entfernt = $.Deferred(),
         q,
         a,
@@ -102,12 +102,12 @@ var returnFunction = function () {
         if (a < guid_array.length) {
             guid_array_2.push(guid_array[a]);
             if (a === (batch-1)) {
-                window.adb.entferneBeziehungssammlung_2(bs_name, guid_array_2, (a-batch_grösse));
+                window.adb.entferneBeziehungssammlung_2(bsName, guid_array_2, (a-batch_grösse));
                 guid_array_2 = [];
                 batch += batch_grösse;
             }
         } else {
-            window.adb.entferneBeziehungssammlung_2(bs_name, guid_array_2, (a-batch_grösse));
+            window.adb.entferneBeziehungssammlung_2(bsName, guid_array_2, (a-batch_grösse));
             bs_entfernt.resolve();
             break;
         }

@@ -727,17 +727,19 @@ window.adb.handleDsNameChange = function () {
 // wenn DsLöschen geklickt wird
 window.adb.handleDsLöschenClick = function () {
     'use strict';
+    var entferneDatensammlungAusAllenObjekten = require('./adbModules/import/entferneDatensammlungAusAllenObjekten');
     // Rückmeldung anzeigen
     $("#importieren_ds_ds_beschreiben_hinweis")
         .alert()
         .show()
         .html("Bitte warten: Die Datensammlung wird entfernt...");
-    window.adb.entferneDatensammlungAusAllenObjekten($("#DsName").val());
+    entferneDatensammlungAusAllenObjekten($("#DsName").val());
 };
 
 // wenn BsLoeschen geklickt wird
 window.adb.handleBsLöschenClick = function () {
     'use strict';
+    var entferneBeziehungssammlungAusAllenObjekten = require('./adbModules/import/entferneBeziehungssammlungAusAllenObjekten');
     // Rückmeldung anzeigen
     $("#importieren_bs_ds_beschreiben_hinweis")
         .alert()
@@ -746,7 +748,7 @@ window.adb.handleBsLöschenClick = function () {
         .addClass("alert-info")
         .show();
     $("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
-    window.adb.entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
+    entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
 };
 
 // wenn exportieren geklickt wird
@@ -1387,7 +1389,7 @@ window.adb.entferneBeziehungssammlung = function () {
     require('./adbModules/entferneBeziehungssammlung')();
 };
 
-window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzögerungs_faktor) {
+window.adb.entferneBeziehungssammlung_2 = function (bsName, guid_array, verzögerungs_faktor) {
     'use strict';
     // alle docs holen
     setTimeout(function () {
@@ -1398,18 +1400,18 @@ window.adb.entferneBeziehungssammlung_2 = function (bs_name, guid_array, verzög
                     f;
                 _.each(data.rows, function (data_row) {
                     objekt = data_row.doc;
-                    window.adb.entferneBeziehungssammlungAusObjekt(bs_name, objekt);
+                    window.adb.entferneBeziehungssammlungAusObjekt(bsName, objekt);
                 });
             }
         });
     }, verzögerungs_faktor*40);
 };
 
-window.adb.entferneBeziehungssammlungAusObjekt = function (bs_name, objekt) {
+window.adb.entferneBeziehungssammlungAusObjekt = function (bsName, objekt) {
     'use strict';
     if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
         for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {
-            if (objekt.Beziehungssammlungen[i].Name === bs_name) {
+            if (objekt.Beziehungssammlungen[i].Name === bsName) {
                 objekt.Beziehungssammlungen.splice(i,1);
                 var $db = $.couch.db('artendb');
                 $db.saveDoc(objekt);
@@ -1451,172 +1453,6 @@ window.adb.fügeDatensammlungZuObjekt = function (guid, datensammlung) {
     });
 };
 
-// fügt der Art eine Datensammlung hinzu
-// wenn dieselbe schon vorkommt, wird sie überschrieben
-window.adb.fügeBeziehungenZuObjekt = function (guid, beziehungssammlung, beziehungen) {
-    'use strict';
-    var $db = $.couch.db('artendb');
-    $db.openDoc(guid, {
-        success: function (doc) {
-            // prüfen, ob die Beziehung schon existiert
-            if (doc.Beziehungssammlungen && doc.Beziehungssammlungen.length > 0) {
-                var hinzugefügt = false,
-                    i,
-                    h;
-                for (i in doc.Beziehungssammlungen) {
-                    if (doc.Beziehungssammlungen[i].Name === beziehungssammlung.Name) {
-                        for (h=0; h<beziehungen.length; h++) {
-                            if (!_.contains(doc.Beziehungssammlungen[i].Beziehungen, beziehungen[h])) {
-                                doc.Beziehungssammlungen[i].Beziehungen.push(beziehungen[h]);
-                            }
-                        }
-                        // Beziehungen nach Name sortieren
-                        doc.Beziehungssammlungen[i].Beziehungen = window.adb.sortiereBeziehungenNachName(doc.Beziehungssammlungen[i].Beziehungen);
-                        hinzugefügt = true;
-                        break;
-                    }
-                }
-                if (!hinzugefügt) {
-                    // die Beziehungssammlung existiert noch nicht
-                    beziehungssammlung.Beziehungen = [];
-                    _.each(beziehungen, function (beziehung) {
-                        beziehungssammlung.Beziehungen.push(beziehung);
-                    });
-                    // Beziehungen nach Name sortieren
-                    beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
-                    doc.Beziehungssammlungen.push(beziehungssammlung);
-                }
-            } else {
-                // Beziehungssammlung anfügen
-                beziehungssammlung.Beziehungen = [];
-                _.each(beziehungen, function (beziehung) {
-                    beziehungssammlung.Beziehungen.push(beziehung);
-                });
-                // Beziehungen nach Name sortieren
-                beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
-                doc.Beziehungssammlungen = [];
-                doc.Beziehungssammlungen.push(beziehungssammlung);
-            }
-            // Beziehungssammlungen nach Name sortieren
-            doc.Beziehungssammlungen = window.adb.sortiereObjektarrayNachName(doc.Beziehungssammlungen);
-            // in artendb speichern
-            $db.saveDoc(doc);
-            // mitteilen, dass eine bs importiert wurde
-            $(document).trigger('adb.bs_hinzugefügt');
-            // TODO: Scheitern des Speicherns abfangen (trigger adb.bs_nicht_hinzugefügt)
-        }
-    });
-};
-
-// übernimmt den Namen einer Datensammlung
-// öffnet alle Dokumente, die diese Datensammlung enthalten und löscht die Datensammlung
-window.adb.entferneDatensammlungAusAllenObjekten = function (dsName) {
-    'use strict';
-    var ds_entfernt = $.Deferred(),
-        anz_vorkommen_von_ds,
-        anz_vorkommen_von_ds_entfernt = 0,
-        $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
-        $db = $.couch.db('artendb'),
-        rückmeldung;
-    $db.view('artendb/ds_guid?startkey=["' + dsName + '"]&endkey=["' + dsName + '",{}]', {
-        success: function (data) {
-            anz_vorkommen_von_ds = data.rows.length;
-
-            // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
-            $(document).bind('adb.ds_entfernt', function () {
-                anz_vorkommen_von_ds_entfernt++;
-                rückmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
-                $importieren_ds_ds_beschreiben_hinweis
-                    .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
-                    .html(rückmeldung);
-                $('html, body').animate({
-                    scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
-                }, 2000);
-                if (anz_vorkommen_von_ds_entfernt === anz_vorkommen_von_ds) {
-                    // die Indexe aktualisieren
-                    $db.view('artendb/lr', {
-                        success: function () {
-                            // melden, dass Indexe aktualisiert wurden
-                            rückmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
-                            rückmeldung += "Die Indexe wurden aktualisiert.";
-                            $importieren_ds_ds_beschreiben_hinweis
-                                .removeClass("alert-info").removeClass("alert-danger").addClass("alert-success")
-                                .html(rückmeldung);
-                            $('html, body').animate({
-                                scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
-                            }, 2000);
-                        }
-                    });
-                }
-            });
-
-            // Eigenschaftensammlungen entfernen
-            _.each(data.rows, function (data_row) {
-                // guid und DsName übergeben
-                window.adb.entferneDatensammlungAusDokument(data_row.key[1], dsName);
-            });
-            ds_entfernt.resolve();
-        }
-    });
-    return ds_entfernt.promise();
-};
-
-// übernimmt den Namen einer Beziehungssammlung
-// öffnet alle Dokumente, die diese Beziehungssammlung enthalten und löscht die Beziehungssammlung
-window.adb.entferneBeziehungssammlungAusAllenObjekten = function (bs_name) {
-    'use strict';
-    var bs_entfernt = $.Deferred(),
-        anz_vorkommen_von_bs_entfernt = 0,
-        anz_vorkommen_von_bs,
-        $importieren_bs_ds_beschreiben_hinweis = $("#importieren_bs_ds_beschreiben_hinweis"),
-        $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text"),
-        $db = $.couch.db('artendb'),
-        rückmeldung;
-    $db.view('artendb/bs_guid?startkey=["' + bs_name + '"]&endkey=["' + bs_name + '",{}]', {
-        success: function (data) {
-            anz_vorkommen_von_bs = data.rows.length;
-            // listener einrichten, der meldet, wenn ein Datensatz entfernt wurde
-            $(document).bind('adb.bs_entfernt', function () {
-                anz_vorkommen_von_bs_entfernt++;
-                $importieren_bs_ds_beschreiben_hinweis
-                    .removeClass("alert-success")
-                    .removeClass("alert-danger")
-                    .addClass("alert-info");
-                rückmeldung = "Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
-                $importieren_bs_ds_beschreiben_hinweis_text.html(rückmeldung);
-                $('html, body').animate({
-                    scrollTop: $importieren_bs_ds_beschreiben_hinweis_text.offset().top
-                }, 2000);
-                if (anz_vorkommen_von_bs_entfernt === anz_vorkommen_von_bs) {
-                    // die Indexe aktualisieren
-                    $db.view('artendb/lr', {
-                        success: function () {
-                            // melden, dass Indexe aktualisiert wurden
-                            $importieren_bs_ds_beschreiben_hinweis
-                                .removeClass("alert-info")
-                                .removeClass("alert-danger")
-                                .addClass("alert-success");
-                            rückmeldung = "Die Beziehungssammlungen wurden entfernt.<br>";
-                            rückmeldung += "Die Indexe wurden aktualisiert.";
-                            $importieren_bs_ds_beschreiben_hinweis_text.html(rückmeldung);
-                            $('html, body').animate({
-                                scrollTop: $importieren_bs_ds_beschreiben_hinweis_text.offset().top
-                            }, 2000);
-                        }
-                    });
-                }
-            });
-
-            _.each(data.rows, function (data_row) {
-                // guid und DsName übergeben
-                window.adb.entferneBeziehungssammlungAusDokument(data_row.key[1], bs_name);
-            });
-            bs_entfernt.resolve();
-        }
-    });
-    return bs_entfernt.promise();
-};
-
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung
@@ -1641,14 +1477,14 @@ window.adb.entferneDatensammlungAusDokument = function (id, dsName) {
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Beziehungssammlung, die zu entfernen ist
 // entfernt die Beziehungssammlung
-window.adb.entferneBeziehungssammlungAusDokument = function (id, bs_name) {
+window.adb.entferneBeziehungssammlungAusDokument = function (id, bsName) {
     'use strict';
     var $db = $.couch.db('artendb');
     $db.openDoc(id, {
         success: function (doc) {
             // Beziehungssammlung entfernen
             doc.Beziehungssammlungen = _.reject(doc.Beziehungssammlungen, function (beziehungssammlung) {
-                return beziehungssammlung.Name === bs_name;
+                return beziehungssammlung.Name === bsName;
             });
             // in artendb speichern
             $db.saveDoc(doc);

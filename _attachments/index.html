@@ -1021,7 +1021,7 @@
                 // Achtung: IE 8 und älter kennen addEventListener nicht, daher prüfen, ob es existiert
                 if (window.addEventListener) {
                     window.addEventListener('popstate', function () {
-                        window.adb.öffneUri();
+                        window.adb.oeffneUri();
                     });
                 }
 
@@ -1232,7 +1232,7 @@
                 // Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
                 // daher öffneUri nochmals auslösen
                 window.onload = function () {
-                    window.adb.öffneUri();
+                    window.adb.oeffneUri();
                 };
 
                 // wenn User noch angemeldet ist, UI anpassen

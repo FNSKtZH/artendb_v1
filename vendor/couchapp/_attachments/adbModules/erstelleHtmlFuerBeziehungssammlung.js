@@ -14,20 +14,20 @@ var returnFunction = function (art, beziehungssammlung, alt_name) {
     var html,
         name,
         ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        bs_name = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name,
+        bsName = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + alt_name,
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld = require('./erstelleHtmlFuerFeld');
 
     // Accordion-Gruppe und -heading anfügen
     html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
     // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-    html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bs_name + '">';
+    html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bsName + '">';
     // Titel für die Datensammlung einfügen
     html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
     // header abschliessen
     html += '</a></h4></div>';
     // body beginnen
-    html += '<div id="collapse' + bs_name + '" class="panel-collapse collapse"><div class="panel-body">';
+    html += '<div id="collapse' + bsName + '" class="panel-collapse collapse"><div class="panel-body">';
 
     // Datensammlung beschreiben
     html += erstelleHtmlFuerDatensammlungBeschreibung(beziehungssammlung);

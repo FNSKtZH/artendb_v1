@@ -6,7 +6,7 @@
 var $   = require('jquery'),
     Uri = require('Uri');
 
-var returnFunction = function () {
+module.exports = function () {
     // parameter der uri holen
     var uri                            = new Uri($(location).attr('href')),
         id                             = uri.getQueryParamValue('id'),
@@ -19,9 +19,10 @@ var returnFunction = function () {
         hash                           = uri.anchor(),
         uri2,
         $db                            = $.couch.db('artendb'),
-        zeigeFormular                  = require('./adbModules/zeigeFormular'),
-        erstelleListeFuerFeldwahl      = require('./adbModules/export/erstelleListeFuerFeldwahl'),
-        oeffneBaumZuId                 = require('./adbModules/jstree/oeffneBaumZuId');
+        zeigeFormular                  = require('./zeigeFormular'),
+        erstelleListeFuerFeldwahl      = require('./export/erstelleListeFuerFeldwahl'),
+        oeffneBaumZuId                 = require('./jstree/oeffneBaumZuId'),
+        erstelleBaum                   = require('./jstree/erstelleBaum');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -40,7 +41,6 @@ var returnFunction = function () {
         // Gruppe ermitteln
         $db.openDoc(id, {
             success: function (objekt) {
-                var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
                 // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.Gruppe = objekt.Gruppe;
                 $(".baum.jstree").jstree("deselect_all");
@@ -77,5 +77,3 @@ var returnFunction = function () {
     // dafür sorgen, dass die passenden Menus angezeigt werden
     window.adb.blendeMenus();
 };
-
-module.exports = returnFunction;

@@ -24,7 +24,8 @@ var returnFunction = function () {
         $BsLink = $("#BsLink"),
         $BsUrsprungsBs = $("#BsUrsprungsBs"),
         $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis"),
-        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text");
+        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
+        fuegeBeziehungenZuObjekt = require('./fuegeBeziehungenZuObjekt');
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$BsName.val()) {
         $("#meldung_individuell_label").html("Namen fehlt");
@@ -191,7 +192,7 @@ var returnFunction = function () {
                     if (beziehungen.length > 0) {
                         // Datenbankabfrage ist langsam. Extern aufrufen, 
                         // sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-                        window.adb.fügeBeziehungenZuObjekt(importdaten_objekt_id, beziehungssammlung, beziehungen);
+                        fuegeBeziehungenZuObjekt(importdaten_objekt_id, beziehungssammlung, beziehungen);
                     }
                 });
 

@@ -7,7 +7,7 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 var returnFunction = function (that) {
-    var bs_name        = that.value,
+    var bsName        = that.value,
         wählbar        = false,
         $BsAnzDs       = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
@@ -31,10 +31,10 @@ var returnFunction = function (that) {
         });
         $BsAnzDs.html("");
         $BsAnzDs_label.html("");
-        if (bs_name) {
+        if (bsName) {
             _.each(window.adb.bs_von_objekten.rows, function (bs_row) {
-                if (bs_row.key[1] === bs_name) {
-                    $BsName.val(bs_name);
+                if (bs_row.key[1] === bsName) {
+                    $BsName.val(bsName);
                     _.each(bs_row, function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
                             $("#BsUrsprungsBs").val(feldwert);
