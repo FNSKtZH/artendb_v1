@@ -1698,7 +1698,7 @@ window.adb.öffneUri = function () {
         var $db = $.couch.db("artendb");
         $db.openDoc(id, {
             success: function (objekt) {
-                var erstelleBaum = require('./adbModules/erstelleBaum');
+                var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
                 // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.Gruppe = objekt.Gruppe;
                 $(".baum.jstree").jstree("deselect_all");
@@ -2178,7 +2178,7 @@ window.adb.exportZurücksetzen = function (event, _alt) {
 
 window.adb.öffneGruppe = function (Gruppe) {
     'use strict';
-    var erstelleBaum = require('./adbModules/erstelleBaum');
+    var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
     // Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
     window.adb.Gruppe = Gruppe;
     $(".suchfeld").val("");
@@ -2360,7 +2360,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
     var $db = $.couch.db("artendb");
     $db.saveDoc(object, {
         success: function () {
-            var erstelleBaum = require('./adbModules/erstelleBaum');
+            var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
             $.when(erstelleBaum()).then(function () {
                 var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
                 oeffneBaumZuId(object._id);

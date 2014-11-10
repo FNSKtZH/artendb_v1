@@ -11,7 +11,9 @@ var returnFunction = function (that) {
         parent_id = that.id,
         parent = {},
         object = {},
-        $db = $.couch.db("artendb");
+        $db = $.couch.db("artendb"),
+        erstelleBaum = require('./jstree/erstelleBaum'),
+        oeffneBaumZuId = require('./oeffneBaumZuId');
 
     // zuerst eine id holen
     object._id = $.couch.newUUID(1);
@@ -55,7 +57,6 @@ var returnFunction = function (that) {
     // in die DB schreiben
     $db.saveDoc(object, {
         success: function (resp) {
-            var erstelleBaum = require('./erstelleBaum');
             object._rev = resp.rev;
             if (parent_id !== "0") {
                 // die Hierarchie aufbauen und setzen
@@ -63,7 +64,6 @@ var returnFunction = function (that) {
                 window.adb.aktualisiereHierarchieEinesNeuenLr(null, object, true);
             } else {
                 $.when(erstelleBaum()).then(function () {
-                    var oeffneBaumZuId = require('./oeffneBaumZuId');
                     oeffneBaumZuId(object._id);
                     $('#lr_parent_waehlen').modal('hide');
                 });
