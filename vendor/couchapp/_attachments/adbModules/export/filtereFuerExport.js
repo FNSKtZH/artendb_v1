@@ -189,7 +189,7 @@ var returnFunction = function (direkt, fürAlt) {
     } if (fürAlt) {
         window.adb.übergebeFilterFürExportFürAlt(gewählte_felder_objekt);
     } else {
-        uebergebeFilterFuerExportMitVorschau ($, gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
+        uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterien_objekt, gewählte_felder_objekt);
     }
 };
 

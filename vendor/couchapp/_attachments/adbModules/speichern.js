@@ -4,10 +4,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var Uri = require('jsuri');
+var Uri = require('jsuri'),
+    $   = require('jquery');
 
-// braucht $ wegen .collapse
-var returnFunction = function ($, feldwert, feldname) {
+var returnFunction = function (feldwert, feldname) {
     // zuerst die id des Objekts holen
     var uri = new Uri($(location).attr('href')),
         id = uri.getQueryParamValue('id'),

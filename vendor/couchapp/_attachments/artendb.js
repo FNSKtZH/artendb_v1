@@ -972,9 +972,9 @@ window.adb.handleRückfrageLrLöschenJaClick = function () {
 };
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
+// wird in index.html benutzt
 window.adb.handleLrTaxonomieControlsChange = function () {
-    'use strict';
-    require('./adbModules/speichern') ($, $(this).val(), this.id);
+    require('./adbModules/speichern')($(this).val(), this.id);
 };
 
 // wenn .Lebensräume.Taxonomie geöffnet wird
