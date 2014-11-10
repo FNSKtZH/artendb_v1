@@ -1,10 +1,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
-// muss $ übernehmen wegen $.typeahead
-var returnFunction = function ($, such_objekte) {
+var returnFunction = function (such_objekte) {
 
     such_objekte = _.map(such_objekte.rows, function (objekt) {
         return objekt.value;
@@ -17,7 +17,7 @@ var returnFunction = function ($, such_objekte) {
         limit: 20
     }).on('typeahead:selected', function (e, datum) {
         var oeffneBaumZuId = require('./oeffneBaumZuId');
-        oeffneBaumZuId($, datum.id);
+        oeffneBaumZuId(datum.id);
     });
     $("#suchfeld" + window.adb.Gruppe).focus();
 };

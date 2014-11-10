@@ -64,7 +64,7 @@ var returnFunction = function ($, feldwert, feldname) {
                             window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldwert);
                             // Feld Taxonomie und Beschriftung des Accordions aktualisiern
                             // dazu neu initiieren, weil sonst das Accordion nicht verändert wird
-                            initiiereArt($, id);
+                            initiiereArt(id);
                             // Taxonomie anzeigen
                             $('#' + ersetzeUngueltigeZeichenInIdNamen(feldwert)).collapse('show');
                         } else {

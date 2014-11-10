@@ -1,8 +1,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// braucht $ wegen $.jstree
-var returnFunction = function ($, id) {
+var $ = require('jquery');
+
+var returnFunction = function (id) {
     // Hierarchie der id holen
     var $db = $.couch.db("artendb");
     $db.openDoc(id, {
@@ -63,7 +64,7 @@ var returnFunction = function ($, id) {
                 _.each(objekt.Taxonomie.Eigenschaften.Hierarchie, function (hierarchie) {
                     id_array.push(hierarchie.GUID);
                 });
-                oeffneNodeNachIdArray($, id_array);
+                oeffneNodeNachIdArray(id_array);
                 break;
             }
         },

@@ -688,10 +688,9 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
 };
 
 // wenn DsWählen geändert wird
+// wird in index.html benutzt
 window.adb.handleDsWählenChange = function () {
-    'use strict';
-    var handleDsWaehlenChange = require('./adbModules/handleDsWaehlenChange');
-    handleDsWaehlenChange ($, this);
+    require('./adbModules/handleDsWaehlenChange')(this);
 };
 
 // wenn DsName geändert wird
@@ -875,11 +874,9 @@ window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
 };
 
 // ist nötig, weil index.html nicht requiren kann
+// wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
-    'use strict';
-    var that = this,
-        handleExportFeldFilternChange = require('./adbModules/handleExportFeldFilternChange');
-    handleExportFeldFilternChange($, that);
+    require('./adbModules/handleExportFeldFilternChange')(this);
 };
 
 // wenn exportieren_exportieren angezeigt wird
@@ -930,10 +927,9 @@ window.adb.handleBtnLrBearbNeuClick = function () {
 };
 
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
+// wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {
-    'use strict';
-    var handleLrParentOptionenChange = require('./adbModules/handleLrParentOptionenChange');
-    handleLrParentOptionenChange($, this);
+    require('./adbModules/handleLrParentOptionenChange')(this);
 };
 
 window.adb.handleRückfrageLrLöschenJaClick = function () {
@@ -1708,7 +1704,7 @@ window.adb.öffneUri = function () {
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum()).then(function () {
                     var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
-                    oeffneBaumZuId($, id);
+                    oeffneBaumZuId(id);
                 });
             }
         });
@@ -2363,7 +2359,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
             var erstelleBaum = require('./adbModules/erstelleBaum');
             $.when(erstelleBaum()).then(function () {
                 var oeffneBaumZuId = require('./adbModules/oeffneBaumZuId');
-                oeffneBaumZuId($, object._id);
+                oeffneBaumZuId(object._id);
                 $('#lr_parent_waehlen').modal('hide');
             });
         },
@@ -2373,7 +2369,7 @@ window.adb.aktualisiereHierarchieEinesNeuenLr_2 = function (LR, object) {
             $("#meldung_individuell_text").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
             $("#meldung_individuell_schliessen").html("schliessen");
             $('#meldung_individuell').modal();
-            initiiereArt ($, object._id);
+            initiiereArt(object._id);
         }
     });
 };

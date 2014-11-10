@@ -67,7 +67,7 @@ var returnFunction = function () {
             if (!$("#art").is(':visible') || localStorage.art_id !== node.attr("id")) {
                 localStorage.art_id = node.attr("id");
                 // Anzeige im Formular initiieren. ID und Datensammlung übergeben
-                initiiereArt($, node.attr("id"));
+                initiiereArt(node.attr("id"));
             }
         }
     }).bind("loaded.jstree", function () {

@@ -1,9 +1,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
-var returnFunction = function ($, id) {
+var returnFunction = function (id) {
     var initiiereArt2 = require('./initiiereArt2'),
         $db = $.couch.db("artendb"),
         erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');

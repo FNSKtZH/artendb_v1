@@ -61,7 +61,7 @@ var returnFunction = function (dbs) {
                             mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-                    meldeErfolgVonIdIdentifikation2 ($, mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
+                    meldeErfolgVonIdIdentifikation2(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
                 },
                 error: function () {
                     console.log('meldeErfolgVonIdentifikation: keine Daten erhalten');
@@ -94,7 +94,7 @@ var returnFunction = function (dbs) {
                             mehrfach_vorkommende_ids.push(import_datensatz[name_des_id_felds]);
                         }
                     });
-                    meldeErfolgVonIdIdentifikation2 ($, mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
+                    meldeErfolgVonIdIdentifikation2(mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs);
                 },
                 error: function () {
                     console.log('meldeErfolgVonIdentifikation: keine Daten erhalten');

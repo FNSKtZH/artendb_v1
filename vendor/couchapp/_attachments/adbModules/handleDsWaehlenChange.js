@@ -1,10 +1,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    $ = require('jquery');
 
-// $ wird benötigt wegen $.alert
-var returnFunction = function ($, that) {
+var returnFunction = function (that) {
     var ds_name        = that.value,
         wählbar        = false,
         $DsAnzDs       = $("#DsAnzDs"),
@@ -17,7 +17,7 @@ var returnFunction = function ($, that) {
         .hide();
     // wählbar setzen
     // wählen kann man nur, was man selber importiert hat - oder admin ist
-    if ($("#"+that.id+" option:selected").attr("waehlbar") === "true") {
+    if ($("#" + that.id + " option:selected").attr("waehlbar") === "true") {
         wählbar = true;
     } else if (Boolean(localStorage.admin)) {
         wählbar = true;

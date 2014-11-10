@@ -3,13 +3,16 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// $ wird benütigt für $.modal und $.couch
-var returnFunction = function ($, that) {
+var $ = require('jquery');
+
+var returnFunction = function (that) {
     // prüfen, ob oberster Node gewählt wurde
     var parent_name = $(that).val(),
         parent_id = that.id,
         parent = {},
-        object = {};
+        object = {},
+        $db = $.couch.db("artendb");
+
     // zuerst eine id holen
     object._id = $.couch.newUUID(1);
     object.Gruppe = "Lebensräume";
@@ -50,7 +53,6 @@ var returnFunction = function ($, that) {
     }
     object.Taxonomie.Eigenschaften.Parent = parent;
     // in die DB schreiben
-    var $db = $.couch.db("artendb");
     $db.saveDoc(object, {
         success: function (resp) {
             var erstelleBaum = require('./erstelleBaum');
@@ -62,7 +64,7 @@ var returnFunction = function ($, that) {
             } else {
                 $.when(erstelleBaum()).then(function () {
                     var oeffneBaumZuId = require('./oeffneBaumZuId');
-                    oeffneBaumZuId($, object._id);
+                    oeffneBaumZuId(object._id);
                     $('#lr_parent_waehlen').modal('hide');
                 });
             }

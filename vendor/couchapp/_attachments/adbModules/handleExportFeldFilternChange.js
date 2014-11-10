@@ -5,8 +5,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// braucht $ wegen .modal
-var returnFunction = function ($, that) {
+var $ = require('jquery'),
+    _ = require('underscore');
+
+var returnFunction = function (that) {
     var $that = $(that),
         bez_ds_filtered = [];
     // die Checkboxen sollen drei Werte annehmen können:

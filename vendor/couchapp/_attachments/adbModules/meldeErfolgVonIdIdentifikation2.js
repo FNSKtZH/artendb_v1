@@ -1,8 +1,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-// braucht $ wegen .alert
-var returnFunction = function ($, mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs) {
+var $ = require('jquery');
+
+var returnFunction = function (mehrfach_vorkommende_ids, ids_von_datensätzen, ids_von_nicht_importierbaren_datensätzen, dbs) {
     var $importieren_dbs_ids_identifizieren_hinweis_text = $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_hinweis_text");
     $importieren_dbs_ids_identifizieren_hinweis_text.alert();
     // rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
