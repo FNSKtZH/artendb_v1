@@ -27,6 +27,7 @@ var returnFunction = function (direkt, fürAlt) {
         _alt = '',
         übergebeFilterFürDirektExport        = require('./uebergebeFilterFuerDirektExport'),
         uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau'),
+        uebergebeFilterFuerExportFuerAlt     = require('./uebergebeFilterFuerExportFuerAlt'),
         ermittleVergleichsoperator           = require('./ermittleVergleichsoperator');
 
     if (fürAlt) {
@@ -187,7 +188,7 @@ var returnFunction = function (direkt, fürAlt) {
     if (direkt === "direkt") {
         übergebeFilterFürDirektExport (gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt);
     } if (fürAlt) {
-        window.adb.übergebeFilterFürExportFürAlt(gewählte_felder_objekt);
+        uebergebeFilterFuerExportFuerAlt(gewählte_felder_objekt);
     } else {
         uebergebeFilterFuerExportMitVorschau(gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt);
     }
