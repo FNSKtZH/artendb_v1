@@ -32,138 +32,6 @@ window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function (feld_name, id, artn
     return html_container;
 };
 
-// generiert den html-Inhalt für Serien von Links in Flora
-window.adb.generiereHtmlFuerLinksZuGleicherGruppe = function (feldname, objekt_liste) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group"><label class="control-label">';
-    html_container += feldname;
-    html_container += ':</label><span class="feldtext controls">';
-    _.each(objekt_liste, function (objekt, index) {
-        if (index > 0) {
-            html_container += ', ';
-        }
-        html_container += '<p class="form-control-static controls"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
-        html_container += objekt.GUID;
-        html_container += '">';
-        html_container += objekt.Name;
-        html_container += '</a></p>';
-    });
-    html_container += '</span></div>';
-    return html_container;
-};
-
-// generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerWwwLink = function (feldname, feldwert, dsTyp, dsName) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group">\n\t<label class="control-label" for="';
-    html_container += feldname;
-    html_container += '">';
-    html_container += feldname;
-    html_container += ':</label>\n\t';
-    // jetzt Link beginnen, damit das Feld klickbar wird
-    html_container += '<p><a href="';
-    html_container += feldwert;
-    html_container += '"><input class="controls form-control input-sm" dsTyp="' + dsTyp + '" dsName="' + dsName + '" id="';
-    html_container += feldname;
-    html_container += '" name="';
-    html_container += feldname;
-    html_container += '" type="text" value="';
-    html_container += feldwert;
-    html_container += '" readonly="readonly" style="cursor:pointer;">';
-    // Link abschliessen
-    html_container += '</a></p>';
-    html_container += '\n</div>';
-    return html_container;
-};
-
-// generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerObjektlink = function (feldname, feldwert, url) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group"><label class="control-label">';
-    html_container += feldname;
-    html_container += ':';
-    html_container += '</label>';
-    html_container += '<p class="form-control-static feldtext controls"><a href="';
-    html_container += url;
-    html_container += '" target="_blank">';
-    html_container += feldwert;
-    html_container += '</a></p></div>';
-    return html_container;
-};
-
-// generiert den html-Inhalt für Textinputs
-window.adb.generiereHtmlFuerTextinput = function (feldname, feldwert, input_typ, dsTyp, dsName) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group">\n\t<label class="control-label" for="';
-    html_container += feldname;
-    html_container += '">';
-    html_container += feldname;
-    html_container += ':</label>\n\t<input class="controls form-control input-sm" id="';
-    html_container += feldname;
-    html_container += '" name="';
-    html_container += feldname;
-    html_container += '" type="';
-    html_container += input_typ;
-    html_container += '" value="';
-    html_container += feldwert;
-    html_container += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">\n</div>';
-    return html_container;
-};
-
-// generiert den html-Inhalt für Textarea
-window.adb.generiereHtmlFuerTextarea = function (feldname, feldwert, dsTyp, dsName) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group"><label class="control-label" for="';
-    html_container += feldname;
-    html_container += '">';
-    html_container += feldname;
-    html_container += ':</label><textarea class="controls form-control" id="';
-    html_container += feldname;
-    html_container += '" name="';
-    html_container += feldname;
-    html_container += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">';
-    html_container += feldwert;
-    html_container += '</textarea></div>';
-    return html_container;
-};
-
-// generiert den html-Inhalt für ja/nein-Felder
-window.adb.generiereHtmlFuerBoolean = function (feldname, feldwert, dsTyp, dsName) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group"><label class="control-label" for="';
-    html_container += feldname;
-    html_container += '">';
-    html_container += feldname;
-    html_container += ':</label><input type="checkbox" id="';
-    html_container += feldname;
-    html_container += '" name="';
-    html_container += feldname;
-    html_container += '"';
-    if (feldwert === true) {
-        html_container += ' checked="true"';
-    }
-    html_container += '" readonly="readonly" disabled="disabled" dsTyp="' + dsTyp + '" dsName="' + dsName + '"></div>';
-    return html_container;
-};
-
-// begrenzt die maximale Höhe des Baums auf die Seitenhöhe, wenn nötig
-window.adb.setzeTreehoehe = function () {
-    'use strict';
-    var window_height = $(window).height();
-    if ($(window).width() > 1000 && !$("body").hasClass("force-mobile")) {
-        $(".baum").css("max-height", window_height - 161);
-    } else {
-        // Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
-        $(".baum").css("max-height", window_height - 252);
-    }
-};
-
 // setzt die Höhe von textareas so, dass der Text genau rein passt
 window.adb.fitTextareaToContent = function (id, max_height) {
     'use strict';
@@ -929,7 +797,8 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function () {
     'use strict';
-    window.adb.setzeTreehoehe();
+    setzeTreehoehe = require('./adbModules/jstree/setzeTreehoehe');
+    setzeTreehoehe();
     // Höhe der Textareas korrigieren
     $('#forms').find('textarea').each(function () {
         window.adb.fitTextareaToContent(this.id);

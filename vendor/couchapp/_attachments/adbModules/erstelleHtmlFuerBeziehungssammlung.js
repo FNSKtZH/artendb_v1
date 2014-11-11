@@ -15,6 +15,7 @@ var returnFunction = function (art, beziehungssammlung, altName) {
         name,
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
+        generiereHtmlFuerObjektlink               = require('./generiereHtmlFuerObjektlink'),
         ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
         bsName                                    = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + altName;
 
@@ -47,9 +48,9 @@ var returnFunction = function (art, beziehungssammlung, altName) {
                 // Partner darstellen
                 if (beziehungspartner.Rolle) {
                     // Feld soll mit der Rolle beschriftet werden
-                    html += window.adb.generiereHtmlFuerObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += generiereHtmlFuerObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 } else {
-                    html += window.adb.generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
                 }
             });
         }

@@ -13,7 +13,9 @@ module.exports = function (dsTyp, art, datensammlung) {
         dsName,
         ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
-        erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld');
+        erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
+        generiereHtmlFuerTextarea                 = require('./generiereHtmlFuerTextarea'),
+        generiereHtmlFuerLinksZuGleicherGruppe    = require('./generiereHtmlFuerLinksZuGleicherGruppe');
 
     dsName = ersetzeUngueltigeZeichenInIdNamen(datensammlung.Name);
 
@@ -47,17 +49,17 @@ module.exports = function (dsTyp, art, datensammlung) {
             htmlDatensammlung += window.adb.generiereHtmlFuerLinkZuGleicherGruppe(feldname, art._id, feldwert.Name);
         } else if ((feldname === "Gültige Namen" || feldname === "Eingeschlossene Arten" || feldname === "Synonyme") && art.Gruppe === "Flora") {
             // das ist ein Array von Objekten
-            htmlDatensammlung += window.adb.generiereHtmlFuerLinksZuGleicherGruppe(feldname, feldwert);
+            htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(feldname, feldwert);
         } else if ((feldname === "Artname" && art.Gruppe === "Flora") || (feldname === "Parent" && art.Gruppe === "Lebensräume")) {
             // dieses Feld nicht anzeigen
         } else if (feldname === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(feldwert)) {
             // Namen kommagetrennt anzeigen
             hierarchieString = window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(feldwert);
-            htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(feldname, hierarchieString, dsTyp, datensammlung.Name.replace(/"/g, "'"));
+            htmlDatensammlung += generiereHtmlFuerTextarea(feldname, hierarchieString, dsTyp, datensammlung.Name.replace(/"/g, "'"));
         } else if (_.isArray(feldwert)) {
             // dieses Feld enthält einen Array von Werten
             arrayString = feldwert.toString();
-            htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(feldname, arrayString, dsTyp, datensammlung.Name.replace(/"/g, "'"));
+            htmlDatensammlung += generiereHtmlFuerTextarea(feldname, arrayString, dsTyp, datensammlung.Name.replace(/"/g, "'"));
         } else {
             htmlDatensammlung += erstelleHtmlFuerFeld(feldname, feldwert, dsTyp, datensammlung.Name.replace(/"/g, "'"));
         }

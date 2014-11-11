@@ -5,22 +5,27 @@
 'use strict';
 
 var returnFunction = function (feldname, feldwert, dsTyp, dsName) {
-    var htmlDatensammlung = "";
+    var html                       = "",
+        generiereHtmlFuerWwwLink   = require('./generiereHtmlFuerWwwLink'),
+        generiereHtmlFuerTextinput = require('./generiereHtmlFuerTextinput'),
+        generiereHtmlFuerTextarea  = require('./generiereHtmlFuerTextarea'),
+        generiereHtmlFuerBoolean   = require('./generiereHtmlFuerBoolean');
+
     if ((typeof feldwert === "string" && feldwert.slice(0, 7) === "http://") || (typeof feldwert === "string" && feldwert.slice(0, 8) === "https://") || (typeof feldwert === "string" && feldwert.slice(0, 2) === "//")) {
         // www-Links als Link darstellen
-        htmlDatensammlung += window.adb.generiereHtmlFuerWwwLink(feldname, feldwert, dsTyp, dsName);
+        html += generiereHtmlFuerWwwLink(feldname, feldwert, dsTyp, dsName);
     } else if (typeof feldwert === "string" && feldwert.length < 45) {
-        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
+        html += generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
     } else if (typeof feldwert === "string" && feldwert.length >= 45) {
-        htmlDatensammlung += window.adb.generiereHtmlFuerTextarea(feldname, feldwert, dsTyp);
+        html += generiereHtmlFuerTextarea(feldname, feldwert, dsTyp);
     } else if (typeof feldwert === "number") {
-        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "number", dsTyp, dsName);
+        html += generiereHtmlFuerTextinput(feldname, feldwert, "number", dsTyp, dsName);
     } else if (typeof feldwert === "boolean") {
-        htmlDatensammlung += window.adb.generiereHtmlFuerBoolean(feldname, feldwert, dsTyp, dsName);
+        html += generiereHtmlFuerBoolean(feldname, feldwert, dsTyp, dsName);
     } else {
-        htmlDatensammlung += window.adb.generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
+        html += generiereHtmlFuerTextinput(feldname, feldwert, "text", dsTyp, dsName);
     }
-    return htmlDatensammlung;
+    return html;
 };
 
 module.exports = returnFunction;

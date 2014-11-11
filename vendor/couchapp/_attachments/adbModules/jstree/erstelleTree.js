@@ -12,7 +12,8 @@ module.exports = function () {
         holeDatenUrlFuerTreeOberstesLevel = require('./holeDatenUrlFuerTreeOberstesLevel'),
         holeDatenUrlFuerTreeUntereLevel   = require('./holeDatenUrlFuerTreeUntereLevel'),
         initiiereSuchfeld                 = require('../initiiereSuchfeld'),
-        initiiereArt                      = require('../initiiereArt');
+        initiiereArt                      = require('../initiiereArt'),
+        setzeTreehoehe                    = require('./setzeTreehoehe');
 
     $("#tree" + window.adb.Gruppe).jstree({
         "json_data": {
@@ -76,12 +77,12 @@ module.exports = function () {
         $("#treeMitteilung").hide();
         $("#tree" + window.adb.Gruppe).show();
         $("#tree" + window.adb.Gruppe + "Beschriftung").show();
-        window.adb.setzeTreehoehe();
+        setzeTreehoehe();
         initiiereSuchfeld();
     }).bind("after_open.jstree", function () {
-        window.adb.setzeTreehoehe();
+        setzeTreehoehe();
     }).bind("after_close.jstree", function () {
-        window.adb.setzeTreehoehe();
+        setzeTreehoehe();
     });
     return jstreeErstellt.promise();
 };

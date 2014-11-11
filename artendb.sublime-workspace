@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"vor",
+				"voriger_node"
+			],
+			[
 				"bez",
 				"beziehungen"
 			],
@@ -106,10 +110,6 @@
 			[
 				"massnber",
 				"massnberVonPop"
-			],
-			[
-				"vor",
-				"voranzustellendeNullen"
 			],
 			[
 				"Z",
@@ -296,13 +296,10 @@
 	"buffers":
 	[
 		{
-			"contents": "http://arteigenschaften.ch/index.html?exportieren_fuer_artenlistentool=true\nhttp://127.0.0.1:5984/artendb/_design/artendb/index.html?exportieren_fuer_artenlistentool=true\n\n\n\n\nlokal:\nhttp://127.0.0.1:5984/artendb/_design/artendb/index.html\ncouchapp push artendb http://barbalex:dLhdMg12@127.0.0.1:5984/artendb\ncouchapp autopush artendb http://barbalex:dLhdMg12@127.0.0.1:5984/artendb\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\narteigenschaften.ch:\nhttp://arteigenschaften.ch/artendb/_design/artendb/index.html\ncouchapp push artendb http://barbalex:lBihdl12@178.62.220.244:5984/artendb\ncouchapp autopush artendb http://barbalex:lBihdl12@178.62.220.244:5984/artendb\nhttp://barbalex:lBihdl12@arteigenschaften.ch/artendb\nhttp://178.62.220.244:5984/_utils\nhttp://178.62.220.244:5984/artendb/_design/artendb/_rewrite\n\nartdaten.ch:\nhttp://artdaten.ch/artendb/_design/artendb/index.html\ncouchapp push artendb http://barbalex:dLhdMg12@141.0.170.50:5984/artendb\nhttp://141.0.170.50:5984/_utils\nhttp://141.0.170.50:5984/artendb\n\nremote access:\nauf Windows: putty benutzen\nauf mac: ssh -p 30000 alex@178.62.220.244\n\n===================================================================\n\n// Sicherungen mit pouchdb-dump-cli\npouchdb-dump http://localhost:5984/artendb > artendb_dump.txt\n\n// dropbox\n// http://xmodulo.com/access-dropbox-command-line-linux.html\n// app key: okhjqu9gy89xav0\n// app secret: u14i0jm6itjq148\n\n// Dropbox uploader installieren and make it executable:\nwget https://raw.github.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh\n$ chmod +x dropbox_uploader.sh\n\n// configure Dropbox Uploader:\n./dropbox_uploader.sh\n\n// cron erstellen\n// Quelle: https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps\n\n//bash-file erstellen\nnano\n// einfügen:\n# dumped artendb\n# stellt dem Filenamen das Datum voran\n# komprimiert das File\n# kopiert das File auf die dropbox\n# entfernt das File\nFILENAME=$(date +\"%Y-%m-%d_%H-%M-%S_artendb_dump.txt\")\nFILENAME_GZ=$FILENAME.tar.gz\npouchdb-dump http://localhost:5984/artendb > $FILENAME\ntar cvzf $FILENAME_GZ $FILENAME\n/home/alex/dropbox_uploader.sh upload $FILENAME_GZ $FILENAME_GZ\nrm $FILENAME\nrm $FILENAME_GZ\n\n// sichern als: sichereArtendbAufDropbox.sh\n// ausführbar machen:\nchmod +x sichereArtendbAufDropbox.sh\n\n// von einem bash-File \"sichereApf.bash\" aus aufrufen:\nbash -c \"/home/alex/sichereArtendbAufDropbox.sh\"\n\n\n\n// cron erstellen:\n// Quelle: https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps\ncrontab -e\n// einfügen:\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games\nSHELL=/bin/bash\nHOME=/home/alex\n#Wöchentlich am Montag um 0 Uhr artendb dumpen und auf dropbox verschieben (Server scheint 6 Stunden verschoben)\n0 18 * * 1 /home/alex/sichereApf.bash\n\n===================================================================\n\n\n\n\n\n\n\n\nInstallation auf Ubuntu virtuellem Server:\n\nHier beschrieben: https://github.com/FNSKtZH/artendb/wiki/ArtenDb-installieren\n\napflora/gabriel: Dem neuen User nach dieser Anleitung Rechte im Ordner /var/zpanel/hostdata geben: http://superuser.com/questions/19318/how-can-i-give-write-access-of-a-folder-to-all-users-in-linux\n\n\n\n\n\n\n\n\n\nBootstrap customize:\n- Nichts aus Responsive\n- ohne Grid System\n- ohne Layouts\n- 2: kein typeahead\n\nmodernizr customize:\nsiehe Anfang des Codes in index.html\n\n\nmonitis.com installieren\nurl für agent holen: \n- free:http://dashboard.monitor.us/downloader/monitorus-agent-linux-64bit.tar.gz\n- premium: http://dashboard.monitis.com/downloader/monitis-agent-linux-64bit.tar.gz\nagent mit wget installieren: wget url\npremium agent installieren nach dieser Anleitung: http://www.monitis.com/support/server-device-monitoring/install-linux-agent/\n\nbestehenden agent deinstallieren:\nagent stoppen\nmonitis ordner entfernen\nwenn neu installiert: Pfad in /etc/init.d/monitisstartup anpassen\n\naus ./monitis.sh log aussteigen: ctrl + c\n\nmelden für support:\nemail: support@monitis.com\ntel: +41-615-880-140\n\n\nhttp://uptimerobot.com/\n\n\n\nsublime text\nsearch in files, where:\nC:\\Users\\alex\\artendb, -index.html, -artendb_browserified.js, -artendb_built.js, -main.css, -artendb_built.js.map, -bootstrap.css, -jquery.jstree.js, -jquery.jstree.min.js, -modernizr.js, -underscore.js, -bootstrap.js, -css3-mediaqueries.js, -css3-multi-column.js, -history.js, -jquery.cookie.js, -jquery.couch.app.js, -jquery.couch.app.util.js, -jquery.csv.js, -jquery.js, -jsuri.js, -typeahead.js, -atom.js, -linkup.js, -markdown.js, -mustache.js, -utils.js, -jquery.couch.js, -path.js\n",
 			"file": "/F/Google Drive/artendb_admin/push.txt",
-			"file_size": 5021,
-			"file_write_time": 130600861305762118,
 			"settings":
 			{
-				"buffer_size": 4551,
+				"buffer_size": 4595,
 				"line_ending": "Windows"
 			}
 		},
@@ -310,7 +307,7 @@
 			"file": "_attachments/index_dev.html",
 			"settings":
 			{
-				"buffer_size": 128638,
+				"buffer_size": 128644,
 				"line_ending": "Windows"
 			}
 		},
@@ -326,7 +323,49 @@
 			"file": "vendor/couchapp/_attachments/artendb.js",
 			"settings":
 			{
-				"buffer_size": 77073,
+				"buffer_size": 67835,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vendor/couchapp/_attachments/adbModules/import/importiereBeziehungssammlung.js",
+			"settings":
+			{
+				"buffer_size": 11284,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vendor/couchapp/_attachments/adbModules/import/bereiteBeziehungspartnerFuerImportVor.js",
+			"settings":
+			{
+				"buffer_size": 2554,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 290 files for \".removeClass(\"alert-info\")\n            .removeClass(\"alert-danger\")\n            .addClass(\"alert-success\");\n        if (dbs === \"Bs\") {\n            $importieren_dbs_ids_identifizieren_hinweis_text.\" (case sensitive)\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\import\\meldeErfolgVonIdIdentifikation2.js:\n   39          // rückmelden: Total x Datensätze. y davon enthalten die gewählte ID. q davon können zugeordnet werden\n   40          $importieren_dbs_ids_identifizieren_hinweis_text\n   41:             .removeClass(\"alert-info\")\n   42:             .removeClass(\"alert-danger\")\n   43:             .addClass(\"alert-success\");\n   44:         if (dbs === \"Bs\") {\n   45:             $importieren_dbs_ids_identifizieren_hinweis_text.html(\"Die Importtabelle enthält \" + window.adb[dbs.toLowerCase() + \"Datensätze\"].length + \" Beziehungen von \" + idsVonDatensaetzen.length + \" Arten:<br>Beziehungen von \" + idsVonDatensaetzen.length + \" Arten enthalten einen Wert im Feld \\\"\" + window.adb[dbs + \"FelderId\"] + \"\\\"<br>Beziehungen von \" + window.adb.zuordbareDatensaetze.length + \" Arten können zugeordnet und importiert werden\");\n   46          } else {\n   47              $importieren_dbs_ids_identifizieren_hinweis_text.html(\"Die Importtabelle enthält \" + window.adb[dbs.toLowerCase() + \"Datensätze\"].length + \" Datensätze:<br>\" + idsVonDatensaetzen.length + \" enthalten einen Wert im Feld \\\"\" + window.adb[dbs + \"FelderId\"] + \"\\\"<br>\" + window.adb.zuordbareDatensaetze.length + \" können zugeordnet und importiert werden\");\n\n1 match in 1 file\n\n\nSearching 290 files for \"meldeErfolgVonIdIdentifikation2\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\import\\meldeErfolgVonIdIdentifikation.js:\n    6  var _                               = require('underscore'),\n    7      $                               = require('jquery'),\n    8:     meldeErfolgVonIdIdentifikation2 = require('./meldeErfolgVonIdIdentifikation2');\n    9  \n   10  module.exports = function (dbs) {\n   ..\n   62                          }\n   63                      });\n   64:                     meldeErfolgVonIdIdentifikation2(mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs);\n   65                  },\n   66                  error: function () {\n   ..\n   96                          }\n   97                      });\n   98:                     meldeErfolgVonIdIdentifikation2(mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs);\n   99                  },\n  100                  error: function () {\n\n4 matches in 1 file\n\n\nSearching 290 files for \"window.adb.BsFelderId\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\entferneBeziehungssammlung.js:\n   83              for (q = 0; q < window.adb.zuordbareDatensaetze.length; q++) {\n   84                  // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen\n   85:                 if (window.adb.zuordbareDatensaetze[q].Id == bs_datensatz[window.adb.BsFelderId]) {\n   86                      // und die guid auslesen\n   87                      guid = window.adb.zuordbareDatensaetze[q].Guid;\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\import\\importiereBeziehungssammlung.js:\n  131                  if (window.adb.BsId === \"guid\") {\n  132                      // die in der Tabelle mitgelieferte id ist die guid\n  133:                     guid = objekt[window.adb.BsFelderId];\n  134                  } else {\n  135                      for (q = 0; q < window.adb.zuordbareDatensaetze.length; q++) {\n  136                          // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen\n  137:                         if (window.adb.zuordbareDatensaetze[q].Id == objekt[window.adb.BsFelderId]) {\n  138                              // und die guid auslesen\n  139                              guid = window.adb.zuordbareDatensaetze[q].Guid;\n\n3 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 4045,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation.js",
+			"settings":
+			{
+				"buffer_size": 6017,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation2.js",
+			"settings":
+			{
+				"buffer_size": 4641,
 				"line_ending": "Windows"
 			}
 		}
@@ -373,10 +412,23 @@
 	[
 		"/C/Users/alex/artendb/",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules"
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import"
 	],
 	"file_history":
 	[
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/importiereBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/handleExportierenExportierenCollapseShown.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleRueckfrageLrLoeschenJaClick.js",
+		"/C/Users/alex/artendb/package.json",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/handleFeldWaehlenAlleVonDs.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/handleFeldWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/pruefeObZuvieleBeziehungssammlungenGewaehltSind.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/pruefeObZuvieleExportfelderGewaehltSind.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsNameChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.couch.js",
+		"/C/Users/alex/apflora/src/jquery.jstree.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/filtereFuerExport.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/admin/nenneDsUm.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adb_lib/bundleLogger.js",
@@ -398,7 +450,6 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/importiereDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/importiereBeziehungssammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsWaehlenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleBsWaehlenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/fuegeBeziehungenZuObjekt.js",
@@ -431,7 +482,6 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesNeuenLr_2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerFeld.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesNeuenLr.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/_vorlage.js",
@@ -494,17 +544,7 @@
 		"/C/Users/alex/artendb/_attachments/img/glyphicons-halflings.png",
 		"/C/Users/alex/artendb/_attachments/img/glyphicons-halflings.png_alt",
 		"/C/Users/alex/artendb/_attachments/readmebilder/beziehungssammlung_.png",
-		"/C/Users/alex/artendb/_attachments/readmebilder/datensammlung_.png",
-		"/C/Users/alex/artendb/_attachments/readmebilder/objekt.png",
-		"/C/Users/alex/artendb/_attachments/style/fonts/glyphicons-halflings-regular.eot",
-		"/C/Users/alex/artendb/_attachments/style/fonts/glyphicons-halflings-regular.ttf",
-		"/C/Users/alex/artendb/_attachments/style/fonts/glyphicons-halflings-regular.woff",
-		"/C/Users/alex/artendb/_attachments/style/images/aster.ico",
-		"/C/Users/alex/artendb/_attachments/style/images/aster.png",
-		"/C/Users/alex/artendb/_attachments/style/images/aster_144.png",
-		"/C/Users/alex/artendb/_attachments/style/images/aster_alt.ico",
-		"/C/Users/alex/artendb/_attachments/style/images/aster_quadratisch.png",
-		"/C/Users/alex/artendb/_attachments/style/images/ui-bg_glass_100_f5f0e5_1x400.png"
+		"/C/Users/alex/artendb/_attachments/readmebilder/datensammlung_.png"
 	],
 	"find":
 	{
@@ -608,6 +648,42 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"Datensätze",
+			"window.adb.BsFelderId",
+			"meldeErfolgVonIdIdentifikation2",
+			"Datensätze",
+			".removeClass(\"alert-info\")\n            .removeClass(\"alert-danger\")\n            .addClass(\"alert-success\");\n        if (dbs === \"Bs\") {\n            $importieren_dbs_ids_identifizieren_hinweis_text.",
+			"window.adb.bereiteBeziehungspartnerFuerImportVor",
+			"beziehungspartner_vorbereitet",
+			"beziehungspartnerVorbereitet",
+			"bez_partner",
+			"bez_partner_array",
+			"alle_bez_partner_array",
+			"window.adb.bezPartner_objekt",
+			"/adbModules/export",
+			"./adbModules/handleRueckfrageLrLoeschenJaClick",
+			"window.adb.handleRueckfrageLrLoeschenJaClick",
+			"window.adb.öffneGruppe",
+			"voriger_node",
+			"doc_array",
+			"window.adb.löscheMassenMitObjektArray",
+			"window.adb.handleRückfrageLrLöschenJaClick",
+			"window.adb.handleFeldWaehlenAlleVonDs",
+			"/adbModules/export",
+			"this",
+			"window.adb.handleFeldWählenAlleVonDs",
+			"window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind",
+			"window.adb.pruefeObZuvieleExportfelderGewaehltSind",
+			"window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind",
+			"window.adb.prüfeObZuvieleExportfelderGewähltSind",
+			"window.adb.handleFeldWaehlenChange",
+			"window.adb.handleFeldWählenChange",
+			"window.adb.handleDsNameChange",
+			"ds_key",
+			"signup",
+			"\"+praefix+woher+\"",
+			"'+woher",
+			"\"+woher",
 			"gruppenliste",
 			"}\n\n    gruppenliste = gruppen.split(\",\");",
 			"returnFunction",
@@ -699,43 +775,7 @@
 			"returnFunction",
 			"window.adb.setzeTreehöhe",
 			"jstree_erstellt",
-			"baum_erstellt",
-			"returnFunction",
-			"formular_angezeigt",
-			"returnFunction",
-			"neuer_nodetext",
-			"returnFunction",
-			"wikipedia_link",
-			"google_bilder_link",
-			"importieren_beziehungssammlung",
-			"importieren_datensammlung",
-			"exportieren_fuer_alt",
-			"präfix",
-			"window.adb.passeUiFürAngemeldetenUserAn",
-			"such_objekte",
-			"window.adb.filtere_lr",
-			"initiiereSuchfeld",
-			"returnFunction",
-			"initiiereArt2",
-			"datensammlung",
-			"atensammlung",
-			"datesammlung",
-			"synonyme_art",
-			"bs_der_originalart",
-			"bs_der_synonymen_art",
-			"beziehung_origart",
-			"beziehung_der_originalart",
-			"beziehung_origart",
-			"beziehungDesSynonyms",
-			"beziehung_des_synonyms",
-			"data_row",
-			"bez_namen",
-			"ds_namen",
-			"beziehungssammlungen_von_synonymen",
-			"eigenschaftensammlungen_von_synonymen",
-			"guids_von_synonymen",
-			"taxonomische_beziehungssammlungen",
-			"art_beziehungssammlungen"
+			"baum_erstellt"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -743,6 +783,28 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Datensaetze",
+			"beziehungspartnerVorbereitet",
+			"bezPartner",
+			"BezPartnerArray",
+			"alleBezPartnerArray",
+			"window.adb.bezPartnerObjekt",
+			"",
+			"window.adb.oeffneGruppe",
+			"vorigerNode",
+			"docArray",
+			"window.adb.loescheMassenMitObjektArray",
+			"window.adb.handleRueckfrageLrLoeschenJaClick",
+			"",
+			"that",
+			"window.adb.handleFeldWaehlenAlleVonDs",
+			"window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind",
+			"window.adb.pruefeObZuvieleExportfelderGewaehltSind",
+			"window.adb.handleFeldWaehlenChange",
+			"dsKey",
+			"\" + praefix + woher + \"",
+			"' + woher",
+			"\" + woher",
 			"admin_korrigiere_ds_name_rueckmeldung",
 			"admin_korrigiere_ds_name_rückmeldung",
 			"admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung",
@@ -848,34 +910,12 @@
 			"window.adb.generiereHtmlFuerWwwLink",
 			"window.adb.generiereHtmlFuerTextarea",
 			"window.adb.generiereHtmlFuerLinksZuGleicherGruppe",
-			"window.adb.generiereHtmlFuerLinkZuGleicherGruppe",
-			"arrayString",
-			"hierarchieString",
-			"htmlDatensammlung",
-			"window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray",
-			"window.adb.ergaenzeParentZuLrHierarchie",
-			"mehrfachVorkommendeIds",
-			"objekt",
-			"zugehoerigesObjekt",
-			"idsVonNichtImportierbarenDatensaetzen",
-			"idsVonDatensaetzen",
-			"bsDatensaetzeObjekt",
-			"bsVorlage",
-			"window.adb.bereiteBeziehungspartnerFuerImportVor",
-			"bsImportiert",
-			"window.adb.fuegeDatensammlungZuObjekt",
-			"dsDatensatzMitRichtigerId",
-			"rueckmeldung",
-			"anzDsImportiert",
-			"anzDs",
-			"anzahlFelder",
-			"rueckmeldungLinks",
-			"erste10Ids"
+			"window.adb.generiereHtmlFuerLinkZuGleicherGruppe"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": false
 	},
 	"groups":
@@ -890,15 +930,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4551,
+						"buffer_size": 4595,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2871,
-								2871
+								2672,
+								2672
 							]
 						],
 						"settings":
@@ -906,7 +946,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2088.0,
+						"translation.y": 1464.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -918,7 +958,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 128638,
+						"buffer_size": 128644,
 						"regions":
 						{
 						},
@@ -939,7 +979,7 @@
 						"translation.y": 33484.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -969,7 +1009,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -978,15 +1018,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 77073,
+						"buffer_size": 67835,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								51774,
-								51774
+								38516,
+								38516
 							]
 						],
 						"settings":
@@ -996,10 +1036,203 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 34132.0,
+						"translation.y": 26428.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "vendor/couchapp/_attachments/adbModules/import/importiereBeziehungssammlung.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11284,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5036,
+								5073
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 700.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "vendor/couchapp/_attachments/adbModules/import/bereiteBeziehungspartnerFuerImportVor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								971,
+								971
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4045,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										548,
+										773
+									],
+									[
+										1918,
+										1949
+									],
+									[
+										1963,
+										1994
+									],
+									[
+										2144,
+										2175
+									],
+									[
+										2432,
+										2463
+									],
+									[
+										3080,
+										3101
+									],
+									[
+										3513,
+										3534
+									],
+									[
+										3850,
+										3871
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								2646,
+								2646
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1128.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6017,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4129,
+								4129
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 940.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "vendor/couchapp/_attachments/adbModules/import/meldeErfolgVonIdIdentifikation2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4641,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3722,
+								3740
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
