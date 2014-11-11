@@ -7,9 +7,10 @@ module.exports = function (woher) {
     var email       = $('#Email_' + woher).val(),
         passwort    = $('#Passwort_' + woher).val(),
         blendeMenus                   = require('./blendeMenus'),
-        passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn');
+        passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
+        validiereUserAnmeldung        = require('./validiereUserAnmeldung');
 
-    if (window.adb.validiereUserAnmeldung(woher)) {
+    if (validiereUserAnmeldung(woher)) {
         $.couch.login({
             name : email,
             password : passwort,

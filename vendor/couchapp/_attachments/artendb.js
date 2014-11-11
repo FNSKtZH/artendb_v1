@@ -11,27 +11,6 @@ window.adb.meldeUserAb = function () {
     require('./adbModules/login/meldeUserAb')();
 };
 
-
-window.adb.validiereUserAnmeldung = function (woher) {
-    'use strict';
-    var email = $('#Email_' + woher).val(),
-        passwort = $('#Passwort_' + woher).val();
-    if (!email) {
-        setTimeout(function () {
-            $('#Email_' + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Emailhinweis_" + woher).show();
-        return false;
-    } else if (!passwort) {
-        setTimeout(function () {
-            $('#Passwort_' + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Passworthinweis_" + woher).show();
-        return false;
-    }
-    return true;
-};
-
 // wenn BsName geändert wird
 // suchen, ob schon eine Datensammlung mit diesem Namen existiert
 // und sie von jemand anderem importiert wurde
