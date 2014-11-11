@@ -16,7 +16,8 @@ module.exports = function (dsTyp, art, datensammlung) {
         erstelleHtmlFuerFeld                                = require('./erstelleHtmlFuerFeld'),
         generiereHtmlFuerTextarea                           = require('./generiereHtmlFuerTextarea'),
         generiereHtmlFuerLinksZuGleicherGruppe              = require('./generiereHtmlFuerLinksZuGleicherGruppe'),
-        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
+        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
+        generiereHtmlFuerLinkZuGleicherGruppe               = require('./generiereHtmlFuerLinkZuGleicherGruppe');
 
     dsName = ersetzeUngueltigeZeichenInIdNamen(datensammlung.Name);
 
@@ -47,7 +48,7 @@ module.exports = function (dsTyp, art, datensammlung) {
             // dieses Feld wird künftig nicht mehr importiert
         } else if (((feldname === "Offizielle Art" || feldname === "Eingeschlossen in" || feldname === "Synonym von") && art.Gruppe === "Flora") || (feldname === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
             // dann den Link aufbauen lassen
-            htmlDatensammlung += window.adb.generiereHtmlFuerLinkZuGleicherGruppe(feldname, art._id, feldwert.Name);
+            htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(feldname, art._id, feldwert.Name);
         } else if ((feldname === "Gültige Namen" || feldname === "Eingeschlossene Arten" || feldname === "Synonyme") && art.Gruppe === "Flora") {
             // das ist ein Array von Objekten
             htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(feldname, feldwert);

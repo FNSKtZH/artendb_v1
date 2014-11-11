@@ -2,47 +2,6 @@
 
 window.adb = window.adb || {};
 
-// generiert den html-Inhalt für einzelne Links in Flora
-window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function (feld_name, id, artname) {
-    'use strict';
-    var html_container;
-    html_container = '<div class="form-group"><label class="control-label">';
-    html_container += feld_name;
-    html_container += ':</label><p class="form-control-static controls feldtext"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
-    html_container += id;
-    html_container += '">';
-    html_container += artname;
-    html_container += '</a></p></div>';
-    return html_container;
-};
-
-// setzt die Höhe von textareas so, dass der Text genau rein passt
-window.adb.fitTextareaToContent = function (id, max_height) {
-    'use strict';
-    var text = id && id.style ? id : document.getElementById(id),
-        adjustedHeight;
-    max_height = max_height || document.documentElement.clientHeight;
-    if (!text) {
-        return;
-    }
-
-    /* Accounts for rows being deleted, pixel value may need adjusting */
-    if (text.clientHeight == text.scrollHeight) {
-        text.style.height = "30px";
-    }
-
-    adjustedHeight = text.clientHeight;
-    if (!max_height || max_height > adjustedHeight) {
-        adjustedHeight = Math.max(text.scrollHeight, adjustedHeight);
-    }
-    if (max_height) {
-        adjustedHeight = Math.min(max_height, adjustedHeight);
-    }
-    if (adjustedHeight > text.clientHeight) {
-        text.style.height = adjustedHeight + "px";
-    }
-};
-
 // kontrollieren, ob die erforderlichen Felder etwas enthalten
 // wenn ja wird true retourniert, sonst false
 window.adb.validiereSignup = function (woher) {
@@ -762,8 +721,10 @@ window.adb.handleExportierenExportierenExportierenClick = function () {
 // Höhe der textareas an Textgrösse anpassen
 window.adb.handlePanelShown = function () {
     'use strict';
+    var fitTextareaToContent = require('./adbModules/fitTextareaToContent');
+
     $(this).find('textarea').each(function () {
-        window.adb.fitTextareaToContent(this.id);
+        fitTextareaToContent(this.id);
     });
 };
 
@@ -781,11 +742,13 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function () {
     'use strict';
-    setzeTreehoehe = require('./adbModules/jstree/setzeTreehoehe');
+    setzeTreehoehe       = require('./adbModules/jstree/setzeTreehoehe'),
+    fitTextareaToContent = require('./adbModules/fitTextareaToContent');
+
     setzeTreehoehe();
     // Höhe der Textareas korrigieren
     $('#forms').find('textarea').each(function () {
-        window.adb.fitTextareaToContent(this.id);
+        fitTextareaToContent(this.id);
     });
 };
 
@@ -885,8 +848,7 @@ window.adb.handleBsIdChange = function () {
 
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function () {
-    'use strict';
-    window.adb.fitTextareaToContent(this.id);
+    require('./adbModules/fitTextareaToContent')(this.id);
 };
 
 // wird in index.html benutzt

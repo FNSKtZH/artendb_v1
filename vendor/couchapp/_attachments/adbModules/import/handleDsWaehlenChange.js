@@ -10,7 +10,8 @@ module.exports = function (that) {
         $DsAnzDs       = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
         $DsName        = $("#DsName"),
-        $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error");
+        $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error"),
+        fitTextareaToContent                 = require('../fitTextareaToContent');
 
     // allfälligen Alert schliessen
     $importieren_ds_ds_beschreiben_error
@@ -64,7 +65,7 @@ module.exports = function (that) {
                     $('#importieren_ds')
                         .find('textarea')
                         .each(function () {
-                            window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
+                            fitTextareaToContent(this, document.documentElement.clientHeight);
                         });
                     $DsName.focus();
                 }

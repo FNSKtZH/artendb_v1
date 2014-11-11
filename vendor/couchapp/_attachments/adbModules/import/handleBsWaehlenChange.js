@@ -12,7 +12,8 @@ module.exports = function (that) {
         $BsAnzDs       = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
         $BsName        = $("#BsName"),
-        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2");
+        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2"),
+        fitTextareaToContent                    = require('../fitTextareaToContent');
     // allfälligen Alert schliessen
     $importieren_bs_ds_beschreiben_hinweis2
         .alert()
@@ -61,7 +62,7 @@ module.exports = function (that) {
                     $BsAnzDs.html(bsRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importieren_bs').find('textarea').each(function () {
-                        window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);
+                        fitTextareaToContent(this, document.documentElement.clientHeight);
                     });
                     $BsName.focus();
                 }
