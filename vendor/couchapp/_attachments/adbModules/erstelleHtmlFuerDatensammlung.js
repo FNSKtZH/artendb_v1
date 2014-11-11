@@ -11,11 +11,12 @@ module.exports = function (dsTyp, art, datensammlung) {
         hierarchieString,
         arrayString,
         dsName,
-        ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
-        erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
-        generiereHtmlFuerTextarea                 = require('./generiereHtmlFuerTextarea'),
-        generiereHtmlFuerLinksZuGleicherGruppe    = require('./generiereHtmlFuerLinksZuGleicherGruppe');
+        ersetzeUngueltigeZeichenInIdNamen                   = require('./ersetzeUngueltigeZeichenInIdNamen'),
+        erstelleHtmlFuerDatensammlungBeschreibung           = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+        erstelleHtmlFuerFeld                                = require('./erstelleHtmlFuerFeld'),
+        generiereHtmlFuerTextarea                           = require('./generiereHtmlFuerTextarea'),
+        generiereHtmlFuerLinksZuGleicherGruppe              = require('./generiereHtmlFuerLinksZuGleicherGruppe'),
+        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
 
     dsName = ersetzeUngueltigeZeichenInIdNamen(datensammlung.Name);
 
@@ -54,7 +55,7 @@ module.exports = function (dsTyp, art, datensammlung) {
             // dieses Feld nicht anzeigen
         } else if (feldname === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(feldwert)) {
             // Namen kommagetrennt anzeigen
-            hierarchieString = window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(feldwert);
+            hierarchieString   = erstelleHierarchieFuerFeldAusHierarchieobjekteArray(feldwert);
             htmlDatensammlung += generiereHtmlFuerTextarea(feldname, hierarchieString, dsTyp, datensammlung.Name.replace(/"/g, "'"));
         } else if (_.isArray(feldwert)) {
             // dieses Feld enthält einen Array von Werten

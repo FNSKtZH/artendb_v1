@@ -10,7 +10,8 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         object_array = _.map(lr.rows, function (row) {
             return row.doc;
         }),
-        $db = $.couch.db('artendb');
+        $db = $.couch.db('artendb'),
+        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
 
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};
@@ -27,7 +28,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
     }
     if (aktualisiereHierarchiefeld) {
-        $("#Hierarchie").val(window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
+        $("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
     }
     // jetzt den parent aktualisieren
     if (objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {

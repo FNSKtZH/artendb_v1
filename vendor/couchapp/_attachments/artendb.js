@@ -2,22 +2,6 @@
 
 window.adb = window.adb || {};
 
-window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray = function (hierarchie_array) {
-    'use strict';
-    if (!_.isArray(hierarchie_array)) {
-        return "";
-    }
-    // Namen kommagetrennt anzeigen
-    var hierarchieString = "";
-    _.each(hierarchie_array, function (hierarchie_objekt, index) {
-        if (index > 0) {
-            hierarchieString += "\n";
-        }
-        hierarchieString += hierarchie_objekt.Name;
-    });
-    return hierarchieString;
-};
-
 // generiert den html-Inhalt für einzelne Links in Flora
 window.adb.generiereHtmlFuerLinkZuGleicherGruppe = function (feld_name, id, artname) {
     'use strict';
