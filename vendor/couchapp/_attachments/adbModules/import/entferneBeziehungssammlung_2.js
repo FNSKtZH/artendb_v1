@@ -5,6 +5,8 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (bsName, guidArray, verzoegerungsFaktor) {
+    var entferneBeziehungssammlungAusObjekt = require('./entferneBeziehungssammlungAusObjekt');
+
     // alle docs holen
     setTimeout(function () {
         var $db = $.couch.db('artendb');
@@ -13,7 +15,7 @@ module.exports = function (bsName, guidArray, verzoegerungsFaktor) {
                 var objekt;
                 _.each(data.rows, function (dataRow) {
                     objekt = dataRow.doc;
-                    window.adb.entferneBeziehungssammlungAusObjekt(bsName, objekt);
+                    entferneBeziehungssammlungAusObjekt(bsName, objekt);
                 });
             }
         });

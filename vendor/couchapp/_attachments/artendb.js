@@ -713,22 +713,6 @@ window.adb.entferneBeziehungssammlung = function () {
     require('./adbModules/import/entferneBeziehungssammlung')();
 };
 
-window.adb.entferneBeziehungssammlungAusObjekt = function (bsName, objekt) {
-    'use strict';
-    if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
-        for (var i=0; i<objekt.Beziehungssammlungen.length; i++) {
-            if (objekt.Beziehungssammlungen[i].Name === bsName) {
-                objekt.Beziehungssammlungen.splice(i,1);
-                var $db = $.couch.db('artendb');
-                $db.saveDoc(objekt);
-                // mitteilen, dass eine bs entfernt wurde
-                $(document).trigger('adb.bsEntfernt');
-                break;
-            }
-        }
-    }
-};
-
 // fügt der Art eine Datensammlung hinzu
 // wenn dieselbe schon vorkommt, wird sie überschrieben
 window.adb.fuegeDatensammlungZuObjekt = function (guid, datensammlung) {
