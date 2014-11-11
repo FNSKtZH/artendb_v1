@@ -7,9 +7,10 @@ var $ = require('jquery');
 
 module.exports = function (woher) {
     var $db                                   = $.couch.db('artendb'),
-        bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02');
+        bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02'),
+        pruefeAnmeldung                       = require('../login/pruefeAnmeldung');
 
-    if (!window.adb.pruefeAnmeldung(woher)) {
+    if (!pruefeAnmeldung(woher)) {
         $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
     } else {
         $("#DsName").focus();

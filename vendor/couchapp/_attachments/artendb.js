@@ -11,22 +11,6 @@ window.adb.meldeUserAb = function () {
     require('./adbModules/login/meldeUserAb')();
 };
 
-// prüft, ob der Benutzer angemeldet ist
-// ja: retourniert true
-// nein: retourniert false und öffnet die Anmeldung
-// welche anmeldung hängt ab, woher die Prüfung angefordert wurde
-// darum erwartet die Funktion den parameter woher
-window.adb.pruefeAnmeldung = function (woher) {
-    'use strict';
-    if (!localStorage.Email) {
-        setTimeout(function () {
-            window.adb.zurueckZurAnmeldung(woher);
-        }, 600);
-        return false;
-    }
-    return true;
-};
-
 window.adb.zurueckZurAnmeldung = function (woher) {
     'use strict';
     var praefix = "importieren_";
@@ -252,11 +236,13 @@ window.adb.handleMenuBtnClick = function () {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function () {
     'use strict';
-    var zeigeFormular = require('./adbModules/zeigeFormular');
+    var zeigeFormular   = require('./adbModules/zeigeFormular'),
+        pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
     if(window.adb.isFileAPIAvailable()) {
         zeigeFormular ("importieren_ds");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-        if (window.adb.pruefeAnmeldung("ds")) {
+        if (pruefeAnmeldung("ds")) {
             $("#importieren_ds_ds_beschreiben_collapse").collapse('show');
         }
     }
@@ -267,11 +253,13 @@ window.adb.handleDs_ImportierenClick = function () {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function () {
     'use strict';
-    var zeigeFormular = require('./adbModules/zeigeFormular');
+    var zeigeFormular = require('./adbModules/zeigeFormular'),
+    pruefeAnmeldung   = require('./adbModules/login/pruefeAnmeldung');
+
     if(window.adb.isFileAPIAvailable()) {
         zeigeFormular ("importieren_bs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-        if (window.adb.pruefeAnmeldung("bs")) {
+        if (pruefeAnmeldung("bs")) {
             $("#importieren_bs_ds_beschreiben_collapse").collapse('show');
         }
     }
@@ -327,7 +315,9 @@ window.adb.handleImportierenBsDsBeschreibenCollapseShown = function () {
 // wenn importieren_ds_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("ds")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
     } else {
         $('#DsFile').fileupload();
@@ -340,7 +330,9 @@ window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {
 // wenn importieren_bs_daten_uploaden_collapse geöffnet wird
 window.adb.handleImportierenBsDatenUpladenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("bs")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
     } else {
         $('#BsFile').fileupload();
@@ -353,7 +345,9 @@ window.adb.handleImportierenBsDatenUpladenCollapseShown = function () {
 // wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("ds")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
     }
     $('html, body').animate({
@@ -364,7 +358,9 @@ window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function () {
 // wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
 window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("bs")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
     }
     $('html, body').animate({
@@ -375,7 +371,9 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenDsImportAusführenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("ds")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("ds")) {
         $(this).collapse('hide');
     }
     $('html, body').animate({
@@ -386,7 +384,9 @@ window.adb.handleImportierenDsImportAusführenCollapseShown = function () {
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
 window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("bs")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("bs")) {
         $(this).collapse('hide');
     }
     $('html, body').animate({
@@ -1027,7 +1027,9 @@ window.adb.bereiteImportierenDsBeschreibenVor_02 = function () {
 // woher wird bloss benötigt, wenn angemeldet werden muss
 window.adb.bereiteImportieren_bs_beschreibenVor = function (woher) {
     'use strict';
-    if (!window.adb.pruefeAnmeldung("woher")) {
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
+    if (!pruefeAnmeldung("woher")) {
         $('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
     } else {
         $("#BsName").focus();
@@ -1266,8 +1268,10 @@ window.adb.myTypeOf = function (wert) {
 
 window.adb.bearbeiteLrTaxonomie = function () {
     'use strict';
+    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+
     // Benutzer muss anmelden
-    if (!window.adb.pruefeAnmeldung("art")) {
+    if (!pruefeAnmeldung("art")) {
         return false;
     }
 
