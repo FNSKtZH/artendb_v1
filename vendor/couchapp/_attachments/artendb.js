@@ -820,43 +820,9 @@ window.adb.handleLrParentOptionenChange = function () {
     require('./adbModules/handleLrParentOptionenChange')(this);
 };
 
-window.adb.handleRückfrageLrLöschenJaClick = function () {
-    'use strict';
-    // zuerst die id des Objekts holen
-    var uri = new Uri($(location).attr('href')),
-        id = uri.getQueryParamValue('id'),
-        hash = uri.anchor();
-    // wenn browser history nicht unterstützt, erstellt history.js eine hash
-    // dann muss die id durch die id in der hash ersetzt werden
-    if (hash) {
-        var uri2 = new Uri(hash);
-        id = uri2.getQueryParamValue('id');
-    }
-    // Objekt selbst inkl. aller hierarchisch darunter liegende Objekte ermitteln und löschen
-    var $db = $.couch.db('artendb');
-    $db.view('artendb/hierarchie?key="' + id + '"&include_docs=true', {
-        success: function (data) {
-            // daraus einen Array von docs machen
-            var doc_array = _.map(data.rows, function (row) {
-                return row.doc;
-            });
-            // und diese Dokumente nun löschen
-            window.adb.löscheMassenMitObjektArray(doc_array);
-            // vorigen node ermitteln
-            var voriger_node = $.jstree._reference("#" + id)._get_prev("#" + id);
-            // node des gelöschten LR entfernen
-            $.jstree._reference("#" + id).delete_node("#" + id);
-            // vorigen node öffnen
-            if (voriger_node) {
-                $.jstree._reference(voriger_node).select_node(voriger_node);
-            } else {
-                window.adb.öffneGruppe("Lebensräume");
-            }
-        },
-        error: function () {
-            console.log('handleRückfrageLrLöschenJaClick: keine Daten erhalten');
-        }
-    });
+// wird in index.html benutzt
+window.adb.handleRueckfrageLrLoeschenJaClick = function () {
+    require('./adbModules/handleRueckfrageLrLoeschenJaClick')();
 };
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
@@ -873,37 +839,9 @@ window.adb.handlePanelbodyLrTaxonomieShown = function () {
     }
 };
 
-// wenn #exportieren_exportieren_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleExportierenExportierenCollapseShown = function (that) {
-    'use strict';
-    var filtereFuerExport = require('./adbModules/export/filtereFuerExport'),
-        fuerAlt = false;
-
-    if (that.id === 'exportieren_alt_exportieren_collapse') {
-        fuerAlt = true;
-    }
-
-    // nur ausführen, wenn exportieren_exportieren_collapse offen ist
-    // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
-    if ($("#exportieren_exportieren_collapse").is(":visible")) {
-        if (window.adb.handleExportierenObjekteWaehlenCollapseShown(that)) {
-            // Gruppe ist gewählt, weitermachen
-
-            // Tabelle und Herunterladen-Schaltfläche ausblenden
-            $(".exportieren_exportieren_tabelle").hide();
-            $(".exportieren_exportieren_exportieren").hide();
-
-            // filtert und baut danach die Vorschautabelle auf
-            filtereFuerExport(null, fuerAlt);
-        }
-    }
-    if ($("#exportieren_alt_exportieren_collapse").is(":visible")) {
-        // Tabelle und Herunterladen-Schaltfläche ausblenden
-        $(".exportieren_exportieren_tabelle").hide();
-        $(".exportieren_exportieren_exportieren").hide();
-        // filtert und baut danach die Vorschautabelle auf
-        filtereFuerExport(null, fuerAlt);
-    }
+    require('./adbModules/export/handleExportierenExportierenCollapseShown')(that);
 };
 
 // scrollt das übergebene Element nach oben
@@ -1069,7 +1007,7 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 
 // wenn .gruppe geklickt wird
 window.adb.handleÖffneGruppeClick = function () {
-    window.adb.öffneGruppe($(this).attr("Gruppe"));
+    window.adb.oeffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
@@ -1171,57 +1109,6 @@ window.adb.queryChanges = function (options) {
 // wird in index.html benutzt
 window.adb.importiereBeziehungssammlung = function () {
     require('./adbModules/import/importiereBeziehungssammlung')();
-};
-
-window.adb.bereiteBeziehungspartnerFuerImportVor = function () {
-    'use strict';
-    var alle_bez_partner_array = [],
-        bez_partner_array,
-        beziehungspartner_vorbereitet = $.Deferred();
-    window.adb.bezPartner_objekt = {};
-
-    _.each(window.adb.bsDatensaetze, function (bs_datensatz) {
-        if (bs_datensatz.Beziehungspartner) {
-            // bs_datensatz.Beziehungspartner ist eine kommagetrennte Liste von guids
-            // diese Liste in Array verwandeln
-            bez_partner_array = bs_datensatz.Beziehungspartner.split(", ");
-            // und in window.adb.bsDatensaetze nachführen
-            bs_datensatz.Beziehungspartner = bez_partner_array;
-            // und vollständige Liste aller Beziehungspartner nachführen
-            alle_bez_partner_array = _.union(alle_bez_partner_array, bez_partner_array);
-        }
-    });
-    // jetzt wollen wir ein Objekt bauen, das für alle Beziehungspartner das auszutauschende Objekt enthält
-    // danach für jede guid Gruppe, Taxonomie (bei LR) und Name holen und ein Objekt draus machen
-    var $db = $.couch.db('artendb');
-    $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(alle_bez_partner_array)) + '&include_docs=true', {
-        success: function (data) {
-            var objekt,
-                bez_partner;
-            _.each(data.rows, function (dataRow) {
-                objekt = dataRow.doc;
-                bez_partner = {};
-                bez_partner.Gruppe = objekt.Gruppe;
-                if (objekt.Gruppe === "Lebensräume") {
-                    bez_partner.Taxonomie = objekt.Taxonomie.Eigenschaften.Taxonomie;
-                    if (objekt.Taxonomie.Eigenschaften.Taxonomie.Label) {
-                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Label + ": " + objekt.Taxonomie.Eigenschaften.Taxonomie.Einheit;
-                    } else {
-                        bez_partner.Name = objekt.Taxonomie.Eigenschaften.Einheit;
-                    }
-                } else {
-                    bez_partner.Name = objekt.Taxonomie.Eigenschaften["Artname vollständig"];
-                }
-                bez_partner.GUID = objekt._id;
-                window.adb.bezPartner_objekt[objekt._id] = bez_partner;
-            });
-        },
-        error: function () {
-            console.log('bereiteBeziehungspartnerFürImportVor: keine Daten erhalten');
-        }
-    });
-    beziehungspartner_vorbereitet.resolve();
-    return beziehungspartner_vorbereitet.promise();
 };
 
 // wird in index.html benutzt
@@ -1612,7 +1499,7 @@ window.adb.exportZuruecksetzen = function (event, _alt) {
     $('#exportieren_alt_exportieren_url').val('');
 };
 
-window.adb.öffneGruppe = function (Gruppe) {
+window.adb.oeffneGruppe = function (Gruppe) {
     'use strict';
     var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
     // Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
@@ -1822,7 +1709,7 @@ window.adb.erstelleLrLabelName = function (label, einheit) {
 // nimmt einen Array von Objekten entgegen
 // baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
 // aktualisiert die Objekte mit einer einzigen Operation
-window.adb.löscheMassenMitObjektArray = function (object_array) {
+window.adb.loescheMassenMitObjektArray = function (object_array) {
     'use strict';
     var objekte_mit_objekte,
         objekte = [],

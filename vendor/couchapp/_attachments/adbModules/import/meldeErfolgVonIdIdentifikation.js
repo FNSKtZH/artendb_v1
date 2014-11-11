@@ -42,7 +42,7 @@ module.exports = function (dbs) {
                     var nameDesIdFelds = window.adb[dbs + "FelderId"],
                         zugehoerigesObjekt;
                     // durch die importierten Datensätze loopen
-                    _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function (importDatensatz) {
+                    _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {
                         if (idsVonDatensaetzen.indexOf(importDatensatz[nameDesIdFelds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             idsVonDatensaetzen.push(importDatensatz[nameDesIdFelds]);
@@ -73,7 +73,7 @@ module.exports = function (dbs) {
                     var nameDesIdFelds = window.adb[dbs + "FelderId"],
                         objekt;
                     // durch die importierten Datensätze loopen
-                    _.each(window.adb[dbs.toLowerCase() + "Datensätze"], function (importDatensatz) {
+                    _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {
                         if (idsVonDatensaetzen.indexOf(importDatensatz[nameDesIdFelds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             idsVonDatensaetzen.push(importDatensatz[nameDesIdFelds]);

@@ -24,7 +24,8 @@ module.exports = function () {
         $BsUrsprungsBs                                 = $("#BsUrsprungsBs"),
         $importieren_bs_import_ausfuehren_hinweis      = $("#importieren_bs_import_ausfuehren_hinweis"),
         $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
-        fuegeBeziehungenZuObjekt                       = require('./fuegeBeziehungenZuObjekt');
+        fuegeBeziehungenZuObjekt                       = require('./fuegeBeziehungenZuObjekt'),
+        bereiteBeziehungspartnerFuerImportVor          = require('./bereiteBeziehungspartnerFuerImportVor');
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$BsName.val()) {
@@ -96,7 +97,7 @@ module.exports = function () {
     });
 
     // zuerst: Veranlassen, dass die Beziehungspartner in window.adb.bsDatensaetze in einen Array der richtigen Form umgewandelt werden
-    $.when(window.adb.bereiteBeziehungspartnerFuerImportVor()).then(function () {
+    $.when(bereiteBeziehungspartnerFuerImportVor()).then(function () {
         setTimeout(function () {
             var beziehungssammlung,
                 bsVorlage = {},
@@ -176,7 +177,7 @@ module.exports = function () {
                                 beziehung[feldname] = [];
                                 // durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
                                 _.each(feldwert, function (beziehungspartnerFeld) {
-                                    beziehung[feldname].push(window.adb.bezPartner_objekt[beziehungspartnerFeld]);
+                                    beziehung[feldname].push(window.adb.bezPartnerObjekt[beziehungspartnerFeld]);
                                 });
                             } else {
                                 // Normalfall
