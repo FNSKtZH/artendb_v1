@@ -8,22 +8,22 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 // $ wird benötigt wegen .modal
-var returnFunction = function () {
+module.exports = function () {
     var datensammlung,
         anzahlFelder,
-        anzDs = window.adb.dsDatensaetze.length,
+        anzDs             = window.adb.dsDatensaetze.length,
         // Der Verlauf soll angezeigt werden, daher braucht es einen zähler
-        anzDsImportiert = 0,
-        DsImportiert = $.Deferred(),
-        $DsName = $("#DsName"),
-        $DsBeschreibung = $("#DsBeschreibung"),
+        anzDsImportiert   = 0,
+        DsImportiert      = $.Deferred(),
+        $DsName           = $("#DsName"),
+        $DsBeschreibung   = $("#DsBeschreibung"),
         nr,
         rueckmeldungLinks = "",
         rueckmeldung,
-        $DsDatenstand = $("#DsDatenstand"),
-        $DsLink = $("#DsLink"),
-        $DsUrsprungsDs = $("#DsUrsprungsDs"),
-        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis"),
+        $DsDatenstand     = $("#DsDatenstand"),
+        $DsLink           = $("#DsLink"),
+        $DsUrsprungsDs    = $("#DsUrsprungsDs"),
+        $importieren_ds_import_ausfuehren_hinweis      = $("#importieren_ds_import_ausfuehren_hinweis"),
         $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
         erste10Ids,
         dsDatensatzMitRichtigerId;
@@ -95,7 +95,7 @@ var returnFunction = function () {
             });
         }
     });
-    _.each(window.adb.dsDatensaetze, function (ds_datensatz) {
+    _.each(window.adb.dsDatensaetze, function (dsDatensatz) {
         // Datensammlung als Objekt gründen
         datensammlung = {};
         datensammlung.Name = $DsName.val();
@@ -120,7 +120,7 @@ var returnFunction = function () {
         datensammlung.Eigenschaften = {};
         // Felder anfügen, wenn sie Werte enthalten
         anzahlFelder = 0;
-        _.each(ds_datensatz, function (feldwert, feldname) {
+        _.each(dsDatensatz, function (feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
             // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
             //if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
@@ -154,10 +154,10 @@ var returnFunction = function () {
             var guid;
             if (window.adb.DsId === "guid") {
                 // die in der Tabelle mitgelieferte id ist die guid
-                guid = ds_datensatz[window.adb.DsFelderId];
+                guid = dsDatensatz[window.adb.DsFelderId];
             } else {
                 dsDatensatzMitRichtigerId = _.find(window.adb.zuordbareDatensaetze, function (datensatz) {
-                    return datensatz.Id == ds_datensatz[window.adb.DsFelderId];
+                    return datensatz.Id == dsDatensatz[window.adb.DsFelderId];
                 });
                 guid = dsDatensatzMitRichtigerId.Guid;
             }
@@ -189,5 +189,3 @@ var returnFunction = function () {
     }, 2000);
     DsImportiert.resolve();
 };
-
-module.exports = returnFunction;

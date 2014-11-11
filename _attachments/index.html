@@ -887,7 +887,7 @@
                                 <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
                                 <hr>
                                 <button id="admin_korrigiere_ds_name_ch_rote_liste_1991" type="button" class="btn btn-primary">Eigenschaftensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
-                                <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung"></span>
+                                <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung"></span>
                                 <hr>
                                 <fieldset>
                                     <p style="font-weight:bold;">Eigenschaften- oder Beziehungssammlung umbenennen</p>
@@ -906,12 +906,12 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-1 col-sm-11">
                                             <button id="admin_korrigiere_ds_name" type="button" class="btn btn-primary">umbenennen</button>
-                                            <span id="admin_korrigiere_ds_name_rückmeldung"></span>
+                                            <span id="admin_korrigiere_ds_name_rueckmeldung"></span>
                                         </div>
                                     </div>
                                     <hr>
                                     <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button>
-                                    <span id="admin_baue_ds_zu_eigenschaften_um_rückmeldung"></span>
+                                    <span id="admin_baue_ds_zu_eigenschaften_um_rueckmeldung"></span>
                                 </fieldset>
                             </div>
                         </div>
@@ -1404,7 +1404,7 @@
                     .on("change", ".feld_waehlen", window.adb.handleFeldWählenChange)
                     .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWählenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
-                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZurücksetzen)
+                    .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
                     .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
                         // den event hier stoppen, nicht erst in der Funktion
@@ -1445,7 +1445,7 @@
                     .on("change", ".feld_waehlen", window.adb.handleFeldWählenChange)
                     .on("change", ".feld_waehlen_alle_von_ds_alt", window.adb.handleFeldWählenAlleVonDs)
                     .on("change", "#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt", function (event) {
-                        window.adb.exportZurücksetzen(event, '_alt');
+                        window.adb.exportZuruecksetzen(event, '_alt');
                     })
                     .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function (event) {
                         window.adb.scrollThisToTop(this, 6);

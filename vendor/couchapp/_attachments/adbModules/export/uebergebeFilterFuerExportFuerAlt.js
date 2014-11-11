@@ -4,16 +4,16 @@
 var $   = require('jquery'),
     Uri = require('Uri');
 
-var returnFunction = function (gewaehlteFelderObjekt) {
+module.exports = function (gewaehlteFelderObjekt) {
     // Alle Felder abfragen
     var queryParam,
         url,
         list,
         view,
         $exportieren_alt_exportieren_url = $('#exportieren_alt_exportieren_url'),
-        $db = $.couch.db('artendb'),
-        uri = new Uri($(location).attr('href')),
-        baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
+        $db                              = $.couch.db('artendb'),
+        uri                              = new Uri($(location).attr('href')),
+        baueTabelleFuerExportAuf         = require('./baueTabelleFuerExportAuf');
 
     if ($("#exportieren_alt_synonym_infos").prop('checked')) {
         // list
@@ -75,5 +75,3 @@ var returnFunction = function (gewaehlteFelderObjekt) {
         }
     });
 };
-
-module.exports = returnFunction;

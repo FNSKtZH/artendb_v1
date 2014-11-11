@@ -9,10 +9,11 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-// braucht $ wegen .alert
-var returnFunction = function (export_gruppen, formular) {
+module.exports = function (exportGruppen, formular) {
 
     var gruppen = [],
+        exportFelderArrays,
+        $db = $.couch.db('artendb'),
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
         $exportieren_nur_objekte_mit_eigenschaften          = $("#exportieren_nur_objekte_mit_eigenschaften"),
@@ -56,8 +57,8 @@ var returnFunction = function (export_gruppen, formular) {
     // gewählte Gruppen ermitteln
     // globale Variable enthält die Gruppen. Damit nach AJAX-Abfragen bestimmt werden kann, ob alle Daten vorliegen
     // globale Variable sammelt arrays mit den Listen der Felder pro Gruppe
-    var export_felder_arrays = [];
-    /*if (export_gruppen.length > 1) {
+    exportFelderArrays = [];
+    /*if (exportGruppen.length > 1) {
         // wenn mehrere Gruppen gewählt werden
         // Option exportieren_nur_objekte_mit_eigenschaften ausblenden
         // und false setzen
@@ -70,20 +71,19 @@ var returnFunction = function (export_gruppen, formular) {
             $exportieren_nur_objekte_mit_eigenschaften.prop('checked', true);
         }
     }*/
-    if (export_gruppen.length > 0) {
+    if (exportGruppen.length > 0) {
         // gruppen einzeln abfragen
-        gruppen = export_gruppen;
+        gruppen = exportGruppen;
         _.each(gruppen, function (gruppe) {
             // Felder abfragen
-            var $db = $.couch.db('artendb');
             $db.view('artendb/felder?group_level=5&startkey=["' + gruppe + '"]&endkey=["' + gruppe + '",{},{},{},{}]', {
                 success: function (data) {
-                    export_felder_arrays = _.union(export_felder_arrays, data.rows);
-                    // eine Gruppe aus export_gruppen entfernen
-                    export_gruppen.splice(0, 1);
-                    if (export_gruppen.length === 0) {
+                    exportFelderArrays = _.union(exportFelderArrays, data.rows);
+                    // eine Gruppe aus exportGruppen entfernen
+                    exportGruppen.splice(0, 1);
+                    if (exportGruppen.length === 0) {
                         // alle Gruppen sind verarbeitet
-                        erstelleListeFuerFeldwahl2(export_felder_arrays, formular);
+                        erstelleListeFuerFeldwahl2(exportFelderArrays, formular);
                     }
                 },
                 error: function () {
@@ -107,5 +107,3 @@ var returnFunction = function (export_gruppen, formular) {
     $(".exportieren_exportieren_tabelle")
         .hide();
 };
-
-module.exports = returnFunction;

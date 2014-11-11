@@ -4,7 +4,7 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-var returnFunction = function () {
+module.exports = function () {
     $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
     var $db = $.couch.db('artendb');
     $db.view('artendb/flora?include_docs=true', {
@@ -12,19 +12,21 @@ var returnFunction = function () {
             var korrigiert = 0,
                 fehler = 0,
                 save;
+
             _.each(data.rows, function (row) {
                 var art = row.doc,
-                    ds_artwert,
+                    dsArtwert,
                     daten = {};
+
                 if (art.Eigenschaftensammlungen) {
-                    ds_artwert = _.find(art.Eigenschaftensammlungen, function (ds) {
-                       return ds.Name === "ZH Artwert (1995)";
+                    dsArtwert = _.find(art.Eigenschaftensammlungen, function (ds) {
+                        return ds.Name === "ZH Artwert (1995)";
                     });
-                    //if (ds_artwert && ds_artwert.Eigenschaften && ds_artwert.Eigenschaften["Artwert KT ZH"]) {
-                    if (ds_artwert && ds_artwert.Eigenschaften) {
+                    //if (dsArtwert && dsArtwert.Eigenschaften && dsArtwert.Eigenschaften["Artwert KT ZH"]) {
+                    if (dsArtwert && dsArtwert.Eigenschaften) {
                         save = false;
                         // loopen und neu aufbauen, damit die Reihenfolge der keys erhalten bleibt (hoffentlich)
-                        _.each(ds_artwert.Eigenschaften, function (value, key) {
+                        _.each(dsArtwert.Eigenschaften, function (value, key) {
                             if (key === "Artwert KT ZH") {
                                 key = "Artwert";
                                 save = true;
@@ -32,7 +34,7 @@ var returnFunction = function () {
                             daten[key] = value;
                         });
                         if (save) {
-                            ds_artwert.Eigenschaften = daten;
+                            dsArtwert.Eigenschaften = daten;
                             $db.saveDoc(art, {
                                 success: function () {
                                     korrigiert++;
@@ -56,5 +58,3 @@ var returnFunction = function () {
         }
     });
 };
-
-module.exports = returnFunction;

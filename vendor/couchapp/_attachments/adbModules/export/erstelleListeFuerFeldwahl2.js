@@ -4,35 +4,34 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-// braucht $ wegen .alert
-var returnFunction = function (export_felder_arrays, formular) {
+module.exports = function (exportFelderArrays, formular) {
     var felderObjekt = {},
-        hinweis_taxonomien,
+        hinweisTaxonomien,
         taxonomien,
         datensammlungen,
         beziehungssammlungen,
         ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt'),
         erstelleExportfelder = require('./erstelleExportfelder');
 
-    // in export_felder_arrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
+    // in exportFelderArrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
     // Muster: Gruppe, Typ der Datensammlung, Name der Datensammlung, Name des Felds
     // Mehrfacheinträge sollen entfernt werden
 
     // dazu muss zuerst die Gruppe entfernt werden
-    _.each(export_felder_arrays, function (export_felder) {
-        export_felder.key.splice(0, 1);
+    _.each(exportFelderArrays, function (exportFelder) {
+        exportFelder.key.splice(0, 1);
     });
 
     // jetzt nur noch eineindeutige Array-Objekte (=Eigenschaftensammlungen) belassen
-    export_felder_arrays = _.union(export_felder_arrays);
+    exportFelderArrays = _.union(exportFelderArrays);
     // jetzt den Array von Objekten nach key sortieren
-    export_felder_arrays = _.sortBy(export_felder_arrays, function (object) {
+    exportFelderArrays = _.sortBy(exportFelderArrays, function (object) {
         return object.key;
     });
 
     // Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
-    felderObjekt = ergaenzeFelderObjekt(felderObjekt, export_felder_arrays);
+    felderObjekt = ergaenzeFelderObjekt(felderObjekt, exportFelderArrays);
 
     // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
     if (felderObjekt["Taxonomie(n)"] && felderObjekt["Taxonomie(n)"].Eigenschaften) {
@@ -57,16 +56,16 @@ var returnFunction = function (export_felder_arrays, formular) {
         }
     });
 
-    $.when(window.adb.holeDatensammlungenFürExportfelder()).done(function () {
+    $.when(window.adb.holeDatensammlungenFuerExportfelder()).done(function () {
         erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen, formular);
     });
 
     if (!formular || formular === 'export') {
         // kontrollieren, ob Taxonomien zusammengefasst werden
         if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
-            hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
+            hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
         } else {
-            hinweis_taxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
+            hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
         }
         // Ergebnis rückmelden
         $("#exportieren_objekte_waehlen_gruppen_hinweis_text")
@@ -75,8 +74,6 @@ var returnFunction = function (export_felder_arrays, formular) {
             .removeClass("alert-danger")
             .addClass("alert-success")
             .show()
-            .html(hinweis_taxonomien);
+            .html(hinweisTaxonomien);
     }
 };
-
-module.exports = returnFunction;

@@ -8,23 +8,23 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 // $ wird benötigt wegen .alert
-var returnFunction = function () {
+module.exports = function () {
     var anzahlFelder,
-        anzahlBeziehungssammlungen = window.adb.bsDatensaetze.length,
-        anzBsImportiert = 0,
+        anzahlBeziehungssammlungen                     = window.adb.bsDatensaetze.length,
+        anzBsImportiert                                = 0,
         erste10Ids,
         nr,
         rueckmeldung,
-        rueckmeldungLinks = "",
-        bsImportiert = $.Deferred(),
-        $BsName = $("#BsName"),
-        $BsBeschreibung = $("#BsBeschreibung"),
-        $BsDatenstand = $("#BsDatenstand"),
-        $BsLink = $("#BsLink"),
-        $BsUrsprungsBs = $("#BsUrsprungsBs"),
-        $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis"),
+        rueckmeldungLinks                              = "",
+        bsImportiert                                   = $.Deferred(),
+        $BsName                                        = $("#BsName"),
+        $BsBeschreibung                                = $("#BsBeschreibung"),
+        $BsDatenstand                                  = $("#BsDatenstand"),
+        $BsLink                                        = $("#BsLink"),
+        $BsUrsprungsBs                                 = $("#BsUrsprungsBs"),
+        $importieren_bs_import_ausfuehren_hinweis      = $("#importieren_bs_import_ausfuehren_hinweis"),
         $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
-        fuegeBeziehungenZuObjekt = require('./fuegeBeziehungenZuObjekt');
+        fuegeBeziehungenZuObjekt                       = require('./fuegeBeziehungenZuObjekt');
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$BsName.val()) {
@@ -101,6 +101,7 @@ var returnFunction = function () {
             var beziehungssammlung,
                 bsVorlage = {},
                 bsDatensaetzeObjekt;
+
             anzahlBeziehungssammlungen = 0;
             bsVorlage.Name = $BsName.val();
             if ($BsBeschreibung.val()) {
@@ -143,17 +144,17 @@ var returnFunction = function () {
                 return objekt.GUID;
             });
             // jetzt durch die GUID's loopen und die jeweiligen Beziehungen anhängen
-            $.each(bsDatensaetzeObjekt, function (importdaten_objekt_id, importdaten_felder_array) {
+            $.each(bsDatensaetzeObjekt, function (importdatenObjektId, importdatenFelderArray) {
                 var beziehungen = [];
                 anzahlBeziehungssammlungen += 1;
                 // Beziehungssammlung als Objekt gründen, indem die Vorlage kopiert wird
                 beziehungssammlung = $.extend(true, {}, bsVorlage);
-                _.each(importdaten_felder_array, function (importdaten_feld) {
+                _.each(importdatenFelderArray, function (importdatenFeld) {
                     // durch die Felder der Beziehungen loopen
                     anzahlFelder = 0;
                     // Felder der Beziehungssammlung als Objekt gründen
                     var beziehung = {};
-                    _.each(importdaten_feld, function (feldwert, feldname) {
+                    _.each(importdatenFeld, function (feldwert, feldname) {
                         // durch die Felder der Beziehung loopen
                         // nicht importiert wird die GUID und leere Felder
                         if (feldname !== "GUID" && feldwert !== "" && feldwert !== null) {
@@ -174,8 +175,8 @@ var returnFunction = function () {
                             } else if (feldname == "Beziehungspartner") {
                                 beziehung[feldname] = [];
                                 // durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
-                                _.each(feldwert, function (beziehungspartner_feld) {
-                                    beziehung[feldname].push(window.adb.bezPartner_objekt[beziehungspartner_feld]);
+                                _.each(feldwert, function (beziehungspartnerFeld) {
+                                    beziehung[feldname].push(window.adb.bezPartner_objekt[beziehungspartnerFeld]);
                                 });
                             } else {
                                 // Normalfall
@@ -193,7 +194,7 @@ var returnFunction = function () {
                 if (beziehungen.length > 0) {
                     // Datenbankabfrage ist langsam. Extern aufrufen, 
                     // sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
-                    fuegeBeziehungenZuObjekt(importdaten_objekt_id, beziehungssammlung, beziehungen);
+                    fuegeBeziehungenZuObjekt(importdatenObjektId, beziehungssammlung, beziehungen);
                 }
             });
 
@@ -212,5 +213,3 @@ var returnFunction = function () {
     });
     return bsImportiert.promise();
 };
-
-module.exports = returnFunction;

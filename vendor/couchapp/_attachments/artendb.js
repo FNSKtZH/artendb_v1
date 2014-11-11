@@ -788,7 +788,7 @@ window.adb.handleFeldWählenChange = function () {
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    window.adb.exportZurücksetzen(null, _alt);
+    window.adb.exportZuruecksetzen(null, _alt);
     return true;
 };
 
@@ -865,13 +865,13 @@ window.adb.handleFeldWählenAlleVonDs = function () {
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    window.adb.exportZurücksetzen(null, _alt);
+    window.adb.exportZuruecksetzen(null, _alt);
 };
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
     'use strict';
-    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
+    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen();
     require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppen_gewählt);
 };
 
@@ -991,10 +991,10 @@ window.adb.handlePanelbodyLrTaxonomieShown = function () {
 window.adb.handleExportierenExportierenCollapseShown = function (that) {
     'use strict';
     var filtereFuerExport = require('./adbModules/export/filtereFuerExport'),
-        fürAlt = false;
+        fuerAlt = false;
 
     if (that.id === 'exportieren_alt_exportieren_collapse') {
-        fürAlt = true;
+        fuerAlt = true;
     }
 
     // nur ausführen, wenn exportieren_exportieren_collapse offen ist
@@ -1008,7 +1008,7 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
             $(".exportieren_exportieren_exportieren").hide();
 
             // filtert und baut danach die Vorschautabelle auf
-            filtereFuerExport(null, fürAlt);
+            filtereFuerExport(null, fuerAlt);
         }
     }
     if ($("#exportieren_alt_exportieren_collapse").is(":visible")) {
@@ -1016,7 +1016,7 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
         $(".exportieren_exportieren_tabelle").hide();
         $(".exportieren_exportieren_exportieren").hide();
         // filtert und baut danach die Vorschautabelle auf
-        filtereFuerExport(null, fürAlt);
+        filtereFuerExport(null, fuerAlt);
     }
 };
 
@@ -1031,7 +1031,7 @@ window.adb.scrollThisToTop = function (that, minus) {
 
 window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
     'use strict';
-    var gruppen_gewählt = window.adb.fürExportGewählteGruppen(),
+    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen(),
         erstelleListeFuerFeldwahl = require('./adbModules/export/erstelleListeFuerFeldwahl');
 
     if (gruppen_gewählt.length === 0) {
@@ -1061,7 +1061,7 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
         $(that).html("Taxonomien einzeln behandeln");
     }
     // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-    var gruppen_gewählt = window.adb.fürExportGewählteGruppen();
+    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen();
     if (gruppen_gewählt.length > 0) {
         erstelleListeFuerFeldwahl(gruppen_gewählt);
     }
@@ -1502,7 +1502,7 @@ window.adb.oeffneUri = function () {
 
 // holt eine Liste aller Datensammlungen, wenn nötig
 // speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann
-window.adb.holeDatensammlungenFürExportfelder = function () {
+window.adb.holeDatensammlungenFuerExportfelder = function () {
     'use strict';
     var exfe_geholt = $.Deferred();
     if (window.adb.ds_bs_von_objekten) {
@@ -1525,7 +1525,7 @@ window.adb.filtereFürExport = function (direkt) {
     require('./adbModules/export/filtereFuerExport')(direkt);
 };
 
-window.adb.fürExportGewählteGruppen = function () {
+window.adb.fuerExportGewaehlteGruppen = function () {
     'use strict';
     var export_gruppen = [];
     $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
@@ -1709,7 +1709,7 @@ window.adb.sortKeysOfObject = function (o) {
     return sorted;
 };
 
-window.adb.exportZurücksetzen = function (event, _alt) {
+window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
     var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse"),
         _alt = _alt || '';

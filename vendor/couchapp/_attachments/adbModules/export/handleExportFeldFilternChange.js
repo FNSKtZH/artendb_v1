@@ -8,7 +8,7 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-var returnFunction = function (that) {
+module.exports = function (that) {
     var $that = $(that),
         bez_ds_filtered = [];
     // die Checkboxen sollen drei Werte annehmen können:
@@ -40,8 +40,6 @@ var returnFunction = function (that) {
         $('#meldung_zuviele_bs').modal();
         $(that).val("");
     } else {
-        window.adb.exportZurücksetzen();
+        window.adb.exportZuruecksetzen();
     }
 };
-
-module.exports = returnFunction;

@@ -4,33 +4,33 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function () {
-    var $admin_korrigiere_ds_name_ch_rückmeldung = $("#admin_korrigiere_ds_name_rückmeldung"),
-        $admin_korrigiere_ds_name_name_vorher = $("#admin_korrigiere_ds_name_name_vorher"),
+module.exports = function () {
+    var $admin_korrigiere_ds_name_rueckmeldung = $("#admin_korrigiere_ds_name_rueckmeldung"),
+        $admin_korrigiere_ds_name_name_vorher  = $("#admin_korrigiere_ds_name_name_vorher"),
         $admin_korrigiere_ds_name_name_nachher = $("#admin_korrigiere_ds_name_name_nachher"),
-        name_vorher = $admin_korrigiere_ds_name_name_vorher.val(),
-        name_nachher = $admin_korrigiere_ds_name_name_nachher.val(),
-        $db = $.couch.db('artendb');
-    
+        name_vorher                            = $admin_korrigiere_ds_name_name_vorher.val(),
+        name_nachher                           = $admin_korrigiere_ds_name_name_nachher.val(),
+        $db                                    = $.couch.db('artendb');
+
     if (!name_vorher) {
-        $admin_korrigiere_ds_name_ch_rückmeldung.html("Bitte Name vorher erfassen");
+        $admin_korrigiere_ds_name_rueckmeldung.html("Bitte Name vorher erfassen");
         $admin_korrigiere_ds_name_name_vorher.focus();
         return;
     }
     if (!name_nachher) {
-        $admin_korrigiere_ds_name_ch_rückmeldung.html("Bitte Name nachher erfassen");
+        $admin_korrigiere_ds_name_rueckmeldung.html("Bitte Name nachher erfassen");
         $admin_korrigiere_ds_name_name_nachher.focus();
         return;
     }
-    $admin_korrigiere_ds_name_ch_rückmeldung.html("Daten werden analysiert...");
+    $admin_korrigiere_ds_name_rueckmeldung.html("Daten werden analysiert...");
 
     $db.view('artendb/ds_bs_guid?startkey=["' + name_vorher + '"]&endkey=["' + name_vorher + '",{}]&include_docs=true', {
         success: function (data) {
             var korrigiert = 0,
-                fehler = 0,
-                save;
+                fehler = 0;
+
             if (data.rows.length === 0) {
-                $admin_korrigiere_ds_name_ch_rückmeldung.html("Es gibt keine Datensammlung namens " + name_vorher);
+                $admin_korrigiere_ds_name_rueckmeldung.html("Es gibt keine Datensammlung namens " + name_vorher);
                 return;
             }
             _.each(data.rows, function (row) {
@@ -38,6 +38,7 @@ var returnFunction = function () {
                     ds,
                     bs,
                     save = false;
+
                 // Datensammlung mit diesem Namen suchen
                 if (art.Eigenschaftensammlungen && art.Eigenschaftensammlungen.length > 0) {
                     ds = _.find(art.Eigenschaftensammlungen, function (ds_) {
@@ -67,11 +68,11 @@ var returnFunction = function () {
                     $db.saveDoc(art, {
                         success: function () {
                             korrigiert ++;
-                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            $admin_korrigiere_ds_name_rueckmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         },
                         error: function () {
                             fehler ++;
-                            $admin_korrigiere_ds_name_ch_rückmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            $admin_korrigiere_ds_name_rueckmeldung.html("Arten mit dieser Datensammlung: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         }
                     });
                 }
@@ -85,5 +86,3 @@ var returnFunction = function () {
         }
     });
 };
-
-module.exports = returnFunction;

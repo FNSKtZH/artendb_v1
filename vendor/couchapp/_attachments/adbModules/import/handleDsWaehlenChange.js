@@ -4,25 +4,26 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (that) {
-    var dsName        = that.value,
-        wählbar        = false,
+module.exports = function (that) {
+    var dsName         = that.value,
+        waehlbar       = false,
         $DsAnzDs       = $("#DsAnzDs"),
         $DsAnzDs_label = $("#DsAnzDs_label"),
         $DsName        = $("#DsName"),
         $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error");
+
     // allfälligen Alert schliessen
     $importieren_ds_ds_beschreiben_error
         .alert()
         .hide();
-    // wählbar setzen
+    // waehlbar setzen
     // wählen kann man nur, was man selber importiert hat - oder admin ist
     if ($("#" + that.id + " option:selected").attr("waehlbar") === "true") {
-        wählbar = true;
-    } else if (Boolean(localStorage.admin)) {
-        wählbar = true;
+        waehlbar = true;
+    } else {
+        waehlbar = Boolean(localStorage.admin);
     }
-    if (wählbar) {
+    if (waehlbar) {
         // zuerst alle Felder leeren
         $('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
             $(this).val('');
@@ -30,17 +31,17 @@ var returnFunction = function (that) {
         $DsAnzDs.html("");
         $DsAnzDs_label.html("");
         if (dsName) {
-            _.each(window.adb.dsVonObjekten.rows, function (ds_von_objekten_row) {
-                if (ds_von_objekten_row.key[1] === dsName) {
+            _.each(window.adb.dsVonObjekten.rows, function (dsVonObjektenRow) {
+                if (dsVonObjektenRow.key[1] === dsName) {
                     $DsName.val(dsName);
-                    _.each(ds_von_objekten_row.key[4], function (feldwert, feldname) {
+                    _.each(dsVonObjektenRow.key[4], function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
                             $("#DsUrsprungsDs").val(feldwert);
                         } else if (feldname !== "importiert von") {
                             $("#Ds" + feldname).val(feldwert);
                         }
                     });
-                    if (ds_von_objekten_row.key[2] === true) {
+                    if (dsVonObjektenRow.key[2] === true) {
                         $("#DsZusammenfassend").prop('checked', true);
                         // Feld für Ursprungs-DS anzeigen
                         $("#DsUrsprungsDs_div").show();
@@ -52,13 +53,13 @@ var returnFunction = function (that) {
                     }
                     // wenn die ds/bs kein "importiert von" hat ist der Wert null
                     // verhindern, dass null angezeigt wird
-                    if (ds_von_objekten_row.key[3]) {
-                        $("#DsImportiertVon").val(ds_von_objekten_row.key[3]);
+                    if (dsVonObjektenRow.key[3]) {
+                        $("#DsImportiertVon").val(dsVonObjektenRow.key[3]);
                     } else {
                         $("#DsImportiertVon").val("");
                     }
                     $DsAnzDs_label.html("Anzahl Arten/Lebensräume");
-                    $DsAnzDs.html(ds_von_objekten_row.value);
+                    $DsAnzDs.html(dsVonObjektenRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importieren_ds')
                         .find('textarea')
@@ -86,5 +87,3 @@ var returnFunction = function (that) {
         }, 2000);
     }
 };
-
-module.exports = returnFunction;

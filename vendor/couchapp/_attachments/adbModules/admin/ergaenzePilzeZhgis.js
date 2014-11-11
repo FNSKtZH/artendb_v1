@@ -4,22 +4,23 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-var returnFunction = function () {
-    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
+module.exports = function () {
     var $db = $.couch.db('artendb');
+    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
     $db.view('artendb/macromycetes?include_docs=true', {
         success: function (data) {
-            var ds_zhgis = {},
-                ergänzt = 0,
-                fehler = 0,
-                zhgis_schon_da = 0;
-            ds_zhgis.Name = "ZH GIS";
-            ds_zhgis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
-            ds_zhgis.Datenstand = "dauernd nachgeführt";
-            ds_zhgis.Link = "http://www.naturschutz.zh.ch";
-            ds_zhgis["importiert von"] = "alex@gabriel-software.ch";
-            ds_zhgis.Eigenschaften = {};
-            ds_zhgis.Eigenschaften["GIS-Layer"] = "Pilze";
+            var dsZhGis      = {},
+                ergaenzt     = 0,
+                fehler       = 0,
+                zhGisSchonDa = 0;
+
+            dsZhGis.Name = "ZH GIS";
+            dsZhGis.Beschreibung = "GIS-Layer und Betrachtungsdistanzen für das Artenlistentool, Artengruppen für EvAB, im Kanton Zürich. Eigenschaften aller Arten";
+            dsZhGis.Datenstand = "dauernd nachgeführt";
+            dsZhGis.Link = "http://www.naturschutz.zh.ch";
+            dsZhGis["importiert von"] = "alex@gabriel-software.ch";
+            dsZhGis.Eigenschaften = {};
+            dsZhGis.Eigenschaften["GIS-Layer"] = "Pilze";
             _.each(data.rows, function (row) {
                 var pilz = row.doc,
                     zhgis_in_ds;
@@ -31,27 +32,25 @@ var returnFunction = function () {
                 });
                 // nur ergänzen, wenn ZH GIS noch nicht existiert
                 if (!zhgis_in_ds) {
-                    pilz.Eigenschaftensammlungen.push(ds_zhgis);
+                    pilz.Eigenschaftensammlungen.push(dsZhGis);
                     pilz.Eigenschaftensammlungen = _.sortBy(pilz.Eigenschaftensammlungen, function (ds) {
                         return ds.Name;
                     });
                     $db.saveDoc(pilz, {
                         success: function () {
-                            ergänzt ++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                            ergaenzt++;
+                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                         },
                         error: function () {
-                            fehler ++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                            fehler++;
+                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                         }
                     });
                 } else {
-                    zhgis_schon_da ++;
-                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergänzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhgis_schon_da);
+                    zhGisSchonDa++;
+                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                 }
             });
         }
     });
 };
-
-module.exports = returnFunction;

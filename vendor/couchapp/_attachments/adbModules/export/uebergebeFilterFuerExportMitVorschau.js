@@ -5,10 +5,10 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 // braucht $ wegen .alert
-var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkriterienObjekt, gewählte_felder_objekt) {
+module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterienObjekt, gewaehlteFelderObjekt) {
     // Alle Felder abfragen
     var fTz = "false",
-        anz_gruppen_abgefragt = 0,
+        anzGruppenAbgefragt = 0,
         listName,
         queryParam,
         $db = $.couch.db('artendb'),
@@ -20,17 +20,17 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
     }
     // globale Variable vorbereiten
     window.adb.exportieren_objekte = [];
-    // in anz_gruppen_abgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
+    // in anzGruppenAbgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
-    _.each(gruppen_array, function (gruppe) {
+    _.each(gruppenArray, function (gruppe) {
         if ($("#exportieren_synonym_infos").prop('checked')) {
             listName = "artendb/export_mit_synonymen";
-            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         } else {
             listName = "artendb/export";
-            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewählte_felder_objekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
-        if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anz_ds_gewählt > 0) {
+        if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anzDsGewaehlt > 0) {
             // prüfen, ob mindestens ein Feld aus ds gewählt ist
             // wenn ja: true, sonst false
             queryParam += "&nur_objekte_mit_eigenschaften=true";
@@ -48,8 +48,8 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
                 // alle Objekte in data in window.adb.exportieren_objekte anfügen
                 window.adb.exportieren_objekte = _.union(window.adb.exportieren_objekte, data);
                 // speichern, dass eine Gruppe abgefragt wurde
-                anz_gruppen_abgefragt++;
-                if (anz_gruppen_abgefragt === gruppen_array.length) {
+                anzGruppenAbgefragt++;
+                if (anzGruppenAbgefragt === gruppenArray.length) {
                     // alle Gruppen wurden abgefragt, jetzt kann es weitergehen
                     // Ergebnis rückmelden
                     $("#exportieren_exportieren_hinweis_text")
@@ -65,5 +65,3 @@ var returnFunction = function (gruppen, gruppen_array, anz_ds_gewählt, filterkr
         });
     });
 };
-
-module.exports = returnFunction;

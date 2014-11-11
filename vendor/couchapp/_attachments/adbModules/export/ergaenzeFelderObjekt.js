@@ -10,19 +10,19 @@
 
 var _ = require('underscore');
 
-var returnFunction = function (felderObjekt, felder_array) {
+module.exports = function (felderObjekt, felderArray) {
     var dsTyp,
         dsName,
         feldname,
         feldtyp;
 
-    _.each(felder_array, function (feld_objekt) {
-        if (feld_objekt.key) {
+    _.each(felderArray, function (feldObjekt) {
+        if (feldObjekt.key) {
             // Gruppe wurde entfernt, so sind alle keys um 1 kleiner als ursprünglich
-            dsTyp = feld_objekt.key[0];
-            dsName = feld_objekt.key[1];
-            feldname = feld_objekt.key[2];
-            feldtyp = feld_objekt.key[3];
+            dsTyp    = feldObjekt.key[0];
+            dsName   = feldObjekt.key[1];
+            feldname = feldObjekt.key[2];
+            feldtyp  = feldObjekt.key[3];
             if (dsTyp === "Objekt") {
                 // das ist eine Eigenschaft des Objekts
                 //FelderObjekt[FeldName] = null;    // NICHT HINZUFÜGEN, DIESE FELDER SIND SCHON IM FORMULAR FIX DRIN
@@ -65,5 +65,3 @@ var returnFunction = function (felderObjekt, felder_array) {
     });
     return felderObjekt;
 };
-
-module.exports = returnFunction;

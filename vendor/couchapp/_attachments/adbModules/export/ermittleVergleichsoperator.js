@@ -5,9 +5,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
-
-var returnFunction = function (filterwert) {
+module.exports = function (filterwert) {
     var vergleichsoperator;
     if (filterwert.indexOf(">=") === 0) {
         vergleichsoperator = ">=";
@@ -50,5 +48,3 @@ var returnFunction = function (filterwert) {
     }
     return [vergleichsoperator, filterwert];
 };
-
-module.exports = returnFunction;
