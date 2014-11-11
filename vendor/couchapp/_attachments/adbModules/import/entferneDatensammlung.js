@@ -19,7 +19,8 @@ module.exports = function () {
         anzVorkommenVonDsEntfernt = 0,
         rueckmeldung,
         $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
-        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis");
+        $importieren_ds_import_ausfuehren_hinweis = $("#importieren_ds_import_ausfuehren_hinweis"),
+        entferneDatensammlung_2 = require('./entferneDatensammlung_2');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.dsEntfernt', function () {
@@ -90,12 +91,12 @@ module.exports = function () {
         if (a < guidArray.length) {
             guidArray2.push(guidArray[a]);
             if (a === (batch - 1)) {
-                window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray2, (a - batchGroesse));
+                entferneDatensammlung_2($("#DsName").val(), guidArray2, (a - batchGroesse));
                 guidArray2 = [];
                 batch += batchGroesse;
             }
         } else {
-            window.adb.entferneDatensammlung_2($("#DsName").val(), guidArray2, (a - batchGroesse));
+            entferneDatensammlung_2($("#DsName").val(), guidArray2, (a - batchGroesse));
             break;
         }
     }

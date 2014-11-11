@@ -704,72 +704,13 @@ window.adb.importiereBeziehungssammlung = function () {
 // wird in index.html benutzt
 window.adb.entferneDatensammlung = function () {
     'use strict';
-    require('./adbModules/entferneDatensammlung')();
-};
-
-window.adb.entferneDatensammlung_2 = function (dsName, guidArray, verzögerungs_faktor) {
-    'use strict';
-    // alle docs holen
-    setTimeout(function () {
-        var $db = $.couch.db('artendb');
-        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
-            success: function (data) {
-                var Objekt;
-                _.each(data.rows, function (dataRow) {
-                    Objekt = dataRow.doc;
-                    window.adb.entferneDatensammlungAusObjekt(dsName, Objekt);
-                });
-            }
-        });
-    }, verzögerungs_faktor*40);
-};
-
-window.adb.entferneDatensammlungAusObjekt = function (dsName, objekt) {
-    'use strict';
-    if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
-        /* hat nicht funktioniert
-        var datensammlung = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
-            return datensammlung.Name === dsName;
-        });
-        objekt.Eigenschaftensammlungen = _.without(Objekt.Eigenschaftensammlungen, datensammlung);
-        $db = $.couch.db('artendb');
-        $db.saveDoc(objekt);*/
-        for (var i=0; i<objekt.Eigenschaftensammlungen.length; i++) {
-            if (objekt.Eigenschaftensammlungen[i].Name === dsName) {
-                objekt.Eigenschaftensammlungen.splice(i,1);
-                var $db = $.couch.db('artendb');
-                $db.saveDoc(objekt);
-                // mitteilen, dass eine ds entfernt wurde
-                $(document).trigger('adb.dsEntfernt');
-                // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
-                break;
-            }
-        }
-    }
+    require('./adbModules/import/entferneDatensammlung')();
 };
 
 // wird in index.html benutzt
 window.adb.entferneBeziehungssammlung = function () {
     'use strict';
-    require('./adbModules/entferneBeziehungssammlung')();
-};
-
-window.adb.entferneBeziehungssammlung_2 = function (bsName, guidArray, verzögerungs_faktor) {
-    'use strict';
-    // alle docs holen
-    setTimeout(function () {
-        var $db = $.couch.db('artendb');
-        $db.view('artendb/all_docs?keys=' + encodeURI(JSON.stringify(guidArray)) + '&include_docs=true', {
-            success: function (data) {
-                var objekt,
-                    f;
-                _.each(data.rows, function (dataRow) {
-                    objekt = dataRow.doc;
-                    window.adb.entferneBeziehungssammlungAusObjekt(bsName, objekt);
-                });
-            }
-        });
-    }, verzögerungs_faktor*40);
+    require('./adbModules/import/entferneBeziehungssammlung')();
 };
 
 window.adb.entferneBeziehungssammlungAusObjekt = function (bsName, objekt) {

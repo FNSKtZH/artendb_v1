@@ -22,7 +22,8 @@ module.exports = function () {
         rueckmeldung,
         $db = $.couch.db('artendb'),
         $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis"),
-        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text");
+        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
+        entferneBeziehungssammlung_2 = require('./entferneBeziehungssammlung_2');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.bsEntfernt', function () {
@@ -102,12 +103,12 @@ module.exports = function () {
         if (a < guidArray.length) {
             guidArray2.push(guidArray[a]);
             if (a === (batch - 1)) {
-                window.adb.entferneBeziehungssammlung_2(bsName, guidArray2, (a - batchGroesse));
+                entferneBeziehungssammlung_2(bsName, guidArray2, (a - batchGroesse));
                 guidArray2 = [];
                 batch += batchGroesse;
             }
         } else {
-            window.adb.entferneBeziehungssammlung_2(bsName, guidArray2, (a - batchGroesse));
+            entferneBeziehungssammlung_2(bsName, guidArray2, (a - batchGroesse));
             bsEntfernt.resolve();
             break;
         }
