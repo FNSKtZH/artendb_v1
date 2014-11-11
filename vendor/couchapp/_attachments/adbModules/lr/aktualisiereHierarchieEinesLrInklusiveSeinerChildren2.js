@@ -11,7 +11,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
             return row.doc;
         }),
         $db = $.couch.db('artendb'),
-        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
+        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
 
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};

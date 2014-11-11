@@ -12,8 +12,8 @@ var returnFunction = function (that) {
         parent                             = {},
         object                             = {},
         $db                                = $.couch.db('artendb'),
-        erstelleBaum                       = require('./jstree/erstelleBaum'),
-        oeffneBaumZuId                     = require('./jstree/oeffneBaumZuId'),
+        erstelleBaum                       = require('../jstree/erstelleBaum'),
+        oeffneBaumZuId                     = require('../jstree/oeffneBaumZuId'),
         aktualisiereHierarchieEinesNeuenLr = require('./aktualisiereHierarchieEinesNeuenLr');
 
     // zuerst eine id holen

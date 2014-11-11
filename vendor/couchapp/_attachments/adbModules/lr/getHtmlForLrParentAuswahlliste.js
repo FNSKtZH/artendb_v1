@@ -10,7 +10,6 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (taxonomieName, callback) {
-
     // lr holen
     var $db = $.couch.db('artendb');
     $db.view('artendb/lr?include_docs=true', {
@@ -21,6 +20,7 @@ module.exports = function (taxonomieName, callback) {
                 objectHtml,
                 html = "",
                 i;
+
             // reduzieren auf die LR der Taxonomie
             taxonomieObjekte = _.filter(lr.rows, function (row) {
                 return row.doc.Taxonomie.Name === taxonomieName;

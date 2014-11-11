@@ -154,11 +154,12 @@ window.adb.handleMenuBtnClick = function () {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleDs_ImportierenClick = function () {
     'use strict';
-    var zeigeFormular   = require('./adbModules/zeigeFormular'),
-        pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
+    var zeigeFormular      = require('./adbModules/zeigeFormular'),
+        pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
+        isFileAPIAvailable = require('./adbModules/isFileAPIAvailable');
 
-    if(window.adb.isFileAPIAvailable()) {
-        zeigeFormular ("importieren_ds");
+    if (isFileAPIAvailable()) {
+        zeigeFormular("importieren_ds");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("ds")) {
             $("#importieren_ds_ds_beschreiben_collapse").collapse('show');
@@ -171,11 +172,12 @@ window.adb.handleDs_ImportierenClick = function () {
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 window.adb.handleBs_ImportierenClick = function () {
     'use strict';
-    var zeigeFormular = require('./adbModules/zeigeFormular'),
-    pruefeAnmeldung   = require('./adbModules/login/pruefeAnmeldung');
+    var zeigeFormular      = require('./adbModules/zeigeFormular'),
+        pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
+        isFileAPIAvailable = require('./adbModules/isFileAPIAvailable');
 
-    if(window.adb.isFileAPIAvailable()) {
-        zeigeFormular ("importieren_bs");
+    if (isFileAPIAvailable()) {
+        zeigeFormular("importieren_bs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("bs")) {
             $("#importieren_bs_ds_beschreiben_collapse").collapse('show');
@@ -186,7 +188,7 @@ window.adb.handleBs_ImportierenClick = function () {
 window.adb.handleMenuAdminClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
-    zeigeFormular ("admin");
+    zeigeFormular("admin");
 };
 
 // wird in index.html benutzt
@@ -433,7 +435,7 @@ window.adb.handleBtnLrBearbSchuetzenClick = function () {
 window.adb.handleBtnLrBearbNeuClick = function () {
     'use strict';
     var html,
-        getHtmlForLrParentAuswahlliste = require('./adbModules/getHtmlForLrParentAuswahlliste');
+        getHtmlForLrParentAuswahlliste = require('./adbModules/lr/getHtmlForLrParentAuswahlliste');
     if (!$(this).hasClass('disabled')) {
         getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
             $("#lr_parent_waehlen_optionen").html(html);
@@ -449,13 +451,13 @@ window.adb.handleBtnLrBearbNeuClick = function () {
 // wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {
     'use strict';
-    require('./adbModules/handleLrParentOptionenChange')(this);
+    require('./adbModules/lr/handleLrParentOptionenChange')(this);
 };
 
 // wird in index.html benutzt
 window.adb.handleRueckfrageLrLoeschenJaClick = function () {
     'use strict';
-    require('./adbModules/handleRueckfrageLrLoeschenJaClick')();
+    require('./adbModules/lr/handleRueckfrageLrLoeschenJaClick')();
 };
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
@@ -530,14 +532,16 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function () {
     'use strict';
-    var erstelleExportString = require('./adbModules/export/erstelleExportString');
-    if (window.adb.isFileAPIAvailable()) {
+    var erstelleExportString = require('./adbModules/export/erstelleExportString'),
+        isFileAPIAvailable   = require('./adbModules/isFileAPIAvailable');
+
+    if (isFileAPIAvailable()) {
         var exportstring = erstelleExportString(window.adb.exportieren_objekte),
-            blob = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
-            d = new Date(),
-            month = d.getMonth()+1,
-            day = d.getDate(),
-            output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+            blob   = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
+            d      = new Date(),
+            month  = d.getMonth() + 1,
+            day    = d.getDate(),
+            output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
         saveAs(blob, output + "_export.csv");
     }
 };
@@ -689,71 +693,6 @@ window.adb.handleTextareaKeyupFocus = function () {
 window.adb.importiereDatensammlung = function () {
     'use strict';
     require('./adbModules/import/importiereDatensammlung')();
-};
-
-// wird momentan nicht benutzt
-window.adb.queryChangesStartingNow = function (options) {
-    'use strict';
-    options = options || {};
-    options.since = "now";
-    if (options.filter) {
-        // der Filter bremst die Abfrage - das ist schlecht, weil dann bereits DS aktualisiert wurden!
-        // daher für die Erstabfrage entfernen
-        var filter = options.filter;
-        var dsname = options.dsname;
-        delete options.view;
-        delete options.dsname;
-    }
-    $.ajax({
-        type: "get",
-        url: "/artendb/_changes",
-        dataType: "json",
-        data: options
-    })
-    .done(function (data) {
-        $(document).trigger('longpoll-data', data, data.last_seq);
-        options.feed = "longpoll";
-        options.since = data.last_seq;
-        if (filter) {
-            options.filter = filter;
-            options.dsname = dsname;
-        }
-        $.ajax({
-            type: "get",
-            url: "/artendb/_changes",
-            dataType: "json",
-            data: options
-        })
-        .done(function (data2) {
-            if (data2.results.length > 0 ) {
-                $(document).trigger('longpoll-data2', data2);
-            }
-            options.since = data2.last_seq;
-            // dafür sorgen, dass weiter beobachtet wird
-            window.adb.queryChanges(options);
-        });
-    });
-};
-
-// wird momentan nicht benutzt
-window.adb.queryChanges = function (options) {
-    'use strict';
-    options = options || {};
-    options.since = options.since || "now";
-    options.feed = options.feed || "longpoll";
-    $.ajax({
-        type: "get",
-        url: "/artendb/_changes",
-        dataType: "json",
-        data: options
-    })
-    .done(function (data) {
-        if (data.results.length > 0 ) {
-            $(document).trigger('longpoll-data', data);
-        }
-        options.since = data.last_seq;
-        window.adb.queryChanges(options);
-    });
 };
 
 // wird in index.html benutzt
@@ -962,79 +901,6 @@ window.adb.fuerExportGewaehlteGruppen = function () {
         }
     });
     return export_gruppen;
-};
-
-window.adb.bereiteImportierenBsBeschreibenVor_2 = function () {
-    'use strict';
-    var html,
-        bs_namen = [];
-    // in diesem Array werden alle keys gesammelt
-    // diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-    window.adb.BsKeys = _.map(window.adb.bs_von_objekten.rows, function (row) {
-        return row.key;
-    });
-
-    // brauche nur drei keys
-    window.adb.dsNamenEindeutig = _.map(window.adb.BsKeys, function (bs_key) {
-        return [bs_key[1], bs_key[2], bs_key[3]];
-    });
-    // Objektarray reduzieren auf eindeutige Namen
-    window.adb.dsNamenEindeutig = _.reject(window.adb.dsNamenEindeutig, function (objekt) {
-        var position_in_bs_namen = _.indexOf(bs_namen, objekt[0]);
-        if (position_in_bs_namen === -1) {
-            bs_namen.push(objekt[0]);
-            return false;
-        } else {
-            return true;
-        }
-    });
-
-    // nach DsNamen sortieren
-    window.adb.dsNamenEindeutig = _.sortBy(window.adb.dsNamenEindeutig, function (key) {
-        return key[0];
-    });
-    // mit leerer Zeile beginnen
-    html = "<option value='' waehlbar=true></option>";
-    // Namen der Datensammlungen als Optionen anfügen
-    _.each(window.adb.dsNamenEindeutig, function (ds_name_eindeutig) {
-        // veränderbar sind nur selbst importierte und zusammenfassende
-        if (ds_name_eindeutig[2] === localStorage.Email || ds_name_eindeutig[1] || Boolean(localStorage.admin)) {
-            // veränderbare sind normal = schwarz
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + ds_name_eindeutig[0] + "</option>";
-        } else {
-            // nicht veränderbare sind grau
-            html += "<option value='" + ds_name_eindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + ds_name_eindeutig[0] + "</option>";
-        }
-    });
-    $("#BsWaehlen").html(html);
-    $("#BsUrsprungsBs").html(html);
-};
-
-window.adb.isFileAPIAvailable = function () {
-    'use strict';
-    // Check for the various File API support.
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        // Great success! All the File APIs are supported.
-        return true;
-    } else {
-        // source: File API availability - //caniuse.com/#feat=fileapi
-        // source: <output> availability - //html5doctor.com/the-output-element/
-        var html = "Für den Datenimport benötigen Sie mindestens einen der folgenden Browser:<br>";
-        html += "(Stand März 2014)<br>";
-        html += "- Google Chrome: 31 oder neuer<br>";
-        html += "- Chrome auf Android: 33 oder neuer<br>";
-        html += "- Mozilla Firefox: 28 oder neuer<br>";
-        html += "- Firefox auf Android: 26 oder neuer<br>";
-        html += "- Safari: 7.0 oder neuer<br>";
-        html += "- iOs Safari: 6.0 oder neuer<br>";
-        html += "- Opera: 20 oder neuer<br>";
-        html += "- Internet Explorer: 10 oder neuer<br>";
-        html += "- Internet Explorer mobile: bis Version 10 nicht<br>";
-        html += "- Android Standardbrowser: Android 4.4 oder neuer<br>";
-        $("#fileApiMeldungText").html(html);
-        $('#fileApiMeldung').modal();
-        return false;
-    }
 };
 
 window.adb.sortiereObjektarrayNachName = function (objektarray) {
@@ -1270,7 +1136,7 @@ window.adb.aktualisiereHierarchieEinerLrTaxonomie = function (object_array) {
 window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     'use strict';
     var $db = $.couch.db('artendb'),
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
     if (lr) {
         aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
     } else {

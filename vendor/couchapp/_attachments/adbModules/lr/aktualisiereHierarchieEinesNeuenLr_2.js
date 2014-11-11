@@ -9,9 +9,9 @@ module.exports = function (LR, object) {
         hierarchie     = [],
         parent_object,
         $db            = $.couch.db('artendb'),
-        oeffneBaumZuId = require('./jstree/oeffneBaumZuId'),
-        erstelleBaum   = require('./jstree/erstelleBaum'),
-        initiiereArt   = require('./initiiereArt');
+        oeffneBaumZuId = require('../jstree/oeffneBaumZuId'),
+        erstelleBaum   = require('../jstree/erstelleBaum'),
+        initiiereArt   = require('../initiiereArt');
 
     object_array = _.map(LR.rows, function (row) {
         return row.doc;

@@ -33,7 +33,7 @@ module.exports = function (that) {
         $BsAnzDs.html("");
         $BsAnzDs_label.html("");
         if (bsName) {
-            _.each(window.adb.bs_von_objekten.rows, function (bsRow) {
+            _.each(window.adb.bsVonObjekten.rows, function (bsRow) {
                 if (bsRow.key[1] === bsName) {
                     $BsName.val(bsName);
                     _.each(bsRow, function (feldwert, feldname) {
