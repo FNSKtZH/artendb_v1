@@ -22,7 +22,8 @@ module.exports = function () {
         zeigeFormular                 = require('./zeigeFormular'),
         erstelleListeFuerFeldwahl     = require('./export/erstelleListeFuerFeldwahl'),
         oeffneBaumZuId                = require('./jstree/oeffneBaumZuId'),
-        erstelleBaum                  = require('./jstree/erstelleBaum');
+        erstelleBaum                  = require('./jstree/erstelleBaum'),
+        blendeMenus                   = require('./login/blendeMenus');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -75,5 +76,5 @@ module.exports = function () {
     }
 
     // dafür sorgen, dass die passenden Menus angezeigt werden
-    window.adb.blendeMenus();
+    blendeMenus();
 };

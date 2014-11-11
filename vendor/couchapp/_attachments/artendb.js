@@ -2,122 +2,13 @@
 
 window.adb = window.adb || {};
 
-// kontrollieren, ob die erforderlichen Felder etwas enthalten
-// wenn ja wird true retourniert, sonst false
-window.adb.validiereSignup = function (woher) {
-    'use strict';
-    var email,
-        passwort,
-        passwort2;
-    // zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
-    $(".hinweis").hide();
-    // erfasste Werte holen
-    email = $("#Email_" + woher).val();
-    passwort = $("#Passwort_" + woher).val();
-    passwort2 = $("#Passwort2_" + woher).val();
-    // prüfen
-    if (!email) {
-        $("#Emailhinweis_" + woher).show();
-        setTimeout(function () {
-            $("#Email_" + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        return false;
-    }
-    if (!passwort) {
-        $("#Passworthinweis_" + woher).show();
-        setTimeout(function () {
-            $("#Passwort_" + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        return false;
-    }
-    if (!passwort2) {
-        $("#Passwort2hinweis_" + woher).show();
-        setTimeout(function () {
-            $("#Passwort2_" + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        return false;
-    }
-    if (passwort !== passwort2) {
-        $("#Passwort2hinweisFalsch_" + woher).show();
-        setTimeout(function () {
-            $("#Passwort2_" + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        return false;
-    }
-    return true;
-};
-
-window.adb.erstelleKonto = function (woher) {
-    'use strict';
-    // User in _user eintragen
-    $.couch.signup({
-        name: $('#Email_' + woher).val()
-    }, $('#Passwort_' + woher).val(), {
-        success: function () {
-            localStorage.Email = $('#Email_' + woher).val();
-            if (woher === "art") {
-                window.adb.bearbeiteLrTaxonomie();
-            }
-            window.adb.passeUiFuerAngemeldetenUserAn(woher);
-            // Werte aus Feldern entfernen
-            $("#Email_" + woher).val("");
-            $("#Passwort_" + woher).val("");
-            $("#Passwort2_" + woher).val("");
-        },
-        error: function () {
-            var praefix = "importieren_";
-            if (woher === "art") {
-                praefix = "";
-            }
-            $("#" + praefix + woher + "_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-            $("#" + praefix + woher + "_anmelden_fehler")
-                .alert()
-                .show();
-        }
-    });
-};
-
-window.adb.blendeMenus = function () {
-    'use strict';
-    if (localStorage.admin) {
-        $("#menu_btn")
-            .find(".admin")
-            .show();
-    } else {
-        $("#menu_btn")
-            .find(".admin")
-            .hide();
-    }
-};
+var $ = require('jquery'),
+    _ = require('underscore');
 
 // wird in index.html benutzt
 window.adb.meldeUserAb = function () {
-    require('./adbModules/meldeUserAb')();
-};
-
-window.adb.passeUiFuerAngemeldetenUserAn = function (woher) {
     'use strict';
-    var praefix = "importieren_";
-    if (woher === "art") {
-        praefix = "";
-    }
-    $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
-    $(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-    if (woher !== "art") {
-        $("#" + praefix + woher + "_anmelden_collapse").collapse('hide');
-        $("#importieren_" + woher + "_ds_beschreiben_collapse").collapse('show');
-    }
-    $(".alert").hide();
-    $(".hinweis").hide();
-    $(".well.anmelden").hide();
-    $(".Email").hide();
-    $(".Passwort").hide();
-    $(".anmelden_btn").hide();
-    $(".abmelden_btn").show();
-    $(".konto_erstellen_btn").hide();
-    $(".konto_speichern_btn").hide();
-    // in LR soll Anmelde-Accordion nicht sichtbar sein
-    $("#art_anmelden").hide();
+    require('./adbModules/login/meldeUserAb')();
 };
 
 // prüft, ob der Benutzer angemeldet ist
@@ -755,7 +646,7 @@ window.adb.handleResize = function () {
 // wenn .anmelden_btn geklickt wird
 window.adb.handleAnmeldenBtnClick = function (that) {
     'use strict';
-    var meldeUserAn = require('./adbModules/meldeUserAn');
+    var meldeUserAn = require('./adbModules/login/meldeUserAn');
     // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
     var bs_ds = that.id.substring(that.id.length-2);
     if (bs_ds === "rt") {
@@ -788,9 +679,9 @@ window.adb.handlePasswort2Keyup = function () {
 // wenn .konto_erstellen_btn geklickt wird
 window.adb.handleKontoErstellenBtnClick = function (that) {
     'use strict';
-    var bs_ds = that.id.substring(that.id.length-2);
-    if (bs_ds === "rt") {
-        bs_ds = "art";
+    var bsDs = that.id.substring(that.id.length-2);
+    if (bsDs === "rt") {
+        bsDs = "art";
     }
     $(".signup").show();
     $(".anmelden_btn").hide();
@@ -799,19 +690,22 @@ window.adb.handleKontoErstellenBtnClick = function (that) {
     $(".konto_speichern_btn").show();
     $(".importieren_anmelden_fehler").hide();
     setTimeout(function () {
-        $("#Email_" + bs_ds).focus();
+        $("#Email_" + bsDs).focus();
     }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 };
 
 // wenn .konto_speichern_btn geklickt wird
 window.adb.handleKontoSpeichernBtnClick = function (that) {
     'use strict';
-    var bs_ds = that.id.substring(that.id.length-2);
-    if (bs_ds === "rt") {
-        bs_ds = "art";
+    var bsDs = that.id.substring(that.id.length - 2),
+        validiereSignup = require('./adbModules/login/validiereSignup'),
+        erstelleKonto   = require('./adbModules/login/erstelleKonto');
+
+    if (bsDs === "rt") {
+        bsDs = "art";
     }
-    if (window.adb.validiereSignup(bs_ds)) {
-        window.adb.erstelleKonto(bs_ds);
+    if (validiereSignup(bsDs)) {
+        erstelleKonto(bsDs);
         // Anmeldefenster zurücksetzen
         $(".signup").hide();
         $(".anmelden_btn").hide();

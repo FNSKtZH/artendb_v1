@@ -4,8 +4,10 @@
 var $ = require('jquery');
 
 module.exports = function (woher) {
-    var email = $('#Email_' + woher).val(),
-        passwort = $('#Passwort_' + woher).val();
+    var email       = $('#Email_' + woher).val(),
+        passwort    = $('#Passwort_' + woher).val(),
+        blendeMenus                   = require('./blendeMenus'),
+        passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn');
 
     if (window.adb.validiereUserAnmeldung(woher)) {
         $.couch.login({
@@ -16,7 +18,7 @@ module.exports = function (woher) {
                 if (woher === "art") {
                     window.adb.bearbeiteLrTaxonomie();
                 }
-                window.adb.passeUiFuerAngemeldetenUserAn(woher);
+                passeUiFuerAngemeldetenUserAn(woher);
                 // Werte aus Feldern entfernen
                 $("#Email_" + woher).val("");
                 $("#Passwort_" + woher).val("");
@@ -29,7 +31,7 @@ module.exports = function (woher) {
                 } else {
                     delete localStorage.admin;
                 }
-                window.adb.blendeMenus();
+                blendeMenus();
             },
             error: function () {
                 var praefix = "importieren_";

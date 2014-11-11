@@ -4,6 +4,7 @@
 var $ = require('jquery');
 
 module.exports = function () {
+    var blendeMenus = require('./blendeMenus');
     // IE8 kann nicht deleten
     try {
         delete localStorage.Email;
@@ -27,5 +28,5 @@ module.exports = function () {
     // falls dieser User admin war: vergessen
     delete localStorage.admin;
     // für diesen Nutzer passende Menus anzeigen
-    window.adb.blendeMenus();
+    blendeMenus();
 };
