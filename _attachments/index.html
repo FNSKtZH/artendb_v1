@@ -1402,7 +1402,7 @@
                 $("#export")
                     .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
-                    .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWählenAlleVonDs)
+                    .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
                     .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
                     .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function (event) {
@@ -1443,7 +1443,7 @@
 
                 $("#export_alt")
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
-                    .on("change", ".feld_waehlen_alle_von_ds_alt", window.adb.handleFeldWählenAlleVonDs)
+                    .on("change", ".feld_waehlen_alle_von_ds_alt", window.adb.handleFeldWaehlenAlleVonDs)
                     .on("change", "#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt", function (event) {
                         window.adb.exportZuruecksetzen(event, '_alt');
                     })
