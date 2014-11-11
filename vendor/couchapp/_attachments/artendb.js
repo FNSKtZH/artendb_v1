@@ -744,56 +744,12 @@ window.adb.handleExportierenAltClick = function () {
     window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
 };
 
-// wenn .feld_waehlen geändert wird
-// 1.: kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
-//     und pro Beziehung eine Zeile ausgegeben wird. 
-//     Wenn ja: reklamieren und rückgängig machen
-// 2.: kontrollieren, ob mehr als 50 Felder gewählt wurden
-//     wenn ja: reklamieren und rückgängig machen
-window.adb.handleFeldWählenChange = function () {
-    'use strict';
-    var that = this,
-        formular = $(that).closest('form').attr('id'),
-        _alt = '';
-
-    if (formular === 'export_alt') _alt = '_alt';
-
-    if ($(that).prop('checked')) {
-        // wenn das Feld hinzugefügt wurde: prüfen, ob zuviele Felder gewählt sind...
-        if (window.adb.prüfeObZuvieleExportfelderGewähltSind(that, _alt)) return false;
-        // ...oder zuviele Beziehungen
-        if (window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind(that, _alt)) return false;
-    }
-
-    // alles i.o.
-    // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    window.adb.exportZuruecksetzen(null, _alt);
-    return true;
+// wird in index.html benutzt
+window.adb.handleFeldWaehlenChange = function () {
+    return require('./adbModules/export/handleFeldWaehlenChange')(this);
 };
 
-window.adb.prüfeObZuvieleExportfelderGewähltSind = function (that, _alt) {
-    var count = 0;
-    $("#export" + _alt)
-        .find(".exportieren_felder_waehlen_felderliste")
-        .find(".feld_waehlen")
-        .each(function () {
-            if ($(this).prop('checked')) {
-                // gewähltes Feld > zählen
-                count++;
-            }
-        });
-
-    // Anzahl Felder kontrollieren
-    if (count > 50) {
-        // zuviele gewählt
-        $('#meldung_zuviele_exportfelder').modal();
-        $(that).prop('checked', false);
-        return true;
-    }
-    return false;
-};
-
-window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind = function (that, _alt) {
+window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind = function (that, _alt) {
     if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
         var bez_ds_checked = [];
         $("#export" + _alt)
@@ -822,19 +778,22 @@ window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind = function (that, _al
 // wenn checked: alle unchecken, sonst alle checken
 window.adb.handleFeldWählenAlleVonDs = function () {
     'use strict';
-    var that = this,
-        ds = $(that).attr('datensammlung'),
+    var that     = this,
+        ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
-        _alt = '',
-        status = $(that).prop('checked');
+        _alt     = '',
+        status   = $(that).prop('checked'),
+        pruefeObZuvieleExportfelderGewaehltSind = require('./adbModules/export/pruefeObZuvieleExportfelderGewaehltSind');
 
-    if (formular === 'export_alt') _alt = '_alt';
+    if (formular === 'export_alt') {
+        _alt = '_alt';
+    }
 
     $('#' + formular + ' [datensammlung="' + ds + '"]').each(function () {
         if (status) {
             // Wenn ein Feld dazugefügt wurde...
             // ...kontrollieren, ob zuviele Beziehungen gewählt sind
-            if (window.adb.prüfeObZuvieleExportfelderGewähltSind(this, _alt) || window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind(this, _alt)) {
+            if (pruefeObZuvieleExportfelderGewaehltSind(this, _alt) || window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, _alt)) {
                 // oops, zu viele Felder gewählt oder zu viele Beziehungen > aufhören
                 return;
             }
