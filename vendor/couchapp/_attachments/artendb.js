@@ -66,7 +66,8 @@ window.adb.handleDsZusammenfassendChange = function () {
 
 // Wenn BsWählen geändert wird
 // wird in index.html benutzt
-window.adb.handleBsWählenChange = function () {
+window.adb.handleBsWaehlenChange = function () {
+    'use strict';
     require('./adbModules/import/handleBsWaehlenChange')(this);
 };
 
@@ -190,26 +191,31 @@ window.adb.handleMenuAdminClick = function () {
 
 // wird in index.html benutzt
 window.adb.ergänzePilzeZhgis = function () {
+    'use strict';
     require('./adbModules/admin/ergaenzePilzeZhgis')();
 };
 
 // wird in index.html benutzt
 window.adb.korrigiereArtwertnameInFlora = function () {
+    'use strict';
     require('./adbModules/admin/korrigiereArtwertnameInFlora')();
 };
 
 // wird in index.html benutzt
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
+    'use strict';
     require('./adbModules/admin/korrigiereDsNameFloraChRoteListe1991')();
 };
 
 // wird in index.html benutzt
 window.adb.nenneDsUm = function () {
+    'use strict';
     require('./adbModules/admin/nenneDsUm')();
 };
 
 // wird in index.html benutzt
 window.adb.baueDsZuEigenschaftenUm = function () {
+    'use strict';
     require('./adbModules/admin/baueDsZuEigenschaftenUm')();
 };
 
@@ -224,8 +230,9 @@ window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
 // wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
 window.adb.handleImportierenBsDsBeschreibenCollapseShown = function () {
     'use strict';
+    var bereiteImportierenBsBeschreibenVor = require('./adbModules/import/bereiteImportierenBsBeschreibenVor');
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-    window.adb.bereiteImportieren_bs_beschreibenVor("bs");
+    bereiteImportierenBsBeschreibenVor("bs");
     $("#BsImportiertVon").val(localStorage.Email);
 };
 
@@ -314,11 +321,13 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
 // wenn DsWählen geändert wird
 // wird in index.html benutzt
 window.adb.handleDsWählenChange = function () {
+    'use strict';
     require('./adbModules/import/handleDsWaehlenChange')(this);
 };
 
 // wird in index.html benutzt
 window.adb.handleDsNameChange = function () {
+    'use strict';
     require('./adbModules/import/handleDsNameChange')(this);
 };
 
@@ -365,11 +374,13 @@ window.adb.handleExportierenAltClick = function () {
 
 // wird in index.html benutzt
 window.adb.handleFeldWaehlenChange = function () {
+    'use strict';
     return require('./adbModules/export/handleFeldWaehlenChange')(this);
 };
 
 // wird in index.html benutzt
 window.adb.handleFeldWaehlenAlleVonDs = function () {
+    'use strict';
     require('./adbModules/export/handleFeldWaehlenAlleVonDs')(this);
 };
 
@@ -383,6 +394,7 @@ window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
 // ist nötig, weil index.html nicht requiren kann
 // wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
+    'use strict';
     require('./adbModules/export/handleExportFeldFilternChange')(this);
 };
 
@@ -436,17 +448,20 @@ window.adb.handleBtnLrBearbNeuClick = function () {
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
 // wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {
+    'use strict';
     require('./adbModules/handleLrParentOptionenChange')(this);
 };
 
 // wird in index.html benutzt
 window.adb.handleRueckfrageLrLoeschenJaClick = function () {
+    'use strict';
     require('./adbModules/handleRueckfrageLrLoeschenJaClick')();
 };
 
 // Wenn #art .Lebensräume.Taxonomie .controls geändert wird
 // wird in index.html benutzt
 window.adb.handleLrTaxonomieControlsChange = function () {
+    'use strict';
     require('./adbModules/speichern')($(this).val(), this.id);
 };
 
@@ -460,12 +475,14 @@ window.adb.handlePanelbodyLrTaxonomieShown = function () {
 
 // wird in index.html benutzt
 window.adb.handleExportierenExportierenCollapseShown = function (that) {
+    'use strict';
     require('./adbModules/export/handleExportierenExportierenCollapseShown')(that);
 };
 
 // scrollt das übergebene Element nach oben
 // minus die übergebene Anzahl Pixel
 window.adb.scrollThisToTop = function (that, minus) {
+    'use strict';
     minus = minus || 0;
     $('html, body').animate({
         scrollTop: $(that).parent().offset().top - minus
@@ -550,8 +567,8 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
 // wenn Fenstergrösse verändert wird
 window.adb.handleResize = function () {
     'use strict';
-    setzeTreehoehe       = require('./adbModules/jstree/setzeTreehoehe'),
-    fitTextareaToContent = require('./adbModules/fitTextareaToContent');
+    var setzeTreehoehe       = require('./adbModules/jstree/setzeTreehoehe'),
+        fitTextareaToContent = require('./adbModules/fitTextareaToContent');
 
     setzeTreehoehe();
     // Höhe der Textareas korrigieren
@@ -634,36 +651,43 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 
 // wenn .gruppe geklickt wird
 window.adb.handleÖffneGruppeClick = function () {
+    'use strict';
     window.adb.oeffneGruppe($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
 window.adb.handleDsFelderChange = function () {
+    'use strict';
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function () {
+    'use strict';
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn #DsId geändert wird
 window.adb.handleDsIdChange = function () {
+    'use strict';
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsId geändert wird
 window.adb.handleBsIdChange = function () {
+    'use strict';
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function () {
+    'use strict';
     require('./adbModules/fitTextareaToContent')(this.id);
 };
 
 // wird in index.html benutzt
 window.adb.importiereDatensammlung = function () {
+    'use strict';
     require('./adbModules/import/importiereDatensammlung')();
 };
 
@@ -734,11 +758,13 @@ window.adb.queryChanges = function (options) {
 
 // wird in index.html benutzt
 window.adb.importiereBeziehungssammlung = function () {
+    'use strict';
     require('./adbModules/import/importiereBeziehungssammlung')();
 };
 
 // wird in index.html benutzt
 window.adb.entferneDatensammlung = function () {
+    'use strict';
     require('./adbModules/entferneDatensammlung')();
 };
 
@@ -785,6 +811,7 @@ window.adb.entferneDatensammlungAusObjekt = function (dsName, objekt) {
 
 // wird in index.html benutzt
 window.adb.entferneBeziehungssammlung = function () {
+    'use strict';
     require('./adbModules/entferneBeziehungssammlung')();
 };
 
@@ -896,6 +923,7 @@ window.adb.entferneBeziehungssammlungAusDokument = function (id, bsName) {
 
 // wird in index.html benutzt
 window.adb.oeffneUri = function () {
+    'use strict';
     require('./adbModules/oeffneUri')();
 };
 
@@ -921,6 +949,7 @@ window.adb.holeDatensammlungenFuerExportfelder = function () {
 
 // wird in index.html benutzt
 window.adb.filtereFürExport = function (direkt) {
+    'use strict';
     require('./adbModules/export/filtereFuerExport')(direkt);
 };
 
@@ -935,40 +964,7 @@ window.adb.fuerExportGewaehlteGruppen = function () {
     return export_gruppen;
 };
 
-
-window.adb.bereiteImportierenDsBeschreibenVor_02 = function () {
-    'use strict';
-    
-};
-
-// woher wird bloss benötigt, wenn angemeldet werden muss
-window.adb.bereiteImportieren_bs_beschreibenVor = function (woher) {
-    'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("woher")) {
-        $('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
-    } else {
-        $("#BsName").focus();
-        // anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
-        //$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
-        // Daten holen, wenn nötig
-        if (window.adb.bs_von_objekten) {
-            window.adb.bereiteImportieren_bs_beschreibenVor_02();
-        } else {
-            var $db = $.couch.db('artendb');
-            $db.view('artendb/ds_von_objekten?startkey=["Beziehungssammlung"]&endkey=["Beziehungssammlung",{},{},{},{}]&group_level=5', {
-                success: function (data) {
-                    // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
-                    window.adb.bs_von_objekten = data;
-                    window.adb.bereiteImportieren_bs_beschreibenVor_02();
-                }
-            });
-        }
-    }
-};
-
-window.adb.bereiteImportieren_bs_beschreibenVor_02 = function () {
+window.adb.bereiteImportierenBsBeschreibenVor_2 = function () {
     'use strict';
     var html,
         bs_namen = [];
