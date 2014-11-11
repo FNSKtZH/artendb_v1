@@ -1,3 +1,5 @@
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+
 window.adb = window.adb || {};
 
 window.adb.erstelleHierarchieFuerFeldAusHierarchieobjekteArray = function (hierarchie_array) {
@@ -63,7 +65,7 @@ window.adb.generiereHtmlFuerWwwLink = function (feldname, feldwert, dsTyp, dsNam
     // jetzt Link beginnen, damit das Feld klickbar wird
     html_container += '<p><a href="';
     html_container += feldwert;
-    html_container += '"><input class="controls form-control input-sm" dsTyp="'+dsTyp+'" dsName="'+dsName+'" id="';
+    html_container += '"><input class="controls form-control input-sm" dsTyp="' + dsTyp + '" dsName="' + dsName + '" id="';
     html_container += feldname;
     html_container += '" name="';
     html_container += feldname;
@@ -108,7 +110,7 @@ window.adb.generiereHtmlFuerTextinput = function (feldname, feldwert, input_typ,
     html_container += input_typ;
     html_container += '" value="';
     html_container += feldwert;
-    html_container += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">\n</div>';
+    html_container += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">\n</div>';
     return html_container;
 };
 
@@ -124,7 +126,7 @@ window.adb.generiereHtmlFuerTextarea = function (feldname, feldwert, dsTyp, dsNa
     html_container += feldname;
     html_container += '" name="';
     html_container += feldname;
-    html_container += '" readonly="readonly" dsTyp="'+dsTyp+'" dsName="'+dsName+'">';
+    html_container += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">';
     html_container += feldwert;
     html_container += '</textarea></div>';
     return html_container;
@@ -146,7 +148,7 @@ window.adb.generiereHtmlFuerBoolean = function (feldname, feldwert, dsTyp, dsNam
     if (feldwert === true) {
         html_container += ' checked="true"';
     }
-    html_container += '" readonly="readonly" disabled="disabled" dsTyp="'+dsTyp+'" dsName="'+dsName+'"></div>';
+    html_container += '" readonly="readonly" disabled="disabled" dsTyp="' + dsTyp + '" dsName="' + dsName + '"></div>';
     return html_container;
 };
 
@@ -165,7 +167,8 @@ window.adb.setzeTreehoehe = function () {
 // setzt die Höhe von textareas so, dass der Text genau rein passt
 window.adb.fitTextareaToContent = function (id, max_height) {
     'use strict';
-    var text = id && id.style ? id : document.getElementById(id);
+    var text = id && id.style ? id : document.getElementById(id),
+        adjustedHeight;
     max_height = max_height || document.documentElement.clientHeight;
     if (!text) {
         return;
@@ -176,7 +179,7 @@ window.adb.fitTextareaToContent = function (id, max_height) {
         text.style.height = "30px";
     }
 
-    var adjustedHeight = text.clientHeight;
+    adjustedHeight = text.clientHeight;
     if (!max_height || max_height > adjustedHeight) {
         adjustedHeight = Math.max(text.scrollHeight, adjustedHeight);
     }
@@ -198,32 +201,35 @@ window.adb.validiereSignup = function (woher) {
     // zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
     $(".hinweis").hide();
     // erfasste Werte holen
-    email = $("#Email_"+woher).val();
-    passwort = $("#Passwort_"+woher).val();
-    passwort2 = $("#Passwort2_"+woher).val();
+    email = $("#Email_" + woher).val();
+    passwort = $("#Passwort_" + woher).val();
+    passwort2 = $("#Passwort2_" + woher).val();
     // prüfen
     if (!email) {
-        $("#Emailhinweis_"+woher).show();
+        $("#Emailhinweis_" + woher).show();
         setTimeout(function () {
-            $("#Email_"+woher).focus();
+            $("#Email_" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
-    } else if (!passwort) {
-        $("#Passworthinweis_"+woher).show();
+    }
+    if (!passwort) {
+        $("#Passworthinweis_" + woher).show();
         setTimeout(function () {
-            $("#Passwort_"+woher).focus();
+            $("#Passwort_" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
-    } else if (!passwort2) {
-        $("#Passwort2hinweis_"+woher).show();
+    }
+    if (!passwort2) {
+        $("#Passwort2hinweis_" + woher).show();
         setTimeout(function () {
-            $("#Passwort2_"+woher).focus();
+            $("#Passwort2_" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
-    } else if (passwort !== passwort2) {
-        $("#Passwort2hinweisFalsch_"+woher).show();
+    }
+    if (passwort !== passwort2) {
+        $("#Passwort2hinweisFalsch_" + woher).show();
         setTimeout(function () {
-            $("#Passwort2_"+woher).focus();
+            $("#Passwort2_" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
@@ -234,27 +240,26 @@ window.adb.erstelleKonto = function (woher) {
     'use strict';
     // User in _user eintragen
     $.couch.signup({
-        name: $('#Email_'+woher).val()
-    },
-    $('#Passwort_'+woher).val(), {
-        success : function () {
-            localStorage.Email = $('#Email_'+woher).val();
+        name: $('#Email_' + woher).val()
+    }, $('#Passwort_' + woher).val(), {
+        success: function () {
+            localStorage.Email = $('#Email_' + woher).val();
             if (woher === "art") {
                 window.adb.bearbeiteLrTaxonomie();
             }
             window.adb.passeUiFuerAngemeldetenUserAn(woher);
             // Werte aus Feldern entfernen
-            $("#Email_"+woher).val("");
-            $("#Passwort_"+woher).val("");
-            $("#Passwort2_"+woher).val("");
+            $("#Email_" + woher).val("");
+            $("#Passwort_" + woher).val("");
+            $("#Passwort2_" + woher).val("");
         },
-        error : function () {
+        error: function () {
             var praefix = "importieren_";
             if (woher === "art") {
                 praefix = "";
             }
-            $("#"+praefix+woher+"_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-            $("#"+praefix+woher+"_anmelden_fehler")
+            $("#" + praefix + woher + "_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
+            $("#" + praefix + woher + "_anmelden_fehler")
                 .alert()
                 .show();
         }
@@ -331,35 +336,35 @@ window.adb.zurueckZurAnmeldung = function (woher) {
     }
 
     // Mitteilen, dass Anmeldung nötig ist
-    $("#"+praefix+woher+"_anmelden_hinweis")
+    $("#" + praefix + woher + "_anmelden_hinweis")
         .alert()
         .show();
-    $("#"+praefix+woher+"_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
-    $("#"+praefix+woher+"_anmelden_collapse").collapse('show');
+    $("#" + praefix + woher + "_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
+    $("#" + praefix + woher + "_anmelden_collapse").collapse('show');
     $(".anmelden_btn").show();
     $(".abmelden_btn").hide();
     // ausschalten, soll später bei Organisationen möglich werden
     //$(".konto_erstellen_btn").show();
     $(".konto_speichern_btn").hide();
-    $("#Email_"+woher).focus();
+    $("#Email_" + woher).focus();
 };
 
 
 window.adb.validiereUserAnmeldung = function (woher) {
     'use strict';
-    var email = $('#Email_'+woher).val(),
-        passwort = $('#Passwort_'+woher).val();
+    var email = $('#Email_' + woher).val(),
+        passwort = $('#Passwort_' + woher).val();
     if (!email) {
         setTimeout(function () {
-            $('#Email_'+woher).focus();
+            $('#Email_' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Emailhinweis_"+woher).show();
+        $("#Emailhinweis_" + woher).show();
         return false;
     } else if (!passwort) {
         setTimeout(function () {
-            $('#Passwort_'+woher).focus();
+            $('#Passwort_' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Passworthinweis_"+woher).show();
+        $("#Passworthinweis_" + woher).show();
         return false;
     }
     return true;
@@ -693,35 +698,9 @@ window.adb.handleDsWählenChange = function () {
     require('./adbModules/import/handleDsWaehlenChange')(this);
 };
 
-// wenn DsName geändert wird
-// suchen, ob schon eine Datensammlung mit diesem Namen existiert
-// und sie von jemand anderem importiert wurde
-// und sie nicht zusammenfassend ist
+// wird in index.html benutzt
 window.adb.handleDsNameChange = function () {
-    'use strict';
-    var that = this,
-        ds_key = _.find(window.adb.dsNamenEindeutig, function (key) {
-            return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
-        }),
-        $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
-    if (ds_key) {
-        $importieren_ds_ds_beschreiben_hinweis2
-            .alert()
-            .show()
-            .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-        setTimeout(function () {
-            $importieren_ds_ds_beschreiben_hinweis2
-                .alert()
-                .hide();
-        }, 30000);
-        $("#DsName")
-            .val("")
-            .focus();
-    } else {
-        $importieren_ds_ds_beschreiben_hinweis2
-            .alert()
-            .hide();
-    }
+    require('./adbModules/import/handleDsNameChange')(this);
 };
 
 // wenn DsLöschen geklickt wird
