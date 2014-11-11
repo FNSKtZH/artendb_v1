@@ -722,14 +722,16 @@ window.adb.entferneDatensammlungAusDokument = function (id, dsName) {
     $db.openDoc(id, {
         success: function (doc) {
             // Datensammlung entfernen
-            doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function (datensammlung) {
-                return datensammlung.Name === dsName;
-            });
-            // in artendb speichern
-            $db.saveDoc(doc);
-            // mitteilen, dass eine ds entfernt wurde
-            $(document).trigger('adb.dsEntfernt');
-            // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
+            if (doc.Eigenschaftensammlungen) {
+                doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function (datensammlung) {
+                    return datensammlung.Name === dsName;
+                });
+                // in artendb speichern
+                $db.saveDoc(doc);
+                // mitteilen, dass eine ds entfernt wurde
+                $(document).trigger('adb.dsEntfernt');
+                // TODO: Scheitern abfangen (trigger adb.ds_nicht_entfernt)
+            }
         }
     });
 };
@@ -869,8 +871,9 @@ window.adb.sortKeysOfObject = function (o) {
 
 window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
-    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse"),
-        _alt = _alt || '';
+    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse");
+    
+    _alt = _alt || '';
 
     // Export ausblenden, falls sie eingeblendet war
     if ($exportieren_exportieren_collapse.css("display") !== "none") {
@@ -912,13 +915,14 @@ window.adb.convertToCorrectType = function (feldwert) {
     var type = window.adb.myTypeOf(feldwert);
     if (type === "boolean") {
         return Boolean(feldwert);
-    } else if (type === "float") {
-        return parseFloat(feldwert);
-    } else if (type === "integer") {
-        return parseInt(feldwert);
-    } else {
-        return feldwert;
     }
+    if (type === "float") {
+        return parseFloat(feldwert);
+    }
+    if (type === "integer") {
+        return parseInt(feldwert);
+    }
+    return feldwert;
 };
 
 // Hilfsfunktion, die typeof ersetzt und ergänzt
