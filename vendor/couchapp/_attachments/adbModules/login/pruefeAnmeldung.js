@@ -8,9 +8,11 @@
 'use strict';
 
 module.exports = function (woher) {
+    var zurueckZurAnmeldung = require('./zurueckZurAnmeldung');
+
     if (!localStorage.Email) {
         setTimeout(function () {
-            window.adb.zurueckZurAnmeldung(woher);
+            zurueckZurAnmeldung(woher);
         }, 600);
         return false;
     }
