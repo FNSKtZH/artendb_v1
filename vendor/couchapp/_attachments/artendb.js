@@ -11,54 +11,16 @@ window.adb.meldeUserAb = function () {
     require('./adbModules/login/meldeUserAb')();
 };
 
-// wenn BsName geändert wird
-// suchen, ob schon eine Datensammlung mit diesem Namen existiert
-// und sie von jemand anderem importiert wurde
-// und sie nicht zusammenfassend ist
+// wird in index.html benutzt
 window.adb.handleBsNameChange = function () {
     'use strict';
-    var that = this,
-        bs_key = _.find(window.adb.dsNamenEindeutig, function (key) {
-            return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
-        });
-    if (bs_key) {
-        $("#importieren_bs_ds_beschreiben_hinweis2")
-            .alert()
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
-            .show();
-        $("#importieren_bs_ds_beschreiben_hinweis_text2").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-        setTimeout(function () {
-            $("#importieren_bs_ds_beschreiben_hinweis2")
-                .alert()
-                .hide();
-        }, 30000);
-        $("#BsName")
-            .val("")
-            .focus();
-    } else {
-        $("#importieren_bs_ds_beschreiben_hinweis2")
-            .alert()
-            .hide();
-    }
+    require('./adbModules/import/handleBsNameChange')(this);
 };
 
-// Wenn DsImportiertVon geändert wird
-// kontrollieren, dass es die email der angemeldeten Person ist
+// wird in index.html benutzt
 window.adb.handleDsImportiertVonChange = function () {
     'use strict';
-    var $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
-    $("#DsImportiertVon").val(localStorage.Email);
-    $importieren_ds_ds_beschreiben_hinweis2
-        .alert()
-        .show()
-        .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-    setTimeout(function () {
-        $importieren_ds_ds_beschreiben_hinweis2
-            .alert()
-            .hide();
-    }, 10000);
+    require('./adbModules/import/handleDsImportiertVonChange')();
 };
 
 // Wenn BsImportiertVon geändert wird
