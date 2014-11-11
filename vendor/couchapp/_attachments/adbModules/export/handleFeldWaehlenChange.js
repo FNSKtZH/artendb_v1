@@ -13,7 +13,8 @@ var $ = require('jquery');
 module.exports = function (that) {
     var formular = $(that).closest('form').attr('id'),
         _alt = '',
-        pruefeObZuvieleExportfelderGewaehltSind = require('./pruefeObZuvieleExportfelderGewaehltSind');
+        pruefeObZuvieleExportfelderGewaehltSind         = require('./pruefeObZuvieleExportfelderGewaehltSind'),
+        pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind');
 
     if (formular === 'export_alt') {
         _alt = '_alt';
@@ -25,7 +26,7 @@ module.exports = function (that) {
             return false;
         }
         // ...oder zuviele Beziehungen
-        if (window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind(that, _alt)) {
+        if (pruefeObZuvieleBeziehungssammlungenGewaehltSind(that, _alt)) {
             return false;
         }
     }

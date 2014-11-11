@@ -749,41 +749,17 @@ window.adb.handleFeldWaehlenChange = function () {
     return require('./adbModules/export/handleFeldWaehlenChange')(this);
 };
 
-window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind = function (that, _alt) {
-    if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
-        var bez_ds_checked = [];
-        $("#export" + _alt)
-            .find(" .exportieren_felder_waehlen_felderliste")
-            .find(".feld_waehlen")
-            .each(function () {
-                if ($(this).prop('checked')) {
-                    if ($(this).attr('dstyp') === "Beziehung") {
-                        bez_ds_checked.push($(this).attr('datensammlung'));
-                    }
-                }
-            });
-
-        // eindeutige Liste der dsTypen erstellen
-        bez_ds_checked = _.union(bez_ds_checked);
-        if (bez_ds_checked && bez_ds_checked.length > 1) {
-            $('#meldung_zuviele_bs').modal();
-            $(that).prop('checked', false);
-            return true;
-        }
-        return false;
-    }
-};
-
 // wenn .feld_waehlen_alle_von_ds geändert wird
 // wenn checked: alle unchecken, sonst alle checken
-window.adb.handleFeldWählenAlleVonDs = function () {
+window.adb.handleFeldWaehlenAlleVonDs = function () {
     'use strict';
     var that     = this,
         ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
         _alt     = '',
         status   = $(that).prop('checked'),
-        pruefeObZuvieleExportfelderGewaehltSind = require('./adbModules/export/pruefeObZuvieleExportfelderGewaehltSind');
+        pruefeObZuvieleExportfelderGewaehltSind         = require('./adbModules/export/pruefeObZuvieleExportfelderGewaehltSind'),
+        pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./adbModules/export/pruefeObZuvieleBeziehungssammlungenGewaehltSind');
 
     if (formular === 'export_alt') {
         _alt = '_alt';
@@ -793,7 +769,7 @@ window.adb.handleFeldWählenAlleVonDs = function () {
         if (status) {
             // Wenn ein Feld dazugefügt wurde...
             // ...kontrollieren, ob zuviele Beziehungen gewählt sind
-            if (pruefeObZuvieleExportfelderGewaehltSind(this, _alt) || window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, _alt)) {
+            if (pruefeObZuvieleExportfelderGewaehltSind(this, _alt) || pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, _alt)) {
                 // oops, zu viele Felder gewählt oder zu viele Beziehungen > aufhören
                 return;
             }
