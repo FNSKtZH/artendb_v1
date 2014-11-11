@@ -713,36 +713,6 @@ window.adb.entferneBeziehungssammlung = function () {
     require('./adbModules/import/entferneBeziehungssammlung')();
 };
 
-// fügt der Art eine Datensammlung hinzu
-// wenn dieselbe schon vorkommt, wird sie überschrieben
-window.adb.fuegeDatensammlungZuObjekt = function (guid, datensammlung) {
-    'use strict';
-    var $db = $.couch.db('artendb');
-    $db.openDoc(guid, {
-        success: function (doc) {
-            // sicherstellen, dass Eigenschaftensammlung existiert
-            if (!doc.Eigenschaftensammlungen) {
-                doc.Eigenschaftensammlungen = [];
-            }
-            // falls dieselbe Datensammlung schon existierte: löschen
-            // trifft z.B. zu bei zusammenfassenden
-            doc.Eigenschaftensammlungen = _.reject(doc.Eigenschaftensammlungen, function (es) {
-                return es.Name === datensammlung.Name;
-            });
-            // Datensammlung anfügen
-            doc.Eigenschaftensammlungen.push(datensammlung);
-            // sortieren
-            // Eigenschaftensammlungen nach Name sortieren
-            doc.Eigenschaftensammlungen = window.adb.sortiereObjektarrayNachName(doc.Eigenschaftensammlungen);
-            // in artendb speichern
-            $db.saveDoc(doc);
-            // mitteilen, dass ein ds importiert wurde
-            $(document).trigger('adb.ds_hinzugefügt');
-            // TODO: Scheitern des Speicherns abfangen (trigger adb.ds_nicht_hinzugefügt)
-        }
-    });
-};
-
 // übernimmt die id des zu verändernden Dokuments
 // und den Namen der Datensammlung, die zu entfernen ist
 // entfernt die Datensammlung

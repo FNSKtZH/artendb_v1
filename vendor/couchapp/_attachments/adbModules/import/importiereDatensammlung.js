@@ -26,7 +26,8 @@ module.exports = function () {
         $importieren_ds_import_ausfuehren_hinweis      = $("#importieren_ds_import_ausfuehren_hinweis"),
         $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
         erste10Ids,
-        dsDatensatzMitRichtigerId;
+        dsDatensatzMitRichtigerId,
+        fuegeDatensammlungZuObjekt = require('./fuegeDatensammlungZuObjekt');
 
     // prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
     if (!$DsName.val()) {
@@ -164,7 +165,7 @@ module.exports = function () {
             // kann sein, dass der guid oben nicht zugeordnet werden konnte. Dann nicht anfügen
             if (guid) {
                 console.log("füge ds zu objekt");
-                window.adb.fuegeDatensammlungZuObjekt(guid, datensammlung);
+                fuegeDatensammlungZuObjekt(guid, datensammlung);
             }
         }
     });
