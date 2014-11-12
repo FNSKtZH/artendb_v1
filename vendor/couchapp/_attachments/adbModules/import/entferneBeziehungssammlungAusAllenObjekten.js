@@ -14,7 +14,8 @@ module.exports = function (bsName) {
         $importieren_bs_ds_beschreiben_hinweis = $("#importieren_bs_ds_beschreiben_hinweis"),
         $importieren_bs_ds_beschreiben_hinweis_text = $("#importieren_bs_ds_beschreiben_hinweis_text"),
         $db = $.couch.db('artendb'),
-        rueckmeldung;
+        rueckmeldung,
+        entferneBeziehungssammlungAusDokument = require('./entferneBeziehungssammlungAusDokument');
 
     $db.view('artendb/bs_guid?startkey=["' + bsName + '"]&endkey=["' + bsName + '",{}]', {
         success: function (data) {
@@ -53,7 +54,7 @@ module.exports = function (bsName) {
 
             _.each(data.rows, function (dataRow) {
                 // guid und DsName übergeben
-                window.adb.entferneBeziehungssammlungAusDokument(dataRow.key[1], bsName);
+                entferneBeziehungssammlungAusDokument(dataRow.key[1], bsName);
             });
             bsEntfernt.resolve();
         }

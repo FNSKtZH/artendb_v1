@@ -13,7 +13,8 @@ module.exports = function (dsName) {
         anzVorkommenVonDsEntfernt = 0,
         $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
         $db = $.couch.db('artendb'),
-        rueckmeldung;
+        rueckmeldung,
+        entferneDatensammlungAusDokument = require('./entferneDatensammlungAusDokument');
 
     $db.view('artendb/ds_guid?startkey=["' + dsName + '"]&endkey=["' + dsName + '",{}]', {
         success: function (data) {
@@ -50,7 +51,7 @@ module.exports = function (dsName) {
             // Eigenschaftensammlungen entfernen
             _.each(data.rows, function (dataRow) {
                 // guid und DsName übergeben
-                window.adb.entferneDatensammlungAusDokument(dataRow.key[1], dsName);
+                entferneDatensammlungAusDokument(dataRow.key[1], dsName);
             });
             dsEntfernt.resolve();
         }
