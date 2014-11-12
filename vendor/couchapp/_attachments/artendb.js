@@ -459,17 +459,10 @@ window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
         .jstree("select_node", "#" + id);
 };
 
-// wenn Fenstergrösse verändert wird
+// wird in index.html benutzt
 window.adb.handleResize = function () {
     'use strict';
-    var setzeTreehoehe       = require('./adbModules/jstree/setzeTreehoehe'),
-        fitTextareaToContent = require('./adbModules/fitTextareaToContent');
-
-    setzeTreehoehe();
-    // Höhe der Textareas korrigieren
-    $('#forms').find('textarea').each(function () {
-        fitTextareaToContent(this.id);
-    });
+    require('./adbModules/handleResize')();
 };
 
 // wird in index.html benutzt
