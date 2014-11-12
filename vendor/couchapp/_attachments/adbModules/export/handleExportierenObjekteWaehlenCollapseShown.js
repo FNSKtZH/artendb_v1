@@ -3,12 +3,9 @@
 
 var $ = require('jquery');
 
-module.exports = function (event) {
-    var that = event.target,
-        gruppenGewaehlt = window.adb.fuerExportGewaehlteGruppen(),
+module.exports = function (that) {
+    var gruppenGewaehlt = window.adb.fuerExportGewaehlteGruppen(),
         erstelleListeFuerFeldwahl = require('./erstelleListeFuerFeldwahl');
-
-    console.log('halo, that = ', that);
 
     if (gruppenGewaehlt.length === 0) {
         // keine Gruppe gewählt

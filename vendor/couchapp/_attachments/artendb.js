@@ -426,7 +426,7 @@ window.adb.handleLrTaxonomieControlsChange = function () {
 window.adb.handlePanelbodyLrTaxonomieShown = function () {
     'use strict';
     var bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
-    if (localStorage.lrBearb == "true") {
+    if (localStorage.lrBearb === "true") {
         bearbeiteLrTaxonomie();
     }
 };
@@ -437,20 +437,16 @@ window.adb.handleExportierenExportierenCollapseShown = function (that) {
     require('./adbModules/export/handleExportierenExportierenCollapseShown')(that);
 };
 
-// scrollt das übergebene Element nach oben
-// minus die übergebene Anzahl Pixel
+// wird in index.html benutzt
 window.adb.scrollThisToTop = function (that, minus) {
     'use strict';
-    minus = minus || 0;
-    $('html, body').animate({
-        scrollTop: $(that).parent().offset().top - minus
-    }, 2000);
+    require('./adbModules/scrollThisToTop')(that, minus);
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenObjekteWaehlenCollapseShown = function (event) {
+window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
     'use strict';
-    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(event);
+    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(that);
 };
 
 // wird in index.html benutzt
@@ -459,27 +455,10 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
     require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
 };
 
-// wenn #exportieren_exportieren_exportieren geklickt wird
+// wird in index.html benutzt
 window.adb.handleExportierenExportierenExportierenClick = function () {
     'use strict';
-    var erstelleExportString = require('./adbModules/export/erstelleExportString'),
-        isFileAPIAvailable   = require('./adbModules/isFileAPIAvailable'),
-        exportstring,
-        blob,
-        d,
-        month,
-        day,
-        output;
-
-    if (isFileAPIAvailable()) {
-        exportstring = erstelleExportString(window.adb.exportieren_objekte);
-        blob   = new Blob([exportstring], {type: "text/csv;charset=utf-8;"});
-        d      = new Date();
-        month  = d.getMonth() + 1;
-        day    = d.getDate();
-        output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-        saveAs(blob, output + "_export.csv");
-    }
+    require('./adbModules/export/handleExportierenExportierenExportierenClick')();
 };
 
 // wenn .panel geöffnet wird

@@ -1103,8 +1103,12 @@
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', function (event) {
                         window.adb.handleExportierenExportierenCollapseShown(this);
                     })
-                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function () {
+                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
+                    })
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function () {
+                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
+                    });
 
                 $("#export_alt")
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
