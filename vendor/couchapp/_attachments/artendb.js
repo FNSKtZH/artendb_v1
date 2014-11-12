@@ -161,12 +161,10 @@ window.adb.baueDsZuEigenschaftenUm = function () {
     require('./adbModules/admin/baueDsZuEigenschaftenUm')();
 };
 
-// wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
     'use strict';
-    // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-    require('./adbModules/import/bereiteImportierenDsBeschreibenVor')("ds");
-    $("#DsImportiertVon").val(localStorage.Email);
+    require('./adbModules/import/handleImportierenDsDsBeschreibenCollapseShown')();
 };
 
 // wird in index.html benutzt
