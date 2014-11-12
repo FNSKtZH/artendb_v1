@@ -386,20 +386,10 @@ window.adb.handleBtnLrBearbSchuetzenClick = function () {
     }
 };
 
-// wenn .btn.lr_bearb_neu geklickt wird
+// wird in index.html benutzt
 window.adb.handleBtnLrBearbNeuClick = function () {
     'use strict';
-    var html,
-        getHtmlForLrParentAuswahlliste = require('./adbModules/lr/getHtmlForLrParentAuswahlliste');
-    if (!$(this).hasClass('disabled')) {
-        getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
-            $("#lr_parent_waehlen_optionen").html(html);
-            // jetzt das modal aufrufen
-            // höhe Anpassen funktioniert leider nicht über css mit calc
-            $('#lr_parent_waehlen').modal();
-            $('#lr_parent_waehlen_optionen').css('max-height', $(window).height()-100);
-        });
-    }
+    require('./adbModules/lr/handleBtnLrBearbNeuClick')(this);
 };
 
 // wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
