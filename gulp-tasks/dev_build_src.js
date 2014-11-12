@@ -13,6 +13,7 @@ gulp.task('dev_build_src', function () {
         'vendor/couchapp/_attachments/index_lib/bootstrap.js',
         'vendor/couchapp/_attachments/index_lib/jsuri.js',
         'vendor/couchapp/_attachments/index_lib/FileSaver.js',
+        'vendor/couchapp/_attachments/index_lib/xlsx.js',
         'vendor/couchapp/_attachments/index_lib/css3-mediaqueries.js',
         'vendor/couchapp/_attachments/index_lib/history.js',
         'vendor/couchapp/_attachments/index_lib/sha1.js',

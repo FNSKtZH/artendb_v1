@@ -2,8 +2,7 @@
 
 window.adb = window.adb || {};
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $ = require('jquery');
 
 // wird in index.html benutzt
 window.adb.meldeUserAb = function () {

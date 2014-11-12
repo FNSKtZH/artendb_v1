@@ -13,6 +13,7 @@
     "jquery.jstree": "global:$.jstree",
     "Uri": "global:Uri",
     "saveAs": "global:saveAs",
+    "XLSX": "global:XLSX",
     "Modernizr": "global:Modernizr"
   },
   "scripts": {
