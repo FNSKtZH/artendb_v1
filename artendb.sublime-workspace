@@ -307,7 +307,7 @@
 			"file": "_attachments/index_dev.html",
 			"settings":
 			{
-				"buffer_size": 128644,
+				"buffer_size": 128645,
 				"line_ending": "Windows"
 			}
 		},
@@ -323,25 +323,7 @@
 			"file": "vendor/couchapp/_attachments/artendb.js",
 			"settings":
 			{
-				"buffer_size": 60743,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Searching 300 files for \"window.adb.fitTextareaToContent\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\import\\handleBsWaehlenChange.js:\n   62                      // dafür sorgen, dass textareas genug gross sind\n   63                      $('#importieren_bs').find('textarea').each(function () {\n   64:                         window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);\n   65                      });\n   66                      $BsName.focus();\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\import\\handleDsWaehlenChange.js:\n   65                          .find('textarea')\n   66                          .each(function () {\n   67:                             window.adb.fitTextareaToContent(this, document.documentElement.clientHeight);\n   68                          });\n   69                      $DsName.focus();\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n    4  \n    5  \n    6: window.adb.fitTextareaToContent = function (id, max_height) {\n    7      'use strict';\n    8      \n    .\n  729      'use strict';\n  730      $(this).find('textarea').each(function () {\n  731:         window.adb.fitTextareaToContent(this.id);\n  732      });\n  733  };\n  ...\n  751      // Höhe der Textareas korrigieren\n  752      $('#forms').find('textarea').each(function () {\n  753:         window.adb.fitTextareaToContent(this.id);\n  754      });\n  755  };\n  ...\n  852  window.adb.handleTextareaKeyupFocus = function () {\n  853      'use strict';\n  854:     window.adb.fitTextareaToContent(this.id);\n  855  };\n  856  \n\n6 matches across 3 files\n",
-			"settings":
-			{
-				"buffer_size": 1648,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "vendor/couchapp/_attachments/adbModules/import/handleDsWaehlenChange.js",
-			"settings":
-			{
-				"buffer_size": 4014,
+				"buffer_size": 44422,
 				"line_ending": "Windows"
 			}
 		}
@@ -386,19 +368,65 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/alex/artendb/",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import"
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr"
 	],
 	"file_history":
 	[
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlungAusObjekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlungAusAllenObjekten.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneBeziehungssammlungAusAllenObjekten.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlungAusObjekt (2).js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/fuegeDatensammlungZuObjekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/importiereDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneBeziehungssammlungAusObjekt.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneBeziehungssammlung_2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlung_2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung_2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/queryChangesStartingNow.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/queryChanges.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/handleRueckfrageLrLoeschenJaClick.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/handleLrParentOptionenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/aktualisiereHierarchieEinesNeuenLr_2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/getHtmlForLrParentAuswahlliste.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHierarchieFuerFeldAusHierarchieobjekteArray.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/aktualisiereHierarchieEinesNeuenLr.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleLrParentOptionenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/isFileAPIAvailable.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/bereiteImportierenBsBeschreibenVor_2.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/bereiteImportierenBsBeschreibenVor.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleBsWaehlenChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsImportiertVonChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleBsNameChange.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/validiereUserAnmeldung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/meldeUserAn.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/zurueckZurAnmeldung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/pruefeAnmeldung.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/bereiteImportierenDsBeschreibenVor.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/passeUiFuerAngemeldetenUserAn.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/erstelleKonto.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/meldeUserAb.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/blendeMenus.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneUri.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeUserAn.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeUserAb.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/login/validiereSignup.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/blendeMenus.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleKonto.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/validiereSignup.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/fitTextareaToContent.js",
+		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsWaehlenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerDatensammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/generiereHtmlFuerLinkZuGleicherGruppe.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHierarchieFuerFeldAusHierarchieobjekteArray.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/erstelleTree.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/setzeTreehoehe.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/setzeTreehoehe.js",
@@ -424,7 +452,6 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsNameChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/index_lib/jquery.couch.js",
 		"/C/Users/alex/apflora/src/jquery.jstree.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneDatensammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/filtereFuerExport.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/admin/nenneDsUm.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adb_lib/bundleLogger.js",
@@ -443,13 +470,8 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/ermittleVergleichsoperator.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/ergaenzeFelderObjekt.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/baueTabelleFuerExportAuf.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/importiereDatensammlung.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleDsWaehlenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/fuegeBeziehungenZuObjekt.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneDatensammlungAusAllenObjekten.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/entferneBeziehungssammlungAusAllenObjekten.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/bereiteImportierenDsBeschreibenVor_02.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/bereiteImportierenDsBeschreibenVor.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/oeffneNodeNachIdArray.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/oeffneBaumZuId.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/holeDatenUrlFuerTreeUntereLevel.js",
@@ -457,20 +479,15 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/jstree/erstelleBaum.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/speichern.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/zeigeFormular.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneUri.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/setzteLinksZuBilderUndWikipedia.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeUserAn.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeUserAb.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereSuchfeld.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt2.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/initiiereArt.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleLrParentOptionenChange.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/getHtmlForLrParentAuswahlliste.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTabelle.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleHtmlFuerDatensammlungBeschreibung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesNeuenLr_2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/entferneBeziehungssammlung.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/aktualisiereHierarchieEinesNeuenLr.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/_vorlage.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/_vorlage.js",
@@ -485,42 +502,7 @@
 		"/C/Users/alex/artendb/lists/lib/convertToCorrectType.js",
 		"/C/Users/alex/artendb/lists/lib/ergaenzeDsBsVonSynonym.js",
 		"/C/Users/alex/artendb/lists/lib/codiereFloraStatus.js",
-		"/C/Users/alex/artendb/lists/export_evab.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/artendb.js",
-		"/C/Users/alex/artendb/lists/export_evm_arten.js",
-		"/C/Users/alex/artendb/lists/baum_moose.js",
-		"/C/Users/alex/artendb/lists/baum_fauna.js",
-		"/C/Users/alex/artendb/lists/baum_flora.js",
-		"/C/Users/alex/artendb/lists/baum_lr.js",
-		"/C/Users/alex/artendb/lists/baum_macromycetes.js",
-		"/C/Users/alex/artendb/lists/export_evm_artgruppen.js",
-		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen.js",
-		"/C/Users/alex/artendb/lists/export_alt_mit_synonymen_standardfelder.js",
-		"/C/Users/alex/artendb/lists/export_mit_synonymen.js",
-		"/C/Users/alex/artendb/lists/export_mit_synonymen_direkt.js",
-		"/C/Users/alex/artendb/lists/export_direkt.js",
-		"/C/Users/alex/artendb/lists/export_alt.js",
-		"/C/Users/alex/artendb/lists/lib/holeUebergebeneVariablen.js",
-		"/C/Users/alex/artendb/lists/lib/bereiteFilterkriterienVor.js",
-		"/C/Users/alex/artendb/lists/export_apflora.js",
-		"/C/Users/alex/artendb/lists/lib/artendb_listfunctions.js",
-		"/C/Users/alex/artendb/lists/lib/myTypeOf.js",
-		"/C/Users/alex/artendb/lists/lib/filtereBeziehungspartner.js",
-		"/C/Users/alex/artendb/lists/lib/erstelleExportString.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleBsWaehlenChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleBaum.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/uebergebeFilterFuerExportMitVorschau.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleListeFuerFeldwahl2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneNodeNachIdArray.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/oeffneBaumZuId.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/meldeErfolgVonIdIdentifikation2.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleExportFeldFilternChange.js",
-		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/handleDsWaehlenChange.js",
-		"/C/Users/alex/artendb/_attachments/alt/arteigenschaften_fuer_alt.mdb",
-		"/C/Users/alex/artendb/_attachments/evab/arteigenschaften_fuer_evab.mdb",
-		"/C/Users/alex/artendb/_attachments/fonts/glyphicons-halflings-regular.eot"
+		"/C/Users/alex/artendb/lists/export_evab.js"
 	],
 	"find":
 	{
@@ -624,6 +606,79 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"exportZuruecksetzen",
+			"window.adb.entferneBeziehungssammlungAusObjekt",
+			"window.adb.entferneDatensammlungAusObjekt",
+			"window.adb.entferneBeziehungssammlungAusDokument",
+			"window.adb.entferneDatensammlungAusDokument",
+			"window.adb.fuegeDatensammlungZuObjekt",
+			"fuegeDatensammlungZuObjekt",
+			"window.adb.fuegeDatensammlungZuObjekt",
+			"window.adb.entferneBeziehungssammlungAusObjekt",
+			"entferneBeziehungssammlung",
+			"./entferneBeziehungssammlung_2",
+			"window.adb.entferneBeziehungssammlung_2",
+			"entferneBeziehungssammlung_2",
+			"window.adb.entferneBeziehungssammlung_2",
+			"verzögerungs_faktor",
+			"window.adb.entferneDatensammlungAusObjekt",
+			"entferneDatensammlung",
+			"require",
+			"entferneDatensammlung_2",
+			"window.adb.entferneDatensammlung_2",
+			"Objekt",
+			"verzögerungs_faktor",
+			"window.adb.queryChanges",
+			"window.adb.queryChangesStartingNow",
+			"handleRueckfrageLrLoeschenJaClick",
+			"handleLrParentOptionenChange",
+			"require",
+			"getHtmlForLrParentAuswahlliste",
+			"require",
+			"aktualisiereHierarchieEinesNeuenLr_2",
+			"aktualisiereHierarchieEinesNeuenLr",
+			"aktualisiereHierarchieEinesLrInklusiveSeinerChildren2",
+			"require",
+			"isFileAPIAvailable",
+			"window.adb.isFileAPIAvailable",
+			"ds_name_eindeutig",
+			"dsNameEindeutig",
+			"bs_key",
+			"bs_namen",
+			"window.adb.bereiteImportierenBsBeschreibenVor_2",
+			"window.adb.bs_von_objekten",
+			"window.adb.bereiteImportierenBsBeschreibenVor_2",
+			"window.adb.bereiteImportierenBsBeschreibenVor",
+			"window.adb.bereiteImportierenBsBeschreibenVor_02",
+			"window.adb.bereiteImportieren_bs_beschreibenVor_02",
+			"window.adb.bereiteImportieren_bs_beschreibenVor",
+			"bereiteImportierenDsBeschreibenVor_02",
+			"window.adb.bereiteImportierenDsBeschreibenVor_02",
+			"window.adb.handleBsWählenChange",
+			"window.adb.handleDsImportiertVonChange",
+			"window.adb.handleBsNameChange",
+			"bs_key",
+			"window.adb.validiereUserAnmeldung",
+			"window.adb.zurueckZurAnmeldung",
+			"pruefeAnmeldung",
+			"window.adb.pruefeAnmeldung",
+			"pruefeAnmeldung",
+			"window.adb.pruefeAnmeldung",
+			"window.adb.passeUiFuerAngemeldetenUserAn",
+			"meldeUserAn",
+			"meldeUserAb",
+			"validiereSignup",
+			"erstelleKonto",
+			"blendeMenus",
+			"validiereSignup",
+			"window.adb.blendeMenus",
+			"blendeMenus",
+			"window.adb.blendeMenus",
+			"window.adb.erstelleKonto",
+			"window.adb.validiereSignup",
+			"bs_ds",
+			"window.adb.validiereSignup",
+			"window.adb.fitTextareaToContent",
 			"fitTextareaToContent",
 			"window.adb.fitTextareaToContent",
 			"max_height",
@@ -678,80 +733,7 @@
 			"window.adb.handleFeldWaehlenAlleVonDs",
 			"/adbModules/export",
 			"this",
-			"window.adb.handleFeldWählenAlleVonDs",
-			"window.adb.pruefeObZuvieleBeziehungssammlungenGewaehltSind",
-			"window.adb.pruefeObZuvieleExportfelderGewaehltSind",
-			"window.adb.prüfeObZuvieleBeziehungssammlungenGewähltSind",
-			"window.adb.prüfeObZuvieleExportfelderGewähltSind",
-			"window.adb.handleFeldWaehlenChange",
-			"window.adb.handleFeldWählenChange",
-			"window.adb.handleDsNameChange",
-			"ds_key",
-			"signup",
-			"\"+praefix+woher+\"",
-			"'+woher",
-			"\"+woher",
-			"gruppenliste",
-			"}\n\n    gruppenliste = gruppen.split(\",\");",
-			"returnFunction",
-			"admin_korrigiere_ds_name_rückmeldung",
-			"admin_korrigiere_ds_name_ch_rückmeldung",
-			"returnFunction",
-			"admin_korrigiere_ds_name_ch_rote_liste_1991_rückmeldung",
-			"returnFunction",
-			"ds_artwert",
-			"returnFunction",
-			"zhgis_schon_da",
-			"ergänzt",
-			"ds_zhgis",
-			"admin_baue_ds_zu_eigenschaften_um_rückmeldung",
-			"returnFunction",
-			"var",
-			"anz_gruppen_abgefragt",
-			"returnFunction",
-			"var",
-			"list_name",
-			"view_name",
-			"gewählte_felder_objekt",
-			"anz_ds_gewählt",
-			"returnFunction",
-			"window.adb.exportZurücksetzen",
-			"var",
-			"returnFunction",
-			"window.adb.fürExportGewählteGruppen",
-			"übergebeFilterFürDirektExport",
-			"html_filterkriterien",
-			"anz_ds_gewählt",
-			"gewählte_felder_objekt",
-			"anz_gewählte_felder_aus_dsbs",
-			"gewählte_felder",
-			"gruppen_array",
-			"filter_objekt",
-			"fürAlt",
-			"var",
-			"returnFunction",
-			"window.adb.holeDatensammlungenFürExportfelder",
-			"export_felder",
-			"hinweis_taxonomien",
-			"export_felder_arrays",
-			"returnFunction",
-			"export_felder_arrays",
-			"export_gruppen",
-			"erstelleExportfelder",
-			"var",
-			"x",
-			"object_with_array_in_key",
-			"ds_felder_objekt",
-			"dsbs_von_objekt",
-			"dsbs_von_objekten",
-			"html_filtern",
-			"html_felder_wählen",
-			"$",
-			"returnFunction",
-			"var",
-			"feld_objekt",
-			"felder_array",
-			"var"
+			"window.adb.handleFeldWählenAlleVonDs"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -759,6 +741,23 @@
 		"regex": false,
 		"replace_history":
 		[
+			"window.adb.entferneBeziehungssammlungAusDokument",
+			"window.adb.entferneDatensammlungAusDokument",
+			"window.adb.entferneBeziehungssammlungAusObjekt",
+			"window.adb.entferneDatensammlungAusObjekt",
+			"verzoegerungsFaktor",
+			"objekt",
+			"verzoegerungsFaktor",
+			"dsNameEindeutig",
+			"bsKey",
+			"bsNamen",
+			"window.adb.bsVonObjekten",
+			"window.adb.bereiteImportierenBsBeschreibenVor_2",
+			"window.adb.bereiteImportierenBsBeschreibenVor_02",
+			"window.adb.bereiteImportierenBsBeschreibenVor",
+			"window.adb.handleBsWaehlenChange",
+			"bsKey",
+			"bsDs",
 			"maxHeight",
 			"feldName",
 			"html",
@@ -869,24 +868,7 @@
 			"beziehungOrigArt",
 			"beziehungDerOriginalArt",
 			"beziehungDesSynonyms",
-			"dataRow",
-			"bezNamen",
-			"dsNamen",
-			"beziehungssammlungenVonSynonymen",
-			"eigenschaftensammlungenVonSynonymen",
-			"guidsVonSynonymen",
-			"taxonomischeBeziehungssammlungen",
-			"artBeziehungssammlungen",
-			"artEigenschaftensammlungen",
-			"htmlArt",
-			"parentId",
-			"parentName",
-			"objectHtml",
-			"neueTaxonomie",
-			"taxonomieObjekte",
-			"taxonomieName",
-			"erste10Ds",
-			"htmlDsFelderDiv"
+			"dataRow"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -897,7 +879,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -925,7 +907,7 @@
 						"translation.y": 1464.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -934,15 +916,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 128644,
+						"buffer_size": 128645,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								107174,
-								107174
+								7258,
+								7270
 							]
 						],
 						"settings":
@@ -952,10 +934,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 33484.0,
+						"translation.y": 1920.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -985,7 +967,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -994,15 +976,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 60743,
+						"buffer_size": 44422,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								112,
-								143
+								31109,
+								31109
 							]
 						],
 						"settings":
@@ -1012,104 +994,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1648,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										374,
-										405
-									],
-									[
-										758,
-										789
-									],
-									[
-										1002,
-										1033
-									],
-									[
-										1202,
-										1233
-									],
-									[
-										1394,
-										1425
-									],
-									[
-										1562,
-										1593
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								778,
-								778
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "vendor/couchapp/_attachments/adbModules/import/handleDsWaehlenChange.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4014,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2888,
-								2888
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 958.0,
+						"translation.y": 22690.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

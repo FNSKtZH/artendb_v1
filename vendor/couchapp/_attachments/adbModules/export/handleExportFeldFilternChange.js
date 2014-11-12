@@ -9,8 +9,10 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (that) {
-    var $that = $(that),
-        bez_ds_filtered = [];
+    var $that               = $(that),
+        bez_ds_filtered     = [],
+        exportZuruecksetzen = require('./exportZuruecksetzen');
+
     // die Checkboxen sollen drei Werte annehmen können:
     if (that.type === "checkbox") {
         if (that.readOnly) {
@@ -40,6 +42,6 @@ module.exports = function (that) {
         $('#meldung_zuviele_bs').modal();
         $(that).val("");
     } else {
-        window.adb.exportZuruecksetzen();
+        exportZuruecksetzen();
     }
 };

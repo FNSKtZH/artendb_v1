@@ -8,7 +8,8 @@ module.exports = function (woher) {
         passwort    = $('#Passwort_' + woher).val(),
         blendeMenus                   = require('./blendeMenus'),
         passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
-        validiereUserAnmeldung        = require('./validiereUserAnmeldung');
+        validiereUserAnmeldung        = require('./validiereUserAnmeldung'),
+        bearbeiteLrTaxonomie          = require('../lr/bearbeiteLrTaxonomie');
 
     if (validiereUserAnmeldung(woher)) {
         $.couch.login({
@@ -17,7 +18,7 @@ module.exports = function (woher) {
             success : function (r) {
                 localStorage.Email = $('#Email_' + woher).val();
                 if (woher === "art") {
-                    window.adb.bearbeiteLrTaxonomie();
+                    bearbeiteLrTaxonomie();
                 }
                 passeUiFuerAngemeldetenUserAn(woher);
                 // Werte aus Feldern entfernen

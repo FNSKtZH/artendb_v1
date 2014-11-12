@@ -42,8 +42,8 @@ module.exports = function () {
         // Gruppe ermitteln
         $db.openDoc(id, {
             success: function (objekt) {
-                // window.adb.Gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
-                window.adb.Gruppe = objekt.Gruppe;
+                // window.adb.gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
+                window.adb.gruppe = objekt.Gruppe;
                 $(".baum.jstree").jstree("deselect_all");
                 // den richtigen Button aktivieren
                 $('[gruppe="' + objekt.Gruppe + '"]').button('toggle');

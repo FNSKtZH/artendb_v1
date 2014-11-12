@@ -14,7 +14,7 @@ var returnFunction = function () {
     // alle Beschriftungen ausblenden
     $(".treeBeschriftung").hide();
     // gewollte beschriften und sichtbar schalten
-    switch (window.adb.Gruppe) {
+    switch (window.adb.gruppe) {
     case "Fauna":
         gruppe = "fauna";
         gruppenbezeichnung = "Tiere";
@@ -40,7 +40,7 @@ var returnFunction = function () {
     $db.view('artendb/' + gruppe + '_gruppiert', {
         success: function (data) {
             var anzahl_objekte = data.rows[0].value;
-            $("#tree" + window.adb.Gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+            $("#tree" + window.adb.gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
             // eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
         },
         error: function () {

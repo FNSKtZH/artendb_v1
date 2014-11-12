@@ -8,11 +8,11 @@ module.exports = function () {
         initiiereSuchfeld2 = require('./initiiereSuchfeld2');
 
     // zuerst mal die benötigten Daten holen
-    if (window.adb.Gruppe && window.adb.Gruppe === "Lebensräume") {
+    if (window.adb.gruppe && window.adb.gruppe === "Lebensräume") {
         if (window.adb.filtereLr) {
             initiiereSuchfeld2(window.adb.filtereLr);
         } else {
-            $db.view('artendb/filtere_lr?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{},{},{}]', {
+            $db.view('artendb/filtere_lr?startkey=["' + window.adb.gruppe + '"]&endkey=["' + window.adb.gruppe + '",{},{},{}]', {
                 success: function (data) {
                     window.adb.filtereLr = data;
                     initiiereSuchfeld2(data);
@@ -22,13 +22,13 @@ module.exports = function () {
                 }
             });
         }
-    } else if (window.adb.Gruppe) {
-        if (window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]) {
-            initiiereSuchfeld2(window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()]);
+    } else if (window.adb.gruppe) {
+        if (window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()]) {
+            initiiereSuchfeld2(window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()]);
         } else {
-            $db.view('artendb/filtere_art?startkey=["' + window.adb.Gruppe + '"]&endkey=["' + window.adb.Gruppe + '",{}]', {
+            $db.view('artendb/filtere_art?startkey=["' + window.adb.gruppe + '"]&endkey=["' + window.adb.gruppe + '",{}]', {
                 success: function (data) {
-                    window.adb["filtere_art_" + window.adb.Gruppe.toLowerCase()] = data;
+                    window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()] = data;
                     initiiereSuchfeld2(data);
                 },
                 error: function () {

@@ -14,7 +14,8 @@ module.exports = function (that) {
     var formular = $(that).closest('form').attr('id'),
         _alt = '',
         pruefeObZuvieleExportfelderGewaehltSind         = require('./pruefeObZuvieleExportfelderGewaehltSind'),
-        pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind');
+        pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind'),
+        exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
     if (formular === 'export_alt') {
         _alt = '_alt';
@@ -33,6 +34,6 @@ module.exports = function (that) {
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    window.adb.exportZuruecksetzen(null, _alt);
+    exportZuruecksetzen(null, _alt);
     return true;
 };

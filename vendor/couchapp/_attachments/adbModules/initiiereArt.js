@@ -48,7 +48,7 @@ module.exports = function (id) {
                 htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
                 _.each(taxonomischeBeziehungssammlungen, function (beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "");
+                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "");
                     if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
                         _.each(beziehungssammlung.Beziehungen, function (beziehung) {
                             if (beziehung.Beziehungspartner) {
@@ -79,7 +79,7 @@ module.exports = function (id) {
                 htmlArt += "<h4>Beziehungen:</h4>";
                 _.each(artBeziehungssammlungen, function (beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "");
+                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "");
                 });
             }
             // Beziehungssammlungen von synonymen Arten
@@ -161,7 +161,7 @@ module.exports = function (id) {
                             htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
                             _.each(beziehungssammlungenVonSynonymen, function (beziehungssammlung) {
                                 // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                                htmlArt += erstelleHtmlFuerBeziehungssammlung(art, beziehungssammlung, "2");
+                                htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "2");
                             });
                         }
                         initiiereArt2(htmlArt, art);

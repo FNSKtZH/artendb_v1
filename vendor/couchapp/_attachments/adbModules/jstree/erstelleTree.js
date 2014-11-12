@@ -15,7 +15,7 @@ module.exports = function () {
         initiiereArt                      = require('../initiiereArt'),
         setzeTreehoehe                    = require('./setzeTreehoehe');
 
-    $("#tree" + window.adb.Gruppe).jstree({
+    $("#tree" + window.adb.gruppe).jstree({
         "json_data": {
             ajax: {
                 type: 'GET',
@@ -73,10 +73,10 @@ module.exports = function () {
         }
     }).bind("loaded.jstree", function () {
         jstreeErstellt.resolve();
-        $("#suchen" + window.adb.Gruppe).css("display", "table");
+        $("#suchen" + window.adb.gruppe).css("display", "table");
         $("#treeMitteilung").hide();
-        $("#tree" + window.adb.Gruppe).show();
-        $("#tree" + window.adb.Gruppe + "Beschriftung").show();
+        $("#tree" + window.adb.gruppe).show();
+        $("#tree" + window.adb.gruppe + "Beschriftung").show();
         setzeTreehoehe();
         initiiereSuchfeld();
     }).bind("after_open.jstree", function () {

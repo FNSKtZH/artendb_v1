@@ -18,7 +18,8 @@ module.exports = function (feldwert, feldname) {
         neuerNodetext,
         $db                               = $.couch.db('artendb'),
         initiiereArt                      = require('./initiiereArt'),
-        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen');
+        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
+        convertToCorrectType              = require('./convertToCorrectType');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {
@@ -33,7 +34,7 @@ module.exports = function (feldwert, feldname) {
         id = uri2.getQueryParamValue('id');
     }
     // sicherstellen, dass boolean, float und integer nicht in Text verwandelt werden
-    feldwert = window.adb.convertToCorrectType(feldwert);
+    feldwert = convertToCorrectType(feldwert);
 
     $db.openDoc(id, {
         success: function (object) {
@@ -78,7 +79,7 @@ module.exports = function (feldwert, feldname) {
                             // object hat noch den alten Wert für Einheit, neuen verwenden
                             neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
                         }
-                        $("#tree" + window.adb.Gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
+                        $("#tree" + window.adb.gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
                     }
                 },
                 error: function () {

@@ -4,7 +4,9 @@
 var $ = require('jquery');
 
 module.exports = function (woher) {
-    var passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn');
+    var passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
+    bearbeiteLrTaxonomie              = require('../lr/bearbeiteLrTaxonomie');
+
     // User in _user eintragen
     $.couch.signup({
         name: $('#Email_' + woher).val()
@@ -12,7 +14,7 @@ module.exports = function (woher) {
         success: function () {
             localStorage.Email = $('#Email_' + woher).val();
             if (woher === "art") {
-                window.adb.bearbeiteLrTaxonomie();
+                bearbeiteLrTaxonomie();
             }
             passeUiFuerAngemeldetenUserAn(woher);
             // Werte aus Feldern entfernen

@@ -10,13 +10,14 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-var returnFunction = function (art, beziehungssammlung, altName) {
+var returnFunction = function (beziehungssammlung, altName) {
     var html,
         name,
         erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
         erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
         generiereHtmlFuerObjektlink               = require('./generiereHtmlFuerObjektlink'),
         ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
+        sortiereBeziehungenNachName               = require('./sortiereBeziehungenNachName'),
         bsName                                    = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + altName;
 
     // Accordion-Gruppe und -heading anfügen
@@ -34,7 +35,7 @@ var returnFunction = function (art, beziehungssammlung, altName) {
     html += erstelleHtmlFuerDatensammlungBeschreibung(beziehungssammlung);
 
     // die Beziehungen sortieren
-    beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
+    beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
 
     // jetzt für alle Beziehungen die Felder hinzufügen
     _.each(beziehungssammlung.Beziehungen, function (beziehung, index) {

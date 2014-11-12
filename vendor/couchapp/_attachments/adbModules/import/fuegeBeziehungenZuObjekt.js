@@ -10,7 +10,8 @@ var $ = require('jquery'),
 module.exports = function (guid, beziehungssammlung, beziehungen) {
     var $db = $.couch.db('artendb'),
         hinzugefuegt,
-        entsprechendeBezSammlungInObjekt;
+        entsprechendeBezSammlungInObjekt,
+        sortiereBeziehungenNachName = require('../sortiereBeziehungenNachName');
 
     $db.openDoc(guid, {
         success: function (doc) {
@@ -27,7 +28,7 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
                         }
                     });
                     // Beziehungen nach Name sortieren
-                    entsprechendeBezSammlungInObjekt.Beziehungen = window.adb.sortiereBeziehungenNachName(entsprechendeBezSammlungInObjekt.Beziehungen);
+                    entsprechendeBezSammlungInObjekt.Beziehungen = sortiereBeziehungenNachName(entsprechendeBezSammlungInObjekt.Beziehungen);
                     hinzugefuegt = true;
                 }
                 if (!hinzugefuegt) {
@@ -37,7 +38,7 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
                         beziehungssammlung.Beziehungen.push(beziehung);
                     });
                     // Beziehungen nach Name sortieren
-                    beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
+                    beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
                     doc.Beziehungssammlungen.push(beziehungssammlung);
                 }
             } else {
@@ -47,7 +48,7 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
                     beziehungssammlung.Beziehungen.push(beziehung);
                 });
                 // Beziehungen nach Name sortieren
-                beziehungssammlung.Beziehungen = window.adb.sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
+                beziehungssammlung.Beziehungen = sortiereBeziehungenNachName(beziehungssammlung.Beziehungen);
                 doc.Beziehungssammlungen = [];
                 doc.Beziehungssammlungen.push(beziehungssammlung);
             }

@@ -11,7 +11,8 @@ module.exports = function (exportFelderArrays, formular) {
         datensammlungen,
         beziehungssammlungen,
         ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt'),
-        erstelleExportfelder = require('./erstelleExportfelder');
+        erstelleExportfelder = require('./erstelleExportfelder'),
+        sortKeysOfObject     = require('../sortKeysOfObject');
 
     // in exportFelderArrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
@@ -35,7 +36,7 @@ module.exports = function (exportFelderArrays, formular) {
 
     // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
     if (felderObjekt["Taxonomie(n)"] && felderObjekt["Taxonomie(n)"].Eigenschaften) {
-        felderObjekt["Taxonomie(n)"].Eigenschaften = window.adb.sortKeysOfObject(felderObjekt["Taxonomie(n)"].Eigenschaften);
+        felderObjekt["Taxonomie(n)"].Eigenschaften = sortKeysOfObject(felderObjekt["Taxonomie(n)"].Eigenschaften);
     }
 
     // Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren

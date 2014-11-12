@@ -11,7 +11,9 @@ module.exports = function () {
         uri2,
         id    = uri.getQueryParamValue('id'),
         hash  = uri.anchor(),
-        $db   = $.couch.db('artendb');
+        $db   = $.couch.db('artendb'),
+        oeffneGruppe = require('../oeffneGruppe');
+
     // wenn browser history nicht unterstützt, erstellt history.js eine hash
     // dann muss die id durch die id in der hash ersetzt werden
     if (hash) {
@@ -37,7 +39,7 @@ module.exports = function () {
             if (vorigerNode) {
                 $.jstree._reference(vorigerNode).select_node(vorigerNode);
             } else {
-                window.adb.oeffneGruppe("Lebensräume");
+                oeffneGruppe("Lebensräume");
             }
         },
         error: function () {

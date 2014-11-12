@@ -10,8 +10,8 @@ module.exports = function (suchObjekte) {
         return objekt.value;
     });
 
-    $('#suchfeld' + window.adb.Gruppe).typeahead({
-        name: window.adb.Gruppe,
+    $('#suchfeld' + window.adb.gruppe).typeahead({
+        name: window.adb.gruppe,
         valueKey: 'Name',
         local: suchObjekte,
         limit: 20
@@ -19,5 +19,5 @@ module.exports = function (suchObjekte) {
         var oeffneBaumZuId = require('./jstree/oeffneBaumZuId');
         oeffneBaumZuId(datum.id);
     });
-    $("#suchfeld" + window.adb.Gruppe).focus();
+    $("#suchfeld" + window.adb.gruppe).focus();
 };

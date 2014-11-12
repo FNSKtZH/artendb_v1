@@ -416,8 +416,9 @@ window.adb.handleExportierenExportierenShow = function () {
 // wenn .btn.lr_bearb_bearb geklickt wird
 window.adb.handleBtnLrBearbBearbKlick = function () {
     'use strict';
+    bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
     if (!$(this).hasClass('disabled')) {
-        window.adb.bearbeiteLrTaxonomie();
+        bearbeiteLrTaxonomie();
     }
 };
 
@@ -470,8 +471,9 @@ window.adb.handleLrTaxonomieControlsChange = function () {
 // wenn .Lebensräume.Taxonomie geöffnet wird
 window.adb.handlePanelbodyLrTaxonomieShown = function () {
     'use strict';
+    bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
     if (localStorage.lr_bearb == "true") {
-        window.adb.bearbeiteLrTaxonomie();
+        bearbeiteLrTaxonomie();
     }
 };
 
@@ -561,7 +563,7 @@ window.adb.handlePanelShown = function () {
 window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
     'use strict';
     $(".suchen").val("");
-    $("#tree" + window.adb.Gruppe)
+    $("#tree" + window.adb.gruppe)
         .jstree("clear_search")
         .jstree("deselect_all")
         .jstree("close_all", -1)
@@ -656,7 +658,7 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 // wenn .gruppe geklickt wird
 window.adb.handleÖffneGruppeClick = function () {
     'use strict';
-    window.adb.oeffneGruppe($(this).attr("Gruppe"));
+    require('./adbModules/oeffneGruppe')($(this).attr("Gruppe"));
 };
 
 // wenn #DsFelder geändert wird
@@ -815,170 +817,10 @@ window.adb.sortiereObjektarrayNachName = function (objektarray) {
     return objektarray;
 };
 
-// übernimmt einen Array mit den Beziehungen
-// gibt diesen sortiert zurück
-window.adb.sortiereBeziehungenNachName = function (beziehungen) {
-    'use strict';
-// Beziehungen nach Name sortieren
-    beziehungen.sort(function (a, b) {
-        var aName,
-            bName;
-        _.each(a.Beziehungspartner, function (beziehungspartner) {
-            if (beziehungspartner.Gruppe === "Lebensräume") {
-                // sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
-                aName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
-            } else {
-                aName = beziehungspartner.Gruppe + beziehungspartner.Name;
-            }
-        });
-        _.each(b.Beziehungspartner, function (beziehungspartner) {
-            if (beziehungspartner.Gruppe === "Lebensräume") {
-                bName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
-            } else {
-                bName = beziehungspartner.Gruppe + beziehungspartner.Name;
-            }
-        });
-        if (aName && bName) {
-            return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-        } else {
-            return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-        }
-    });
-    return beziehungen;
-};
-
-// sortiert nach den keys des Objekts
-// resultat nicht garantiert!
-window.adb.sortKeysOfObject = function (o) {
-    'use strict';
-    var sorted = {},
-        key,
-        a = [];
-
-    for (key in o) {
-        if (o.hasOwnProperty(key)) {
-            a.push(key);
-        }
-    }
-
-    a.sort();
-
-    for (key = 0; key < a.length; key++) {
-        sorted[a[key]] = o[a[key]];
-    }
-    return sorted;
-};
-
+// wird in index.html benutzt
 window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
-    var $exportieren_exportieren_collapse = $("#exportieren" + _alt + "_exportieren_collapse");
-    
-    _alt = _alt || '';
-
-    // Export ausblenden, falls sie eingeblendet war
-    if ($exportieren_exportieren_collapse.css("display") !== "none") {
-        $exportieren_exportieren_collapse.collapse('hide');
-    }
-    $("#exportieren" + _alt + "_exportieren_tabelle").hide();
-    $(".exportieren" + _alt + "_exportieren_exportieren").hide();
-    $("#exportieren" + _alt + "_exportieren_error_text")
-        .alert()
-        .hide();
-    $('#exportieren_alt_exportieren_url').val('');
-};
-
-window.adb.oeffneGruppe = function (Gruppe) {
-    'use strict';
-    var erstelleBaum = require('./adbModules/jstree/erstelleBaum');
-    // Gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
-    window.adb.Gruppe = Gruppe;
-    $(".suchfeld").val("");
-    $("#Gruppe_label").html("Gruppe:");
-    $(".suchen")
-        .hide()
-        .val("");
-    $("#forms").hide();
-    var treeMitteilung = "hole Daten...";
-    if (window.adb.Gruppe === "Macromycetes") {
-        treeMitteilung = "hole Daten (das dauert bei Pilzen länger...)";
-    }
-    $("#treeMitteilung")
-        .html(treeMitteilung)
-        .show();
-    erstelleBaum();
-    // keine Art mehr aktiv
-    delete localStorage.art_id;
-};
-
-window.adb.convertToCorrectType = function (feldwert) {
-    'use strict';
-    var type = window.adb.myTypeOf(feldwert);
-    if (type === "boolean") {
-        return Boolean(feldwert);
-    }
-    if (type === "float") {
-        return parseFloat(feldwert);
-    }
-    if (type === "integer") {
-        return parseInt(feldwert);
-    }
-    return feldwert;
-};
-
-// Hilfsfunktion, die typeof ersetzt und ergänzt
-// typeof gibt bei input-Feldern immer String zurück!
-window.adb.myTypeOf = function (wert) {
-    'use strict';
-    if (typeof wert === "boolean") {
-        return "boolean";
-    } else if (parseInt(wert) && parseFloat(wert) && parseInt(wert) != parseFloat(wert) && parseInt(wert) == wert) {
-        // es ist eine Float
-        return "float";
-    // verhindern, dass führende Nullen abgeschnitten werden
-    } else if (parseInt(wert) == wert && wert.toString().length === Math.ceil(parseInt(wert)/10)) {
-        // es ist eine Integer
-        return "integer";
-    } else {
-        // als String behandeln
-        return "string";
-    }
-};
-
-window.adb.bearbeiteLrTaxonomie = function () {
-    'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    // Benutzer muss anmelden
-    if (!pruefeAnmeldung("art")) {
-        return false;
-    }
-
-    // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-    localStorage.lr_bearb = true;
-
-    // Anmeldung: zeigen, aber geschlossen
-    $("#art_anmelden_collapse").collapse('hide');
-    $("#art_anmelden").show();
-
-    // alle Felder schreibbar setzen
-    $(".Lebensräume.Taxonomie").find(".controls").each(function () {
-        // einige Felder nicht bearbeiten
-        if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
-            var parent = $(this).parent();
-            $(this).attr('readonly', false);
-            if (parent.attr('href')) {
-                parent.attr('href', '#');
-                // Standardverhalten beim Klicken von Links verhindern
-                parent.attr('onclick', 'return false;');
-                // Mauspointer nicht mehr als Finger
-                this.style.cursor = '';
-            }
-        }
-    });
-
-    // Schreibbarkeit in den Symbolen anzeigen
-    $('.lr_bearb').removeClass('disabled');
-    $(".lr_bearb_bearb").addClass('disabled');
+    require('./adbModules/export/exportZuruecksetzen')(event, _alt);
 };
 
 window.adb.schuetzeLrTaxonomie = function () {
