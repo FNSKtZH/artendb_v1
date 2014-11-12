@@ -77,47 +77,16 @@ window.adb.handleDsFileChange = function () {
     require('./adbModules/import/handleDsFileChange')(event);
 };
 
-// wenn BsFile geändert wird
+// wird in index.html benutzt
 window.adb.handleBsFileChange = function () {
     'use strict';
-    var erstelleTabelle = require('./adbModules/erstelleTabelle');
-    if (typeof event.target.files[0] === "undefined") {
-        // vorhandene Datei wurde entfernt
-        $("#BsTabelleEigenschaften").hide();
-        $("#importieren_bs_ids_identifizieren_hinweis_text").hide();
-        $("#BsImportieren").hide();
-        $("#BsEntfernen").hide();
-    } else {
-        var file = event.target.files[0],
-            reader = new FileReader();
-        reader.onload = function (event) {
-            window.adb.bsDatensaetze = $.csv.toObjects(event.target.result);
-            erstelleTabelle (window.adb.bsDatensaetze, "BsFelder_div", "BsTabelleEigenschaften");
-        };
-        reader.readAsText(file);
-    }
+    require('./adbModules/import/handleBsFileChange')(event);
 };
 
-// wenn btn_resize geklickt wird
+// wird in index.html benutzt
 window.adb.handleBtnResizeClick = function () {
     'use strict';
-    var windowHeight = $(window).height(),
-        $body = $("body");
-    $body.toggleClass("force-mobile");
-    if ($body.hasClass("force-mobile")) {
-        // Spalten sind untereinander. Baum 91px weniger hoch, damit Formulare zum raufschieben immer erreicht werden können
-        $(".baum").css("max-height", windowHeight - 252);
-        // button rechts ausrichten
-        $("#btn_resize")
-            .css("margin-right", "0px")
-            .attr("data-original-title", "in zwei Spalten anzeigen");
-    } else {
-        $(".baum").css("max-height", windowHeight - 161);
-        // button an anderen Schaltflächen ausrichten
-        $("#btn_resize")
-            .css("margin-right", "6px")
-            .attr("data-original-title", "ganze Breite nutzen");
-    }
+    require('./adbModules/handleBtnResizeClick')();
 };
 
 // wenn menu_btn geklickt wird
@@ -915,48 +884,7 @@ window.adb.loescheMassenMitObjektArray = function (object_array) {
     });
 };
 
-
-window.adb.ermittleVergleichsoperator = function (filterwert) {
-    'use strict';
-    
-};
-
-// kontrolliert den verwendeten Browser
-// Quelle: //stackoverflow.com/questions/13478303/correct-way-to-use-modernizr-to-detect-ie
-window.adb.browserDetect = {
-    init: function () {
-        this.browser = this.searchString(this.dataBrowser) || "Other";
-        this.version = this.searchVersion(navigator.userAgent) ||       this.searchVersion(navigator.appVersion) || "Unknown";
-    },
-
-    searchString: function (data) {
-        for (var i=0 ; i < data.length ; i++)   
-        {
-            var dataString = data[i].string;
-            this.versionSearchString = data[i].subString;
-
-            if (dataString.indexOf(data[i].subString) != -1)
-            {
-                return data[i].identity;
-            }
-        }
-    },
-
-    searchVersion: function (dataString) {
-        var index = dataString.indexOf(this.versionSearchString);
-        if (index == -1) return;
-        return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
-    },
-
-    dataBrowser: [
-        { string: navigator.userAgent, subString: "Chrome",  identity: "Chrome" },
-        { string: navigator.userAgent, subString: "MSIE",     identity: "Explorer" },
-        { string: navigator.userAgent, subString: "Firefox", identity: "Firefox" },
-        { string: navigator.userAgent, subString: "Safari",  identity: "Safari" },
-        { string: navigator.userAgent, subString: "Opera",   identity: "Opera" }
-    ]
-
-};
+window.adb.browserDetect = require('./adbModules/browserDetect');
 
 /*
 * Bootstrap file uploader
