@@ -6,7 +6,7 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    var bereiteImportierenDsBeschreibenVor = require('./adbModules/import/bereiteImportierenDsBeschreibenVor');
+    var bereiteImportierenDsBeschreibenVor = require('./bereiteImportierenDsBeschreibenVor');
 
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
     bereiteImportierenDsBeschreibenVor("ds");

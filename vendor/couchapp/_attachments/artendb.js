@@ -29,26 +29,16 @@ window.adb.handleBsImportiertVonChange = function () {
     require('./adbModules/import/handleBsImportiertVonChange')();
 };
 
-// wenn BsZusammenfassend geändert wird
-// BsUrsprungsBs_div zeigen oder verstecken
+// wird in index.html benutzt
 window.adb.handleBsZusammenfassendChange = function () {
     'use strict';
-    if ($(this).prop('checked')) {
-        $("#BsUrsprungsBs_div").show();
-    } else {
-        $("#BsUrsprungsBs_div").hide();
-    }
+    require('./adbModules/import/handleBsZusammenfassendChange')(this);
 };
 
-// wenn DsZusammenfassend geändert wird
-// DsUrsprungsDs zeigen oder verstecken
+// wird in index.html benutzt
 window.adb.handleDsZusammenfassendChange = function () {
     'use strict';
-    if ($(this).prop('checked')) {
-        $("#DsUrsprungsDs_div").show();
-    } else {
-        $("#DsUrsprungsDs_div").hide();
-    }
+    require('./adbModules/import/handleDsZusammenfassendChange')(this);
 };
 
 // Wenn BsWählen geändert wird
@@ -76,59 +66,28 @@ window.adb.handleBtnResizeClick = function () {
     require('./adbModules/handleBtnResizeClick')();
 };
 
-// wenn menu_btn geklickt wird
-// Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
+// wird in index.html benutzt
 window.adb.handleMenuBtnClick = function () {
     'use strict';
-    if (localStorage.art_id) {
-        $("#GoogleBilderLink_li").removeClass("disabled");
-        $("#WikipediaLink_li").removeClass("disabled");
-    } else {
-        $("#GoogleBilderLink_li").addClass("disabled");
-        $("#WikipediaLink_li").addClass("disabled");
-    }
+    require('./adbModules/handleMenuBtnClick')();
 };
 
-// wenn ds_importieren geklickt wird
-// testen, ob der Browser das Importieren unterstützt
-// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+// wird in index.html benutzt
 window.adb.handleDsImportierenClick = function () {
     'use strict';
-    var zeigeFormular      = require('./adbModules/zeigeFormular'),
-        pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
-        isFileAPIAvailable = require('./adbModules/isFileAPIAvailable');
-
-    if (isFileAPIAvailable()) {
-        zeigeFormular("importieren_ds");
-        // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-        if (pruefeAnmeldung("ds")) {
-            $("#importieren_ds_ds_beschreiben_collapse").collapse('show');
-        }
-    }
+    require('./adbModules/import/handleDsImportierenClick')();
 };
 
-// wenn bs_importieren geklickt wird
-// testen, ob der Browser das Importieren unterstützt
-// wenn nein, Meldung bringen (macht die aufgerufene Funktion)
+// wird in index.html benutzt
 window.adb.handleBsImportierenClick = function () {
     'use strict';
-    var zeigeFormular      = require('./adbModules/zeigeFormular'),
-        pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
-        isFileAPIAvailable = require('./adbModules/isFileAPIAvailable');
-
-    if (isFileAPIAvailable()) {
-        zeigeFormular("importieren_bs");
-        // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
-        if (pruefeAnmeldung("bs")) {
-            $("#importieren_bs_ds_beschreiben_collapse").collapse('show');
-        }
-    }
+    require('./adbModules/import/handleBsImportierenClick')();
 };
 
+// wird in index.html benutzt
 window.adb.handleMenuAdminClick = function () {
     'use strict';
-    var zeigeFormular = require('./adbModules/zeigeFormular');
-    zeigeFormular("admin");
+    require('./adbModules/zeigeFormular')("admin");
 };
 
 // wird in index.html benutzt
