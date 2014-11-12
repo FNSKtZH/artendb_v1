@@ -16,7 +16,7 @@ module.exports = function () {
         $('#meldung_individuell_abschliessend').modal();
         // jetzt den nächstgrössten Bock
     } else if (browserDetect.browser == 'Explorer' && browserDetect.version === 9) {
-        $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>In Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>In Exporten eine Vorschau der Daten anzeigen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren.<br>Benützen Sie stattdessen den Strukturbaum und das Menu</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B.<ul><li><a href='//google.de/chrome/'>Google Chrome</a> (empfohlen)</li><li><a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a></li><li><a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a></li></ul>");
+        $('#meldung_individuell_text').html("Ihr Browser unterstützt einige Funktionen nicht, die ArtenDb benötigt,<br>zum Beispiel:<br><br><ul><li>importieren</li><li>Exporte direkt herunterladen</li><li>Feldlisten mehrspaltig darstellen</li><li>in Exporten Informationen zu Eigenschaften- und Beziehungssammlungen korrekt darstellen</li><li>in Exporten eine Vorschau der Daten anzeigen</li><li>eine korrekte URL anzeigen</li><li>mit den Schaltflächen 'zurück' und 'vorwärts' navigieren<br>(benützen Sie stattdessen den Strukturbaum und das Menu)</li></ul><br>Tipp: Verwenden Sie eine aktuelle Version von z.B.<ul><li><a href='//google.de/chrome/'>Google Chrome</a> (empfohlen)</li><li><a href='//mozilla.org/de/firefox/new/'>Mozilla Firefox</a></li><li><a href='http://windows.microsoft.com/de-de/internet-explorer/download-ie'>Internet Explorer</a></li></ul>");
         $("#meldung_individuell_schliessen").html("trotzdem weiterfahren");
         $('#meldung_individuell_label').html("ungeeigneter Browser");
         $('#meldung_individuell').modal();
@@ -46,5 +46,25 @@ module.exports = function () {
         test: Modernizr.csstransforms,
         nope: 'style/artendb_ohne_mq.css'
     });
+
+    /*
+    DAS HAT ALLES NICHT GEKLAPPT
+    DARUM IN SCRIPTS GELADEN
+    Modernizr.load({
+        test: Modernizr.history,
+        nope: 'vendor/couchapp/history.js'
+    });
+
+    if (!window.history || !history.pushState) {
+        $.getScript('vendor/couchapp/history.js');
+    }*/
+
+    /* ausgeschaltet, weil IE9 Zugriffsfehler meldete
+    Modernizr.load({
+        test: Modernizr.
+                csscolumns,
+        nope: 'vendor/couchapp/css3-multi-column.js'
+        // scheint nicht zu funktionieren, auf IE8 und IE9
+    });*/
 
 };
