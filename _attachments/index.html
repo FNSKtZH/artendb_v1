@@ -933,31 +933,7 @@
 
             $(document).ready(function () {
 
-                window.adb.pruefeBrowserKompatibilitaet();
-
-                
-
-                // falls URL übergeben wurde, das entsprechende Dokument öffnen
-                // soll auch ausgelöst werden, wenn die Rücktaste oder Vortaste getätigt wird
-                window.addEventListener('popstate', function () {
-                    window.adb.oeffneUri();
-                });
-
-                // Wenn Fenster geladen wird, löst IE und Firefox keinen popstate event aus
-                // daher öffneUri nochmals auslösen
-                window.onload = function () {
-                    window.adb.oeffneUri();
-                };
-
-                // wenn User noch angemeldet ist, UI anpassen
-                if (localStorage.Email) {
-                    $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
-                    $(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
-                    $(".anmelden_btn").hide();
-                    $(".abmelden_btn").show();
-                    $(".konto_erstellen_btn").hide();
-                    $(".konto_speichern_btn").hide();
-                }
+                window.adb.initiiereApp();
 
                 $("#menu")
                     // Baum aufbauen, wenn Gruppe gewählt wird
@@ -969,33 +945,13 @@
                 $("body")
                     .on("click", "#menu_btn", window.adb.handleMenuBtnClick)
                     .on("click", ".show_next_hidden", function (event) {
-                        var that = this;
                         event.preventDefault();
-                        var $element_to_show = $(this)
-                            .parent()
-                            .find(".adb-hidden")
-                            .first();
-                        if ($element_to_show.is(':visible')) {
-                            $element_to_show.hide(400);
-                            $(that).text("...mehr");
-                        } else {
-                            $element_to_show.show(400);
-                            $(that).text("...weniger");
-                        }
+                        window.adb.showNextHidden(this);
                     })
                     .on("click", ".show_next_hidden_export", function (event) {
                         var that = this;
                         event.preventDefault();
-                        var $element_to_show = $(this)
-                            .parent()
-                            .next();
-                        if ($element_to_show.is(':visible')) {
-                            $element_to_show.hide(400);
-                            $(that).text("...mehr");
-                        } else {
-                            $element_to_show.show(400);
-                            $(that).text("...weniger");
-                        }
+                        window.adb.showNextHiddenExport(this);
                     });
 
                 $("#menu_btn")
@@ -1096,7 +1052,7 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.importiereBeziehungssammlung()
+                        window.adb.importiereBeziehungssammlung();
                     })
                     .on("click", "#BsLoeschen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion

@@ -884,10 +884,23 @@ window.adb.loescheMassenMitObjektArray = function (object_array) {
     });
 };
 
-window.adb.pruefeBrowserKompatibilitaet = function () {
+window.adb.initiiereApp = function () {
     'use strict';
-    require('./adbModules/pruefeBrowserKompatibilitaet')();
+    require('./adbModules/initiiereApp')();
 };
+
+// wird in index.html benutzt
+window.adb.showNextHidden = function (that) {
+    'use strict';
+    require('./adbModules/showNextHidden')(that);
+};
+
+// wird in index.html benutzt
+window.adb.showNextHiddenExport = function (that) {
+    'use strict';
+    require('./adbModules/export/showNextHiddenExport')(that);
+};
+
 
 /*
 * Bootstrap file uploader
