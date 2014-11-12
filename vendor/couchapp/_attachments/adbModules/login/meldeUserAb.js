@@ -4,13 +4,10 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    var blendeMenus = require('./blendeMenus');
-    // IE8 kann nicht deleten
-    try {
-        delete localStorage.Email;
-    } catch (e) {
-        localStorage.Email = undefined;
-    }
+    var blendeMenus     = require('./blendeMenus'),
+    schuetzeLrTaxonomie = require('../lr/schuetzeLrTaxonomie');
+
+    delete localStorage.Email;
     $(".art_anmelden_titel").text("Anmelden");
     $(".importieren_anmelden_titel").text("1. Anmelden");
     $(".alert").hide();
@@ -24,7 +21,7 @@ module.exports = function () {
     // $(".konto_erstellen_btn").show();
     $(".konto_speichern_btn").hide();
     $("#art_anmelden").hide();
-    window.adb.schuetzeLrTaxonomie();
+    schuetzeLrTaxonomie();
     // falls dieser User admin war: vergessen
     delete localStorage.admin;
     // für diesen Nutzer passende Menus anzeigen

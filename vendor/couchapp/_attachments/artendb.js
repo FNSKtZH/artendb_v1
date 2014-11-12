@@ -71,26 +71,10 @@ window.adb.handleBsWaehlenChange = function () {
     require('./adbModules/import/handleBsWaehlenChange')(this);
 };
 
-// wenn DsFile geändert wird
+// wird in index.html benutzt
 window.adb.handleDsFileChange = function () {
     'use strict';
-    var erstelleTabelle = require('./adbModules/erstelleTabelle');
-    if (typeof event.target.files[0] === "undefined") {
-        // vorhandene Datei wurde entfernt
-        $("#DsTabelleEigenschaften").hide();
-        $("#importieren_ds_ids_identifizieren_hinweis_text").hide();
-        $("#DsImportieren").hide();
-        $("#DsEntfernen").hide();
-    } else {
-        var file = event.target.files[0],
-            reader = new FileReader();
-
-        reader.onload = function (event) {
-            window.adb.dsDatensaetze = $.csv.toObjects(event.target.result);
-            erstelleTabelle (window.adb.dsDatensaetze, "DsFelder_div", "DsTabelleEigenschaften");
-        };
-        reader.readAsText(file);
-    }
+    require('./adbModules/import/handleDsFileChange')(event);
 };
 
 // wenn BsFile geändert wird
@@ -416,7 +400,7 @@ window.adb.handleExportierenExportierenShow = function () {
 // wenn .btn.lr_bearb_bearb geklickt wird
 window.adb.handleBtnLrBearbBearbKlick = function () {
     'use strict';
-    bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
+    var bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
     if (!$(this).hasClass('disabled')) {
         bearbeiteLrTaxonomie();
     }
@@ -425,10 +409,11 @@ window.adb.handleBtnLrBearbBearbKlick = function () {
 // wenn .btn.lr_bearb_schuetzen geklickt wird
 window.adb.handleBtnLrBearbSchuetzenClick = function () {
     'use strict';
+    var schuetzeLrTaxonomie = require('./adbModules/lr/schuetzeLrTaxonomie');
     if (!$(this).hasClass('disabled')) {
-        window.adb.schuetzeLrTaxonomie();
+        schuetzeLrTaxonomie();
         // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-        delete localStorage.lr_bearb;
+        delete localStorage.lrBearb;
     }
 };
 
@@ -471,8 +456,8 @@ window.adb.handleLrTaxonomieControlsChange = function () {
 // wenn .Lebensräume.Taxonomie geöffnet wird
 window.adb.handlePanelbodyLrTaxonomieShown = function () {
     'use strict';
-    bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
-    if (localStorage.lr_bearb == "true") {
+    var bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
+    if (localStorage.lrBearb == "true") {
         bearbeiteLrTaxonomie();
     }
 };
@@ -802,47 +787,10 @@ window.adb.fuerExportGewaehlteGruppen = function () {
     return export_gruppen;
 };
 
-window.adb.sortiereObjektarrayNachName = function (objektarray) {
-    'use strict';
-    // Beziehungssammlungen bzw. Datensammlungen nach Name sortieren
-    objektarray.sort(function (a, b) {
-        var aName = a.Name,
-            bName = b.Name;
-        if (aName && bName) {
-            return (aName.toLowerCase() == bName.toLowerCase()) ? 0 : (aName.toLowerCase() > bName.toLowerCase()) ? 1 : -1;
-        } else {
-            return (aName == bName) ? 0 : (aName > bName) ? 1 : -1;
-        }
-    });
-    return objektarray;
-};
-
 // wird in index.html benutzt
 window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
     require('./adbModules/export/exportZuruecksetzen')(event, _alt);
-};
-
-window.adb.schuetzeLrTaxonomie = function () {
-    'use strict';
-    // alle Felder schreibbar setzen
-    $(".Lebensräume.Taxonomie .controls").each(function () {
-        var parent = $(this).parent();
-        $(this).attr('readonly', true);
-        if (parent.attr('href')) {
-            var feldWert = $(this).val();
-            if (typeof feldWert === "string" && feldWert.slice(0, 7) === "//") {
-                parent.attr('href', feldWert);
-                // falls onclick besteht, entfernen
-                parent.removeAttr("onclick");
-                // Mauspointer nicht mehr als Finger
-                this.style.cursor = 'pointer';
-            }
-        }
-    });
-    $('.lr_bearb').addClass('disabled');
-    $(".lr_bearb_bearb").removeClass('disabled');
-    $("#art_anmelden").hide();
 };
 
 // aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)

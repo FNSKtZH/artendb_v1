@@ -8,7 +8,8 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (guid, datensammlung) {
-    var $db = $.couch.db('artendb');
+    var $db = $.couch.db('artendb'),
+        sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
 
     $db.openDoc(guid, {
         success: function (doc) {
@@ -25,7 +26,7 @@ module.exports = function (guid, datensammlung) {
             doc.Eigenschaftensammlungen.push(datensammlung);
             // sortieren
             // Eigenschaftensammlungen nach Name sortieren
-            doc.Eigenschaftensammlungen = window.adb.sortiereObjektarrayNachName(doc.Eigenschaftensammlungen);
+            doc.Eigenschaftensammlungen = sortiereObjektarrayNachName(doc.Eigenschaftensammlungen);
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass ein ds importiert wurde

@@ -12,7 +12,7 @@ module.exports = function () {
     }
 
     // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-    localStorage.lr_bearb = true;
+    localStorage.lrBearb = true;
 
     // Anmeldung: zeigen, aber geschlossen
     $("#art_anmelden_collapse").collapse('hide');
@@ -35,6 +35,6 @@ module.exports = function () {
     });
 
     // Schreibbarkeit in den Symbolen anzeigen
-    $('.lr_bearb').removeClass('disabled');
+    $('.lrBearb').removeClass('disabled');
     $(".lr_bearb_bearb").addClass('disabled');
 };

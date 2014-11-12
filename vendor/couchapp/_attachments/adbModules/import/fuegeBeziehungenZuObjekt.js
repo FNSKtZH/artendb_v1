@@ -11,7 +11,8 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
     var $db = $.couch.db('artendb'),
         hinzugefuegt,
         entsprechendeBezSammlungInObjekt,
-        sortiereBeziehungenNachName = require('../sortiereBeziehungenNachName');
+        sortiereBeziehungenNachName = require('../sortiereBeziehungenNachName'),
+        sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
 
     $db.openDoc(guid, {
         success: function (doc) {
@@ -53,7 +54,7 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
                 doc.Beziehungssammlungen.push(beziehungssammlung);
             }
             // Beziehungssammlungen nach Name sortieren
-            doc.Beziehungssammlungen = window.adb.sortiereObjektarrayNachName(doc.Beziehungssammlungen);
+            doc.Beziehungssammlungen = sortiereObjektarrayNachName(doc.Beziehungssammlungen);
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass eine bs importiert wurde

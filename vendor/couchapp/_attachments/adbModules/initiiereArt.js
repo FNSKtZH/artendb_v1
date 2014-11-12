@@ -20,7 +20,8 @@ module.exports = function (id) {
                 beziehungssammlungenVonSynonymen    = [],
                 dsNamen                             = [],
                 bezNamen                            = [],
-                erstelleHtmlFuerDatensammlung       = require('./erstelleHtmlFuerDatensammlung');
+                erstelleHtmlFuerDatensammlung       = require('./erstelleHtmlFuerDatensammlung'),
+                sortiereObjektarrayNachName         = require('./sortiereObjektarrayNachName');
 
             // panel beginnen
             htmlArt = '<h4>Taxonomie:</h4>';
@@ -145,7 +146,7 @@ module.exports = function (id) {
                         // BS von Synonymen darstellen
                         if (eigenschaftensammlungenVonSynonymen.length > 0) {
                             // DatensammlungenVonSynonymen nach Name sortieren
-                            eigenschaftensammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(eigenschaftensammlungenVonSynonymen);
+                            eigenschaftensammlungenVonSynonymen = sortiereObjektarrayNachName(eigenschaftensammlungenVonSynonymen);
                             // Titel hinzufügen
                             htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
                             _.each(eigenschaftensammlungenVonSynonymen, function (datensammlung) {
@@ -156,7 +157,7 @@ module.exports = function (id) {
                         // bez von Synonymen darstellen
                         if (beziehungssammlungenVonSynonymen.length > 0) {
                             // BeziehungssammlungenVonSynonymen sortieren
-                            beziehungssammlungenVonSynonymen = window.adb.sortiereObjektarrayNachName(beziehungssammlungenVonSynonymen);
+                            beziehungssammlungenVonSynonymen = sortiereObjektarrayNachName(beziehungssammlungenVonSynonymen);
                             // Titel hinzufügen
                             htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
                             _.each(beziehungssammlungenVonSynonymen, function (beziehungssammlung) {
