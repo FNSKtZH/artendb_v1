@@ -884,7 +884,10 @@ window.adb.loescheMassenMitObjektArray = function (object_array) {
     });
 };
 
-window.adb.browserDetect = require('./adbModules/browserDetect');
+window.adb.pruefeBrowserKompatibilitaet = function () {
+    'use strict';
+    require('./adbModules/pruefeBrowserKompatibilitaet')();
+};
 
 /*
 * Bootstrap file uploader

@@ -4,12 +4,15 @@
   "description": "Eigenschaften von Arten aus den Gruppen Fauna, Flora, Moose und Pilze",
   "main": "index.js",
   "browserify": {
-    "transform": [ "browserify-shim" ]
+    "transform": [
+      "browserify-shim"
+    ]
   },
   "browserify-shim": {
     "jquery": "global:$",
     "jquery.jstree": "global:$.jstree",
-    "Uri": "global:Uri"
+    "Uri": "global:Uri",
+    "Modernizr": "global:Modernizr"
   },
   "scripts": {
     "test": "test"
