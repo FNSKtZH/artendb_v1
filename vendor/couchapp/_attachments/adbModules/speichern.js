@@ -19,7 +19,8 @@ module.exports = function (feldwert, feldname) {
         $db                               = $.couch.db('artendb'),
         initiiereArt                      = require('./initiiereArt'),
         ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        convertToCorrectType              = require('./convertToCorrectType');
+        convertToCorrectType              = require('./convertToCorrectType'),
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren = require('./lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {
@@ -62,14 +63,14 @@ module.exports = function (feldwert, feldname) {
                             // somit ändert auch der Taxonomiename
                             // diesen mitgeben
                             // Einheit ändert und Taxonomiename muss auch angepasst werden
-                            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldwert);
+                            aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, feldwert);
                             // Feld Taxonomie und Beschriftung des Accordions aktualisiern
                             // dazu neu initiieren, weil sonst das Accordion nicht verändert wird
                             initiiereArt(id);
                             // Taxonomie anzeigen
                             $('#' + ersetzeUngueltigeZeichenInIdNamen(feldwert)).collapse('show');
                         } else {
-                            window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
+                            aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
                         }
                         // node umbenennen
                         if (feldname === "Label") {

@@ -937,7 +937,7 @@
 
                 $("#menu")
                     // Baum aufbauen, wenn Gruppe gewählt wird
-                    .on("click", ".gruppe", window.adb.handleÖffneGruppeClick)
+                    .on("click", ".gruppe", window.adb.handleOeffneGruppeClick)
                     // zwischen Mobil- und Desktopsicht wechseln
                     .on("click", "#btn_resize", window.adb.handleBtnResizeClick);
 
@@ -949,7 +949,6 @@
                         window.adb.showNextHidden(this);
                     })
                     .on("click", ".show_next_hidden_export", function (event) {
-                        var that = this;
                         event.preventDefault();
                         window.adb.showNextHiddenExport(this);
                     });
@@ -957,26 +956,26 @@
                 $("#menu_btn")
                     // testen, ob der Browser das Importieren unterstützt
                     // wenn nein, Meldung bringen
-                    .on("click", "#ds_importieren", window.adb.handleDs_ImportierenClick)
+                    .on("click", "#ds_importieren",  window.adb.handleDsImportierenClick)
                     // testen, ob der Browser das Importieren unterstützt
                     // wenn nein, Meldung bringen
-                    .on("click", "#bs_importieren", window.adb.handleBs_ImportierenClick)
-                    .on("click", "#menu_admin", window.adb.handleMenuAdminClick)
-                    .on("click", "#exportieren", window.adb.handleExportierenClick)
+                    .on("click", "#bs_importieren",  window.adb.handleBsImportierenClick)
+                    .on("click", "#menu_admin",      window.adb.handleMenuAdminClick)
+                    .on("click", "#exportieren",     window.adb.handleExportierenClick)
                     .on("click", "#exportieren_alt", window.adb.handleExportierenAltClick);
 
                 $("#exportieren_diverses")
-                    .on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergänzePilzeZhgis)
+                    .on("click", "#admin_pilze_zhgis_ergänzen", window.adb.ergaenzePilzeZhgis)
                     .on("click", "#admin_korrigiere_artwertname_in_flora", window.adb.korrigiereArtwertnameInFlora)
                     .on("click", "#admin_korrigiere_ds_name_ch_rote_liste_1991", window.adb.korrigiereDsNameFloraChRoteListe1991)
                     .on("click", "#admin_korrigiere_ds_name", function (event) {
-                            // dieser Event wurde bei jedem Laden der Seite ausgelöst!
-                            if ($("#exportieren_diverses_collapse").is(':visible')) {
-                                window.adb.nenneDsUm();
-                            } else {
-                                event.preventDefault();
-                            }
-                        })
+                        // dieser Event wurde bei jedem Laden der Seite ausgelöst!
+                        if ($("#exportieren_diverses_collapse").is(':visible')) {
+                            window.adb.nenneDsUm();
+                        } else {
+                            event.preventDefault();
+                        }
+                    })
                     .on("click", "#admin_baue_ds_zu_eigenschaften_um", window.adb.baueDsZuEigenschaftenUm);
 
                 $('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
@@ -1013,7 +1012,7 @@
                         // den event hier stoppen, nicht erst in der Funktion
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.handleDsLöschenClick();
+                        window.adb.handleDsLoeschenClick();
                     })
                     .on("click", "#DsImportieren", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
@@ -1059,7 +1058,7 @@
                         // hier übernimmt jQuery das stoppen, in der Funktion nicht
                         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
                         event.preventDefault();
-                        window.adb.handleBsLöschenClick();
+                        window.adb.handleBsLoeschenClick();
                     })
                     .on("click", "#BsEntfernen", function (event) {
                         // den event hier stoppen, nicht erst in der Funktion
@@ -1070,7 +1069,7 @@
                     });
 
                 $("#export")
-                    .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWählenGruppeChange)
+                    .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWaehlenGruppeChange)
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
                     .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs)
                     .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
@@ -1083,7 +1082,7 @@
                         event.preventDefault();
                         // this übergeben!
                         window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
-                        window.adb.handleExportierenDsObjekteWählenGruppeChange();
+                        window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
                     })
                     .on("click", "#exportieren_exportieren_exportieren", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt

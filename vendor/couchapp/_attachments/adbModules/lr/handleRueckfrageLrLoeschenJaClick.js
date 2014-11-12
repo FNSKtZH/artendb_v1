@@ -12,7 +12,8 @@ module.exports = function () {
         id    = uri.getQueryParamValue('id'),
         hash  = uri.anchor(),
         $db   = $.couch.db('artendb'),
-        oeffneGruppe = require('../oeffneGruppe');
+        oeffneGruppe                = require('../oeffneGruppe'),
+        loescheMassenMitObjektArray = require('../loescheMassenMitObjektArray');
 
     // wenn browser history nicht unterstützt, erstellt history.js eine hash
     // dann muss die id durch die id in der hash ersetzt werden
@@ -30,7 +31,7 @@ module.exports = function () {
                 return row.doc;
             });
             // und diese Dokumente nun löschen
-            window.adb.loescheMassenMitObjektArray(docArray);
+            loescheMassenMitObjektArray(docArray);
             // vorigen node ermitteln
             vorigerNode = $.jstree._reference("#" + id)._get_prev("#" + id);
             // node des gelöschten LR entfernen

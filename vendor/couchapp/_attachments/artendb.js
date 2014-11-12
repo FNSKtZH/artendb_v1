@@ -105,7 +105,7 @@ window.adb.handleMenuBtnClick = function () {
 // wenn ds_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-window.adb.handleDs_ImportierenClick = function () {
+window.adb.handleDsImportierenClick = function () {
     'use strict';
     var zeigeFormular      = require('./adbModules/zeigeFormular'),
         pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
@@ -123,7 +123,7 @@ window.adb.handleDs_ImportierenClick = function () {
 // wenn bs_importieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
-window.adb.handleBs_ImportierenClick = function () {
+window.adb.handleBsImportierenClick = function () {
     'use strict';
     var zeigeFormular      = require('./adbModules/zeigeFormular'),
         pruefeAnmeldung    = require('./adbModules/login/pruefeAnmeldung'),
@@ -145,7 +145,7 @@ window.adb.handleMenuAdminClick = function () {
 };
 
 // wird in index.html benutzt
-window.adb.ergänzePilzeZhgis = function () {
+window.adb.ergaenzePilzeZhgis = function () {
     'use strict';
     require('./adbModules/admin/ergaenzePilzeZhgis')();
 };
@@ -287,7 +287,7 @@ window.adb.handleDsNameChange = function () {
 };
 
 // wenn DsLöschen geklickt wird
-window.adb.handleDsLöschenClick = function () {
+window.adb.handleDsLoeschenClick = function () {
     'use strict';
     var entferneDatensammlungAusAllenObjekten = require('./adbModules/import/entferneDatensammlungAusAllenObjekten');
     // Rückmeldung anzeigen
@@ -299,7 +299,7 @@ window.adb.handleDsLöschenClick = function () {
 };
 
 // wenn BsLoeschen geklickt wird
-window.adb.handleBsLöschenClick = function () {
+window.adb.handleBsLoeschenClick = function () {
     'use strict';
     var entferneBeziehungssammlungAusAllenObjekten = require('./adbModules/import/entferneBeziehungssammlungAusAllenObjekten');
     // Rückmeldung anzeigen
@@ -340,7 +340,7 @@ window.adb.handleFeldWaehlenAlleVonDs = function () {
 };
 
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
-window.adb.handleExportierenDsObjekteWählenGruppeChange = function () {
+window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function () {
     'use strict';
     var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen();
     require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppen_gewählt);
@@ -610,7 +610,7 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
 };
 
 // wenn .gruppe geklickt wird
-window.adb.handleÖffneGruppeClick = function () {
+window.adb.handleOeffneGruppeClick = function () {
     'use strict';
     require('./adbModules/oeffneGruppe')($(this).attr("Gruppe"));
 };
@@ -762,53 +762,6 @@ window.adb.exportZuruecksetzen = function (event, _alt) {
     require('./adbModules/export/exportZuruecksetzen')(event, _alt);
 };
 
-// aktualisiert die Hierarchie eines Arrays von Objekten (in dieser Form: Lebensräumen, siehe wie der Name der parent-objekte erstellt wird)
-// der Array kann das Resultat einer Abfrage aus der DB sein (object[i] = dara.rows[i].doc)
-// oder aus dem Import einer Taxonomie stammen
-// diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
-// Momentan nicht verwendet
-window.adb.aktualisiereHierarchieEinerLrTaxonomie = function (object_array) {
-    'use strict';
-    var object,
-        hierarchie,
-        parent;
-    _.each(object_array, function (object) {
-        hierarchie = [];
-        parent = object.Taxonomie.Eigenschaften.Parent;
-        // als Start sich selben zur Hierarchie hinzufügen
-        hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
-        if (parent) {
-            object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(object_array, object._id, hierarchie);
-            $db.saveDoc(object);
-        }
-    });
-};
-
-// aktualisiert die Hierarchie eines Objekts (in dieser Form: Lebensraum)
-// und auch den parent
-// prüft, ob dieses Objekt children hat
-// wenn ja, wird deren Hierarchie auch aktualisiert
-// ist aktualisiereHierarchiefeld true, wird das Feld in der UI aktualisiert
-// wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
-// diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
-window.adb.aktualisiereHierarchieEinesLrInklusiveSeinerChildren = function (lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
-    'use strict';
-    var $db = $.couch.db('artendb'),
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./adbModules/lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
-    if (lr) {
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
-    } else {
-        $db.view('artendb/lr?include_docs=true', {
-            success: function (lr) {
-                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheit_ist_taxonomiename);
-            },
-            error: function () {
-                console.log('aktualisiereHierarchieEinesLrInklusiveSeinerChildren: keine Daten erhalten');
-            }
-        });
-    }
-};
-
 // Baut den Hierarchiepfad für einen Lebensraum auf
 // das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
@@ -855,35 +808,7 @@ window.adb.erstelleLrLabelName = function (label, einheit) {
     return "unbenannte Einheit";
 };
 
-// löscht Datensätze in Massen
-// nimmt einen Array von Objekten entgegen
-// baut daraus einen neuen array auf, in dem die Objekte nur noch die benötigten Informationen haben
-// aktualisiert die Objekte mit einer einzigen Operation
-window.adb.loescheMassenMitObjektArray = function (object_array) {
-    'use strict';
-    var objekte_mit_objekte,
-        objekte = [],
-        new_objekt;
-    _.each(object_array, function (object) {
-        new_objekt = {};
-        new_objekt._id = object._id;
-        new_objekt._rev = object._rev;
-        new_objekt._deleted = true;
-        objekte.push(new_objekt);
-    });
-    objekte_mit_objekte = {};
-    objekte_mit_objekte.docs = objekte;
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: "../../_bulk_docs",
-        contentType: "application/json; charset=utf-8", 
-        data: JSON.stringify(objekte_mit_objekte)
-    }).fail(function () {
-        console.log('löscheMassenMitObjektArray: Daten wurde nicht gelöscht');
-    });
-};
-
+// wird in index.html benutzt
 window.adb.initiiereApp = function () {
     'use strict';
     require('./adbModules/initiiereApp')();
@@ -901,10 +826,9 @@ window.adb.showNextHiddenExport = function (that) {
     require('./adbModules/export/showNextHiddenExport')(that);
 };
 
-
 /*
 * Bootstrap file uploader
-* Quelle: //jasny.github.io/bootstrap/javascript.html#fileupload
+* Quelle: //jasny.github.io/bootstrap
 */
 /**
 * Bootstrap.js by @mdo and @fat, extended by @ArnoldDaniels.

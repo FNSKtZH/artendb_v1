@@ -7,7 +7,7 @@ var _ = require('underscore'),
 var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
-        object_array = _.map(lr.rows, function (row) {
+        objectArray = _.map(lr.rows, function (row) {
             return row.doc;
         }),
         $db = $.couch.db('artendb'),
@@ -22,7 +22,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
     // als Start sich selber zur Hierarchie hinzufügen
     hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
     if (parent.GUID !== objekt._id) {
-        objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(object_array, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
+        objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(objectArray, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     } else {
         // aha, das ist die Wurzel des Baums
         objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
