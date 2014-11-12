@@ -169,82 +169,40 @@ window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
     $("#DsImportiertVon").val(localStorage.Email);
 };
 
-// wenn importieren_bs_ds_beschreiben_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenBsDsBeschreibenCollapseShown = function () {
     'use strict';
-    var bereiteImportierenBsBeschreibenVor = require('./adbModules/import/bereiteImportierenBsBeschreibenVor');
-    // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-    bereiteImportierenBsBeschreibenVor("bs");
-    $("#BsImportiertVon").val(localStorage.Email);
+    require('./adbModules/import/handleImportierenBsDsBeschreibenCollapseShown')();
 };
 
-// wenn importieren_ds_daten_uploaden_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("ds")) {
-        $(this).collapse('hide');
-    } else {
-        $('#DsFile').fileupload();
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_ds_daten_uploaden_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenDsDatenUploadenCollapseShown')(this);
 };
 
-// wenn importieren_bs_daten_uploaden_collapse geöffnet wird
-window.adb.handleImportierenBsDatenUpladenCollapseShown = function () {
+// wird in index.html benutzt
+window.adb.handleImportierenBsDatenUploadenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("bs")) {
-        $(this).collapse('hide');
-    } else {
-        $('#BsFile').fileupload();
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_bs_daten_uploaden_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenBsDatenUploadenCollapseShown')(this);
 };
 
-// wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("ds")) {
-        $(this).collapse('hide');
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_ds_ids_identifizieren_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenDsIdsIdentifizierenCollapseShown')(this);
 };
 
-// wenn importieren_bs_ids_identifizieren_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("bs")) {
-        $(this).collapse('hide');
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_bs_ids_identifizieren_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenBsIdsIdentifizierenCollapseShown')(this);
 };
 
-// wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("ds")) {
-        $(this).collapse('hide');
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_ds_import_ausfuehren_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenDsImportAusfuehrenCollapseShown')(this);
 };
 
 // wird in index.html benutzt
