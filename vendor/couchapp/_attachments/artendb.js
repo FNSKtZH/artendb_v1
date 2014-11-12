@@ -247,17 +247,10 @@ window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function () {
     }, 2000);
 };
 
-// wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
+// wird in index.html benutzt
 window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function () {
     'use strict';
-    var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("bs")) {
-        $(this).collapse('hide');
-    }
-    $('html, body').animate({
-        scrollTop: $("#importieren_bs_import_ausfuehren_collapse").offset().top
-    }, 2000);
+    require('./adbModules/import/handleImportierenBsImportAusfuehrenCollapseShown')(this);
 };
 
 // wenn DsWählen geändert wird
@@ -273,39 +266,22 @@ window.adb.handleDsNameChange = function () {
     require('./adbModules/import/handleDsNameChange')(this);
 };
 
-// wenn DsLöschen geklickt wird
+// wird in index.html benutzt
 window.adb.handleDsLoeschenClick = function () {
     'use strict';
-    var entferneDatensammlungAusAllenObjekten = require('./adbModules/import/entferneDatensammlungAusAllenObjekten');
-    // Rückmeldung anzeigen
-    $("#importieren_ds_ds_beschreiben_hinweis")
-        .alert()
-        .show()
-        .html("Bitte warten: Die Datensammlung wird entfernt...");
-    entferneDatensammlungAusAllenObjekten($("#DsName").val());
+    require('./adbModules/import/handleDsLoeschenClick')();
 };
 
-// wenn BsLoeschen geklickt wird
+// wird in index.html benutzt
 window.adb.handleBsLoeschenClick = function () {
     'use strict';
-    var entferneBeziehungssammlungAusAllenObjekten = require('./adbModules/import/entferneBeziehungssammlungAusAllenObjekten');
-    // Rückmeldung anzeigen
-    $("#importieren_bs_ds_beschreiben_hinweis")
-        .alert()
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info")
-        .show();
-    $("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
-    entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
+    require('./adbModules/import/handleBsLoeschenClick')();
 };
 
-// wenn exportieren geklickt wird
+// wird in index.html benutzt
 window.adb.handleExportierenClick = function () {
     'use strict';
-    var zeigeFormular = require('./adbModules/zeigeFormular');
-    zeigeFormular("export");
-    delete window.adb.exportieren_objekte;
+    require('./adbModules/export/handleExportierenClick')();
 };
 
 // wenn exportieren_alt geklickt wird
