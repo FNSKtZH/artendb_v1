@@ -375,15 +375,10 @@ window.adb.handleBtnLrBearbBearbKlick = function () {
     }
 };
 
-// wenn .btn.lr_bearb_schuetzen geklickt wird
+// wird in index.html benutzt
 window.adb.handleBtnLrBearbSchuetzenClick = function () {
     'use strict';
-    var schuetzeLrTaxonomie = require('./adbModules/lr/schuetzeLrTaxonomie');
-    if (!$(this).hasClass('disabled')) {
-        schuetzeLrTaxonomie();
-        // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-        delete localStorage.lrBearb;
-    }
+    require('./adbModules/lr/handleBtnLrBearbSchuetzenClick')(this);
 };
 
 // wird in index.html benutzt
@@ -434,9 +429,9 @@ window.adb.scrollThisToTop = function (that, minus) {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
+window.adb.handleExportierenObjekteWaehlenCollapseShown = function () {
     'use strict';
-    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(that);
+    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(this);
 };
 
 // wird in index.html benutzt
