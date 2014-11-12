@@ -23,23 +23,10 @@ window.adb.handleDsImportiertVonChange = function () {
     require('./adbModules/import/handleDsImportiertVonChange')();
 };
 
-// Wenn BsImportiertVon geändert wird
-// Kontrollieren, dass es die email der angemeldeten Person ist
+// wird in index.html benutzt
 window.adb.handleBsImportiertVonChange = function () {
     'use strict';
-    $("#BsImportiertVon").val(localStorage.Email);
-    $("#importieren_bs_ds_beschreiben_hinweis2")
-        .alert()
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info")
-        .show();
-    $("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
-    setTimeout(function () {
-        $("#importieren_bs_ds_beschreiben_hinweis2")
-            .alert()
-            .hide();
-    }, 10000);
+    require('./adbModules/import/handleBsImportiertVonChange')();
 };
 
 // wenn BsZusammenfassend geändert wird
@@ -342,8 +329,12 @@ window.adb.handleFeldWaehlenAlleVonDs = function () {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function () {
     'use strict';
-    var gruppenGewaehlt = window.adb.fuerExportGewaehlteGruppen();
-    require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppenGewaehlt);
+    var fuerExportGewaehlteGruppen = require('./adbModules/export/fuerExportGewaehlteGruppen'),
+        erstelleListeFuerFeldwahl  = require('./adbModules/export/erstelleListeFuerFeldwahl'),
+        gruppenGewaehlt;
+
+    gruppenGewaehlt = fuerExportGewaehlteGruppen();
+    erstelleListeFuerFeldwahl(gruppenGewaehlt);
 };
 
 // ist nötig, weil index.html nicht requiren kann
@@ -664,20 +655,9 @@ window.adb.oeffneUri = function () {
 };
 
 // wird in index.html benutzt
-window.adb.filtereFürExport = function (direkt) {
+window.adb.filtereFuerExport = function (direkt) {
     'use strict';
     require('./adbModules/export/filtereFuerExport')(direkt);
-};
-
-window.adb.fuerExportGewaehlteGruppen = function () {
-    'use strict';
-    var export_gruppen = [];
-    $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
-        if ($(this).prop('checked')) {
-            export_gruppen.push($(this).val());
-        }
-    });
-    return export_gruppen;
 };
 
 // wird in index.html benutzt

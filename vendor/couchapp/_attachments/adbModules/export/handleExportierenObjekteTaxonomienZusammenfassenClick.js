@@ -6,7 +6,8 @@
 var $ = require('jquery');
 
 module.exports = function (that) {
-    var erstelleListeFuerFeldwahl = require('./erstelleListeFuerFeldwahl'),
+    var erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
+        fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen'),
         gruppenGewaehlt;
 
     if ($(that).hasClass("active")) {
@@ -17,7 +18,7 @@ module.exports = function (that) {
         $(that).html("Taxonomien einzeln behandeln");
     }
     // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-    gruppenGewaehlt = window.adb.fuerExportGewaehlteGruppen();
+    gruppenGewaehlt = fuerExportGewaehlteGruppen();
     if (gruppenGewaehlt.length > 0) {
         erstelleListeFuerFeldwahl(gruppenGewaehlt);
     }

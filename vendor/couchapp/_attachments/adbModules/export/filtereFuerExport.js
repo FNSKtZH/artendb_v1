@@ -27,7 +27,8 @@ module.exports = function (direkt, fuerAlt) {
         uebergebeFilterFuerDirektExport      = require('./uebergebeFilterFuerDirektExport'),
         uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau'),
         uebergebeFilterFuerExportFuerAlt     = require('./uebergebeFilterFuerExportFuerAlt'),
-        ermittleVergleichsoperator           = require('./ermittleVergleichsoperator');
+        ermittleVergleichsoperator           = require('./ermittleVergleichsoperator'),
+        fuerExportGewaehlteGruppen           = require('./fuerExportGewaehlteGruppen');
 
     if (fuerAlt) {
         formular = 'export_alt';
@@ -36,7 +37,7 @@ module.exports = function (direkt, fuerAlt) {
     $exportieren_exportieren_hinweis_text = $("#exportieren" + _alt + "_exportieren_hinweis_text");
 
     // kontrollieren, ob eine Gruppe gewählt wurde
-    if (!fuerAlt && window.adb.fuerExportGewaehlteGruppen().length === 0) {
+    if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {
         return;
     }
 
