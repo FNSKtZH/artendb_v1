@@ -12,7 +12,8 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         }),
         $db = $.couch.db('artendb'),
         erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
-        ergaenzeParentZuLrHierarchie                        = require('./ergaenzeParentZuLrHierarchie');
+        ergaenzeParentZuLrHierarchie                        = require('./ergaenzeParentZuLrHierarchie'),
+        erstelleHierarchieobjektAusObjekt                   = require('../erstelleHierarchieobjektAusObjekt');
 
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};
@@ -21,7 +22,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         objekt.Taxonomie.Eigenschaften = {};
     }
     // als Start sich selber zur Hierarchie hinzufügen
-    hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
+    hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
     if (parent.GUID !== objekt._id) {
         objekt.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     } else {

@@ -472,16 +472,10 @@ window.adb.handleResize = function () {
     });
 };
 
-// wenn .anmelden_btn geklickt wird
+// wird in index.html benutzt
 window.adb.handleAnmeldenBtnClick = function (that) {
     'use strict';
-    var meldeUserAn = require('./adbModules/login/meldeUserAn');
-    // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
-    var bs_ds = that.id.substring(that.id.length-2);
-    if (bs_ds === "rt") {
-        bs_ds = "art";
-    }
-    meldeUserAn(bs_ds);
+    require('./adbModules/login/handleAnmeldenBtnClick')(that);
 };
 
 // wenn .Email keyup
@@ -505,43 +499,16 @@ window.adb.handlePasswort2Keyup = function () {
     $(".Passworthinweis2").hide();
 };
 
-// wenn .konto_erstellen_btn geklickt wird
+// wird in index.html benutzt
 window.adb.handleKontoErstellenBtnClick = function (that) {
     'use strict';
-    var bsDs = that.id.substring(that.id.length-2);
-    if (bsDs === "rt") {
-        bsDs = "art";
-    }
-    $(".signup").show();
-    $(".anmelden_btn").hide();
-    $(".abmelden_btn").hide();
-    $(".konto_erstellen_btn").hide();
-    $(".konto_speichern_btn").show();
-    $(".importieren_anmelden_fehler").hide();
-    setTimeout(function () {
-        $("#Email_" + bsDs).focus();
-    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    require('./adbModules/login/handleKontoErstellenBtnClick')(that);
 };
 
-// wenn .konto_speichern_btn geklickt wird
+// wird in index.html benutzt
 window.adb.handleKontoSpeichernBtnClick = function (that) {
     'use strict';
-    var bsDs = that.id.substring(that.id.length - 2),
-        validiereSignup = require('./adbModules/login/validiereSignup'),
-        erstelleKonto   = require('./adbModules/login/erstelleKonto');
-
-    if (bsDs === "rt") {
-        bsDs = "art";
-    }
-    if (validiereSignup(bsDs)) {
-        erstelleKonto(bsDs);
-        // Anmeldefenster zurücksetzen
-        $(".signup").hide();
-        $(".anmelden_btn").hide();
-        $(".abmelden_btn").show();
-        $(".konto_erstellen_btn").hide();
-        $(".konto_speichern_btn").hide();
-    }
+    require('./adbModules/login/handleKontoSpeichernBtnClick')(that);
 };
 
 // wenn .gruppe geklickt wird
@@ -620,29 +587,6 @@ window.adb.filtereFuerExport = function (direkt) {
 window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
     require('./adbModules/export/exportZuruecksetzen')(event, _alt);
-};
-
-window.adb.erstelleHierarchieobjektAusObjekt = function (objekt) {
-    'use strict';
-    var hierarchieobjekt = {};
-    hierarchieobjekt.Name = window.adb.erstelleLrLabelNameAusObjekt(objekt);
-    hierarchieobjekt.GUID = objekt._id;
-    return hierarchieobjekt;
-};
-
-window.adb.erstelleLrLabelNameAusObjekt = function (objekt) {
-    'use strict';
-    var label = objekt.Taxonomie.Eigenschaften.Label || "",
-        einheit = objekt.Taxonomie.Eigenschaften.Einheit || "";
-    return window.adb.erstelleLrLabelName(label, einheit);
-};
-
-window.adb.erstelleLrLabelName = function (label, einheit) {
-    'use strict';
-    if (label && einheit) return label + ": " + einheit;
-    if (einheit)          return                einheit;
-    // aha, ein neues Objekt, noch ohne Label und Einheit
-    return "unbenannte Einheit";
 };
 
 // wird in index.html benutzt

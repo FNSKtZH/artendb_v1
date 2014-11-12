@@ -9,17 +9,18 @@ var _ = require('underscore');
 
 var ergaenzeParentZuLrHierarchie = function (objektArray, parentGUID, hierarchie) {
     var parentObjekt,
-        hierarchieErgaenzt;
+        hierarchieErgaenzt,
+        erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
 
     _.each(objektArray, function (object) {
         if (object._id === parentGUID) {
-            parentObjekt = window.adb.erstelleHierarchieobjektAusObjekt(object);
+            parentObjekt = erstelleHierarchieobjektAusObjekt(object);
             hierarchie.push(parentObjekt);
             if (object.Taxonomie.Eigenschaften.Parent.GUID !== object._id) {
                 // die Hierarchie ist noch nicht zu Ende - weitermachen
-                console.log('hierarchie: ', hierarchie);
+                //console.log('hierarchie: ', hierarchie);
                 hierarchieErgaenzt = ergaenzeParentZuLrHierarchie(objektArray, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
-                console.log('hierarchieErgaenzt: ', hierarchieErgaenzt);
+                //console.log('hierarchieErgaenzt: ', hierarchieErgaenzt);
                 return hierarchie;
             }
             // jetzt ist die Hierarchie vollständig

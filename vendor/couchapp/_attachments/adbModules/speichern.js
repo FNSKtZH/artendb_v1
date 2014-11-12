@@ -20,6 +20,7 @@ module.exports = function (feldwert, feldname) {
         initiiereArt                      = require('./initiiereArt'),
         ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
         convertToCorrectType              = require('./convertToCorrectType'),
+        erstelleLrLabelName               = require('./lr/erstelleLrLabelName'),
         aktualisiereHierarchieEinesLrInklusiveSeinerChildren = require('./lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
@@ -75,10 +76,10 @@ module.exports = function (feldwert, feldname) {
                         // node umbenennen
                         if (feldname === "Label") {
                             // object hat noch den alten Wert für Label, neuen verwenden
-                            neuerNodetext = window.adb.erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
+                            neuerNodetext = erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
                         } else {
                             // object hat noch den alten Wert für Einheit, neuen verwenden
-                            neuerNodetext = window.adb.erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
+                            neuerNodetext = erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
                         }
                         $("#tree" + window.adb.gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
                     }

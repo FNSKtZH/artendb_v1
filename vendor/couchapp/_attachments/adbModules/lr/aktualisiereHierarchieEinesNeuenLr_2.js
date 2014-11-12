@@ -7,12 +7,13 @@ var $ = require('jquery'),
 module.exports = function (LR, object) {
     var objectArray,
         parent_object,
-        hierarchie                   = [],
-        $db                          = $.couch.db('artendb'),
-        oeffneBaumZuId               = require('../jstree/oeffneBaumZuId'),
-        erstelleBaum                 = require('../jstree/erstelleBaum'),
-        initiiereArt                 = require('../initiiereArt'),
-        ergaenzeParentZuLrHierarchie = require('./ergaenzeParentZuLrHierarchie');
+        hierarchie                        = [],
+        $db                               = $.couch.db('artendb'),
+        oeffneBaumZuId                    = require('../jstree/oeffneBaumZuId'),
+        erstelleBaum                      = require('../jstree/erstelleBaum'),
+        initiiereArt                      = require('../initiiereArt'),
+        ergaenzeParentZuLrHierarchie      = require('./ergaenzeParentZuLrHierarchie'),
+        erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
 
     objectArray = _.map(LR.rows, function (row) {
         return row.doc;
@@ -29,7 +30,7 @@ module.exports = function (LR, object) {
     // object.Taxonomie.Eigenschaften.Taxonomie setzen
     object.Taxonomie.Eigenschaften.Taxonomie = parent_object.Taxonomie.Eigenschaften.Taxonomie;
     // als Start sich selben zur Hierarchie hinzufügen
-    hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
+    hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
     object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     // save ohne open: _rev wurde zuvor übernommen
     $db.saveDoc(object, {

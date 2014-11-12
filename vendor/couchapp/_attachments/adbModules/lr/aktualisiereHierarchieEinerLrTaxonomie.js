@@ -14,13 +14,14 @@ module.exports = function (objectArray) {
     var hierarchie,
         parent,
         $db = $.couch.db('artendb'),
-        ergaenzeParentZuLrHierarchie = require('./ergaenzeParentZuLrHierarchie');
+        ergaenzeParentZuLrHierarchie      = require('./ergaenzeParentZuLrHierarchie'),
+        erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
 
     _.each(objectArray, function (object) {
         hierarchie = [];
         parent = object.Taxonomie.Eigenschaften.Parent;
         // als Start sich selben zur Hierarchie hinzufügen
-        hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
+        hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
         if (parent) {
             object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object._id, hierarchie);
             $db.saveDoc(object);
