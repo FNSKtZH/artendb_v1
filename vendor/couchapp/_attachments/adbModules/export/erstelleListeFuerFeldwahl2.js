@@ -10,9 +10,10 @@ module.exports = function (exportFelderArrays, formular) {
         taxonomien,
         datensammlungen,
         beziehungssammlungen,
-        ergaenzeFelderObjekt = require('./ergaenzeFelderObjekt'),
-        erstelleExportfelder = require('./erstelleExportfelder'),
-        sortKeysOfObject     = require('../sortKeysOfObject');
+        ergaenzeFelderObjekt                = require('./ergaenzeFelderObjekt'),
+        erstelleExportfelder                = require('./erstelleExportfelder'),
+        sortKeysOfObject                    = require('../sortKeysOfObject'),
+        holeDatensammlungenFuerExportfelder = require('./holeDatensammlungenFuerExportfelder');
 
     // in exportFelderArrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
@@ -57,7 +58,7 @@ module.exports = function (exportFelderArrays, formular) {
         }
     });
 
-    $.when(window.adb.holeDatensammlungenFuerExportfelder()).done(function () {
+    $.when(holeDatensammlungenFuerExportfelder()).done(function () {
         erstelleExportfelder(taxonomien, datensammlungen, beziehungssammlungen, formular);
     });
 

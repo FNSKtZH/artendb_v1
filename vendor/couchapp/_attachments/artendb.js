@@ -248,7 +248,7 @@ window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
 };
 
 // wenn importieren_ds_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenDsImportAusführenCollapseShown = function () {
+window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function () {
     'use strict';
     var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
 
@@ -261,7 +261,7 @@ window.adb.handleImportierenDsImportAusführenCollapseShown = function () {
 };
 
 // wenn importieren_bs_import_ausfuehren_collapse geöffnet wird
-window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
+window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function () {
     'use strict';
     var pruefeAnmeldung = require('./adbModules/login/pruefeAnmeldung');
 
@@ -275,7 +275,7 @@ window.adb.handleImportierenBsImportAusführenCollapseShown = function () {
 
 // wenn DsWählen geändert wird
 // wird in index.html benutzt
-window.adb.handleDsWählenChange = function () {
+window.adb.handleDsWaehlenChange = function () {
     'use strict';
     require('./adbModules/import/handleDsWaehlenChange')(this);
 };
@@ -317,7 +317,7 @@ window.adb.handleBsLoeschenClick = function () {
 window.adb.handleExportierenClick = function () {
     'use strict';
     var zeigeFormular = require('./adbModules/zeigeFormular');
-    zeigeFormular ("export");
+    zeigeFormular("export");
     delete window.adb.exportieren_objekte;
 };
 
@@ -342,8 +342,8 @@ window.adb.handleFeldWaehlenAlleVonDs = function () {
 // wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
 window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function () {
     'use strict';
-    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen();
-    require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppen_gewählt);
+    var gruppenGewaehlt = window.adb.fuerExportGewaehlteGruppen();
+    require('./adbModules/export/erstelleListeFuerFeldwahl')(gruppenGewaehlt);
 };
 
 // ist nötig, weil index.html nicht requiren kann
@@ -447,57 +447,37 @@ window.adb.scrollThisToTop = function (that, minus) {
     }, 2000);
 };
 
-window.adb.handleExportierenObjekteWaehlenCollapseShown = function (that) {
+// wird in index.html benutzt
+window.adb.handleExportierenObjekteWaehlenCollapseShown = function (event) {
     'use strict';
-    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen(),
-        erstelleListeFuerFeldwahl = require('./adbModules/export/erstelleListeFuerFeldwahl');
-
-    if (gruppen_gewählt.length === 0) {
-        // keine Gruppe gewählt
-        erstelleListeFuerFeldwahl(gruppen_gewählt);
-        // und den panel schliessen
-        $(that).collapse('hide');
-        return false;
-    }
-    // nach oben scrollen, damit der Bildschirm optimal genutzt wird
-    $('html, body').animate({
-        scrollTop: $(that).parent().offset().top - 6
-    }, 2000);
-    return true;
+    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(event);
 };
 
-// wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
+// wird in index.html benutzt
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {
     'use strict';
-    var gruppe_ist_gewählt = false,
-        erstelleListeFuerFeldwahl = require('./adbModules/export/erstelleListeFuerFeldwahl');
-    if ($(that).hasClass("active")) {
-        window.adb.fasseTaxonomienZusammen = false;
-        $(that).html("Alle Taxonomien zusammenfassen");
-    } else {
-        window.adb.fasseTaxonomienZusammen = true;
-        $(that).html("Taxonomien einzeln behandeln");
-    }
-    // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
-    var gruppen_gewählt = window.adb.fuerExportGewaehlteGruppen();
-    if (gruppen_gewählt.length > 0) {
-        erstelleListeFuerFeldwahl(gruppen_gewählt);
-    }
+    require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
 };
 
 // wenn #exportieren_exportieren_exportieren geklickt wird
 window.adb.handleExportierenExportierenExportierenClick = function () {
     'use strict';
     var erstelleExportString = require('./adbModules/export/erstelleExportString'),
-        isFileAPIAvailable   = require('./adbModules/isFileAPIAvailable');
+        isFileAPIAvailable   = require('./adbModules/isFileAPIAvailable'),
+        exportstring,
+        blob,
+        d,
+        month,
+        day,
+        output;
 
     if (isFileAPIAvailable()) {
-        var exportstring = erstelleExportString(window.adb.exportieren_objekte),
-            blob   = new Blob([exportstring], {type: "text/csv;charset=utf-8;"}),
-            d      = new Date(),
-            month  = d.getMonth() + 1,
-            day    = d.getDate(),
-            output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+        exportstring = erstelleExportString(window.adb.exportieren_objekte);
+        blob   = new Blob([exportstring], {type: "text/csv;charset=utf-8;"});
+        d      = new Date();
+        month  = d.getMonth() + 1;
+        day    = d.getDate();
+        output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
         saveAs(blob, output + "_export.csv");
     }
 };
@@ -719,26 +699,6 @@ window.adb.oeffneUri = function () {
     require('./adbModules/oeffneUri')();
 };
 
-// holt eine Liste aller Datensammlungen, wenn nötig
-// speichert sie in einer globalen Variable, damit sie wiederverwendet werden kann
-window.adb.holeDatensammlungenFuerExportfelder = function () {
-    'use strict';
-    var exfe_geholt = $.Deferred();
-    if (window.adb.ds_bs_von_objekten) {
-        exfe_geholt.resolve();
-    } else {
-        var $db = $.couch.db('artendb');
-        $db.view('artendb/ds_von_objekten?group_level=5', {
-            success: function (data) {
-                // Daten in Objektvariable speichern > Wenn Ds ausgewählt, Angaben in die Felder kopieren
-                window.adb.ds_bs_von_objekten = data;
-                exfe_geholt.resolve();
-            }
-        });
-    }
-    return exfe_geholt.promise();
-};
-
 // wird in index.html benutzt
 window.adb.filtereFürExport = function (direkt) {
     'use strict';
@@ -760,29 +720,6 @@ window.adb.fuerExportGewaehlteGruppen = function () {
 window.adb.exportZuruecksetzen = function (event, _alt) {
     'use strict';
     require('./adbModules/export/exportZuruecksetzen')(event, _alt);
-};
-
-// Baut den Hierarchiepfad für einen Lebensraum auf
-// das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
-// ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
-window.adb.ergaenzeParentZuLrHierarchie = function (objektArray, parentGUID, Hierarchie) {
-    'use strict';
-    var parent_objekt,
-        hierarchie_ergänzt;
-    _.each(objektArray, function (object) {
-        if (object._id === parentGUID) {
-            parent_objekt = window.adb.erstelleHierarchieobjektAusObjekt(object);
-            Hierarchie.push(parent_objekt);
-            if (object.Taxonomie.Eigenschaften.Parent.GUID !== object._id) {
-                // die Hierarchie ist noch nicht zu Ende - weitermachen
-                hierarchie_ergänzt = window.adb.ergaenzeParentZuLrHierarchie(objektArray, object.Taxonomie.Eigenschaften.Parent.GUID, Hierarchie);
-                return Hierarchie;
-            }
-            // jetzt ist die Hierarchie vollständig
-            // sie ist aber verkehrt - umkehren
-            return Hierarchie.reverse();
-        }
-    });
 };
 
 window.adb.erstelleHierarchieobjektAusObjekt = function (objekt) {

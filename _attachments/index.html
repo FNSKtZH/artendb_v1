@@ -990,12 +990,12 @@
 
                 $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
 
-                $('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusführenCollapseShown);
+                $('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
 
-                $('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusführenCollapseShown);
+                $('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
 
                 $("#importieren_ds")
-                    .on("change", "#DsWaehlen", window.adb.handleDsWählenChange)
+                    .on("change", "#DsWaehlen", window.adb.handleDsWaehlenChange)
                     .on("change", "#DsName", window.adb.handleDsNameChange)
                     .on("change", "#DsImportiertVon", window.adb.handleDsImportiertVonChange)
                     .on("change", "#DsZusammenfassend", window.adb.handleDsZusammenfassendChange)
@@ -1103,12 +1103,8 @@
                     .on('shown.bs.collapse', '#exportieren_exportieren_collapse', function (event) {
                         window.adb.handleExportierenExportierenCollapseShown(this);
                     })
-                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', function () {
-                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
-                    })
-                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', function () {
-                        window.adb.handleExportierenObjekteWaehlenCollapseShown(this);
-                    });
+                    .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown)
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
 
                 $("#export_alt")
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)

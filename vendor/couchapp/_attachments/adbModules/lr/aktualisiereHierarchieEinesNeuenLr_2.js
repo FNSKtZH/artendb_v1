@@ -6,12 +6,13 @@ var $ = require('jquery'),
 
 module.exports = function (LR, object) {
     var objectArray,
-        hierarchie     = [],
         parent_object,
-        $db            = $.couch.db('artendb'),
-        oeffneBaumZuId = require('../jstree/oeffneBaumZuId'),
-        erstelleBaum   = require('../jstree/erstelleBaum'),
-        initiiereArt   = require('../initiiereArt');
+        hierarchie                   = [],
+        $db                          = $.couch.db('artendb'),
+        oeffneBaumZuId               = require('../jstree/oeffneBaumZuId'),
+        erstelleBaum                 = require('../jstree/erstelleBaum'),
+        initiiereArt                 = require('../initiiereArt'),
+        ergaenzeParentZuLrHierarchie = require('./ergaenzeParentZuLrHierarchie');
 
     objectArray = _.map(LR.rows, function (row) {
         return row.doc;
@@ -29,7 +30,7 @@ module.exports = function (LR, object) {
     object.Taxonomie.Eigenschaften.Taxonomie = parent_object.Taxonomie.Eigenschaften.Taxonomie;
     // als Start sich selben zur Hierarchie hinzufügen
     hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
-    object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(objectArray, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
+    object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     // save ohne open: _rev wurde zuvor übernommen
     $db.saveDoc(object, {
         success: function () {

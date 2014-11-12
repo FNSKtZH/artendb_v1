@@ -27,9 +27,9 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
     }
 
     // Eigenschaftensammlungen vorbereiten
-    // Struktur von window.adb.ds_bs_von_objekten ist jetzt: [dsTyp, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
+    // Struktur von window.adb.dsBsVonObjekten ist jetzt: [dsTyp, ds.Name, ds.zusammenfassend, ds["importiert von"], Felder_array]
     // erst mal die nicht benötigten Werte entfernen
-    _.each(window.adb.ds_bs_von_objekten.rows, function (objectWithArrayInKey) {
+    _.each(window.adb.dsBsVonObjekten.rows, function (objectWithArrayInKey) {
         dsbsVonObjekten.push([objectWithArrayInKey.key[1], objectWithArrayInKey.key[4]]);
     });
     // Struktur von dsbsVonObjekten ist jetzt: [ds.Name, felderObjekt]

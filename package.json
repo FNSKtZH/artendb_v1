@@ -12,6 +12,7 @@
     "jquery": "global:$",
     "jquery.jstree": "global:$.jstree",
     "Uri": "global:Uri",
+    "saveAs": "global:saveAs",
     "Modernizr": "global:Modernizr"
   },
   "scripts": {

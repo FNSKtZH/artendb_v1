@@ -11,7 +11,8 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
             return row.doc;
         }),
         $db = $.couch.db('artendb'),
-        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray');
+        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
+        ergaenzeParentZuLrHierarchie                        = require('./ergaenzeParentZuLrHierarchie');
 
     if (!objekt.Taxonomie) {
         objekt.Taxonomie = {};
@@ -22,7 +23,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
     // als Start sich selber zur Hierarchie hinzufügen
     hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(objekt));
     if (parent.GUID !== objekt._id) {
-        objekt.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(objectArray, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
+        objekt.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     } else {
         // aha, das ist die Wurzel des Baums
         objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
@@ -31,7 +32,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         $("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
     }
     // jetzt den parent aktualisieren
-    if (objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {
+    if (objekt.Taxonomie.Eigenschaften.Hierarchie && objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {
         // es gibt höhere Ebenen
         // das vorletzte Hierarchieobjekt wählen. das ist length -2, weil length bei 1 beginnt, die Objekte aber von 0 an nummeriert werden
         objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[objekt.Taxonomie.Eigenschaften.Hierarchie.length - 2];

@@ -6,7 +6,8 @@
 var $ = require('jquery');
 
 module.exports = function (that) {
-    var filtereFuerExport = require('./filtereFuerExport'),
+    var filtereFuerExport                            = require('./filtereFuerExport'),
+        handleExportierenObjekteWaehlenCollapseShown = require('./handleExportierenObjekteWaehlenCollapseShown'),
         fuerAlt = false;
 
     if (that.id === 'exportieren_alt_exportieren_collapse') {
@@ -16,7 +17,7 @@ module.exports = function (that) {
     // nur ausführen, wenn exportieren_exportieren_collapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
     if ($("#exportieren_exportieren_collapse").is(":visible")) {
-        if (window.adb.handleExportierenObjekteWaehlenCollapseShown(that)) {
+        if (handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
 
             // Tabelle und Herunterladen-Schaltfläche ausblenden

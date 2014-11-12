@@ -13,7 +13,8 @@ var $ = require('jquery'),
 module.exports = function (objectArray) {
     var hierarchie,
         parent,
-        $db = $.couch.db('artendb');
+        $db = $.couch.db('artendb'),
+        ergaenzeParentZuLrHierarchie = require('./ergaenzeParentZuLrHierarchie');
 
     _.each(objectArray, function (object) {
         hierarchie = [];
@@ -21,7 +22,7 @@ module.exports = function (objectArray) {
         // als Start sich selben zur Hierarchie hinzufügen
         hierarchie.push(window.adb.erstelleHierarchieobjektAusObjekt(object));
         if (parent) {
-            object.Taxonomie.Eigenschaften.Hierarchie = window.adb.ergaenzeParentZuLrHierarchie(objectArray, object._id, hierarchie);
+            object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object._id, hierarchie);
             $db.saveDoc(object);
         }
     });
