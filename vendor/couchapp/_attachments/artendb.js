@@ -326,44 +326,28 @@ window.adb.handleFeldWaehlenAlleVonDs = function () {
     require('./adbModules/export/handleFeldWaehlenAlleVonDs')(this);
 };
 
-// wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
+// wird in index.html benutzt
 window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function () {
     'use strict';
-    var fuerExportGewaehlteGruppen = require('./adbModules/export/fuerExportGewaehlteGruppen'),
-        erstelleListeFuerFeldwahl  = require('./adbModules/export/erstelleListeFuerFeldwahl'),
-        gruppenGewaehlt;
-
-    gruppenGewaehlt = fuerExportGewaehlteGruppen();
-    erstelleListeFuerFeldwahl(gruppenGewaehlt);
+    require('./adbModules/export/handleExportierenDsObjekteWaehlenGruppeChange')();
 };
 
-// ist nötig, weil index.html nicht requiren kann
 // wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
     'use strict';
     require('./adbModules/export/handleExportFeldFilternChange')(this);
 };
 
-// wenn exportieren_exportieren angezeigt wird
-// zur Schaltfläche Vorschau scrollen
+// wird in index.html benutzt
 window.adb.handleExportierenExportierenShow = function () {
     'use strict';
-    // Fehlermeldung verstecken, falls sie noch offen war
-    $("#exportieren_exportieren_error_text")
-        .alert()
-        .hide();
-    $('html, body').animate({
-        scrollTop: $("#exportieren_exportieren_tabelle_aufbauen").offset().top
-    }, 2000);
+    require('./adbModules/export/handleExportierenExportierenShow')();
 };
 
-// wenn .btn.lr_bearb_bearb geklickt wird
+// wird in index.html benutzt
 window.adb.handleBtnLrBearbBearbKlick = function () {
     'use strict';
-    var bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
-    if (!$(this).hasClass('disabled')) {
-        bearbeiteLrTaxonomie();
-    }
+    require('./adbModules/lr/handleBtnLrBearbBearbKlick')(this);
 };
 
 // wird in index.html benutzt
@@ -398,13 +382,10 @@ window.adb.handleLrTaxonomieControlsChange = function () {
     require('./adbModules/speichern')($(this).val(), this.id);
 };
 
-// wenn .Lebensräume.Taxonomie geöffnet wird
+// wird in index.html benutzt
 window.adb.handlePanelbodyLrTaxonomieShown = function () {
     'use strict';
-    var bearbeiteLrTaxonomie = require('./adbModules/lr/bearbeiteLrTaxonomie');
-    if (localStorage.lrBearb === "true") {
-        bearbeiteLrTaxonomie();
-    }
+    require('./adbModules/lr/handlePanelbodyLrTaxonomieShown')();
 };
 
 // wird in index.html benutzt
@@ -437,26 +418,16 @@ window.adb.handleExportierenExportierenExportierenClick = function () {
     require('./adbModules/export/handleExportierenExportierenExportierenClick')();
 };
 
-// wenn .panel geöffnet wird
-// Höhe der textareas an Textgrösse anpassen
+// wird in index.html benutzt
 window.adb.handlePanelShown = function () {
     'use strict';
-    var fitTextareaToContent = require('./adbModules/fitTextareaToContent');
-
-    $(this).find('textarea').each(function () {
-        fitTextareaToContent(this.id);
-    });
+    require('./adbModules/handlePanelShown')(this);
 };
 
-// wenn .LinkZuArtGleicherGruppe geklickt wird
+// wird in index.html benutzt
 window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
     'use strict';
-    $(".suchen").val("");
-    $("#tree" + window.adb.gruppe)
-        .jstree("clear_search")
-        .jstree("deselect_all")
-        .jstree("close_all", -1)
-        .jstree("select_node", "#" + id);
+    require('./adbModules/handleLinkZuArtGleicherGruppeClick')(id);
 };
 
 // wird in index.html benutzt
