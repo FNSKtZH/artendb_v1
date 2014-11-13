@@ -235,5 +235,19 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
         exportObjekte.push(exportObjekt);
     }
 
+    _.each(exportObjekte, function (exportObjekt) {
+        // im Objekt in Beziehungspartnern die [] entfernen
+        _.each(exportObjekt, function (value, key) {
+            if (value instanceof Array) {
+                exportObjekt[key] = _.map(value, function (element) {
+                    if (element instanceof Array) {
+                        element = element[0];
+                    }
+                    return JSON.stringify(element);
+                }).join(', ');
+            }
+        });
+    });
+
     return exportObjekte;
 };

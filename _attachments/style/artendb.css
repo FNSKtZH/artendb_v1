@@ -409,6 +409,15 @@ a {
     color: #016ca2;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
+a.show_next_hidden,
+a.show_next_hidden_export {
+    font-style: italic;
+}
+
 .form input[type="radio"], .form input[type="checkbox"] {
     margin-top:  8px !important;
     margin-left: 4px !important;
@@ -493,10 +502,6 @@ h5 a {
          -o-column-break-inside: avoid;
         -ms-column-break-inside: avoid;
             column-break-inside: avoid;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 #art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
@@ -681,13 +686,9 @@ option {
 }
 
 .last-well {
-    margin-bottom: 20px !important;
+    margin-bottom: 15px !important;
 }
 
-a.show_next_hidden,
-a.show_next_hidden_export {
-    font-style: italic;
-}
 
 
 

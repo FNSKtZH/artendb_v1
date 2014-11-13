@@ -129,6 +129,7 @@ module.exports = function (direkt, fuerAlt) {
             anzGewaehlteFelderAusDsbs++;
         }
     });
+
     // den array dem objekt zuweisen
     gewaehlteFelderObjekt.felder = gewaehlteFelder;
 

@@ -5,6 +5,7 @@ var $ = require('jquery');
 
 module.exports = function (that, _alt) {
     var count = 0;
+
     $("#export" + _alt)
         .find(".exportieren_felder_waehlen_felderliste")
         .find(".feld_waehlen")

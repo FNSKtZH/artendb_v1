@@ -584,24 +584,12 @@
                         </div>
                         <div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Wählen Sie eine oder mehrere Gruppen...</li>
                                         <li>...dann werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
                                         <li>...und Sie können filtern und Eigenschaften wählen</li>
                                         <li><a href="//youtu.be/J13wS88pYC8" target="_blank">Screencast sehen</a></li>
-                                    </ul>
-                                </div>
-                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
-                                    <ul class="adb-hidden">
-                                        <li>Mit der Schaltfläche "Alle Taxonomien zusammenfassen" werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und alle vorkommenden Felder aufgelistet
-                                            <ul>
-                                                <li>Das ist vor allem für Lebensräume interessant: Jeder Lebensraumschlüssel stellt eine Taxonomie dar und oft haben sie dieselben Felder.
-                                                    <br>Filtern Sie beispielsweise im Feld "Taxonomie" nach "Delarze", können Sie alle Informationen von Delarze gleichzeitig exportieren</li>
-                                                <li>Sie können so auch Arten aus mehreren Gruppen exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
-                                            </ul>
-                                        </li>
-                                        <li>Möchten Sie individuelle Felder für das <a href="//www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content" target="_blank">Artenlistentool</a> exportieren? Wählen Sie die Gruppen "Fauna" und "Flora". Dann wird Ihnen im letzten Schritt ein Export für das Artenlistentool angeboten (noch nicht umgesetzt)</li>
                                     </ul>
                                 </div>
                                 <div class="checkbox">
@@ -640,7 +628,14 @@
                                     </label>
                                 </div>
                                 <button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
-                                <div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text"></div>
+                                <div class="well well-sm" style="margin-bottom:5px !important;"><b>Alle Taxonomien zusammenfassen?</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                    <ul class="adb-hidden">
+                                        <li>Mit dieser Option werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und darunter alle in diesen Taxonomien vorkommenden Felder aufgelistet</li>
+                                        <li>Beispielsweise können Sie bei Lebensräumen im Feld "Taxonomie" nach "Delarze" filtern um alle Taxonomien von Delarze gleichzeitig zu exportieren</li>
+                                        <li>Oder Sie können z.B. Arten aus Flora und Fauna gleichzeitig exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
+                                    </ul>
+                                </div>
+                                <div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text" style="margin-top:10px;"></div>
                             </div>
                         </div>
                     </div>
@@ -660,7 +655,7 @@
                                         <li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well" style="margin-bottom:15px;"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"
                                             <br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
@@ -669,7 +664,7 @@
                                             <br>Beispiel: Schreiben Sie "eisvogel", wird auch "Eisvogel" gefunden</li>
                                         <li>Sie können nach einem Teil des Feldinhalts filtern (wenn Sie keine Vergleichsoperatoren verwenden)
                                             <br>Beispiel: Schreiben Sie "Vogel", wird auch "Eisvogel" gefunden</li>
-                                        <li>Sie können die folgenden Vergleichsoperatoren verwenden: "=", ">", ">=", "<", "<="
+                                        <li>Sie können die folgenden <b>Vergleichsoperatoren</b> verwenden: "<b>=</b>", "<b>></b>", "<b>>=</b>", "<b><</b>", "<b><=</b>"
                                             <br>Beispiel 1: Schreiben Sie im Feld "Artwert" ">5", werden Arten mit Artwert ab 6 gefunden
                                             <br>Beispiel 2: Schreiben Sie "=Vogel", wird nur "Vogel" gefunden, nicht aber "Eisvogel"</li>
                                         <li>Was (noch) NICHT funktioniert: Wenn Sie nach zwei oder mehr Eigenschaften derselben Beziehungssammlung filtern und eines davon ist "Beziehungspartner", erhalten Sie zuviele Resultate. Filtern Sie hier also bloss nach einer Eigenschaft und im exportierten Resultat nach der zweiten</li>
@@ -693,25 +688,25 @@
                         </div>
                         <div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
                                         <li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
                                         <li>...und fahren Sie danach mit "4. exportieren" weiter</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <!--div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
                                     </ul>
-                                </div>
+                                </div-->
                                 <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
                                     <label>
                                         <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
                                         <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
                                     </label>
                                 </div>
-                                <div class="checkbox" style="clear:both; padding-top:7px;">
+                                <div class="checkbox" style="padding-top:7px; margin-bottom:20px;">
                                     <label>
                                         <input type="checkbox" id="exportieren_synonym_infos" checked>
                                         <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
@@ -1078,9 +1073,9 @@
 
                 $("#export")
                     .on("change", ".exportieren_ds_objekte_waehlen_gruppe", window.adb.handleExportierenDsObjekteWaehlenGruppeChange)
-                    .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
-                    .on("change", ".feld_waehlen_alle_von_ds", window.adb.handleFeldWaehlenAlleVonDs)
-                    .on("change", ".export_feld_filtern", window.adb.handleExportFeldFilternChange)
+                    .on("change", ".feld_waehlen",                          window.adb.handleFeldWaehlenChange)
+                    .on("change", ".feld_waehlen_alle_von_ds",              window.adb.handleFeldWaehlenAlleVonDs)
+                    .on("change", ".export_feld_filtern",                   window.adb.handleExportFeldFilternChange)
                     .on("change", "#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds", window.adb.exportZuruecksetzen)
                     .on("click", "#exportieren_objekte_Taxonomien_zusammenfassen", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
@@ -1091,6 +1086,7 @@
                         // this übergeben!
                         window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
                         window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
+                        window.adb.exportZuruecksetzen();
                     })
                     .on("click", "#exportieren_exportieren_exportieren", function (event) {
                         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
@@ -1118,8 +1114,8 @@
                 $("#export_alt")
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)
                     .on("change", ".feld_waehlen_alle_von_ds_alt", window.adb.handleFeldWaehlenAlleVonDs)
-                    .on("change", "#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt", function (event) {
-                        window.adb.exportZuruecksetzen(event, '_alt');
+                    .on("change", "#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt", function () {
+                        window.adb.exportZuruecksetzen(null, '_alt');
                     })
                     .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function (event) {
                         window.adb.scrollThisToTop(this, 6);
