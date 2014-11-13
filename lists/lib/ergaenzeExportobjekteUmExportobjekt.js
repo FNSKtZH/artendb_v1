@@ -166,9 +166,8 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                                 // durch die Felder der Beziehung loopen
                                 _.each(export_beziehung, function (export_beziehung_feldwert, export_beziehung_feldname) {
                                     if (export_beziehung_feldname === "Beziehungspartner") {
-                                        // zuerst die Beziehungspartner in JSON hinzufügen
-                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] || [];
-                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname].push(export_beziehung_feldwert);
+                                        // den Beziehungspartner hinzufügen
+                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_beziehung_feldwert[0];
                                         // Reines GUID-Feld ergänzen
                                         if (!export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
                                             export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = export_beziehung_feldwert[0].GUID;
@@ -196,9 +195,11 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                                     if (feldname === "Beziehungspartner") {
                                         // zuerst die Beziehungspartner in JSON hinzufügen
                                         if (!exportObjekt[feld.DsName + ": " + feldname]) {
-                                            exportObjekt[feld.DsName + ": " + feldname] = [];
+                                            exportObjekt[feld.DsName + ": " + feldname] = '';
+                                        } else {
+                                            exportObjekt[feld.DsName + ": " + feldname] += ', ';
                                         }
-                                        exportObjekt[feld.DsName + ": " + feldname].push(feldwert);
+                                        exportObjekt[feld.DsName + ": " + feldname] += JSON.stringify(feldwert[0]);
                                         // Reines GUID-Feld ergänzen
                                         if (!exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
                                             exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
@@ -234,20 +235,6 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
     if (!schonKopiert) {
         exportObjekte.push(exportObjekt);
     }
-
-    _.each(exportObjekte, function (exportObjekt) {
-        // im Objekt in Beziehungspartnern die [] entfernen
-        _.each(exportObjekt, function (value, key) {
-            if (value instanceof Array) {
-                exportObjekt[key] = _.map(value, function (element) {
-                    if (element instanceof Array) {
-                        element = element[0];
-                    }
-                    return JSON.stringify(element);
-                }).join(', ');
-            }
-        });
-    });
 
     return exportObjekte;
 };
