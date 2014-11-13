@@ -752,7 +752,22 @@
                                         <li>...und es erscheinen Schaltflächen für den Download</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm">Details des csv-Formats <a href="#" class="show_next_hidden">...mehr</a>
+                                <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip"  title="Empfohlen, da schnell. Funktioniert auf modernen Browsern">direkt herunterladen</button>
+                                <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip" title="Langsam. Funktioniert auch auf alten Browsern. Sorry: nur csv. Kein xlsx verfügbar">vom Server herunterladen</button>
+                                <div id="exportieren_exportieren_format">
+                                    <p style="margin-bottom:0; margin-top:5px;"><b>Format:</b></p>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportieren_exportieren_format" value="xlsx">xlsx (Excel)
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportieren_exportieren_format" value="csv">csv (kommagetrennte Textdatei)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="well well-sm format_csv">Details des csv-Formats <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
                                         <li>Die erste Zeile enthält die Feldnamen</li>
@@ -760,7 +775,7 @@
                                         <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well">csv-Datei nicht mit Excel öffnen <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well format_csv">csv-Datei nicht mit Excel öffnen <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a>.</li>
                                         <li>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.<br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
@@ -774,21 +789,6 @@
                                             <br>Oder schlimmer: Sie merken nichts und ihre Auswertung ist fehlerhaft!<br>
                                         </li>
                                     </ul>
-                                </div>
-                                <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;" data-toggle="tooltip"  title="Empfohlen, da schnell. Funktioniert auf modernen Browsern">direkt herunterladen</button>
-                                <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;" data-toggle="tooltip" title="Langsam. Funktioniert auch auf alten Browsern. Sorry: nur csv. Kein xlsx verfügbar">vom Server herunterladen</button>
-                                <div id="exportieren_exportieren_exportieren_format">
-                                    <p style="margin-bottom:0; margin-top:5px;"><b>Format:</b></p>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportieren_exportieren_exportieren_format" value="xlsx">xlsx (Excel)
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportieren_exportieren_exportieren_format" value="csv">csv (kommagetrennte Textdatei)
-                                        </label>
-                                    </div>
                                 </div>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
@@ -1112,7 +1112,8 @@
                         window.adb.handleExportierenExportierenCollapseShown(this);
                     })
                     .on('shown.bs.collapse', '#exportieren_objekte_waehlen_ds_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown)
-                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+                    .on('shown.bs.collapse', '#exportieren_felder_waehlen_collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown)
+                    .on('click', '[name="exportieren_exportieren_format"]', window.adb.blendeFormatCsvTipps);
 
                 $("#export_alt")
                     .on("change", ".feld_waehlen", window.adb.handleFeldWaehlenChange)

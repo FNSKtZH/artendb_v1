@@ -13,8 +13,8 @@ module.exports = function (_alt) {
             erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
         } else {
             erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_exportieren_tabelle", null);
+            $(".exportieren_btn").show();
         }
-        $(".exportieren" + _alt + "_exportieren_exportieren").show();
     } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
         $("#exportieren" + _alt + "_exportieren_error_text_text")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");

@@ -315,6 +315,12 @@ window.adb.handlePanelShown = function () {
 };
 
 // wird in index.html benutzt
+window.adb.blendeFormatCsvTipps = function () {
+    'use strict';
+    require('./adbModules/export/blendeFormatCsvTipps')();
+};
+
+// wird in index.html benutzt
 window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
     'use strict';
     require('./adbModules/handleLinkZuArtGleicherGruppeClick')(id);

@@ -22,7 +22,7 @@ module.exports = function (that) {
 
             // Tabelle und Herunterladen-Schaltfläche ausblenden
             $(".exportieren_exportieren_tabelle").hide();
-            $(".exportieren_exportieren_exportieren").hide();
+            $(".exportieren_btn").hide();
 
             // filtert und baut danach die Vorschautabelle auf
             filtereFuerExport(null, fuerAlt);
@@ -31,7 +31,7 @@ module.exports = function (that) {
     if ($("#exportieren_alt_exportieren_collapse").is(":visible")) {
         // Tabelle und Herunterladen-Schaltfläche ausblenden
         $(".exportieren_exportieren_tabelle").hide();
-        $(".exportieren_exportieren_exportieren").hide();
+        $(".exportieren_btn").hide();
         // filtert und baut danach die Vorschautabelle auf
         filtereFuerExport(null, fuerAlt);
     }

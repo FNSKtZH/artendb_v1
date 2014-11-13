@@ -10,7 +10,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         viewName,
         listName,
         gruppenliste = gruppen.split(","),
-        format = $('input[name="exportieren_exportieren_exportieren_format"]:checked').val() || 'xlsx';
+        format = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
         fTz = "true";

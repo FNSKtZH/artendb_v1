@@ -6554,8 +6554,7 @@ a.show_next_hidden_export {
 #exportieren_felder_waehlen input[type="radio"],
 #exportieren_alt_felder_waehlen input[type="radio"],
 #exportieren_felder_waehlen input[type="checkbox"],
-#exportieren_alt_felder_waehlen input[type="checkbox"],
-#exportieren_exportieren_exportieren input[type="radio"] {
+#exportieren_alt_felder_waehlen input[type="checkbox"] {
     margin-top:    1px !important;
     margin-left: -19px !important;
 }
@@ -6570,6 +6569,14 @@ a.show_next_hidden_export {
 #exportieren_exportieren_collapse button {
     margin-bottom: 10px;
     margin-right:   5px;
+}
+
+#exportieren_exportieren_format {
+    margin-bottom: 5px;
+}
+
+.well.format_csv {
+    display: none;
 }
 
 #exportieren_exportieren_collapse .tooltip-inner {
