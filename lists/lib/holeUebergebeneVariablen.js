@@ -11,7 +11,8 @@ module.exports = function (query_objekt) {
             filterkriterien: [],
             felder: [],
             nur_objekte_mit_eigenschaften: true,
-            bez_in_zeilen: true
+            bez_in_zeilen: true,
+            format: 'xlsx'
         },
         filterkriterienObjekt,
         felderObjekt,
@@ -44,6 +45,10 @@ module.exports = function (query_objekt) {
         case "bez_in_zeilen":
             // true oder false wird als String übergeben > umwandeln
             ueVar.bez_in_zeilen = (value === 'true');
+            break;
+        case "format":
+            // true oder false wird als String übergeben > umwandeln
+            ueVar.format = value;
             break;
         }
     });

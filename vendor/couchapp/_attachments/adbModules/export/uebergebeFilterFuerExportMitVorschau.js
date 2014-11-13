@@ -12,6 +12,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         listName,
         queryParam,
         $db = $.couch.db('artendb'),
+        format = $('input[name="exportieren_exportieren_exportieren_format"]:checked').val() || 'xlsx',
         baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
@@ -42,6 +43,9 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         } else {
             queryParam += "&bez_in_zeilen=false";
         }
+
+        // format ergänzen
+        queryParam += "&format=" + format;
 
         $db.list(listName, queryParam, {
             success: function (data) {

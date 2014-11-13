@@ -1,14 +1,6 @@
 function (head, req) {
     'use strict';
 
-    start({
-        "headers": {
-            "Content-Type": "text/csv; charset=utf-8;",
-            "Content-disposition": "attachment;filename=arteigenschaften.csv",
-            "Accept-Charset": "utf-8"
-        }
-    });
-
     var row,
         objekt,
         exportObjekte = [],
@@ -21,13 +13,41 @@ function (head, req) {
         },
         objektHinzufuegen,
         erstelleExportString                  = require('lists/lib/erstelleExportString'),
+        createBlobDataXlsx                    = require('lists/lib/createBlobDataXlsx'),
         beurteileObInformationenEnthaltenSind = require('lists/lib/beurteileObInformationenEnthaltenSind'),
         pruefeObObjektKriterienErfuellt       = require('lists/lib/pruefeObObjektKriterienErfuellt'),
         holeUebergebeneVariablen              = require('lists/lib/holeUebergebeneVariablen'),
         ergaenzeExportobjekteUmExportobjekt   = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
 
+    start({
+        "headers": {
+            "Content-Type": "text/csv; charset=utf-8;",
+            "Content-disposition": "attachment;filename=arteigenschaften.csv",
+            "Accept-Charset": "utf-8"
+        }
+    });
+
     // übergebene Variablen extrahieren
     ueVar = holeUebergebeneVariablen(req.query);
+
+    /* Versuch, xlsx zum Laufen zu bringen
+    if (ueVar.format === 'csv') {
+        start({
+            "headers": {
+                "Content-Type": "text/csv; charset=utf-8;",
+                "Content-disposition": "attachment;filename=arteigenschaften.csv",
+                "Accept-Charset": "utf-8"
+            }
+        });
+    } else {
+        start({
+            "headers": {
+                "Content-Type": "application/octet-stream; charset=utf-8;",
+                "Content-disposition": "attachment;filename=arteigenschaften.xlsx",
+                "Accept-Charset": "utf-8"
+            }
+        });
+    }*/
 
     while (row = getRow()) {
         objekt = row.doc;
@@ -62,5 +82,12 @@ function (head, req) {
             exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bez_in_zeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
         }
     }
+
     send(erstelleExportString(exportObjekte));
+
+    /*if (ueVar.format === 'csv') {
+        send(erstelleExportString(exportObjekte));
+    } else {
+        send(createBlobDataXlsx(exportObjekte));
+    }*/
 }

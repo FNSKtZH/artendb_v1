@@ -117,6 +117,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
         .css("margin-top", "20px")
         // sichtbar stellen
         .show();
+
     // fenster scrollen
     if (!formular) {
         $('html, body').animate({
