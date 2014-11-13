@@ -66,8 +66,8 @@ module.exports = function (gewaehlteFelderObjekt) {
     view += '&limit=11';
     $db.list(list, view, {
         success: function (data) {
-            // alle Objekte in data window.adb.exportieren_objekte übergeben
-            window.adb.exportieren_objekte = data;
+            // alle Objekte in data window.adb.exportierenObjekte übergeben
+            window.adb.exportierenObjekte = data;
             baueTabelleFuerExportAuf('_alt');
         },
         error: function () {

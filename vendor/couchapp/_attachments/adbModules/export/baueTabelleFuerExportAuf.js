@@ -8,14 +8,14 @@ module.exports = function (_alt) {
 
     _alt = _alt || '';
 
-    if (window.adb.exportieren_objekte.length > 0) {
+    if (window.adb.exportierenObjekte.length > 0) {
         if (_alt) {
-            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
         } else {
-            erstelleTabelle(window.adb.exportieren_objekte, "", "exportieren_exportieren_tabelle", null);
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_exportieren_tabelle", null);
         }
         $(".exportieren" + _alt + "_exportieren_exportieren").show();
-    } else if (window.adb.exportieren_objekte && window.adb.exportieren_objekte.length === 0) {
+    } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
         $("#exportieren" + _alt + "_exportieren_error_text_text")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
         $("#exportieren" + _alt + "_exportieren_error_text")

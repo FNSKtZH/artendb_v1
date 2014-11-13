@@ -768,7 +768,8 @@ a.show_next_hidden_export {
 #exportieren_felder_waehlen input[type="radio"],
 #exportieren_alt_felder_waehlen input[type="radio"],
 #exportieren_felder_waehlen input[type="checkbox"],
-#exportieren_alt_felder_waehlen input[type="checkbox"] {
+#exportieren_alt_felder_waehlen input[type="checkbox"],
+#exportieren_exportieren_exportieren input[type="radio"] {
     margin-top:    1px !important;
     margin-left: -19px !important;
 }

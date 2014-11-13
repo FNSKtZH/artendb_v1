@@ -19,7 +19,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         fTz = "true";
     }
     // globale Variable vorbereiten
-    window.adb.exportieren_objekte = [];
+    window.adb.exportierenObjekte = [];
     // in anzGruppenAbgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
     _.each(gruppenArray, function (gruppe) {
@@ -45,8 +45,8 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
 
         $db.list(listName, queryParam, {
             success: function (data) {
-                // alle Objekte in data in window.adb.exportieren_objekte anfügen
-                window.adb.exportieren_objekte = _.union(window.adb.exportieren_objekte, data);
+                // alle Objekte in data in window.adb.exportierenObjekte anfügen
+                window.adb.exportierenObjekte = _.union(window.adb.exportierenObjekte, data);
                 // speichern, dass eine Gruppe abgefragt wurde
                 anzGruppenAbgefragt++;
                 if (anzGruppenAbgefragt === gruppenArray.length) {
@@ -55,7 +55,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
                     $("#exportieren_exportieren_hinweis_text")
                         .alert()
                         .show()
-                        .html(window.adb.exportieren_objekte.length + " Objekte sind gewählt");
+                        .html(window.adb.exportierenObjekte.length + " Objekte sind gewählt");
                     baueTabelleFuerExportAuf();
                 }
             },

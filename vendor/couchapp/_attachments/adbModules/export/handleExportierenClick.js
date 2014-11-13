@@ -7,5 +7,5 @@ module.exports = function () {
     var zeigeFormular = require('../zeigeFormular');
 
     zeigeFormular("export");
-    delete window.adb.exportieren_objekte;
+    delete window.adb.exportierenObjekte;
 };

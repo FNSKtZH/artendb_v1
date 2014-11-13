@@ -752,23 +752,18 @@
                                         <li>...und es erscheinen Schaltflächen für den Download</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm">Details des csv-Formats <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
-                                        <li>Die Exportdatei hat das .csv-Format:
-                                            <ul>
-                                                <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
-                                                <li>Die erste Zeile enthält die Feldnamen</li>
-                                                <li>Felder sind mit Kommas (,) getrennt</li>
-                                                <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
-                                            </ul>
-                                        </li>
-                                        <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a></li>
+                                        <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
+                                        <li>Die erste Zeile enthält die Feldnamen</li>
+                                        <li>Felder sind mit Kommas (,) getrennt</li>
+                                        <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Bitte nicht mit Excel öffnen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well">csv-Datei nicht mit Excel öffnen <a href="#" class="show_next_hidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a>.</li>
-                                        <li><b>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.</b><br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
+                                        <li>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.<br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
                                         <li>In Microsoft Excel importieren Sie die .csv-Datei mit den Befehl "Daten" > "Aus Text" (Sie können die Datei weder öffnen noch doppelklicken).<br>Aber VORSICHT: Excel macht es einem schwer, die Daten korrekt und fehlerfrei zu erhalten! Beispiele:
                                             <ul>
                                                 <li>Manchmal erkennt Excel Feldbegrenzungen nicht richtig, worauf es Daten eines Felds in falsche oder gar in mehrere Felder schreibt</li>
@@ -782,6 +777,19 @@
                                 </div>
                                 <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">direkt herunterladen (schnell, funktioniert nur auf modernen Browsern)</button>
                                 <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_exportieren_exportieren" style="display:none;">vom Server herunterladen (langsam, funktioniert auch auf alten Browsern)</button>
+                                <div id="exportieren_exportieren_exportieren_format">
+                                    <p style="margin-bottom:0; margin-top:5px;"><b>Format:</b></p>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportieren_exportieren_exportieren_format" value="xlsx">xlsx (Excel)
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportieren_exportieren_exportieren_format" value="csv">csv (kommagetrennte Textdatei)
+                                        </label>
+                                    </div>
+                                </div>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
                                 <div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>

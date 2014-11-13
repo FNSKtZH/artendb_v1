@@ -8,22 +8,31 @@ var $      = require('jquery'),
 
 module.exports = function () {
     var erstelleExportString = require('./erstelleExportString'),
+        createBlobDataXlsx   = require('./createBlobDataXlsx'),
         isFileAPIAvailable   = require('../isFileAPIAvailable'),
         exportstring,
+        blobData,
         blob,
         d,
         month,
         day,
-        dateString;
+        dateString,
+        format = $('input[name="exportieren_exportieren_exportieren_format"]:checked').val() || 'xlsx';
 
     if (isFileAPIAvailable()) {
-        exportstring = erstelleExportString(window.adb.exportieren_objekte);
-        blob         = new Blob([exportstring], {type: "text/csv;charset=utf-8;"});
         d            = new Date();
         month        = d.getMonth() + 1;
         day          = d.getDate();
         dateString   = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
 
-        saveAs(blob, dateString + "_export.csv");
+        if (format === 'csv') {
+            exportstring = erstelleExportString(window.adb.exportierenObjekte);
+            blob         = new Blob([exportstring], {type: "text/csv;charset=utf-8;"});
+            saveAs(blob, dateString + "_export.csv");
+        } else {
+            blobData     = createBlobDataXlsx(window.adb.exportierenObjekte);
+            blob         = new Blob([blobData], {type: "application/octet-stream;charset=utf-8;"});
+            saveAs(blob, dateString + "_export.xlsx");
+        }
     }
 };
