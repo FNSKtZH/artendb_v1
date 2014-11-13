@@ -105,10 +105,6 @@ module.exports = function (data) {
     /* add worksheet to workbook */
     wb.SheetNames.push(ws_name);
     wb.Sheets[ws_name] = ws;
-    console.log('data: ', data);
-    console.log('dataArray: ', dataArray);
-    console.log('XLSX: ', XLSX);
-    console.log('wb: ', wb);
     wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
 
     return s2ab(wbout);
