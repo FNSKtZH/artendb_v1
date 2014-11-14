@@ -8,7 +8,7 @@ module.exports = function (Wert) {
     if (typeof Wert === "boolean")   { return "boolean"; }
     if (parseInt(Wert, 10) && parseFloat(Wert) && parseInt(Wert, 10) !== parseFloat(Wert) && parseInt(Wert, 10) == Wert) { return "float"; }
     // verhindern, dass führende Nullen abgeschnitten werden
-    if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10) / 10)) || Wert == "0") { return "integer"; }
+    if ((parseInt(Wert, 10) == Wert && Wert.toString().length === Math.ceil(parseInt(Wert, 10) / 10)) || Wert == "0")    { return "integer"; }
     if (typeof Wert === "object")    { return "object"; }
     if (typeof Wert === "string")    { return "string"; }
     if (Wert === undefined)          { return "undefined"; }

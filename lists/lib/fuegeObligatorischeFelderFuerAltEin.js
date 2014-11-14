@@ -3,7 +3,7 @@
 // erhält das Objekt und das exportObjekt
 // retourniert das angepasste exportObjekt
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true, white: true*/
 'use strict';
 
 var _ = require("lists/lib/underscore");
@@ -11,11 +11,12 @@ var _ = require("lists/lib/underscore");
 module.exports = function (objekt, exportObjekt) {
     var dsZhArtwert1995,
         dsZhGis;
+
     // übergebene Variabeln prüfen
-    if (!objekt) { return {}; }
-    if (!objekt.Taxonomie) { return {}; }
+    if (!objekt)                         { return {}; }
+    if (!objekt.Taxonomie)               { return {}; }
     if (!objekt.Taxonomie.Eigenschaften) { return {}; }
-    if (!exportObjekt) { exportObjekt = {}; }
+    if (!exportObjekt)                   { exportObjekt = {}; }
 
     // Felder ergänzen
     // immer sicherstellen, dass das Feld existiert
@@ -34,9 +35,13 @@ module.exports = function (objekt, exportObjekt) {
         exportObjekt.distance = dsZhGis.Eigenschaften["Betrachtungsdistanz (m)"];
     }
 
-    if (objekt.Taxonomie.Eigenschaften.Artname) { exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255); }
+    if (objekt.Taxonomie.Eigenschaften.Artname) {
+        exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);
+    }
 
-    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) { exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255); }
+    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
+        exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
+    }
 
     dsZhArtwert1995 = _.find(objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === "ZH Artwert (1995)";

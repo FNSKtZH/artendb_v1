@@ -5,7 +5,7 @@ var _ = require("lists/lib/underscore");
 
 module.exports = function (exportobjekte) {
     var stringTitelzeile = "",
-        stringZeilen = "",
+        stringZeilen     = "",
         stringZeile;
 
     if (exportobjekte && exportobjekte.length > 0) {

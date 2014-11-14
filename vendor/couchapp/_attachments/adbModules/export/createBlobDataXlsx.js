@@ -6,7 +6,7 @@
  *
  **/
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true, continue: true*/
 'use strict';
 
 var XLSX = require('XLSX'),
@@ -20,7 +20,7 @@ function datenum(v, date1904) {
     return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
 }
 
-function sheet_from_array_of_arrays(data) {
+function sheetFromArrayOfArrays(data) {
     var ws = {},
         range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0 }},
         R,
@@ -61,7 +61,7 @@ function sheet_from_array_of_arrays(data) {
     return ws;
 }
 
-var ws_name = "arteigenschaften";
+var wsName = "arteigenschaften";
 
 function Workbook() {
     if (!(this instanceof Workbook)) {
@@ -87,11 +87,14 @@ function buildDataFromObject(data) {
 
     // die Feldnamen zuerst:
     dataArray.push(_.keys(data[0]));
+    // dann die Daten
     _.each(data, function (object) {
         dataArray.push(_.map(object, function (val) {
             return val;
         }));
     });
+
+    //console.log('dataArray: ', dataArray);
 
     return dataArray;
 }
@@ -99,12 +102,12 @@ function buildDataFromObject(data) {
 module.exports = function (data) {
     var wb = new Workbook(),
         dataArray = buildDataFromObject(data),
-        ws = sheet_from_array_of_arrays(dataArray),
+        ws = sheetFromArrayOfArrays(dataArray),
         wbout;
 
     /* add worksheet to workbook */
-    wb.SheetNames.push(ws_name);
-    wb.Sheets[ws_name] = ws;
+    wb.SheetNames.push(wsName);
+    wb.Sheets[wsName] = ws;
     wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
 
     return s2ab(wbout);

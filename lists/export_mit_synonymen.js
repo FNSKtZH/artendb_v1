@@ -66,7 +66,7 @@ function (head, req) {
                 // also müssen wir bei hinzuzufügenden Objekten durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
                 // wenn ja und Feld aus DS/BS: objektHinzufuegen = true
                 // wenn ein Filter gesetzt wurde, wird eh nur angezeigt, wo daten sind - also ignorieren
-                objektHinzufuegen = beurteileObInformationenEnthaltenSind(objekt, ueVar.felder, ueVar.filterkriterien);
+                objektHinzufuegen = beurteileObInformationenEnthaltenSind(objekt, ueVar.felder);
             }
 
             if (objektHinzufuegen) {

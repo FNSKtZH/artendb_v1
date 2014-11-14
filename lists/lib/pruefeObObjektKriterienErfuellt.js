@@ -3,7 +3,7 @@
 
 var _ = require("lists/lib/underscore");
 
-module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusammen, nur_objekte_mit_eigenschaften) {
+module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusammen, nurObjekteMitEigenschaften) {
     var objektHinzufuegen = false,
         objektNichtHinzufuegen = false,
         dsTyp,
@@ -29,16 +29,16 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
     objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
 
     // kein Filter aber nur Datensätze mit Infos aus DS/BS
-    //objektHinzufuegen = (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften);
-    if (filterkriterien.length === 0 && !nur_objekte_mit_eigenschaften) {
+    //objektHinzufuegen = (filterkriterien.length === 0 && !nurObjekteMitEigenschaften);
+    if (filterkriterien.length === 0 && !nurObjekteMitEigenschaften) {
         objektHinzufuegen = true;
     }
 
     loopFilterkriterien:
     for (z = 0; z < filterkriterien.length; z++) {
-        dsTyp = filterkriterien[z].DsTyp;
-        dsName = filterkriterien[z].DsName;
-        feldname = filterkriterien[z].Feldname;
+        dsTyp      = filterkriterien[z].DsTyp;
+        dsName     = filterkriterien[z].DsName;
+        feldname   = filterkriterien[z].Feldname;
         filterwert = filterkriterien[z].Filterwert;
         if (feldname === "GUID") {
             // die ID darf nicht in Kleinschrift verwandelt werden
@@ -48,11 +48,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
         }
         vergleichsoperator = filterkriterien[z].Vergleichsoperator;
         if (dsName === "objekt") {
-            if (feldname === "GUID") {
-                feldwert = objekt._id;
-            } else {
-                feldwert = objekt[feldname];
-            }
+            feldwert = (feldname === "GUID" ? objekt._id : objekt[feldname]);
             if (feldwert || feldwert === 0) {
                 if (beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                     objektHinzufuegen = true;
@@ -217,7 +213,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
         }
     }
 
-    if (filterkriterien.length === 0 && nur_objekte_mit_eigenschaften) {
+    if (filterkriterien.length === 0 && nurObjekteMitEigenschaften) {
         // hoppla. jetzt müssen wir trotzdem durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
         // wenn ja und Feld aus DS/BS: objektHinzufuegen = true;
         // wenn nein, soll der Datensatz ja nicht exportiert werden

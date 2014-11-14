@@ -3,26 +3,17 @@
 
 var _ = require("lists/lib/underscore");
 
-module.exports = function (beziehungspartner, Filterwert, Vergleichsoperator) {
+module.exports = function (beziehungspartner, filterwert, vergleichsoperator) {
     // Wenn Feldname = Beziehungspartner, durch die Partner loopen und nur hinzufügen,
     // wessen Name die Bedingung erfüllt
-    var bezPartner = [];
+    var bezPartner = [],
+        beurteileFilterkriterien = require('lists/lib/beurteileFilterkriterien');
+
     if (beziehungspartner && beziehungspartner.length > 0) {
         _.each(beziehungspartner, function (partner) {
             var feldwert = partner.Name.toLowerCase();
-            if (Vergleichsoperator === "kein" && feldwert == Filterwert) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(Filterwert) >= 0) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === "=" && feldwert == Filterwert) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === ">" && feldwert > Filterwert) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === ">=" && feldwert >= Filterwert) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === "<" && feldwert < Filterwert) {
-                bezPartner.push(partner);
-            } else if (Vergleichsoperator === "<=" && feldwert <= Filterwert) {
+
+            if (beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                 bezPartner.push(partner);
             }
         });

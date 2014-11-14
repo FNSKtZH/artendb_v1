@@ -14,6 +14,7 @@
     "Uri": "global:Uri",
     "saveAs": "global:saveAs",
     "XLSX": "global:XLSX",
+    "jszip": "global:jszip",
     "Modernizr": "global:Modernizr"
   },
   "scripts": {
