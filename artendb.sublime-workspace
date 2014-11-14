@@ -328,64 +328,6 @@
 			}
 		},
 		{
-			"file": "vendor/couchapp/_attachments/adbModules/export/createBlobDataXlsx.js",
-			"settings":
-			{
-				"buffer_size": 2813,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "gulp-tasks/dev_build_src.js",
-			"settings":
-			{
-				"buffer_size": 1239,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lists/lib/createBlobDataXlsx.js",
-			"settings":
-			{
-				"buffer_size": 2764,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "gulp-tasks/prod_build_src.js",
-			"settings":
-			{
-				"buffer_size": 1292,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "package.json",
-			"settings":
-			{
-				"buffer_size": 1586,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "lists/lib/erstelleExportString.js",
-			"settings":
-			{
-				"buffer_size": 2117,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Searching 387 files for \"sheet_from_array_of_arrays\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\lists\\lib\\createBlobDataXlsx.js:\n   21  }\n   22  \n   23: function sheet_from_array_of_arrays(data) {\n   24      var ws = {},\n   25          range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0 }},\n   ..\n  100      var wb = new Workbook(),\n  101          dataArray = buildDataFromObject(data),\n  102:         ws = sheet_from_array_of_arrays(dataArray),\n  103          wbout;\n  104  \n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\export\\createBlobDataXlsx.js:\n   21  }\n   22  \n   23: function sheet_from_array_of_arrays(data) {\n   24      var ws = {},\n   25          range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0 }},\n   ..\n  100      var wb = new Workbook(),\n  101          dataArray = buildDataFromObject(data),\n  102:         ws = sheet_from_array_of_arrays(dataArray),\n  103          wbout;\n  104  \n\n4 matches across 2 files\n\n\nSearching 387 files for \"createBlobDataXlsx\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\lists\\export_direkt.js:\n   14          objektHinzufuegen,\n   15          erstelleExportString                  = require('lists/lib/erstelleExportString'),\n   16:         createBlobDataXlsx                    = require('lists/lib/createBlobDataXlsx'),\n   17          beurteileObInformationenEnthaltenSind = require('lists/lib/beurteileObInformationenEnthaltenSind'),\n   18          pruefeObObjektKriterienErfuellt       = require('lists/lib/pruefeObObjektKriterienErfuellt'),\n   ..\n   89          send(erstelleExportString(exportObjekte));\n   90      } else {\n   91:         send(createBlobDataXlsx(exportObjekte));\n   92      }*/\n   93  }\n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\export\\handleExportierenExportierenExportierenClick.js:\n    9  module.exports = function () {\n   10      var erstelleExportString = require('./erstelleExportString'),\n   11:         createBlobDataXlsx   = require('./createBlobDataXlsx'),\n   12          isFileAPIAvailable   = require('../isFileAPIAvailable'),\n   13          exportstring,\n   ..\n   31              saveAs(blob, dateString + \"_export.csv\");\n   32          } else {\n   33:             blobData     = createBlobDataXlsx(window.adb.exportierenObjekte);\n   34              blob         = new Blob([blobData], {type: \"application/octet-stream;charset=utf-8;\"});\n   35              saveAs(blob, dateString + \"_export.xlsx\");\n\n6 matches across 2 files\n\n\nSearching 387 files for \"ws_name\" (case sensitive, whole word)\n\nC:\\Users\\alex\\artendb\\lists\\lib\\createBlobDataXlsx.js:\n   62  }\n   63  \n   64: var ws_name = \"arteigenschaften\";\n   65  \n   66  function Workbook() {\n   ..\n  113  \n  114      /* add worksheet to workbook */\n  115:     wb.SheetNames.push(ws_name);\n  116:     wb.Sheets[ws_name] = ws;\n  117      wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});\n  118  \n\nC:\\Users\\alex\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\export\\createBlobDataXlsx.js:\n   62  }\n   63  \n   64: var ws_name = \"arteigenschaften\";\n   65  \n   66  function Workbook() {\n   ..\n  111  \n  112      /* add worksheet to workbook */\n  113:     wb.SheetNames.push(ws_name);\n  114:     wb.Sheets[ws_name] = ws;\n  115      wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});\n  116  \n\n6 matches across 2 files\n",
-			"settings":
-			{
-				"buffer_size": 3355,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
 			"file": "vendor/couchapp/_attachments/adbModules/export/handleExportierenExportierenExportierenClick.js",
 			"settings":
 			{
@@ -394,10 +336,18 @@
 			}
 		},
 		{
-			"file": "lists/export.js",
+			"file": "vendor/couchapp/_attachments/adbModules/export/createBlobDataXlsx.js",
 			"settings":
 			{
-				"buffer_size": 2426,
+				"buffer_size": 2813,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lists/lib/erstelleExportString.js",
+			"settings":
+			{
+				"buffer_size": 2117,
 				"line_ending": "Windows"
 			}
 		}
@@ -448,8 +398,12 @@
 	],
 	"file_history":
 	[
-		"/C/Users/alex/artendb/lists/lib/ergaenzeExportobjekteUmExportobjekt.js",
+		"/C/Users/alex/artendb/lists/export.js",
+		"/C/Users/alex/artendb/package.json",
+		"/C/Users/alex/artendb/gulp-tasks/prod_build_src.js",
 		"/C/Users/alex/artendb/lists/lib/createBlobDataXlsx.js",
+		"/C/Users/alex/artendb/gulp-tasks/dev_build_src.js",
+		"/C/Users/alex/artendb/lists/lib/ergaenzeExportobjekteUmExportobjekt.js",
 		"/C/Users/alex/artendb/lists/lib/pruefeObObjektKriterienErfuellt.js",
 		"/C/Users/alex/artendb/lists/lib/myTypeOf.js",
 		"/C/Users/alex/artendb/_attachments/index_dev.html",
@@ -462,7 +416,6 @@
 		"/C/Users/alex/artendb/lists/export_mit_synonymen_direkt.js",
 		"/C/Users/alex/artendb/lists/export_mit_synonymen.js",
 		"/C/Users/alex/artendb/lists/export_direkt.js",
-		"/C/Users/alex/artendb/lists/export.js",
 		"/F/Google Drive/apflora_admin/create server on digital ocean.txt",
 		"/C/Users/alex/apflora/server.js",
 		"/C/Users/alex/artendb/.gitignore",
@@ -488,7 +441,6 @@
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/uebergebeFilterFuerDirektExport.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/erstelleTabelle.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/uebergebeFilterFuerExportMitVorschau.js",
-		"/C/Users/alex/artendb/package.json",
 		"/C/Users/alex/artendb/lists/lib/holeUebergebeneVariablen.js",
 		"/C/Users/alex/artendb/node_modules/xlsx/dist/xlsx.core.min.js",
 		"/C/Users/alex/artendb/lists/lib/node/util.js",
@@ -502,8 +454,6 @@
 		"/C/Users/alex/artendb/node_modules/xlsx/dist/xlsx.js",
 		"/C/Users/alex/artendb/lists/lib/convertToCorrectType.js",
 		"/C/Users/alex/artendb/_attachments/style/artendb.css",
-		"/C/Users/alex/artendb/gulp-tasks/prod_build_src.js",
-		"/C/Users/alex/artendb/gulp-tasks/dev_build_src.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/uebergebeFilterFuerExportFuerAlt.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/export/handleExportierenClick.js",
 		"/C/Users/alex/artendb/vendor/couchapp/_attachments/adbModules/import/handleBsZusammenfassendChange.js",
@@ -980,7 +930,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1002,13 +952,15 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage"
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 16008.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1038,11 +990,41 @@
 						"translation.y": 724.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+					"file": "vendor/couchapp/_attachments/adbModules/export/handleExportierenExportierenExportierenClick.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1433,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1357,
+								1308
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "vendor/couchapp/_attachments/adbModules/export/createBlobDataXlsx.js",
 					"semi_transient": false,
 					"settings":
@@ -1054,8 +1036,8 @@
 						"selection":
 						[
 							[
-								2355,
-								2355
+								122,
+								122
 							]
 						],
 						"settings":
@@ -1065,37 +1047,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1728.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "gulp-tasks/dev_build_src.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1239,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								503,
-								503
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2016.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -1103,96 +1055,6 @@
 				},
 				{
 					"buffer": 5,
-					"file": "lists/lib/createBlobDataXlsx.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2764,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2361,
-								2361
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1440.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "gulp-tasks/prod_build_src.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1292,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								838,
-								838
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "package.json",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1586,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								546,
-								546
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
 					"file": "lists/lib/erstelleExportString.js",
 					"semi_transient": false,
 					"settings":
@@ -1215,177 +1077,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 432.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3355,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										171,
-										197
-									],
-									[
-										420,
-										446
-									],
-									[
-										615,
-										641
-									],
-									[
-										864,
-										890
-									],
-									[
-										1229,
-										1247
-									],
-									[
-										1288,
-										1306
-									],
-									[
-										1638,
-										1656
-									],
-									[
-										1943,
-										1961
-									],
-									[
-										1977,
-										1995
-									],
-									[
-										2225,
-										2243
-									],
-									[
-										2620,
-										2627
-									],
-									[
-										2774,
-										2781
-									],
-									[
-										2805,
-										2812
-									],
-									[
-										3035,
-										3042
-									],
-									[
-										3189,
-										3196
-									],
-									[
-										3220,
-										3227
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								2473,
-								2473
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 3,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1464.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "vendor/couchapp/_attachments/adbModules/export/handleExportierenExportierenExportierenClick.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1433,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								970,
-								990
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 72.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "lists/export.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2426,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2249,
-								2255
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 288.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
