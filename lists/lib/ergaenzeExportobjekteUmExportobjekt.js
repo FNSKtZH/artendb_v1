@@ -27,7 +27,7 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
 
         // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
         felder = _.reject(felder, function (feld) {
-            return ["Artwert"].indexOf(feld.Feldname) >=0;
+            return ["Artwert"].indexOf(feld.Feldname) >= 0;
         });
     }
 
@@ -47,10 +47,14 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
 
     _.each(felder, function (feld) {
         var export_feldname = feld.DsName + ": " + feld.Feldname,
-            feldwert;
+            feldwert,
+            gesuchteDs,
+            bsMitNamen,
+            exportBeziehungen;
         // Taxonomie: Felder übernehmen
         // 2014.06.15: zweite Bedingung ausgeklammert, weil die Felder nur geliefert wurden, wenn zusammenfassend true war
-        if (feld.DsTyp === "Taxonomie"/* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/) {
+        // war: /* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/
+        if (feld.DsTyp === "Taxonomie") {
             // Leerwert setzen. Wird überschrieben, falls danach ein Wert gefunden wird
             if (fasse_taxonomien_zusammen) {
                 exportObjekt["Taxonomie(n): " + feld.Feldname] = "";
@@ -58,7 +62,7 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                 exportObjekt[export_feldname] = "";
             }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
-            if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && typeof objekt.Taxonomie.Eigenschaften[feld.Feldname] !== "undefined") {
+            if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && objekt.Taxonomie.Eigenschaften[feld.Feldname] !== undefined) {
                 if (fasse_taxonomien_zusammen) {
                     exportObjekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
@@ -73,13 +77,13 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
             exportObjekt[export_feldname] = "";
             if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
                 // Enthält das objekt diese Datensammlung?
-                var gesuchte_ds = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
+                gesuchteDs = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
                     return datensammlung.Name && datensammlung.Name === feld.DsName;
                 });
-                if (gesuchte_ds) {
+                if (gesuchteDs) {
                     // ja. Wenn die Datensammlung das Feld enthält > exportieren
-                    if (gesuchte_ds.Eigenschaften && typeof gesuchte_ds.Eigenschaften[feld.Feldname] !== "undefined") {
-                        exportObjekt[export_feldname] = gesuchte_ds.Eigenschaften[feld.Feldname];
+                    if (gesuchteDs.Eigenschaften && gesuchteDs.Eigenschaften[feld.Feldname] !== undefined) {
+                        exportObjekt[export_feldname] = gesuchteDs.Eigenschaften[feld.Feldname];
                     }
                 }
             }
@@ -98,15 +102,15 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
             if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
                 // suchen, ob das objekt diese Beziehungssammlungen hat
                 // suche im objekt die Beziehungssammlung mit Name = feld.DsName
-                var bs_mit_namen = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
+                bsMitNamen = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
                     return beziehungssammlung.Name && beziehungssammlung.Name === feld.DsName;
                 });
-                if (bs_mit_namen && bs_mit_namen.Beziehungen && bs_mit_namen.Beziehungen.length > 0) {
-                    // Beziehungen, die exportiert werden sollen, in der Variablen "export_beziehungen" sammeln
+                if (bsMitNamen && bsMitNamen.Beziehungen && bsMitNamen.Beziehungen.length > 0) {
+                    // Beziehungen, die exportiert werden sollen, in der Variablen "exportBeziehungen" sammeln
                     // durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
-                    var export_beziehungen = [];
-                    _.each(bs_mit_namen.Beziehungen, function (beziehung) {
-                        if (typeof beziehung[feld.Feldname] !== "undefined") {
+                    exportBeziehungen = [];
+                    _.each(bsMitNamen.Beziehungen, function (beziehung) {
+                        if (beziehung[feld.Feldname] !== undefined) {
                             // das gesuchte Feld kommt in dieser Beziehung vor
                             feldwert = convertToCorrectType(beziehung[feld.Feldname]);
                             if (filterkriterien && filterkriterien.length > 0) {
@@ -123,24 +127,24 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                                             beziehungspartner = filtereBeziehungspartner(feldwert, filterwert, vergleichsoperator);
                                             if (beziehungspartner.length > 0) {
                                                 beziehung.Beziehungspartner = beziehungspartner;
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             }
                                         } else {
                                             // jetzt müssen die möglichen Vergleichsoperatoren berücksichtigt werden
                                             if (vergleichsoperator === "kein" && feldwert == filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === "kein" && typeof feldwert === "string" && feldwert.indexOf(filterwert) >= 0) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === "=" && feldwert == filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === ">" && feldwert > filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === ">=" && feldwert >= filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === "<" && feldwert < filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             } else if (vergleichsoperator === "<=" && feldwert <= filterwert) {
-                                                export_beziehungen.push(beziehung);
+                                                exportBeziehungen.push(beziehung);
                                             }
                                         }
                                     }
@@ -148,19 +152,19 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                             } else {
                                 // kein Filter auf Feldern - Beziehung hinzufügen
                                 // aber sicherstellen, dass sie nicht schon drin ist
-                                if (!_.contains(export_beziehungen, beziehung)) {
-                                    export_beziehungen.push(beziehung);
+                                if (!_.contains(exportBeziehungen, beziehung)) {
+                                    exportBeziehungen.push(beziehung);
                                 }
                             }
                         }
                     });
-                    if (export_beziehungen.length > 0) {
+                    if (exportBeziehungen.length > 0) {
                         // jetzt unterscheiden, ob alle Treffer in einem Feld oder pro Treffer eine Zeile exportiert wird
                         if (bez_in_zeilen) {
                             // pro Treffer eine neue Zeile erstellen
                             schonKopiert = false;
                             // durch Beziehungen loopen
-                            _.each(export_beziehungen, function (export_beziehung) {
+                            _.each(exportBeziehungen, function (export_beziehung) {
                                 // exportObjekt kopieren
                                 var export_objekt_kopiert = _.clone(exportObjekt);
                                 // durch die Felder der Beziehung loopen
@@ -189,7 +193,7 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                         } else {
                             // jeden Treffer kommagetrennt in dasselbe Feld einfügen
                             // durch Beziehungen loopen
-                            _.each(export_beziehungen, function (export_beziehung) {
+                            _.each(exportBeziehungen, function (export_beziehung) {
                                 // durch die Felder der Beziehung loopen
                                 _.each(export_beziehung, function (feldwert, feldname) {
                                     if (feldname === "Beziehungspartner") {
