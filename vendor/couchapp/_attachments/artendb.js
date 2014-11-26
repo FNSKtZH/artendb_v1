@@ -61,16 +61,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleImportierenDsIdsIdentifizierenCollapseShown = function () {
-    require('./adbModules/import/handleImportierenDsIdsIdentifizierenCollapseShown')(this);
-};
-
-// wird in index.html benutzt
-window.adb.handleImportierenBsIdsIdentifizierenCollapseShown = function () {
-    require('./adbModules/import/handleImportierenBsIdsIdentifizierenCollapseShown')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleImportierenDsImportAusfuehrenCollapseShown = function () {
     require('./adbModules/import/handleImportierenDsImportAusfuehrenCollapseShown')(this);
 };

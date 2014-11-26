@@ -1,26 +1,28 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true, white: true*/
 'use strict';
 
-var $                                           = require('jquery'),
-    onClickOeffneGruppe                         = require('./onClickOeffneGruppe'),
-    onClickBtnResize                            = require('./onClickBtnResize'),
-    onClickMenuBtn                              = require('./onClickMenuBtn'),
-    onClickShowNextHidden                       = require('./onClickShowNextHidden'),
-    onClickShowNextHiddenExport                 = require('./onClickShowNextHiddenExport'),
-    onClickDsImportieren                        = require('./import/onClickDsImportieren'),
-    onClickBsImportieren                        = require('./import/onClickBsImportieren'),
-    onClickMenuAdmin                            = require('./onClickMenuAdmin'),
-    onClickExportieren                          = require('./export/onClickExportieren'),
-    onClickExportierenAlt                       = require('./export/onClickExportierenAlt'),
-    onClickAdminPilzeZhgisErgaenzen             = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
-    onClickAdminKorrigiereArtwertnameInFlora    = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
-    onClickAdminKorrigiereDsNameChRoteListe1991 = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
-    onClickAdminKorrigiereDsName                = require('./admin/onClickAdminKorrigiereDsName'),
-    onClickAdminBaueDsZuEigenschaftenUm         = require('./admin/onClickAdminBaueDsZuEigenschaftenUm'),
-    onShownImportierenDsDsBeschreibenCollapse   = require('./import/onShownImportierenDsDsBeschreibenCollapse'),
-    onShownImportierenBsDsBeschreibenCollapse   = require('./import/onShownImportierenBsDsBeschreibenCollapse'),
-    onShownImportierenDsDatenUploadenCollapse   = require('./import/onShownImportierenDsDatenUploadenCollapse'),
-    onShownImportierenBsDatenUploadenCollapse   = require('./import/onShownImportierenBsDatenUploadenCollapse');
+var $                                             = require('jquery'),
+    onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
+    onClickBtnResize                              = require('./onClickBtnResize'),
+    onClickMenuBtn                                = require('./onClickMenuBtn'),
+    onClickShowNextHidden                         = require('./onClickShowNextHidden'),
+    onClickShowNextHiddenExport                   = require('./onClickShowNextHiddenExport'),
+    onClickDsImportieren                          = require('./import/onClickDsImportieren'),
+    onClickBsImportieren                          = require('./import/onClickBsImportieren'),
+    onClickMenuAdmin                              = require('./onClickMenuAdmin'),
+    onClickExportieren                            = require('./export/onClickExportieren'),
+    onClickExportierenAlt                         = require('./export/onClickExportierenAlt'),
+    onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
+    onClickAdminKorrigiereArtwertnameInFlora      = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
+    onClickAdminKorrigiereDsNameChRoteListe1991   = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
+    onClickAdminKorrigiereDsName                  = require('./admin/onClickAdminKorrigiereDsName'),
+    onClickAdminBaueDsZuEigenschaftenUm           = require('./admin/onClickAdminBaueDsZuEigenschaftenUm'),
+    onShownImportierenDsDsBeschreibenCollapse     = require('./import/onShownImportierenDsDsBeschreibenCollapse'),
+    onShownImportierenBsDsBeschreibenCollapse     = require('./import/onShownImportierenBsDsBeschreibenCollapse'),
+    onShownImportierenDsDatenUploadenCollapse     = require('./import/onShownImportierenDsDatenUploadenCollapse'),
+    onShownImportierenBsDatenUploadenCollapse     = require('./import/onShownImportierenBsDatenUploadenCollapse'),
+    onShownImportierenDsIdsIdentifizierenCollapse = require('./import/onShownImportierenDsIdsIdentifizierenCollapse'),
+    onShownImportierenBsIdsIdentifizierenCollapse = require('./import/onShownImportierenBsIdsIdentifizierenCollapse');
 
 module.exports = function () {
     var $body = $('body');
@@ -62,8 +64,8 @@ module.exports = function () {
     $('#importieren_bs_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
     $('#importieren_ds_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
     $('#importieren_bs_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
-    $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsIdsIdentifizierenCollapseShown);
-    $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
+    $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
+    $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
     $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
     $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
     $('#DsWaehlen').on('change', window.adb.handleDsWaehlenChange);
