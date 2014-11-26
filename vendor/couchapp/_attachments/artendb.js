@@ -20,11 +20,6 @@ window.adb.handleBsNameChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleDsImportiertVonChange = function () {
-    require('./adbModules/import/handleDsImportiertVonChange')();
-};
-
-// wird in index.html benutzt
 window.adb.handleBsImportiertVonChange = function () {
     require('./adbModules/import/handleBsImportiertVonChange')();
 };
@@ -58,11 +53,6 @@ window.adb.handleBsFileChange = function () {
 // wird in index.html benutzt
 window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
-};
-
-// wird in index.html benutzt
-window.adb.handleDsNameChange = function () {
-    require('./adbModules/import/handleDsNameChange')(this);
 };
 
 // wird in index.html benutzt

@@ -25,7 +25,9 @@ var $                                             = require('jquery'),
     onShownImportierenBsIdsIdentifizierenCollapse = require('./import/onShownImportierenBsIdsIdentifizierenCollapse'),
     onShownImportierenDsImportAusfuehrenCollapse  = require('./import/onShownImportierenDsImportAusfuehrenCollapse'),
     onShownImportierenBsImportAusfuehrenCollapse  = require('./import/onShownImportierenBsImportAusfuehrenCollapse'),
-    onChangeDsWaehlen                             = require('./import/onChangeDsWaehlen');
+    onChangeDsWaehlen                             = require('./import/onChangeDsWaehlen'),
+    onChangeDsName                                = require('./import/onChangeDsName'),
+    onChangeDsImportiertVon                       = require('./import/onChangeDsImportiertVon');
 
 module.exports = function () {
     var $body = $('body');
@@ -72,8 +74,8 @@ module.exports = function () {
     $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
     $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
     $('#DsWaehlen')                                 .on('change',            onChangeDsWaehlen);
-    $('#DsName').on('change', window.adb.handleDsNameChange);
-    $('#DsImportiertVon').on('change', window.adb.handleDsImportiertVonChange);
+    $('#DsName')                                    .on('change',            onChangeDsName);
+    $('#DsImportiertVon')                           .on('change',            onChangeDsImportiertVon);
     $('#DsZusammenfassend').on('change', window.adb.handleDsZusammenfassendChange);
     $('#DsFile').on('change', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
