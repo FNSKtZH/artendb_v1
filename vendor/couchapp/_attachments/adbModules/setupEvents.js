@@ -33,19 +33,19 @@ module.exports = function () {
         .on('click', '#exportieren',          onClickExportieren)
         .on('click', '#exportieren_alt',      onClickExportierenAlt);
 
-    $('#exportieren_diverses')
-        .on('click', '#admin_pilze_zhgis_ergänzen', window.adb.ergaenzePilzeZhgis)
-        .on('click', '#admin_korrigiere_artwertname_in_flora', window.adb.korrigiereArtwertnameInFlora)
-        .on('click', '#admin_korrigiere_ds_name_ch_rote_liste_1991', window.adb.korrigiereDsNameFloraChRoteListe1991)
-        .on('click', '#admin_korrigiere_ds_name', function (event) {
+    $('#exportierenDiverses')
+        .on('click', '#adminPilzeZhgisErgaenzen', window.adb.ergaenzePilzeZhgis)
+        .on('click', '#adminKorrigiereArtwertnameInFlora', window.adb.korrigiereArtwertnameInFlora)
+        .on('click', '#adminKorrigiereDsNameChRoteListe1991', window.adb.korrigiereDsNameFloraChRoteListe1991)
+        .on('click', '#adminKorrigiereDsName', function (event) {
             // dieser Event wurde bei jedem Laden der Seite ausgelöst!
-            if ($('#exportieren_diverses_collapse').is(':visible')) {
+            if ($('#exportierenDiversesCollapse').is(':visible')) {
                 window.adb.nenneDsUm();
             } else {
                 event.preventDefault();
             }
         })
-        .on('click', '#admin_baue_ds_zu_eigenschaften_um', window.adb.baueDsZuEigenschaftenUm);
+        .on('click', '#adminBaueDsZuEigenschaftenUm', window.adb.baueDsZuEigenschaftenUm);
 
     $('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
