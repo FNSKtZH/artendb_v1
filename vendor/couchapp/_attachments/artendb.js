@@ -70,12 +70,6 @@ window.adb.handleImportierenBsImportAusfuehrenCollapseShown = function () {
     require('./adbModules/import/handleImportierenBsImportAusfuehrenCollapseShown')(this);
 };
 
-// wenn DsWählen geändert wird
-// wird in index.html benutzt
-window.adb.handleDsWaehlenChange = function () {
-    require('./adbModules/import/handleDsWaehlenChange')(this);
-};
-
 // wird in index.html benutzt
 window.adb.handleDsNameChange = function () {
     require('./adbModules/import/handleDsNameChange')(this);

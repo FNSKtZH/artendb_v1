@@ -4,11 +4,11 @@
 var _ = require('underscore'),
     $ = require('jquery');
 
-module.exports = function (that) {
-    var dsName         = that.value,
+module.exports = function () {
+    var dsName         = this.value,
         waehlbar       = false,
         $DsAnzDs       = $("#DsAnzDs"),
-        $DsAnzDs_label = $("#DsAnzDs_label"),
+        $DsAnzDsLabel  = $("#DsAnzDsLabel"),
         $DsName        = $("#DsName"),
         $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error"),
         fitTextareaToContent                 = require('../fitTextareaToContent');
@@ -19,18 +19,14 @@ module.exports = function (that) {
         .hide();
     // waehlbar setzen
     // wählen kann man nur, was man selber importiert hat - oder admin ist
-    if ($("#" + that.id + " option:selected").attr("waehlbar") === "true") {
-        waehlbar = true;
-    } else {
-        waehlbar = Boolean(localStorage.admin);
-    }
+    waehlbar = $("#" + this.id + " option:selected").attr("waehlbar") === "true" ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
         $('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
             $(this).val('');
         });
         $DsAnzDs.html("");
-        $DsAnzDs_label.html("");
+        $DsAnzDsLabel.html("");
         if (dsName) {
             _.each(window.adb.dsVonObjekten.rows, function (dsVonObjektenRow) {
                 if (dsVonObjektenRow.key[1] === dsName) {
@@ -45,12 +41,12 @@ module.exports = function (that) {
                     if (dsVonObjektenRow.key[2] === true) {
                         $("#DsZusammenfassend").prop('checked', true);
                         // Feld für Ursprungs-DS anzeigen
-                        $("#DsUrsprungsDs_div").show();
+                        $("#DsUrsprungsDsDiv").show();
                     } else {
                         // sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
                         $("#DsZusammenfassend").prop('checked', false);
                         // und Feld für Ursprungs-DS verstecken
-                        $("#DsUrsprungsDs_div").hide();
+                        $("#DsUrsprungsDsDiv").hide();
                     }
                     // wenn die ds/bs kein "importiert von" hat ist der Wert null
                     // verhindern, dass null angezeigt wird
@@ -59,7 +55,7 @@ module.exports = function (that) {
                     } else {
                         $("#DsImportiertVon").val("");
                     }
-                    $DsAnzDs_label.html("Anzahl Arten/Lebensräume");
+                    $DsAnzDsLabel.html("Anzahl Arten/Lebensräume");
                     $DsAnzDs.html(dsVonObjektenRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importieren_ds')
