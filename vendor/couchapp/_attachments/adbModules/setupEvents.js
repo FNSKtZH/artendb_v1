@@ -1,4 +1,4 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true, white: true*/
 'use strict';
 
 var $                                           = require('jquery'),
@@ -19,7 +19,8 @@ var $                                           = require('jquery'),
     onClickAdminBaueDsZuEigenschaftenUm         = require('./admin/onClickAdminBaueDsZuEigenschaftenUm'),
     onShownImportierenDsDsBeschreibenCollapse   = require('./import/onShownImportierenDsDsBeschreibenCollapse'),
     onShownImportierenBsDsBeschreibenCollapse   = require('./import/onShownImportierenBsDsBeschreibenCollapse'),
-    onShownImportierenDsDatenUploadenCollapse   = require('./import/onShownImportierenDsDatenUploadenCollapse');
+    onShownImportierenDsDatenUploadenCollapse   = require('./import/onShownImportierenDsDatenUploadenCollapse'),
+    onShownImportierenBsDatenUploadenCollapse   = require('./import/onShownImportierenBsDatenUploadenCollapse');
 
 module.exports = function () {
     var $body = $('body');
@@ -30,41 +31,41 @@ module.exports = function () {
      * body
      */
     $body
-        .on('click', '.showNextHidden', onClickShowNextHidden)
-        .on('click', '.showNextHiddenExport', onClickShowNextHiddenExport);
-    $('#menuBtn').on('click', onClickMenuBtn);
+        .on('click', '.showNextHidden',                                      onClickShowNextHidden)
+        .on('click', '.showNextHiddenExport',                                onClickShowNextHiddenExport);
+    $('#menuBtn')                                   .on('click',             onClickMenuBtn);
 
     /*
      * menu
      */
     $('#menu').on('click',  '.gruppe', onClickOeffneGruppe);
-    $('#btnResize').on('click', onClickBtnResize);
-    $('#ds_importieren').on('click', onClickDsImportieren);
-    $('#bs_importieren').on('click', onClickBsImportieren);
-    $('#menu_admin').on('click', onClickMenuAdmin);
-    $('#exportieren').on('click', onClickExportieren);
-    $('#exportieren_alt').on('click', onClickExportierenAlt);
+    $('#btnResize')                                 .on('click',             onClickBtnResize);
+    $('#ds_importieren')                            .on('click',             onClickDsImportieren);
+    $('#bs_importieren')                            .on('click',             onClickBsImportieren);
+    $('#menu_admin')                                .on('click',             onClickMenuAdmin);
+    $('#exportieren')                               .on('click',             onClickExportieren);
+    $('#exportieren_alt')                           .on('click',             onClickExportierenAlt);
 
     /*
      * admin
      */
-    $('#adminPilzeZhgisErgaenzen').on('click', onClickAdminPilzeZhgisErgaenzen);
-    $('#adminKorrigiereArtwertnameInFlora').on('click', onClickAdminKorrigiereArtwertnameInFlora);
-    $('#adminKorrigiereDsNameChRoteListe1991').on('click', onClickAdminKorrigiereDsNameChRoteListe1991);
-    $('#adminKorrigiereDsName').on('click', onClickAdminKorrigiereDsName);
-    $('#adminBaueDsZuEigenschaftenUm').on('click', onClickAdminBaueDsZuEigenschaftenUm);
+    $('#adminPilzeZhgisErgaenzen')                  .on('click',             onClickAdminPilzeZhgisErgaenzen);
+    $('#adminKorrigiereArtwertnameInFlora')         .on('click',             onClickAdminKorrigiereArtwertnameInFlora);
+    $('#adminKorrigiereDsNameChRoteListe1991')      .on('click',             onClickAdminKorrigiereDsNameChRoteListe1991);
+    $('#adminKorrigiereDsName')                     .on('click',             onClickAdminKorrigiereDsName);
+    $('#adminBaueDsZuEigenschaftenUm')              .on('click',             onClickAdminBaueDsZuEigenschaftenUm);
 
     /*
      * importieren
      */
-    $('#importieren_ds_ds_beschreiben_collapse').on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
-    $('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
-    $('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
-    $('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsDatenUploadenCollapseShown);
+    $('#importieren_ds_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
+    $('#importieren_bs_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
+    $('#importieren_ds_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
+    $('#importieren_bs_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
     $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsIdsIdentifizierenCollapseShown);
     $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
-    $('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
-    $('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
+    $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
+    $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
     $('#DsWaehlen').on('change', window.adb.handleDsWaehlenChange);
     $('#DsName').on('change', window.adb.handleDsNameChange);
     $('#DsImportiertVon').on('change', window.adb.handleDsImportiertVonChange);
