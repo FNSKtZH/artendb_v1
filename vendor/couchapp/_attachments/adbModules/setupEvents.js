@@ -1,27 +1,25 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $                     = require('jquery'),
-    onClickOeffneGruppe   = require('./events/onClickOeffneGruppe'),
-    onClickBtnResize      = require('./events/onClickBtnResize'),
-    onClickMenuBtn        = require('./events/onClickMenuBtn'),
-    onClickShowNextHidden = require('./events/onClickShowNextHidden');
+var $                           = require('jquery'),
+    onClickOeffneGruppe         = require('./events/onClickOeffneGruppe'),
+    onClickBtnResize            = require('./events/onClickBtnResize'),
+    onClickMenuBtn              = require('./events/onClickMenuBtn'),
+    onClickShowNextHidden       = require('./events/onClickShowNextHidden'),
+    onClickShowNextHiddenExport = require('./events/onClickShowNextHiddenExport');
 
 module.exports = function () {
     $("#menu")
         // Baum aufbauen, wenn Gruppe gewählt wird
-        .on("click", ".gruppe",         onClickOeffneGruppe)
+        .on("click", ".gruppe",               onClickOeffneGruppe)
         // zwischen Mobil- und Desktopsicht wechseln
-        .on("click", "#btnResize",      onClickBtnResize);
+        .on("click", "#btnResize",            onClickBtnResize);
 
     // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
     $("body")
-        .on("click", "#menuBtn",        onClickMenuBtn)
-        .on("click", ".showNextHidden", onClickShowNextHidden)
-        .on("click", ".show_next_hidden_export", function (event) {
-            event.preventDefault();
-            window.adb.showNextHiddenExport(this);
-        });
+        .on("click", "#menuBtn",              onClickMenuBtn)
+        .on("click", ".showNextHidden",       onClickShowNextHidden)
+        .on("click", ".showNextHiddenExport", onClickShowNextHiddenExport);
 
     $("#menuBtn")
         // testen, ob der Browser das Importieren unterstützt

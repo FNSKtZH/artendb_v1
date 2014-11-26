@@ -3,15 +3,18 @@
 
 var $ = require('jquery');
 
-module.exports = function (that) {
-    var $elementToShow = $(that)
-        .parent()
-        .next();
+module.exports = function () {
+    var $elementToShow;
+
+    event.preventDefault();
+
+    $elementToShow = $(this).parent().next();
+
     if ($elementToShow.is(':visible')) {
         $elementToShow.hide(400);
-        $(that).text("...mehr");
+        $(this).text("...mehr");
     } else {
         $elementToShow.show(400);
-        $(that).text("...weniger");
+        $(this).text("...weniger");
     }
 };

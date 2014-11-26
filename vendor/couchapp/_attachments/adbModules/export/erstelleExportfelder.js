@@ -66,8 +66,8 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
             return array[0] === taxonomie.Name;
         });
         if (dsbsVonObjekt && dsbsVonObjekt[1]) {
-            htmlFelderWaehlen += ' <a href="#" class="show_next_hidden_export">...mehr</a>';
-            htmlFiltern += ' <a href="#" class="show_next_hidden_export">...mehr</a>';
+            htmlFelderWaehlen += ' <a href="#" class="showNextHiddenExport">...mehr</a>';
+            htmlFiltern += ' <a href="#" class="showNextHiddenExport">...mehr</a>';
             // ds-titel abschliessen
             htmlFelderWaehlen += '</h5>';
             htmlFiltern += '</h5>';

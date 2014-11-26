@@ -371,11 +371,6 @@ window.adb.initiiereApp = function () {
     require('./adbModules/initiiereApp')();
 };
 
-// wird in index.html benutzt
-window.adb.showNextHiddenExport = function (that) {
-    require('./adbModules/export/showNextHiddenExport')(that);
-};
-
 /*
 * Bootstrap file uploader
 * Quelle: //jasny.github.io/bootstrap

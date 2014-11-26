@@ -414,7 +414,7 @@ a:hover {
 }
 
 a.showNextHidden,
-a.show_next_hidden_export {
+a.showNextHiddenExport {
     font-style: italic;
 }
 
