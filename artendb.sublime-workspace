@@ -320,30 +320,19 @@
 			}
 		},
 		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 313,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "vendor/couchapp/_attachments/adbModules/setupEvents.js",
 			"settings":
 			{
 				"buffer_size": 15467,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "[17:36:13] gulp-notify: [Compile Error] Cannot find module './adbModules/import/handleImportierenDsDatenUploadenCollapseShown' from 'C:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments'",
-			"settings":
-			{
-				"buffer_size": 189,
-				"line_ending": "Windows",
-				"name": "[17:36:13] gulp-notify: [Compile Error] Cannot fin"
-			}
-		},
-		{
-			"contents": "Searching 8330 files for \"handleImportierenBsDsBeschreibenCollapseShown\" (case sensitive, whole word)\n\nC:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\setupEvents.js:\n   48  \n   49      $('#importieren_bs_ds_beschreiben_collapse')\n   50:         .on('shown.bs.collapse',                                 window.adb.handleImportierenBsDsBeschreibenCollapseShown);\n   51  \n   52      $('#importieren_ds_daten_uploaden_collapse')\n\nC:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n   62  \n   63  // wird in index.html benutzt\n   64: window.adb.handleImportierenBsDsBeschreibenCollapseShown = function () {\n   65:     require('./adbModules/import/handleImportierenBsDsBeschreibenCollapseShown')();\n   66  };\n   67  \n\n3 matches across 2 files\n\n\nSearching 8330 files for \"handleImportierenDsDatenUploadenCollapseShown\" (case sensitive, whole word)\n\nC:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments\\adbModules\\setupEvents.js:\n   52  \n   53      $('#importieren_ds_daten_uploaden_collapse')\n   54:         .on('shown.bs.collapse',                                 window.adb.handleImportierenDsDatenUploadenCollapseShown);\n   55  \n   56      $('#importieren_bs_daten_uploaden_collapse')\n\nC:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n   62  \n   63  // wird in index.html benutzt\n   64: window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {\n   65:     require('./adbModules/import/handleImportierenDsDatenUploadenCollapseShown')(this);\n   66  };\n   67  \n\n3 matches across 2 files\n\n\nSearching 8330 files for \"./adbModules/import/handleImportierenDsDatenUploadenCollapseShown\" (case sensitive)\n\nC:\\Users\\Alexander\\artendb\\vendor\\couchapp\\_attachments\\artendb.js:\n   63  // wird in index.html benutzt\n   64  window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {\n   65:     require('./adbModules/import/handleImportierenDsDatenUploadenCollapseShown')(this);\n   66  };\n   67  \n\n1 match in 1 file\n",
-			"settings":
-			{
-				"buffer_size": 1984,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
 			}
 		}
 	],
@@ -898,7 +887,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -926,7 +915,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -956,11 +945,39 @@
 						"translation.y": 1086.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 313,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								312,
+								312
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "vendor/couchapp/_attachments/adbModules/setupEvents.js",
 					"semi_transient": false,
 					"settings":
@@ -984,106 +1001,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 189,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								125,
-								60
-							]
-						],
-						"settings":
-						{
-							"auto_name": "[17:36:13] gulp-notify: [Compile Error] Cannot fin",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1984,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										333,
-										378
-									],
-									[
-										577,
-										622
-									],
-									[
-										679,
-										724
-									],
-									[
-										1109,
-										1154
-									],
-									[
-										1353,
-										1398
-									],
-									[
-										1455,
-										1500
-									],
-									[
-										1872,
-										1937
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								1908,
-								1908
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 3,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1053.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
