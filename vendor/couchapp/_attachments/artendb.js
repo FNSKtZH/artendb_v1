@@ -61,11 +61,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleImportierenDsDatenUploadenCollapseShown = function () {
-    require('./adbModules/import/handleImportierenDsDatenUploadenCollapseShown')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleImportierenBsDatenUploadenCollapseShown = function () {
     require('./adbModules/import/handleImportierenBsDatenUploadenCollapseShown')(this);
 };
