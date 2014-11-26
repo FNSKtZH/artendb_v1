@@ -36,7 +36,7 @@ body {
             hyphens: auto;
 }
 
-#menu_btn {
+#menuBtn {
     position: absolute;
     top:  18px;
     left: 16px;
@@ -88,7 +88,7 @@ body {
         position: fixed;
     }
 
-    body:not(.force-mobile) #menu_btn {
+    body:not(.force-mobile) #menuBtn {
         position: fixed;
     }
 
@@ -152,7 +152,7 @@ body {
     margin-right: 7px;
 }
 
-#menu_btn iframe {
+#menuBtn iframe {
     padding-left: 20px;
     margin-top:    3px;
 }
@@ -413,7 +413,7 @@ a:hover {
     text-decoration: underline;
 }
 
-a.show_next_hidden,
+a.showNextHidden,
 a.show_next_hidden_export {
     font-style: italic;
 }

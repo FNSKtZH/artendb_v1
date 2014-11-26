@@ -12,10 +12,10 @@ module.exports = function (esOderBs) {
     if (esOderBs.Datenstand || esOderBs.Link || (esOderBs.zusammenfassend && esOderBs.Ursprungsdatensammlung)) {
         // wenn keine Beschreibung existiert, andere Option einblenden
         if (esOderBs.Beschreibung) {
-            html += ' <a href="#" class="show_next_hidden">...mehr</a>';
+            html += ' <a href="#" class="showNextHidden">...mehr</a>';
         } else {
             // wenn keine Beschreibung existiert, andere Option einblenden
-            html += '<a href="#" class="show_next_hidden">Beschreibung der Datensammlung anzeigen</a>';
+            html += '<a href="#" class="showNextHidden">Beschreibung der Datensammlung anzeigen</a>';
         }
         html += '<div class="adb-hidden">';
         if (esOderBs.Datenstand) {

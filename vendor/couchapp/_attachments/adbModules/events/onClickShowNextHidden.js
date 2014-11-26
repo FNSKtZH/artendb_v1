@@ -3,17 +3,19 @@
 
 var $ = require('jquery');
 
-module.exports = function (that) {
-    var $elementToShow = $(that)
+module.exports = function () {
+    var $elementToShow = $(this)
         .parent()
         .find(".adb-hidden")
         .first();
 
+    event.preventDefault();
+
     if ($elementToShow.is(':visible')) {
         $elementToShow.hide(400);
-        $(that).text("...mehr");
+        $(this).text("...mehr");
     } else {
         $elementToShow.show(400);
-        $(that).text("...weniger");
+        $(this).text("...weniger");
     }
 };

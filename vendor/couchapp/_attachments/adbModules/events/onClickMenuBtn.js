@@ -1,4 +1,4 @@
-// wenn menu_btn geklickt wird
+// wenn menuBtn geklickt wird
 // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/

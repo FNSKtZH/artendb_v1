@@ -56,11 +56,6 @@ window.adb.handleBsFileChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleMenuBtnClick = function () {
-    require('./adbModules/handleMenuBtnClick')();
-};
-
-// wird in index.html benutzt
 window.adb.handleDsImportierenClick = function () {
     require('./adbModules/import/handleDsImportierenClick')();
 };
@@ -374,11 +369,6 @@ window.adb.exportZuruecksetzen = function (event, _alt) {
 // wird in index.html benutzt
 window.adb.initiiereApp = function () {
     require('./adbModules/initiiereApp')();
-};
-
-// wird in index.html benutzt
-window.adb.showNextHidden = function (that) {
-    require('./adbModules/showNextHidden')(that);
 };
 
 // wird in index.html benutzt

@@ -5,11 +5,11 @@ var $ = require('jquery');
 
 module.exports = function () {
     if (localStorage.admin) {
-        $("#menu_btn")
+        $("#menuBtn")
             .find(".admin")
             .show();
     } else {
-        $("#menu_btn")
+        $("#menuBtn")
             .find(".admin")
             .hide();
     }

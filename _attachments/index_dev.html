@@ -13,7 +13,7 @@
         <title>ArtenDb</title>
     </head>
     <body>
-        <div id="menu_btn" class="btn-group menu" style="display:none;">
+        <div id="menuBtn" class="btn-group menu" style="display:none;">
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                 Menu
                 <span class="caret"></span>
@@ -45,7 +45,7 @@
         </div>
         <fieldset id="menu" class="menu" style="display:none;">
             <div>
-                <button id="btn_resize" type="button" class="btn btn-sm btn-default pull-right" data-toggle="tooltip" data-placement="left" title="ganze Breite nutzen"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
+                <button id="btnResize" type="button" class="btn btn-sm btn-default pull-right" data-toggle="tooltip" data-placement="left" title="ganze Breite nutzen"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
                 <div id="menu-div">
                     <div id="gruppe_label">Gruppe wählen:</div>
                 </div>
@@ -199,7 +199,7 @@
                         <div class="panel-collapse collapse" id="importieren_ds_ds_beschreiben_collapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><a href="//youtu.be/nqd-v6YxkOY" target="_blank"><b>Screencast sehen</b></a></div>
-                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Der Name sollte ungefähr dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Blaue Liste (1998)"</li>
                                         <li>Wurden die Informationen spezifisch für einen bestimmten Kanton oder die ganze Schweiz erarbeitet? Wenn ja: Bitte das entsprechende Kürzel voranstellen. Beispiel: "ZH Artwert (1995)"</li>
@@ -210,14 +210,14 @@
                                         <li>Besonders hilfreich ist es, wenn die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm"><b>Für eine zusammenfassende Eigenschaftensammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Für eine zusammenfassende Eigenschaftensammlung importieren Sie die Daten zwei mal</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>zuerst in die Ursprungs-Eigenschaftensammlung</li>
                                         <li>dann in die zusammenfassende. Bitte die Ursprungs-Eigenschaftensammlung angeben</li>
                                         <li>Mehr Infos <a href="//github.com/FNSKtZH/artendb#zusammenfassende_datensammlungen" target="_blank">hier</a></li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
                                         <li>Dafür verantwortlich ist, wer Daten importiert</li>
@@ -281,7 +281,7 @@
                         </div>
                         <div class="panel-collapse collapse" id="importieren_ds_daten_uploaden_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Sie können Dateien vom Typ <b>.csv</b> (kommagetrennte Textdatei) oder <b>.xlsx</b> (Excel-Datei) importieren</li>
                                         <li>Die erste Zeile enthält die Feldnamen</li>
@@ -290,7 +290,7 @@
                                         <li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm"><b>Zusätzliche Anforderungen an csv-Dateien</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Zusätzliche Anforderungen an csv-Dateien</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
                                         <li>Der Inhalt eines Felds bzw. einer Spalte sollte in der Regel in Anführungs- und Schlusszeichen eingefasst sein, z.B.: "Artwert"</li>
@@ -299,7 +299,7 @@
                                         <li>Die beschriebenen Anforderungen entsprechen der am häufigsten verwendeten Konfiguration des <a href="//de.wikipedia.org/wiki/CSV_(Dateiformat)">"csv"-Formats</a></li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Um die Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
                                         <li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Eigenschaftensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
@@ -415,7 +415,7 @@
                         </div>
                         <div class="panel-collapse collapse" id="importieren_bs_ds_beschreiben_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Der erste Teil des Namens sollte ca. dem ersten Teil eines Literaturzitats entsprechen. Beispiel: "Delarze (2008)"</li>
                                         <li>Danach sollte der Namen die Art der Beziehung ausdrücken. Beispiel: "Delarze (2008): Art charakterisiert Lebensraum"</li>
@@ -427,13 +427,13 @@
                                         <li>Besonders hilfreich ist es, wann die Originalpublikation verlinkt werden kann. Oder eine erläuternde Webseite</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm"><b>Für eine zusammenfassende Beziehungssammlung importieren Sie die Daten zwei mal</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Für eine zusammenfassende Beziehungssammlung importieren Sie die Daten zwei mal</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>zuerst in die Ursprungs-Beziehungssammlung</li>
                                         <li>dann in die zusammenfassende. Bitte die Ursprungs-Beziehungssammlung angeben</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Autorenrechte beachten</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Die Autoren müssen mit der Veröffentlichung einverstanden sein</li>
                                         <li>Dafür verantwortlich ist, wer Daten importiert</li>
@@ -499,7 +499,7 @@
                         </div>
                         <div class="panel-collapse collapse" id="importieren_bs_daten_uploaden_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Sie können Dateien vom Typ <b>.csv</b> (kommagetrennte Textdatei) oder <b>.xlsx</b> (Excel-Datei) importieren</li>
                                         <li>Die erste Zeile enthält die Feldnamen</li>
@@ -508,14 +508,14 @@
                                         <li>Achten Sie darauf, dass die Datei die Codierung "UTF 8" benutzt. Nur in diesem Format werden Umlaute und Sonderzeichen vollständig erkannt</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm"><b>Zusätzliche Anforderungen an csv-Dateien</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm"><b>Zusätzliche Anforderungen an csv-Dateien</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Zeilen werden mit einem Zeilenumbruch getrennt</li>
                                         <li>Der Inhalt eines Felds bzw. einer Spalte sollte NICHT in Anführungs- und Schlusszeichen eingefasst sein. Felder sollten aber keine Kommas enthalten</li>
                                         <li>Felder sind mit Komma getrennt</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Inhaltliche Anforderungen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Um die zu beschreibende Art oder den Lebensraum zu identifizieren müssen Sie eine ID mitliefern. Entweder die GUID der ArtenDb. Oder die vom entsprechenden nationalen Artdatenzentrum für diese Artengruppe verwendete ID (z.B. Flora: SISF-Nr)</li>
                                         <li>Sie haben bloss eine andere ID? Vielleicht finden Sie sie in einer Datensammlung der ArtenDb. Beispielsweise enthält die Flora Indicativa (= "CH Zeigerwerte (2010)") mehrere weitere ID's aus anderen Florenwerken. Sie können diese Daten gemeinsam mit der GUID der ArtenDb exportieren (z.B. ins Excel-Arbeitsblatt "ID-Liste"). Danach können Sie z.B. in Excel in der Spalte neben ihrer ID mithilfe der Funktion "SVERWEIS" die jeweilige GUID der ArtenDb einfügen. Die Funktion "SVERWEIS" schlägt dabei in der "ID-Liste" für ihre ID die GUID nach</li>
@@ -594,7 +594,7 @@
                         </div>
                         <div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Wählen Sie eine oder mehrere Gruppen...</li>
                                         <li>...dann werden die Eigenschaften der Gruppe(n) aufgebaut...</li>
@@ -638,7 +638,7 @@
                                     </label>
                                 </div>
                                 <button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
-                                <div class="well well-sm" style="margin-bottom:5px !important;"><b>Alle Taxonomien zusammenfassen?</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm" style="margin-bottom:5px !important;"><b>Alle Taxonomien zusammenfassen?</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Mit dieser Option werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und darunter alle in diesen Taxonomien vorkommenden Felder aufgelistet</li>
                                         <li>Beispielsweise können Sie bei Lebensräumen im Feld "Taxonomie" nach "Delarze" filtern um alle Taxonomien von Delarze gleichzeitig zu exportieren</li>
@@ -658,14 +658,14 @@
                         </div>
                         <div class="panel-collapse collapse" id="exportieren_objekte_waehlen_ds_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
                                         <li>Erfassen Sie in den Eigenschaften Ihrer Wahl die gewünschten Kriterien...</li>
                                         <li>...und wählen Sie danach unter "3. Eigenschaften wählen", welche Eigenschaften exportiert werden sollen</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Sie können nach beliebig vielen Eigenschaften filtern. Jedes Kriterium reduziert die Anzahl "Treffer"
                                             <br>Beispiel: Filtern Sie im Namen nach "Eisvogel" und in der Ordnung nach "Lepidoptera", erhalten Sie drei Schmetterlinge aber nicht den entsprechenden Vogel</li>
@@ -698,14 +698,14 @@
                         </div>
                         <div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den gewählten Gruppen vorkommen</li>
                                         <li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
                                         <li>...und fahren Sie danach mit "4. exportieren" weiter</li>
                                     </ul>
                                 </div>
-                                <!--div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <!--div class="well well-sm last-well"><b>Tipps und Tricks</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
                                     </ul>
@@ -749,7 +749,7 @@
                         </div>
                         <div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Der Server filtert und baut die Exportdaten auf</li>
                                         <li><strong>...das dauert eine ganze Weile. Geduld bringt Daten!</strong></li>
@@ -772,7 +772,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="well well-sm format_csv">Details des csv-Formats <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm format_csv">Details des csv-Formats <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Zeichensatz ist UTF-8 (wichtig für Umlaute)</li>
                                         <li>Die erste Zeile enthält die Feldnamen</li>
@@ -780,7 +780,7 @@
                                         <li>Feldinhalte sind in Anführungs- und Schlusszeichen (") eingeschlossen</li>
                                     </ul>
                                 </div>
-                                <div class="well well-sm last-well format_csv">csv-Datei nicht mit Excel öffnen <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm last-well format_csv">csv-Datei nicht mit Excel öffnen <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Am einfachsten öffnen Sie die .csv-Datei in den open-source-Programmen <a href="http://www.openoffice.org/de/" target="_blank">OpenOffice</a> oder <a href="http://de.libreoffice.org/" target="_blank">LibreOffice</a>.</li>
                                         <li>Sie werten die Daten lieber in Excel aus? Ich auch. Speichern Sie die so geöffnete Datei einfach im Excel-Format.<br>Wenn Excel die so vorbereitete Datei öffnet, treten die nachfolgend beschriebenen Fehler nicht auf</li>
@@ -819,7 +819,7 @@
                         </div>
                         <div class="panel-collapse collapse in" id="exportieren_alt_felder_waehlen_collapse">
                             <div class="panel-body">
-                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="show_next_hidden">...mehr</a>
+                                <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Nachfolgend sind alle Eigenschaften aufgelistet, die in den vom Artenlistentool auswertbaren Gruppen (Flora und Fauna) vorkommen</li>
                                         <li>Markieren Sie die Eigenschaften, die Sie exportieren möchten...</li>
@@ -947,7 +947,7 @@
             $(document).ready(function () {
                 window.adb.initiiereApp();
                 window.adb.setupEvents();
-                $('#btn_resize, #exportieren_exportieren_exportieren, #exportieren_exportieren_exportieren_direkt').tooltip();
+                $('#btnResize, #exportieren_exportieren_exportieren, #exportieren_exportieren_exportieren_direkt').tooltip();
             });
 
         </script>

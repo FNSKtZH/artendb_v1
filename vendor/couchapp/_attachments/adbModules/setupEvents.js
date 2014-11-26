@@ -1,30 +1,29 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $                   = require('jquery'),
-    onClickOeffneGruppe = require('./events/onClickOeffneGruppe'),
-    onClickBtnResize    = require('./events/onClickBtnResize');
+var $                     = require('jquery'),
+    onClickOeffneGruppe   = require('./events/onClickOeffneGruppe'),
+    onClickBtnResize      = require('./events/onClickBtnResize'),
+    onClickMenuBtn        = require('./events/onClickMenuBtn'),
+    onClickShowNextHidden = require('./events/onClickShowNextHidden');
 
 module.exports = function () {
     $("#menu")
         // Baum aufbauen, wenn Gruppe gewählt wird
-        .on("click", ".gruppe",     onClickOeffneGruppe)
+        .on("click", ".gruppe",         onClickOeffneGruppe)
         // zwischen Mobil- und Desktopsicht wechseln
-        .on("click", "#btn_resize", onClickBtnResize);
+        .on("click", "#btnResize",      onClickBtnResize);
 
     // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
     $("body")
-        .on("click", "#menu_btn", window.adb.handleMenuBtnClick)
-        .on("click", ".show_next_hidden", function (event) {
-            event.preventDefault();
-            window.adb.showNextHidden(this);
-        })
+        .on("click", "#menuBtn",        onClickMenuBtn)
+        .on("click", ".showNextHidden", onClickShowNextHidden)
         .on("click", ".show_next_hidden_export", function (event) {
             event.preventDefault();
             window.adb.showNextHiddenExport(this);
         });
 
-    $("#menu_btn")
+    $("#menuBtn")
         // testen, ob der Browser das Importieren unterstützt
         // wenn nein, Meldung bringen
         .on("click", "#ds_importieren",  window.adb.handleDsImportierenClick)
