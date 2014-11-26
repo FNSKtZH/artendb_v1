@@ -27,7 +27,8 @@ var $                                             = require('jquery'),
     onShownImportierenBsImportAusfuehrenCollapse  = require('./import/onShownImportierenBsImportAusfuehrenCollapse'),
     onChangeDsWaehlen                             = require('./import/onChangeDsWaehlen'),
     onChangeDsName                                = require('./import/onChangeDsName'),
-    onChangeDsImportiertVon                       = require('./import/onChangeDsImportiertVon');
+    onChangeDsImportiertVon                       = require('./import/onChangeDsImportiertVon'),
+    onChangeDsZusammenfassend                     = require('./import/onChangeDsZusammenfassend');
 
 module.exports = function () {
     var $body = $('body');
@@ -76,7 +77,7 @@ module.exports = function () {
     $('#DsWaehlen')                                 .on('change',            onChangeDsWaehlen);
     $('#DsName')                                    .on('change',            onChangeDsName);
     $('#DsImportiertVon')                           .on('change',            onChangeDsImportiertVon);
-    $('#DsZusammenfassend').on('change', window.adb.handleDsZusammenfassendChange);
+    $('#DsZusammenfassend')                         .on('change',            onChangeDsZusammenfassend);
     $('#DsFile').on('change', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht

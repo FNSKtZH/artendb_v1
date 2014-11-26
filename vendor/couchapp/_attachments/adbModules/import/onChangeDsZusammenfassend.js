@@ -6,8 +6,8 @@
 
 var $ = require('jquery');
 
-module.exports = function (that) {
-    if ($(that).prop('checked')) {
+module.exports = function () {
+    if ($(this).prop('checked')) {
         $("#DsUrsprungsDsDiv").show();
     } else {
         $("#DsUrsprungsDsDiv").hide();

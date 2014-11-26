@@ -29,11 +29,6 @@ window.adb.handleBsZusammenfassendChange = function () {
     require('./adbModules/import/handleBsZusammenfassendChange')(this);
 };
 
-// wird in index.html benutzt
-window.adb.handleDsZusammenfassendChange = function () {
-    require('./adbModules/import/handleDsZusammenfassendChange')(this);
-};
-
 // Wenn BsWählen geändert wird
 // wird in index.html benutzt
 window.adb.handleBsWaehlenChange = function () {
