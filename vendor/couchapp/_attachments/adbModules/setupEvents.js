@@ -30,6 +30,8 @@ var $                                             = require('jquery'),
     onChangeDsImportiertVon                       = require('./import/onChangeDsImportiertVon'),
     onChangeDsZusammenfassend                     = require('./import/onChangeDsZusammenfassend'),
     onChangeDsFile                                = require('./import/onChangeDsFile'),
+    onChangeDsFelder                              = require('./import/onChangeDsFelder'),
+    onChangeDsId                                  = require('./import/onChangeDsId'),
     onClickDsLoeschen                             = require('./import/onClickDsLoeschen');
 
 module.exports = function () {
@@ -81,8 +83,8 @@ module.exports = function () {
     $('#DsImportiertVon')                           .on('change',            onChangeDsImportiertVon);
     $('#DsZusammenfassend')                         .on('change',            onChangeDsZusammenfassend);
     $('#DsFile')                                    .on('change',            onChangeDsFile);
-    $('#DsFelder').on('change', window.adb.handleDsFelderChange);
-    $('#DsId').on('change', window.adb.handleDsIdChange);
+    $('#DsFelder')                                  .on('change',            onChangeDsFelder);
+    $('#DsId')                                      .on('change',            onChangeDsId);
     $('#DsLoeschen')                                .on('click',             onClickDsLoeschen);
     $('#DsImportieren').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion

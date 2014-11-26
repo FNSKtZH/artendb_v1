@@ -190,19 +190,9 @@ window.adb.handleKontoSpeichernBtnClick = function (that) {
     require('./adbModules/login/handleKontoSpeichernBtnClick')(that);
 };
 
-// wenn #DsFelder geändert wird
-window.adb.handleDsFelderChange = function () {
-    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
-};
-
 // wenn #BsFelder geändert wird
 window.adb.handleBsFelderChange = function () {
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
-};
-
-// wenn #DsId geändert wird
-window.adb.handleDsIdChange = function () {
-    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Ds');
 };
 
 // wenn #BsId geändert wird
