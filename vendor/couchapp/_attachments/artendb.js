@@ -1,8 +1,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
 
 window.adb = window.adb || {};
 
 var $ = require('jquery');
+
+window.adb.setupEvents = function () {
+    require('./adbModules/setupEvents')();
+};
 
 // wird in index.html benutzt
 window.adb.meldeUserAb = function () {
