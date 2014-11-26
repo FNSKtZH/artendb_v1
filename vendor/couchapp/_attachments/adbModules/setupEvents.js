@@ -14,7 +14,9 @@ var $                                           = require('jquery'),
     onClickExportierenAlt                       = require('./export/onClickExportierenAlt'),
     onClickAdminPilzeZhgisErgaenzen             = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
     onClickAdminKorrigiereArtwertnameInFlora    = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
-    onClickAdminKorrigiereDsNameChRoteListe1991 = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991');
+    onClickAdminKorrigiereDsNameChRoteListe1991 = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
+    onClickAdminKorrigiereDsName                = require('./admin/onClickAdminKorrigiereDsName'),
+    onClickAdminBaueDsZuEigenschaftenUm         = require('./admin/onClickAdminBaueDsZuEigenschaftenUm');
 
 module.exports = function () {
     $('#menu')
@@ -37,15 +39,8 @@ module.exports = function () {
         .on('click',  '#adminPilzeZhgisErgaenzen',             onClickAdminPilzeZhgisErgaenzen)
         .on('click',  '#adminKorrigiereArtwertnameInFlora',    onClickAdminKorrigiereArtwertnameInFlora)
         .on('click',  '#adminKorrigiereDsNameChRoteListe1991', onClickAdminKorrigiereDsNameChRoteListe1991)
-        .on('click',  '#adminKorrigiereDsName', function (event) {
-            // dieser Event wurde bei jedem Laden der Seite ausgelöst!
-            if ($('#adminExportierenCollapse').is(':visible')) {
-                window.adb.nenneDsUm();
-            } else {
-                event.preventDefault();
-            }
-        })
-        .on('click', '#adminBaueDsZuEigenschaftenUm',          window.adb.baueDsZuEigenschaftenUm);
+        .on('click',  '#adminKorrigiereDsName',                onClickAdminKorrigiereDsName)
+        .on('click',  '#adminBaueDsZuEigenschaftenUm',         onClickAdminBaueDsZuEigenschaftenUm);
 
     $('#importieren_ds')
         .on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);

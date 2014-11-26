@@ -61,11 +61,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.baueDsZuEigenschaftenUm = function () {
-    require('./adbModules/admin/baueDsZuEigenschaftenUm')();
-};
-
-// wird in index.html benutzt
 window.adb.handleImportierenDsDsBeschreibenCollapseShown = function () {
     require('./adbModules/import/handleImportierenDsDsBeschreibenCollapseShown')();
 };

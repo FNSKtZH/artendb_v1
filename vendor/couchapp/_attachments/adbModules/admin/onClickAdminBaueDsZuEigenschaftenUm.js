@@ -73,7 +73,7 @@ module.exports = function () {
             }
         },
         error: function () {
-            console.log('baueDsZuEigenschaftenUm: keine Daten erhalten');
+            console.log('onClickAdminBaueDsZuEigenschaftenUm: keine Daten erhalten');
         }
     });
 };
