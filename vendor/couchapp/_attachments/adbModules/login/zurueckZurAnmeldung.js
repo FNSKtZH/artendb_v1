@@ -1,7 +1,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
     var praefix = "importieren_";
@@ -10,6 +11,9 @@ module.exports = function (woher) {
     if (woher === "art") {
         praefix = "";
         $("#art_anmelden").show();
+        $("#" + woher + "_anmelden_hinweis")
+            .alert()
+            .show();
     }
 
     // Mitteilen, dass Anmeldung nötig ist
@@ -23,5 +27,5 @@ module.exports = function (woher) {
     // ausschalten, soll später bei Organisationen möglich werden
     //$(".konto_erstellen_btn").show();
     $(".konto_speichern_btn").hide();
-    $("#Email_" + woher).focus();
+    $("#email" + capitaliseFirstLetter(woher)).focus();
 };

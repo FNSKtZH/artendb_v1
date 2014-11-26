@@ -12,38 +12,40 @@ module.exports = function (woher) {
         passwort,
         passwort2;
 
+    woher = capitaliseFirstLetter(woher);
+
     // zunächst alle Hinweise ausblenden (falls einer von einer früheren Prüfung her noch eingeblendet wäre)
     $(".hinweis").hide();
     // erfasste Werte holen
-    email = $("#Email_" + woher).val();
-    passwort = $("#passwort" + capitaliseFirstLetter(woher)).val();
-    passwort2 = $("#Passwort2_" + woher).val();
+    email     = $("#email" + woher).val();
+    passwort  = $("#passwort" + woher).val();
+    passwort2 = $("#passwort2" + woher).val();
     // prüfen
     if (!email) {
-        $("#Emailhinweis_" + woher).show();
+        $("#emailhinweis" + woher).show();
         setTimeout(function () {
-            $("#Email_" + woher).focus();
+            $("#email" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (!passwort) {
-        $("#Passworthinweis_" + woher).show();
+        $("#passworthinweis" + woher).show();
         setTimeout(function () {
-            $("#passwort" + capitaliseFirstLetter(woher)).focus();
+            $("#passwort" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (!passwort2) {
-        $("#Passwort2hinweis_" + woher).show();
+        $("#passwort2hinweis" + woher).show();
         setTimeout(function () {
-            $("#Passwort2_" + woher).focus();
+            $("#passwort2" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (passwort !== passwort2) {
-        $("#Passwort2hinweisFalsch_" + woher).show();
+        $("#passwort2hinweisFalsch" + woher).show();
         setTimeout(function () {
-            $("#Passwort2_" + woher).focus();
+            $("#passwort2" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }

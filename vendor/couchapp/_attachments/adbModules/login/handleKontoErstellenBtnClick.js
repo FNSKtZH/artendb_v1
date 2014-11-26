@@ -3,7 +3,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (that) {
     var bsDs = that.id.substring(that.id.length - 2);
@@ -18,6 +19,6 @@ module.exports = function (that) {
     $(".konto_speichern_btn").show();
     $(".importieren_anmelden_fehler").hide();
     setTimeout(function () {
-        $("#Email_" + bsDs).focus();
+        $("#email" + capitaliseFirstLetter(bsDs)).focus();
     }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 };

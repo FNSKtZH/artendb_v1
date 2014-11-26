@@ -5,7 +5,7 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    var email       = $('#Email_' + woher).val(),
+    var email       = $('#email' + capitaliseFirstLetter(woher)).val(),
         passwort    = $('#passwort' + capitaliseFirstLetter(woher)).val(),
         blendeMenus                   = require('./blendeMenus'),
         passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
@@ -17,13 +17,13 @@ module.exports = function (woher) {
             name : email,
             password : passwort,
             success : function (r) {
-                localStorage.Email = $('#Email_' + woher).val();
+                localStorage.Email = $('#email' + capitaliseFirstLetter(woher)).val();
                 if (woher === "art") {
                     bearbeiteLrTaxonomie();
                 }
                 passeUiFuerAngemeldetenUserAn(woher);
                 // Werte aus Feldern entfernen
-                $("#Email_" + woher).val("");
+                $("#email" + capitaliseFirstLetter(woher)).val("");
                 $("#passwort" + capitaliseFirstLetter(woher)).val("");
                 $("#art_anmelden").show();
                 // admin-Funktionen

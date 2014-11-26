@@ -10,18 +10,18 @@ module.exports = function (woher) {
 
     // User in _user eintragen
     $.couch.signup({
-        name: $('#Email_' + woher).val()
+        name: $('#email' + capitaliseFirstLetter(woher)).val()
     }, $('#passwort' + capitaliseFirstLetter(woher)).val(), {
         success: function () {
-            localStorage.Email = $('#Email_' + woher).val();
+            localStorage.Email = $('#email' + capitaliseFirstLetter(woher)).val();
             if (woher === "art") {
                 bearbeiteLrTaxonomie();
             }
             passeUiFuerAngemeldetenUserAn(woher);
             // Werte aus Feldern entfernen
-            $("#Email_" + woher).val("");
+            $("#email" + capitaliseFirstLetter(woher)).val("");
             $("#passwort" + capitaliseFirstLetter(woher)).val("");
-            $("#Passwort2_" + woher).val("");
+            $("#passwort2" + capitaliseFirstLetter(woher)).val("");
         },
         error: function () {
             var praefix = "importieren_";

@@ -5,21 +5,22 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    var email    = $('#Email_' + woher).val(),
-        passwort = $('#passwort' + capitaliseFirstLetter(woher)).val();
+    woher = capitaliseFirstLetter(woher);
+    var email    = $('#email' + woher).val(),
+        passwort = $('#passwort' + woher).val();
 
     if (!email) {
         setTimeout(function () {
-            $('#Email_' + woher).focus();
+            $('#email' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Emailhinweis_" + woher).show();
+        $("#emailhinweis" + woher).show();
         return false;
     }
     if (!passwort) {
         setTimeout(function () {
-            $('#passwort' + capitaliseFirstLetter(woher)).focus();
+            $('#passwort' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#Passworthinweis_" + woher).show();
+        $("#passworthinweis" + woher).show();
         return false;
     }
     return true;
