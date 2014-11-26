@@ -883,48 +883,48 @@
             </form>
 
             <form id="admin" class="form_admin form form-horizontal" action="#" method="get" autocomplete="off">
-                <div id="admin_panel" class="panel-group">
+                <div id="adminPanel" class="panel-group">
                     <h4>Administration:</h4>
-                    <div class="panel panel-default" id="exportierenDiverses">
+                    <div class="panel panel-default" id="adminExportieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_diverses_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenDiversesCollapse" data-parent="admin_panel" href="#exportierenDiversesCollapse">Diverses</a>
+                                <a id="adminExportierenTitel" class="accordion-toggle" data-toggle="collapse" data-target="#adminExportierenCollapse" data-parent="adminPanel" href="#adminExportierenCollapse">Diverses</a>
                             </h4>
                         </div>
-                        <div class="collapse in" id="exportierenDiversesCollapse">
+                        <div class="collapse in" id="adminExportierenCollapse">
                             <div class="panel-body">
                                 <button id="adminPilzeZhgisErgaenzen" type="button" class="btn btn-primary">Pilze: GIS-Layer "Pilze" in Eigenschaftensammlung "ZH GIS" ergänzen</button>
-                                <span id="admin_pilze_zhgis_ergänzen_rückmeldung"></span>
+                                <span id="adminPilzeZhgisErgaenzenRueckmeldung"></span>
                                 <hr>
                                 <button id="adminKorrigiereArtwertnameInFlora" type="button" class="btn btn-primary">Artwertnamen in Flora korrigieren ("Artwert KT ZH" zu "Artwert")</button>
-                                <span id="admin_korrigiere_artwertname_in_flora_rückmeldung"></span>
+                                <span id="adminKorrigiereArtwertnameInFloraRueckmeldung"></span>
                                 <hr>
                                 <button id="adminKorrigiereDsNameChRoteListe1991" type="button" class="btn btn-primary">Eigenschaftensammlung "CH Rote Liste (1991)" umbenennen zu "CH Rote Listen Flora (1991)"</button>
-                                <span id="admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung"></span>
+                                <span id="adminKorrigiereDsNameChRoteListe1991Rueckmeldung"></span>
                                 <hr>
                                 <fieldset>
                                     <p style="font-weight:bold;">Eigenschaften- oder Beziehungssammlung umbenennen</p>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_vorher">Name vorher</label>
+                                        <label class="control-label col-sm-1" for="adminKorrigiereDsNameNameVorher">Name vorher</label>
                                         <div class="col-sm-11">
-                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_vorher" style="max-width:400px">
+                                            <input type="text" class="form-control" id="adminKorrigiereDsNameNameVorher" style="max-width:400px">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-1" for="admin_korrigiere_ds_name_name_nachher">Name nachher</label>
+                                        <label class="control-label col-sm-1" for="adminKorrigiereDsNameNameNachher">Name nachher</label>
                                         <div class="col-sm-11">
-                                            <input type="text" class="form-control" id="admin_korrigiere_ds_name_name_nachher" style="max-width:400px">
+                                            <input type="text" class="form-control" id="adminKorrigiereDsNameNameNachher" style="max-width:400px">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-1 col-sm-11">
                                             <button id="adminKorrigiereDsName" type="button" class="btn btn-primary">umbenennen</button>
-                                            <span id="admin_korrigiere_ds_name_rueckmeldung"></span>
+                                            <span id="adminKorrigiereDsNameRueckmeldung"></span>
                                         </div>
                                     </div>
                                     <hr>
-                                    <button id="admin_baue_ds_zu_eigenschaften_um" type="button" class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button>
-                                    <span id="admin_baue_ds_zu_eigenschaften_um_rueckmeldung"></span>
+                                    <button id="adminBaueDsZuEigenschaftenUm" type="button" class="btn btn-primary">Datensammlungen und Taxonomien: Struktur umbenennen ("Datensammlungen" zu "Eigenschaftensammlungen", "Daten" zu "Eigenschaften")</button>
+                                    <span id="adminBaueDsZuEigenschaftenUmRueckmeldung"></span>
                                 </fieldset>
                             </div>
                         </div>

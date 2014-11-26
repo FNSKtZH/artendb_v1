@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 module.exports = function () {
     var $db = $.couch.db('artendb');
-    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Daten werden analysiert...");
+    $("#adminPilzeZhgisErgaenzenRueckmeldung").html("Daten werden analysiert...");
     $db.view('artendb/macromycetes?include_docs=true', {
         success: function (data) {
             var dsZhGis      = {},
@@ -39,16 +39,16 @@ module.exports = function () {
                     $db.saveDoc(pilz, {
                         success: function () {
                             ergaenzt++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
+                            $("#adminPilzeZhgisErgaenzenRueckmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                         },
                         error: function () {
                             fehler++;
-                            $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
+                            $("#adminPilzeZhgisErgaenzenRueckmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                         }
                     });
                 } else {
                     zhGisSchonDa++;
-                    $("#admin_pilze_zhgis_ergänzen_rückmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
+                    $("#adminPilzeZhgisErgaenzenRueckmeldung").html("Total: " + data.rows.length + ". Ergänzt: " + ergaenzt + ", Fehler: " + fehler + ", 'ZH GIS' schon enthalten: " + zhGisSchonDa);
                 }
             });
         }

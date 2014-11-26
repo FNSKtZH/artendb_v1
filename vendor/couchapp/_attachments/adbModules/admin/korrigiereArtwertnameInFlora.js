@@ -5,7 +5,7 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function () {
-    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Daten werden analysiert...");
+    $("#adminKorrigiereArtwertnameInFloraRueckmeldung").html("Daten werden analysiert...");
     var $db = $.couch.db('artendb');
     $db.view('artendb/flora?include_docs=true', {
         success: function (data) {
@@ -38,11 +38,11 @@ module.exports = function () {
                             $db.saveDoc(art, {
                                 success: function () {
                                     korrigiert++;
-                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                    $("#adminKorrigiereArtwertnameInFloraRueckmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
                                 },
                                 error: function () {
                                     fehler++;
-                                    $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
+                                    $("#adminKorrigiereArtwertnameInFloraRueckmeldung").html("Total: " + data.rows.length + ". Korrigiert: " + korrigiert + ", Fehler: " + fehler);
                                 }
                             });
                         }
@@ -50,7 +50,7 @@ module.exports = function () {
                 }
             });
             if (korrigiert === 0) {
-                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
+                $("#adminKorrigiereArtwertnameInFloraRueckmeldung").html("Es gibt offenbar keine Felder mehr mit Namen 'Artwert KT ZH'");
             }
         },
         error: function () {

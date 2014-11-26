@@ -5,17 +5,17 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function () {
-    var $admin_baue_ds_zu_eigenschaften_um_rueckmeldung = $("#admin_baue_ds_zu_eigenschaften_um_rueckmeldung"),
-        $db = $.couch.db('artendb');
+    var $adminBaueDsZuEigenschaftenUmRueckmeldung = $("#adminBaueDsZuEigenschaftenUmRueckmeldung"),
+        $db                                       = $.couch.db('artendb');
 
-    $admin_baue_ds_zu_eigenschaften_um_rueckmeldung.html("Daten werden analysiert...");
+    $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Daten werden analysiert...");
     $db.view('artendb/all_docs?include_docs=true', {
         success: function (data) {
             var korrigiert = 0,
                 fehler = 0;
 
             if (data.rows.length === 0) {
-                $admin_baue_ds_zu_eigenschaften_um_rueckmeldung.html("Keine Daten erhalten");
+                $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Keine Daten erhalten");
                 return;
             }
             _.each(data.rows, function (row) {
@@ -58,18 +58,18 @@ module.exports = function () {
                     $db.saveDoc(art, {
                         success: function () {
                             korrigiert ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         },
                         error: function () {
                             fehler ++;
-                            $admin_baue_ds_zu_eigenschaften_um_rueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                         }
                     });
                 }
 
             });
             if (korrigiert === 0) {
-                $admin_baue_ds_zu_eigenschaften_um_rueckmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+                $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
             }
         },
         error: function () {

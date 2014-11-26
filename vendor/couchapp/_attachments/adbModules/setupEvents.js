@@ -15,53 +15,58 @@ var $                           = require('jquery'),
 
 module.exports = function () {
     $('#menu')
-        // Baum aufbauen, wenn Gruppe gewählt wird
-        .on('click', '.gruppe',               onClickOeffneGruppe)
-        // zwischen Mobil- und Desktopsicht wechseln
-        .on('click', '#btnResize',            onClickBtnResize);
+        .on('click',  '.gruppe',                               onClickOeffneGruppe)
+        .on('click',  '#btnResize',                            onClickBtnResize);
 
-    // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
     $('body')
-        .on('click', '#menuBtn',              onClickMenuBtn)
-        .on('click', '.showNextHidden',       onClickShowNextHidden)
-        .on('click', '.showNextHiddenExport', onClickShowNextHiddenExport);
+        .on('click',  '#menuBtn',                              onClickMenuBtn)
+        .on('click',  '.showNextHidden',                       onClickShowNextHidden)
+        .on('click',  '.showNextHiddenExport',                 onClickShowNextHiddenExport);
 
     $('#menuBtn')
-        .on('click', '#ds_importieren',       onClickDsImportieren)
-        .on('click', '#bs_importieren',       onClickBsImportieren)
-        .on('click', '#menu_admin',           onClickMenuAdmin)
-        .on('click', '#exportieren',          onClickExportieren)
-        .on('click', '#exportieren_alt',      onClickExportierenAlt);
+        .on('click',  '#ds_importieren',                       onClickDsImportieren)
+        .on('click',  '#bs_importieren',                       onClickBsImportieren)
+        .on('click',  '#menu_admin',                           onClickMenuAdmin)
+        .on('click',  '#exportieren',                          onClickExportieren)
+        .on('click',  '#exportieren_alt',                      onClickExportierenAlt);
 
-    $('#exportierenDiverses')
-        .on('click', '#adminPilzeZhgisErgaenzen', window.adb.ergaenzePilzeZhgis)
-        .on('click', '#adminKorrigiereArtwertnameInFlora', window.adb.korrigiereArtwertnameInFlora)
-        .on('click', '#adminKorrigiereDsNameChRoteListe1991', window.adb.korrigiereDsNameFloraChRoteListe1991)
-        .on('click', '#adminKorrigiereDsName', function (event) {
+    $('#adminExportieren')
+        .on('click',  '#adminPilzeZhgisErgaenzen',             window.adb.ergaenzePilzeZhgis)
+        .on('click',  '#adminKorrigiereArtwertnameInFlora',    window.adb.korrigiereArtwertnameInFlora)
+        .on('click',  '#adminKorrigiereDsNameChRoteListe1991', window.adb.korrigiereDsNameFloraChRoteListe1991)
+        .on('click',  '#adminKorrigiereDsName', function (event) {
             // dieser Event wurde bei jedem Laden der Seite ausgelöst!
-            if ($('#exportierenDiversesCollapse').is(':visible')) {
+            if ($('#adminExportierenCollapse').is(':visible')) {
                 window.adb.nenneDsUm();
             } else {
                 event.preventDefault();
             }
         })
-        .on('click', '#adminBaueDsZuEigenschaftenUm', window.adb.baueDsZuEigenschaftenUm);
+        .on('click', '#adminBaueDsZuEigenschaftenUm',          window.adb.baueDsZuEigenschaftenUm);
 
-    $('#importieren_ds').on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
+    $('#importieren_ds')
+        .on('shown.bs.collapse', '#importieren_ds_ds_beschreiben_collapse', window.adb.handleImportierenDsDsBeschreibenCollapseShown);
 
-    $('#importieren_bs_ds_beschreiben_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsDsBeschreibenCollapseShown);
+    $('#importieren_bs_ds_beschreiben_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenBsDsBeschreibenCollapseShown);
 
-    $('#importieren_ds_daten_uploaden_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsDatenUploadenCollapseShown);
+    $('#importieren_ds_daten_uploaden_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenDsDatenUploadenCollapseShown);
 
-    $('#importieren_bs_daten_uploaden_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsDatenUploadenCollapseShown);
+    $('#importieren_bs_daten_uploaden_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenBsDatenUploadenCollapseShown);
 
-    $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsIdsIdentifizierenCollapseShown);
+    $('#importieren_ds_ids_identifizieren_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenDsIdsIdentifizierenCollapseShown);
 
-    $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
+    $('#importieren_bs_ids_identifizieren_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenBsIdsIdentifizierenCollapseShown);
 
-    $('#importieren_ds_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
+    $('#importieren_ds_import_ausfuehren_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
 
-    $('#importieren_bs_import_ausfuehren_collapse').on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
+    $('#importieren_bs_import_ausfuehren_collapse')
+        .on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
 
     $('#importieren_ds')
         .on('change', '#DsWaehlen', window.adb.handleDsWaehlenChange)
@@ -77,19 +82,19 @@ module.exports = function () {
         })
         .on('change', '#DsFelder', window.adb.handleDsFelderChange)
         .on('change', '#DsId', window.adb.handleDsIdChange)
-        .on('click', '#DsLoeschen', function (event) {
+        .on('click',  '#DsLoeschen', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
             event.preventDefault();
             window.adb.handleDsLoeschenClick();
         })
-        .on('click', '#DsImportieren', function (event) {
+        .on('click',  '#DsImportieren', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
             event.preventDefault();
             window.adb.importiereDatensammlung();
         })
-        .on('click', '#DsEntfernen', function (event) {
+        .on('click',  '#DsEntfernen', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -97,16 +102,16 @@ module.exports = function () {
             window.adb.entferneDatensammlung();
         })
         // verhindern, dass bootstrap ganz nach oben scrollt
-        .on('click', '.panel-heading a', function (event) {
+        .on('click',  '.panel-heading a', function (event) {
             event.preventDefault();
         });
 
     $('#importieren_bs')
-        .on('change', '#BsWaehlen', window.adb.handleBsWaehlenChange)
-        .on('change', '#BsName', window.adb.handleBsNameChange)
-        .on('change', '#BsImportiertVon', window.adb.handleBsImportiertVonChange)
-        .on('change', '#BsZusammenfassend', window.adb.handleBsZusammenfassendChange)
-        .on('change', '#BsFile', function (event) {
+        .on('change',  '#BsWaehlen', window.adb.handleBsWaehlenChange)
+        .on('change',  '#BsName', window.adb.handleBsNameChange)
+        .on('change',  '#BsImportiertVon', window.adb.handleBsImportiertVonChange)
+        .on('change',  '#BsZusammenfassend', window.adb.handleBsZusammenfassendChange)
+        .on('change',  '#BsFile', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -115,7 +120,7 @@ module.exports = function () {
         })
         .on('change', '#BsId', window.adb.handleBsIdChange)
         .on('change', '#BsFelder', window.adb.handleBsFelderChange)
-        .on('click', '#BsImportieren', function (event) {
+        .on('click',  '#BsImportieren', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht

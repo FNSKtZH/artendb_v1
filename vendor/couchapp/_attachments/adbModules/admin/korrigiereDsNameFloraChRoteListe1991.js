@@ -5,10 +5,10 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function () {
-    var $admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung = $("#admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung"),
+    var $adminKorrigiereDsNameChRoteListe1991Rueckmeldung = $("#adminKorrigiereDsNameChRoteListe1991Rueckmeldung"),
         $db = $.couch.db('artendb');
 
-    $admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung.html("Daten werden analysiert...");
+    $adminKorrigiereDsNameChRoteListe1991Rueckmeldung.html("Daten werden analysiert...");
     $db.view('artendb/flora?include_docs=true', {
         success: function (data) {
             var korrigiert = 0,
@@ -27,18 +27,18 @@ module.exports = function () {
                         $db.saveDoc(art, {
                             success: function () {
                                 korrigiert++;
-                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                                $adminKorrigiereDsNameChRoteListe1991Rueckmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                             },
                             error: function () {
                                 fehler++;
-                                $admin_korrigiere_ds_name_ch_rote_liste_1991_rueckmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                                $adminKorrigiereDsNameChRoteListe1991Rueckmeldung.html("Floraarten: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
                             }
                         });
                     }
                 }
             });
             if (korrigiert === 0) {
-                $("#admin_korrigiere_artwertname_in_flora_rückmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
+                $("#adminKorrigiereArtwertnameInFloraRueckmeldung").html("Es gibt offenbar keine Datensammlungen mehr mit Namen 'CH Rote Liste (1991)'");
             }
         },
         error: function () {
