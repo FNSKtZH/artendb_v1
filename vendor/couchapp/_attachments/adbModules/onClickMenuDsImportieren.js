@@ -1,4 +1,4 @@
-// wenn ds_importieren geklickt wird
+// wenn menuDsImportieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 
@@ -8,9 +8,9 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    var zeigeFormular      = require('../zeigeFormular'),
-        pruefeAnmeldung    = require('../login/pruefeAnmeldung'),
-        isFileAPIAvailable = require('../isFileAPIAvailable');
+    var zeigeFormular      = require('./zeigeFormular'),
+        pruefeAnmeldung    = require('./login/pruefeAnmeldung'),
+        isFileAPIAvailable = require('./isFileAPIAvailable');
 
     if (isFileAPIAvailable()) {
         zeigeFormular("importieren_ds");

@@ -7,9 +7,9 @@ var $                                             = require('jquery'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
     onClickShowNextHidden                         = require('./onClickShowNextHidden'),
     onClickShowNextHiddenExport                   = require('./onClickShowNextHiddenExport'),
-    onClickDsImportieren                          = require('./import/onClickDsImportieren'),
-    onClickBsImportieren                          = require('./import/onClickBsImportieren'),
     onClickMenuAdmin                              = require('./onClickMenuAdmin'),
+    onClickMenuDsImportieren                      = require('./onClickMenuDsImportieren'),
+    onClickMenuBsImportieren                      = require('./onClickMenuBsImportieren'),
     onClickExportieren                            = require('./export/onClickExportieren'),
     onClickExportierenAlt                         = require('./export/onClickExportierenAlt'),
     onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
@@ -52,8 +52,8 @@ module.exports = function () {
      */
     $('#menu').on('click',  '.gruppe', onClickOeffneGruppe);
     $('#btnResize')                                 .on('click',             onClickBtnResize);
-    $('#ds_importieren')                            .on('click',             onClickDsImportieren);
-    $('#bs_importieren')                            .on('click',             onClickBsImportieren);
+    $('#menuDsImportieren')                         .on('click',             onClickMenuDsImportieren);
+    $('#bs_importieren')                            .on('click',             onClickMenuBsImportieren);
     $('#menu_admin')                                .on('click',             onClickMenuAdmin);
     $('#exportieren')                               .on('click',             onClickExportieren);
     $('#exportieren_alt')                           .on('click',             onClickExportierenAlt);
