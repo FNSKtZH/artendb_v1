@@ -23,12 +23,12 @@ module.exports = function () {
             });
         }
     } else if (window.adb.gruppe) {
-        if (window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()]) {
-            initiiereSuchfeld2(window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()]);
+        if (window.adb["filtereArt" + window.adb.gruppe]) {
+            initiiereSuchfeld2(window.adb["filtereArt" + window.adb.gruppe]);
         } else {
             $db.view('artendb/filtere_art?startkey=["' + window.adb.gruppe + '"]&endkey=["' + window.adb.gruppe + '",{}]', {
                 success: function (data) {
-                    window.adb["filtere_art_" + window.adb.gruppe.toLowerCase()] = data;
+                    window.adb["filtereArt" + window.adb.gruppe] = data;
                     initiiereSuchfeld2(data);
                 },
                 error: function () {

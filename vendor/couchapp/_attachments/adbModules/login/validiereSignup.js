@@ -4,7 +4,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
     var email,
@@ -15,7 +16,7 @@ module.exports = function (woher) {
     $(".hinweis").hide();
     // erfasste Werte holen
     email = $("#Email_" + woher).val();
-    passwort = $("#Passwort_" + woher).val();
+    passwort = $("#passwort" + capitaliseFirstLetter(woher)).val();
     passwort2 = $("#Passwort2_" + woher).val();
     // prüfen
     if (!email) {
@@ -28,7 +29,7 @@ module.exports = function (woher) {
     if (!passwort) {
         $("#Passworthinweis_" + woher).show();
         setTimeout(function () {
-            $("#Passwort_" + woher).focus();
+            $("#passwort" + capitaliseFirstLetter(woher)).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }

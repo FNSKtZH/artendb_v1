@@ -18,7 +18,7 @@ module.exports = function () {
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
         $("#DsTabelleEigenschaften").hide();
-        $("#importieren_ds_ids_identifizieren_hinweis_text").hide();
+        $("#importierenDsIdsIdentifizierenHinweisText").hide();
         $("#DsImportieren").hide();
         $("#DsEntfernen").hide();
     } else {

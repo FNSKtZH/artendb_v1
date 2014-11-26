@@ -33,7 +33,8 @@ var $                                             = require('jquery'),
     onChangeDsFelder                              = require('./import/onChangeDsFelder'),
     onChangeDsId                                  = require('./import/onChangeDsId'),
     onClickDsLoeschen                             = require('./import/onClickDsLoeschen'),
-    onClickDsImportieren                          = require('./import/onClickDsImportieren');
+    onClickDsImportieren                          = require('./import/onClickDsImportieren'),
+    onClickDsEntfernen                            = require('./import/onClickDsEntfernen');
 
 module.exports = function () {
     var $body = $('body');
@@ -51,7 +52,7 @@ module.exports = function () {
     /*
      * menu
      */
-    $('#menu').on('click',  '.gruppe', onClickOeffneGruppe);
+    $('#menu').on('click',  '.gruppe',                                       onClickOeffneGruppe);
     $('#btnResize')                                 .on('click',             onClickBtnResize);
     $('#menuDsImportieren')                         .on('click',             onClickMenuDsImportieren);
     $('#bs_importieren')                            .on('click',             onClickMenuBsImportieren);
@@ -75,8 +76,8 @@ module.exports = function () {
     $('#importieren_bs_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
     $('#importieren_ds_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
     $('#importieren_bs_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
-    $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
-    $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
+    $('#importierenDsIdsIdentifizierenCollapse')    .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
+    $('#importierenBsIdsIdentifizierenCollapse')    .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
     $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
     $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
     $('#DsWaehlen')                                 .on('change',            onChangeDsWaehlen);
@@ -88,13 +89,7 @@ module.exports = function () {
     $('#DsId')                                      .on('change',            onChangeDsId);
     $('#DsLoeschen')                                .on('click',             onClickDsLoeschen);
     $('#DsImportieren')                             .on('click',             onClickDsImportieren);
-    $('#DsEntfernen').on('click', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.entferneDatensammlung();
-    });
+    $('#DsEntfernen')                               .on('click',             onClickDsEntfernen);
     $('#importieren_ds').on('click',  '.panel-heading a', function (event) {
         // verhindern, dass bootstrap ganz nach oben scrollt
         event.preventDefault ? event.preventDefault() : event.returnValue = false;

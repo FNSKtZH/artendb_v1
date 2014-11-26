@@ -1,4 +1,4 @@
-// wenn importieren_ds_ids_identifizieren_collapse geöffnet wird
+// wenn importierenDsIdsIdentifizierenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -12,6 +12,6 @@ module.exports = function (that) {
         $(that).collapse('hide');
     }
     $('html, body').animate({
-        scrollTop: $("#importieren_ds_ids_identifizieren_collapse").offset().top
+        scrollTop: $("#importierenDsIdsIdentifizierenCollapse").offset().top
     }, 2000);
 };

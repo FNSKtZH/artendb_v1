@@ -10,10 +10,13 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function () {
-    var dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
-            return key[0] === this.value && key[2] !== localStorage.Email && !key[1];
-        }),
+    var that = this,
+        dsKey,
         $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
+
+    dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
+        return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
+    });
 
     if (dsKey) {
         $importieren_ds_ds_beschreiben_hinweis2

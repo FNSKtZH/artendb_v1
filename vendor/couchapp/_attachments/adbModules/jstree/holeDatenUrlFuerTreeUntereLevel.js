@@ -1,7 +1,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (level, filter, gruppe, id) {
     var startkey,
@@ -76,9 +77,10 @@ module.exports = function (level, filter, gruppe, id) {
         break;
     }
     if (gruppe === "lr") {
-        url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baum_lr/baum_lr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
+        url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baumLr/baumLr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
     } else {
-        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum_" + gruppe + "/baum_" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
+        gruppe = capitaliseFirstLetter(gruppe);
+        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum" + gruppe + "/baum" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
     }
     if (id2) {
         url = url + "&id=true";

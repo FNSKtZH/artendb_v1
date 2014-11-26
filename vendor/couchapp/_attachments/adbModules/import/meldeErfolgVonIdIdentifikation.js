@@ -22,7 +22,7 @@ module.exports = function (dbs) {
         window.adb[dbs + "Id"] = $dbsIdSelected.val();
         // das hier wird später noch für den Inmport gebraucht > globale Variable machen
         window.adb.zuordbareDatensaetze = [];
-        $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_hinweis_text")
+        $("#importieren" + dbs + "IdsIdentifizierenHinweisText")
             .alert()
             .html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...")
             .removeClass("alert-success")
@@ -30,7 +30,7 @@ module.exports = function (dbs) {
             .addClass("alert-info")
             .show();
         $('html, body').animate({
-            scrollTop: $("#importieren_" + dbs.toLowerCase() + "_ids_identifizieren_collapse").offset().top
+            scrollTop: $("#importieren" + dbs + "IdsIdentifizierenCollapse").offset().top
         }, 2000);
 
         // Dokumente aus der Gruppe der Datensätze holen

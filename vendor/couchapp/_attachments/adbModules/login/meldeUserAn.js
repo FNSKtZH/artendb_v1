@@ -1,11 +1,12 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
     var email       = $('#Email_' + woher).val(),
-        passwort    = $('#Passwort_' + woher).val(),
+        passwort    = $('#passwort' + capitaliseFirstLetter(woher)).val(),
         blendeMenus                   = require('./blendeMenus'),
         passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
         validiereUserAnmeldung        = require('./validiereUserAnmeldung'),
@@ -23,7 +24,7 @@ module.exports = function (woher) {
                 passeUiFuerAngemeldetenUserAn(woher);
                 // Werte aus Feldern entfernen
                 $("#Email_" + woher).val("");
-                $("#Passwort_" + woher).val("");
+                $("#passwort" + capitaliseFirstLetter(woher)).val("");
                 $("#art_anmelden").show();
                 // admin-Funktionen
                 if (r.roles.indexOf("_admin") !== -1) {

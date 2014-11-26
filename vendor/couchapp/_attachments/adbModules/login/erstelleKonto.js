@@ -1,16 +1,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
     var passeUiFuerAngemeldetenUserAn = require('./passeUiFuerAngemeldetenUserAn'),
-    bearbeiteLrTaxonomie              = require('../lr/bearbeiteLrTaxonomie');
+        bearbeiteLrTaxonomie          = require('../lr/bearbeiteLrTaxonomie');
 
     // User in _user eintragen
     $.couch.signup({
         name: $('#Email_' + woher).val()
-    }, $('#Passwort_' + woher).val(), {
+    }, $('#passwort' + capitaliseFirstLetter(woher)).val(), {
         success: function () {
             localStorage.Email = $('#Email_' + woher).val();
             if (woher === "art") {
@@ -19,7 +20,7 @@ module.exports = function (woher) {
             passeUiFuerAngemeldetenUserAn(woher);
             // Werte aus Feldern entfernen
             $("#Email_" + woher).val("");
-            $("#Passwort_" + woher).val("");
+            $("#passwort" + capitaliseFirstLetter(woher)).val("");
             $("#Passwort2_" + woher).val("");
         },
         error: function () {

@@ -16,7 +16,7 @@ module.exports = function (event) {
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
         $("#BsTabelleEigenschaften").hide();
-        $("#importieren_bs_ids_identifizieren_hinweis_text").hide();
+        $("#importierenBsIdsIdentifizierenHinweisText").hide();
         $("#BsImportieren").hide();
         $("#BsEntfernen").hide();
     } else {
