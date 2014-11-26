@@ -32,7 +32,8 @@ var $                                             = require('jquery'),
     onChangeDsFile                                = require('./import/onChangeDsFile'),
     onChangeDsFelder                              = require('./import/onChangeDsFelder'),
     onChangeDsId                                  = require('./import/onChangeDsId'),
-    onClickDsLoeschen                             = require('./import/onClickDsLoeschen');
+    onClickDsLoeschen                             = require('./import/onClickDsLoeschen'),
+    onClickDsImportieren                          = require('./import/onClickDsImportieren');
 
 module.exports = function () {
     var $body = $('body');
@@ -86,12 +87,7 @@ module.exports = function () {
     $('#DsFelder')                                  .on('change',            onChangeDsFelder);
     $('#DsId')                                      .on('change',            onChangeDsId);
     $('#DsLoeschen')                                .on('click',             onClickDsLoeschen);
-    $('#DsImportieren').on('click', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.importiereDatensammlung();
-    });
+    $('#DsImportieren')                             .on('click',             onClickDsImportieren);
     $('#DsEntfernen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
