@@ -8,6 +8,6 @@ module.exports = function () {
     if ($('#adminExportierenCollapse').is(':visible')) {
         window.adb.nenneDsUm();
     } else {
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
     }
 };

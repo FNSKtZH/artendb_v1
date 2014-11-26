@@ -13,6 +13,8 @@ module.exports = function (event) {
         filetype,
         reader;
 
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
         $("#DsTabelleEigenschaften").hide();

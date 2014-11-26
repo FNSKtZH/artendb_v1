@@ -82,7 +82,7 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleDsFileChange();
     });
     $('#DsFelder').on('change', window.adb.handleDsFelderChange);
@@ -90,25 +90,25 @@ module.exports = function () {
     $('#DsLoeschen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleDsLoeschenClick();
     });
     $('#DsImportieren').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.importiereDatensammlung();
     });
     $('#DsEntfernen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.entferneDatensammlung();
     });
     $('#importieren_ds').on('click',  '.panel-heading a', function (event) {
         // verhindern, dass bootstrap ganz nach oben scrollt
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
     });
 
     $('#BsWaehlen').on('change', window.adb.handleBsWaehlenChange);
@@ -119,7 +119,7 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleBsFileChange();
     });
     $('#BsId').on('change', window.adb.handleBsIdChange);
@@ -128,21 +128,21 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.importiereBeziehungssammlung();
     });
     $('#BsLoeschen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleBsLoeschenClick();
     });
     $('#BsEntfernen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.entferneBeziehungssammlung();
     });
 
@@ -156,7 +156,7 @@ module.exports = function () {
         .on('change', '.export_feld_filtern',                   window.adb.handleExportFeldFilternChange)
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
         })
         .on('click', '[name="exportieren_exportieren_format"]', window.adb.blendeFormatCsvTipps)
         .on('change', '.feld_waehlen_alle_von_ds', window.adb.exportZuruecksetzen);
@@ -166,7 +166,7 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         // this übergeben!
         window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
         window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
@@ -177,11 +177,11 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleExportierenExportierenExportierenClick();
     });
     $('#exportieren_exportieren_exportieren_direkt').on('click', function (event) {
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.filtereFuerExport('direkt');
     });
     $('#exportieren_exportieren_collapse').on('shown.bs.collapse', function () {
@@ -210,7 +210,7 @@ module.exports = function () {
         })
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
         });
 
     /*
@@ -218,7 +218,7 @@ module.exports = function () {
      */
     $('#art')
         .on('click', '.btn.lrBearb', function (event) {
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
         })
         .on('click', '.btn.lr_bearb_bearb', window.adb.handleBtnLrBearbBearbKlick)
         .on('click', '.btn.lr_bearb_schuetzen', window.adb.handleBtnLrBearbSchuetzenClick)
@@ -230,7 +230,7 @@ module.exports = function () {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleRueckfrageLrLoeschenJaClick();
     });
     $body
@@ -238,7 +238,7 @@ module.exports = function () {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
             // this übergeben, kommt sonst nicht mit!
             window.adb.handleAnmeldenBtnClick(this);
         })
@@ -246,7 +246,7 @@ module.exports = function () {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
             // auf eigene Funktion verzichten, da nur ein Aufruf
             window.adb.meldeUserAb();
         })
@@ -257,7 +257,7 @@ module.exports = function () {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
             // this übergeben
             window.adb.handleKontoErstellenBtnClick(this);
         })
@@ -265,7 +265,7 @@ module.exports = function () {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
             window.adb.handleKontoSpeichernBtnClick(this);
         });
     $('.form')
@@ -276,7 +276,7 @@ module.exports = function () {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault();
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
             window.adb.handleLinkZuArtGleicherGruppeClick($(this).attr('artid'));
         });
 };
