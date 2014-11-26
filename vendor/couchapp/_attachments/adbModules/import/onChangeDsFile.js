@@ -3,12 +3,12 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $    = require('jquery'),
-    XLSX = require('XLSX');
+var $               = require('jquery'),
+    XLSX            = require('XLSX'),
+    erstelleTabelle = require('../erstelleTabelle');
 
-module.exports = function (event) {
-    var erstelleTabelle = require('../erstelleTabelle'),
-        file,
+module.exports = function () {
+    var file,
         filename,
         filetype,
         reader;

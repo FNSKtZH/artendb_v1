@@ -36,11 +36,6 @@ window.adb.handleBsWaehlenChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleDsFileChange = function () {
-    require('./adbModules/import/handleDsFileChange')(event);
-};
-
-// wird in index.html benutzt
 window.adb.handleBsFileChange = function () {
     require('./adbModules/import/handleBsFileChange')(event);
 };
