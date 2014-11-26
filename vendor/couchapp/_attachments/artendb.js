@@ -56,16 +56,6 @@ window.adb.handleBsFileChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.ergaenzePilzeZhgis = function () {
-    require('./adbModules/admin/ergaenzePilzeZhgis')();
-};
-
-// wird in index.html benutzt
-window.adb.korrigiereArtwertnameInFlora = function () {
-    require('./adbModules/admin/korrigiereArtwertnameInFlora')();
-};
-
-// wird in index.html benutzt
 window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
     require('./adbModules/admin/korrigiereDsNameFloraChRoteListe1991')();
 };

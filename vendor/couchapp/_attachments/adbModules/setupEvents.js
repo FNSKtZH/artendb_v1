@@ -1,17 +1,19 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $                           = require('jquery'),
-    onClickOeffneGruppe         = require('./onClickOeffneGruppe'),
-    onClickBtnResize            = require('./onClickBtnResize'),
-    onClickMenuBtn              = require('./onClickMenuBtn'),
-    onClickShowNextHidden       = require('./onClickShowNextHidden'),
-    onClickShowNextHiddenExport = require('./onClickShowNextHiddenExport'),
-    onClickDsImportieren        = require('./import/onClickDsImportieren'),
-    onClickBsImportieren        = require('./import/onClickBsImportieren'),
-    onClickMenuAdmin            = require('./onClickMenuAdmin'),
-    onClickExportieren          = require('./export/onClickExportieren'),
-    onClickExportierenAlt       = require('./export/onClickExportierenAlt');
+var $                                        = require('jquery'),
+    onClickOeffneGruppe                      = require('./onClickOeffneGruppe'),
+    onClickBtnResize                         = require('./onClickBtnResize'),
+    onClickMenuBtn                           = require('./onClickMenuBtn'),
+    onClickShowNextHidden                    = require('./onClickShowNextHidden'),
+    onClickShowNextHiddenExport              = require('./onClickShowNextHiddenExport'),
+    onClickDsImportieren                     = require('./import/onClickDsImportieren'),
+    onClickBsImportieren                     = require('./import/onClickBsImportieren'),
+    onClickMenuAdmin                         = require('./onClickMenuAdmin'),
+    onClickExportieren                       = require('./export/onClickExportieren'),
+    onClickExportierenAlt                    = require('./export/onClickExportierenAlt'),
+    onClickAdminPilzeZhgisErgaenzen          = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
+    onClickAdminKorrigiereArtwertnameInFlora = require('./admin/onClickAdminKorrigiereArtwertnameInFlora');
 
 module.exports = function () {
     $('#menu')
@@ -31,8 +33,8 @@ module.exports = function () {
         .on('click',  '#exportieren_alt',                      onClickExportierenAlt);
 
     $('#adminExportieren')
-        .on('click',  '#adminPilzeZhgisErgaenzen',             window.adb.ergaenzePilzeZhgis)
-        .on('click',  '#adminKorrigiereArtwertnameInFlora',    window.adb.korrigiereArtwertnameInFlora)
+        .on('click',  '#adminPilzeZhgisErgaenzen',             onClickAdminPilzeZhgisErgaenzen)
+        .on('click',  '#adminKorrigiereArtwertnameInFlora',    onClickAdminKorrigiereArtwertnameInFlora)
         .on('click',  '#adminKorrigiereDsNameChRoteListe1991', window.adb.korrigiereDsNameFloraChRoteListe1991)
         .on('click',  '#adminKorrigiereDsName', function (event) {
             // dieser Event wurde bei jedem Laden der Seite ausgelöst!

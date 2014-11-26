@@ -54,7 +54,7 @@ module.exports = function () {
             }
         },
         error: function () {
-            console.log('korrigiereArtwertnameInFlora: keine Daten erhalten');
+            console.log('onClickAdminKorrigiereArtwertnameInFlora: keine Daten erhalten');
         }
     });
 };
