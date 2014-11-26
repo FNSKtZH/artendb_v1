@@ -56,11 +56,6 @@ window.adb.handleBsFileChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.korrigiereDsNameFloraChRoteListe1991 = function () {
-    require('./adbModules/admin/korrigiereDsNameFloraChRoteListe1991')();
-};
-
-// wird in index.html benutzt
 window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
 };

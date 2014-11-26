@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 module.exports = function () {
     var $adminKorrigiereDsNameChRoteListe1991Rueckmeldung = $("#adminKorrigiereDsNameChRoteListe1991Rueckmeldung"),
-        $db = $.couch.db('artendb');
+        $db                                               = $.couch.db('artendb');
 
     $adminKorrigiereDsNameChRoteListe1991Rueckmeldung.html("Daten werden analysiert...");
     $db.view('artendb/flora?include_docs=true', {
@@ -42,7 +42,7 @@ module.exports = function () {
             }
         },
         error: function () {
-            console.log('korrigiereDsNameFloraChRoteListe1991: keine Daten erhalten');
+            console.log('onClickAdminKorrigiereDsNameChRoteListe1991: keine Daten erhalten');
         }
     });
 };
