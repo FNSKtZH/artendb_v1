@@ -46,11 +46,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleDsLoeschenClick = function () {
-    require('./adbModules/import/handleDsLoeschenClick')();
-};
-
-// wird in index.html benutzt
 window.adb.handleBsLoeschenClick = function () {
     require('./adbModules/import/handleBsLoeschenClick')();
 };
