@@ -2,11 +2,11 @@
 'use strict';
 
 var $                           = require('jquery'),
-    onClickOeffneGruppe         = require('./events/onClickOeffneGruppe'),
-    onClickBtnResize            = require('./events/onClickBtnResize'),
-    onClickMenuBtn              = require('./events/onClickMenuBtn'),
-    onClickShowNextHidden       = require('./events/onClickShowNextHidden'),
-    onClickShowNextHiddenExport = require('./events/onClickShowNextHiddenExport');
+    onClickOeffneGruppe         = require('./onClickOeffneGruppe'),
+    onClickBtnResize            = require('./onClickBtnResize'),
+    onClickMenuBtn              = require('./onClickMenuBtn'),
+    onClickShowNextHidden       = require('./onClickShowNextHidden'),
+    onClickShowNextHiddenExport = require('./onClickShowNextHiddenExport');
 
 module.exports = function () {
     $('#menu')
