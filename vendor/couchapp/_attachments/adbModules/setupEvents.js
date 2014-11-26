@@ -6,7 +6,10 @@ var $                           = require('jquery'),
     onClickBtnResize            = require('./onClickBtnResize'),
     onClickMenuBtn              = require('./onClickMenuBtn'),
     onClickShowNextHidden       = require('./onClickShowNextHidden'),
-    onClickShowNextHiddenExport = require('./onClickShowNextHiddenExport');
+    onClickShowNextHiddenExport = require('./onClickShowNextHiddenExport'),
+    onClickDsImportieren        = require('./import/onClickDsImportieren'),
+    onClickBsImportieren        = require('./import/onClickBsImportieren'),
+    onClickMenuAdmin            = require('./onClickMenuAdmin');
 
 module.exports = function () {
     $('#menu')
@@ -22,13 +25,9 @@ module.exports = function () {
         .on('click', '.showNextHiddenExport', onClickShowNextHiddenExport);
 
     $('#menuBtn')
-        // testen, ob der Browser das Importieren unterstützt
-        // wenn nein, Meldung bringen
-        .on('click', '#ds_importieren',  window.adb.handleDsImportierenClick)
-        // testen, ob der Browser das Importieren unterstützt
-        // wenn nein, Meldung bringen
-        .on('click', '#bs_importieren',  window.adb.handleBsImportierenClick)
-        .on('click', '#menu_admin',      window.adb.handleMenuAdminClick)
+        .on('click', '#ds_importieren',       onClickDsImportieren)
+        .on('click', '#bs_importieren',       onClickBsImportieren)
+        .on('click', '#menu_admin',           onClickMenuAdmin)
         .on('click', '#exportieren',     window.adb.handleExportierenClick)
         .on('click', '#exportieren_alt', window.adb.handleExportierenAltClick);
 

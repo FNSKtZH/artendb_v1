@@ -56,21 +56,6 @@ window.adb.handleBsFileChange = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleDsImportierenClick = function () {
-    require('./adbModules/import/handleDsImportierenClick')();
-};
-
-// wird in index.html benutzt
-window.adb.handleBsImportierenClick = function () {
-    require('./adbModules/import/handleBsImportierenClick')();
-};
-
-// wird in index.html benutzt
-window.adb.handleMenuAdminClick = function () {
-    require('./adbModules/zeigeFormular')("admin");
-};
-
-// wird in index.html benutzt
 window.adb.ergaenzePilzeZhgis = function () {
     require('./adbModules/admin/ergaenzePilzeZhgis')();
 };
