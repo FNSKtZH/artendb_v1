@@ -7,7 +7,7 @@ var $ = require('jquery');
 
 module.exports = function () {
     var windowHeight = $(window).height(),
-        $body = $("body");
+        $body        = $("body");
 
     $body.toggleClass("force-mobile");
     if ($body.hasClass("force-mobile")) {

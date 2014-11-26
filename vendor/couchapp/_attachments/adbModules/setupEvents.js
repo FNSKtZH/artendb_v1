@@ -1,14 +1,16 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                   = require('jquery'),
+    onClickOeffneGruppe = require('./events/onClickOeffneGruppe'),
+    onClickBtnResize    = require('./events/onClickBtnResize');
 
 module.exports = function () {
     $("#menu")
         // Baum aufbauen, wenn Gruppe gewählt wird
-        .on("click", ".gruppe", window.adb.handleOeffneGruppeClick)
+        .on("click", ".gruppe",     onClickOeffneGruppe)
         // zwischen Mobil- und Desktopsicht wechseln
-        .on("click", "#btn_resize", window.adb.handleBtnResizeClick);
+        .on("click", "#btn_resize", onClickBtnResize);
 
     // Menu: Links zu Google Bilder und Wikipedia nur aktiv setzen, wenn Art oder Lebensraum angezeigt wird
     $("body")
