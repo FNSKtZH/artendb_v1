@@ -23,6 +23,7 @@ var $                                             = require('jquery'),
     onShownImportierenBsDatenUploadenCollapse     = require('./import/onShownImportierenBsDatenUploadenCollapse'),
     onShownImportierenDsIdsIdentifizierenCollapse = require('./import/onShownImportierenDsIdsIdentifizierenCollapse'),
     onShownImportierenBsIdsIdentifizierenCollapse = require('./import/onShownImportierenBsIdsIdentifizierenCollapse'),
+    onShownImportierenDsImportAusfuehrenCollapse  = require('./import/onShownImportierenDsImportAusfuehrenCollapse'),
     onChangeDsWaehlen                             = require('./import/onChangeDsWaehlen');
 
 module.exports = function () {
@@ -67,7 +68,7 @@ module.exports = function () {
     $('#importieren_bs_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
     $('#importieren_ds_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
     $('#importieren_bs_ids_identifizieren_collapse').on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
-    $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenDsImportAusfuehrenCollapseShown);
+    $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
     $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', window.adb.handleImportierenBsImportAusfuehrenCollapseShown);
     $('#DsWaehlen')                                 .on('change',            onChangeDsWaehlen);
     $('#DsName').on('change', window.adb.handleDsNameChange);
