@@ -142,16 +142,6 @@ window.adb.handleBsLoeschenClick = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenClick = function () {
-    require('./adbModules/export/handleExportierenClick')();
-};
-
-// wenn exportieren_alt geklickt wird
-window.adb.handleExportierenAltClick = function () {
-    window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
-};
-
-// wird in index.html benutzt
 window.adb.handleFeldWaehlenChange = function () {
     return require('./adbModules/export/handleFeldWaehlenChange')(this);
 };

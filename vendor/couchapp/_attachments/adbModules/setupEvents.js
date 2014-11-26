@@ -9,7 +9,9 @@ var $                           = require('jquery'),
     onClickShowNextHiddenExport = require('./onClickShowNextHiddenExport'),
     onClickDsImportieren        = require('./import/onClickDsImportieren'),
     onClickBsImportieren        = require('./import/onClickBsImportieren'),
-    onClickMenuAdmin            = require('./onClickMenuAdmin');
+    onClickMenuAdmin            = require('./onClickMenuAdmin'),
+    onClickExportieren          = require('./export/onClickExportieren'),
+    onClickExportierenAlt       = require('./export/onClickExportierenAlt');
 
 module.exports = function () {
     $('#menu')
@@ -28,8 +30,8 @@ module.exports = function () {
         .on('click', '#ds_importieren',       onClickDsImportieren)
         .on('click', '#bs_importieren',       onClickBsImportieren)
         .on('click', '#menu_admin',           onClickMenuAdmin)
-        .on('click', '#exportieren',     window.adb.handleExportierenClick)
-        .on('click', '#exportieren_alt', window.adb.handleExportierenAltClick);
+        .on('click', '#exportieren',          onClickExportieren)
+        .on('click', '#exportieren_alt',      onClickExportierenAlt);
 
     $('#exportieren_diverses')
         .on('click', '#admin_pilze_zhgis_ergänzen', window.adb.ergaenzePilzeZhgis)
