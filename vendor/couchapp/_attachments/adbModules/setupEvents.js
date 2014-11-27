@@ -56,14 +56,14 @@ module.exports = function () {
      * body
      */
     $body
-        .on('click', '.showNextHidden',                                      onClickShowNextHidden)
-        .on('click', '.showNextHiddenExport',                                onClickShowNextHiddenExport);
+        .on('click', '.showNextHidden',                                   onClickShowNextHidden)
+        .on('click', '.showNextHiddenExport',                             onClickShowNextHiddenExport);
     $('#menuBtn')                                .on('click',             onClickMenuBtn);
 
     /*
      * menu
      */
-    $('#menu').on('click',  '.gruppe',                                       onClickOeffneGruppe);
+    $('#menu').on('click',  '.gruppe',                                    onClickOeffneGruppe);
     $('#btnResize')                              .on('click',             onClickBtnResize);
     $('#menuDsImportieren')                      .on('click',             onClickMenuDsImportieren);
     $('#bsImportieren')                          .on('click',             onClickMenuBsImportieren);
