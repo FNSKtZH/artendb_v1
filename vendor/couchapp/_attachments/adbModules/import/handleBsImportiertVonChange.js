@@ -14,7 +14,7 @@ module.exports = function () {
         .removeClass("alert-danger")
         .addClass("alert-info")
         .show();
-    $("#importieren_bs_ds_beschreiben_hinweis_text2").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+    $("#importieren_bs_ds_beschreiben_hinweis2_text").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
     setTimeout(function () {
         $("#importieren_bs_ds_beschreiben_hinweis2")
             .alert()

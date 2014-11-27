@@ -15,11 +15,6 @@ window.adb.meldeUserAb = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleBsNameChange = function () {
-    require('./adbModules/import/handleBsNameChange')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleBsImportiertVonChange = function () {
     require('./adbModules/import/handleBsImportiertVonChange')();
 };
