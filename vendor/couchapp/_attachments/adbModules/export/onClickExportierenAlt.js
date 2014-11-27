@@ -1,4 +1,4 @@
-// wenn exportieren_alt geklickt wird
+// wenn exportierenAlt geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

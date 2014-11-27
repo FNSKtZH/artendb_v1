@@ -835,8 +835,8 @@ option {
 \*--------------------------------*/
 
 /*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
-#importieren_ds_import_ausfuehren_collapse button,
-#importieren_bs_import_ausfuehren_collapse button {
+#importierenDsImportAusfuehrenCollapse button,
+#importierenBsImportAusfuehrenCollapse button {
     display: block;
 }
 

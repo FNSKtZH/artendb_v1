@@ -58,60 +58,60 @@ module.exports = function () {
     $body
         .on('click', '.showNextHidden',                                      onClickShowNextHidden)
         .on('click', '.showNextHiddenExport',                                onClickShowNextHiddenExport);
-    $('#menuBtn')                                   .on('click',             onClickMenuBtn);
+    $('#menuBtn')                                .on('click',             onClickMenuBtn);
 
     /*
      * menu
      */
     $('#menu').on('click',  '.gruppe',                                       onClickOeffneGruppe);
-    $('#btnResize')                                 .on('click',             onClickBtnResize);
-    $('#menuDsImportieren')                         .on('click',             onClickMenuDsImportieren);
-    $('#bs_importieren')                            .on('click',             onClickMenuBsImportieren);
-    $('#menu_admin')                                .on('click',             onClickMenuAdmin);
-    $('#exportieren')                               .on('click',             onClickExportieren);
-    $('#exportieren_alt')                           .on('click',             onClickExportierenAlt);
+    $('#btnResize')                              .on('click',             onClickBtnResize);
+    $('#menuDsImportieren')                      .on('click',             onClickMenuDsImportieren);
+    $('#bsImportieren')                          .on('click',             onClickMenuBsImportieren);
+    $('#menuAdmin')                              .on('click',             onClickMenuAdmin);
+    $('#exportieren')                            .on('click',             onClickExportieren);
+    $('#exportierenAlt')                         .on('click',             onClickExportierenAlt);
 
     /*
      * admin
      */
-    $('#adminPilzeZhgisErgaenzen')                  .on('click',             onClickAdminPilzeZhgisErgaenzen);
-    $('#adminKorrigiereArtwertnameInFlora')         .on('click',             onClickAdminKorrigiereArtwertnameInFlora);
-    $('#adminKorrigiereDsNameChRoteListe1991')      .on('click',             onClickAdminKorrigiereDsNameChRoteListe1991);
-    $('#adminKorrigiereDsName')                     .on('click',             onClickAdminKorrigiereDsName);
-    $('#adminBaueDsZuEigenschaftenUm')              .on('click',             onClickAdminBaueDsZuEigenschaftenUm);
+    $('#adminPilzeZhgisErgaenzen')               .on('click',             onClickAdminPilzeZhgisErgaenzen);
+    $('#adminKorrigiereArtwertnameInFlora')      .on('click',             onClickAdminKorrigiereArtwertnameInFlora);
+    $('#adminKorrigiereDsNameChRoteListe1991')   .on('click',             onClickAdminKorrigiereDsNameChRoteListe1991);
+    $('#adminKorrigiereDsName')                  .on('click',             onClickAdminKorrigiereDsName);
+    $('#adminBaueDsZuEigenschaftenUm')           .on('click',             onClickAdminBaueDsZuEigenschaftenUm);
 
     /*
      * importieren
      */
-    $('#importieren_ds_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
-    $('#importieren_bs_ds_beschreiben_collapse')    .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
-    $('#importieren_ds_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
-    $('#importieren_bs_daten_uploaden_collapse')    .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
-    $('#importierenDsIdsIdentifizierenCollapse')    .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
-    $('#importierenBsIdsIdentifizierenCollapse')    .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
-    $('#importieren_ds_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
-    $('#importieren_bs_import_ausfuehren_collapse') .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
-    $('#DsWaehlen')                                 .on('change',            onChangeDsWaehlen);
-    $('#DsName')                                    .on('change',            onChangeDsName);
-    $('#DsImportiertVon')                           .on('change',            onChangeDsImportiertVon);
-    $('#DsZusammenfassend')                         .on('change',            onChangeDsZusammenfassend);
-    $('#DsFile')                                    .on('change',            onChangeDsFile);
-    $('#DsFelder')                                  .on('change',            onChangeDsFelder);
-    $('#DsId')                                      .on('change',            onChangeDsId);
-    $('#DsLoeschen')                                .on('click',             onClickDsLoeschen);
-    $('#DsImportieren')                             .on('click',             onClickDsImportieren);
-    $('#DsEntfernen')                               .on('click',             onClickDsEntfernen);
-    $('#importierenDs').on('click', '.panel-heading a',                      onClickPanelHeadingA);
-    $('#BsWaehlen')                                 .on('change',            onChangeBsWaehlen);
-    $('#BsName')                                    .on('change',            onChangeBsName);
-    $('#BsImportiertVon')                           .on('change',            onChangeBsImportiertVon);
-    $('#BsZusammenfassend')                         .on('change',            onChangeBsZusammenfassend);
-    $('#BsFile')                                    .on('change',            onChangeBsFile);
-    $('#BsId')                                      .on('change',            onChangeBsId);
-    $('#BsFelder')                                  .on('change',            onChangeBsFelder);
-    $('#BsImportieren')                             .on('click',             onClickBsImportieren);
-    $('#BsLoeschen')                                .on('click',             onClickBsLoeschen);
-    $('#BsEntfernen')                               .on('click',             onClickBsEntfernen);
+    $('#importieren_ds_ds_beschreiben_collapse') .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
+    $('#importieren_bs_ds_beschreiben_collapse') .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
+    $('#importierenDsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
+    $('#importierenBsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
+    $('#importierenDsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
+    $('#importierenBsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
+    $('#importierenDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
+    $('#importierenBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
+    $('#DsWaehlen')                              .on('change',            onChangeDsWaehlen);
+    $('#DsName')                                 .on('change',            onChangeDsName);
+    $('#DsImportiertVon')                        .on('change',            onChangeDsImportiertVon);
+    $('#DsZusammenfassend')                      .on('change',            onChangeDsZusammenfassend);
+    $('#DsFile')                                 .on('change',            onChangeDsFile);
+    $('#DsFelder')                               .on('change',            onChangeDsFelder);
+    $('#DsId')                                   .on('change',            onChangeDsId);
+    $('#DsLoeschen')                             .on('click',             onClickDsLoeschen);
+    $('#DsImportieren')                          .on('click',             onClickDsImportieren);
+    $('#DsEntfernen')                            .on('click',             onClickDsEntfernen);
+    $('#importierenDs').on('click', '.panel-heading a',                   onClickPanelHeadingA);
+    $('#BsWaehlen')                              .on('change',            onChangeBsWaehlen);
+    $('#BsName')                                 .on('change',            onChangeBsName);
+    $('#BsImportiertVon')                        .on('change',            onChangeBsImportiertVon);
+    $('#BsZusammenfassend')                      .on('change',            onChangeBsZusammenfassend);
+    $('#BsFile')                                 .on('change',            onChangeBsFile);
+    $('#BsId')                                   .on('change',            onChangeBsId);
+    $('#BsFelder')                               .on('change',            onChangeBsFelder);
+    $('#BsImportieren')                          .on('click',             onClickBsImportieren);
+    $('#BsLoeschen')                             .on('click',             onClickBsLoeschen);
+    $('#BsEntfernen')                            .on('click',             onClickBsEntfernen);
 
     /*
      * exportieren

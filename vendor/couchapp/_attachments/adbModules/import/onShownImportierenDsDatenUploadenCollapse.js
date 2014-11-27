@@ -1,4 +1,4 @@
-// wenn importieren_ds_daten_uploaden_collapse geöffnet wird
+// wenn importierenDsDatenUploadenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -14,6 +14,6 @@ module.exports = function (that) {
         $('#DsFile').fileupload();
     }
     $('html, body').animate({
-        scrollTop: $("#importieren_ds_daten_uploaden_collapse").offset().top
+        scrollTop: $("#importierenDsDatenUploadenCollapse").offset().top
     }, 2000);
 };

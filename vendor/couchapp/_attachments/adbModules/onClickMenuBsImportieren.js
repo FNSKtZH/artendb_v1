@@ -1,4 +1,4 @@
-// wenn bs_importieren geklickt wird
+// wenn bsImportieren geklickt wird
 // testen, ob der Browser das Importieren unterstützt
 // wenn nein, Meldung bringen (macht die aufgerufene Funktion)
 

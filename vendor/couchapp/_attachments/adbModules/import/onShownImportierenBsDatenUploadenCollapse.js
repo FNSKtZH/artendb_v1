@@ -1,4 +1,4 @@
-// wenn importieren_bs_daten_uploaden_collapse geöffnet wird
+// wenn importierenBsDatenUploadenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -14,6 +14,6 @@ module.exports = function (that) {
         $('#BsFile').fileupload();
     }
     $('html, body').animate({
-        scrollTop: $("#importieren_bs_daten_uploaden_collapse").offset().top
+        scrollTop: $("#importierenBsDatenUploadenCollapse").offset().top
     }, 2000);
 };
