@@ -38,6 +38,7 @@ var $                                             = require('jquery'),
     onClickPanelHeadingA                          = require('./import/onClickPanelHeadingA'),
     onChangeBsWaehlen                             = require('./import/onChangeBsWaehlen'),
     onChangeBsName                                = require('./import/onChangeBsName'),
+    onChangeBsImportiertVon                       = require('./import/onChangeBsImportiertVon'),
     onChangeBsFile                                = require('./import/onChangeBsFile');
 
 module.exports = function () {
@@ -97,7 +98,7 @@ module.exports = function () {
     $('#importierenDs').on('click', '.panel-heading a',                      onClickPanelHeadingA);
     $('#BsWaehlen')                                 .on('change',            onChangeBsWaehlen);
     $('#BsName')                                    .on('change',            onChangeBsName);
-    $('#BsImportiertVon').on('change', window.adb.handleBsImportiertVonChange);
+    $('#BsImportiertVon')                           .on('change',            onChangeBsImportiertVon);
     $('#BsZusammenfassend').on('change', window.adb.handleBsZusammenfassendChange);
     $('#BsFile')                                    .on('change',            onChangeBsFile);
     $('#BsId').on('change', window.adb.handleBsIdChange);
