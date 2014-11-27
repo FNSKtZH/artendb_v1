@@ -29,17 +29,6 @@ window.adb.handleBsZusammenfassendChange = function () {
     require('./adbModules/import/handleBsZusammenfassendChange')(this);
 };
 
-// Wenn BsWählen geändert wird
-// wird in index.html benutzt
-window.adb.handleBsWaehlenChange = function () {
-    require('./adbModules/import/handleBsWaehlenChange')(this);
-};
-
-// wird in index.html benutzt
-window.adb.handleBsFileChange = function () {
-    require('./adbModules/import/handleBsFileChange')(event);
-};
-
 // wird in index.html benutzt
 window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();

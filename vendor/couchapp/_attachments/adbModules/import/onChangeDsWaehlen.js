@@ -58,7 +58,7 @@ module.exports = function () {
                     $DsAnzDsLabel.html("Anzahl Arten/Lebensräume");
                     $DsAnzDs.html(dsVonObjektenRow.value);
                     // dafür sorgen, dass textareas genug gross sind
-                    $('#importieren_ds')
+                    $('#importierenDs')
                         .find('textarea')
                         .each(function () {
                             fitTextareaToContent(this, document.documentElement.clientHeight);

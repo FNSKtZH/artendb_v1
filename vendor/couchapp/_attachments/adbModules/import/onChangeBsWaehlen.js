@@ -3,28 +3,25 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                    = require('underscore'),
+    $                    = require('jquery'),
+    fitTextareaToContent = require('../fitTextareaToContent');
 
-module.exports = function (that) {
-    var bsName         = that.value,
+module.exports = function () {
+    var that           = this,
+        bsName         = that.value,
         waehlbar       = false,
         $BsAnzDs       = $("#BsAnzDs"),
         $BsAnzDs_label = $("#BsAnzDs_label"),
         $BsName        = $("#BsName"),
-        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2"),
-        fitTextareaToContent                    = require('../fitTextareaToContent');
+        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2");
     // allfälligen Alert schliessen
     $importieren_bs_ds_beschreiben_hinweis2
         .alert()
         .hide();
     // waehlbar setzen
     // wählen kann man nur, was man selber importiert hat - oder admin ist
-    if ($("#" + that.id + " option:selected").attr("waehlbar") === "true") {
-        waehlbar = true;
-    } else {
-        waehlbar = Boolean(localStorage.admin);
-    }
+    waehlbar = $("#" + that.id + " option:selected").attr("waehlbar") === "true" ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
         $('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {

@@ -3,15 +3,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $    = require('jquery'),
-    XLSX = require('XLSX');
+var $               = require('jquery'),
+    XLSX            = require('XLSX'),
+    erstelleTabelle = require('../erstelleTabelle');
 
-module.exports = function (event) {
-    var erstelleTabelle = require('../erstelleTabelle'),
-        file,
+module.exports = function () {
+    var file,
         filename,
         filetype,
         reader;
+
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
@@ -20,10 +22,10 @@ module.exports = function (event) {
         $("#BsImportieren").hide();
         $("#BsEntfernen").hide();
     } else {
-        file = event.target.files[0];
+        file     = event.target.files[0];
         filename = file.name;
         filetype = filename.split('.').pop();
-        reader = new FileReader();
+        reader   = new FileReader();
 
         if (filetype === 'csv') {
             reader.onload = function (event) {
@@ -35,9 +37,9 @@ module.exports = function (event) {
             reader.readAsText(file);
         }
         if (filetype === 'xlsx') {
-            reader.onload = function(event) {
-                var data = event.target.result,
-                    workbook = XLSX.read(data, {type: 'binary'}),
+            reader.onload = function (event) {
+                var data      = event.target.result,
+                    workbook  = XLSX.read(data, {type: 'binary'}),
                     sheetName = workbook.SheetNames[0],
                     worksheet = workbook.Sheets[sheetName];
 
@@ -46,6 +48,5 @@ module.exports = function (event) {
             };
             reader.readAsBinaryString(file);
         }
-            
     }
 };

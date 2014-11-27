@@ -34,7 +34,10 @@ var $                                             = require('jquery'),
     onChangeDsId                                  = require('./import/onChangeDsId'),
     onClickDsLoeschen                             = require('./import/onClickDsLoeschen'),
     onClickDsImportieren                          = require('./import/onClickDsImportieren'),
-    onClickDsEntfernen                            = require('./import/onClickDsEntfernen');
+    onClickDsEntfernen                            = require('./import/onClickDsEntfernen'),
+    onClickPanelHeadingA                          = require('./import/onClickPanelHeadingA'),
+    onChangeBsWaehlen                             = require('./import/onChangeBsWaehlen'),
+    onChangeBsFile                                = require('./import/onChangeBsFile');
 
 module.exports = function () {
     var $body = $('body');
@@ -90,22 +93,12 @@ module.exports = function () {
     $('#DsLoeschen')                                .on('click',             onClickDsLoeschen);
     $('#DsImportieren')                             .on('click',             onClickDsImportieren);
     $('#DsEntfernen')                               .on('click',             onClickDsEntfernen);
-    $('#importieren_ds').on('click',  '.panel-heading a', function (event) {
-        // verhindern, dass bootstrap ganz nach oben scrollt
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-    });
-
-    $('#BsWaehlen').on('change', window.adb.handleBsWaehlenChange);
+    $('#importierenDs').on('click', '.panel-heading a',                      onClickPanelHeadingA);
+    $('#BsWaehlen')                                 .on('change',            onChangeBsWaehlen);
     $('#BsName').on('change', window.adb.handleBsNameChange);
     $('#BsImportiertVon').on('change', window.adb.handleBsImportiertVonChange);
     $('#BsZusammenfassend').on('change', window.adb.handleBsZusammenfassendChange);
-    $('#BsFile').on('change', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.handleBsFileChange();
-    });
+    $('#BsFile')                                    .on('change',            onChangeBsFile);
     $('#BsId').on('change', window.adb.handleBsIdChange);
     $('#BsFelder').on('change', window.adb.handleBsFelderChange);
     $('#BsImportieren').on('click', function (event) {

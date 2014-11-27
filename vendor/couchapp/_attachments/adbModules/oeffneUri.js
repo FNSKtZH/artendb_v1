@@ -69,7 +69,7 @@ module.exports = function () {
         }
     }
     if (importierenDatensammlung) {
-        zeigeFormular('importieren_ds');
+        zeigeFormular('importierenDs');
     }
     if (importierenBeziehungssammlung) {
         zeigeFormular('importieren_bs');

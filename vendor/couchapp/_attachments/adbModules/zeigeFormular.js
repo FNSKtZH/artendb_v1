@@ -60,7 +60,7 @@ module.exports = function (formularname) {
             // ganze Breite nutzen (menu bleibt ausgeblendet)
             $("body").toggleClass("force-mobile");
             break;
-        case 'importieren_ds':
+        case 'importierenDs':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?importieren_datensammlung=true");
             break;

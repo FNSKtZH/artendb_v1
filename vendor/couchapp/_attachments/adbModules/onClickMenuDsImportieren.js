@@ -13,7 +13,7 @@ module.exports = function () {
         isFileAPIAvailable = require('./isFileAPIAvailable');
 
     if (isFileAPIAvailable()) {
-        zeigeFormular("importieren_ds");
+        zeigeFormular("importierenDs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("ds")) {
             $("#importieren_ds_ds_beschreiben_collapse").collapse('show');

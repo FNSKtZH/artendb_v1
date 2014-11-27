@@ -6179,7 +6179,7 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #art label,
-#importieren_ds label,
+#importierenDs label,
 #importieren_bs label,
 #export .form-group label {
     width: 200px;
@@ -6290,7 +6290,7 @@ h5 a {
             column-break-inside: avoid;
 }
 
-#art legend, #importieren_ds legend, #importieren_bs legend, #export legend {
+#art legend, #importierenDs legend, #importieren_bs legend, #export legend {
     color: #6F6F66;
     font-weight: bold;
     margin: 0 0 7px 0;
@@ -6392,7 +6392,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /* vertikalen Abstand zwischen Feldern verkleinern */
-#art .form-group, #importieren_ds .form-group, #importieren_bs .form-group, #export .form-group {
+#art .form-group, #importierenDs .form-group, #importieren_bs .form-group, #export .form-group {
     margin-bottom: 5px;
     -webkit-column-break-inside: avoid;
        -moz-column-break-inside: avoid;
