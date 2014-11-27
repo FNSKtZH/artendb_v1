@@ -169,11 +169,6 @@ window.adb.handleBsFelderChange = function () {
     require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
-// wenn #BsId geändert wird
-window.adb.handleBsIdChange = function () {
-    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
-};
-
 // wenn in textarea keyup oder focus
 window.adb.handleTextareaKeyupFocus = function () {
     require('./adbModules/fitTextareaToContent')(this.id);

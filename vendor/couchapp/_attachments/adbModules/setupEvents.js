@@ -40,7 +40,9 @@ var $                                             = require('jquery'),
     onChangeBsName                                = require('./import/onChangeBsName'),
     onChangeBsImportiertVon                       = require('./import/onChangeBsImportiertVon'),
     onChangeBsZusammenfassend                     = require('./import/onChangeBsZusammenfassend'),
-    onChangeBsFile                                = require('./import/onChangeBsFile');
+    onChangeBsFile                                = require('./import/onChangeBsFile'),
+    onChangeBsId                                  = require('./import/onChangeBsId'),
+    onClickBsImportieren                          = require('./import/onClickBsImportieren');
 
 module.exports = function () {
     var $body = $('body');
@@ -102,15 +104,9 @@ module.exports = function () {
     $('#BsImportiertVon')                           .on('change',            onChangeBsImportiertVon);
     $('#BsZusammenfassend')                         .on('change',            onChangeBsZusammenfassend);
     $('#BsFile')                                    .on('change',            onChangeBsFile);
-    $('#BsId').on('change', window.adb.handleBsIdChange);
+    $('#BsId')                                      .on('change',            onChangeBsId);
     $('#BsFelder').on('change', window.adb.handleBsFelderChange);
-    $('#BsImportieren').on('click', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.importiereBeziehungssammlung();
-    });
+    $('#BsImportieren')                             .on('click',             onClickBsImportieren);
     $('#BsLoeschen').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
