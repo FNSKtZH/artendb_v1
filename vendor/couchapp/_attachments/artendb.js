@@ -15,11 +15,6 @@ window.adb.meldeUserAb = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleBsZusammenfassendChange = function () {
-    require('./adbModules/import/handleBsZusammenfassendChange')(this);
-};
-
-// wird in index.html benutzt
 window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
 };

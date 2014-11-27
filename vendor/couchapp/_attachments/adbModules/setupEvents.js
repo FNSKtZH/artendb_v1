@@ -39,6 +39,7 @@ var $                                             = require('jquery'),
     onChangeBsWaehlen                             = require('./import/onChangeBsWaehlen'),
     onChangeBsName                                = require('./import/onChangeBsName'),
     onChangeBsImportiertVon                       = require('./import/onChangeBsImportiertVon'),
+    onChangeBsZusammenfassend                     = require('./import/onChangeBsZusammenfassend'),
     onChangeBsFile                                = require('./import/onChangeBsFile');
 
 module.exports = function () {
@@ -99,7 +100,7 @@ module.exports = function () {
     $('#BsWaehlen')                                 .on('change',            onChangeBsWaehlen);
     $('#BsName')                                    .on('change',            onChangeBsName);
     $('#BsImportiertVon')                           .on('change',            onChangeBsImportiertVon);
-    $('#BsZusammenfassend').on('change', window.adb.handleBsZusammenfassendChange);
+    $('#BsZusammenfassend')                         .on('change',            onChangeBsZusammenfassend);
     $('#BsFile')                                    .on('change',            onChangeBsFile);
     $('#BsId').on('change', window.adb.handleBsIdChange);
     $('#BsFelder').on('change', window.adb.handleBsFelderChange);
