@@ -3,10 +3,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                          = require('jquery'),
+    entferneBeziehungssammlungAusAllenObjekten = require('./entferneBeziehungssammlungAusAllenObjekten');
 
 module.exports = function () {
-    var entferneBeziehungssammlungAusAllenObjekten = require('./entferneBeziehungssammlungAusAllenObjekten');
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     // Rückmeldung anzeigen
     $("#importieren_bs_ds_beschreiben_hinweis")

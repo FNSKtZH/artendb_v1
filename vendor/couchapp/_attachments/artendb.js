@@ -20,11 +20,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleBsLoeschenClick = function () {
-    require('./adbModules/import/handleBsLoeschenClick')();
-};
-
-// wird in index.html benutzt
 window.adb.handleFeldWaehlenChange = function () {
     return require('./adbModules/export/handleFeldWaehlenChange')(this);
 };
@@ -162,11 +157,6 @@ window.adb.handleKontoErstellenBtnClick = function (that) {
 // wird in index.html benutzt
 window.adb.handleKontoSpeichernBtnClick = function (that) {
     require('./adbModules/login/handleKontoSpeichernBtnClick')(that);
-};
-
-// wenn #BsFelder geändert wird
-window.adb.handleBsFelderChange = function () {
-    require('./adbModules/import/meldeErfolgVonIdIdentifikation')('Bs');
 };
 
 // wenn in textarea keyup oder focus
