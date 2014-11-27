@@ -44,7 +44,8 @@ var $                                             = require('jquery'),
     onChangeBsId                                  = require('./import/onChangeBsId'),
     onChangeBsFelder                              = require('./import/onChangeBsFelder'),
     onClickBsImportieren                          = require('./import/onClickBsImportieren'),
-    onClickBsLoeschen                             = require('./import/onClickBsLoeschen');
+    onClickBsLoeschen                             = require('./import/onClickBsLoeschen'),
+    onClickBsEntfernen                            = require('./import/onClickBsEntfernen');
 
 module.exports = function () {
     var $body = $('body');
@@ -110,13 +111,7 @@ module.exports = function () {
     $('#BsFelder')                                  .on('change',            onChangeBsFelder);
     $('#BsImportieren')                             .on('click',             onClickBsImportieren);
     $('#BsLoeschen')                                .on('click',             onClickBsLoeschen);
-    $('#BsEntfernen').on('click', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.entferneBeziehungssammlung();
-    });
+    $('#BsEntfernen')                               .on('click',             onClickBsEntfernen);
 
     /*
      * exportieren
