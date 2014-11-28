@@ -37,11 +37,11 @@ module.exports = function (gewaehlteFelderObjekt) {
 
     // Beziehungen in Zeilen oder in Spalte
     if ($("#export_bez_in_zeilen").prop('checked')) {
-        queryParam += "&bez_in_zeilen=true";
-        view += "&bez_in_zeilen=true";
+        queryParam += "&bezInZeilen=true";
+        view += "&bezInZeilen=true";
     } else {
-        queryParam += "&bez_in_zeilen=false";
-        view += "&bez_in_zeilen=false";
+        queryParam += "&bezInZeilen=false";
+        view += "&bezInZeilen=false";
     }
 
     // Felder

@@ -19,12 +19,12 @@
         exportObjekte = [],
         üVar = {
             felder: [],
-            bez_in_zeilen: true
+            bezInZeilen: true
         },
         exportObjekt,
         beziehungssammlungenAusSynonymen,
         datensammlungenAusSynonymen,
-        ergänzeDsBsVonSynonym_return,
+        ergänzeDsBsVonSynonymReturn,
         ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
         holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
         ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
@@ -33,7 +33,7 @@
     // übergebene Variablen extrahieren
     üVar = holeUebergebeneVariablen(req.query);
     // Wichtige überschreiben:
-    üVar.nur_objekte_mit_eigenschaften = false;
+    üVar.nurObjekteMitEigenschaften = false;
     üVar.filterkriterien = [];
     üVar.fasseTaxonomienZusammen = true;
 
@@ -49,9 +49,9 @@
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonym_return = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
-            datensammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[0];
-            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[1];
+            ergänzeDsBsVonSynonymReturn = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[0];
+            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[1];
 
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
@@ -66,7 +66,7 @@
 
             // Exportobjekte um das Objekt ergänzen
             // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
             
             // arrays für sammlungen aus synonymen zurücksetzen
             beziehungssammlungenAusSynonymen = [];

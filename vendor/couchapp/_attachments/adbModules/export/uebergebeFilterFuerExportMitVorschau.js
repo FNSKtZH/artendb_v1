@@ -24,8 +24,8 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
     // in anzGruppenAbgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
     _.each(gruppenArray, function (gruppe) {
-        if ($("#exportieren_synonym_infos").prop('checked')) {
-            listName = "artendb/export_mit_synonymen";
+        if ($("#exportierenSynonymInfos").prop('checked')) {
+            listName = "artendb/exportMitSynonymen";
             queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         } else {
             listName = "artendb/export";
@@ -34,14 +34,14 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anzDsGewaehlt > 0) {
             // prüfen, ob mindestens ein Feld aus ds gewählt ist
             // wenn ja: true, sonst false
-            queryParam += "&nur_objekte_mit_eigenschaften=true";
+            queryParam += "&nurObjekteMitEigenschaften=true";
         } else {
-            queryParam += "&nur_objekte_mit_eigenschaften=false";
+            queryParam += "&nurObjekteMitEigenschaften=false";
         }
         if ($("#export_bez_in_zeilen").prop('checked')) {
-            queryParam += "&bez_in_zeilen=true";
+            queryParam += "&bezInZeilen=true";
         } else {
-            queryParam += "&bez_in_zeilen=false";
+            queryParam += "&bezInZeilen=false";
         }
 
         // format ergänzen

@@ -152,7 +152,7 @@ module.exports = function (direkt, fuerAlt) {
     if (fuerAlt) {
         htmlFilterkriterien = "Gewählte Option:<ul>";
     }
-    if ($("#exportieren_synonym_infos").prop('checked')) {
+    if ($("#exportierenSynonymInfos").prop('checked')) {
         htmlFilterkriterien += "<li>inklusive Informationen von Synonymen</li>";
     } else {
         htmlFilterkriterien += "<li>Informationen von Synonymen ignorieren</li>";

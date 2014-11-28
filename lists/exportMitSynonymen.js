@@ -3,33 +3,31 @@ function (head, req) {
     
     start({
         "headers": {
-            "Content-Type": "text/csv",
-            "Content-disposition": "attachment;filename=Arteigenschaften_mit_Synonymen.csv",
-            "Accept-Charset": "utf-8"
+            "Accept-Charset": "utf-8",
+            "Content-Type": "json; charset=utf-8;"
         }
     });
 
-    var row,
+    var beurteileObInformationenEnthaltenSind     = require('lists/lib/beurteileObInformationenEnthaltenSind'),
+        pruefeObObjektKriterienErfuellt           = require('lists/lib/pruefeObObjektKriterienErfuellt'),
+        ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
+        holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
+        ergaenzeExportobjekteUmExportobjekt       = require('lists/lib/ergaenzeExportobjekteUmExportobjekt'),
+        row,
         objekt,
         exportObjekte = [],
         ueVar = {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
             felder: [],
-            nur_objekte_mit_eigenschaften: true,
-            bez_in_zeilen: true
+            nurObjekteMitEigenschaften: true,
+            bezInZeilen: true
         },
         objektHinzufuegen,
         beziehungssammlungenAusSynonymen,
         datensammlungenAusSynonymen,
-        ergänzeDsBsVonSynonym_return,
-        erstelleExportString                      = require('lists/lib/erstelleExportString'),
-        beurteileObInformationenEnthaltenSind     = require('lists/lib/beurteileObInformationenEnthaltenSind'),
-        pruefeObObjektKriterienErfuellt           = require('lists/lib/pruefeObObjektKriterienErfuellt'),
-        ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
-        holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
-        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
-        ergaenzeExportobjekteUmExportobjekt       = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
+        ergänzeDsBsVonSynonymReturn;
 
     // übergebene Variablen extrahieren
     ueVar = holeUebergebeneVariablen(req.query);
@@ -41,26 +39,19 @@ function (head, req) {
     while (row = getRow()) {
         objekt = row.doc;
 
-        // Prüfen, ob Gruppen übergeben wurden
-        // ist hier nötig, weil nicht pro gewählte Gruppe eine list aufgerufen werden kann
-        if (ueVar.gruppen && ueVar.gruppen.length > 0) {
-            // ja: Prüfen, ob das Dokument einer der Gruppen angehört / nein: weiter
-            if (ueVar.gruppen.indexOf(objekt.Gruppe) === -1) {
-                // diese Gruppe wollen wir nicht > weiter mit nächstem objekt
-                continue;
-            }
-        }
+        // Prüfen, ob Gruppen übergeben wurden ist nicht nötig, weil pro Gruppe eine list aufgerufen wird, die dann den view der Gruppe benutzt
 
         if (row.key[1] === 0) {
             // das ist ein Synonym
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonym_return = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
-            datensammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[0];
-            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonym_return[1];
+            ergänzeDsBsVonSynonymReturn = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[0];
+            beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[1];
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
+
             // sicherstellen, dass DS und BS existieren
             objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
             objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
@@ -68,10 +59,9 @@ function (head, req) {
             // allfällige DS und BS aus Synonymen anhängen
             objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
 
-            // prüfen, ob das Objekt die Kriterien erfüllt
-            objektHinzufuegen = pruefeObObjektKriterienErfuellt(objekt, ueVar.felder, ueVar.filterkriterien, ueVar.fasseTaxonomienZusammen, ueVar.nur_objekte_mit_eigenschaften);
+            objektHinzufuegen = pruefeObObjektKriterienErfuellt(objekt, ueVar.felder, ueVar.filterkriterien, ueVar.fasseTaxonomienZusammen, ueVar.nurObjekteMitEigenschaften);
 
-            if (ueVar.nur_objekte_mit_eigenschaften && objektHinzufuegen && ueVar.filterkriterien.length === 0) {
+            if (ueVar.nurObjekteMitEigenschaften && objektHinzufuegen && ueVar.filterkriterien.length === 0) {
                 // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
                 // also müssen wir bei hinzuzufügenden Objekten durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
                 // wenn ja und Feld aus DS/BS: objektHinzufuegen = true
@@ -82,7 +72,7 @@ function (head, req) {
             if (objektHinzufuegen) {
                 // alle Kriterien sind erfüllt
                 // jetzt das Exportobjekt aufbauen
-                exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bez_in_zeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
+                exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bezInZeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
             }
 
             // arrays für sammlungen aus synonymen zurücksetzen
@@ -90,5 +80,6 @@ function (head, req) {
             datensammlungenAusSynonymen = [];
         }
     }
-    send(erstelleExportString(exportObjekte));
+
+    send(JSON.stringify(exportObjekte));
 }

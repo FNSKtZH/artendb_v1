@@ -1,7 +1,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _                         = require("lists/lib/underscore"),
+    bereiteFilterkriterienVor = require('lists/lib/bereiteFilterkriterienVor');
 
 // liest übergebene Variabeln für Export aus
 // und bereitet sie für die Verwendung auf
@@ -10,13 +11,12 @@ module.exports = function (query_objekt) {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
             felder: [],
-            nur_objekte_mit_eigenschaften: true,
-            bez_in_zeilen: true,
+            nurObjekteMitEigenschaften: true,
+            bezInZeilen: true,
             format: 'xlsx'
         },
         filterkriterienObjekt,
-        felderObjekt,
-        bereiteFilterkriterienVor = require('lists/lib/bereiteFilterkriterienVor');
+        felderObjekt;
 
     _.each(query_objekt, function (value, key) {
         switch (key) {
@@ -38,13 +38,13 @@ module.exports = function (query_objekt) {
         case "gruppen":
             ueVar.gruppen = value.split(",");
             break;
-        case "nur_objekte_mit_eigenschaften":
+        case "nurObjekteMitEigenschaften":
             // true oder false wird als String übergeben > umwandeln
-            ueVar.nur_objekte_mit_eigenschaften = (value == 'true');
+            ueVar.nurObjekteMitEigenschaften = (value == 'true');
             break;
-        case "bez_in_zeilen":
+        case "bezInZeilen":
             // true oder false wird als String übergeben > umwandeln
-            ueVar.bez_in_zeilen = (value === 'true');
+            ueVar.bezInZeilen = (value === 'true');
             break;
         case "format":
             // true oder false wird als String übergeben > umwandeln

@@ -14,8 +14,8 @@ function (head, req) {
             fasseTaxonomienZusammen: false,
             filterkriterien: [],
             felder: [],
-            nur_objekte_mit_eigenschaften: true,
-            bez_in_zeilen: true
+            nurObjekteMitEigenschaften: true,
+            bezInZeilen: true
         },
         exportObjekte = [],
         objektHinzufuegen,
@@ -33,9 +33,9 @@ function (head, req) {
         // Prüfen, ob Gruppen übergeben wurden: ist nicht nötig, weil pro Gruppe eine list aufgerufen wird, die dann den view der Gruppe benutzt
 
         // prüfen, ob die Kriterien erfüllt sind
-        objektHinzufuegen = pruefeObObjektKriterienErfuellt(objekt, ueVar.felder, ueVar.filterkriterien, ueVar.fasseTaxonomienZusammen, ueVar.nur_objekte_mit_eigenschaften);
+        objektHinzufuegen = pruefeObObjektKriterienErfuellt(objekt, ueVar.felder, ueVar.filterkriterien, ueVar.fasseTaxonomienZusammen, ueVar.nurObjekteMitEigenschaften);
 
-        if (ueVar.nur_objekte_mit_eigenschaften && objektHinzufuegen && ueVar.filterkriterien.length === 0) {
+        if (ueVar.nurObjekteMitEigenschaften && objektHinzufuegen && ueVar.filterkriterien.length === 0) {
             // der Benutzer will nur Objekte mit Informationen aus den gewählten Eigenschaften- und Beziehungssammlungen erhalten
             // also müssen wir bei hinzuzufügenden Objekten durch die Felder loopen und schauen, ob der Datensatz anzuzeigende Felder enthält
             // wenn ja und Feld aus DS/BS: objektHinzufuegen = true
@@ -46,7 +46,7 @@ function (head, req) {
         if (objektHinzufuegen) {
             // alle Kriterien sind erfüllt
             // jetzt das Exportobjekt aufbauen
-            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bez_in_zeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
+            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, ueVar.felder, ueVar.bezInZeilen, ueVar.fasseTaxonomienZusammen, ueVar.filterkriterien, exportObjekte, null);
         }
     }
     send(JSON.stringify(exportObjekte));

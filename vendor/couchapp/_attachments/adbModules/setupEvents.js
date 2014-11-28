@@ -127,7 +127,7 @@ module.exports = function () {
         })
         .on('click', '[name="exportieren_exportieren_format"]', window.adb.blendeFormatCsvTipps)
         .on('change', '.feld_waehlen_alle_von_ds', window.adb.exportZuruecksetzen);
-    $('#export_bez_in_zeilen,#export_bez_in_feldern,#exportieren_synonym_infos,#exportieren_nur_objekte_mit_eigenschaften').on('change', window.adb.exportZuruecksetzen);
+    $('#export_bez_in_zeilen,#export_bez_in_feldern,#exportierenSynonymInfos,#exportieren_nur_objekte_mit_eigenschaften').on('change', window.adb.exportZuruecksetzen);
     $('#exportieren_objekte_Taxonomien_zusammenfassen').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
         // den event hier stoppen, nicht erst in der Funktion

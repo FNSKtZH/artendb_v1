@@ -11,12 +11,13 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         listName,
         gruppenliste = gruppen.split(","),
         format = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
+
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
         fTz = "true";
     }
-    if ($("#exportieren_synonym_infos").prop('checked')) {
-        listName = "export_mit_synonymen_direkt";
+    if ($("#exportierenSynonymInfos").prop('checked')) {
+        listName = "exportMitSynonymenDirekt";
         if (gruppenliste.length > 1) {
             viewName = "all_docs_mit_synonymen";
         } else {
@@ -47,14 +48,14 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
     if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anzDsGewaehlt > 0) {
         // prüfen, ob mindestens ein Feld aus ds gewählt ist
         // wenn ja: true, sonst false
-        queryParam += "&nur_objekte_mit_eigenschaften=true";
+        queryParam += "&nurObjekteMitEigenschaften=true";
     } else {
-        queryParam += "&nur_objekte_mit_eigenschaften=false";
+        queryParam += "&nurObjekteMitEigenschaften=false";
     }
     if ($("#export_bez_in_zeilen").prop('checked')) {
-        queryParam += "&bez_in_zeilen=true";
+        queryParam += "&bezInZeilen=true";
     } else {
-        queryParam += "&bez_in_zeilen=false";
+        queryParam += "&bezInZeilen=false";
     }
     window.open('_list/' + queryParam);
 };

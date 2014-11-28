@@ -1,19 +1,19 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _                                   = require("lists/lib/underscore"),
+    filtereBeziehungspartner            = require('lists/lib/filtereBeziehungspartner'),
+    beurteileFilterkriterien            = require('lists/lib/beurteileFilterkriterien'),
+    convertToCorrectType                = require('lists/lib/convertToCorrectType'),
+    fuegeObligatorischeFelderFuerAltEin = require('lists/lib/fuegeObligatorischeFelderFuerAltEin');
 
 // baut die Export-Objekte auf für alle export-lists
 // benötigt Objekt und felder
 // retourniert schonKopiert und exportObjekt
 // exportFuer: ermöglicht anpassungen für spezielle Exporte, z.b. für das Artenlistentool
-module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusammen, filterkriterien, exportObjekte, exportFuer) {
+module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen, filterkriterien, exportObjekte, exportFuer) {
     var exportObjekt = {},
-        schonKopiert = false,
-        filtereBeziehungspartner            = require('lists/lib/filtereBeziehungspartner'),
-        beurteileFilterkriterien            = require('lists/lib/beurteileFilterkriterien'),
-        convertToCorrectType                = require('lists/lib/convertToCorrectType'),
-        fuegeObligatorischeFelderFuerAltEin = require('lists/lib/fuegeObligatorischeFelderFuerAltEin');
+        schonKopiert = false;
 
     // es müssen Felder übergeben worden sein
     // wenn nicht, aufhören
@@ -55,17 +55,17 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
 
         // Taxonomie: Felder übernehmen
         // 2014.06.15: zweite Bedingung ausgeklammert, weil die Felder nur geliefert wurden, wenn zusammenfassend true war
-        // war: /* && (fasse_taxonomien_zusammen || feld.DsName === objekt.Taxonomie.Name)*/
+        // war: /* && (fasseTaxonomienZusammen || feld.DsName === objekt.Taxonomie.Name)*/
         if (feld.DsTyp === "Taxonomie") {
             // Leerwert setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-            if (fasse_taxonomien_zusammen) {
+            if (fasseTaxonomienZusammen) {
                 exportObjekt["Taxonomie(n): " + feld.Feldname] = "";
             } else {
                 exportObjekt[exportFeldname] = "";
             }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
             if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && objekt.Taxonomie.Eigenschaften[feld.Feldname] !== undefined) {
-                if (fasse_taxonomien_zusammen) {
+                if (fasseTaxonomienZusammen) {
                     exportObjekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
                     exportObjekt[exportFeldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
@@ -149,42 +149,42 @@ module.exports = function (objekt, felder, bez_in_zeilen, fasse_taxonomien_zusam
                     });
                     if (exportBeziehungen.length > 0) {
                         // jetzt unterscheiden, ob alle Treffer in einem Feld oder pro Treffer eine Zeile exportiert wird
-                        if (bez_in_zeilen) {
+                        if (bezInZeilen) {
                             // pro Treffer eine neue Zeile erstellen
                             schonKopiert = false;
                             // durch Beziehungen loopen
-                            _.each(exportBeziehungen, function (export_beziehung) {
+                            _.each(exportBeziehungen, function (exportBeziehung) {
                                 // exportObjekt kopieren
-                                var export_objekt_kopiert = _.clone(exportObjekt);
+                                var exportObjektKopiert = _.clone(exportObjekt);
                                 // durch die Felder der Beziehung loopen
-                                _.each(export_beziehung, function (export_beziehung_feldwert, export_beziehung_feldname) {
-                                    if (export_beziehung_feldname === "Beziehungspartner") {
+                                _.each(exportBeziehung, function (exportBeziehungFeldwert, exportBeziehungFeldname) {
+                                    if (exportBeziehungFeldname === "Beziehungspartner") {
                                         // den Beziehungspartner hinzufügen
-                                        export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_beziehung_feldwert[0];
+                                        exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] = exportBeziehungFeldwert[0];
                                         // Reines GUID-Feld ergänzen
-                                        if (!export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                            export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = export_beziehung_feldwert[0].GUID;
+                                        if (!exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
+                                            exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungFeldwert[0].GUID;
                                         } else {
-                                            export_objekt_kopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + export_beziehung_feldwert[0].GUID;
+                                            exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungFeldwert[0].GUID;
                                         }
                                     } else {
                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                        if (!export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname]) {
-                                            export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] = export_beziehung_feldwert;
+                                        if (!exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname]) {
+                                            exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] = exportBeziehungFeldwert;
                                         } else {
-                                            export_objekt_kopiert[feld.DsName + ": " + export_beziehung_feldname] += ", " + export_beziehung_feldwert;
+                                            exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] += ", " + exportBeziehungFeldwert;
                                         }
                                     }
                                 });
-                                exportObjekte.push(export_objekt_kopiert);
+                                exportObjekte.push(exportObjektKopiert);
                                 schonKopiert = true;
                             });
                         } else {
                             // jeden Treffer kommagetrennt in dasselbe Feld einfügen
                             // durch Beziehungen loopen
-                            _.each(exportBeziehungen, function (export_beziehung) {
+                            _.each(exportBeziehungen, function (exportBeziehung) {
                                 // durch die Felder der Beziehung loopen
-                                _.each(export_beziehung, function (feldwert, feldname) {
+                                _.each(exportBeziehung, function (feldwert, feldname) {
                                     if (feldname === "Beziehungspartner") {
                                         // zuerst die Beziehungspartner in JSON hinzufügen
                                         if (!exportObjekt[feld.DsName + ": " + feldname]) {

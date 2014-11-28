@@ -19,7 +19,7 @@ function (head, req) {
         exportObjekte = [],
         üVar = {
             felder: [],
-            bez_in_zeilen: true
+            bezInZeilen: true
         },
         exportObjekt,
         holeUebergebeneVariablen            = require('lists/lib/holeUebergebeneVariablen'),
@@ -28,7 +28,7 @@ function (head, req) {
     // übergebene Variablen extrahieren
     üVar = holeUebergebeneVariablen(req.query);
     // Wichtige überschreiben:
-    üVar.nur_objekte_mit_eigenschaften = false;
+    üVar.nurObjekteMitEigenschaften = false;
     üVar.filterkriterien = [];
     üVar.fasseTaxonomienZusammen = true;
 
@@ -39,7 +39,7 @@ function (head, req) {
 
         // Exportobjekte um das Objekt ergänzen
         // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-        exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bez_in_zeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+        exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
     }
 
     send(JSON.stringify(exportObjekte));
