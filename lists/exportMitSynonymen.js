@@ -18,11 +18,11 @@ function (head, req) {
         objekt,
         exportObjekte = [],
         ueVar = {
-            fasseTaxonomienZusammen: false,
-            filterkriterien: [],
-            felder: [],
+            fasseTaxonomienZusammen:    false,
+            filterkriterien:            [],
+            felder:                     [],
             nurObjekteMitEigenschaften: true,
-            bezInZeilen: true
+            bezInZeilen:                true
         },
         objektHinzufuegen,
         beziehungssammlungenAusSynonymen,
@@ -34,7 +34,7 @@ function (head, req) {
 
     // arrays für sammlungen aus synonymen gründen
     beziehungssammlungenAusSynonymen = [];
-    datensammlungenAusSynonymen = [];
+    datensammlungenAusSynonymen      = [];
 
     while (row = getRow()) {
         objekt = row.doc;
@@ -46,15 +46,15 @@ function (head, req) {
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonymReturn = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
-            datensammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[0];
+            ergänzeDsBsVonSynonymReturn      = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen      = ergänzeDsBsVonSynonymReturn[0];
             beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[1];
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
 
             // sicherstellen, dass DS und BS existieren
             objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
-            objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
+            objekt.Beziehungssammlungen    = objekt.Beziehungssammlungen    || [];
 
             // allfällige DS und BS aus Synonymen anhängen
             objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
@@ -77,7 +77,7 @@ function (head, req) {
 
             // arrays für sammlungen aus synonymen zurücksetzen
             beziehungssammlungenAusSynonymen = [];
-            datensammlungenAusSynonymen = [];
+            datensammlungenAusSynonymen      = [];
         }
     }
 

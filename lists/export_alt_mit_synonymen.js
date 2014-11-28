@@ -14,7 +14,11 @@
         }
     });
 
-    var row,
+    var ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
+        holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
+        ergaenzeExportobjekteUmExportobjekt       = require('lists/lib/ergaenzeExportobjekteUmExportobjekt'),
+        row,
         objekt,
         exportObjekte = [],
         üVar = {
@@ -24,11 +28,7 @@
         exportObjekt,
         beziehungssammlungenAusSynonymen,
         datensammlungenAusSynonymen,
-        ergänzeDsBsVonSynonymReturn,
-        ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
-        holeUebergebeneVariablen                  = require('lists/lib/holeUebergebeneVariablen'),
-        ergaenzeDsBsVonSynonym                    = require('lists/lib/ergaenzeDsBsVonSynonym'),
-        ergaenzeExportobjekteUmExportobjekt       = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
+        ergänzeDsBsVonSynonymReturn;
 
     // übergebene Variablen extrahieren
     üVar = holeUebergebeneVariablen(req.query);
@@ -49,15 +49,15 @@
             // wir erstellen je eine Liste aller in Synonymen enthaltenen Eigenschaften- und Beziehungssammlungen inkl. der darin enthaltenen Daten
             // nämlich: datensammlungenAusSynonymen und beziehungssammlungenAusSynonymen
             // später können diese, wenn nicht im Originalobjekt enthalten, angefügt werden
-            ergänzeDsBsVonSynonymReturn = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
-            datensammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[0];
+            ergänzeDsBsVonSynonymReturn      = ergaenzeDsBsVonSynonym(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
+            datensammlungenAusSynonymen      = ergänzeDsBsVonSynonymReturn[0];
             beziehungssammlungenAusSynonymen = ergänzeDsBsVonSynonymReturn[1];
 
         } else if (row.key[1] === 1) {
             // wir sind jetzt im Originalobjekt
             // sicherstellen, dass DS und BS existieren
             objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
-            objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
+            objekt.Beziehungssammlungen    = objekt.Beziehungssammlungen || [];
 
             // allfällige DS und BS aus Synonymen anhängen
             objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
@@ -70,7 +70,7 @@
             
             // arrays für sammlungen aus synonymen zurücksetzen
             beziehungssammlungenAusSynonymen = [];
-            datensammlungenAusSynonymen = [];
+            datensammlungenAusSynonymen      = [];
         }
     }
 

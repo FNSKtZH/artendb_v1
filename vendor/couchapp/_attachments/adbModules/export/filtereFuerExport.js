@@ -4,8 +4,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                    = require('underscore'),
+    $                                    = require('jquery'),
+    uebergebeFilterFuerDirektExport      = require('./uebergebeFilterFuerDirektExport'),
+    uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau'),
+    uebergebeFilterFuerExportFuerAlt     = require('./uebergebeFilterFuerExportFuerAlt'),
+    ermittleVergleichsoperator           = require('./ermittleVergleichsoperator'),
+    fuerExportGewaehlteGruppen           = require('./fuerExportGewaehlteGruppen');
 
 // $ wird benötigt wegen .alert
 module.exports = function (direkt, fuerAlt) {
@@ -23,12 +28,7 @@ module.exports = function (direkt, fuerAlt) {
         htmlFilterkriterien,
         formular                  = 'export',
         _alt                      = '',
-        $exportieren_exportieren_hinweis_text,
-        uebergebeFilterFuerDirektExport      = require('./uebergebeFilterFuerDirektExport'),
-        uebergebeFilterFuerExportMitVorschau = require('./uebergebeFilterFuerExportMitVorschau'),
-        uebergebeFilterFuerExportFuerAlt     = require('./uebergebeFilterFuerExportFuerAlt'),
-        ermittleVergleichsoperator           = require('./ermittleVergleichsoperator'),
-        fuerExportGewaehlteGruppen           = require('./fuerExportGewaehlteGruppen');
+        $exportieren_exportieren_hinweis_text;
 
     if (fuerAlt) {
         formular = 'export_alt';
@@ -109,8 +109,8 @@ module.exports = function (direkt, fuerAlt) {
     $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
-            var feldObjekt = {};
-            feldObjekt.DsName = "Objekt";
+            var feldObjekt      = {};
+            feldObjekt.DsName   = "Objekt";
             feldObjekt.Feldname = $(this).attr('feldname');
             gewaehlteFelder.push(feldObjekt);
         }
@@ -118,12 +118,12 @@ module.exports = function (direkt, fuerAlt) {
     $("#" + formular).find(".exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
-            var feldObjekt = {};
-            feldObjekt.DsTyp = $(this).attr('dstyp');
+            var feldObjekt      = {};
+            feldObjekt.DsTyp    = $(this).attr('dstyp');
             if (feldObjekt.DsTyp !== "Taxonomie") {
                 anzDsGewaehlt++;
             }
-            feldObjekt.DsName = $(this).attr('datensammlung');
+            feldObjekt.DsName   = $(this).attr('datensammlung');
             feldObjekt.Feldname = $(this).attr('feld');
             gewaehlteFelder.push(feldObjekt);
             anzGewaehlteFelderAusDsbs++;

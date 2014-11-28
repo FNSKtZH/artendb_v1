@@ -1,19 +1,19 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                        = require('underscore'),
+    $                        = require('jquery'),
+    baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
 
 // braucht $ wegen .alert
 module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterienObjekt, gewaehlteFelderObjekt) {
     // Alle Felder abfragen
-    var fTz = "false",
+    var fTz                 = "false",
         anzGruppenAbgefragt = 0,
         listName,
         queryParam,
-        $db = $.couch.db('artendb'),
-        format = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx',
-        baueTabelleFuerExportAuf = require('./baueTabelleFuerExportAuf');
+        $db                 = $.couch.db('artendb'),
+        format              = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {

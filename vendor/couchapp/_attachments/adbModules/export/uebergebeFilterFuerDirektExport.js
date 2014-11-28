@@ -5,12 +5,12 @@ var $ = require('jquery');
 
 module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterienObjekt, gewaehlteFelderObjekt) {
     // Alle Felder abfragen
-    var fTz = "false",
+    var fTz          = "false",
         queryParam,
         viewName,
         listName,
         gruppenliste = gruppen.split(","),
-        format = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
+        format       = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
@@ -22,11 +22,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
             viewName = "all_docs_mit_synonymen";
         } else {
             // den view der Gruppe nehmen, das ist viel schneller
-            if (gruppenliste[0] === "Lebensräume") {
-                viewName = "lr_mit_synonymen";
-            } else {
-                viewName = gruppenliste[0].toLowerCase() + "_mit_synonymen";
-            }
+            viewName = (gruppenliste[0] === "Lebensräume" ? "lr_mit_synonymen" : gruppenliste[0].toLowerCase() + "_mit_synonymen");
         }
     } else {
         listName = "export_direkt";
@@ -34,12 +30,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
             viewName = "all_docs";
         } else {
             // den view der Gruppe nehmen, das ist viel schneller
-            if (gruppenliste[0] === "Lebensräume") {
-                viewName = "lr";
-            } else {
-                viewName = gruppenliste[0].toLowerCase();
-            }
-
+            viewName = (gruppenliste[0] === "Lebensräume" ? "lr" : gruppenliste[0].toLowerCase());
         }
     }
 

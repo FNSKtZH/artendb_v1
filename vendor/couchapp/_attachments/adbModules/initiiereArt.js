@@ -1,15 +1,15 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                  = require('underscore'),
+    $                                  = require('jquery'),
+    initiiereArt2                      = require('./initiiereArt2'),
+    erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung'),
+    erstelleHtmlFuerDatensammlung      = require('./erstelleHtmlFuerDatensammlung'),
+    sortiereObjektarrayNachName        = require('./sortiereObjektarrayNachName');
 
 module.exports = function (id) {
-    var $db                                = $.couch.db('artendb'),
-        initiiereArt2                      = require('./initiiereArt2'),
-        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung'),
-        erstelleHtmlFuerDatensammlung      = require('./erstelleHtmlFuerDatensammlung'),
-        sortiereObjektarrayNachName        = require('./sortiereObjektarrayNachName');
+    var $db = $.couch.db('artendb');
 
     $db.openDoc(id, {
         success: function (art) {

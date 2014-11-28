@@ -1,23 +1,23 @@
 function (head, req) {
     'use strict';
 
-    var row,
-        objekt,
-        exportObjekte = [],
-        ueVar = {
-            fasseTaxonomienZusammen: false,
-            filterkriterien: [],
-            felder: [],
-            nurObjekteMitEigenschaften: true,
-            bezInZeilen: true
-        },
-        objektHinzufuegen,
-        erstelleExportString                  = require('lists/lib/erstelleExportString'),
+    var erstelleExportString                  = require('lists/lib/erstelleExportString'),
         createBlobDataXlsx                    = require('lists/lib/createBlobDataXlsx'),
         beurteileObInformationenEnthaltenSind = require('lists/lib/beurteileObInformationenEnthaltenSind'),
         pruefeObObjektKriterienErfuellt       = require('lists/lib/pruefeObObjektKriterienErfuellt'),
         holeUebergebeneVariablen              = require('lists/lib/holeUebergebeneVariablen'),
-        ergaenzeExportobjekteUmExportobjekt   = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
+        ergaenzeExportobjekteUmExportobjekt   = require('lists/lib/ergaenzeExportobjekteUmExportobjekt'),
+        row,
+        objekt,
+        exportObjekte = [],
+        ueVar = {
+            fasseTaxonomienZusammen:    false,
+            filterkriterien:            [],
+            felder:                     [],
+            nurObjekteMitEigenschaften: true,
+            bezInZeilen:                true
+        },
+        objektHinzufuegen;
 
     start({
         "headers": {

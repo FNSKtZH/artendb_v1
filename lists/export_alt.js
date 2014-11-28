@@ -14,16 +14,16 @@ function (head, req) {
         }
     });
 
-    var row,
+    var holeUebergebeneVariablen            = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeExportobjekteUmExportobjekt = require('lists/lib/ergaenzeExportobjekteUmExportobjekt'),
+        row,
         objekt,
         exportObjekte = [],
         üVar = {
             felder: [],
             bezInZeilen: true
         },
-        exportObjekt,
-        holeUebergebeneVariablen            = require('lists/lib/holeUebergebeneVariablen'),
-        ergaenzeExportobjekteUmExportobjekt = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
+        exportObjekt;
 
     // übergebene Variablen extrahieren
     üVar = holeUebergebeneVariablen(req.query);

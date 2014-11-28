@@ -8,7 +8,11 @@ function (head, req) {
         }
     });
 
-    var row,
+    var beurteileObInformationenEnthaltenSind = require('lists/lib/beurteileObInformationenEnthaltenSind'),
+        pruefeObObjektKriterienErfuellt       = require('lists/lib/pruefeObObjektKriterienErfuellt'),
+        holeUebergebeneVariablen              = require('lists/lib/holeUebergebeneVariablen'),
+        ergaenzeExportobjekteUmExportobjekt   = require('lists/lib/ergaenzeExportobjekteUmExportobjekt'),
+        row,
         objekt,
         ueVar = {
             fasseTaxonomienZusammen: false,
@@ -18,11 +22,7 @@ function (head, req) {
             bezInZeilen: true
         },
         exportObjekte = [],
-        objektHinzufuegen,
-        beurteileObInformationenEnthaltenSind = require('lists/lib/beurteileObInformationenEnthaltenSind'),
-        pruefeObObjektKriterienErfuellt       = require('lists/lib/pruefeObObjektKriterienErfuellt'),
-        holeUebergebeneVariablen              = require('lists/lib/holeUebergebeneVariablen'),
-        ergaenzeExportobjekteUmExportobjekt   = require('lists/lib/ergaenzeExportobjekteUmExportobjekt');
+        objektHinzufuegen;
 
     // übergebene Variablen extrahieren
     ueVar = holeUebergebeneVariablen(req.query);
