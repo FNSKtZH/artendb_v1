@@ -7,7 +7,9 @@ var _ = require('underscore'),
 module.exports = function (id) {
     var $db                                = $.couch.db('artendb'),
         initiiereArt2                      = require('./initiiereArt2'),
-        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung');
+        erstelleHtmlFuerBeziehungssammlung = require('./erstelleHtmlFuerBeziehungssammlung'),
+        erstelleHtmlFuerDatensammlung      = require('./erstelleHtmlFuerDatensammlung'),
+        sortiereObjektarrayNachName        = require('./sortiereObjektarrayNachName');
 
     $db.openDoc(id, {
         success: function (art) {
@@ -19,9 +21,7 @@ module.exports = function (id) {
                 eigenschaftensammlungenVonSynonymen = [],
                 beziehungssammlungenVonSynonymen    = [],
                 dsNamen                             = [],
-                bezNamen                            = [],
-                erstelleHtmlFuerDatensammlung       = require('./erstelleHtmlFuerDatensammlung'),
-                sortiereObjektarrayNachName         = require('./sortiereObjektarrayNachName');
+                bezNamen                            = [];
 
             // panel beginnen
             htmlArt = '<h4>Taxonomie:</h4>';
@@ -32,6 +32,7 @@ module.exports = function (id) {
             // aber Beziehungssammlungen aufteilen
             if (art.Beziehungssammlungen.length > 0) {
                 _.each(art.Beziehungssammlungen, function (beziehungssammlung) {
+                    console.log('beziehungssammlung.Typ: ', beziehungssammlung.Typ);
                     if (beziehungssammlung.Typ === undefined) {
                         artBeziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
@@ -169,6 +170,8 @@ module.exports = function (id) {
                     },
                     error: function () {
                         console.log('initiiereArt.js: keine Daten für Synonyme erhalten');
+                        // trotzdem initiieren
+                        initiiereArt2(htmlArt, art);
                     }
                 });
             } else {
