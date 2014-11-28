@@ -45,7 +45,8 @@ var $                                             = require('jquery'),
     onChangeBsFelder                              = require('./import/onChangeBsFelder'),
     onClickBsImportieren                          = require('./import/onClickBsImportieren'),
     onClickBsLoeschen                             = require('./import/onClickBsLoeschen'),
-    onClickBsEntfernen                            = require('./import/onClickBsEntfernen');
+    onClickBsEntfernen                            = require('./import/onClickBsEntfernen'),
+    onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe');
 
 module.exports = function () {
     var $body = $('body');
@@ -117,7 +118,7 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportieren_ds_objekte_waehlen_gruppe', window.adb.handleExportierenDsObjekteWaehlenGruppeChange)
+        .on('change', '.exportieren_ds_objekte_waehlen_gruppe',          onChangeExportierenDsObjekteWaehlenGruppe)
         .on('change', '.feld_waehlen',                          window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds',              window.adb.handleFeldWaehlenAlleVonDs)
         .on('change', '.export_feld_filtern',                   window.adb.handleExportFeldFilternChange)

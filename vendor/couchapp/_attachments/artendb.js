@@ -30,11 +30,6 @@ window.adb.handleFeldWaehlenAlleVonDs = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenDsObjekteWaehlenGruppeChange = function () {
-    require('./adbModules/export/handleExportierenDsObjekteWaehlenGruppeChange')();
-};
-
-// wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
     require('./adbModules/export/handleExportFeldFilternChange')(this);
 };
