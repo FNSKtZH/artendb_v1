@@ -4,12 +4,12 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $                           = require('jquery'),
+    _                           = require('underscore'),
+    sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
 
 module.exports = function (guid, datensammlung) {
-    var $db = $.couch.db('artendb'),
-        sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
+    var $db = $.couch.db('artendb');
 
     $db.openDoc(guid, {
         success: function (doc) {

@@ -4,15 +4,15 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $                           = require('jquery'),
+    _                           = require('underscore'),
+    sortiereBeziehungenNachName = require('../sortiereBeziehungenNachName'),
+    sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
 
 module.exports = function (guid, beziehungssammlung, beziehungen) {
     var $db = $.couch.db('artendb'),
         hinzugefuegt,
-        entsprechendeBezSammlungInObjekt,
-        sortiereBeziehungenNachName = require('../sortiereBeziehungenNachName'),
-        sortiereObjektarrayNachName = require('../sortiereObjektarrayNachName');
+        entsprechendeBezSammlungInObjekt;
 
     $db.openDoc(guid, {
         success: function (doc) {

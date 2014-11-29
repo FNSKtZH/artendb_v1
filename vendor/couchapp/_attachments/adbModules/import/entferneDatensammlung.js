@@ -4,39 +4,40 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                       = require('underscore'),
+    $                       = require('jquery'),
+    entferneDatensammlung_2 = require('./entferneDatensammlung_2');
 
 module.exports = function () {
-    var guidArray = [],
-        guidArray2 = [],
+    var guidArray                                 = [],
+        guidArray2                                = [],
         guid,
-        dsEntfernt = $.Deferred(),
+        dsEntfernt                                = $.Deferred(),
         a,
         batch,
         batchGroesse,
-        anzVorkommenVonDs = window.adb.zuordbareDatensaetze.length,
-        anzVorkommenVonDsEntfernt = 0,
+        anzVorkommenVonDs                         = window.adb.zuordbareDatensaetze.length,
+        anzVorkommenVonDsEntfernt                 = 0,
         rueckmeldung,
-        $importierenDsImportAusfuehrenHinweisText = $("#importierenDsImportAusfuehrenHinweisText"),
-        $importierenDsImportAusfuehrenHinweis = $("#importierenDsImportAusfuehrenHinweis"),
-        entferneDatensammlung_2 = require('./entferneDatensammlung_2');
+        $importierenDsImportAusfuehrenHinweisText = $('#importierenDsImportAusfuehrenHinweisText'),
+        $importierenDsImportAusfuehrenHinweis     = $('#importierenDsImportAusfuehrenHinweis');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.dsEntfernt', function () {
         anzVorkommenVonDsEntfernt++;
         var prozent = Math.round((anzVorkommenVonDs - anzVorkommenVonDsEntfernt) / anzVorkommenVonDs * 100),
-            $db = $.couch.db('artendb');
-        $("#dsImportierenProgressbar")
+            $db     = $.couch.db('artendb');
+
+        $('#dsImportierenProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#dsImportierenProgressbarText")
-            .html(prozent + "%");
+        $('#dsImportierenProgressbarText')
+            .html(prozent + '%');
         $importierenDsImportAusfuehrenHinweis
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info");
-        rueckmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...";
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info');
+        rueckmeldung = 'Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...';
         $importierenDsImportAusfuehrenHinweisText
             .html(rueckmeldung);
         $('html, body').animate({
@@ -48,13 +49,13 @@ module.exports = function () {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
                     $importierenDsImportAusfuehrenHinweis
-                        .removeClass("alert-info")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success");
-                    rueckmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
-                    rueckmeldung += "Die Indexe wurden aktualisiert.";
+                        .removeClass('alert-info')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success');
+                    rueckmeldung  = 'Die Eigenschaftensammlungen wurden entfernt.<br>';
+                    rueckmeldung += 'Die Indexe wurden aktualisiert.';
                     if (window.adb.rueckmeldungLinks) {
-                        rueckmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                        rueckmeldung += '<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>';
                         rueckmeldung += window.adb.rueckmeldungLinks;
                         delete window.adb.rueckmeldungLinks;
                     }
@@ -70,7 +71,7 @@ module.exports = function () {
 
     _.each(window.adb.dsDatensaetze, function (datensatz) {
         // zuerst die id in guid übersetzen
-        if (window.adb.dsId === "guid") {
+        if (window.adb.dsId === 'guid') {
             // die in der Tabelle mitgelieferte id ist die guid
             guid = datensatz.GUID;
         } else {
@@ -85,18 +86,18 @@ module.exports = function () {
     });
     // alle docs gleichzeitig holen
     // aber batchweise
-    batch = 150;
+    batch        = 150;
     batchGroesse = 150;
     for (a = 0; a < batch; a++) {
         if (a < guidArray.length) {
             guidArray2.push(guidArray[a]);
             if (a === (batch - 1)) {
-                entferneDatensammlung_2($("#dsName").val(), guidArray2, (a - batchGroesse));
+                entferneDatensammlung_2($('#dsName').val(), guidArray2, (a - batchGroesse));
                 guidArray2 = [];
-                batch += batchGroesse;
+                batch     += batchGroesse;
             }
         } else {
-            entferneDatensammlung_2($("#dsName").val(), guidArray2, (a - batchGroesse));
+            entferneDatensammlung_2($('#dsName').val(), guidArray2, (a - batchGroesse));
             break;
         }
     }

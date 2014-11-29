@@ -10,12 +10,12 @@ var $                                    = require('jquery'),
 module.exports = function (woher) {
     var $db = $.couch.db('artendb');
 
-    if (!pruefeAnmeldung("woher")) {
+    if (!pruefeAnmeldung('woher')) {
         $('#importierenBsDsBeschreibenCollapse').collapse('hide');
     } else {
-        $("#bsName").focus();
+        $('#bsName').focus();
         // anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
-        //$("#bsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
+        //$('#bsWaehlen').html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
         // Daten holen, wenn nötig
         if (window.adb.bsVonObjekten) {
             bereiteImportierenBsBeschreibenVor_2();

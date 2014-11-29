@@ -1,4 +1,4 @@
-// erhält dbs = "Ds" oder "Bs"
+// erhält dbs = 'Ds' oder 'Bs'
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -8,8 +8,8 @@ var _                               = require('underscore'),
     meldeErfolgVonIdIdentifikation2 = require('./meldeErfolgVonIdIdentifikation2');
 
 module.exports = function (dbs) {
-    var $dbsFelderSelected       = $("#" + dbs.toLowerCase() + "Felder option:selected"),
-        $dbsIdSelected           = $("#" + dbs.toLowerCase() + "Id option:selected"),
+    var $dbsFelderSelected       = $('#' + dbs.toLowerCase() + 'Felder option:selected'),
+        $dbsIdSelected           = $('#' + dbs.toLowerCase() + 'Id option:selected'),
         idsVonDatensaetzen       = [],
         mehrfachVorkommendeIds   = [],
         idsVonNichtImportierbarenDatensaetzen = [],
@@ -17,32 +17,33 @@ module.exports = function (dbs) {
 
     if ($dbsFelderSelected.length && $dbsIdSelected.length) {
         // beide ID's sind gewählt
-        window.adb[dbs.toLowerCase() + "FelderId"] = $dbsFelderSelected.val();
+        window.adb[dbs.toLowerCase() + 'FelderId'] = $dbsFelderSelected.val();
         window.adb.dsId = $dbsIdSelected.val();
-        window.adb[dbs.toLowerCase() + "Id"] = $dbsIdSelected.val();
+        window.adb[dbs.toLowerCase() + 'Id'] = $dbsIdSelected.val();
         // das hier wird später noch für den Inmport gebraucht > globale Variable machen
         window.adb.zuordbareDatensaetze = [];
-        $("#importieren" + dbs + "IdsIdentifizierenHinweisText")
+        $('#importieren' + dbs + 'IdsIdentifizierenHinweisText')
             .alert()
-            .html("Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...")
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
+            .html('Bitte warten, die Daten werden analysiert.<br>Das kann eine Weile dauern...')
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info')
             .show();
         $('html, body').animate({
-            scrollTop: $("#importieren" + dbs + "IdsIdentifizierenCollapse").offset().top
+            scrollTop: $('#importieren' + dbs + 'IdsIdentifizierenCollapse').offset().top
         }, 2000);
 
         // Dokumente aus der Gruppe der Datensätze holen
         // durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
         // kontrollieren, ob eine id mehr als einmal vorkommt
-        if (window.adb.dsId === "guid") {
+        if (window.adb.dsId === 'guid') {
             $db.view('artendb/all_docs', {
                 success: function (data) {
-                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + "FelderId"],
+                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + 'FelderId'],
                         zugehoerigesObjekt;
+
                     // durch die importierten Datensätze loopen
-                    _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {
+                    _.each(window.adb[dbs.toLowerCase() + 'Datensaetze'], function (importDatensatz) {
                         if (idsVonDatensaetzen.indexOf(importDatensatz[nameDesIdFelds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             idsVonDatensaetzen.push(importDatensatz[nameDesIdFelds]);
@@ -70,10 +71,11 @@ module.exports = function (dbs) {
         } else {
             $db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.dsId + '"]&endkey=["' + window.adb.dsId + '",{},{}]', {
                 success: function (data) {
-                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + "FelderId"],
+                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + 'FelderId'],
                         objekt;
+
                     // durch die importierten Datensätze loopen
-                    _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {
+                    _.each(window.adb[dbs.toLowerCase() + 'Datensaetze'], function (importDatensatz) {
                         if (idsVonDatensaetzen.indexOf(importDatensatz[nameDesIdFelds]) === -1) {
                             // diese ID wurde noch nicht hinzugefügt > hinzufügen
                             idsVonDatensaetzen.push(importDatensatz[nameDesIdFelds]);
@@ -82,8 +84,8 @@ module.exports = function (dbs) {
                                 return objektRow.key[2] === importDatensatz[nameDesIdFelds];
                             });
                             if (zugehoerigesObjekt) {
-                                objekt = {};
-                                objekt.Id = parseInt(importDatensatz[nameDesIdFelds], 10);
+                                objekt      = {};
+                                objekt.Id   = parseInt(importDatensatz[nameDesIdFelds], 10);
                                 objekt.Guid = zugehoerigesObjekt.key[1];
                                 window.adb.zuordbareDatensaetze.push(objekt);
                             } else {

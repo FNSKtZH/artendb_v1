@@ -4,17 +4,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $                                = require('jquery'),
+    _                                = require('underscore'),
+    entferneDatensammlungAusDokument = require('./entferneDatensammlungAusDokument');
 
 module.exports = function (dsName) {
-    var dsEntfernt = $.Deferred(),
+    var dsEntfernt                         = $.Deferred(),
         anzVorkommenVonDs,
-        anzVorkommenVonDsEntfernt = 0,
-        $importierenDsDsBeschreibenHinweis = $("#importierenDsDsBeschreibenHinweis"),
-        $db = $.couch.db('artendb'),
-        rueckmeldung,
-        entferneDatensammlungAusDokument = require('./entferneDatensammlungAusDokument');
+        anzVorkommenVonDsEntfernt          = 0,
+        $importierenDsDsBeschreibenHinweis = $('#importierenDsDsBeschreibenHinweis'),
+        $db                                = $.couch.db('artendb'),
+        rueckmeldung;
 
     $db.view('artendb/ds_guid?startkey=["' + dsName + '"]&endkey=["' + dsName + '",{}]', {
         success: function (data) {
@@ -23,9 +23,9 @@ module.exports = function (dsName) {
             // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
             $(document).bind('adb.dsEntfernt', function () {
                 anzVorkommenVonDsEntfernt++;
-                rueckmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
+                rueckmeldung = 'Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...';
                 $importierenDsDsBeschreibenHinweis
-                    .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
+                    .removeClass('alert-success').removeClass('alert-danger').addClass('alert-info')
                     .html(rueckmeldung);
                 $('html, body').animate({
                     scrollTop: $importierenDsDsBeschreibenHinweis.offset().top
@@ -35,10 +35,10 @@ module.exports = function (dsName) {
                     $db.view('artendb/lr', {
                         success: function () {
                             // melden, dass Indexe aktualisiert wurden
-                            rueckmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
-                            rueckmeldung += "Die Indexe wurden aktualisiert.";
+                            rueckmeldung  = 'Die Eigenschaftensammlungen wurden entfernt.<br>';
+                            rueckmeldung += 'Die Indexe wurden aktualisiert.';
                             $importierenDsDsBeschreibenHinweis
-                                .removeClass("alert-info").removeClass("alert-danger").addClass("alert-success")
+                                .removeClass('alert-info').removeClass('alert-danger').addClass('alert-success')
                                 .html(rueckmeldung);
                             $('html, body').animate({
                                 scrollTop: $importierenDsDsBeschreibenHinweis.offset().top

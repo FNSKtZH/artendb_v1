@@ -20,8 +20,9 @@ module.exports = function () {
     });
     // Objektarray reduzieren auf eindeutige Namen
     window.adb.dsNamenEindeutig = _.reject(window.adb.dsNamenEindeutig, function (objekt) {
-        var position_in_bs_namen = _.indexOf(bsNamen, objekt[0]);
-        if (position_in_bs_namen === -1) {
+        var positionInBsNamen = _.indexOf(bsNamen, objekt[0]);
+
+        if (positionInBsNamen === -1) {
             bsNamen.push(objekt[0]);
             return false;
         }
@@ -33,7 +34,7 @@ module.exports = function () {
         return key[0];
     });
     // mit leerer Zeile beginnen
-    html = "<option value='' waehlbar=true></option>";
+    html = '<option value="" waehlbar=true></option>';
     // Namen der Datensammlungen als Optionen anfügen
     _.each(window.adb.dsNamenEindeutig, function (dsNameEindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
@@ -45,6 +46,6 @@ module.exports = function () {
             html += "<option value='" + dsNameEindeutig[0] + "' class='adbGrauNormal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
         }
     });
-    $("#bsWaehlen").html(html);
-    $("#bsUrsprungsBs").html(html);
+    $('#bsWaehlen').html(html);
+    $('#bsUrsprungsBs').html(html);
 };

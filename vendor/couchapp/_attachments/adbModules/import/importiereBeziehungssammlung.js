@@ -17,33 +17,33 @@ module.exports = function () {
         erste10Ids,
         nr,
         rueckmeldung,
-        rueckmeldungLinks                         = "",
+        rueckmeldungLinks                         = '',
         bsImportiert                              = $.Deferred(),
-        $bsName                                   = $("#bsName"),
-        $bsBeschreibung                           = $("#bsBeschreibung"),
-        $bsDatenstand                             = $("#bsDatenstand"),
-        $bsLink                                   = $("#bsLink"),
-        $bsUrsprungsBs                            = $("#bsUrsprungsBs"),
-        $importierenBsImportAusfuehrenHinweis     = $("#importierenBsImportAusfuehrenHinweis"),
-        $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText");
+        $bsName                                   = $('#bsName'),
+        $bsBeschreibung                           = $('#bsBeschreibung'),
+        $bsDatenstand                             = $('#bsDatenstand'),
+        $bsLink                                   = $('#bsLink'),
+        $bsUrsprungsBs                            = $('#bsUrsprungsBs'),
+        $importierenBsImportAusfuehrenHinweis     = $('#importierenBsImportAusfuehrenHinweis'),
+        $importierenBsImportAusfuehrenHinweisText = $('#importierenBsImportAusfuehrenHinweisText');
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$bsName.val()) {
-        $("#meldungIndividuellLabel").html("Namen fehlt");
-        $("#meldungIndividuellText").html("Bitte geben Sie der Beziehungssammlung einen Namen");
-        $("#meldungIndividuellSchliessen").html("schliessen");
+        $('#meldungIndividuellLabel').html('Namen fehlt');
+        $('#meldungIndividuellText').html('Bitte geben Sie der Beziehungssammlung einen Namen');
+        $('#meldungIndividuellSchliessen').html('schliessen');
         $('#meldungIndividuell').modal();
         $bsName.focus();
         return false;
     }
 
     // Rückmeldung in Feld anzeigen:
-    rueckmeldung = "Die Daten werden importiert...";
+    rueckmeldung = 'Die Daten werden importiert...';
     $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
     $importierenBsImportAusfuehrenHinweis
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info");
+        .removeClass('alert-success')
+        .removeClass('alert-danger')
+        .addClass('alert-info');
     $importierenBsImportAusfuehrenHinweis.alert().show();
     $('html, body').animate({
         scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
@@ -53,18 +53,18 @@ module.exports = function () {
     $(document).bind('adb.bsHinzugefuegt', function () {
         anzBsImportiert++;
         var prozent = Math.round(anzBsImportiert / anzahlBeziehungssammlungen * 100),
-            $db = $.couch.db('artendb');
+            $db     = $.couch.db('artendb');
 
-        $("#bsImportierenProgressbar")
+        $('#bsImportierenProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#bsImportierenProgressbarText").html(prozent + "%");
+        $('#bsImportierenProgressbarText').html(prozent + '%');
         $importierenBsImportAusfuehrenHinweis
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info')
             .show();
-        rueckmeldung = "Die Daten werden importiert...<br>Die Indexe werden aktualisiert...";
+        rueckmeldung = 'Die Daten werden importiert...<br>Die Indexe werden aktualisiert...';
         $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
         $('html, body').animate({
             scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
@@ -75,13 +75,13 @@ module.exports = function () {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
                     $importierenBsImportAusfuehrenHinweis
-                        .removeClass("alert-info")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success")
+                        .removeClass('alert-info')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success')
                         .show();
-                    rueckmeldung  = "Die Daten wurden importiert.<br>";
-                    rueckmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
-                    rueckmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                    rueckmeldung  = 'Die Daten wurden importiert.<br>';
+                    rueckmeldung += 'Die Indexe wurden neu aufgebaut.<br><br>';
+                    rueckmeldung += 'Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>';
                     $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
                     // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
                     window.adb.rueckmeldungLinks = rueckmeldungLinks;
@@ -115,13 +115,13 @@ module.exports = function () {
                 bsVorlage.Link = $bsLink.val();
             }
             // falls die Datensammlung zusammenfassend ist
-            if ($("#bsZusammenfassend").prop('checked')) {
+            if ($('#bsZusammenfassend').prop('checked')) {
                 bsVorlage.zusammenfassend = true;
             }
             if ($bsUrsprungsBs.val()) {
                 bsVorlage.Ursprungsdatensammlung = $bsUrsprungsBs.val();
             }
-            bsVorlage["importiert von"] = localStorage.Email;
+            bsVorlage['importiert von'] = localStorage.Email;
             bsVorlage.Beziehungen = [];
             // zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
             bsDatensaetzeObjekt = _.groupBy(window.adb.bsDatensaetze, function (objekt) {
@@ -129,7 +129,7 @@ module.exports = function () {
                 var guid,
                     q;
 
-                if (window.adb.bsId === "guid") {
+                if (window.adb.bsId === 'guid') {
                     // die in der Tabelle mitgelieferte id ist die guid
                     guid = objekt[window.adb.BsFelderId];
                 } else {
@@ -156,17 +156,18 @@ module.exports = function () {
                     anzahlFelder = 0;
                     // Felder der Beziehungssammlung als Objekt gründen
                     var beziehung = {};
+
                     _.each(importdatenFeld, function (feldwert, feldname) {
                         // durch die Felder der Beziehung loopen
                         // nicht importiert wird die GUID und leere Felder
-                        if (feldname !== "GUID" && feldwert !== "" && feldwert !== null) {
+                        if (feldname !== 'GUID' && feldwert !== '' && feldwert !== null) {
                             if (feldwert === -1) {
                                 // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
                                 beziehung[feldname] = true;
-                            } else if (feldwert == "true") {
+                            } else if (feldwert == 'true') {
                                 // true/false nicht als string importieren
                                 beziehung[feldname] = true;
-                            } else if (feldwert == "false") {
+                            } else if (feldwert == 'false') {
                                 beziehung[feldname] = false;
                             } else if (feldwert == parseInt(feldwert, 10)) {
                                 // Ganzzahlen als Zahlen importieren
@@ -174,7 +175,7 @@ module.exports = function () {
                             } else if (feldwert == parseFloat(feldwert)) {
                                 // Bruchzahlen als Zahlen importieren
                                 beziehung[feldname] = parseFloat(feldwert);
-                            } else if (feldname == "Beziehungspartner") {
+                            } else if (feldname == 'Beziehungspartner') {
                                 beziehung[feldname] = [];
                                 // durch Beziehungspartner loopen und GUIDS mit Objekten ersetzen
                                 _.each(feldwert, function (beziehungspartnerFeld) {
@@ -201,14 +202,14 @@ module.exports = function () {
             });
 
             // Für 10 Kontrollbeispiele die Links aufbauen
-            if (window.adb.bsId === "guid") {
+            if (window.adb.bsId === 'guid') {
                 erste10Ids = _.first(window.adb.zuordbareDatensaetze, 10);
             } else {
-                erste10Ids = _.pluck(_.first(window.adb.zuordbareDatensaetze, 10), "Guid");
+                erste10Ids = _.pluck(_.first(window.adb.zuordbareDatensaetze, 10), 'Guid');
             }
             _.each(erste10Ids, function (id, index) {
                 nr = index++;
-                rueckmeldungLinks += '<a href="' + $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
+                rueckmeldungLinks += '<a href="' + $(location).attr('protocol') + '//' + $(location).attr('host') + $(location).attr('pathname') + '?id=' + id + '"  target="_blank">Beispiel ' + nr + '</a><br>';
             });
             bsImportiert.resolve();
         }, 1000);

@@ -4,36 +4,37 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                            = require('underscore'),
+    $                            = require('jquery'),
+    entferneBeziehungssammlung_2 = require('./entferneBeziehungssammlung_2');
 
 module.exports = function () {
-    var guidArray = [],
-        guidArray2 = [],
+    var guidArray                                 = [],
+        guidArray2                                = [],
         guid,
-        bsName = $("#bsName").val(),
-        bsEntfernt = $.Deferred(),
+        bsName                                    = $('#bsName').val(),
+        bsEntfernt                                = $.Deferred(),
         q,
         a,
-        batch = 150,
-        batchGroesse = 150,
-        anzVorkommenVonBsEntfernt = 0,
-        anzVorkommenVonBs = window.adb.zuordbareDatensaetze.length,
+        batch                                     = 150,
+        batchGroesse                              = 150,
+        anzVorkommenVonBsEntfernt                 = 0,
+        anzVorkommenVonBs                         = window.adb.zuordbareDatensaetze.length,
         rueckmeldung,
-        $db = $.couch.db('artendb'),
-        $importierenBsImportAusfuehrenHinweis = $("#importierenBsImportAusfuehrenHinweis"),
-        $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText"),
-        entferneBeziehungssammlung_2 = require('./entferneBeziehungssammlung_2');
+        $db                                       = $.couch.db('artendb'),
+        $importierenBsImportAusfuehrenHinweis     = $('#importierenBsImportAusfuehrenHinweis'),
+        $importierenBsImportAusfuehrenHinweisText = $('#importierenBsImportAusfuehrenHinweisText');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.bsEntfernt', function () {
         anzVorkommenVonBsEntfernt++;
         var prozent = Math.round((anzVorkommenVonBs - anzVorkommenVonBsEntfernt) / anzVorkommenVonBs * 100);
-        $("#bsImportierenProgressbar")
+
+        $('#bsImportierenProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#bsImportierenProgressbarText")
-            .html(prozent + "%");
+        $('#bsImportierenProgressbarText')
+            .html(prozent + '%');
 
         if (anzVorkommenVonBsEntfernt === anzVorkommenVonBs) {
             // die Indexe aktualisieren
@@ -41,13 +42,13 @@ module.exports = function () {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
                     $importierenBsImportAusfuehrenHinweis
-                        .removeClass("alert-info")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success");
-                    rueckmeldung = "Die Beziehungssammlungen wurden entfernt.<br>";
-                    rueckmeldung += "Die Indexe wurden aktualisiert.";
+                        .removeClass('alert-info')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success');
+                    rueckmeldung  = 'Die Beziehungssammlungen wurden entfernt.<br>';
+                    rueckmeldung += 'Die Indexe wurden aktualisiert.';
                     if (window.adb.rueckmeldungLinks) {
-                        rueckmeldung += "<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
+                        rueckmeldung += '<br><br>Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>';
                         rueckmeldung += window.adb.rueckmeldungLinks;
                         delete window.adb.rueckmeldungLinks;
                     }
@@ -65,25 +66,25 @@ module.exports = function () {
 
     // rückmelden, dass es passiert
     $importierenBsImportAusfuehrenHinweis
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info");
-    rueckmeldung = "Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
+        .removeClass('alert-success')
+        .removeClass('alert-danger')
+        .addClass('alert-info');
+    rueckmeldung = 'Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...';
     $importierenBsImportAusfuehrenHinweisText
         .html(rueckmeldung);
     $('html, body').animate({
         scrollTop: $importierenBsImportAusfuehrenHinweisText.offset().top
     }, 2000);
 
-    _.each(window.adb.bsDatensaetze, function (bs_datensatz) {
+    _.each(window.adb.bsDatensaetze, function (bsDatensatz) {
         // zuerst die id in guid übersetzen
-        if (window.adb.bsId === "guid") {
+        if (window.adb.bsId === 'guid') {
             // die in der Tabelle mitgelieferte id ist die guid
-            guid = bs_datensatz.GUID;
+            guid = bsDatensatz.GUID;
         } else {
             for (q = 0; q < window.adb.zuordbareDatensaetze.length; q++) {
                 // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-                if (window.adb.zuordbareDatensaetze[q].Id == bs_datensatz[window.adb.BsFelderId]) {
+                if (window.adb.zuordbareDatensaetze[q].Id == bsDatensatz[window.adb.BsFelderId]) {
                     // und die guid auslesen
                     guid = window.adb.zuordbareDatensaetze[q].Guid;
                     break;
@@ -114,12 +115,12 @@ module.exports = function () {
         }
         // RückmeldungsLinks in Feld anzeigen:
         $importierenBsImportAusfuehrenHinweis
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info')
             .css('display', 'block');
         $importierenBsImportAusfuehrenHinweisText
-            .html("Die Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...");
+            .html('Die Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...');
     }
     return bsEntfernt.promise();
 };

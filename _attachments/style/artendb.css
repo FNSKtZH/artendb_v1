@@ -790,7 +790,7 @@ option {
     margin-bottom: 5px;
 }
 
-.well.format_csv {
+.well.formatCsv {
     display: none;
 }
 

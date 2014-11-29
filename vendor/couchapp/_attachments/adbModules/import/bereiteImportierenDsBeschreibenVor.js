@@ -3,17 +3,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                     = require('jquery'),
+    bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02'),
+    pruefeAnmeldung                       = require('../login/pruefeAnmeldung');
 
 module.exports = function (woher) {
-    var $db                                   = $.couch.db('artendb'),
-        bereiteImportierenDsBeschreibenVor_02 = require('./bereiteImportierenDsBeschreibenVor_02'),
-        pruefeAnmeldung                       = require('../login/pruefeAnmeldung');
+    var $db = $.couch.db('artendb');
 
     if (!pruefeAnmeldung(woher)) {
         $('#importierenDsDsBeschreibenCollapse').collapse('hide');
     } else {
-        $("#dsName").focus();
+        $('#dsName').focus();
         // Daten holen, wenn nötig
         if (window.adb.dsVonObjekten) {
             bereiteImportierenDsBeschreibenVor_02();
