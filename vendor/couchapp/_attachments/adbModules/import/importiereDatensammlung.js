@@ -124,7 +124,7 @@ module.exports = function () {
         _.each(dsDatensatz, function (feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
             // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
-            //if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.DsId !== "guid" && feldname !== "Taxonomie ID")) {
+            //if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null && (window.adb.dsId !== "guid" && feldname !== "Taxonomie ID")) {
             if (feldname !== window.adb.DsFelderId && feldwert !== "" && feldwert !== null) {
                 if (feldwert === -1) {
                     // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
@@ -153,7 +153,7 @@ module.exports = function () {
             // Datenbankabfrage ist langsam. Extern aufrufen,
             // sonst überholt die for-Schlaufe und Datensammlung ist bis zur saveDoc-Ausführung eine andere!
             var guid;
-            if (window.adb.DsId === "guid") {
+            if (window.adb.dsId === "guid") {
                 // die in der Tabelle mitgelieferte id ist die guid
                 guid = dsDatensatz[window.adb.DsFelderId];
             } else {
@@ -170,7 +170,7 @@ module.exports = function () {
         }
     });
     // Für 10 Kontrollbeispiele die Links aufbauen
-    if (window.adb.DsId === "guid") {
+    if (window.adb.dsId === "guid") {
         erste10Ids = _.first(window.adb.zuordbareDatensaetze, 10);
     } else {
         erste10Ids = _.pluck(_.first(window.adb.zuordbareDatensaetze, 10), "Guid");

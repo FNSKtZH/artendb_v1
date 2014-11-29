@@ -58,7 +58,7 @@ module.exports = function (guid, beziehungssammlung, beziehungen) {
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass eine bs importiert wurde
-            $(document).trigger('adb.bs_hinzugefügt');
+            $(document).trigger('adb.bsHinzugefuegt');
             // TODO: Scheitern des Speicherns abfangen (trigger adb.bs_nicht_hinzugefügt)
         }
     });

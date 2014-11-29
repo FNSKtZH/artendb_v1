@@ -8,8 +8,8 @@ var _                               = require('underscore'),
     meldeErfolgVonIdIdentifikation2 = require('./meldeErfolgVonIdIdentifikation2');
 
 module.exports = function (dbs) {
-    var $dbsFelderSelected       = $("#" + dbs + "Felder option:selected"),
-        $dbsIdSelected           = $("#" + dbs + "Id option:selected"),
+    var $dbsFelderSelected       = $("#" + dbs.toLowerCase() + "Felder option:selected"),
+        $dbsIdSelected           = $("#" + dbs.toLowerCase() + "Id option:selected"),
         idsVonDatensaetzen       = [],
         mehrfachVorkommendeIds   = [],
         idsVonNichtImportierbarenDatensaetzen = [],
@@ -17,9 +17,9 @@ module.exports = function (dbs) {
 
     if ($dbsFelderSelected.length && $dbsIdSelected.length) {
         // beide ID's sind gewählt
-        window.adb[dbs + "FelderId"] = $dbsFelderSelected.val();
-        window.adb.DsId = $dbsIdSelected.val();
-        window.adb[dbs + "Id"] = $dbsIdSelected.val();
+        window.adb[dbs.toLowerCase() + "FelderId"] = $dbsFelderSelected.val();
+        window.adb.dsId = $dbsIdSelected.val();
+        window.adb[dbs.toLowerCase() + "Id"] = $dbsIdSelected.val();
         // das hier wird später noch für den Inmport gebraucht > globale Variable machen
         window.adb.zuordbareDatensaetze = [];
         $("#importieren" + dbs + "IdsIdentifizierenHinweisText")
@@ -36,10 +36,10 @@ module.exports = function (dbs) {
         // Dokumente aus der Gruppe der Datensätze holen
         // durch alle loopen. Dabei einen Array von Objekten bilden mit id und guid
         // kontrollieren, ob eine id mehr als einmal vorkommt
-        if (window.adb.DsId === "guid") {
+        if (window.adb.dsId === "guid") {
             $db.view('artendb/all_docs', {
                 success: function (data) {
-                    var nameDesIdFelds = window.adb[dbs + "FelderId"],
+                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + "FelderId"],
                         zugehoerigesObjekt;
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {
@@ -68,9 +68,9 @@ module.exports = function (dbs) {
                 }
             });
         } else {
-            $db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.DsId + '"]&endkey=["' + window.adb.DsId + '",{},{}]', {
+            $db.view('artendb/gruppe_id_taxonomieid?startkey=["' + window.adb.dsId + '"]&endkey=["' + window.adb.dsId + '",{},{}]', {
                 success: function (data) {
-                    var nameDesIdFelds = window.adb[dbs + "FelderId"],
+                    var nameDesIdFelds = window.adb[dbs.toLowerCase() + "FelderId"],
                         objekt;
                     // durch die importierten Datensätze loopen
                     _.each(window.adb[dbs.toLowerCase() + "Datensaetze"], function (importDatensatz) {

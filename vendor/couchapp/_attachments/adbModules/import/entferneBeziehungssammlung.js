@@ -77,7 +77,7 @@ module.exports = function () {
 
     _.each(window.adb.bsDatensaetze, function (bs_datensatz) {
         // zuerst die id in guid übersetzen
-        if (window.adb.BsId === "guid") {
+        if (window.adb.bsId === "guid") {
             // die in der Tabelle mitgelieferte id ist die guid
             guid = bs_datensatz.GUID;
         } else {

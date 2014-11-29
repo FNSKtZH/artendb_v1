@@ -19,8 +19,8 @@ module.exports = function () {
         rueckmeldung,
         rueckmeldungLinks                         = "",
         bsImportiert                              = $.Deferred(),
-        $BsName                                   = $("#bsName"),
-        $BsBeschreibung                           = $("#bsBeschreibung"),
+        $bsName                                   = $("#bsName"),
+        $bsBeschreibung                           = $("#bsBeschreibung"),
         $bsDatenstand                             = $("#bsDatenstand"),
         $bsLink                                   = $("#bsLink"),
         $bsUrsprungsBs                            = $("#bsUrsprungsBs"),
@@ -28,12 +28,12 @@ module.exports = function () {
         $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText");
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
-    if (!$BsName.val()) {
+    if (!$bsName.val()) {
         $("#meldungIndividuellLabel").html("Namen fehlt");
         $("#meldungIndividuellText").html("Bitte geben Sie der Beziehungssammlung einen Namen");
         $("#meldungIndividuellSchliessen").html("schliessen");
         $('#meldungIndividuell').modal();
-        $BsName.focus();
+        $bsName.focus();
         return false;
     }
 
@@ -50,7 +50,7 @@ module.exports = function () {
     }, 2000);
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    $(document).bind('adb.bs_hinzugefügt', function () {
+    $(document).bind('adb.bsHinzugefuegt', function () {
         anzBsImportiert++;
         var prozent = Math.round(anzBsImportiert / anzahlBeziehungssammlungen * 100),
             $db = $.couch.db('artendb');
@@ -79,7 +79,7 @@ module.exports = function () {
                         .removeClass("alert-danger")
                         .addClass("alert-success")
                         .show();
-                    rueckmeldung = "Die Daten wurden importiert.<br>";
+                    rueckmeldung  = "Die Daten wurden importiert.<br>";
                     rueckmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
                     rueckmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
                     $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
@@ -104,9 +104,9 @@ module.exports = function () {
                 bsDatensaetzeObjekt;
 
             anzahlBeziehungssammlungen = 0;
-            bsVorlage.Name = $BsName.val();
-            if ($BsBeschreibung.val()) {
-                bsVorlage.Beschreibung = $BsBeschreibung.val();
+            bsVorlage.Name = $bsName.val();
+            if ($bsBeschreibung.val()) {
+                bsVorlage.Beschreibung = $bsBeschreibung.val();
             }
             if ($bsDatenstand.val()) {
                 bsVorlage.Datenstand = $bsDatenstand.val();
@@ -128,7 +128,8 @@ module.exports = function () {
                 // id in guid umwandeln
                 var guid,
                     q;
-                if (window.adb.BsId === "guid") {
+
+                if (window.adb.bsId === "guid") {
                     // die in der Tabelle mitgelieferte id ist die guid
                     guid = objekt[window.adb.BsFelderId];
                 } else {
@@ -200,7 +201,7 @@ module.exports = function () {
             });
 
             // Für 10 Kontrollbeispiele die Links aufbauen
-            if (window.adb.BsId === "guid") {
+            if (window.adb.bsId === "guid") {
                 erste10Ids = _.first(window.adb.zuordbareDatensaetze, 10);
             } else {
                 erste10Ids = _.pluck(_.first(window.adb.zuordbareDatensaetze, 10), "Guid");
