@@ -6,7 +6,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true, white: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _ = require('lists/lib/underscore');
 
 module.exports = function (objekt, exportObjekt) {
     var dsZhArtwert1995,
@@ -20,31 +20,31 @@ module.exports = function (objekt, exportObjekt) {
 
     // Felder ergänzen
     // immer sicherstellen, dass das Feld existiert
-    exportObjekt.idArt = "{" + objekt._id + "}";
-    exportObjekt.ref = objekt.Taxonomie.Eigenschaften["Taxonomie ID"];
+    exportObjekt.idArt = '{' + objekt._id + '}';
+    exportObjekt.ref = objekt.Taxonomie.Eigenschaften['Taxonomie ID'];
 
     dsZhGis = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-        return ds.Name === "ZH GIS";
+        return ds.Name === 'ZH GIS';
     }) || {};
 
-    if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften["GIS-Layer"]) {
-        exportObjekt.gisLayer = dsZhGis.Eigenschaften["GIS-Layer"].substring(0, 50);
+    if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['GIS-Layer']) {
+        exportObjekt.gisLayer = dsZhGis.Eigenschaften['GIS-Layer'].substring(0, 50);
     }
 
-    if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften["Betrachtungsdistanz (m)"]) {
-        exportObjekt.distance = dsZhGis.Eigenschaften["Betrachtungsdistanz (m)"];
+    if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['Betrachtungsdistanz (m)']) {
+        exportObjekt.distance = dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'];
     }
 
     if (objekt.Taxonomie.Eigenschaften.Artname) {
         exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255);
     }
 
-    if (objekt.Taxonomie.Eigenschaften["Name Deutsch"]) {
-        exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften["Name Deutsch"].substring(0, 255);
+    if (objekt.Taxonomie.Eigenschaften['Name Deutsch']) {
+        exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften['Name Deutsch'].substring(0, 255);
     }
 
     dsZhArtwert1995 = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-        return ds.Name === "ZH Artwert (1995)";
+        return ds.Name === 'ZH Artwert (1995)';
     }) || {};
 
     if (dsZhArtwert1995 && dsZhArtwert1995.Eigenschaften && (dsZhArtwert1995.Eigenschaften.Artwert || dsZhArtwert1995.Eigenschaften.Artwert === 0)) {

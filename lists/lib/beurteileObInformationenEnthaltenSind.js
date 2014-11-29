@@ -4,7 +4,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _ = require('lists/lib/underscore');
 
 module.exports = function (objekt, felder) {
     var hinzufuegen = false,
@@ -19,10 +19,10 @@ module.exports = function (objekt, felder) {
 
     if (felder && felder.length > 0) {
         _.each(felder, function (feld) {
-            dsTyp = feld.DsTyp;
-            dsName = feld.DsName;
+            dsTyp    = feld.DsTyp;
+            dsName   = feld.DsName;
             feldName = feld.Feldname;
-            if (dsTyp === "Beziehung") {
+            if (dsTyp === 'Beziehung') {
                 // suche Beziehungssammlung mit dsName
                 bsMitName = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
                     return beziehungssammlung.Name === dsName;
@@ -37,7 +37,7 @@ module.exports = function (objekt, felder) {
                         mindestensEinFeldHinzufuegen = true;
                     }
                 }
-            } else if (dsTyp === "Datensammlung") {
+            } else if (dsTyp === 'Datensammlung') {
                 // das ist ein Feld aus einer Datensammlung
                 // suche Datensammlung mit Name = dsName
                 dsMitName = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {

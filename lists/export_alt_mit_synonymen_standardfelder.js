@@ -7,10 +7,10 @@ function (head, req) {
     'use strict';
 
     start({
-        "headers": {
-            "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;",
-            "Accept-Encoding": "gzip,deflate"
+        'headers': {
+            'Accept-Charset':  'utf-8',
+            'Content-Type':    'json; charset=utf-8;',
+            'Accept-Encoding': 'gzip,deflate'
         }
     });
 
@@ -28,7 +28,7 @@ function (head, req) {
 
     // arrays für sammlungen aus synonymen gründen
     beziehungssammlungenAusSynonymen = [];
-    datensammlungenAusSynonymen = [];
+    datensammlungenAusSynonymen      = [];
 
     while (row = getRow()) {
         objekt = row.doc;

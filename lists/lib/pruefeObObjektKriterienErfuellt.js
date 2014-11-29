@@ -1,10 +1,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _                        = require('lists/lib/underscore'),
+    filtereBeziehungspartner = require('lists/lib/filtereBeziehungspartner'),
+    convertToCorrectType     = require('lists/lib/convertToCorrectType'),
+    beurteileFilterkriterien = require('lists/lib/beurteileFilterkriterien');
 
 module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusammen, nurObjekteMitEigenschaften) {
-    var objektHinzufuegen = false,
+    var objektHinzufuegen      = false,
         objektNichtHinzufuegen = false,
         dsTyp,
         dsName,
@@ -15,9 +18,6 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
         vergleichsoperator,
         feldExistiert,
         feldHinzugefuegt,
-        filtereBeziehungspartner = require('lists/lib/filtereBeziehungspartner'),
-        convertToCorrectType     = require('lists/lib/convertToCorrectType'),
-        beurteileFilterkriterien = require('lists/lib/beurteileFilterkriterien'),
         z,
         g,
         k,
@@ -26,7 +26,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
 
     // sicherstellen, dass DS und BS existieren
     objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
-    objekt.Beziehungssammlungen = objekt.Beziehungssammlungen || [];
+    objekt.Beziehungssammlungen    = objekt.Beziehungssammlungen    || [];
 
     // kein Filter aber nur Datensätze mit Infos aus DS/BS
     //objektHinzufuegen = (filterkriterien.length === 0 && !nurObjekteMitEigenschaften);
@@ -40,15 +40,15 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
         dsName     = filterkriterien[z].DsName;
         feldname   = filterkriterien[z].Feldname;
         filterwert = filterkriterien[z].Filterwert;
-        if (feldname === "GUID") {
+        if (feldname === 'GUID') {
             // die ID darf nicht in Kleinschrift verwandelt werden
             filterwert = filterkriterien[z].Filterwert;
         } else {
             filterwert = convertToCorrectType(filterkriterien[z].Filterwert);
         }
         vergleichsoperator = filterkriterien[z].Vergleichsoperator;
-        if (dsName === "objekt") {
-            feldwert = (feldname === "GUID" ? objekt._id : objekt[feldname]);
+        if (dsName === 'objekt') {
+            feldwert = (feldname === 'GUID' ? objekt._id : objekt[feldname]);
             if (feldwert || feldwert === 0) {
                 if (beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                     objektHinzufuegen = true;
@@ -57,10 +57,10 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                     break;
                 }
             }
-        } else if (dsTyp === "Taxonomie" && fasseTaxonomienZusammen) {
+        } else if (dsTyp === 'Taxonomie' && fasseTaxonomienZusammen) {
             feldwert = convertToCorrectType(objekt.Taxonomie.Eigenschaften[feldname]);
             // das Feld ist aus Taxonomie und die werden zusammengefasst
-            // daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde "Taxonomie(n)"
+            // daher die Taxonomie dieses Objekts ermitteln, um das Kriterium zu setzen, denn mitgeliefert wurde 'Taxonomie(n)'
             if (feldwert || feldwert === 0) {
                 if (beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                     objektHinzufuegen = true;
@@ -80,7 +80,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                 objektNichtHinzufuegen = true;
                 break;
             }
-        } else if (dsTyp === "Taxonomie") {
+        } else if (dsTyp === 'Taxonomie') {
             feldwert = convertToCorrectType(objekt.Taxonomie.Eigenschaften[feldname]);
             // das Feld ist aus Taxonomie und die werden nicht zusammengefasst
             if (feldwert || feldwert === 0) {
@@ -104,7 +104,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                     objektHinzufuegen = true;
                 }
             }
-        } else if (dsTyp === "Beziehung") {
+        } else if (dsTyp === 'Beziehung') {
             // durch alle Beziehungssammlungen loopen und suchen, ob Filter trifft
             dsExistiert = false;
             for (g = 0; g < objekt.Beziehungssammlungen.length; g++) {
@@ -112,7 +112,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                     dsExistiert = true;
                     // durch Beziehungssammlungen der Beziehung loopen
                     if (objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
-                        feldExistiert = false;
+                        feldExistiert    = false;
                         feldHinzugefuegt = false;
                         if (objekt.Beziehungssammlungen[g].Beziehungen && objekt.Beziehungssammlungen[g].Beziehungen.length > 0) {
                             _.each(objekt.Beziehungssammlungen[g].Beziehungen, function (beziehung) {
@@ -120,23 +120,23 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                                 if (beziehung[feldname] || beziehung[feldname] === 0) {
                                     feldExistiert = true;
                                     // Beziehungspartner sind Objekte und müssen separat gefiltert werden
-                                    if (feldname === "Beziehungspartner") {
+                                    if (feldname === 'Beziehungspartner') {
                                         var bezPartner = filtereBeziehungspartner(feldwert, filterwert, vergleichsoperator);
                                         if (bezPartner.length > 0) {
                                             objektHinzufuegen = true;
-                                            feldHinzugefuegt = true;
+                                            feldHinzugefuegt  = true;
                                         }
                                     } else {
                                         if (beurteileFilterkriterien(feldwert, filterwert, vergleichsoperator)) {
                                             objektHinzufuegen = true;
-                                            feldHinzugefuegt = true;
+                                            feldHinzugefuegt  = true;
                                         }
                                         if (filterwert === false) {
                                             // es handelt sich um ein ja/nein Feld und es wird nach false gesucht
                                             // in diesem Fall kann es sein, dass das Feld einfach nicht existiert
                                             // der Benutzer will aber wohl, dass auch dieser Datensatz geliefert wird
                                             objektHinzufuegen = true;
-                                            feldHinzugefuegt = true;
+                                            feldHinzugefuegt  = true;
                                         }
                                     }
                                 }
@@ -165,7 +165,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                 // es gibt keine passende Beziehung, nicht hinzufügen
                 objektNichtHinzufuegen = true;
             }
-        } else if (dsTyp === "Datensammlung") {
+        } else if (dsTyp === 'Datensammlung') {
             dsExistiert = false;
             // das ist ein Feld aus einer Datensammlung
             // Wenn die Datensammlung nicht existiert aber nach false gesucht wurde, muss der Datensatz trotzdem geliefert werden
@@ -219,10 +219,10 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
         // wenn nein, soll der Datensatz ja nicht exportiert werden
         if (felder && felder.length > 0) {
             _.each(felder, function (feld) {
-                dsTyp = feld.DsTyp;
-                dsName = feld.DsName;
+                dsTyp    = feld.DsTyp;
+                dsName   = feld.DsName;
                 feldname = feld.Feldname;
-                if (dsTyp === "Beziehung") {
+                if (dsTyp === 'Beziehung') {
                     // Beziehungssammlungen mit Namen = dsName suchen
                     var bsMitName = _.find(objekt.Beziehungssammlungen, function (beziehungssammlung) {
                         return beziehungssammlung.Name === dsName;
@@ -236,7 +236,7 @@ module.exports = function (objekt, felder, filterkriterien, fasseTaxonomienZusam
                             objektHinzufuegen = true;
                         }
                     }
-                } else if (dsTyp === "Datensammlung") {
+                } else if (dsTyp === 'Datensammlung') {
                     // das ist ein Feld aus einer Datensammlung
                     // suchen, ob im objekt die gesuchte Datensammlung vorkommt und eine solches Feld mit Eigenschaften enthält
                     dsMitFeld = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {

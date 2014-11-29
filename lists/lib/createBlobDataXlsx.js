@@ -61,7 +61,7 @@ function sheetFromArrayOfArrays(data) {
     return ws;
 }
 
-var wsName = "arteigenschaften";
+var wsName = 'arteigenschaften';
 
 function Workbook() {
     if (!(this instanceof Workbook)) {
@@ -97,9 +97,9 @@ function buildDataFromObject(data) {
 }
 
 module.exports = function (data) {
-    var wb = new Workbook(),
+    var wb        = new Workbook(),
         dataArray = buildDataFromObject(data),
-        ws = sheetFromArrayOfArrays(dataArray),
+        ws        = sheetFromArrayOfArrays(dataArray),
         wbout;
 
     /* add worksheet to workbook */

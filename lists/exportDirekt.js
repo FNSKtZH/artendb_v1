@@ -20,10 +20,10 @@ function (head, req) {
         objektHinzufuegen;
 
     start({
-        "headers": {
-            "Content-Type": "text/csv; charset=utf-8;",
-            "Content-disposition": "attachment;filename=arteigenschaften.csv",
-            "Accept-Charset": "utf-8"
+        'headers': {
+            'Content-Type':        'text/csv; charset=utf-8;',
+            'Content-disposition': 'attachment;filename=arteigenschaften.csv',
+            'Accept-Charset':      'utf-8'
         }
     });
 
@@ -33,18 +33,18 @@ function (head, req) {
     /* Versuch, xlsx zum Laufen zu bringen
     if (ueVar.format === 'csv') {
         start({
-            "headers": {
-                "Content-Type": "text/csv; charset=utf-8;",
-                "Content-disposition": "attachment;filename=arteigenschaften.csv",
-                "Accept-Charset": "utf-8"
+            'headers': {
+                'Content-Type': 'text/csv; charset=utf-8;',
+                'Content-disposition': 'attachment;filename=arteigenschaften.csv',
+                'Accept-Charset': 'utf-8'
             }
         });
     } else {
         start({
-            "headers": {
-                "Content-Type": "application/octet-stream; charset=utf-8;",
-                "Content-disposition": "attachment;filename=arteigenschaften.xlsx",
-                "Accept-Charset": "utf-8"
+            'headers': {
+                'Content-Type': 'application/octet-stream; charset=utf-8;',
+                'Content-disposition': 'attachment;filename=arteigenschaften.xlsx',
+                'Accept-Charset': 'utf-8'
             }
         });
     }*/

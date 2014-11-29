@@ -1,7 +1,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require("lists/lib/underscore");
+var _ = require('lists/lib/underscore');
 
 // ergänzt ein Objekt um fehlende Informationen seiner Synonyme
 module.exports = function (objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen) {

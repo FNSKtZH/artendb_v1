@@ -2,10 +2,10 @@ function (head, req) {
     'use strict';
     
     start({
-        "headers": {
-            "Content-Type": "text/csv",
-            "Content-disposition": "attachment;filename=Arteigenschaften_mit_Synonymen.csv",
-            "Accept-Charset": "utf-8"
+        'headers': {
+            'Content-Type':        'text/csv',
+            'Content-disposition': 'attachment;filename=Arteigenschaften_mit_Synonymen.csv',
+            'Accept-Charset':      'utf-8'
         }
     });
 

@@ -2,9 +2,9 @@ function (head, req) {
     'use strict';
     
     start({
-        "headers": {
-            "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;"
+        'headers': {
+            'Accept-Charset': 'utf-8',
+            'Content-Type':   'json; charset=utf-8;'
         }
     });
 

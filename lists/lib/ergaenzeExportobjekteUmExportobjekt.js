@@ -1,7 +1,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _                                   = require("lists/lib/underscore"),
+var _                                   = require('lists/lib/underscore'),
     filtereBeziehungspartner            = require('lists/lib/filtereBeziehungspartner'),
     beurteileFilterkriterien            = require('lists/lib/beurteileFilterkriterien'),
     convertToCorrectType                = require('lists/lib/convertToCorrectType'),
@@ -22,24 +22,24 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
     }
 
     // wenn der Export für das Artenlistentool erstellt wird: Obligatorische Felder einfügen
-    if (exportFuer && exportFuer === "alt") {
+    if (exportFuer && exportFuer === 'alt') {
         // Für das ALT obligatorische Felder hinzufügen
         exportObjekt = fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt);
 
         // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
         felder = _.reject(felder, function (feld) {
-            return ["Artwert"].indexOf(feld.Feldname) >= 0;
+            return ['Artwert'].indexOf(feld.Feldname) >= 0;
         });
     }
 
     // Neues Objekt aufbauen, das nur die gewünschten Felder enthält
     _.each(objekt, function (feldwert, feldname) {
-        if (typeof feldwert !== "object" && feldname !== "_rev") {
+        if (typeof feldwert !== 'object' && feldname !== '_rev') {
             _.each(felder, function (feld) {
-                if (feld.DsName === "Objekt" && feld.Feldname === feldname) {
+                if (feld.DsName === 'Objekt' && feld.Feldname === feldname) {
                     exportObjekt[feldname] = feldwert;
                 }
-                if (feld.DsName === "Objekt" && feld.Feldname === "GUID" && feldname === "_id") {
+                if (feld.DsName === 'Objekt' && feld.Feldname === 'GUID' && feldname === '_id') {
                     exportObjekt.GUID = feldwert;
                 }
             });
@@ -47,7 +47,7 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
     });
 
     _.each(felder, function (feld) {
-        var exportFeldname = feld.DsName + ": " + feld.Feldname,
+        var exportFeldname = feld.DsName + ': ' + feld.Feldname,
             feldwert,
             gesuchteDs,
             bsMitNamen,
@@ -56,17 +56,17 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
         // Taxonomie: Felder übernehmen
         // 2014.06.15: zweite Bedingung ausgeklammert, weil die Felder nur geliefert wurden, wenn zusammenfassend true war
         // war: /* && (fasseTaxonomienZusammen || feld.DsName === objekt.Taxonomie.Name)*/
-        if (feld.DsTyp === "Taxonomie") {
+        if (feld.DsTyp === 'Taxonomie') {
             // Leerwert setzen. Wird überschrieben, falls danach ein Wert gefunden wird
             if (fasseTaxonomienZusammen) {
-                exportObjekt["Taxonomie(n): " + feld.Feldname] = "";
+                exportObjekt['Taxonomie(n): ' + feld.Feldname] = '';
             } else {
-                exportObjekt[exportFeldname] = "";
+                exportObjekt[exportFeldname] = '';
             }
             // wenn im objekt das zu exportierende Feld vorkommt, den Wert übernehmen
             if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften && objekt.Taxonomie.Eigenschaften[feld.Feldname] !== undefined) {
                 if (fasseTaxonomienZusammen) {
-                    exportObjekt["Taxonomie(n): " + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
+                    exportObjekt['Taxonomie(n): ' + feld.Feldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 } else {
                     exportObjekt[exportFeldname] = objekt.Taxonomie.Eigenschaften[feld.Feldname];
                 }
@@ -74,9 +74,9 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
         }
 
         // Eigenschaftensammlungen: Felder übernehmen
-        if (feld.DsTyp === "Datensammlung") {
+        if (feld.DsTyp === 'Datensammlung') {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-            exportObjekt[exportFeldname] = "";
+            exportObjekt[exportFeldname] = '';
             if (objekt.Eigenschaftensammlungen && objekt.Eigenschaftensammlungen.length > 0) {
                 // Enthält das objekt diese Datensammlung?
                 gesuchteDs = _.find(objekt.Eigenschaftensammlungen, function (datensammlung) {
@@ -91,14 +91,14 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
             }
         }
 
-        if (feld.DsTyp === "Beziehung") {
+        if (feld.DsTyp === 'Beziehung') {
             // das leere feld setzen. Wird überschrieben, falls danach ein Wert gefunden wird
-            exportObjekt[exportFeldname] = "";
+            exportObjekt[exportFeldname] = '';
 
             // wurde schon ein zusätzliches Feld geschaffen? wenn ja: hinzufügen
-            if (feld.Feldname === "Beziehungspartner") {
+            if (feld.Feldname === 'Beziehungspartner') {
                 // noch ein Feld hinzufügen
-                exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] = "";
+                exportObjekt[feld.DsName + ': Beziehungspartner GUID(s)'] = '';
             }
 
             if (objekt.Beziehungssammlungen && objekt.Beziehungssammlungen.length > 0) {
@@ -108,7 +108,7 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
                     return beziehungssammlung.Name && beziehungssammlung.Name === feld.DsName;
                 });
                 if (bsMitNamen && bsMitNamen.Beziehungen && bsMitNamen.Beziehungen.length > 0) {
-                    // Beziehungen, die exportiert werden sollen, in der Variablen "exportBeziehungen" sammeln
+                    // Beziehungen, die exportiert werden sollen, in der Variablen 'exportBeziehungen' sammeln
                     // durch alle Beziehungen loopen und nur diejenigen anfügen, welche die Bedingungen erfüllen
                     exportBeziehungen = [];
                     _.each(bsMitNamen.Beziehungen, function (beziehung) {
@@ -124,9 +124,9 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
                                         vergleichsoperator = filterkriterium.Vergleichsoperator,
                                         beziehungspartner;
 
-                                    if (dsTyp === "Beziehung" && dsName === feld.DsName && feldname === feld.Feldname) {
+                                    if (dsTyp === 'Beziehung' && dsName === feld.DsName && feldname === feld.Feldname) {
                                         // Beziehungspartner sind Objekte und müssen separat gefiltert werden
-                                        if (feldname === "Beziehungspartner") {
+                                        if (feldname === 'Beziehungspartner') {
                                             beziehungspartner = filtereBeziehungspartner(feldwert, filterwert, vergleichsoperator);
                                             if (beziehungspartner.length > 0) {
                                                 beziehung.Beziehungspartner = beziehungspartner;
@@ -158,21 +158,21 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
                                 var exportObjektKopiert = _.clone(exportObjekt);
                                 // durch die Felder der Beziehung loopen
                                 _.each(exportBeziehung, function (exportBeziehungFeldwert, exportBeziehungFeldname) {
-                                    if (exportBeziehungFeldname === "Beziehungspartner") {
+                                    if (exportBeziehungFeldname === 'Beziehungspartner') {
                                         // den Beziehungspartner hinzufügen
-                                        exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] = exportBeziehungFeldwert[0];
+                                        exportObjektKopiert[feld.DsName + ': ' + exportBeziehungFeldname] = exportBeziehungFeldwert[0];
                                         // Reines GUID-Feld ergänzen
-                                        if (!exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                            exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] = exportBeziehungFeldwert[0].GUID;
+                                        if (!exportObjektKopiert[feld.DsName + ': Beziehungspartner GUID(s)']) {
+                                            exportObjektKopiert[feld.DsName + ': Beziehungspartner GUID(s)'] = exportBeziehungFeldwert[0].GUID;
                                         } else {
-                                            exportObjektKopiert[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + exportBeziehungFeldwert[0].GUID;
+                                            exportObjektKopiert[feld.DsName + ': Beziehungspartner GUID(s)'] += ', ' + exportBeziehungFeldwert[0].GUID;
                                         }
                                     } else {
                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                        if (!exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname]) {
-                                            exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] = exportBeziehungFeldwert;
+                                        if (!exportObjektKopiert[feld.DsName + ': ' + exportBeziehungFeldname]) {
+                                            exportObjektKopiert[feld.DsName + ': ' + exportBeziehungFeldname] = exportBeziehungFeldwert;
                                         } else {
-                                            exportObjektKopiert[feld.DsName + ": " + exportBeziehungFeldname] += ", " + exportBeziehungFeldwert;
+                                            exportObjektKopiert[feld.DsName + ': ' + exportBeziehungFeldname] += ', ' + exportBeziehungFeldwert;
                                         }
                                     }
                                 });
@@ -185,34 +185,34 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
                             _.each(exportBeziehungen, function (exportBeziehung) {
                                 // durch die Felder der Beziehung loopen
                                 _.each(exportBeziehung, function (feldwert, feldname) {
-                                    if (feldname === "Beziehungspartner") {
+                                    if (feldname === 'Beziehungspartner') {
                                         // zuerst die Beziehungspartner in JSON hinzufügen
-                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
-                                            exportObjekt[feld.DsName + ": " + feldname] = '';
+                                        if (!exportObjekt[feld.DsName + ': ' + feldname]) {
+                                            exportObjekt[feld.DsName + ': ' + feldname] = '';
                                         } else {
-                                            exportObjekt[feld.DsName + ": " + feldname] += ', ';
+                                            exportObjekt[feld.DsName + ': ' + feldname] += ', ';
                                         }
-                                        exportObjekt[feld.DsName + ": " + feldname] += JSON.stringify(feldwert[0]);
+                                        exportObjekt[feld.DsName + ': ' + feldname] += JSON.stringify(feldwert[0]);
                                         // Reines GUID-Feld ergänzen
-                                        if (!exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"]) {
-                                            exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] = feldwert[0].GUID;
+                                        if (!exportObjekt[feld.DsName + ': Beziehungspartner GUID(s)']) {
+                                            exportObjekt[feld.DsName + ': Beziehungspartner GUID(s)'] = feldwert[0].GUID;
                                         } else {
-                                            exportObjekt[feld.DsName + ": Beziehungspartner GUID(s)"] += ", " + feldwert[0].GUID;
+                                            exportObjekt[feld.DsName + ': Beziehungspartner GUID(s)'] += ', ' + feldwert[0].GUID;
                                         }
                                         // es gibt einen Fehler, wenn replace für einen leeren Wert ausgeführt wird, also kontrollieren
-                                    } else if (typeof feldwert === "number") {
+                                    } else if (typeof feldwert === 'number') {
                                         // Vorsicht: in Nummern können keine Kommas ersetzt werden - gäbe einen error
-                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
-                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert;
+                                        if (!exportObjekt[feld.DsName + ': ' + feldname]) {
+                                            exportObjekt[feld.DsName + ': ' + feldname] = feldwert;
                                         } else {
-                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert;
+                                            exportObjekt[feld.DsName + ': ' + feldname] += ', ' + feldwert;
                                         }
                                     } else {
                                         // Vorsicht: Werte werden kommagetrennt. Also müssen Kommas ersetzt werden
-                                        if (!exportObjekt[feld.DsName + ": " + feldname]) {
-                                            exportObjekt[feld.DsName + ": " + feldname] = feldwert.replace(/,/g, '(Komma)');
+                                        if (!exportObjekt[feld.DsName + ': ' + feldname]) {
+                                            exportObjekt[feld.DsName + ': ' + feldname] = feldwert.replace(/,/g, '(Komma)');
                                         } else {
-                                            exportObjekt[feld.DsName + ": " + feldname] += ", " + feldwert.replace(/,/g, '(Komma)');
+                                            exportObjekt[feld.DsName + ': ' + feldname] += ', ' + feldwert.replace(/,/g, '(Komma)');
                                         }
                                     }
                                 });
