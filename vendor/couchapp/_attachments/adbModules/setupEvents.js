@@ -85,15 +85,15 @@ module.exports = function () {
     /*
      * importieren
      */
-    $('#importieren_ds_ds_beschreiben_collapse') .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
-    $('#importieren_bs_ds_beschreiben_collapse') .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
+    $('#importierenDsDsBeschreibenCollapse') .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
+    $('#importierenBsDsBeschreibenCollapse') .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
     $('#importierenDsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
     $('#importierenBsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
     $('#importierenDsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
     $('#importierenBsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
     $('#importierenDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
     $('#importierenBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
-    $('#DsWaehlen')                              .on('change',            onChangeDsWaehlen);
+    $('#dsWaehlen')                              .on('change',            onChangeDsWaehlen);
     $('#DsName')                                 .on('change',            onChangeDsName);
     $('#DsImportiertVon')                        .on('change',            onChangeDsImportiertVon);
     $('#DsZusammenfassend')                      .on('change',            onChangeDsZusammenfassend);
@@ -104,10 +104,10 @@ module.exports = function () {
     $('#DsImportieren')                          .on('click',             onClickDsImportieren);
     $('#DsEntfernen')                            .on('click',             onClickDsEntfernen);
     $('#importierenDs').on('click', '.panel-heading a',                   onClickPanelHeadingA);
-    $('#BsWaehlen')                              .on('change',            onChangeBsWaehlen);
+    $('#bsWaehlen')                              .on('change',            onChangeBsWaehlen);
     $('#BsName')                                 .on('change',            onChangeBsName);
-    $('#BsImportiertVon')                        .on('change',            onChangeBsImportiertVon);
-    $('#BsZusammenfassend')                      .on('change',            onChangeBsZusammenfassend);
+    $('#bsImportiertVon')                        .on('change',            onChangeBsImportiertVon);
+    $('#bsZusammenfassend')                      .on('change',            onChangeBsZusammenfassend);
     $('#BsFile')                                 .on('change',            onChangeBsFile);
     $('#BsId')                                   .on('change',            onChangeBsId);
     $('#BsFelder')                               .on('change',            onChangeBsFelder);
@@ -119,8 +119,8 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportierenDsObjekteWaehlenGruppe',          onChangeExportierenDsObjekteWaehlenGruppe)
-        .on('change', '.feldWaehlen',                                   onChangeFeldWaehlen)
+        .on('change', '.exportierenDsObjekteWaehlenGruppe',               onChangeExportierenDsObjekteWaehlenGruppe)
+        .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDs',              window.adb.handleFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                   window.adb.handleExportFeldFilternChange)
         // verhindern, dass bootstrap ganz nach oben scrollt
@@ -129,8 +129,8 @@ module.exports = function () {
         })
         .on('click', '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
         .on('change', '.feldWaehlenAlleVonDs', window.adb.exportZuruecksetzen);
-    $('#exportBezInZeilen,#export_bez_in_feldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
-    $('#exportieren_objekte_Taxonomien_zusammenfassen').on('click', function (event) {
+    $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
+    $('#exportierenObjekteTaxonomienZusammenfassen').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -141,7 +141,7 @@ module.exports = function () {
         window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
         window.adb.exportZuruecksetzen();
     });
-    $('#exportieren_exportieren_exportieren').on('click', function (event) {
+    $('#exportierenExportierenExportieren').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -149,15 +149,15 @@ module.exports = function () {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.handleExportierenExportierenExportierenClick();
     });
-    $('#exportieren_exportieren_exportieren_direkt').on('click', function (event) {
+    $('#exportierenExportierenExportieren_direkt').on('click', function (event) {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.filtereFuerExport('direkt');
     });
-    $('#exportieren_exportieren_collapse').on('shown.bs.collapse', function () {
+    $('#exportierenExportierenCollapse').on('shown.bs.collapse', function () {
         window.adb.handleExportierenExportierenCollapseShown(this);
     });
     $('#exportierenObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportieren_felder_waehlen_collapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+    $('#exportierenFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportieren_exportieren').on('show', window.adb.handleExportierenExportierenShow);
 
     /*
@@ -166,13 +166,13 @@ module.exports = function () {
     $('#exportAlt')
         .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds_alt', window.adb.handleFeldWaehlenAlleVonDs)
-        .on('change', '#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
+        .on('change', '#export_altBezInZeilen,#export_altBezInFeldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
             window.adb.exportZuruecksetzen(null, '_alt');
         })
         .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function () {
             window.adb.scrollThisToTop(this, 6);
         })
-        .on('shown.bs.collapse', '#exportieren_alt_exportieren_collapse', function () {
+        .on('shown.bs.collapse', '#exportieren_altExportierenCollapse', function () {
             // mitteilen, dass für alt exportiert wird
             window.adb.handleExportierenExportierenCollapseShown(this);
             window.adb.scrollThisToTop(this, 6);

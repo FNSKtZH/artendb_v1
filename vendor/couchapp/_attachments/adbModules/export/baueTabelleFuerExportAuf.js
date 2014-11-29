@@ -10,10 +10,10 @@ module.exports = function (_alt) {
 
     if (window.adb.exportierenObjekte.length > 0) {
         if (_alt) {
-            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_alt_exportieren_tabelle", 'exportAlt');
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_altExportierenTabelle", 'exportAlt');
         } else {
-            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_exportieren_tabelle", null);
-            $(".exportieren_btn").show();
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportierenExportierenTabelle", null);
+            $(".exportierenBtn").show();
         }
     } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
         $("#exportieren" + _alt + "ExportierenErrorTextText")

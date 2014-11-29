@@ -7,6 +7,7 @@ var $ = require('jquery'),
 module.exports = function () {
     var html,
         bsNamen = [];
+
     // in diesem Array werden alle keys gesammelt
     // diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
     window.adb.BsKeys = _.map(window.adb.bsVonObjekten.rows, function (row) {
@@ -38,12 +39,12 @@ module.exports = function () {
         // veränderbar sind nur selbst importierte und zusammenfassende
         if (dsNameEindeutig[2] === localStorage.Email || dsNameEindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
-            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adbGruenFett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
         } else {
             // nicht veränderbare sind grau
-            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adbGrauNormal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
         }
     });
-    $("#BsWaehlen").html(html);
+    $("#bsWaehlen").html(html);
     $("#BsUrsprungsBs").html(html);
 };

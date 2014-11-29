@@ -11,11 +11,11 @@ module.exports = function (woher) {
         bereiteImportierenBsBeschreibenVor_2 = require('./bereiteImportierenBsBeschreibenVor_2');
 
     if (!pruefeAnmeldung("woher")) {
-        $('#importieren_bs_ds_beschreiben_collapse').collapse('hide');
+        $('#importierenBsDsBeschreibenCollapse').collapse('hide');
     } else {
         $("#BsName").focus();
         // anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
-        //$("#BsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
+        //$("#bsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
         // Daten holen, wenn nötig
         if (window.adb.bsVonObjekten) {
             bereiteImportierenBsBeschreibenVor_2();

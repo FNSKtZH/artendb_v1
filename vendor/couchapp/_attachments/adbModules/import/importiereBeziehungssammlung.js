@@ -115,7 +115,7 @@ module.exports = function () {
                 bsVorlage.Link = $BsLink.val();
             }
             // falls die Datensammlung zusammenfassend ist
-            if ($("#BsZusammenfassend").prop('checked')) {
+            if ($("#bsZusammenfassend").prop('checked')) {
                 bsVorlage.zusammenfassend = true;
             }
             if ($BsUrsprungsBs.val()) {

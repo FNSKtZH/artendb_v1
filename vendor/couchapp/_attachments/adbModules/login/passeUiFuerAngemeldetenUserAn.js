@@ -1,7 +1,8 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $ = require('jquery'),
+    capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
     $("#art_anmelden_titel").text(localStorage.Email + " ist angemeldet");
@@ -11,7 +12,7 @@ module.exports = function (woher) {
         $("#art_anmelden_collapse").collapse('hide');
     } else {
         $("#importieren_" + woher + "_anmelden_collapse").collapse('hide');
-        $("#importieren_" + woher + "_ds_beschreiben_collapse").collapse('show');
+        $("#importieren" + capitaliseFirstLetter(woher) + "DsBeschreibenCollapse").collapse('show');
     }
     $(".alert").hide();
     $(".hinweis").hide();

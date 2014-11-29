@@ -193,10 +193,10 @@
                     <div class="panel panel-default" id="importieren_ds_ds_beschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_ds_beschreiben_collapse">2. Eigenschaftensammlung beschreiben</a>
+                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsDsBeschreibenCollapse">2. Eigenschaftensammlung beschreiben</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importieren_ds_ds_beschreiben_collapse">
+                        <div class="panel-collapse collapse" id="importierenDsDsBeschreibenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><a href="//youtu.be/nqd-v6YxkOY" target="_blank"><b>Screencast sehen</b></a></div>
                                 <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
@@ -224,8 +224,8 @@
                                     </ul>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsWaehlen">Bestehende wählen</label>
-                                    <select class="form-control controls" id="DsWaehlen"></select>
+                                    <label class="control-label" for="dsWaehlen">Bestehende wählen</label>
+                                    <select class="form-control controls" id="dsWaehlen"></select>
                                 </div>
                                 <div class="controls feld">
                                     <button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
@@ -265,7 +265,7 @@
                                     <div id="DsAnzDs" class="feldtext controls"></div>
                                 </div>
                                 <div id="importieren_ds_ds_beschreiben_hinweis2" class="alert alert-info"></div>
-                                <div id="importieren_ds_ds_beschreiben_error" class="alert alert-danger">
+                                <div id="importierenDsDsBeschreibenError" class="alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                     <div id="importieren_ds_ds_beschreiben_error_text"></div>
                                 </div>
@@ -410,10 +410,10 @@
                     <div class="panel panel-default" id="importieren_bs_ds_beschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_ds_beschreiben_collapse">2. Beziehungssammlung beschreiben</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importierenBsDsBeschreibenCollapse">2. Beziehungssammlung beschreiben</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importieren_bs_ds_beschreiben_collapse">
+                        <div class="panel-collapse collapse" id="importierenBsDsBeschreibenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -440,8 +440,8 @@
                                     </ul>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsWaehlen">Bestehende wählen</label>
-                                    <select class="form-control controls" id="BsWaehlen"></select>
+                                    <label class="control-label" for="bsWaehlen">Bestehende wählen</label>
+                                    <select class="form-control controls" id="bsWaehlen"></select>
                                 </div>
                                 <div class="controls feld">
                                     <button type="button" class="btn btn-primary" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
@@ -468,24 +468,24 @@
                                     <textarea class="form-control controls" id="BsLink"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsImportiertVon">importiert von</label>
-                                    <input type="text" class="form-control controls input-sm" id="BsImportiertVon">
+                                    <label class="control-label" for="bsImportiertVon">importiert von</label>
+                                    <input type="text" class="form-control controls input-sm" id="bsImportiertVon">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsZusammenfassend">zusammenfassend</label>
-                                    <input type="checkbox" id="BsZusammenfassend">
+                                    <label class="control-label" for="bsZusammenfassend">zusammenfassend</label>
+                                    <input type="checkbox" id="bsZusammenfassend">
                                 </div>
-                                <div class="form-group" id="BsUrsprungsBs_div" style="display:none;">
+                                <div class="form-group" id="bsUrsprungsBsDiv" style="display:none;">
                                     <label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
                                     <select class="form-control controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsAnzDs" id="BsAnzDs_label"></label>
+                                    <label class="control-label" for="BsAnzDs" id="BsAnzDsLabel"></label>
                                     <div id="BsAnzDs" class="feldtext controls"></div>
                                 </div>
-                                <div id="importieren_bs_ds_beschreiben_hinweis2" class="alert alert-info">
+                                <div id="importierenBsDsBeschreibenHinweis2" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importieren_bs_ds_beschreiben_hinweis2_text"></div>
+                                    <div id="importierenBsDsBeschreibenHinweis2Text"></div>
                                 </div>
                             </div>
                         </div>
@@ -637,7 +637,7 @@
                                         Lebensräume
                                     </label>
                                 </div>
-                                <button id="exportieren_objekte_Taxonomien_zusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
+                                <button id="exportierenObjekteTaxonomienZusammenfassen" type="button" class="btn btn-primary" data-toggle="button" style="margin-bottom:9px;">Alle Taxonomien zusammenfassen</button>
                                 <div class="well well-sm" style="margin-bottom:5px !important;"><b>Alle Taxonomien zusammenfassen?</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
                                         <li>Mit dieser Option werden alle in den gewählten Gruppen vorkommenden Taxonomien unter dem Titel "Taxonomie(n)" zusammegefasst und darunter alle in diesen Taxonomien vorkommenden Felder aufgelistet</li>
@@ -645,7 +645,7 @@
                                         <li>Oder Sie können z.B. Arten aus Flora und Fauna gleichzeitig exportieren und dabei den vollständigen Artnamen ins selbe Feld schreiben</li>
                                     </ul>
                                 </div>
-                                <div id="exportieren_objekte_waehlen_gruppen_hinweis_text" class="alert alert-info exportieren_objekte_waehlen_gruppen_hinweis_text" style="margin-top:10px;"></div>
+                                <div id="exportierenObjekteWaehlenGruppenHinweisText" class="alert alert-info exportierenObjekteWaehlenGruppenHinweisText" style="margin-top:10px;"></div>
                             </div>
                         </div>
                     </div>
@@ -693,10 +693,10 @@
                     <div class="panel panel-default" id="exportieren_felder_waehlen">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_felder_waehlen_collapse" data-parent="exportieren_panel" href="#exportieren_felder_waehlen_collapse">3. Eigenschaften wählen</a>
+                                <a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenFelderWaehlenCollapse" data-parent="exportieren_panel" href="#exportierenFelderWaehlenCollapse">3. Eigenschaften wählen</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="exportieren_felder_waehlen_collapse">
+                        <div class="panel-collapse collapse" id="exportierenFelderWaehlenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm last-well"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -710,7 +710,7 @@
                                         <li>Ihr Browser und der Server haben Grenzen. Wählen sie sehr viele Daten, kann es sein, dass der Exportvorgang nie aufhört. Dann müssen Sie die Daten aufteilen und später die Exporte zusammensetzen. Aber Sie können ruhig ausprobieren, wie viel drin liegt...</li>
                                     </ul>
                                 </div-->
-                                <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
+                                <div id="exportierenNurObjekteMitEigenschaftenCheckbox" class="checkbox">
                                     <label>
                                         <input type="checkbox" id="exportierenNurObjekteMitEigenschaften" checked>
                                         <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
@@ -744,10 +744,10 @@
                     <div id="exportieren_exportieren" class="panel panel-default">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_exportieren_collapse" data-parent="exportieren_panel" href="#exportieren_exportieren_collapse">4. exportieren</a>
+                                <a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenExportierenCollapse" data-parent="exportieren_panel" href="#exportierenExportierenCollapse">4. exportieren</a>
                             </h4>
                         </div>
-                        <div id="exportieren_exportieren_collapse" class="panel-collapse collapse">
+                        <div id="exportierenExportierenCollapse" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -757,18 +757,18 @@
                                         <li>...und es erscheinen Schaltflächen für den Download</li>
                                     </ul>
                                 </div>
-                                <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip"  title="Empfohlen, da schnell. Funktioniert auf modernen Browsern">direkt herunterladen</button>
-                                <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip" title="Langsam. Funktioniert auch auf alten Browsern. Sorry: nur csv. Kein xlsx verfügbar">vom Server herunterladen</button>
+                                <button id="exportierenExportierenExportieren" class="btn btn-primary exportierenBtn" style="display:none;" data-toggle="tooltip"  title="Empfohlen, da schnell. Funktioniert auf modernen Browsern">direkt herunterladen</button>
+                                <button id="exportierenExportierenExportieren_direkt" class="btn btn-primary exportierenBtn" style="display:none;" data-toggle="tooltip" title="Langsam. Funktioniert auch auf alten Browsern. Sorry: nur csv. Kein xlsx verfügbar">vom Server herunterladen</button>
                                 <div id="exportierenExportierenFormat">
                                     <p style="margin-bottom:0; margin-top:5px;"><b>Format:</b></p>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportierenExportierenFormat" value="xlsx">xlsx (Excel)
+                                            <input type="radio" id="exportierenExportierenExportieren_xlsx" checked="checked" name="exportierenExportierenFormat" value="xlsx">xlsx (Excel)
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportierenExportierenFormat" value="csv">csv (kommagetrennte Textdatei)
+                                            <input type="radio" id="exportierenExportierenExportieren_csv" name="exportierenExportierenFormat" value="csv">csv (kommagetrennte Textdatei)
                                         </label>
                                     </div>
                                 </div>
@@ -796,7 +796,7 @@
                                     </ul>
                                 </div>
                                 <div id="exportierenExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
-                                <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
+                                <div id="exportierenExportierenTabelle" class="tabelle exportierenExportierenTabelle" style="padding-top:7px;margin-bottom:7px;"></div>
                                 <div id="exportierenExportierenHinweisText" class="alert alert-info"></div>
                                 <div id="exportierenExportierenErrorText" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -846,8 +846,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div id="exportieren_alt_felder_waehlen_felderliste" class="exportierenFelderWaehlenFelderliste"></div>
-                                <div id="exportieren_alt_felder_waehlen_hinweis_text" class="alert alert-info">Eigenschaften werden ermittelt...</div>
+                                <div id="exportieren_altFelderWaehlenFelderliste" class="exportierenFelderWaehlenFelderliste"></div>
+                                <div id="exportieren_altFelderWaehlenHinweisText" class="alert alert-info">Eigenschaften werden ermittelt...</div>
                             </div>
                         </div>
                     </div>
@@ -855,10 +855,10 @@
                     <div id="exportieren_alt_exportieren" class="panel panel-default">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_exportieren_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_exportieren_collapse">2. URL generieren</a>
+                                <a id="exportieren_alt_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_altExportierenCollapse" data-parent="exportieren_alt_panel" href="#exportieren_altExportierenCollapse">2. URL generieren</a>
                             </h4>
                         </div>
-                        <div id="exportieren_alt_exportieren_collapse" class="panel-collapse collapse">
+                        <div id="exportieren_altExportierenCollapse" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="well well-sm" style="margin-bottom:9px;"><b>So geht's</b>
                                     <ul>
@@ -870,7 +870,7 @@
                                 <div>URL:</div>
                                 <textarea class="form-control" id="exportierenAltExportierenUrl"></textarea>
                                 <div id="exportieren_altExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
-                                <div id="exportieren_alt_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle"></div>
+                                <div id="exportieren_altExportierenTabelle" class="tabelle exportierenExportierenTabelle"></div>
                                 <div id="exportieren_alt_exportieren_hinweis_text" class="alert alert-info"></div>
                                 <div id="exportieren_altExportierenErrorText" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -947,7 +947,7 @@
             $(document).ready(function () {
                 window.adb.initiiereApp();
                 window.adb.setupEvents();
-                $('#btnResize, #exportieren_exportieren_exportieren, #exportieren_exportieren_exportieren_direkt').tooltip();
+                $('#btnResize, #exportierenExportierenExportieren, #exportierenExportierenExportieren_direkt').tooltip();
             });
 
         </script>

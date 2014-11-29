@@ -11,11 +11,11 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
-    var html = "",
-        Feldname = "",
+    var html            = "",
+        Feldname        = "",
         htmlDsFelderDiv = "",
         erste10Ds,
-        $tabellenDiv = $("#" + tabellenDiv);
+        $tabellenDiv    = $("#" + tabellenDiv);
 
     if (!formular || formular !== 'exportAlt') {
         if (datensaetze.length > 10) {
@@ -43,7 +43,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     }
     htmlDsFelderDiv += '<label class="control-label" for="' + Feldname + '">Feld mit eindeutiger ID<br>in den Importdaten</label>';
     htmlDsFelderDiv += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(datensaetze[0]).length * 19) + 9)  + 'px">';
-    html += "<thead><tr>";
+    html            += "<thead><tr>";
 
     // Tabellenzeilen aufbauen
     // nur die ersten 10 Datensätze anzeigen
@@ -66,12 +66,12 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // durch die Felder des ersten Datensatzes zirkeln
     _.each(erste10Ds[0], function (feldwert, feldname) {
         // Spalte anlegen
-        html += "<th>" + feldname + "</th>";
+        html            += "<th>" + feldname + "</th>";
         // Option für Feldliste anfügen
         htmlDsFelderDiv += '<option value="' + feldname + '">' + feldname + '</option>';
     });
     // Titelzeile abschliessen
-    html += "</tr></thead><tbody>";
+    html            += "</tr></thead><tbody>";
     // Feldliste abschliessen
     htmlDsFelderDiv += '</select>';
     if (felderDiv) {

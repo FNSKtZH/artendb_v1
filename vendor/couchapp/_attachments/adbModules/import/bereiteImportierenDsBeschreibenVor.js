@@ -11,7 +11,7 @@ module.exports = function (woher) {
         pruefeAnmeldung                       = require('../login/pruefeAnmeldung');
 
     if (!pruefeAnmeldung(woher)) {
-        $('#importieren_ds_ds_beschreiben_collapse').collapse('hide');
+        $('#importierenDsDsBeschreibenCollapse').collapse('hide');
     } else {
         $("#DsName").focus();
         // Daten holen, wenn nötig

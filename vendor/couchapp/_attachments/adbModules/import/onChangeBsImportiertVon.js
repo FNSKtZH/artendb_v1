@@ -1,4 +1,4 @@
-// Wenn BsImportiertVon geändert wird
+// Wenn bsImportiertVon geändert wird
 // Kontrollieren, dass es die email der angemeldeten Person ist
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
@@ -7,16 +7,16 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    $("#BsImportiertVon").val(localStorage.Email);
-    $("#importieren_bs_ds_beschreiben_hinweis2")
+    $("#bsImportiertVon").val(localStorage.Email);
+    $("#importierenBsDsBeschreibenHinweis2")
         .alert()
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info")
         .show();
-    $("#importieren_bs_ds_beschreiben_hinweis2_text").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+    $("#importierenBsDsBeschreibenHinweis2Text").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
     setTimeout(function () {
-        $("#importieren_bs_ds_beschreiben_hinweis2")
+        $("#importierenBsDsBeschreibenHinweis2")
             .alert()
             .hide();
     }, 10000);

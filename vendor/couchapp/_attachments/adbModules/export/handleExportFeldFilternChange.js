@@ -5,13 +5,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $                   = require('jquery'),
+    _                   = require('underscore'),
+    exportZuruecksetzen = require('./exportZuruecksetzen');
 
 module.exports = function (that) {
-    var $that               = $(that),
-        bez_ds_filtered     = [],
-        exportZuruecksetzen = require('./exportZuruecksetzen');
+    var $that         = $(that),
+        bezDsFiltered = [];
 
     // die Checkboxen sollen drei Werte annehmen können:
     if (that.type === "checkbox") {
@@ -33,12 +33,12 @@ module.exports = function (that) {
         .find(".exportFeldFiltern")
         .each(function () {
             if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
-                bez_ds_filtered.push($(this).attr('eigenschaft'));
+                bezDsFiltered.push($(this).attr('eigenschaft'));
             }
         });
     // eindeutige Liste der dsTypen erstellen
-    bez_ds_filtered = _.union(bez_ds_filtered);
-    if (bez_ds_filtered && bez_ds_filtered.length > 1) {
+    bezDsFiltered = _.union(bezDsFiltered);
+    if (bezDsFiltered && bezDsFiltered.length > 1) {
         $('#meldungZuvieleBs').modal();
         $(that).val("");
     } else {

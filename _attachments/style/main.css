@@ -6347,7 +6347,7 @@ h5 a {
     opacity: 0.5;
 }
 
-.BeschreibungDatensammlung {
+.beschreibungDatensammlung {
     padding-bottom: 0.9em;
     /* sehr lange links müssen im Wort umbrechen können */
     word-wrap: break-word;
@@ -6567,7 +6567,7 @@ option {
     color: #8D8C8C;
 }
 
-#exportieren_exportieren_collapse button {
+#exportierenExportierenCollapse button {
     margin-bottom: 10px;
     margin-right:   5px;
 }
@@ -6580,7 +6580,7 @@ option {
     display: none;
 }
 
-#exportieren_exportieren_collapse .tooltip-inner {
+#exportierenExportierenCollapse .tooltip-inner {
     max-width: 250px;
 }
 
@@ -6629,12 +6629,12 @@ option {
 /*
 ** Auswahlliste um bestehende DS/BS zu wählen: wählbare sollen grün und fett sein, nicht wählbare grau und normal
 */
-.adb_gruen_fett {
+.adbGruenFett {
     color: green;
     font-weight: bold;
 }
 
-.adb_grau_normal {
+.adbGrauNormal {
     color: grey;
     font-weight: normal;
 }

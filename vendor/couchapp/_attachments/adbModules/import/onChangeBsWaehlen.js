@@ -8,15 +8,16 @@ var _                    = require('underscore'),
     fitTextareaToContent = require('../fitTextareaToContent');
 
 module.exports = function () {
-    var that           = this,
-        bsName         = that.value,
-        waehlbar       = false,
-        $BsAnzDs       = $("#BsAnzDs"),
-        $BsAnzDs_label = $("#BsAnzDs_label"),
-        $BsName        = $("#BsName"),
-        $importieren_bs_ds_beschreiben_hinweis2 = $("#importieren_bs_ds_beschreiben_hinweis2");
+    var that          = this,
+        bsName        = that.value,
+        waehlbar      = false,
+        $BsAnzDs      = $("#BsAnzDs"),
+        $BsAnzDsLabel = $("#BsAnzDsLabel"),
+        $BsName       = $("#BsName"),
+        $importierenBsDsBeschreibenHinweis2 = $("#importierenBsDsBeschreibenHinweis2");
+
     // allfälligen Alert schliessen
-    $importieren_bs_ds_beschreiben_hinweis2
+    $importierenBsDsBeschreibenHinweis2
         .alert()
         .hide();
     // waehlbar setzen
@@ -24,11 +25,11 @@ module.exports = function () {
     waehlbar = $("#" + that.id + " option:selected").attr("waehlbar") === "true" ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
-        $('#importieren_bs_ds_beschreiben_collapse textarea, #importieren_bs_ds_beschreiben_collapse input').each(function () {
+        $('#importierenBsDsBeschreibenCollapse textarea, #importierenBsDsBeschreibenCollapse input').each(function () {
             $(this).val('');
         });
         $BsAnzDs.html("");
-        $BsAnzDs_label.html("");
+        $BsAnzDsLabel.html("");
         if (bsName) {
             _.each(window.adb.bsVonObjekten.rows, function (bsRow) {
                 if (bsRow.key[1] === bsName) {
@@ -41,21 +42,21 @@ module.exports = function () {
                         }
                     });
                     if (bsRow.key[2] === true) {
-                        $("#BsZusammenfassend").prop('checked', true);
-                        $("#BsUrsprungsBs_div").show();
+                        $("#bsZusammenfassend").prop('checked', true);
+                        $("#bsUrsprungsBsDiv").show();
                     } else {
                         // sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere BS gewählt wird
-                        $("#BsZusammenfassend").prop('checked', false);
-                        $("#BsUrsprungsBs_div").hide();
+                        $("#bsZusammenfassend").prop('checked', false);
+                        $("#bsUrsprungsBsDiv").hide();
                     }
                     // wenn die ds/bs kein "importiert von" hat ist der Wert null
                     // verhindern, dass null angezeigt wird
                     if (bsRow.key[3]) {
-                        $("#BsImportiertVon").val(bsRow.key[3]);
+                        $("#bsImportiertVon").val(bsRow.key[3]);
                     } else {
-                        $("#BsImportiertVon").val("");
+                        $("#bsImportiertVon").val("");
                     }
-                    $BsAnzDs_label.html("Anzahl Arten/Lebensräume");
+                    $BsAnzDsLabel.html("Anzahl Arten/Lebensräume");
                     $BsAnzDs.html(bsRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importierenBs').find('textarea').each(function () {
@@ -72,16 +73,16 @@ module.exports = function () {
         }
     } else {
         // melden, dass diese BS nicht bearbeitet werden kann
-        $("#importieren_bs_ds_beschreiben_hinweis2_text")
+        $("#importierenBsDsBeschreibenHinweis2Text")
             .html("Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Beziehungssammlungen.");
-        $importieren_bs_ds_beschreiben_hinweis2
+        $importierenBsDsBeschreibenHinweis2
             .alert()
             .removeClass("alert-success")
             .removeClass("alert-info")
             .addClass("alert-danger")
             .show();
         $('html, body').animate({
-            scrollTop: $("#BsWaehlen").offset().top
+            scrollTop: $("#bsWaehlen").offset().top
         }, 2000);
     }
 };

@@ -4,7 +4,7 @@
 var Autolinker = require('autolinker');
 
 module.exports = function (esOderBs) {
-    var html = '<div class="Datensammlung BeschreibungDatensammlung">';
+    var html = '<div class="Datensammlung beschreibungDatensammlung">';
     if (esOderBs.Beschreibung) {
         html += esOderBs.Beschreibung;
     }

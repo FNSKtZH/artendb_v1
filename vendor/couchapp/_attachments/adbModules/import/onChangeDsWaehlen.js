@@ -1,8 +1,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                    = require('underscore'),
+    $                    = require('jquery'),
+    fitTextareaToContent = require('../fitTextareaToContent');
 
 module.exports = function () {
     var dsName         = this.value,
@@ -10,11 +11,10 @@ module.exports = function () {
         $DsAnzDs       = $("#DsAnzDs"),
         $DsAnzDsLabel  = $("#DsAnzDsLabel"),
         $DsName        = $("#DsName"),
-        $importieren_ds_ds_beschreiben_error = $("#importieren_ds_ds_beschreiben_error"),
-        fitTextareaToContent                 = require('../fitTextareaToContent');
+        $importierenDsDsBeschreibenError = $("#importierenDsDsBeschreibenError");
 
     // allfälligen Alert schliessen
-    $importieren_ds_ds_beschreiben_error
+    $importierenDsDsBeschreibenError
         .alert()
         .hide();
     // waehlbar setzen
@@ -22,7 +22,7 @@ module.exports = function () {
     waehlbar = $("#" + this.id + " option:selected").attr("waehlbar") === "true" ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
-        $('#importieren_ds_ds_beschreiben_collapse textarea, #importieren_ds_ds_beschreiben_collapse input').each(function () {
+        $('#importierenDsDsBeschreibenCollapse textarea, #importierenDsDsBeschreibenCollapse input').each(function () {
             $(this).val('');
         });
         $DsAnzDs.html("");
@@ -76,11 +76,11 @@ module.exports = function () {
         // melden, dass diese BS nicht bearbeitet werden kann
         $("#importieren_ds_ds_beschreiben_error_text")
             .html("Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.");
-        $importieren_ds_ds_beschreiben_error
+        $importierenDsDsBeschreibenError
             .alert()
             .show();
         $('html, body').animate({
-            scrollTop: $("#DsWaehlen").offset().top
+            scrollTop: $("#dsWaehlen").offset().top
         }, 2000);
     }
 };

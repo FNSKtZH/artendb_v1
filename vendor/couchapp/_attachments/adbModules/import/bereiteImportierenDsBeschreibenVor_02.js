@@ -40,12 +40,12 @@ module.exports = function () {
         // veränderbar sind nur selbst importierte und zusammenfassende
         if (dsNameEindeutig[2] === localStorage.Email || dsNameEindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
-            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_gruen_fett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adbGruenFett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
         } else {
             // nicht veränderbare sind grau
-            html += "<option value='" + dsNameEindeutig[0] + "' class='adb_grau_normal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
+            html += "<option value='" + dsNameEindeutig[0] + "' class='adbGrauNormal' waehlbar=false>" + dsNameEindeutig[0] + "</option>";
         }
     });
-    $("#DsWaehlen").html(html);
+    $("#dsWaehlen").html(html);
     $("#DsUrsprungsDs").html(html);
 };

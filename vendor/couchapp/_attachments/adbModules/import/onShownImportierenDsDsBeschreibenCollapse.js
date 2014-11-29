@@ -1,4 +1,4 @@
-// wenn importieren_ds_ds_beschreiben_collapse geöffnet wird
+// wenn importierenDsDsBeschreibenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

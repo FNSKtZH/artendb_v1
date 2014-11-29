@@ -16,7 +16,7 @@ module.exports = function () {
         zeigeFormular("importierenDs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("ds")) {
-            $("#importieren_ds_ds_beschreiben_collapse").collapse('show');
+            $("#importierenDsDsBeschreibenCollapse").collapse('show');
         }
     }
 };

@@ -1,14 +1,14 @@
-// wenn #exportieren_objekte_Taxonomien_zusammenfassen geklickt wird
+// wenn #exportierenObjekteTaxonomienZusammenfassen geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                          = require('jquery'),
+    erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
+    fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
 
 module.exports = function (that) {
-    var erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
-        fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen'),
-        gruppenGewaehlt;
+    var gruppenGewaehlt;
 
     if ($(that).hasClass("active")) {
         window.adb.fasseTaxonomienZusammen = false;

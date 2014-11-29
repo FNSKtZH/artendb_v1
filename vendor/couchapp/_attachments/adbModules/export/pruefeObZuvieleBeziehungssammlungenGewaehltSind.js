@@ -5,7 +5,7 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (that, _alt) {
-    if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
+    if ($("#export" + _alt + "BezInZeilen").prop('checked')) {
         var bezDsChecked = [];
         $("#export" + _alt)
             .find(" .exportierenFelderWaehlenFelderliste")

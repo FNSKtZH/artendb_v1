@@ -1,19 +1,19 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                   = require('underscore'),
+    $                                   = require('jquery'),
+    ergaenzeFelderObjekt                = require('./ergaenzeFelderObjekt'),
+    erstelleExportfelder                = require('./erstelleExportfelder'),
+    sortKeysOfObject                    = require('../sortKeysOfObject'),
+    holeDatensammlungenFuerExportfelder = require('./holeDatensammlungenFuerExportfelder');
 
 module.exports = function (exportFelderArrays, formular) {
     var felderObjekt = {},
         hinweisTaxonomien,
         taxonomien,
         datensammlungen,
-        beziehungssammlungen,
-        ergaenzeFelderObjekt                = require('./ergaenzeFelderObjekt'),
-        erstelleExportfelder                = require('./erstelleExportfelder'),
-        sortKeysOfObject                    = require('../sortKeysOfObject'),
-        holeDatensammlungenFuerExportfelder = require('./holeDatensammlungenFuerExportfelder');
+        beziehungssammlungen;
 
     // in exportFelderArrays ist eine Liste der Felder, die in dieser Gruppe enthalten sind
     // sie kann aber Mehrfacheinträge enthalten, die sich in der Gruppe unterscheiden
@@ -41,8 +41,8 @@ module.exports = function (exportFelderArrays, formular) {
     }
 
     // Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
-    taxonomien = [];
-    datensammlungen = [];
+    taxonomien           = [];
+    datensammlungen      = [];
     beziehungssammlungen = [];
 
     _.each(felderObjekt, function (ds) {
@@ -64,13 +64,13 @@ module.exports = function (exportFelderArrays, formular) {
 
     if (!formular || formular === 'export') {
         // kontrollieren, ob Taxonomien zusammengefasst werden
-        if ($("#exportieren_objekte_Taxonomien_zusammenfassen").hasClass("active")) {
+        if ($("#exportierenObjekteTaxonomienZusammenfassen").hasClass("active")) {
             hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
         } else {
             hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
         }
         // Ergebnis rückmelden
-        $("#exportieren_objekte_waehlen_gruppen_hinweis_text")
+        $("#exportierenObjekteWaehlenGruppenHinweisText")
             .alert()
             .removeClass("alert-info")
             .removeClass("alert-danger")
