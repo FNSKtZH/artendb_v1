@@ -1,4 +1,4 @@
-// wird aufgerufen durch eine der zwei Schaltflächen: "Vorschau anzeigen", "direkt exportieren"
+// wird aufgerufen durch eine der zwei Schaltflächen: 'Vorschau anzeigen', 'direkt exportieren'
 // direkt: list-funktion aufrufen, welche die Daten direkt herunterlädt
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
@@ -20,21 +20,21 @@ module.exports = function (direkt, fuerAlt) {
         filterkriterienObjekt     = {},
         filterObjekt,
         gruppenArray              = [],
-        gruppen                   = "",
+        gruppen                   = '',
         gewaehlteFelder           = [],
         anzGewaehlteFelderAusDsbs = 0,
         gewaehlteFelderObjekt     = {},
         anzDsGewaehlt             = 0,
         htmlFilterkriterien,
         formular                  = 'export',
-        alt                      = '',
+        alt                       = '',
         $exportierenExportierenHinweisText;
 
     if (fuerAlt) {
         formular = 'exportAlt';
-        alt     = 'Alt';
+        alt      = 'Alt';
     }
-    $exportierenExportierenHinweisText = $("#exportieren" + alt + "ExportierenHinweisText");
+    $exportierenExportierenHinweisText = $('#exportieren' + alt + 'ExportierenHinweisText');
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {
@@ -56,36 +56,36 @@ module.exports = function (direkt, fuerAlt) {
 
     // gewählte Gruppen ermitteln
     if (!fuerAlt) {
-        $(".exportierenDsObjekteWaehlenGruppe").each(function () {
+        $('.exportierenDsObjekteWaehlenGruppe').each(function () {
             if ($(this).prop('checked')) {
                 gruppenArray.push($(this).attr('view'));
                 if (gruppen) {
-                    gruppen += ",";
+                    gruppen += ',';
                 }
                 gruppen += $(this).val();
             }
         });
     } else {
         gruppenArray = ['fauna', 'flora'];
-        gruppen = 'Fauna, Flora';
+        gruppen      = 'Fauna, Flora';
     }
 
     if (!fuerAlt) {
         // durch alle Filterfelder loopen
         // aber nur, wenn nicht für ALT exportiert wird
         // wenn ein Feld einen Wert enthält, danach filtern
-        $("#exportierenObjekteWaehlenDsCollapse").find(".exportFeldFiltern").each(function () {
+        $('#exportierenObjekteWaehlenDsCollapse').find('.exportFeldFiltern').each(function () {
             var that  = this,
                 $this = $(this);
 
-            if (that.type === "checkbox") {
+            if (that.type === 'checkbox') {
                 if (!$this.prop('readonly')) {
                     filterObjekt            = {};
                     filterObjekt.DsTyp      = $this.attr('dstyp');
                     filterObjekt.DsName     = $this.attr('eigenschaft');
                     filterObjekt.Feldname   = $this.attr('feld');
-                    filterObjekt.Filterwert = $this.prop("checked");
-                    filterObjekt.Vergleichsoperator = "=";
+                    filterObjekt.Filterwert = $this.prop('checked');
+                    filterObjekt.Vergleichsoperator = '=';
                     filterkriterien.push(filterObjekt);
                 }
                 // übrige checkboxen ignorieren
@@ -107,21 +107,21 @@ module.exports = function (direkt, fuerAlt) {
     filterkriterienObjekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
-    $("#" + formular).find(".exportierenFelderWaehlenObjektFeld.feldWaehlen").each(function () {
+    $('#' + formular).find('.exportierenFelderWaehlenObjektFeld.feldWaehlen').each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
-            feldObjekt.DsName   = "Objekt";
+            feldObjekt.DsName   = 'Objekt';
             feldObjekt.Feldname = $(this).attr('feldname');
             gewaehlteFelder.push(feldObjekt);
         }
     });
-    $("#" + formular).find(".exportierenFelderWaehlenFelderliste").find(".feldWaehlen").each(function () {
+    $('#' + formular).find('.exportierenFelderWaehlenFelderliste').find('.feldWaehlen').each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
             feldObjekt.DsTyp    = $(this).attr('dstyp');
-            if (feldObjekt.DsTyp !== "Taxonomie") {
+            if (feldObjekt.DsTyp !== 'Taxonomie') {
                 anzDsGewaehlt++;
             }
             feldObjekt.DsName   = $(this).attr('datensammlung');
@@ -140,53 +140,53 @@ module.exports = function (direkt, fuerAlt) {
         $exportierenExportierenHinweisText
             .alert()
             .hide();
-        $("#exportieren" + alt + "ExportierenErrorTextText")
-            .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
-        $("#exportieren" + alt + "ExportierenErrorText")
+        $('#exportieren' + alt + 'ExportierenErrorTextText')
+            .html('Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen');
+        $('#exportieren' + alt + 'ExportierenErrorText')
             .alert()
             .show();
         return;
     }
 
     // html für filterkriterien aufbauen
-    htmlFilterkriterien = "Gewählte Filterkriterien:<ul>";
+    htmlFilterkriterien = 'Gewählte Filterkriterien:<ul>';
     if (fuerAlt) {
-        htmlFilterkriterien = "Gewählte Option:<ul>";
+        htmlFilterkriterien  = 'Gewählte Option:<ul>';
     }
-    if ($("#exportierenSynonymInfos").prop('checked')) {
-        htmlFilterkriterien += "<li>inklusive Informationen von Synonymen</li>";
+    if ($('#exportierenSynonymInfos').prop('checked')) {
+        htmlFilterkriterien += '<li>inklusive Informationen von Synonymen</li>';
     } else {
-        htmlFilterkriterien += "<li>Informationen von Synonymen ignorieren</li>";
+        htmlFilterkriterien += '<li>Informationen von Synonymen ignorieren</li>';
     }
     if (filterkriterien.length > 0) {
         _.each(filterkriterien, function (filterkriterium) {
-            htmlFilterkriterien += "<li>";
-            htmlFilterkriterien += "Feld \"" + filterkriterium.Feldname + "\" ";
-            if (filterkriterium.Vergleichsoperator !== "kein") {
-                htmlFilterkriterien += filterkriterium.Vergleichsoperator + " \"";
+            htmlFilterkriterien += '<li>';
+            htmlFilterkriterien += 'Feld "' + filterkriterium.Feldname + '" ';
+            if (filterkriterium.Vergleichsoperator !== 'kein') {
+                htmlFilterkriterien += filterkriterium.Vergleichsoperator + ' "';
             } else {
-                htmlFilterkriterien += "enthält \"";
+                htmlFilterkriterien += 'enthält "';
             }
             htmlFilterkriterien += filterkriterium.Filterwert;
-            htmlFilterkriterien += "\"</li>";
+            htmlFilterkriterien += '"</li>';
         });
-        htmlFilterkriterien += "</ul>";
+        htmlFilterkriterien += '</ul>';
     } else if (anzGewaehlteFelderAusDsbs > 0 && !fuerAlt) {
         // wenn Filterkriterien erfasst wurde, werden sowieso nur Datensätze angezeigt, in denen Daten vorkommen
         // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
         // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden
-        if ($("#exportierenNurObjekteMitEigenschaften").prop('checked')) {
-            htmlFilterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</li>";
+        if ($('#exportierenNurObjekteMitEigenschaften').prop('checked')) {
+            htmlFilterkriterien += '<li>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</li>';
         } else {
-            htmlFilterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";
+            htmlFilterkriterien += '<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>';
         }
     }
-    $("#exportieren" + alt + "ExportierenFilterkriterien")
+    $('#exportieren' + alt + 'ExportierenFilterkriterien')
         .html(htmlFilterkriterien)
         .show();
 
     // jetzt das filterObjekt übergeben
-    if (direkt === "direkt") {
+    if (direkt === 'direkt') {
         uebergebeFilterFuerDirektExport(gruppen, gruppenArray, anzDsGewaehlt, filterkriterienObjekt, gewaehlteFelderObjekt);
     } else if (fuerAlt) {
         uebergebeFilterFuerExportFuerAlt(gewaehlteFelderObjekt);

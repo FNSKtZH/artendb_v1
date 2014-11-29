@@ -4,22 +4,22 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $                     = require('jquery');
+var $ = require('jquery');
 
 module.exports = function (event, alt) {
     var $exportierenExportierenCollapse;
 
     alt = alt || '';
-    $exportierenExportierenCollapse = $("#exportieren" + alt + "ExportierenCollapse");
+    $exportierenExportierenCollapse = $('#exportieren' + alt + 'ExportierenCollapse');
 
 
     // Export ausblenden, falls sie eingeblendet war
     if ($exportierenExportierenCollapse.is(':visible')) {
         $exportierenExportierenCollapse.collapse('hide');
     }
-    $("#exportieren" + alt + "ExportierenTabelle").hide();
-    $(".exportieren" + alt + "ExportierenExportieren").hide();
-    $("#exportieren" + alt + "ExportierenErrorText")
+    $('#exportieren' + alt + 'ExportierenTabelle').hide();
+    $('.exportieren' + alt + 'ExportierenExportieren').hide();
+    $('#exportieren' + alt + 'ExportierenErrorText')
         .alert()
         .hide();
     $('#exportierenAltExportierenUrl').val('');

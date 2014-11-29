@@ -8,7 +8,7 @@ var $ = require('jquery');
 
 module.exports = function () {
     var exfeGeholt = $.Deferred(),
-        $db = $.couch.db('artendb');
+        $db        = $.couch.db('artendb');
 
     if (window.adb.dsBsVonObjekten) {
         exfeGeholt.resolve();

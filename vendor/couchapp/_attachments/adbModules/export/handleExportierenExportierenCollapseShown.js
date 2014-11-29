@@ -16,22 +16,22 @@ module.exports = function (that) {
 
     // nur ausführen, wenn exportierenExportierenCollapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
-    if ($("#exportierenExportierenCollapse").is(":visible")) {
+    if ($('#exportierenExportierenCollapse').is(':visible')) {
         if (handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
 
             // Tabelle und Herunterladen-Schaltfläche ausblenden
-            $(".exportierenExportierenTabelle").hide();
-            $(".exportierenBtn").hide();
+            $('.exportierenExportierenTabelle').hide();
+            $('.exportierenBtn').hide();
 
             // filtert und baut danach die Vorschautabelle auf
             filtereFuerExport(null, fuerAlt);
         }
     }
-    if ($("#exportieren_altExportierenCollapse").is(":visible")) {
+    if ($('#exportieren_altExportierenCollapse').is(':visible')) {
         // Tabelle und Herunterladen-Schaltfläche ausblenden
-        $(".exportierenExportierenTabelle").hide();
-        $(".exportierenBtn").hide();
+        $('.exportierenExportierenTabelle').hide();
+        $('.exportierenBtn').hide();
         // filtert und baut danach die Vorschautabelle auf
         filtereFuerExport(null, fuerAlt);
     }

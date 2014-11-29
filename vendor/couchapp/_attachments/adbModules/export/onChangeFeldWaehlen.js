@@ -14,9 +14,9 @@ var $                                               = require('jquery'),
     exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
 module.exports = function () {
-    var that = this,
+    var that     = this,
         formular = $(that).closest('form').attr('id'),
-        alt = '';
+        alt      = '';
 
     if (formular === 'exportAlt') {
         alt = 'Alt';

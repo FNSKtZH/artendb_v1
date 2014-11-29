@@ -8,7 +8,7 @@ var _                        = require('underscore'),
 // braucht $ wegen .alert
 module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterienObjekt, gewaehlteFelderObjekt) {
     // Alle Felder abfragen
-    var fTz                 = "false",
+    var fTz                 = 'false',
         anzGruppenAbgefragt = 0,
         listName,
         queryParam,
@@ -17,27 +17,27 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
-        fTz = "true";
+        fTz = 'true';
     }
     // globale Variable vorbereiten
     window.adb.exportierenObjekte = [];
     // in anzGruppenAbgefragt wird gezählt, wieviele Gruppen schon abgefragt wurden
     // jede Abfrage kontrolliert nach Erhalt der Daten, ob schon alle Gruppen abgefragt wurden und macht weiter, wenn ja
     _.each(gruppenArray, function (gruppe) {
-        if ($("#exportierenSynonymInfos").prop('checked')) {
-            listName = "artendb/exportMitSynonymen";
-            queryParam = gruppe + "_mit_synonymen?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+        if ($('#exportierenSynonymInfos').prop('checked')) {
+            listName   = 'artendb/exportMitSynonymen';
+            queryParam = gruppe + '_mit_synonymen?include_docs=true&filter=' + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + '&felder=' + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + '&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
         } else {
-            listName = "artendb/export";
-            queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
+            listName   = 'artendb/export';
+            queryParam = gruppe + '?include_docs=true&filter=' + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + '&felder=' + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + '&fasseTaxonomienZusammen=' + fTz + '&gruppen=' + gruppen;
         }
         // prüfen, ob mindestens ein Feld aus ds gewählt ist
         // wenn ja: true, sonst false
-        queryParam += ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0 ? "&nurObjekteMitEigenschaften=true" : "&nurObjekteMitEigenschaften=false");
-        queryParam += ($("#exportBezInZeilen").prop('checked') ? "&bezInZeilen=true" : "&bezInZeilen=false");
+        queryParam += ($('#exportierenNurObjekteMitEigenschaften').prop('checked') && anzDsGewaehlt > 0 ? '&nurObjekteMitEigenschaften=true' : '&nurObjekteMitEigenschaften=false');
+        queryParam += ($('#exportBezInZeilen').prop('checked') ? '&bezInZeilen=true' : '&bezInZeilen=false');
 
         // format ergänzen
-        queryParam += "&format=" + format;
+        queryParam += '&format=' + format;
 
         $db.list(listName, queryParam, {
             success: function (data) {
@@ -48,10 +48,10 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
                 if (anzGruppenAbgefragt === gruppenArray.length) {
                     // alle Gruppen wurden abgefragt, jetzt kann es weitergehen
                     // Ergebnis rückmelden
-                    $("#exportierenExportierenHinweisText")
+                    $('#exportierenExportierenHinweisText')
                         .alert()
                         .show()
-                        .html(window.adb.exportierenObjekte.length + " Objekte sind gewählt");
+                        .html(window.adb.exportierenObjekte.length + ' Objekte sind gewählt');
                     baueTabelleFuerExportAuf();
                 }
             },

@@ -5,14 +5,15 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function (that, alt) {
-    if ($("#export" + alt + "BezInZeilen").prop('checked')) {
+    if ($('#export' + alt + 'BezInZeilen').prop('checked')) {
         var bezDsChecked = [];
-        $("#export" + alt)
-            .find(" .exportierenFelderWaehlenFelderliste")
-            .find(".feldWaehlen")
+
+        $('#export' + alt)
+            .find(' .exportierenFelderWaehlenFelderliste')
+            .find('.feldWaehlen')
             .each(function () {
                 if ($(this).prop('checked')) {
-                    if ($(this).attr('dstyp') === "Beziehung") {
+                    if ($(this).attr('dstyp') === 'Beziehung') {
                         bezDsChecked.push($(this).attr('datensammlung'));
                     }
                 }

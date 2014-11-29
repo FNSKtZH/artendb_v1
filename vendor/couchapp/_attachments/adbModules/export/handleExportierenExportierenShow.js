@@ -8,10 +8,10 @@ var $ = require('jquery');
 
 module.exports = function () {
     // Fehlermeldung verstecken, falls sie noch offen war
-    $("#exportierenExportierenErrorText")
+    $('#exportierenExportierenErrorText')
         .alert()
         .hide();
     $('html, body').animate({
-        scrollTop: $("#exportierenExportierenTabelleAufbauen").offset().top
+        scrollTop: $('#exportierenExportierenTabelleAufbauen').offset().top
     }, 2000);
 };

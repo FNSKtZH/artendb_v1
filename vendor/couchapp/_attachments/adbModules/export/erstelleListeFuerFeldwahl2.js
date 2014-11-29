@@ -32,12 +32,12 @@ module.exports = function (exportFelderArrays, formular) {
         return object.key;
     });
 
-    // Im Objekt "FelderObjekt" werden die Felder aller gewählten Gruppen gesammelt
+    // Im Objekt 'FelderObjekt' werden die Felder aller gewählten Gruppen gesammelt
     felderObjekt = ergaenzeFelderObjekt(felderObjekt, exportFelderArrays);
 
-    // bei allfälligen "Taxonomie(n)" Feldnamen sortieren
-    if (felderObjekt["Taxonomie(n)"] && felderObjekt["Taxonomie(n)"].Eigenschaften) {
-        felderObjekt["Taxonomie(n)"].Eigenschaften = sortKeysOfObject(felderObjekt["Taxonomie(n)"].Eigenschaften);
+    // bei allfälligen 'Taxonomie(n)' Feldnamen sortieren
+    if (felderObjekt['Taxonomie(n)'] && felderObjekt['Taxonomie(n)'].Eigenschaften) {
+        felderObjekt['Taxonomie(n)'].Eigenschaften = sortKeysOfObject(felderObjekt['Taxonomie(n)'].Eigenschaften);
     }
 
     // Taxonomien und Datensammlungen aus dem FelderObjekt extrahieren
@@ -46,13 +46,13 @@ module.exports = function (exportFelderArrays, formular) {
     beziehungssammlungen = [];
 
     _.each(felderObjekt, function (ds) {
-        if (typeof ds === "object" && ds.Typ) {
+        if (typeof ds === 'object' && ds.Typ) {
             // das ist Datensammlung oder Taxonomie
-            if (ds.Typ === "Datensammlung") {
+            if (ds.Typ === 'Datensammlung') {
                 datensammlungen.push(ds);
-            } else if (ds.Typ === "Taxonomie") {
+            } else if (ds.Typ === 'Taxonomie') {
                 taxonomien.push(ds);
-            } else if (ds.Typ === "Beziehung") {
+            } else if (ds.Typ === 'Beziehung') {
                 beziehungssammlungen.push(ds);
             }
         }
@@ -64,17 +64,17 @@ module.exports = function (exportFelderArrays, formular) {
 
     if (!formular || formular === 'export') {
         // kontrollieren, ob Taxonomien zusammengefasst werden
-        if ($("#exportierenObjekteTaxonomienZusammenfassen").hasClass("active")) {
-            hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst";
+        if ($('#exportierenObjekteTaxonomienZusammenfassen').hasClass('active')) {
+            hinweisTaxonomien = 'Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst';
         } else {
-            hinweisTaxonomien = "Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt";
+            hinweisTaxonomien = 'Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt';
         }
         // Ergebnis rückmelden
-        $("#exportierenObjekteWaehlenGruppenHinweisText")
+        $('#exportierenObjekteWaehlenGruppenHinweisText')
             .alert()
-            .removeClass("alert-info")
-            .removeClass("alert-danger")
-            .addClass("alert-success")
+            .removeClass('alert-info')
+            .removeClass('alert-danger')
+            .addClass('alert-success')
             .show()
             .html(hinweisTaxonomien);
     }

@@ -4,5 +4,5 @@
 'use strict';
 
 module.exports = function () {
-    window.open("_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true");
+    window.open('_list/export_alt_mit_synonymen_standardfelder/all_docs_mit_synonymen_fuer_alt?include_docs=true');
 };

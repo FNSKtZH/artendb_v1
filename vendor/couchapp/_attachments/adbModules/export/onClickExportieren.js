@@ -3,9 +3,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-module.exports = function () {
-    var zeigeFormular = require('../zeigeFormular');
+var zeigeFormular = require('../zeigeFormular');
 
-    zeigeFormular("export");
+module.exports = function () {
+    zeigeFormular('export');
     delete window.adb.exportierenObjekte;
 };

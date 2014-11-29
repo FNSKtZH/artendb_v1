@@ -10,12 +10,12 @@ var $                          = require('jquery'),
 module.exports = function (that) {
     var gruppenGewaehlt;
 
-    if ($(that).hasClass("active")) {
+    if ($(that).hasClass('active')) {
         window.adb.fasseTaxonomienZusammen = false;
-        $(that).html("Alle Taxonomien zusammenfassen");
+        $(that).html('Alle Taxonomien zusammenfassen');
     } else {
         window.adb.fasseTaxonomienZusammen = true;
-        $(that).html("Taxonomien einzeln behandeln");
+        $(that).html('Taxonomien einzeln behandeln');
     }
     // Felder neu aufbauen, aber nur, wenn eine Gruppe gewählt ist
     gruppenGewaehlt = fuerExportGewaehlteGruppen();

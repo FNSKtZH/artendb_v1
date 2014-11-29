@@ -14,7 +14,7 @@ module.exports = function (that) {
         bezDsFiltered = [];
 
     // die Checkboxen sollen drei Werte annehmen können:
-    if (that.type === "checkbox") {
+    if (that.type === 'checkbox') {
         if (that.readOnly) {
             // so ist es zu Beginn
             // dann soll er auf chedked wechseln
@@ -29,10 +29,10 @@ module.exports = function (that) {
         }
     }
 
-    $("#exportierenObjekteWaehlenDsCollapse")
-        .find(".exportFeldFiltern")
+    $('#exportierenObjekteWaehlenDsCollapse')
+        .find('.exportFeldFiltern')
         .each(function () {
-            if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
+            if ((this.value || this.value === 0) && $(this).attr('dstyp') === 'Beziehung') {
                 bezDsFiltered.push($(this).attr('eigenschaft'));
             }
         });
@@ -40,7 +40,7 @@ module.exports = function (that) {
     bezDsFiltered = _.union(bezDsFiltered);
     if (bezDsFiltered && bezDsFiltered.length > 1) {
         $('#meldungZuvieleBs').modal();
-        $(that).val("");
+        $(that).val('');
     } else {
         exportZuruecksetzen();
     }

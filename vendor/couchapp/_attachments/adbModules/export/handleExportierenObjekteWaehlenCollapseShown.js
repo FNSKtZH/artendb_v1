@@ -1,14 +1,12 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                          = require('jquery'),
+    erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
+    fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
 
 module.exports = function (that) {
-    var gruppenGewaehlt,
-        erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
-        fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
-
-    gruppenGewaehlt = fuerExportGewaehlteGruppen();
+    var gruppenGewaehlt = fuerExportGewaehlteGruppen();
 
     if (gruppenGewaehlt.length === 0) {
         // keine Gruppe gewählt

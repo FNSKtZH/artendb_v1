@@ -12,7 +12,7 @@ var $                                               = require('jquery'),
 module.exports = function (that) {
     var ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
-        alt     = '',
+        alt      = '',
         status   = $(that).prop('checked');
 
     if (formular === 'exportAlt') {

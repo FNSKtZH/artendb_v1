@@ -7,44 +7,25 @@
 
 module.exports = function (filterwert) {
     var vergleichsoperator;
-    if (filterwert.indexOf(">=") === 0) {
-        vergleichsoperator = ">=";
-        if (filterwert.indexOf(" ") === 2) {
-            filterwert = filterwert.slice(3);
-        } else {
-            filterwert = filterwert.slice(2);
-        }
-    } else if (filterwert.indexOf("<=") === 0) {
-        vergleichsoperator = "<=";
-        if (filterwert.indexOf(" ") === 2) {
-            filterwert = filterwert.slice(3);
-        } else {
-            filterwert = filterwert.slice(2);
-        }
-    } else if (filterwert.indexOf(">") === 0) {
-        vergleichsoperator = ">";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
-    } else if (filterwert.indexOf("<") === 0) {
-        vergleichsoperator = "<";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
-    } else if (filterwert.indexOf("=") === 0) {
-        // abfangen, falls jemand "=" eingibt
-        vergleichsoperator = "=";
-        if (filterwert.indexOf(" ") === 1) {
-            filterwert = filterwert.slice(2);
-        } else {
-            filterwert = filterwert.slice(1);
-        }
+
+    if (filterwert.indexOf('>=') === 0) {
+        vergleichsoperator = '>=';
+        filterwert = (filterwert.indexOf(' ') === 2 ? filterwert.slice(3) : filterwert.slice(2));
+    } else if (filterwert.indexOf('<=') === 0) {
+        vergleichsoperator = '<=';
+        filterwert = (filterwert.indexOf(' ') === 2 ? filterwert.slice(3) : filterwert.slice(2));
+    } else if (filterwert.indexOf('>') === 0) {
+        vergleichsoperator = '>';
+        filterwert = (filterwert.indexOf(' ') === 1 ? filterwert.slice(2) : filterwert.slice(1));
+    } else if (filterwert.indexOf('<') === 0) {
+        vergleichsoperator = '<';
+        filterwert = (filterwert.indexOf(' ') === 1 ? filterwert.slice(2) : filterwert.slice(1));
+    } else if (filterwert.indexOf('=') === 0) {
+        // abfangen, falls jemand '=' eingibt
+        vergleichsoperator = '=';
+        filterwert = (filterwert.indexOf(' ') === 1 ? filterwert.slice(2) : filterwert.slice(1));
     } else {
-        vergleichsoperator = "kein";
+        vergleichsoperator = 'kein';
     }
     return [vergleichsoperator, filterwert];
 };

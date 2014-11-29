@@ -6,9 +6,9 @@ var $ = require('jquery');
 module.exports = function (that, alt) {
     var count = 0;
 
-    $("#export" + alt)
-        .find(".exportierenFelderWaehlenFelderliste")
-        .find(".feldWaehlen")
+    $('#export' + alt)
+        .find('.exportierenFelderWaehlenFelderliste')
+        .find('.feldWaehlen')
         .each(function () {
             if ($(this).prop('checked')) {
                 // gewähltes Feld > zählen

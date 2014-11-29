@@ -1,4 +1,4 @@
-// baut im Formular "export" die Liste aller Eigenschaften auf
+// baut im Formular 'export' die Liste aller Eigenschaften auf
 // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 // bekommt die Namen der Gruppen
 // formular ist im Standard export, wenn anders (z.B. exportAlt), übergeben
@@ -12,15 +12,15 @@ var _                          = require('underscore'),
 
 module.exports = function (exportGruppen, formular) {
 
-    var gruppen = [],
+    var gruppen                                        = [],
         exportFelderArrays,
-        $db = $.couch.db('artendb'),
-        $exportierenObjekteWaehlenGruppenHinweisText   = $("#exportierenObjekteWaehlenGruppenHinweisText"),
-        $exportierenNurObjekteMitEigenschaftenCheckbox = $("#exportierenNurObjekteMitEigenschaftenCheckbox"),
-        $exportierenNurObjekteMitEigenschaften         = $("#exportierenNurObjekteMitEigenschaften"),
-        $exportierenExportierenCollapse                = $("#exportierenExportierenCollapse"),
-        $exportierenFelderWaehlenCollapse              = $("#exportierenFelderWaehlenCollapse"),
-        $exportierenObjekteWaehlenDsCollapse           = $("#exportierenObjekteWaehlenDsCollapse");
+        $db                                            = $.couch.db('artendb'),
+        $exportierenObjekteWaehlenGruppenHinweisText   = $('#exportierenObjekteWaehlenGruppenHinweisText'),
+        $exportierenNurObjekteMitEigenschaftenCheckbox = $('#exportierenNurObjekteMitEigenschaftenCheckbox'),
+        $exportierenNurObjekteMitEigenschaften         = $('#exportierenNurObjekteMitEigenschaften'),
+        $exportierenExportierenCollapse                = $('#exportierenExportierenCollapse'),
+        $exportierenFelderWaehlenCollapse              = $('#exportierenFelderWaehlenCollapse'),
+        $exportierenObjekteWaehlenDsCollapse           = $('#exportierenObjekteWaehlenDsCollapse');
 
     // falls noch offen: folgende Bereiche schliessen
     if ($exportierenExportierenCollapse.is(':visible')) {
@@ -37,11 +37,11 @@ module.exports = function (exportGruppen, formular) {
         // Beschäftigung melden
         $exportierenObjekteWaehlenGruppenHinweisText
             .alert()
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info')
             .show()
-            .html("Eigenschaften werden ermittelt...");
+            .html('Eigenschaften werden ermittelt...');
         // scrollen, damit Hinweis sicher ganz sichtbar ist
         $('html, body').animate({
             scrollTop: $exportierenObjekteWaehlenGruppenHinweisText.offset().top
@@ -63,11 +63,11 @@ module.exports = function (exportGruppen, formular) {
         // Option exportierenNurObjekteMitEigenschaften ausblenden
         // und false setzen
         // sonst kommen nur die DS einer Gruppe
-        $exportierenNurObjekteMitEigenschaftenCheckbox.addClass("adb-hidden");
+        $exportierenNurObjekteMitEigenschaftenCheckbox.addClass('adb-hidden');
         $exportierenNurObjekteMitEigenschaften.prop('checked', false);
     } else {
-        if ($exportierenNurObjekteMitEigenschaftenCheckbox.hasClass("adb-hidden")) {
-            $exportierenNurObjekteMitEigenschaftenCheckbox.removeClass("adb-hidden")
+        if ($exportierenNurObjekteMitEigenschaftenCheckbox.hasClass('adb-hidden')) {
+            $exportierenNurObjekteMitEigenschaftenCheckbox.removeClass('adb-hidden')
             $exportierenNurObjekteMitEigenschaften.prop('checked', true);
         }
     }*/
@@ -93,17 +93,17 @@ module.exports = function (exportGruppen, formular) {
         });
     } else {
         // letzte Rückmeldung anpassen
-        $exportierenObjekteWaehlenGruppenHinweisText.html("bitte eine Gruppe wählen")
-            .removeClass("alert-info")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+        $exportierenObjekteWaehlenGruppenHinweisText.html('bitte eine Gruppe wählen')
+            .removeClass('alert-info')
+            .removeClass('alert-success')
+            .addClass('alert-danger');
         // Felder entfernen
-        $("#export").find(".exportierenFelderWaehlenFelderliste")
-            .html("");
-        $("#exportierenObjekteWaehlenDsFelderliste")
-            .html("");
+        $('#export').find('.exportierenFelderWaehlenFelderliste')
+            .html('');
+        $('#exportierenObjekteWaehlenDsFelderliste')
+            .html('');
     }
     // Tabelle ausblenden, falls sie eingeblendet war
-    $(".exportierenExportierenTabelle")
+    $('.exportierenExportierenTabelle')
         .hide();
 };

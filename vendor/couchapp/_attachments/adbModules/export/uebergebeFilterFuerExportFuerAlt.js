@@ -15,38 +15,38 @@ module.exports = function (gewaehlteFelderObjekt) {
         $db                           = $.couch.db('artendb'),
         uri                           = new Uri($(location).attr('href'));
 
-    if ($("#exportierenAltSynonymInfos").prop('checked')) {
+    if ($('#exportierenAltSynonymInfos').prop('checked')) {
         // list
-        queryParam = "export_alt_mit_synonymen";
-        list = 'artendb/export_alt_mit_synonymen';
+        queryParam  = 'export_alt_mit_synonymen';
+        list        = 'artendb/export_alt_mit_synonymen';
         // view
-        queryParam += "/alt_arten_mit_synonymen";
-        view = 'alt_arten_mit_synonymen';
+        queryParam += '/alt_arten_mit_synonymen';
+        view        = 'alt_arten_mit_synonymen';
     } else {
         // list
-        queryParam = "exportAlt";
-        list = 'artendb/exportAlt';
+        queryParam  = 'export_alt';
+        list        = 'artendb/export_alt';
         // view
-        queryParam += "/alt_arten";
-        view = 'alt_arten';
+        queryParam += '/alt_arten';
+        view        = 'alt_arten';
     }
 
     // include docs
-    queryParam += "?include_docs=true";
-    view += '?include_docs=true';
+    queryParam += '?include_docs=true';
+    view       += '?include_docs=true';
 
     // Beziehungen in Zeilen oder in Spalte
-    if ($("#exportBezInZeilen").prop('checked')) {
-        queryParam += "&bezInZeilen=true";
-        view += "&bezInZeilen=true";
+    if ($('#exportBezInZeilen').prop('checked')) {
+        queryParam += '&bezInZeilen=true';
+        view       += '&bezInZeilen=true';
     } else {
-        queryParam += "&bezInZeilen=false";
-        view += "&bezInZeilen=false";
+        queryParam += '&bezInZeilen=false';
+        view       += '&bezInZeilen=false';
     }
 
     // Felder
-    queryParam += "&felder=" + JSON.stringify(gewaehlteFelderObjekt);
-    view += "&felder=" + JSON.stringify(gewaehlteFelderObjekt);
+    queryParam += '&felder=' + JSON.stringify(gewaehlteFelderObjekt);
+    view       += '&felder=' + JSON.stringify(gewaehlteFelderObjekt);
 
     // URL aus bestehender Verbindung zusammensetzen
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
