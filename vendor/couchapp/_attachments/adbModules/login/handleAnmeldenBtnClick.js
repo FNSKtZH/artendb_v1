@@ -1,4 +1,4 @@
-// wenn .anmelden_btn geklickt wird
+// wenn .anmeldenBtn geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

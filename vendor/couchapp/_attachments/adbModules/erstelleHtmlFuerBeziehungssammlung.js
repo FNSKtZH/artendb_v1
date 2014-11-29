@@ -23,7 +23,7 @@ var returnFunction = function (beziehungssammlung, altName) {
     // Accordion-Gruppe und -heading anfügen
     html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
     // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-    html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + bsName + '">';
+    html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panelArt" href="#collapse' + bsName + '">';
     // Titel für die Datensammlung einfügen
     html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
     // header abschliessen

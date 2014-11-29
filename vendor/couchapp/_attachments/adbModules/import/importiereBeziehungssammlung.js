@@ -21,8 +21,8 @@ module.exports = function () {
         bsImportiert                              = $.Deferred(),
         $BsName                                   = $("#bsName"),
         $BsBeschreibung                           = $("#bsBeschreibung"),
-        $BsDatenstand                             = $("#bsDatenstand"),
-        $BsLink                                   = $("#bsLink"),
+        $bsDatenstand                             = $("#bsDatenstand"),
+        $bsLink                                   = $("#bsLink"),
         $bsUrsprungsBs                            = $("#bsUrsprungsBs"),
         $importierenBsImportAusfuehrenHinweis     = $("#importierenBsImportAusfuehrenHinweis"),
         $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText");
@@ -108,11 +108,11 @@ module.exports = function () {
             if ($BsBeschreibung.val()) {
                 bsVorlage.Beschreibung = $BsBeschreibung.val();
             }
-            if ($BsDatenstand.val()) {
-                bsVorlage.Datenstand = $BsDatenstand.val();
+            if ($bsDatenstand.val()) {
+                bsVorlage.Datenstand = $bsDatenstand.val();
             }
-            if ($BsLink.val()) {
-                bsVorlage.Link = $BsLink.val();
+            if ($bsLink.val()) {
+                bsVorlage.Link = $bsLink.val();
             }
             // falls die Datensammlung zusammenfassend ist
             if ($("#bsZusammenfassend").prop('checked')) {

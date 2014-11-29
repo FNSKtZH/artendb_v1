@@ -103,97 +103,97 @@
         <fieldset id="forms">
 
             <form id="art" class="form_art form form-horizontal" action="#" method="get" autocomplete="off">
-                <div id="panel_art" class="panel-group">
-                    <div id="art_anmelden" class="panel panel-default" style="display:none;">
+                <div id="panelArt" class="panel-group">
+                    <div id="artAnmelden" class="panel panel-default" style="display:none;">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="art_anmelden_titel" class="art_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="panel_art" href="#art_anmelden_collapse">Anmelden</a>
+                                <a id="artAnmeldenTitel" class="artAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="panelArt" href="#artAnmeldenCollapse">Anmelden</a>
                             </h4>
                         </div>
-                        <div id="art_anmelden_collapse" class="panel-collapse collapse anmelden">
+                        <div id="artAnmeldenCollapse" class="panel-collapse collapse anmelden">
                             <div class="panel-body">
                                 <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
                                 <div class="form-group">
                                     <label class="control-label Email" for="emailArt">Email</label>
                                     <input type="email" id="emailArt" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisArt" class="controls Emailhinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
+                                    <div id="emailHinweisArt" class="controls emailHinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label Passwort" for="passwortArt">Passwort</label>
                                     <input type="password" id="passwortArt" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisArt" class="controls Passworthinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div id="passwortHinweisArt" class="controls passwortHinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
                                     <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
                                     <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
                                     <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Art">Passwort bestätigen</label>
-                                    <input type="password" id="passwort2Art" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisArt" class="controls Passwort2hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschArt" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
+                                    <input type="password" id="passwort2Art" class="controls form-control passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="passwort2HinweisArt" class="controls passwort2Hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2HinweisFalschArt" class="controls passwort2HinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
-                                    <button id="anmelden_btn_art" class="btn btn-primary anmelden_btn">anmelden</button>
-                                    <button id="abmelden_btn_art" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_art" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
-                                    <button id="konto_speichern_btn_art" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                    <button id="anmeldenBtnArt" class="btn btn-primary anmeldenBtn">anmelden</button>
+                                    <button id="abmeldenBtnArt" class="btn btn-primary abmeldenBtn" style="display:none;">abmelden</button>
+                                    <button id="kontoErstellenBtnArt" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
+                                    <button id="kontoSpeichernBtnArt" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="art_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
-                                <div id="art_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                                <div id="artAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="artAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
-                    <div id="art_inhalt"></div>
+                    <div id="artInhalt"></div>
                 </div>
             </form>
             
-            <form id="importierenDs" class="form_importieren_ds form form-horizontal import" action="#" method="get" autocomplete="off">
-                <div class="panel-group" id="importieren_ds_panel">
+            <form id="importierenDs" class="formImportierenDs form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div class="panel-group" id="importierenDsPanel">
                     <h4>Eigenschaften importieren:</h4>
-                    <div id="importieren_ds_anmelden" class="panel panel-default importieren_anmelden">
+                    <div id="importierenDsAnmelden" class="panel panel-default importieren_anmelden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="importieren_ds_anmelden_titel" class="importieren_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importieren_ds_anmelden_collapse">1. Anmelden</a>
+                                <a id="importierenDsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsAnmeldenCollapse">1. Anmelden</a>
                             </h4>
                         </div>
-                        <div id="importieren_ds_anmelden_collapse" class="collapse importieren_anmelden_collapse anmelden">
+                        <div id="importierenDsAnmeldenCollapse" class="collapse importierenAnmeldenCollapse anmelden">
                             <div class="panel-body">
                                 <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
                                 <div class="form-group Email">
                                     <label class="control-label Email" for="emailDs">Email</label>
                                     <input type="email" id="emailDs" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisDs" class="controls hinweis alert alert-danger Emailhinweis feldInFormgroup">Bitte Email erfassen</div>
+                                    <div id="emailHinweisDs" class="controls hinweis alert alert-danger emailHinweis feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group Passwort">
                                     <label class="control-label Passwort" for="passwortDs">Passwort</label>
                                     <input type="password" id="passwortDs" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisDs" class="controls hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div id="passwortHinweisDs" class="controls hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
                                     <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
                                     <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
                                     <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Ds">Passwort bestätigen</label>
-                                    <input type="password" id="passwort2Ds" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisDs" class="controls hinweis alert alert-danger feldInFormgroup Passwort2hinweis">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschDs" class="controls hinweis alert alert-danger feldInFormgroup Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
+                                    <input type="password" id="passwort2Ds" class="controls form-control passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="passwort2HinweisDs" class="controls hinweis alert alert-danger feldInFormgroup passwort2Hinweis">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2HinweisFalschDs" class="controls hinweis alert alert-danger feldInFormgroup passwort2HinweisFalsch">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
-                                    <button id="anmelden_btn_ds" class="btn btn-primary anmelden_btn">anmelden</button>
-                                    <button id="abmelden_btn_ds" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_ds" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
-                                    <button id="konto_speichern_btn_ds" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                    <button id="anmeldenBtnDs" class="btn btn-primary anmeldenBtn">anmelden</button>
+                                    <button id="abmeldenBtnDs" class="btn btn-primary abmeldenBtn" style="display:none;">abmelden</button>
+                                    <button id="kontoErstellenBtnDs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
+                                    <button id="kontoSpeichernBtnDs" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="importieren_ds_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
-                                <div id="importieren_ds_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                                <div id="importierenDsAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="importierenDsAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_ds_ds_beschreiben">
+                    <div class="panel panel-default" id="importierenDsDsBeschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsDsBeschreibenCollapse">2. Eigenschaftensammlung beschreiben</a>
+                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsDsBeschreibenCollapse">2. Eigenschaftensammlung beschreiben</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenDsDsBeschreibenCollapse">
@@ -228,41 +228,41 @@
                                     <select class="form-control controls" id="dsWaehlen"></select>
                                 </div>
                                 <div class="controls feld">
-                                    <button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+                                    <button type="button" class="btn btn-primary btn-default" id="dsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
                                 <div id="importierenDsDsBeschreibenHinweis" class="alert alert-info"></div>
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsName">Name</label>
-                                    <input type="text" class="form-control controls input-sm" id="DsName">
+                                    <label class="control-label" for="dsName">Name</label>
+                                    <input type="text" class="form-control controls input-sm" id="dsName">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsBeschreibung">Beschreibung</label>
-                                    <textarea class="form-control controls" id="DsBeschreibung"></textarea>
+                                    <label class="control-label" for="dsBeschreibung">Beschreibung</label>
+                                    <textarea class="form-control controls" id="dsBeschreibung"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsDatenstand">Datenstand</label>
-                                    <textarea class="form-control controls" id="DsDatenstand"></textarea>
+                                    <label class="control-label" for="dsDatenstand">Datenstand</label>
+                                    <textarea class="form-control controls" id="dsDatenstand"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsLink">Link</label>
-                                    <textarea class="form-control controls" id="DsLink"></textarea>
+                                    <label class="control-label" for="dsLink">Link</label>
+                                    <textarea class="form-control controls" id="dsLink"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsImportiertVon">importiert von</label>
-                                    <input type="text" class="form-control controls input-sm" id="DsImportiertVon">
+                                    <label class="control-label" for="dsImportiertVon">importiert von</label>
+                                    <input type="text" class="form-control controls input-sm" id="dsImportiertVon">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsZusammenfassend">zusammenfassend</label>
-                                    <input type="checkbox" id="DsZusammenfassend">
+                                    <label class="control-label" for="dsZusammenfassend">zusammenfassend</label>
+                                    <input type="checkbox" id="dsZusammenfassend">
                                 </div>
-                                <div class="form-group" id="DsUrsprungsDsDiv" style="display:none;">
+                                <div class="form-group" id="dsUrsprungsDsDiv" style="display:none;">
                                     <label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Eigenschaftensammlung</label>
                                     <select class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsAnzDs" id="DsAnzDsLabel"></label>
-                                    <div id="DsAnzDs" class="feldtext controls"></div>
+                                    <label class="control-label" for="dsAnzDs" id="DsAnzDsLabel"></label>
+                                    <div id="dsAnzDs" class="feldtext controls"></div>
                                 </div>
                                 <div id="importierenDsDsBeschreibenHinweis2" class="alert alert-info"></div>
                                 <div id="importierenDsDsBeschreibenError" class="alert alert-danger">
@@ -273,10 +273,10 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_ds_daten_uploaden">
+                    <div class="panel panel-default" id="importierenDsDatenUploaden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsDatenUploadenCollapse">3. Eigenschaften laden</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsDatenUploadenCollapse">3. Eigenschaften laden</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenDsDatenUploadenCollapse">
@@ -319,7 +319,7 @@
                     <div class="panel panel-default" id="importierenDsIdsIdentifizieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenDsIdsIdentifizierenCollapse">
@@ -340,10 +340,10 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_ds_import_ausfuehren">
+                    <div class="panel panel-default" id="importierenDsImportAusfuehren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsImportAusfuehrenCollapse">5. Import ausführen</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsImportAusfuehrenCollapse">5. Import ausführen</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenDsImportAusfuehrenCollapse">
@@ -364,53 +364,53 @@
                 </div>        
             </form>
 
-            <form id="importierenBs" class="form_importieren_bs form form-horizontal import" action="#" method="get" autocomplete="off">
-                <div id="importieren_bs_panel" class="panel-group">
+            <form id="importierenBs" class="formImportierenBs form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div id="importierenBsPanel" class="panel-group">
                     <h4>Beziehungen importieren:</h4>
-                    <div id="importieren_bs_anmelden" class="panel panel-default">
+                    <div id="importierenBsAnmelden" class="panel panel-default">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="importieren_bs_anmelden_titel" class="importieren_anmelden_titel accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importieren_bs_anmelden_collapse">1. Anmelden</a>
+                                <a id="importierenBsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsAnmeldenCollapse">1. Anmelden</a>
                             </h4>
                         </div>
-                        <div id="importieren_bs_anmelden_collapse" class="collapse anmelden">
+                        <div id="importierenBsAnmeldenCollapse" class="collapse anmelden">
                             <div class="panel-body">
                                 <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
                                 <div class="form-group">
                                     <label class="control-label Email" for="emailBs">Email</label>
                                     <input type="email" id="emailBs" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisBs" class="controls Emailhinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
+                                    <div id="emailHinweisBs" class="controls emailHinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label Passwort" for="passwortBs">Passwort</label>
                                     <input type="password" id="passwortBs" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisBs" class="controls Passworthinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div id="passwortHinweisBs" class="controls passwortHinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
                                     <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
                                     <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
                                     <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Bs">Passwort bestätigen</label>
-                                    <input type="password" id="passwort2Bs" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisBs" class="controls Passwort2hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschBs" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
+                                    <input type="password" id="passwort2Bs" class="controls form-control passwort2" placeholder="Passwort bestätigen" required>
+                                    <div id="passwort2HinweisBs" class="controls passwort2Hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2HinweisFalschBs" class="controls passwort2HinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
-                                    <button id="anmelden_btn_bs" class="btn btn-primary anmelden_btn">anmelden</button>
-                                    <button id="abmelden_btn_bs" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_bs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
-                                    <button id="konto_speichern_btn_bs" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
+                                    <button id="anmeldenBtnBs" class="btn btn-primary anmeldenBtn">anmelden</button>
+                                    <button id="abmeldenBtnBs" class="btn btn-primary abmeldenBtn" style="display:none;">abmelden</button>
+                                    <button id="kontoErstellenBtnBs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
+                                    <button id="kontoSpeichernBtnBs" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="importieren_bs_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
-                                <div id="importieren_bs_anmelden_hinweis_text" class="importieren_anmelden_hinweis_text alert alert-warning feld"></div>
+                                <div id="importierenBsAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="importierenBsAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_bs_ds_beschreiben">
+                    <div class="panel panel-default" id="importierenBsDsBeschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importierenBsDsBeschreibenCollapse">2. Beziehungssammlung beschreiben</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsDsBeschreibenCollapse">2. Beziehungssammlung beschreiben</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenBsDsBeschreibenCollapse">
@@ -444,7 +444,7 @@
                                     <select class="form-control controls" id="bsWaehlen"></select>
                                 </div>
                                 <div class="controls feld">
-                                    <button type="button" class="btn btn-primary" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
+                                    <button type="button" class="btn btn-primary" id="bsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
                                     <div id="importierenBsDsBeschreibenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                     <div id="importierenBsDsBeschreibenHinweisText"></div>
@@ -452,20 +452,20 @@
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsName">Name</label>
-                                    <input type="text" class="form-control controls input-sm" id="BsName">
+                                    <label class="control-label" for="bsName">Name</label>
+                                    <input type="text" class="form-control controls input-sm" id="bsName">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="BsBeschreibung">Beschreibung</label>
                                     <textarea class="form-control controls" id="BsBeschreibung"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsDatenstand">Datenstand</label>
-                                    <textarea class="form-control controls" id="BsDatenstand"></textarea>
+                                    <label class="control-label" for="bsDatenstand">Datenstand</label>
+                                    <textarea class="form-control controls" id="bsDatenstand"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsLink">Link</label>
-                                    <textarea class="form-control controls" id="BsLink"></textarea>
+                                    <label class="control-label" for="bsLink">Link</label>
+                                    <textarea class="form-control controls" id="bsLink"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="bsImportiertVon">importiert von</label>
@@ -480,8 +480,8 @@
                                     <select class="form-control controls bsUrsprungsBs" id="bsUrsprungsBs"></select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsAnzDs" id="BsAnzDsLabel"></label>
-                                    <div id="BsAnzDs" class="feldtext controls"></div>
+                                    <label class="control-label" for="bsAnzDs" id="BsAnzDsLabel"></label>
+                                    <div id="bsAnzDs" class="feldtext controls"></div>
                                 </div>
                                 <div id="importierenBsDsBeschreibenHinweis2" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -494,7 +494,7 @@
                     <div class="panel panel-default" id="importieren_bs_daten_uploaden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importierenBsDatenUploadenCollapse">3. Beziehungen laden</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsDatenUploadenCollapse">3. Beziehungen laden</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenBsDatenUploadenCollapse">
@@ -537,7 +537,7 @@
                     <div class="panel panel-default" id="importieren_bs_ids_identifizieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importierenBsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenBsIdsIdentifizierenCollapse">
@@ -561,7 +561,7 @@
                     <div class="panel panel-default" id="importieren_bs_import_ausfuehren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_bs_panel" href="#importierenBsImportAusfuehrenCollapse">5. Import ausführen</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsImportAusfuehrenCollapse">5. Import ausführen</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="importierenBsImportAusfuehrenCollapse">
@@ -1077,7 +1077,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3>Hierarchie</h3>
                 </div>
-                <div id="lr_parent_waehlen_optionen" class="modal-body" style="margin-bottom:5px;">
+                <div id="lrParentWaehlenOptionen" class="modal-body" style="margin-bottom:5px;">
                 </div>
             </div>
         </div>

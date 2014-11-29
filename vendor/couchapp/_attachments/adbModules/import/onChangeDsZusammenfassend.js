@@ -1,4 +1,4 @@
-// wenn DsZusammenfassend geändert wird
+// wenn dsZusammenfassend geändert wird
 // DsUrsprungsDs zeigen oder verstecken
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/

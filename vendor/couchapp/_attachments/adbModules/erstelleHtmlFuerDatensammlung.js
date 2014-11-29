@@ -4,20 +4,20 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _                                                   = require('underscore'),
+    ersetzeUngueltigeZeichenInIdNamen                   = require('./ersetzeUngueltigeZeichenInIdNamen'),
+    erstelleHtmlFuerDatensammlungBeschreibung           = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+    erstelleHtmlFuerFeld                                = require('./erstelleHtmlFuerFeld'),
+    generiereHtmlFuerTextarea                           = require('./generiereHtmlFuerTextarea'),
+    generiereHtmlFuerLinksZuGleicherGruppe              = require('./generiereHtmlFuerLinksZuGleicherGruppe'),
+    erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
+    generiereHtmlFuerLinkZuGleicherGruppe               = require('./generiereHtmlFuerLinkZuGleicherGruppe');
 
 module.exports = function (dsTyp, art, datensammlung) {
     var htmlDatensammlung,
         hierarchieString,
         arrayString,
-        dsName,
-        ersetzeUngueltigeZeichenInIdNamen                   = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        erstelleHtmlFuerDatensammlungBeschreibung           = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
-        erstelleHtmlFuerFeld                                = require('./erstelleHtmlFuerFeld'),
-        generiereHtmlFuerTextarea                           = require('./generiereHtmlFuerTextarea'),
-        generiereHtmlFuerLinksZuGleicherGruppe              = require('./generiereHtmlFuerLinksZuGleicherGruppe'),
-        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('./erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
-        generiereHtmlFuerLinkZuGleicherGruppe               = require('./generiereHtmlFuerLinkZuGleicherGruppe');
+        dsName;
 
     dsName = ersetzeUngueltigeZeichenInIdNamen(datensammlung.Name);
 
@@ -25,10 +25,10 @@ module.exports = function (dsTyp, art, datensammlung) {
     htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
     // bei LR: Symbolleiste einfügen
     if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
-        htmlDatensammlung += '<div class="btn-toolbar bearbToolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lrBearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lrBearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lrBearb lr_bearb_neu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lrBearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
+        htmlDatensammlung += '<div class="btn-toolbar bearbToolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lrBearb lr_bearb_bearb" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lrBearb lr_bearb_schuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lrBearb lrBearbNeu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lrBearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
     }
     // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
-    htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panel_art" href="#collapse' + dsName + '">';
+    htmlDatensammlung += '<h4 class="panel-title"><a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panelArt" href="#collapse' + dsName + '">';
     // Titel für die Datensammlung einfügen
     htmlDatensammlung += datensammlung.Name;
     // header abschliessen

@@ -56,7 +56,7 @@ module.exports = function (taxonomieName, callback) {
             // neueTaxonomie als erstes Objekt in den Array einfügen
             taxonomieObjekte.unshift(neueTaxonomie);
 
-            // jetzt die Optionenliste für $("#lr_parent_waehlen_optionen") aufbauen
+            // jetzt die Optionenliste für $("#lrParentWaehlenOptionen") aufbauen
             for (i = 0; i < taxonomieObjekte.length; i++) {
                 objectHtml = '';
                 if (i === 1) {

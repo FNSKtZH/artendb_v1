@@ -49,7 +49,7 @@ window.adb.handleBtnLrBearbNeuClick = function () {
     require('./adbModules/lr/handleBtnLrBearbNeuClick')(this);
 };
 
-// wenn #lr_parent_waehlen_optionen [name="parent_optionen"] geändert wird
+// wenn #lrParentWaehlenOptionen [name="parent_optionen"] geändert wird
 // wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {
     require('./adbModules/lr/handleLrParentOptionenChange')(this);
@@ -124,16 +124,16 @@ window.adb.handleAnmeldenBtnClick = function (that) {
 // wenn .Email keyup
 window.adb.handleEmailKeyup = function () {
     //allfällig noch vorhandenen Hinweis ausblenden
-    $(".Emailhinweis").hide();
+    $(".emailHinweis").hide();
 };
 
 // wenn .Passwort keyup
 window.adb.handlePasswortKeyup = function () {
     //allfällig noch vorhandenen Hinweis ausblenden
-    $(".Passworthinweis").hide();
+    $(".passwortHinweis").hide();
 };
 
-// wenn .Passwort2 keyup
+// wenn .passwort2 keyup
 window.adb.handlePasswort2Keyup = function () {
     //allfällig noch vorhandenen Hinweis ausblenden
     $(".Passworthinweis2").hide();

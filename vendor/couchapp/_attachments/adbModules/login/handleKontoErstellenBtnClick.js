@@ -13,10 +13,10 @@ module.exports = function (that) {
         bsDs = "art";
     }
     $(".signup").show();
-    $(".anmelden_btn").hide();
-    $(".abmelden_btn").hide();
+    $(".anmeldenBtn").hide();
+    $(".abmeldenBtn").hide();
     $(".kontoErstellenBtn").hide();
-    $(".konto_speichern_btn").show();
+    $(".kontoSpeichernBtn").show();
     $(".importieren_anmelden_fehler").hide();
     setTimeout(function () {
         $("#email" + capitaliseFirstLetter(bsDs)).focus();

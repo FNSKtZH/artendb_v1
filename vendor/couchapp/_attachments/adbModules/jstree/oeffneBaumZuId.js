@@ -10,7 +10,7 @@ module.exports = function (id) {
     $db.openDoc(id, {
         success: function (objekt) {
             var $filter_klasse        = $("[filter='" + objekt.Taxonomie.Eigenschaften.Klasse + "']"),
-                $art_anmelden         = $("#art_anmelden"),
+                $artAnmelden         = $("#artAnmelden"),
                 id_array              = [],
                 oeffneNodeNachIdArray = require('./oeffneNodeNachIdArray');
 
@@ -26,7 +26,7 @@ module.exports = function (id) {
                     }, true);
                 }, true);
                 // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
+                $artAnmelden.hide();
                 break;
             case "Flora":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -37,7 +37,7 @@ module.exports = function (id) {
                     }, true);
                 }, true);
                 // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
+                $artAnmelden.hide();
                 break;
             case "Moose":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -50,7 +50,7 @@ module.exports = function (id) {
                     }, true);
                 }, true);
                 // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
+                $artAnmelden.hide();
                 break;
             case "Macromycetes":
                 // von oben nach unten die jeweils richtigen nodes öffnen, zuletzt selektieren
@@ -59,7 +59,7 @@ module.exports = function (id) {
                     $.jstree._reference("#treeMacromycetes").select_node($("#" + objekt._id), null, false);
                 }, true);
                 // Anmeldung verstecken, wenn nicht Lebensräume
-                $art_anmelden.hide();
+                $artAnmelden.hide();
                 break;
             case "Lebensräume":
                 _.each(objekt.Taxonomie.Eigenschaften.Hierarchie, function (hierarchie) {

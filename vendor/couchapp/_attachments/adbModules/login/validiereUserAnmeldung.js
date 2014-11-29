@@ -13,14 +13,14 @@ module.exports = function (woher) {
         setTimeout(function () {
             $('#email' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#emailhinweis" + woher).show();
+        $("#emailHinweis" + woher).show();
         return false;
     }
     if (!passwort) {
         setTimeout(function () {
             $('#passwort' + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $("#passworthinweis" + woher).show();
+        $("#passwortHinweis" + woher).show();
         return false;
     }
     return true;

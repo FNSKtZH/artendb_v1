@@ -5,27 +5,27 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    var praefix = "importieren_";
+    var praefix = "importieren";
 
     // Bei LR muss der Anmeldungsabschnitt eingeblendet werden
     if (woher === "art") {
         praefix = "";
-        $("#art_anmelden").show();
-        $("#" + woher + "_anmelden_hinweis")
+        $("#artAnmelden").show();
+        $("#" + woher + "AnmeldenHinweis")
             .alert()
             .show();
     }
 
     // Mitteilen, dass Anmeldung nötig ist
-    $("#" + praefix + woher + "_anmelden_hinweis")
+    $("#" + praefix + woher + "AnmeldenHinweis")
         .alert()
         .show();
-    $("#" + praefix + woher + "_anmelden_hinweis_text").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
-    $("#" + praefix + woher + "_anmelden_collapse").collapse('show');
-    $(".anmelden_btn").show();
-    $(".abmelden_btn").hide();
+    $("#" + praefix + woher + "AnmeldenHinweisText").html("Um Daten zu bearbeiten, müssen Sie angemeldet sein");
+    $("#" + praefix + woher + "AnmeldenCollapse").collapse('show');
+    $(".anmeldenBtn").show();
+    $(".abmeldenBtn").hide();
     // ausschalten, soll später bei Organisationen möglich werden
     //$(".kontoErstellenBtn").show();
-    $(".konto_speichern_btn").hide();
+    $(".kontoSpeichernBtn").hide();
     $("#email" + capitaliseFirstLetter(woher)).focus();
 };

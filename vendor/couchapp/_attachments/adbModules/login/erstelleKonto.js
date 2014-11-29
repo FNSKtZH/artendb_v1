@@ -24,12 +24,12 @@ module.exports = function (woher) {
             $("#passwort2" + capitaliseFirstLetter(woher)).val("");
         },
         error: function () {
-            var praefix = "importieren_";
+            var praefix = "importieren";
             if (woher === "art") {
                 praefix = "";
             }
-            $("#" + praefix + woher + "_anmelden_fehler_text").html("Fehler: Das Konto wurde nicht erstellt");
-            $("#" + praefix + woher + "_anmelden_fehler")
+            $("#" + praefix + capitaliseFirstLetter(woher) + "AnmeldenFehlerText").html("Fehler: Das Konto wurde nicht erstellt");
+            $("#" + praefix + capitaliseFirstLetter(woher) + "AnmeldenFehler")
                 .alert()
                 .show();
         }

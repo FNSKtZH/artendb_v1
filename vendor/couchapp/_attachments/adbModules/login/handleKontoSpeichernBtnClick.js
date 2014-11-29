@@ -1,4 +1,4 @@
-// wenn .konto_speichern_btn geklickt wird
+// wenn .kontoSpeichernBtn geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -17,9 +17,9 @@ module.exports = function (that) {
         erstelleKonto(bsDs);
         // Anmeldefenster zurücksetzen
         $(".signup").hide();
-        $(".anmelden_btn").hide();
-        $(".abmelden_btn").show();
+        $(".anmeldenBtn").hide();
+        $(".abmeldenBtn").show();
         $(".kontoErstellenBtn").hide();
-        $(".konto_speichern_btn").hide();
+        $(".kontoSpeichernBtn").hide();
     }
 };

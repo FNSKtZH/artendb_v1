@@ -191,10 +191,10 @@ module.exports = function () {
         })
         .on('click', '.btn.lr_bearb_bearb', window.adb.handleBtnLrBearbBearbKlick)
         .on('click', '.btn.lr_bearb_schuetzen', window.adb.handleBtnLrBearbSchuetzenClick)
-        .on('click', '.btn.lr_bearb_neu', window.adb.handleBtnLrBearbNeuClick)
+        .on('click', '.btn.lrBearbNeu', window.adb.handleBtnLrBearbNeuClick)
         .on('change', '.Lebensräume.Taxonomie .controls', window.adb.handleLrTaxonomieControlsChange)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
-    $('#lr_parent_waehlen_optionen').on('change', '[name="parent_optionen"]', window.adb.handleLrParentOptionenChange);
+    $('#lrParentWaehlenOptionen').on('change', '[name="parent_optionen"]', window.adb.handleLrParentOptionenChange);
     $('#rueckfrage_lr_loeschen_ja').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -203,7 +203,7 @@ module.exports = function () {
         window.adb.handleRueckfrageLrLoeschenJaClick();
     });
     $body
-        .on('click', '.anmelden_btn', function (event) {
+        .on('click', '.anmeldenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -211,7 +211,7 @@ module.exports = function () {
             // this übergeben, kommt sonst nicht mit!
             window.adb.handleAnmeldenBtnClick(this);
         })
-        .on('click', '.abmelden_btn', function (event) {
+        .on('click', '.abmeldenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -221,7 +221,7 @@ module.exports = function () {
         })
         .on('keyup', '.Email', window.adb.handleEmailKeyup)
         .on('keyup', '.Passwort', window.adb.handlePasswortKeyup)
-        .on('keyup', '.Passwort2', window.adb.handlePasswort2Keyup)
+        .on('keyup', '.passwort2', window.adb.handlePasswort2Keyup)
         .on('click', '.kontoErstellenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
@@ -230,7 +230,7 @@ module.exports = function () {
             // this übergeben
             window.adb.handleKontoErstellenBtnClick(this);
         })
-        .on('click', '.konto_speichern_btn', function (event) {
+        .on('click', '.kontoSpeichernBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht

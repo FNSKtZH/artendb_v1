@@ -25,7 +25,7 @@ module.exports = function (woher) {
                 // Werte aus Feldern entfernen
                 $("#email" + capitaliseFirstLetter(woher)).val("");
                 $("#passwort" + capitaliseFirstLetter(woher)).val("");
-                $("#art_anmelden").show();
+                $("#artAnmelden").show();
                 // admin-Funktionen
                 if (r.roles.indexOf("_admin") !== -1) {
                     // das ist ein admin
@@ -37,13 +37,13 @@ module.exports = function (woher) {
                 blendeMenus();
             },
             error: function () {
-                var praefix = "importieren_";
+                var praefix = "importieren";
                 if (woher === "art") {
                     praefix = "";
                 }
                 // zuerst allfällige bestehende Hinweise ausblenden
                 $(".hinweis").hide();
-                $("#" + praefix + woher + "_anmelden_fehler_text")
+                $("#" + praefix + woher + "AnmeldenFehlerText")
                     .html("Anmeldung gescheitert.<br>Sie müssen ev. ein Konto erstellen?")
                     .alert()
                     .show();

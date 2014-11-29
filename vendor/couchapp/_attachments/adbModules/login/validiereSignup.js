@@ -22,28 +22,28 @@ module.exports = function (woher) {
     passwort2 = $("#passwort2" + woher).val();
     // prüfen
     if (!email) {
-        $("#emailhinweis" + woher).show();
+        $("#emailHinweis" + woher).show();
         setTimeout(function () {
             $("#email" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (!passwort) {
-        $("#passworthinweis" + woher).show();
+        $("#passwortHinweis" + woher).show();
         setTimeout(function () {
             $("#passwort" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (!passwort2) {
-        $("#passwort2hinweis" + woher).show();
+        $("#passwort2Hinweis" + woher).show();
         setTimeout(function () {
             $("#passwort2" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
         return false;
     }
     if (passwort !== passwort2) {
-        $("#passwort2hinweisFalsch" + woher).show();
+        $("#passwort2HinweisFalsch" + woher).show();
         setTimeout(function () {
             $("#passwort2" + woher).focus();
         }, 50);  // need to use a timer so that .blur() can finish before you do .focus()

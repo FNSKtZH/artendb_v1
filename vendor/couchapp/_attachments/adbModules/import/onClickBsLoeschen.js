@@ -1,4 +1,4 @@
-// wenn BsLoeschen geklickt wird
+// wenn bsLoeschen geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

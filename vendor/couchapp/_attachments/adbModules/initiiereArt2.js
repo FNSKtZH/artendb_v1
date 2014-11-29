@@ -7,11 +7,11 @@ module.exports = function (htmlArt, art) {
     var setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia'),
         zeigeFormular                   = require('./zeigeFormular');
     // panel beenden
-    $("#art_inhalt").html(htmlArt);
+    $("#artInhalt").html(htmlArt);
     // richtiges Formular anzeigen
     zeigeFormular("art");
     // Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
-    $("#art_anmelden").hide();
+    $("#artAnmelden").hide();
     // Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
     if (art.Eigenschaftensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
         $('.panel-collapse.Taxonomie').each(function () {

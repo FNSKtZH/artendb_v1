@@ -15,8 +15,8 @@ module.exports = function () {
     localStorage.lrBearb = true;
 
     // Anmeldung: zeigen, aber geschlossen
-    $("#art_anmelden_collapse").collapse('hide');
-    $("#art_anmelden").show();
+    $("#artAnmeldenCollapse").collapse('hide');
+    $("#artAnmelden").show();
 
     // alle Felder schreibbar setzen
     $(".Lebensräume.Taxonomie").find(".controls").each(function () {

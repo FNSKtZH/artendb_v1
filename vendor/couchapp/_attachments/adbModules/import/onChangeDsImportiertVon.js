@@ -1,4 +1,4 @@
-// Wenn DsImportiertVon geändert wird
+// Wenn dsImportiertVon geändert wird
 // kontrollieren, dass es die email der angemeldeten Person ist
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
