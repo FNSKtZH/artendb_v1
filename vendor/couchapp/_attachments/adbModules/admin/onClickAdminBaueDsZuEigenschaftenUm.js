@@ -5,42 +5,42 @@ var $ = require('jquery'),
     _ = require('underscore');
 
 module.exports = function () {
-    var $adminBaueDsZuEigenschaftenUmRueckmeldung = $("#adminBaueDsZuEigenschaftenUmRueckmeldung"),
+    var $adminBaueDsZuEigenschaftenUmRueckmeldung = $('#adminBaueDsZuEigenschaftenUmRueckmeldung'),
         $db                                       = $.couch.db('artendb');
 
-    $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Daten werden analysiert...");
+    $adminBaueDsZuEigenschaftenUmRueckmeldung.html('Daten werden analysiert...');
     $db.view('artendb/all_docs?include_docs=true', {
         success: function (data) {
             var korrigiert = 0,
-                fehler = 0;
+                fehler     = 0;
 
             if (data.rows.length === 0) {
-                $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Keine Daten erhalten");
+                $adminBaueDsZuEigenschaftenUmRueckmeldung.html('Keine Daten erhalten');
                 return;
             }
             _.each(data.rows, function (row) {
                 var art = row.doc,
                     datensammlungen,
                     beziehungssammlungen,
-                    ds_daten,
-                    tax_daten,
+                    dsDaten,
+                    taxDaten,
                     save = false;
                 // Datensammlungen umbenennen
                 // ds und bs entfernen, danach in der richtigen Reihenfolge hinzufügen
                 // damit die Reihenfolge bewahrt bleibt
                 if (art.Taxonomie && art.Taxonomie.Daten) {
-                    tax_daten = art.Taxonomie.Daten;
+                    taxDaten = art.Taxonomie.Daten;
                     delete art.Taxonomie.Daten;
-                    art.Taxonomie.Eigenschaften = tax_daten;
+                    art.Taxonomie.Eigenschaften = taxDaten;
                     save = true;
                 }
                 if (art.Datensammlungen) {
                     datensammlungen = art.Datensammlungen;
                     _.each(datensammlungen, function (ds) {
                         if (ds.Daten) {
-                            ds_daten = ds.Daten;
+                            dsDaten = ds.Daten;
                             delete ds.Daten;
-                            ds.Eigenschaften = ds_daten;
+                            ds.Eigenschaften = dsDaten;
                         }
                     });
                     delete art.Datensammlungen;
@@ -57,19 +57,19 @@ module.exports = function () {
                 if (save) {
                     $db.saveDoc(art, {
                         success: function () {
-                            korrigiert ++;
-                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            korrigiert++;
+                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html('Anzahl Dokumente in DB: ' + data.rows.length + '. Umbenannt: ' + korrigiert + ', Fehler: ' + fehler);
                         },
                         error: function () {
-                            fehler ++;
-                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Anzahl Dokumente in DB: " + data.rows.length + ". Umbenannt: " + korrigiert + ", Fehler: " + fehler);
+                            fehler++;
+                            $adminBaueDsZuEigenschaftenUmRueckmeldung.html('Anzahl Dokumente in DB: ' + data.rows.length + '. Umbenannt: ' + korrigiert + ', Fehler: ' + fehler);
                         }
                     });
                 }
 
             });
             if (korrigiert === 0) {
-                $adminBaueDsZuEigenschaftenUmRueckmeldung.html("Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen");
+                $adminBaueDsZuEigenschaftenUmRueckmeldung.html('Es gibt offenbar keine Datensammlungen mehr, die umbenannt werden müssen');
             }
         },
         error: function () {
