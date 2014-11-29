@@ -16,9 +16,9 @@ module.exports = function (_alt) {
             $(".exportieren_btn").show();
         }
     } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
-        $("#exportieren" + _alt + "_exportieren_error_text_text")
+        $("#exportieren" + _alt + "ExportierenErrorTextText")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
-        $("#exportieren" + _alt + "_exportieren_error_text")
+        $("#exportieren" + _alt + "ExportierenErrorText")
             .alert()
             .show();
     }

@@ -653,10 +653,10 @@
                     <div class="panel panel-default" id="exportieren_objekte_waehlen_ds">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_ds_collapse" data-parent="exportieren_panel" href="#exportieren_objekte_waehlen_ds_collapse">2. filtern</a>
+                                <a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenObjekteWaehlenDsCollapse" data-parent="exportieren_panel" href="#exportierenObjekteWaehlenDsCollapse">2. filtern</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="exportieren_objekte_waehlen_ds_collapse">
+                        <div class="panel-collapse collapse" id="exportierenObjekteWaehlenDsCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm" style="margin-bottom:15px;"><b>So geht's</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -683,9 +683,9 @@
                                 <h3>Art / Lebensraum</h3>
                                 <div class="form-group">
                                     <label class="control-label" for="exportieren_objekte_waehlen_ds_guid">GUID</label>
-                                    <input class="controls form-control export_feld_filtern input-sm" type="text" id="exportieren_objekte_waehlen_ds_guid" Eigenschaft="Objekt" Feld="GUID">
+                                    <input class="controls form-control exportFeldFiltern input-sm" type="text" id="exportieren_objekte_waehlen_ds_guid" Eigenschaft="Objekt" Feld="GUID">
                                 </div>
-                                <div id="exportieren_objekte_waehlen_ds_felderliste"></div>
+                                <div id="exportierenObjekteWaehlenDsFelderliste"></div>
                             </div>
                         </div>
                     </div>
@@ -727,12 +727,12 @@
                                 <div class="felderspalte">
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                            <input id="exportieren_felder_waehlen_objekt_id" class="exportierenFelderWaehlenObjektFeld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                            <input id="exportieren_felder_waehlen_objekt_gruppe" class="exportierenFelderWaehlenObjektFeld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
                                         </label>
                                     </div>
                                 </div>
@@ -795,12 +795,12 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+                                <div id="exportierenExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
                                 <div id="exportierenExportierenHinweisText" class="alert alert-info"></div>
-                                <div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                <div id="exportierenExportierenErrorText" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <span id="exportieren_exportieren_error_text_text"></span>
+                                    <span id="exportierenExportierenErrorTextText"></span>
                                 </div>
                             </div><!--panel-body-->
                         </div><!--panel-collapse-->
@@ -828,7 +828,7 @@
                                 </div>
                                 <div class="checkbox" style="clear:both; padding-top:7px;">
                                     <label>
-                                        <input type="checkbox" id="exportieren_alt_synonym_infos" checked>
+                                        <input type="checkbox" id="exportierenAltSynonymInfos" checked>
                                         <b>inklusive Informationen von Synonymen</b><br>Es werden auch Informationen mitgeliefert, die nur bei einem Synonym beschrieben wurden
                                     </label>
                                 </div>
@@ -837,12 +837,12 @@
                                 <div class="felderspalte">
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_alt_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                            <input id="exportierenAltFelderWaehlenObjektId" class="exportierenFelderWaehlenObjektFeld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_alt_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                            <input id="exportieren_alt_felder_waehlen_objekt_gruppe" class="exportierenFelderWaehlenObjektFeld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
                                         </label>
                                     </div>
                                 </div>
@@ -868,13 +868,13 @@
                                     </ul>
                                 </div>
                                 <div>URL:</div>
-                                <textarea class="form-control" id="exportieren_alt_exportieren_url"></textarea>
-                                <div id="exportieren_alt_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+                                <textarea class="form-control" id="exportierenAltExportierenUrl"></textarea>
+                                <div id="exportieren_altExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_alt_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle"></div>
                                 <div id="exportieren_alt_exportieren_hinweis_text" class="alert alert-info"></div>
-                                <div id="exportieren_alt_exportieren_error_text" class="alert alert-danger alert-dismissable">
+                                <div id="exportieren_altExportierenErrorText" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <span id="exportieren_alt_exportieren_error_text_text"></span>
+                                    <span id="exportieren_altExportierenErrorTextText"></span>
                                 </div>
                             </div><!--panel-body-->
                         </div><!--panel-collapse-->

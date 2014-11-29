@@ -1,19 +1,19 @@
-// wenn .feld_waehlen_alle_von_ds geändert wird
+// wenn .feldWaehlenAlleVonDs geändert wird
 // wenn checked: alle unchecken, sonst alle checken
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                               = require('jquery'),
+    pruefeObZuvieleExportfelderGewaehltSind         = require('./pruefeObZuvieleExportfelderGewaehltSind'),
+    pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind'),
+    exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
 module.exports = function (that) {
     var ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
         _alt     = '',
-        status   = $(that).prop('checked'),
-        pruefeObZuvieleExportfelderGewaehltSind         = require('./pruefeObZuvieleExportfelderGewaehltSind'),
-        pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind'),
-        exportZuruecksetzen                             = require('./exportZuruecksetzen');
+        status   = $(that).prop('checked');
 
     if (formular === 'exportAlt') {
         _alt = '_alt';

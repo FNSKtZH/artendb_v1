@@ -31,19 +31,10 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
             listName = "artendb/export";
             queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
-        if ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0) {
-            // prüfen, ob mindestens ein Feld aus ds gewählt ist
-            // wenn ja: true, sonst false
-            queryParam += "&nurObjekteMitEigenschaften=true";
-        } else {
-            queryParam += "&nurObjekteMitEigenschaften=false";
-        }
+        // prüfen, ob mindestens ein Feld aus ds gewählt ist
+        // wenn ja: true, sonst false
+        queryParam += ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0 ? "&nurObjekteMitEigenschaften=true" : "&nurObjekteMitEigenschaften=false");
         queryParam += ($("#exportBezInZeilen").prop('checked') ? "&bezInZeilen=true" : "&bezInZeilen=false");
-        /*if ($("#exportBezInZeilen").prop('checked')) {
-            queryParam += "&bezInZeilen=true";
-        } else {
-            queryParam += "&bezInZeilen=false";
-        }*/
 
         // format ergänzen
         queryParam += "&format=" + format;

@@ -74,9 +74,10 @@ module.exports = function (direkt, fuerAlt) {
         // durch alle Filterfelder loopen
         // aber nur, wenn nicht für ALT exportiert wird
         // wenn ein Feld einen Wert enthält, danach filtern
-        $("#exportieren_objekte_waehlen_ds_collapse").find(".export_feld_filtern").each(function () {
-            var that = this,
+        $("#exportierenObjekteWaehlenDsCollapse").find(".exportFeldFiltern").each(function () {
+            var that  = this,
                 $this = $(this);
+
             if (that.type === "checkbox") {
                 if (!$this.prop('readonly')) {
                     filterObjekt            = {};
@@ -95,7 +96,7 @@ module.exports = function (direkt, fuerAlt) {
                 filterObjekt.DsName   = $this.attr('eigenschaft');
                 filterObjekt.Feldname = $this.attr('feld');
                 // Filterwert in Kleinschrift verwandeln, damit Gross-/Kleinschrift nicht wesentlich ist (Vergleichswerte werden von filtereFürExport später auch in Kleinschrift verwandelt)
-                filterObjekt.Filterwert = ermittleVergleichsoperator(this.value)[1];
+                filterObjekt.Filterwert         = ermittleVergleichsoperator(this.value)[1];
                 filterObjekt.Vergleichsoperator = ermittleVergleichsoperator(this.value)[0];
                 filterkriterien.push(filterObjekt);
             }
@@ -106,7 +107,7 @@ module.exports = function (direkt, fuerAlt) {
     filterkriterienObjekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
-    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feldWaehlen").each(function () {
+    $("#" + formular).find(".exportierenFelderWaehlenObjektFeld.feldWaehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
@@ -139,9 +140,9 @@ module.exports = function (direkt, fuerAlt) {
         $exportierenExportierenHinweisText
             .alert()
             .hide();
-        $("#exportieren" + _alt + "_exportieren_error_text_text")
+        $("#exportieren" + _alt + "ExportierenErrorTextText")
             .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
-        $("#exportieren" + _alt + "_exportieren_error_text")
+        $("#exportieren" + _alt + "ExportierenErrorText")
             .alert()
             .show();
         return;
@@ -180,7 +181,7 @@ module.exports = function (direkt, fuerAlt) {
             htmlFilterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";
         }
     }
-    $("#exportieren" + _alt + "_exportieren_filterkriterien")
+    $("#exportieren" + _alt + "ExportierenFilterkriterien")
         .html(htmlFilterkriterien)
         .show();
 

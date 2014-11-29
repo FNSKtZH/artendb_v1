@@ -121,14 +121,14 @@ module.exports = function () {
     $('#export')
         .on('change', '.exportierenDsObjekteWaehlenGruppe',          onChangeExportierenDsObjekteWaehlenGruppe)
         .on('change', '.feldWaehlen',                                   onChangeFeldWaehlen)
-        .on('change', '.feld_waehlen_alle_von_ds',              window.adb.handleFeldWaehlenAlleVonDs)
-        .on('change', '.export_feld_filtern',                   window.adb.handleExportFeldFilternChange)
+        .on('change', '.feldWaehlenAlleVonDs',              window.adb.handleFeldWaehlenAlleVonDs)
+        .on('change', '.exportFeldFiltern',                   window.adb.handleExportFeldFilternChange)
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
         })
         .on('click', '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
-        .on('change', '.feld_waehlen_alle_von_ds', window.adb.exportZuruecksetzen);
+        .on('change', '.feldWaehlenAlleVonDs', window.adb.exportZuruecksetzen);
     $('#exportBezInZeilen,#export_bez_in_feldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
     $('#exportieren_objekte_Taxonomien_zusammenfassen').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
@@ -156,7 +156,7 @@ module.exports = function () {
     $('#exportieren_exportieren_collapse').on('shown.bs.collapse', function () {
         window.adb.handleExportierenExportierenCollapseShown(this);
     });
-    $('#exportieren_objekte_waehlen_ds_collapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+    $('#exportierenObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportieren_felder_waehlen_collapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportieren_exportieren').on('show', window.adb.handleExportierenExportierenShow);
 
@@ -166,7 +166,7 @@ module.exports = function () {
     $('#exportAlt')
         .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds_alt', window.adb.handleFeldWaehlenAlleVonDs)
-        .on('change', '#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
+        .on('change', '#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
             window.adb.exportZuruecksetzen(null, '_alt');
         })
         .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function () {

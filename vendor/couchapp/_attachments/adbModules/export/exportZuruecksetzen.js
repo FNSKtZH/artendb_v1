@@ -19,8 +19,8 @@ module.exports = function (event, _alt) {
     }
     $("#exportieren" + _alt + "_exportieren_tabelle").hide();
     $(".exportieren" + _alt + "_exportieren_exportieren").hide();
-    $("#exportieren" + _alt + "_exportieren_error_text")
+    $("#exportieren" + _alt + "ExportierenErrorText")
         .alert()
         .hide();
-    $('#exportieren_alt_exportieren_url').val('');
+    $('#exportierenAltExportierenUrl').val('');
 };

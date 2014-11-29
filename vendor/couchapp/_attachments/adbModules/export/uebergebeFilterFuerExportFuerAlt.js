@@ -11,11 +11,11 @@ module.exports = function (gewaehlteFelderObjekt) {
         url,
         list,
         view,
-        $exportieren_alt_exportieren_url = $('#exportieren_alt_exportieren_url'),
-        $db                              = $.couch.db('artendb'),
-        uri                              = new Uri($(location).attr('href'));
+        $exportierenAltExportierenUrl = $('#exportierenAltExportierenUrl'),
+        $db                           = $.couch.db('artendb'),
+        uri                           = new Uri($(location).attr('href'));
 
-    if ($("#exportieren_alt_synonym_infos").prop('checked')) {
+    if ($("#exportierenAltSynonymInfos").prop('checked')) {
         // list
         queryParam = "export_alt_mit_synonymen";
         list = 'artendb/export_alt_mit_synonymen';
@@ -52,11 +52,11 @@ module.exports = function (gewaehlteFelderObjekt) {
     url = uri.protocol() + '://' + uri.host() + ':' + uri.port() + '/artendb/_design/artendb/_list/' + queryParam;
 
     // url anzeigen und markieren
-    $exportieren_alt_exportieren_url
+    $exportierenAltExportierenUrl
         .val(url);
     // ..aber erst verzögert markieren, sonst springt das Fenster
     setTimeout(function () {
-        $exportieren_alt_exportieren_url
+        $exportierenAltExportierenUrl
             .focus()
             .select();
     }, 2000);

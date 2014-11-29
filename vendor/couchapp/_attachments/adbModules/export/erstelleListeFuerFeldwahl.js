@@ -19,7 +19,7 @@ module.exports = function (exportGruppen, formular) {
         $exportierenNurObjekteMitEigenschaften          = $("#exportierenNurObjekteMitEigenschaften"),
         $exportieren_exportieren_collapse                   = $("#exportieren_exportieren_collapse"),
         $exportieren_felder_waehlen_collapse                = $("#exportieren_felder_waehlen_collapse"),
-        $exportieren_objekte_waehlen_ds_collapse            = $("#exportieren_objekte_waehlen_ds_collapse"),
+        $exportierenObjekteWaehlenDsCollapse            = $("#exportierenObjekteWaehlenDsCollapse"),
         erstelleListeFuerFeldwahl2                          = require('./erstelleListeFuerFeldwahl2');
 
     // falls noch offen: folgende Bereiche schliessen
@@ -29,8 +29,8 @@ module.exports = function (exportGruppen, formular) {
     if ($exportieren_felder_waehlen_collapse.is(':visible')) {
         $exportieren_felder_waehlen_collapse.collapse('hide');
     }
-    if ($exportieren_objekte_waehlen_ds_collapse.is(':visible')) {
-        $exportieren_objekte_waehlen_ds_collapse.collapse('hide');
+    if ($exportierenObjekteWaehlenDsCollapse.is(':visible')) {
+        $exportierenObjekteWaehlenDsCollapse.collapse('hide');
     }
 
     if (!formular || formular === 'export') {
@@ -100,7 +100,7 @@ module.exports = function (exportGruppen, formular) {
         // Felder entfernen
         $("#export").find(".exportierenFelderWaehlenFelderliste")
             .html("");
-        $("#exportieren_objekte_waehlen_ds_felderliste")
+        $("#exportierenObjekteWaehlenDsFelderliste")
             .html("");
     }
     // Tabelle ausblenden, falls sie eingeblendet war

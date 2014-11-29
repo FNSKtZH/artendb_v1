@@ -36,17 +36,9 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
 
     queryParam = listName + "/" + viewName + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen + "&format=" + format;
 
-    if ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0) {
-        // prüfen, ob mindestens ein Feld aus ds gewählt ist
-        // wenn ja: true, sonst false
-        queryParam += "&nurObjekteMitEigenschaften=true";
-    } else {
-        queryParam += "&nurObjekteMitEigenschaften=false";
-    }
-    if ($("#exportBezInZeilen").prop('checked')) {
-        queryParam += "&bezInZeilen=true";
-    } else {
-        queryParam += "&bezInZeilen=false";
-    }
+    // prüfen, ob mindestens ein Feld aus ds gewählt ist
+    // wenn ja: true, sonst false
+    queryParam += ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0 ? "&nurObjekteMitEigenschaften=true" : "&nurObjekteMitEigenschaften=false");
+    queryParam += ($("#exportBezInZeilen").prop('checked') ? "&bezInZeilen=true" : "&bezInZeilen=false");
     window.open('_list/' + queryParam);
 };

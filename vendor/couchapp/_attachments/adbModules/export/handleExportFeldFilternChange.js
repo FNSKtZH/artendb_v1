@@ -1,4 +1,4 @@
-// wenn export_feld_filtern geändert wird
+// wenn exportFeldFiltern geändert wird
 // kontrollieren, ob mehr als eine Beziehungssammlung Filter enthält.
 // Wenn ja: reklamieren und rückgängig machen
 
@@ -29,8 +29,8 @@ module.exports = function (that) {
         }
     }
 
-    $("#exportieren_objekte_waehlen_ds_collapse")
-        .find(".export_feld_filtern")
+    $("#exportierenObjekteWaehlenDsCollapse")
+        .find(".exportFeldFiltern")
         .each(function () {
             if ((this.value || this.value === 0) && $(this).attr('dstyp') === "Beziehung") {
                 bez_ds_filtered.push($(this).attr('eigenschaft'));

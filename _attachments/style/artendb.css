@@ -441,8 +441,8 @@ h5 a {
     font-weight: normal !important;
 }
 
-#exportieren_panel .ds_beschreibung_zeile,
-#art .ds_beschreibung_zeile {
+#exportieren_panel .dsBeschreibungZeile,
+#art .dsBeschreibungZeile {
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display:    -moz-box;      /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;      /* TWEENER - IE 10 */
@@ -454,14 +454,14 @@ h5 a {
         -ms-flex-direction: row;
 }
 
-#exportieren_panel .ds_beschreibung_zeile > div:nth-child(1),
-#art .ds_beschreibung_zeile > div:nth-child(1) {
+#exportieren_panel .dsBeschreibungZeile > div:nth-child(1),
+#art .dsBeschreibungZeile > div:nth-child(1) {
     width: 97px;
     word-wrap: break-word;
 }
 
-#exportieren_panel .ds_beschreibung_zeile > div:nth-child(2),
-#art .ds_beschreibung_zeile > div:nth-child(2) {
+#exportieren_panel .dsBeschreibungZeile > div:nth-child(2),
+#art .dsBeschreibungZeile > div:nth-child(2) {
     -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
        -moz-box-flex: 1;      /* OLD - Firefox 19- */
     width: 20%;               /* For old syntax, otherwise collapses. */
@@ -775,7 +775,7 @@ option {
 }
 
 #exportieren_panel div.adb-hidden,
-#exportieren_alt_exportieren_filterkriterien {
+#exportieren_altExportierenFilterkriterien {
     margin-bottom: 20px;
     margin-top:   -10px;
     color: #8D8C8C;
@@ -799,7 +799,7 @@ option {
 }
 
 /*Filterfelder im Export: checkboxes gestalten*/
-#exportieren_objekte_waehlen_ds_collapse .felderspalte .form-group input[type='checkbox'] {
+#exportierenObjekteWaehlenDsCollapse .felderspalte .form-group input[type='checkbox'] {
     width:      13px !important;
     height:     13px;
     margin-top:  8px !important;
@@ -807,7 +807,7 @@ option {
     cursor: auto;
 }
 
-#exportieren_exportieren_filterkriterien li {
+#exportierenExportierenFilterkriterien li {
     margin-left: -24px;
 }
 
