@@ -7,12 +7,12 @@ var $               = require('jquery'),
     pruefeAnmeldung = require('../login/pruefeAnmeldung');
 
 module.exports = function (that) {
-    if (!pruefeAnmeldung("ds")) {
+    if (!pruefeAnmeldung('ds')) {
         $(that).collapse('hide');
     } else {
         $('#dsFile').fileupload();
     }
     $('html, body').animate({
-        scrollTop: $("#importierenDsDatenUploadenCollapse").offset().top
+        scrollTop: $('#importierenDsDatenUploadenCollapse').offset().top
     }, 2000);
 };

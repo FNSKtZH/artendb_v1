@@ -17,10 +17,10 @@ module.exports = function () {
 
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
-        $("#dsTabelleEigenschaften").hide();
-        $("#importierenDsIdsIdentifizierenHinweisText").hide();
-        $("#dsImportieren").hide();
-        $("#dsEntfernen").hide();
+        $('#dsTabelleEigenschaften').hide();
+        $('#importierenDsIdsIdentifizierenHinweisText').hide();
+        $('#dsImportieren').hide();
+        $('#dsEntfernen').hide();
     } else {
         file     = event.target.files[0];
         filename = file.name;
@@ -32,7 +32,7 @@ module.exports = function () {
                 var data = event.target.result;
 
                 window.adb.dsDatensaetze = $.csv.toObjects(data);
-                erstelleTabelle(window.adb.dsDatensaetze, "dsFelderDiv", "DsTabelleEigenschaften");
+                erstelleTabelle(window.adb.dsDatensaetze, 'dsFelderDiv', 'DsTabelleEigenschaften');
             };
             reader.readAsText(file);
         }
@@ -44,7 +44,7 @@ module.exports = function () {
                     worksheet = workbook.Sheets[sheetName];
 
                 window.adb.dsDatensaetze = XLSX.utils.sheet_to_json(worksheet);
-                erstelleTabelle(window.adb.dsDatensaetze, "dsFelderDiv", "DsTabelleEigenschaften");
+                erstelleTabelle(window.adb.dsDatensaetze, 'dsFelderDiv', 'DsTabelleEigenschaften');
             };
             reader.readAsBinaryString(file);
         }

@@ -8,6 +8,6 @@ var $                                  = require('jquery'),
 
 module.exports = function () {
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
-    bereiteImportierenBsBeschreibenVor("bs");
-    $("#bsImportiertVon").val(localStorage.Email);
+    bereiteImportierenBsBeschreibenVor('bs');
+    $('#bsImportiertVon').val(localStorage.Email);
 };

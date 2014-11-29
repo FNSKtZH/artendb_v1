@@ -3,15 +3,14 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $               = require('jquery'),
+    pruefeAnmeldung = require('../login/pruefeAnmeldung');
 
 module.exports = function (that) {
-    var pruefeAnmeldung = require('../login/pruefeAnmeldung');
-
-    if (!pruefeAnmeldung("bs")) {
+    if (!pruefeAnmeldung('bs')) {
         $(that).collapse('hide');
     }
     $('html, body').animate({
-        scrollTop: $("#importierenBsIdsIdentifizierenCollapse").offset().top
+        scrollTop: $('#importierenBsIdsIdentifizierenCollapse').offset().top
     }, 2000);
 };

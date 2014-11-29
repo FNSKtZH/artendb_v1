@@ -18,23 +18,23 @@ module.exports = function () {
     });
 
     if (bsKey) {
-        $("#importierenBsDsBeschreibenHinweis2")
+        $('#importierenBsDsBeschreibenHinweis2')
             .alert()
-            .removeClass("alert-success")
-            .removeClass("alert-danger")
-            .addClass("alert-info")
+            .removeClass('alert-success')
+            .removeClass('alert-danger')
+            .addClass('alert-info')
             .show();
-        $("#importierenBsDsBeschreibenHinweis2Text").html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+        $('#importierenBsDsBeschreibenHinweis2Text').html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
         setTimeout(function () {
-            $("#importierenBsDsBeschreibenHinweis2")
+            $('#importierenBsDsBeschreibenHinweis2')
                 .alert()
                 .hide();
         }, 30000);
-        $("#bsName")
-            .val("")
+        $('#bsName')
+            .val('')
             .focus();
     } else {
-        $("#importierenBsDsBeschreibenHinweis2")
+        $('#importierenBsDsBeschreibenHinweis2')
             .alert()
             .hide();
     }

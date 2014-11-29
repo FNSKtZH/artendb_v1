@@ -7,16 +7,16 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    $("#bsImportiertVon").val(localStorage.Email);
-    $("#importierenBsDsBeschreibenHinweis2")
+    $('#bsImportiertVon').val(localStorage.Email);
+    $('#importierenBsDsBeschreibenHinweis2')
         .alert()
-        .removeClass("alert-success")
-        .removeClass("alert-danger")
-        .addClass("alert-info")
+        .removeClass('alert-success')
+        .removeClass('alert-danger')
+        .addClass('alert-info')
         .show();
-    $("#importierenBsDsBeschreibenHinweis2Text").html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+    $('#importierenBsDsBeschreibenHinweis2Text').html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
     setTimeout(function () {
-        $("#importierenBsDsBeschreibenHinweis2")
+        $('#importierenBsDsBeschreibenHinweis2')
             .alert()
             .hide();
     }, 10000);

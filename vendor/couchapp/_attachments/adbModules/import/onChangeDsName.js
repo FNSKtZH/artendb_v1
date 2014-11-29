@@ -12,7 +12,7 @@ var $ = require('jquery'),
 module.exports = function () {
     var that = this,
         dsKey,
-        $importierenDsDsBeschreibenHinweis2 = $("#importierenDsDsBeschreibenHinweis2");
+        $importierenDsDsBeschreibenHinweis2 = $('#importierenDsDsBeschreibenHinweis2');
 
     dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
         return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
@@ -28,8 +28,8 @@ module.exports = function () {
                 .alert()
                 .hide();
         }, 30000);
-        $("#dsName")
-            .val("")
+        $('#dsName')
+            .val('')
             .focus();
     } else {
         $importierenDsDsBeschreibenHinweis2
