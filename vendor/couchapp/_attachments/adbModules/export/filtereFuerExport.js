@@ -34,7 +34,7 @@ module.exports = function (direkt, fuerAlt) {
         formular = 'exportAlt';
         _alt     = '_alt';
     }
-    $exportierenExportierenHinweisText = $("#exportieren" + _alt + "_exportieren_hinweis_text");
+    $exportierenExportierenHinweisText = $("#exportieren" + _alt + "ExportierenHinweisText");
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {

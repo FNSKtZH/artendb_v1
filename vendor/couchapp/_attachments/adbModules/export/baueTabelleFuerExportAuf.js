@@ -30,7 +30,7 @@ module.exports = function (_alt) {
     }
 
     // Beschäftigungsmeldung verstecken
-    $("#exportieren" + _alt + "_exportieren_hinweis_text")
+    $("#exportieren" + _alt + "ExportierenHinweisText")
         .alert()
         .hide();
 };

@@ -38,11 +38,12 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         } else {
             queryParam += "&nurObjekteMitEigenschaften=false";
         }
-        if ($("#exportBezInZeilen").prop('checked')) {
+        queryParam += ($("#exportBezInZeilen").prop('checked') ? "&bezInZeilen=true" : "&bezInZeilen=false");
+        /*if ($("#exportBezInZeilen").prop('checked')) {
             queryParam += "&bezInZeilen=true";
         } else {
             queryParam += "&bezInZeilen=false";
-        }
+        }*/
 
         // format ergänzen
         queryParam += "&format=" + format;
