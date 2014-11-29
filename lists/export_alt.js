@@ -7,10 +7,10 @@ function (head, req) {
      'use strict';
 
     start({
-        "headers": {
-            "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;",
-            "Accept-Encoding": "gzip,deflate"
+        'headers': {
+            'Accept-Charset':  'utf-8',
+            'Content-Type':    'json; charset=utf-8;',
+            'Accept-Encoding': 'gzip,deflate'
         }
     });
 
@@ -29,8 +29,8 @@ function (head, req) {
     üVar = holeUebergebeneVariablen(req.query);
     // Wichtige überschreiben:
     üVar.nurObjekteMitEigenschaften = false;
-    üVar.filterkriterien = [];
-    üVar.fasseTaxonomienZusammen = true;
+    üVar.filterkriterien            = [];
+    üVar.fasseTaxonomienZusammen    = true;
 
     while (row = getRow ()) {
         objekt = row.doc;
@@ -38,8 +38,8 @@ function (head, req) {
         // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen
 
         // Exportobjekte um das Objekt ergänzen
-        // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-        exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+        // der letzte Parameter 'alt' teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
+        exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, 'alt');
     }
 
     send(JSON.stringify(exportObjekte));

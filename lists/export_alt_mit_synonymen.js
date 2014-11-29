@@ -7,10 +7,10 @@
     'use strict';
 
     start({
-        "headers": {
-            "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;",
-            "Accept-Encoding": "gzip,deflate"
+        'headers': {
+            'Accept-Charset':  'utf-8',
+            'Content-Type':    'json; charset=utf-8;',
+            'Accept-Encoding': 'gzip,deflate'
         }
     });
 
@@ -34,12 +34,12 @@
     üVar = holeUebergebeneVariablen(req.query);
     // Wichtige überschreiben:
     üVar.nurObjekteMitEigenschaften = false;
-    üVar.filterkriterien = [];
-    üVar.fasseTaxonomienZusammen = true;
+    üVar.filterkriterien            = [];
+    üVar.fasseTaxonomienZusammen    = true;
 
     // arrays für sammlungen aus synonymen gründen
     beziehungssammlungenAusSynonymen = [];
-    datensammlungenAusSynonymen = [];
+    datensammlungenAusSynonymen      = [];
 
     while (row = getRow ()) {
         objekt = row.doc;
@@ -57,7 +57,7 @@
             // wir sind jetzt im Originalobjekt
             // sicherstellen, dass DS und BS existieren
             objekt.Eigenschaftensammlungen = objekt.Eigenschaftensammlungen || [];
-            objekt.Beziehungssammlungen    = objekt.Beziehungssammlungen || [];
+            objekt.Beziehungssammlungen    = objekt.Beziehungssammlungen    || [];
 
             // allfällige DS und BS aus Synonymen anhängen
             objekt = ergaenzeObjektUmInformationenVonSynonymen(objekt, datensammlungenAusSynonymen, beziehungssammlungenAusSynonymen);
@@ -65,8 +65,8 @@
             // für das alt sollen alle Daten aus den gewünschten Artgruppen gewählt werden, also keinen Filter übernehmen
 
             // Exportobjekte um das Objekt ergänzen
-            // der letzte Parameter "alt" teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
-            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, "alt");
+            // der letzte Parameter 'alt' teilt mit, dass der Export für das Artenlistentool erstellt wird und die Pflichtfelder benötigt
+            exportObjekte = ergaenzeExportobjekteUmExportobjekt(objekt, üVar.felder, üVar.bezInZeilen, üVar.fasseTaxonomienZusammen, üVar.filterkriterien, exportObjekte, 'alt');
             
             // arrays für sammlungen aus synonymen zurücksetzen
             beziehungssammlungenAusSynonymen = [];

@@ -2,16 +2,16 @@ function (head, req) {
     'use strict';
 
     start({
-        "headers": {
-            "Accept-Charset": "utf-8",
-            "Content-Type": "json; charset=utf-8;"
+        'headers': {
+            'Accept-Charset': 'utf-8',
+            'Content-Type':   'json; charset=utf-8;'
         }
     });
 
     var row,
         objekt,
         objektArray = [],
-        level = parseInt(req.query.group_level),
+        level       = parseInt(req.query.group_level),
         filter,
         i;
 
@@ -20,12 +20,12 @@ function (head, req) {
     }
 
     while(row = getRow()) {
-        objekt = {};
-        objekt.data = row.key[level-1];
-        objekt.attr = {};
-        objekt.attr.level = level;
-        objekt.attr.gruppe = "fauna";
-        filter = [];
+        objekt             = {};
+        objekt.data        = row.key[level - 1];
+        objekt.attr        = {};
+        objekt.attr.level  = level;
+        objekt.attr.gruppe = 'fauna';
+        filter             = [];
         for (i=0; i<level; i++) {
             filter.push(row.key[i]);
         }
@@ -33,7 +33,7 @@ function (head, req) {
         if (req.query.id) {
             objekt.attr.id = row.key[level];
         }
-        objekt.state = "closed";
+        objekt.state       = 'closed';
         objektArray.push(objekt);
     }
 
