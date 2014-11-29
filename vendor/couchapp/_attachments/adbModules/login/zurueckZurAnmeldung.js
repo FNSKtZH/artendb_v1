@@ -25,7 +25,7 @@ module.exports = function (woher) {
     $(".anmelden_btn").show();
     $(".abmelden_btn").hide();
     // ausschalten, soll später bei Organisationen möglich werden
-    //$(".konto_erstellen_btn").show();
+    //$(".kontoErstellenBtn").show();
     $(".konto_speichern_btn").hide();
     $("#email" + capitaliseFirstLetter(woher)).focus();
 };

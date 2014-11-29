@@ -12,27 +12,27 @@ var $ = require('jquery'),
 module.exports = function () {
     var that = this,
         dsKey,
-        $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
+        $importierenDsDsBeschreibenHinweis2 = $("#importierenDsDsBeschreibenHinweis2");
 
     dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
         return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
     });
 
     if (dsKey) {
-        $importieren_ds_ds_beschreiben_hinweis2
+        $importierenDsDsBeschreibenHinweis2
             .alert()
             .show()
             .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
         setTimeout(function () {
-            $importieren_ds_ds_beschreiben_hinweis2
+            $importierenDsDsBeschreibenHinweis2
                 .alert()
                 .hide();
         }, 30000);
-        $("#DsName")
+        $("#dsName")
             .val("")
             .focus();
     } else {
-        $importieren_ds_ds_beschreiben_hinweis2
+        $importierenDsDsBeschreibenHinweis2
             .alert()
             .hide();
     }

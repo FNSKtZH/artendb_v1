@@ -3,17 +3,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                    = require('jquery'),
+    pruefeAnmeldung                      = require('../login/pruefeAnmeldung'),
+    bereiteImportierenBsBeschreibenVor_2 = require('./bereiteImportierenBsBeschreibenVor_2');
 
 module.exports = function (woher) {
-    var $db = $.couch.db('artendb'),
-        pruefeAnmeldung                      = require('../login/pruefeAnmeldung'),
-        bereiteImportierenBsBeschreibenVor_2 = require('./bereiteImportierenBsBeschreibenVor_2');
+    var $db = $.couch.db('artendb');
 
     if (!pruefeAnmeldung("woher")) {
         $('#importierenBsDsBeschreibenCollapse').collapse('hide');
     } else {
-        $("#BsName").focus();
+        $("#bsName").focus();
         // anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf
         //$("#bsWaehlen").html("<option value='null'>Bitte warte, die Liste wird aufgebaut...</option>");
         // Daten holen, wenn nötig

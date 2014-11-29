@@ -7,15 +7,15 @@
 var $ = require('jquery');
 
 module.exports = function () {
-    var $importieren_ds_ds_beschreiben_hinweis2 = $("#importieren_ds_ds_beschreiben_hinweis2");
+    var $importierenDsDsBeschreibenHinweis2 = $("#importierenDsDsBeschreibenHinweis2");
 
-    $("#DsImportiertVon").val(localStorage.Email);
-    $importieren_ds_ds_beschreiben_hinweis2
+    $("#dsImportiertVon").val(localStorage.Email);
+    $importierenDsDsBeschreibenHinweis2
         .alert()
         .show()
         .html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
     setTimeout(function () {
-        $importieren_ds_ds_beschreiben_hinweis2
+        $importierenDsDsBeschreibenHinweis2
             .alert()
             .hide();
     }, 10000);

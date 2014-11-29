@@ -13,7 +13,7 @@ module.exports = function (woher) {
     if (!pruefeAnmeldung(woher)) {
         $('#importierenDsDsBeschreibenCollapse').collapse('hide');
     } else {
-        $("#DsName").focus();
+        $("#dsName").focus();
         // Daten holen, wenn nötig
         if (window.adb.dsVonObjekten) {
             bereiteImportierenDsBeschreibenVor_02();

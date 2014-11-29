@@ -35,9 +35,9 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // Zeile anlegen
     // gleichzeitig Feldliste für Formular anlegen
     if (felderDiv) {
-        if (felderDiv === "DsFelder_div") {
+        if (felderDiv === "dsFelderDiv") {
             Feldname = "DsFelder";
-        } else if (felderDiv === "BsFelder_div") {
+        } else if (felderDiv === "bsFelderDiv") {
             Feldname = "BsFelder";
         }
     }

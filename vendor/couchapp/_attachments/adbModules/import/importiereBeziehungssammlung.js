@@ -4,49 +4,49 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                     = require('underscore'),
+    $                                     = require('jquery'),
+    fuegeBeziehungenZuObjekt              = require('./fuegeBeziehungenZuObjekt'),
+    bereiteBeziehungspartnerFuerImportVor = require('./bereiteBeziehungspartnerFuerImportVor');
 
 // $ wird benötigt wegen .alert
 module.exports = function () {
     var anzahlFelder,
-        anzahlBeziehungssammlungen                     = window.adb.bsDatensaetze.length,
-        anzBsImportiert                                = 0,
+        anzahlBeziehungssammlungen                = window.adb.bsDatensaetze.length,
+        anzBsImportiert                           = 0,
         erste10Ids,
         nr,
         rueckmeldung,
-        rueckmeldungLinks                              = "",
-        bsImportiert                                   = $.Deferred(),
-        $BsName                                        = $("#BsName"),
-        $BsBeschreibung                                = $("#BsBeschreibung"),
-        $BsDatenstand                                  = $("#BsDatenstand"),
-        $BsLink                                        = $("#BsLink"),
-        $BsUrsprungsBs                                 = $("#BsUrsprungsBs"),
-        $importieren_bs_import_ausfuehren_hinweis      = $("#importieren_bs_import_ausfuehren_hinweis"),
-        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
-        fuegeBeziehungenZuObjekt                       = require('./fuegeBeziehungenZuObjekt'),
-        bereiteBeziehungspartnerFuerImportVor          = require('./bereiteBeziehungspartnerFuerImportVor');
+        rueckmeldungLinks                         = "",
+        bsImportiert                              = $.Deferred(),
+        $BsName                                   = $("#bsName"),
+        $BsBeschreibung                           = $("#bsBeschreibung"),
+        $BsDatenstand                             = $("#bsDatenstand"),
+        $BsLink                                   = $("#bsLink"),
+        $bsUrsprungsBs                            = $("#bsUrsprungsBs"),
+        $importierenBsImportAusfuehrenHinweis     = $("#importierenBsImportAusfuehrenHinweis"),
+        $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText");
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$BsName.val()) {
-        $("#meldung_individuell_label").html("Namen fehlt");
-        $("#meldung_individuell_text").html("Bitte geben Sie der Beziehungssammlung einen Namen");
-        $("#meldung_individuell_schliessen").html("schliessen");
-        $('#meldung_individuell').modal();
+        $("#meldungIndividuellLabel").html("Namen fehlt");
+        $("#meldungIndividuellText").html("Bitte geben Sie der Beziehungssammlung einen Namen");
+        $("#meldungIndividuellSchliessen").html("schliessen");
+        $('#meldungIndividuell').modal();
         $BsName.focus();
         return false;
     }
 
     // Rückmeldung in Feld anzeigen:
     rueckmeldung = "Die Daten werden importiert...";
-    $importieren_bs_import_ausfuehren_hinweis_text.html(rueckmeldung);
-    $importieren_bs_import_ausfuehren_hinweis
+    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
+    $importierenBsImportAusfuehrenHinweis
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info");
-    $importieren_bs_import_ausfuehren_hinweis.alert().show();
+    $importierenBsImportAusfuehrenHinweis.alert().show();
     $('html, body').animate({
-        scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
+        scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
     }, 2000);
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
@@ -55,26 +55,26 @@ module.exports = function () {
         var prozent = Math.round(anzBsImportiert / anzahlBeziehungssammlungen * 100),
             $db = $.couch.db('artendb');
 
-        $("#BsImportierenProgressbar")
+        $("#bsImportierenProgressbar")
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#BsImportierenProgressbarText").html(prozent + "%");
-        $importieren_bs_import_ausfuehren_hinweis
+        $("#bsImportierenProgressbarText").html(prozent + "%");
+        $importierenBsImportAusfuehrenHinweis
             .removeClass("alert-success")
             .removeClass("alert-danger")
             .addClass("alert-info")
             .show();
         rueckmeldung = "Die Daten werden importiert...<br>Die Indexe werden aktualisiert...";
-        $importieren_bs_import_ausfuehren_hinweis_text.html(rueckmeldung);
+        $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
         $('html, body').animate({
-            scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
+            scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
         }, 2000);
         if (anzBsImportiert === anzahlBeziehungssammlungen) {
             // Indices aktualisieren
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
-                    $importieren_bs_import_ausfuehren_hinweis
+                    $importierenBsImportAusfuehrenHinweis
                         .removeClass("alert-info")
                         .removeClass("alert-danger")
                         .addClass("alert-success")
@@ -82,11 +82,11 @@ module.exports = function () {
                     rueckmeldung = "Die Daten wurden importiert.<br>";
                     rueckmeldung += "Die Indexe wurden neu aufgebaut.<br><br>";
                     rueckmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    $importieren_bs_import_ausfuehren_hinweis_text.html(rueckmeldung + rueckmeldungLinks);
+                    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
                     // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
                     window.adb.rueckmeldungLinks = rueckmeldungLinks;
                     $('html, body').animate({
-                        scrollTop: $importieren_bs_import_ausfuehren_hinweis.offset().top
+                        scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
                     }, 2000);
                 },
                 error: function () {
@@ -118,8 +118,8 @@ module.exports = function () {
             if ($("#bsZusammenfassend").prop('checked')) {
                 bsVorlage.zusammenfassend = true;
             }
-            if ($BsUrsprungsBs.val()) {
-                bsVorlage.Ursprungsdatensammlung = $BsUrsprungsBs.val();
+            if ($bsUrsprungsBs.val()) {
+                bsVorlage.Ursprungsdatensammlung = $bsUrsprungsBs.val();
             }
             bsVorlage["importiert von"] = localStorage.Email;
             bsVorlage.Beziehungen = [];

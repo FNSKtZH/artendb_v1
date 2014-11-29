@@ -18,10 +18,10 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         dsbsVonObjekt,
         dsFelderObjekt,
         html,
-        _alt              = '';
+        alt              = '';
 
     if (formular === 'exportAlt') {
-        _alt = '_alt';
+        alt = 'Alt';
         // fürs alt muss die GUID nicht mitgeliefert werden
         $('#exportierenAltFelderWaehlenObjektId').prop('checked', false);
     }
@@ -48,7 +48,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         dsTyp = "Beziehung";
         // bei "felder wählen" soll man auch wählen können, ob pro Beziehung eine Zeile oder alle Beziehungen in ein Feld geschrieben werden sollen
         // das muss auch erklärt sein
-        htmlFelderWaehlen += '<h3>Beziehungssammlungen</h3><div class="export_zum_titel_gehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="showNextHidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export' + _alt + 'BezInZeilen" checked="checked" name="exportBezWie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export' + _alt + 'BezInFeldern" name="exportBezWie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
+        htmlFelderWaehlen += '<h3>Beziehungssammlungen</h3><div class="exportZumTitelGehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="showNextHidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export' + alt + 'BezInZeilen" checked="checked" name="exportBezWie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export' + alt + 'BezInFeldern" name="exportBezWie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>';
         htmlFiltern += '<h3>Beziehungssammlungen</h3>';
     }
     _.each(taxonomien, function (taxonomie, index) {
@@ -99,7 +99,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         // aber nur, wenn mehr als 1 Feld existieren
         if ((taxonomie.Eigenschaften && _.size(taxonomie.Eigenschaften) > 1) || (taxonomie.Beziehungen && _.size(taxonomie.Beziehungen) > 1)) {
             htmlFelderWaehlen += '<div class="checkbox"><label>';
-            htmlFelderWaehlen += '<input class="feldWaehlenAlleVonDs' + _alt + '" type="checkbox" DsTyp="' + dsTyp + '" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
+            htmlFelderWaehlen += '<input class="feldWaehlenAlleVonDs' + alt + '" type="checkbox" DsTyp="' + dsTyp + '" Datensammlung="' + taxonomie.Name + '"><em>alle</em>';
             htmlFelderWaehlen += '</div></label>';
         }
         htmlFelderWaehlen += '<div class="felderspalte">';
@@ -167,7 +167,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         } else {
             $("#exportieren_altFelderWaehlenFelderliste").append(htmlFelderWaehlen);
             // Rückmeldung ausblenden
-            $("#exportieren_altFelderWaehlenHinweisText").hide();
+            $("#exportierenaltFelderWaehlenHinweisText").hide();
         }
     }
 };

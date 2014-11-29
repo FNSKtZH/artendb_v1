@@ -3,10 +3,10 @@
 
 var $ = require('jquery');
 
-module.exports = function (that, _alt) {
+module.exports = function (that, alt) {
     var count = 0;
 
-    $("#export" + _alt)
+    $("#export" + alt)
         .find(".exportierenFelderWaehlenFelderliste")
         .find(".feldWaehlen")
         .each(function () {

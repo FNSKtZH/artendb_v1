@@ -30,7 +30,7 @@ module.exports = function () {
                 .alert()
                 .hide();
         }, 30000);
-        $("#BsName")
+        $("#bsName")
             .val("")
             .focus();
     } else {

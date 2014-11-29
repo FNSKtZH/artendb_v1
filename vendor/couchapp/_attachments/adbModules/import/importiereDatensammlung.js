@@ -4,8 +4,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                          = require('underscore'),
+    $                          = require('jquery'),
+    fuegeDatensammlungZuObjekt = require('./fuegeDatensammlungZuObjekt');
 
 // $ wird benötigt wegen .modal
 module.exports = function () {
@@ -14,28 +15,27 @@ module.exports = function () {
         anzDs             = window.adb.dsDatensaetze.length,
         // Der Verlauf soll angezeigt werden, daher braucht es einen zähler
         anzDsImportiert   = 0,
-        DsImportiert      = $.Deferred(),
-        $DsName           = $("#DsName"),
-        $DsBeschreibung   = $("#DsBeschreibung"),
+        dsImportiert      = $.Deferred(),
+        $dsName           = $("#dsName"),
+        $dsBeschreibung   = $("#dsBeschreibung"),
         nr,
         rueckmeldungLinks = "",
         rueckmeldung,
-        $DsDatenstand     = $("#DsDatenstand"),
-        $DsLink           = $("#DsLink"),
-        $DsUrsprungsDs    = $("#DsUrsprungsDs"),
-        $importieren_ds_import_ausfuehren_hinweis      = $("#importieren_ds_import_ausfuehren_hinweis"),
-        $importieren_ds_import_ausfuehren_hinweis_text = $("#importieren_ds_import_ausfuehren_hinweis_text"),
+        $dsDatenstand     = $("#dsDatenstand"),
+        $dsLink           = $("#dsLink"),
+        $dsUrsprungsDs    = $("#dsUrsprungsDs"),
+        $importierenDsImportAusfuehrenHinweis     = $("#importierenDsImportAusfuehrenHinweis"),
+        $importierenDsImportAusfuehrenHinweisText = $("#importierenDsImportAusfuehrenHinweisText"),
         erste10Ids,
-        dsDatensatzMitRichtigerId,
-        fuegeDatensammlungZuObjekt = require('./fuegeDatensammlungZuObjekt');
+        dsDatensatzMitRichtigerId;
 
     // prüfen, ob ein DsName erfasst wurde. Wenn nicht: melden
-    if (!$DsName.val()) {
-        $("#meldung_individuell_label").html("Namen fehlt");
-        $("#meldung_individuell_text").html("Bitte geben Sie der Datensammlung einen Namen");
-        $("#meldung_individuell_schliessen").html("schliessen");
-        $('#meldung_individuell').modal();
-        $DsName.focus();
+    if (!$dsName.val()) {
+        $("#meldungIndividuellLabel").html("Namen fehlt");
+        $("#meldungIndividuellText").html("Bitte geben Sie der Datensammlung einen Namen");
+        $("#meldungIndividuellSchliessen").html("schliessen");
+        $('#meldungIndividuell').modal();
+        $dsName.focus();
         return false;
     }
 
@@ -43,7 +43,7 @@ module.exports = function () {
     // versucht, view als Filter zu verwenden, oder besser, den expliziten Filter dsimport mit dsname als Kriterium
     // Ergebnis: bei view kamen alle changes, auch design doc. Bei dsimport kam nichts.
     /*var changes_options = {};
-    changes_options.dsname = $DsName.val();
+    changes_options.dsname = $dsName.val();
     changes_options.filter = "artendb/dsimport";
     window.adb.queryChangesStartingNow();
 
@@ -51,10 +51,10 @@ module.exports = function () {
     $(document).bind('longpoll-data', function (event, data) {
         anzDsImportiert = anzDsImportiert + data.results.length;
         var prozent = Math.round(anzDsImportiert/anzDs*100);
-        $("#DsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
+        $("#dsImportierenProgressbar").css('width', prozent +'%').attr('aria-valuenow', prozent);
         if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
             // Rückmeldung in Feld anzeigen:
-            $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
+            $importierenDsImportAusfuehrenHinweis.css('display', 'block');
         }
     });*/
 
@@ -64,30 +64,30 @@ module.exports = function () {
         var prozent = Math.round(anzDsImportiert / anzDs * 100),
             $db = $.couch.db('artendb');
 
-        $("#DsImportierenProgressbar")
+        $("#dsImportierenProgressbar")
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#DsImportierenProgressbarText").html(prozent + "%");
-        $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
+        $("#dsImportierenProgressbarText").html(prozent + "%");
+        $importierenDsImportAusfuehrenHinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
         rueckmeldung = "Die Daten wurden importiert.<br>Die Indexe werden aktualisiert...";
-        $importieren_ds_import_ausfuehren_hinweis_text.html(rueckmeldung);
+        $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung);
         $('html, body').animate({
-            scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+            scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
         }, 2000);
         if (anzDsImportiert === anzDs) {
             // die Indexe aktualisieren
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass views aktualisiert wurden
-                    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
+                    $importierenDsImportAusfuehrenHinweis.removeClass("alert-info").removeClass("alert-danger").addClass("alert-success");
                     rueckmeldung = "Die Daten wurden importiert.<br>";
                     rueckmeldung += "Die Indexe wurden aktualisiert.<br><br>";
                     rueckmeldung += "Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>";
-                    $importieren_ds_import_ausfuehren_hinweis_text.html(rueckmeldung + rueckmeldungLinks);
+                    $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
                     // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
                     window.adb.rueckmeldungLinks = rueckmeldungLinks;
                     $('html, body').animate({
-                        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+                        scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
                     }, 2000);
                 },
                 error: function () {
@@ -99,22 +99,22 @@ module.exports = function () {
     _.each(window.adb.dsDatensaetze, function (dsDatensatz) {
         // Datensammlung als Objekt gründen
         datensammlung = {};
-        datensammlung.Name = $DsName.val();
-        if ($DsBeschreibung.val()) {
-            datensammlung.Beschreibung = $DsBeschreibung.val();
+        datensammlung.Name = $dsName.val();
+        if ($dsBeschreibung.val()) {
+            datensammlung.Beschreibung = $dsBeschreibung.val();
         }
-        if ($DsDatenstand.val()) {
-            datensammlung.Datenstand = $DsDatenstand.val();
+        if ($dsDatenstand.val()) {
+            datensammlung.Datenstand = $dsDatenstand.val();
         }
-        if ($DsLink.val()) {
-            datensammlung.Link = $DsLink.val();
+        if ($dsLink.val()) {
+            datensammlung.Link = $dsLink.val();
         }
         // falls die Datensammlung zusammenfassend ist
-        if ($("#DsZusammenfassend").prop('checked')) {
+        if ($("#dsZusammenfassend").prop('checked')) {
             datensammlung.zusammenfassend = true;
         }
-        if ($DsUrsprungsDs.val()) {
-            datensammlung.Ursprungsdatensammlung = $DsUrsprungsDs.val();
+        if ($dsUrsprungsDs.val()) {
+            datensammlung.Ursprungsdatensammlung = $dsUrsprungsDs.val();
         }
         datensammlung["importiert von"] = localStorage.Email;
         // Felder der Datensammlung als Objekt gründen
@@ -181,12 +181,12 @@ module.exports = function () {
     });
 
     // Rückmeldung in Feld anzeigen
-    $importieren_ds_import_ausfuehren_hinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
+    $importierenDsImportAusfuehrenHinweis.removeClass("alert-success").removeClass("alert-danger").addClass("alert-info");
     rueckmeldung = "Die Daten werden importiert...";
-    $importieren_ds_import_ausfuehren_hinweis_text.html(rueckmeldung);
-    $importieren_ds_import_ausfuehren_hinweis.css('display', 'block');
+    $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung);
+    $importierenDsImportAusfuehrenHinweis.css('display', 'block');
     $('html, body').animate({
-        scrollTop: $importieren_ds_import_ausfuehren_hinweis.offset().top
+        scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
     }, 2000);
-    DsImportiert.resolve();
+    dsImportiert.resolve();
 };

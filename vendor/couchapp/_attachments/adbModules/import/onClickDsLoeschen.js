@@ -10,9 +10,9 @@ module.exports = function () {
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     // Rückmeldung anzeigen
-    $("#importieren_ds_ds_beschreiben_hinweis")
+    $("#importierenDsDsBeschreibenHinweis")
         .alert()
         .show()
         .html("Bitte warten: Die Datensammlung wird entfernt...");
-    entferneDatensammlungAusAllenObjekten($("#DsName").val());
+    entferneDatensammlungAusAllenObjekten($("#dsName").val());
 };

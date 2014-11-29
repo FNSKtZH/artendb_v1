@@ -8,9 +8,9 @@ var _                    = require('underscore'),
 module.exports = function () {
     var dsName         = this.value,
         waehlbar       = false,
-        $DsAnzDs       = $("#DsAnzDs"),
-        $DsAnzDsLabel  = $("#DsAnzDsLabel"),
-        $DsName        = $("#DsName"),
+        $dsAnzDs       = $("#dsAnzDs"),
+        $dsAnzDsLabel  = $("#dsAnzDsLabel"),
+        $dsName        = $("#dsName"),
         $importierenDsDsBeschreibenError = $("#importierenDsDsBeschreibenError");
 
     // allfälligen Alert schliessen
@@ -22,59 +22,62 @@ module.exports = function () {
     waehlbar = $("#" + this.id + " option:selected").attr("waehlbar") === "true" ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
-        $('#importierenDsDsBeschreibenCollapse textarea, #importierenDsDsBeschreibenCollapse input').each(function () {
+        $('#importierenDsDsBeschreibenCollapse').find('textarea').each(function () {
             $(this).val('');
         });
-        $DsAnzDs.html("");
-        $DsAnzDsLabel.html("");
+        $('#importierenDsDsBeschreibenCollapse').find('input').each(function () {
+            $(this).val('');
+        });
+        $dsAnzDs.html("");
+        $dsAnzDsLabel.html("");
         if (dsName) {
             _.each(window.adb.dsVonObjekten.rows, function (dsVonObjektenRow) {
                 if (dsVonObjektenRow.key[1] === dsName) {
-                    $DsName.val(dsName);
+                    $dsName.val(dsName);
                     _.each(dsVonObjektenRow.key[4], function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
-                            $("#DsUrsprungsDs").val(feldwert);
+                            $("#dsUrsprungsDs").val(feldwert);
                         } else if (feldname !== "importiert von") {
-                            $("#Ds" + feldname).val(feldwert);
+                            $("#ds" + feldname).val(feldwert);
                         }
                     });
                     if (dsVonObjektenRow.key[2] === true) {
-                        $("#DsZusammenfassend").prop('checked', true);
+                        $("#dsZusammenfassend").prop('checked', true);
                         // Feld für Ursprungs-DS anzeigen
-                        $("#DsUrsprungsDsDiv").show();
+                        $("#dsUrsprungsDsDiv").show();
                     } else {
                         // sicherstellen, dass der Haken im Feld entfernt wird, wenn nach der zusammenfassenden eine andere DS gewählt wird
-                        $("#DsZusammenfassend").prop('checked', false);
+                        $("#dsZusammenfassend").prop('checked', false);
                         // und Feld für Ursprungs-DS verstecken
-                        $("#DsUrsprungsDsDiv").hide();
+                        $("#dsUrsprungsDsDiv").hide();
                     }
                     // wenn die ds/bs kein "importiert von" hat ist der Wert null
                     // verhindern, dass null angezeigt wird
                     if (dsVonObjektenRow.key[3]) {
-                        $("#DsImportiertVon").val(dsVonObjektenRow.key[3]);
+                        $("#dsImportiertVon").val(dsVonObjektenRow.key[3]);
                     } else {
-                        $("#DsImportiertVon").val("");
+                        $("#dsImportiertVon").val("");
                     }
-                    $DsAnzDsLabel.html("Anzahl Arten/Lebensräume");
-                    $DsAnzDs.html(dsVonObjektenRow.value);
+                    $dsAnzDsLabel.html("Anzahl Arten/Lebensräume");
+                    $dsAnzDs.html(dsVonObjektenRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importierenDs')
                         .find('textarea')
                         .each(function () {
                             fitTextareaToContent(this, document.documentElement.clientHeight);
                         });
-                    $DsName.focus();
+                    $dsName.focus();
                 }
                 // löschen-Schaltfläche einblenden
-                $("#DsLoeschen").show();
+                $("#dsLoeschen").show();
             });
         } else {
             // löschen-Schaltfläche ausblenden
-            $("#DsLoeschen").hide();
+            $("#dsLoeschen").hide();
         }
     } else {
         // melden, dass diese BS nicht bearbeitet werden kann
-        $("#importieren_ds_ds_beschreiben_error_text")
+        $("#importierenDsDsBeschreibenErrorText")
             .html("Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.");
         $importierenDsDsBeschreibenError
             .alert()

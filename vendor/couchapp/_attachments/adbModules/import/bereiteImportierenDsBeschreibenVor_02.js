@@ -47,5 +47,5 @@ module.exports = function () {
         }
     });
     $("#dsWaehlen").html(html);
-    $("#DsUrsprungsDs").html(html);
+    $("#dsUrsprungsDs").html(html);
 };

@@ -49,7 +49,7 @@
                 <div id="menu-div">
                     <div id="gruppe_label">Gruppe wählen:</div>
                 </div>
-                <div id="Gruppe" class="btn-group" data-toggle="buttons">
+                <div id="gruppe" class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary gruppe" Gruppe="Fauna">
                         <input type="radio">Fauna
                     </label>
@@ -116,26 +116,26 @@
                                 <div class="form-group">
                                     <label class="control-label Email" for="emailArt">Email</label>
                                     <input type="email" id="emailArt" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisArt" class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div>
+                                    <div id="emailhinweisArt" class="controls Emailhinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label Passwort" for="passwortArt">Passwort</label>
                                     <input type="password" id="passwortArt" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisArt" class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
-                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
-                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
-                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                    <div id="passworthinweisArt" class="controls Passworthinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Art">Passwort bestätigen</label>
                                     <input type="password" id="passwort2Art" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisArt" class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschArt" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div>
+                                    <div id="passwort2hinweisArt" class="controls Passwort2hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2hinweisFalschArt" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
                                     <button id="anmelden_btn_art" class="btn btn-primary anmelden_btn">anmelden</button>
                                     <button id="abmelden_btn_art" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_art" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_erstellen_btn_art" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="konto_speichern_btn_art" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
                                 </div>
                                 <div id="art_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
@@ -162,26 +162,26 @@
                                 <div class="form-group Email">
                                     <label class="control-label Email" for="emailDs">Email</label>
                                     <input type="email" id="emailDs" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisDs" class="controls hinweis alert alert-danger Emailhinweis feld_in_formgroup">Bitte Email erfassen</div>
+                                    <div id="emailhinweisDs" class="controls hinweis alert alert-danger Emailhinweis feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group Passwort">
                                     <label class="control-label Passwort" for="passwortDs">Passwort</label>
                                     <input type="password" id="passwortDs" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisDs" class="controls hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
-                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
-                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
-                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                    <div id="passworthinweisDs" class="controls hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Ds">Passwort bestätigen</label>
                                     <input type="password" id="passwort2Ds" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisDs" class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweis">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschDs" class="controls hinweis alert alert-danger feld_in_formgroup Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
+                                    <div id="passwort2hinweisDs" class="controls hinweis alert alert-danger feldInFormgroup Passwort2hinweis">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2hinweisFalschDs" class="controls hinweis alert alert-danger feldInFormgroup Passwort2hinweisFalsch">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
                                     <button id="anmelden_btn_ds" class="btn btn-primary anmelden_btn">anmelden</button>
                                     <button id="abmelden_btn_ds" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_ds" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_erstellen_btn_ds" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="konto_speichern_btn_ds" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
                                 </div>
                                 <div id="importieren_ds_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
@@ -229,7 +229,7 @@
                                 </div>
                                 <div class="controls feld">
                                     <button type="button" class="btn btn-primary btn-default" id="DsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Eigenschaftensammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
-                                <div id="importieren_ds_ds_beschreiben_hinweis" class="alert alert-info"></div>
+                                <div id="importierenDsDsBeschreibenHinweis" class="alert alert-info"></div>
                                 </div>
                                 <hr>
                                 <div class="form-group">
@@ -264,10 +264,10 @@
                                     <label class="control-label" for="DsAnzDs" id="DsAnzDsLabel"></label>
                                     <div id="DsAnzDs" class="feldtext controls"></div>
                                 </div>
-                                <div id="importieren_ds_ds_beschreiben_hinweis2" class="alert alert-info"></div>
+                                <div id="importierenDsDsBeschreibenHinweis2" class="alert alert-info"></div>
                                 <div id="importierenDsDsBeschreibenError" class="alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importieren_ds_ds_beschreiben_error_text"></div>
+                                    <div id="importierenDsDsBeschreibenErrorText"></div>
                                 </div>
                             </div>
                         </div>
@@ -316,7 +316,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_ds_ids_identifizieren">
+                    <div class="panel panel-default" id="importierenDsIdsIdentifizieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="importieren_ds_panel" href="#importierenDsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
@@ -324,7 +324,7 @@
                         </div>
                         <div class="panel-collapse collapse" id="importierenDsIdsIdentifizierenCollapse">
                             <div class="panel-body">
-                                <div id="DsFelder_div" class="form-group"></div>
+                                <div id="dsFelderDiv" class="form-group"></div>
                                 <div class="form-group">
                                     <label class="control-label" for="DsId">zugehörige ID<br>in ArtenDb</label>
                                     <select multiple class="form-control controls input-sm" id="DsId" style="height:101px;">
@@ -354,9 +354,9 @@
                                     <div id="DsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id="DsImportierenProgressbarText"></span>
                                     </div>
                                 </div>
-                                <div id="importieren_ds_import_ausfuehren_hinweis" class="alert alert-info">
+                                <div id="importierenDsImportAusfuehrenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importieren_ds_import_ausfuehren_hinweis_text"></div>
+                                    <div id="importierenDsImportAusfuehrenHinweisText"></div>
                                 </div>
                             </div>
                         </div>
@@ -379,26 +379,26 @@
                                 <div class="form-group">
                                     <label class="control-label Email" for="emailBs">Email</label>
                                     <input type="email" id="emailBs" class="controls form-control Email" placeholder="Email" required>
-                                    <div id="emailhinweisBs" class="controls Emailhinweis hinweis alert alert-danger feld_in_formgroup">Bitte Email erfassen</div>
+                                    <div id="emailhinweisBs" class="controls Emailhinweis hinweis alert alert-danger feldInFormgroup">Bitte Email erfassen</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label Passwort" for="passwortBs">Passwort</label>
                                     <input type="password" id="passwortBs" class="controls form-control Passwort" placeholder="Passwort" required>
-                                    <div id="passworthinweisBs" class="controls Passworthinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort erfassen</div>
-                                    <div class="controls signup feld_in_formgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
-                                    <div class="controls signup feld_in_formgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
-                                    <div class="controls Passwort feld_in_formgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
+                                    <div id="passworthinweisBs" class="controls Passworthinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort erfassen</div>
+                                    <div class="controls signup feldInFormgroup">Vorsicht: Email und Passwort können später nicht mehr geändert werden!</div>
+                                    <div class="controls signup feldInFormgroup">Es wird eine verschlüsselte Version des Passworts gespeichert. Das Original kennt ausser Ihnen niemand.</div>
+                                    <div class="controls Passwort feldInFormgroup">Passwort vergessen? <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, möglichst mit derselben email-Adresse, die Sie für das Konto verwenden.</div>
                                 </div>
                                 <div class="form-group signup">
                                     <label class="control-label" for="passwort2Bs">Passwort bestätigen</label>
                                     <input type="password" id="passwort2Bs" class="controls form-control Passwort2" placeholder="Passwort bestätigen" required>
-                                    <div id="passwort2hinweisBs" class="controls Passwort2hinweis hinweis alert alert-danger feld_in_formgroup">Bitte Passwort bestätigen</div>
-                                    <div id="passwort2hinweisFalschBs" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feld_in_formgroup">Die Passwörter stimmen nicht überein</div>
+                                    <div id="passwort2hinweisBs" class="controls Passwort2hinweis hinweis alert alert-danger feldInFormgroup">Bitte Passwort bestätigen</div>
+                                    <div id="passwort2hinweisFalschBs" class="controls Passwort2hinweisFalsch hinweis alert alert-danger feldInFormgroup">Die Passwörter stimmen nicht überein</div>
                                 </div>
                                 <div class="controls feld" style="padding-bottom:6px;">
                                     <button id="anmelden_btn_bs" class="btn btn-primary anmelden_btn">anmelden</button>
                                     <button id="abmelden_btn_bs" class="btn btn-primary abmelden_btn" style="display:none;">abmelden</button>
-                                    <button id="konto_erstellen_btn_bs" class="btn btn-primary konto_erstellen_btn">neues Konto erstellen</button>
+                                    <button id="konto_erstellen_btn_bs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="konto_speichern_btn_bs" class="btn btn-primary konto_speichern_btn" style="display:none;">neues Konto speichern</button>
                                 </div>
                                 <div id="importieren_bs_anmelden_fehler_text" class="importieren_anmelden_fehler_text alert alert-danger feld"></div>
@@ -445,9 +445,9 @@
                                 </div>
                                 <div class="controls feld">
                                     <button type="button" class="btn btn-primary" id="BsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
-                                    <div id="importieren_bs_ds_beschreiben_hinweis" class="alert alert-info">
+                                    <div id="importierenBsDsBeschreibenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importieren_bs_ds_beschreiben_hinweis_text"></div>
+                                    <div id="importierenBsDsBeschreibenHinweisText"></div>
                                 </div>
                                 </div>
                                 <hr>
@@ -476,8 +476,8 @@
                                     <input type="checkbox" id="bsZusammenfassend">
                                 </div>
                                 <div class="form-group" id="bsUrsprungsBsDiv" style="display:none;">
-                                    <label class="control-label BsUrsprungsBs" for="BsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
-                                    <select class="form-control controls BsUrsprungsBs" id="BsUrsprungsBs"></select>
+                                    <label class="control-label bsUrsprungsBs" for="bsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
+                                    <select class="form-control controls bsUrsprungsBs" id="bsUrsprungsBs"></select>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="BsAnzDs" id="BsAnzDsLabel"></label>
@@ -542,7 +542,7 @@
                         </div>
                         <div class="panel-collapse collapse" id="importierenBsIdsIdentifizierenCollapse">
                             <div class="panel-body">
-                                <div id="BsFelder_div" class="form-group"></div>
+                                <div id="bsFelderDiv" class="form-group"></div>
                                 <div class="form-group">
                                     <label class="control-label" for="BsId">zugehörige ID in ArtenDb</label>
                                     <select multiple class="form-control controls" id="BsId" style="height:101px;">
@@ -573,9 +573,9 @@
                                         <span id="BsImportierenProgressbarText"></span>
                                     </div>
                                 </div>
-                                <div id="importieren_bs_import_ausfuehren_hinweis" class="alert alert-info">
+                                <div id="importierenBsImportAusfuehrenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importieren_bs_import_ausfuehren_hinweis_text"></div>
+                                    <div id="importierenBsImportAusfuehrenHinweisText"></div>
                                 </div>
                             </div>
                         </div>
@@ -584,12 +584,12 @@
             </form>
 
             <form id="export" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
-                <div id="exportieren_panel" class="panel-group">
+                <div id="exportierenPanel" class="panel-group">
                     <h4>Eigenschaften exportieren:</h4>
                     <div class="panel panel-default" id="exportieren_objekte_waehlen_gruppen">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_gruppen_collapse" data-parent="exportieren_panel" href="#exportieren_objekte_waehlen_gruppen_collapse">1. Gruppe(n) wählen</a>
+                                <a id="exportieren_objekte_waehlen_gruppen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_objekte_waehlen_gruppen_collapse" data-parent="exportierenPanel" href="#exportieren_objekte_waehlen_gruppen_collapse">1. Gruppe(n) wählen</a>
                             </h4>
                         </div>
                         <div class="collapse in" id="exportieren_objekte_waehlen_gruppen_collapse">
@@ -650,10 +650,10 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="exportieren_objekte_waehlen_ds">
+                    <div class="panel panel-default" id="exportierenObjekteWaehlenDs">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenObjekteWaehlenDsCollapse" data-parent="exportieren_panel" href="#exportierenObjekteWaehlenDsCollapse">2. filtern</a>
+                                <a id="exportieren_objekte_waehlen_ds_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenObjekteWaehlenDsCollapse" data-parent="exportierenPanel" href="#exportierenObjekteWaehlenDsCollapse">2. filtern</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="exportierenObjekteWaehlenDsCollapse">
@@ -690,10 +690,10 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="exportieren_felder_waehlen">
+                    <div class="panel panel-default" id="exportierenFelderWaehlen">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenFelderWaehlenCollapse" data-parent="exportieren_panel" href="#exportierenFelderWaehlenCollapse">3. Eigenschaften wählen</a>
+                                <a id="exportieren_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenFelderWaehlenCollapse" data-parent="exportierenPanel" href="#exportierenFelderWaehlenCollapse">3. Eigenschaften wählen</a>
                             </h4>
                         </div>
                         <div class="panel-collapse collapse" id="exportierenFelderWaehlenCollapse">
@@ -741,10 +741,10 @@
                         </div>
                     </div>
 
-                    <div id="exportieren_exportieren" class="panel panel-default">
+                    <div id="exportierenExportieren" class="panel panel-default">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenExportierenCollapse" data-parent="exportieren_panel" href="#exportierenExportierenCollapse">4. exportieren</a>
+                                <a id="exportieren_exportieren_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportierenExportierenCollapse" data-parent="exportierenPanel" href="#exportierenExportierenCollapse">4. exportieren</a>
                             </h4>
                         </div>
                         <div id="exportierenExportierenCollapse" class="panel-collapse collapse">
@@ -811,7 +811,7 @@
             <form id="exportAlt" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
                 <div id="exportieren_alt_panel" class="panel-group">
                     <h4>Eigenschaften für das Artenlistentool wählen:</h4>
-                    <div class="panel panel-default" id="exportieren_alt_felder_waehlen">
+                    <div class="panel panel-default" id="exportierenAltFelderWaehlen">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
                                 <a id="exportieren_alt_felder_waehlen_titel" class="accordion-toggle" data-toggle="collapse" data-target="#exportieren_alt_felder_waehlen_collapse" data-parent="exportieren_alt_panel" href="#exportieren_alt_felder_waehlen_collapse">1. Eigenschaften wählen</a>
@@ -847,7 +847,7 @@
                                     </div>
                                 </div>
                                 <div id="exportieren_altFelderWaehlenFelderliste" class="exportierenFelderWaehlenFelderliste"></div>
-                                <div id="exportieren_altFelderWaehlenHinweisText" class="alert alert-info">Eigenschaften werden ermittelt...</div>
+                                <div id="exportierenaltFelderWaehlenHinweisText" class="alert alert-info">Eigenschaften werden ermittelt...</div>
                             </div>
                         </div>
                     </div>
@@ -869,7 +869,7 @@
                                 </div>
                                 <div>URL:</div>
                                 <textarea class="form-control" id="exportierenAltExportierenUrl"></textarea>
-                                <div id="exportieren_altExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
+                                <div id="exportierenAltExportierenFilterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_altExportierenTabelle" class="tabelle exportierenExportierenTabelle"></div>
                                 <div id="exportieren_alt_exportieren_hinweis_text" class="alert alert-info"></div>
                                 <div id="exportieren_altExportierenErrorText" class="alert alert-danger alert-dismissable">
@@ -1021,32 +1021,32 @@
         </div>
     </div>
 
-    <div id="meldung_individuell" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="meldungIndividuell" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="meldung_individuell_label">Beispielstext</h3>
+                    <h3 id="meldungIndividuellLabel">Beispielstext</h3>
                 </div>
                 <div class="modal-body">
-                    <p id="meldung_individuell_text">Beispielstext</p>
+                    <p id="meldungIndividuellText">Beispielstext</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="meldung_individuell_schliessen">schliessen</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="meldungIndividuellSchliessen">schliessen</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="meldung_individuell_abschliessend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="meldungIndividuellAbschliessend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="meldung_individuell_abschliessend_label">Beispielstext</h3>
+                    <h3 id="meldungIndividuellAbschliessendLabel">Beispielstext</h3>
                 </div>
                 <div class="modal-body">
-                    <p id="meldung_individuell_abschliessend_text">Beispielstext</p>
+                    <p id="meldungIndividuellAbschliessendText">Beispielstext</p>
                 </div>
             </div>
         </div>
@@ -1070,7 +1070,7 @@
         </div>
     </div>
 
-    <div id="lr_parent_waehlen" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="lrParentWaehlen" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

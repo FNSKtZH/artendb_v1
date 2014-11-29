@@ -10,12 +10,12 @@ module.exports = function () {
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     // Rückmeldung anzeigen
-    $("#importieren_bs_ds_beschreiben_hinweis")
+    $("#importierenBsDsBeschreibenHinweis")
         .alert()
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info")
         .show();
-    $("#importieren_bs_ds_beschreiben_hinweis_text").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
-    entferneBeziehungssammlungAusAllenObjekten($("#BsName").val());
+    $("#importierenBsDsBeschreibenHinweisText").html("Bitte warten: Die Beziehungssammlung wird entfernt...");
+    entferneBeziehungssammlungAusAllenObjekten($("#bsName").val());
 };

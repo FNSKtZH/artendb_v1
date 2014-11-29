@@ -68,7 +68,7 @@ module.exports = function (gewaehlteFelderObjekt) {
         success: function (data) {
             // alle Objekte in data window.adb.exportierenObjekte übergeben
             window.adb.exportierenObjekte = data;
-            baueTabelleFuerExportAuf('_alt');
+            baueTabelleFuerExportAuf('Alt');
         },
         error: function () {
             console.log('übergebeFilterFürExportFürAlt: error in $db.list');

@@ -6,8 +6,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                          = require('underscore'),
+    $                          = require('jquery'),
+    erstelleListeFuerFeldwahl2 = require('./erstelleListeFuerFeldwahl2');
 
 module.exports = function (exportGruppen, formular) {
 
@@ -18,9 +19,8 @@ module.exports = function (exportGruppen, formular) {
         $exportierenNurObjekteMitEigenschaftenCheckbox = $("#exportierenNurObjekteMitEigenschaftenCheckbox"),
         $exportierenNurObjekteMitEigenschaften         = $("#exportierenNurObjekteMitEigenschaften"),
         $exportierenExportierenCollapse                = $("#exportierenExportierenCollapse"),
-        $exportierenFelderWaehlenCollapse           = $("#exportierenFelderWaehlenCollapse"),
-        $exportierenObjekteWaehlenDsCollapse            = $("#exportierenObjekteWaehlenDsCollapse"),
-        erstelleListeFuerFeldwahl2                          = require('./erstelleListeFuerFeldwahl2');
+        $exportierenFelderWaehlenCollapse              = $("#exportierenFelderWaehlenCollapse"),
+        $exportierenObjekteWaehlenDsCollapse           = $("#exportierenObjekteWaehlenDsCollapse");
 
     // falls noch offen: folgende Bereiche schliessen
     if ($exportierenExportierenCollapse.is(':visible')) {
@@ -49,7 +49,7 @@ module.exports = function (exportGruppen, formular) {
     } else {
         // für alt
         // Beschäftigung melden
-        $('#exportieren_altFelderWaehlenHinweisText')
+        $('#exportierenaltFelderWaehlenHinweisText')
             .alert()
             .show();
     }

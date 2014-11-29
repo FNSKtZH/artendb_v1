@@ -12,18 +12,18 @@ var $                                               = require('jquery'),
 module.exports = function (that) {
     var ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
-        _alt     = '',
+        alt     = '',
         status   = $(that).prop('checked');
 
     if (formular === 'exportAlt') {
-        _alt = '_alt';
+        alt = 'Alt';
     }
 
     $('#' + formular + ' [datensammlung="' + ds + '"]').each(function () {
         if (status) {
             // Wenn ein Feld dazugefügt wurde...
             // ...kontrollieren, ob zuviele Beziehungen gewählt sind
-            if (pruefeObZuvieleExportfelderGewaehltSind(this, _alt) || pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, _alt)) {
+            if (pruefeObZuvieleExportfelderGewaehltSind(this, alt) || pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, alt)) {
                 // oops, zu viele Felder gewählt oder zu viele Beziehungen > aufhören
                 return;
             }
@@ -33,5 +33,5 @@ module.exports = function (that) {
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    exportZuruecksetzen(null, _alt);
+    exportZuruecksetzen(null, alt);
 };

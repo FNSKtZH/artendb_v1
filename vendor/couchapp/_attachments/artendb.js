@@ -185,8 +185,8 @@ window.adb.filtereFuerExport = function (direkt) {
 };
 
 // wird in index.html benutzt
-window.adb.exportZuruecksetzen = function (event, _alt) {
-    require('./adbModules/export/exportZuruecksetzen')(event, _alt);
+window.adb.exportZuruecksetzen = function (event, alt) {
+    require('./adbModules/export/exportZuruecksetzen')(event, alt);
 };
 
 // wird in index.html benutzt

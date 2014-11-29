@@ -3,12 +3,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                  = require('jquery'),
+    bereiteImportierenDsBeschreibenVor = require('./bereiteImportierenDsBeschreibenVor');
 
 module.exports = function () {
-    var bereiteImportierenDsBeschreibenVor = require('./bereiteImportierenDsBeschreibenVor');
-
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
     bereiteImportierenDsBeschreibenVor("ds");
-    $("#DsImportiertVon").val(localStorage.Email);
+    $("#dsImportiertVon").val(localStorage.Email);
 };

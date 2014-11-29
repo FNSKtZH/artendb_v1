@@ -1,36 +1,35 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $ = require('jquery'),
+    erstelleTabelle = require('../erstelleTabelle');
 
-module.exports = function (_alt) {
-    var erstelleTabelle = require('../erstelleTabelle');
-
-    _alt = _alt || '';
+module.exports = function (alt) {
+    alt = alt || '';
 
     if (window.adb.exportierenObjekte.length > 0) {
-        if (_alt) {
-            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_altExportierenTabelle", 'exportAlt');
+        if (alt) {
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportierenAltExportierenTabelle", 'exportAlt');
         } else {
             erstelleTabelle(window.adb.exportierenObjekte, "", "exportierenExportierenTabelle", null);
             $(".exportierenBtn").show();
         }
     } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
-        $("#exportieren" + _alt + "ExportierenErrorTextText")
+        $("#exportieren" + alt + "ExportierenErrorTextText")
             .html("Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an");
-        $("#exportieren" + _alt + "ExportierenErrorText")
+        $("#exportieren" + alt + "ExportierenErrorText")
             .alert()
             .show();
     }
-    if (!_alt) {
+    if (!alt) {
         // Panel-Titel an oberen Rand scrollen (bei alt schon ausgelöst)
         $('html, body').animate({
-            scrollTop: $("#exportieren_exportieren").offset().top - 6
+            scrollTop: $("#exportierenExportieren").offset().top - 6
         }, 2000);
     }
 
     // Beschäftigungsmeldung verstecken
-    $("#exportieren" + _alt + "ExportierenHinweisText")
+    $("#exportieren" + alt + "ExportierenHinweisText")
         .alert()
         .hide();
 };

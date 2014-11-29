@@ -16,25 +16,25 @@ var $                                               = require('jquery'),
 module.exports = function () {
     var that = this,
         formular = $(that).closest('form').attr('id'),
-        _alt = '';
+        alt = '';
 
     if (formular === 'exportAlt') {
-        _alt = '_alt';
+        alt = 'Alt';
     }
 
     if ($(that).prop('checked')) {
         // wenn das Feld hinzugefügt wurde: prüfen, ob zuviele Felder gewählt sind...
-        if (pruefeObZuvieleExportfelderGewaehltSind(that, _alt)) {
+        if (pruefeObZuvieleExportfelderGewaehltSind(that, alt)) {
             return false;
         }
         // ...oder zuviele Beziehungen
-        if (pruefeObZuvieleBeziehungssammlungenGewaehltSind(that, _alt)) {
+        if (pruefeObZuvieleBeziehungssammlungenGewaehltSind(that, alt)) {
             return false;
         }
     }
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    exportZuruecksetzen(null, _alt);
+    exportZuruecksetzen(null, alt);
     return true;
 };

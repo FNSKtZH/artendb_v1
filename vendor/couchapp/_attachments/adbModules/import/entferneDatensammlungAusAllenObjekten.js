@@ -11,7 +11,7 @@ module.exports = function (dsName) {
     var dsEntfernt = $.Deferred(),
         anzVorkommenVonDs,
         anzVorkommenVonDsEntfernt = 0,
-        $importieren_ds_ds_beschreiben_hinweis = $("#importieren_ds_ds_beschreiben_hinweis"),
+        $importierenDsDsBeschreibenHinweis = $("#importierenDsDsBeschreibenHinweis"),
         $db = $.couch.db('artendb'),
         rueckmeldung,
         entferneDatensammlungAusDokument = require('./entferneDatensammlungAusDokument');
@@ -24,11 +24,11 @@ module.exports = function (dsName) {
             $(document).bind('adb.dsEntfernt', function () {
                 anzVorkommenVonDsEntfernt++;
                 rueckmeldung = "Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
-                $importieren_ds_ds_beschreiben_hinweis
+                $importierenDsDsBeschreibenHinweis
                     .removeClass("alert-success").removeClass("alert-danger").addClass("alert-info")
                     .html(rueckmeldung);
                 $('html, body').animate({
-                    scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
+                    scrollTop: $importierenDsDsBeschreibenHinweis.offset().top
                 }, 2000);
                 if (anzVorkommenVonDsEntfernt === anzVorkommenVonDs) {
                     // die Indexe aktualisieren
@@ -37,11 +37,11 @@ module.exports = function (dsName) {
                             // melden, dass Indexe aktualisiert wurden
                             rueckmeldung = "Die Eigenschaftensammlungen wurden entfernt.<br>";
                             rueckmeldung += "Die Indexe wurden aktualisiert.";
-                            $importieren_ds_ds_beschreiben_hinweis
+                            $importierenDsDsBeschreibenHinweis
                                 .removeClass("alert-info").removeClass("alert-danger").addClass("alert-success")
                                 .html(rueckmeldung);
                             $('html, body').animate({
-                                scrollTop: $importieren_ds_ds_beschreiben_hinweis.offset().top
+                                scrollTop: $importierenDsDsBeschreibenHinweis.offset().top
                             }, 2000);
                         }
                     });

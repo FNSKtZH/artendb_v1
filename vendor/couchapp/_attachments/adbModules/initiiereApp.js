@@ -27,7 +27,7 @@ module.exports = function () {
         $(".importieren_anmelden_titel").text("1. " + localStorage.Email + " ist angemeldet");
         $(".anmelden_btn").hide();
         $(".abmelden_btn").show();
-        $(".konto_erstellen_btn").hide();
+        $(".kontoErstellenBtn").hide();
         $(".konto_speichern_btn").hide();
     }
 };

@@ -94,26 +94,26 @@ module.exports = function () {
     $('#importierenDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
     $('#importierenBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
     $('#dsWaehlen')                              .on('change',            onChangeDsWaehlen);
-    $('#DsName')                                 .on('change',            onChangeDsName);
-    $('#DsImportiertVon')                        .on('change',            onChangeDsImportiertVon);
-    $('#DsZusammenfassend')                      .on('change',            onChangeDsZusammenfassend);
-    $('#DsFile')                                 .on('change',            onChangeDsFile);
-    $('#DsFelder')                               .on('change',            onChangeDsFelder);
-    $('#DsId')                                   .on('change',            onChangeDsId);
-    $('#DsLoeschen')                             .on('click',             onClickDsLoeschen);
-    $('#DsImportieren')                          .on('click',             onClickDsImportieren);
-    $('#DsEntfernen')                            .on('click',             onClickDsEntfernen);
+    $('#dsName')                                 .on('change',            onChangeDsName);
+    $('#dsImportiertVon')                        .on('change',            onChangeDsImportiertVon);
+    $('#dsZusammenfassend')                      .on('change',            onChangeDsZusammenfassend);
+    $('#dsFile')                                 .on('change',            onChangeDsFile);
+    $('#dsFelder')                               .on('change',            onChangeDsFelder);
+    $('#dsId')                                   .on('change',            onChangeDsId);
+    $('#dsLoeschen')                             .on('click',             onClickDsLoeschen);
+    $('#dsImportieren')                          .on('click',             onClickDsImportieren);
+    $('#dsEntfernen')                            .on('click',             onClickDsEntfernen);
     $('#importierenDs').on('click', '.panel-heading a',                   onClickPanelHeadingA);
     $('#bsWaehlen')                              .on('change',            onChangeBsWaehlen);
-    $('#BsName')                                 .on('change',            onChangeBsName);
+    $('#bsName')                                 .on('change',            onChangeBsName);
     $('#bsImportiertVon')                        .on('change',            onChangeBsImportiertVon);
     $('#bsZusammenfassend')                      .on('change',            onChangeBsZusammenfassend);
-    $('#BsFile')                                 .on('change',            onChangeBsFile);
-    $('#BsId')                                   .on('change',            onChangeBsId);
-    $('#BsFelder')                               .on('change',            onChangeBsFelder);
-    $('#BsImportieren')                          .on('click',             onClickBsImportieren);
-    $('#BsLoeschen')                             .on('click',             onClickBsLoeschen);
-    $('#BsEntfernen')                            .on('click',             onClickBsEntfernen);
+    $('#bsFile')                                 .on('change',            onChangeBsFile);
+    $('#bsId')                                   .on('change',            onChangeBsId);
+    $('#bsFelder')                               .on('change',            onChangeBsFelder);
+    $('#bsImportieren')                          .on('click',             onClickBsImportieren);
+    $('#bsLoeschen')                             .on('click',             onClickBsLoeschen);
+    $('#bsEntfernen')                            .on('click',             onClickBsEntfernen);
 
     /*
      * exportieren
@@ -158,7 +158,7 @@ module.exports = function () {
     });
     $('#exportierenObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportierenFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportieren_exportieren').on('show', window.adb.handleExportierenExportierenShow);
+    $('#exportierenExportieren').on('show', window.adb.handleExportierenExportierenShow);
 
     /*
      * exportieren für alt
@@ -167,7 +167,7 @@ module.exports = function () {
         .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds_alt', window.adb.handleFeldWaehlenAlleVonDs)
         .on('change', '#export_altBezInZeilen,#export_altBezInFeldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
-            window.adb.exportZuruecksetzen(null, '_alt');
+            window.adb.exportZuruecksetzen(null, 'Alt');
         })
         .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function () {
             window.adb.scrollThisToTop(this, 6);
@@ -222,7 +222,7 @@ module.exports = function () {
         .on('keyup', '.Email', window.adb.handleEmailKeyup)
         .on('keyup', '.Passwort', window.adb.handlePasswortKeyup)
         .on('keyup', '.Passwort2', window.adb.handlePasswort2Keyup)
-        .on('click', '.konto_erstellen_btn', function (event) {
+        .on('click', '.kontoErstellenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht

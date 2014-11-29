@@ -37,7 +37,7 @@ module.exports = function (formularname) {
             $(".baum").hide();
             $(".treeBeschriftung").hide();
             // Gruppe Schaltfläche deaktivieren
-            $('#Gruppe').find('.active').removeClass('active');
+            $('#gruppe').find('.active').removeClass('active');
         }
         $form.each(function () {
             var that = $(this);

@@ -11,7 +11,7 @@ module.exports = function () {
     var guidArray = [],
         guidArray2 = [],
         guid,
-        bsName = $("#BsName").val(),
+        bsName = $("#bsName").val(),
         bsEntfernt = $.Deferred(),
         q,
         a,
@@ -21,18 +21,18 @@ module.exports = function () {
         anzVorkommenVonBs = window.adb.zuordbareDatensaetze.length,
         rueckmeldung,
         $db = $.couch.db('artendb'),
-        $importieren_bs_import_ausfuehren_hinweis = $("#importieren_bs_import_ausfuehren_hinweis"),
-        $importieren_bs_import_ausfuehren_hinweis_text = $("#importieren_bs_import_ausfuehren_hinweis_text"),
+        $importierenBsImportAusfuehrenHinweis = $("#importierenBsImportAusfuehrenHinweis"),
+        $importierenBsImportAusfuehrenHinweisText = $("#importierenBsImportAusfuehrenHinweisText"),
         entferneBeziehungssammlung_2 = require('./entferneBeziehungssammlung_2');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.bsEntfernt', function () {
         anzVorkommenVonBsEntfernt++;
         var prozent = Math.round((anzVorkommenVonBs - anzVorkommenVonBsEntfernt) / anzVorkommenVonBs * 100);
-        $("#BsImportierenProgressbar")
+        $("#bsImportierenProgressbar")
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $("#BsImportierenProgressbarText")
+        $("#bsImportierenProgressbarText")
             .html(prozent + "%");
 
         if (anzVorkommenVonBsEntfernt === anzVorkommenVonBs) {
@@ -40,7 +40,7 @@ module.exports = function () {
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
-                    $importieren_bs_import_ausfuehren_hinweis
+                    $importierenBsImportAusfuehrenHinweis
                         .removeClass("alert-info")
                         .removeClass("alert-danger")
                         .addClass("alert-success");
@@ -51,9 +51,9 @@ module.exports = function () {
                         rueckmeldung += window.adb.rueckmeldungLinks;
                         delete window.adb.rueckmeldungLinks;
                     }
-                    $importieren_bs_import_ausfuehren_hinweis_text.html(rueckmeldung);
+                    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
                     $('html, body').animate({
-                        scrollTop: $importieren_bs_import_ausfuehren_hinweis_text.offset().top
+                        scrollTop: $importierenBsImportAusfuehrenHinweisText.offset().top
                     }, 2000);
                 },
                 error: function () {
@@ -64,15 +64,15 @@ module.exports = function () {
     });
 
     // rückmelden, dass es passiert
-    $importieren_bs_import_ausfuehren_hinweis
+    $importierenBsImportAusfuehrenHinweis
         .removeClass("alert-success")
         .removeClass("alert-danger")
         .addClass("alert-info");
     rueckmeldung = "Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...";
-    $importieren_bs_import_ausfuehren_hinweis_text
+    $importierenBsImportAusfuehrenHinweisText
         .html(rueckmeldung);
     $('html, body').animate({
-        scrollTop: $importieren_bs_import_ausfuehren_hinweis_text.offset().top
+        scrollTop: $importierenBsImportAusfuehrenHinweisText.offset().top
     }, 2000);
 
     _.each(window.adb.bsDatensaetze, function (bs_datensatz) {
@@ -113,12 +113,12 @@ module.exports = function () {
             break;
         }
         // RückmeldungsLinks in Feld anzeigen:
-        $importieren_bs_import_ausfuehren_hinweis
+        $importierenBsImportAusfuehrenHinweis
             .removeClass("alert-success")
             .removeClass("alert-danger")
             .addClass("alert-info")
             .css('display', 'block');
-        $importieren_bs_import_ausfuehren_hinweis_text
+        $importierenBsImportAusfuehrenHinweisText
             .html("Die Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...");
     }
     return bsEntfernt.promise();

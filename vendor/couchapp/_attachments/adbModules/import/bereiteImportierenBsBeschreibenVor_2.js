@@ -46,5 +46,5 @@ module.exports = function () {
         }
     });
     $("#bsWaehlen").html(html);
-    $("#BsUrsprungsBs").html(html);
+    $("#bsUrsprungsBs").html(html);
 };

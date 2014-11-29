@@ -8,8 +8,8 @@ var $ = require('jquery');
 
 module.exports = function () {
     if ($(this).prop('checked')) {
-        $("#DsUrsprungsDsDiv").show();
+        $("#dsUrsprungsDsDiv").show();
     } else {
-        $("#DsUrsprungsDsDiv").hide();
+        $("#dsUrsprungsDsDiv").hide();
     }
 };

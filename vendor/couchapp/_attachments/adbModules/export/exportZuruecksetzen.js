@@ -1,25 +1,25 @@
 // event-handler liefern ungefragt den event mit
-// daher _alt als zweiter Variable
+// daher alt als zweiter Variable
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                     = require('jquery');
 
-module.exports = function (event, _alt) {
+module.exports = function (event, alt) {
     var $exportierenExportierenCollapse;
 
-    _alt = _alt || '';
-    $exportierenExportierenCollapse = $("#exportieren" + _alt + "ExportierenCollapse");
+    alt = alt || '';
+    $exportierenExportierenCollapse = $("#exportieren" + alt + "ExportierenCollapse");
 
 
     // Export ausblenden, falls sie eingeblendet war
     if ($exportierenExportierenCollapse.is(':visible')) {
         $exportierenExportierenCollapse.collapse('hide');
     }
-    $("#exportieren" + _alt + "ExportierenTabelle").hide();
-    $(".exportieren" + _alt + "ExportierenExportieren").hide();
-    $("#exportieren" + _alt + "ExportierenErrorText")
+    $("#exportieren" + alt + "ExportierenTabelle").hide();
+    $(".exportieren" + alt + "ExportierenExportieren").hide();
+    $("#exportieren" + alt + "ExportierenErrorText")
         .alert()
         .hide();
     $('#exportierenAltExportierenUrl').val('');

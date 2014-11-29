@@ -11,9 +11,9 @@ module.exports = function () {
     var that          = this,
         bsName        = that.value,
         waehlbar      = false,
-        $BsAnzDs      = $("#BsAnzDs"),
-        $BsAnzDsLabel = $("#BsAnzDsLabel"),
-        $BsName       = $("#BsName"),
+        $bsAnzDs      = $("#bsAnzDs"),
+        $bsAnzDsLabel = $("#bsAnzDsLabel"),
+        $bsName       = $("#bsName"),
         $importierenBsDsBeschreibenHinweis2 = $("#importierenBsDsBeschreibenHinweis2");
 
     // allfälligen Alert schliessen
@@ -28,17 +28,17 @@ module.exports = function () {
         $('#importierenBsDsBeschreibenCollapse textarea, #importierenBsDsBeschreibenCollapse input').each(function () {
             $(this).val('');
         });
-        $BsAnzDs.html("");
-        $BsAnzDsLabel.html("");
+        $bsAnzDs.html("");
+        $bsAnzDsLabel.html("");
         if (bsName) {
             _.each(window.adb.bsVonObjekten.rows, function (bsRow) {
                 if (bsRow.key[1] === bsName) {
-                    $BsName.val(bsName);
+                    $bsName.val(bsName);
                     _.each(bsRow, function (feldwert, feldname) {
                         if (feldname === "Ursprungsdatensammlung") {
-                            $("#BsUrsprungsBs").val(feldwert);
+                            $("#bsUrsprungsBs").val(feldwert);
                         } else if (feldname !== "importiert von") {
-                            $("#Bs" + feldname).val(feldwert);
+                            $("#bs" + feldname).val(feldwert);
                         }
                     });
                     if (bsRow.key[2] === true) {
@@ -56,20 +56,20 @@ module.exports = function () {
                     } else {
                         $("#bsImportiertVon").val("");
                     }
-                    $BsAnzDsLabel.html("Anzahl Arten/Lebensräume");
-                    $BsAnzDs.html(bsRow.value);
+                    $bsAnzDsLabel.html("Anzahl Arten/Lebensräume");
+                    $bsAnzDs.html(bsRow.value);
                     // dafür sorgen, dass textareas genug gross sind
                     $('#importierenBs').find('textarea').each(function () {
                         fitTextareaToContent(this, document.documentElement.clientHeight);
                     });
-                    $BsName.focus();
+                    $bsName.focus();
                 }
                 // löschen-Schaltfläche einblenden
-                $("#BsLoeschen").show();
+                $("#bsLoeschen").show();
             });
         } else {
             // löschen-Schaltfläche ausblenden
-            $("#BsLoeschen").hide();
+            $("#bsLoeschen").hide();
         }
     } else {
         // melden, dass diese BS nicht bearbeitet werden kann

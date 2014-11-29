@@ -21,7 +21,7 @@ module.exports = function (woher) {
     $(".Passwort").hide();
     $(".anmelden_btn").hide();
     $(".abmelden_btn").show();
-    $(".konto_erstellen_btn").hide();
+    $(".kontoErstellenBtn").hide();
     $(".konto_speichern_btn").hide();
     // in LR soll Anmelde-Accordion nicht sichtbar sein
     $("#art_anmelden").hide();

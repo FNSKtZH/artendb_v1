@@ -1,4 +1,4 @@
-// wenn exportieren_exportieren angezeigt wird
+// wenn exportierenExportieren angezeigt wird
 // zur Schaltfläche Vorschau scrollen
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/

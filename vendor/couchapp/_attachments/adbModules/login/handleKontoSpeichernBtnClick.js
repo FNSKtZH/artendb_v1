@@ -19,7 +19,7 @@ module.exports = function (that) {
         $(".signup").hide();
         $(".anmelden_btn").hide();
         $(".abmelden_btn").show();
-        $(".konto_erstellen_btn").hide();
+        $(".kontoErstellenBtn").hide();
         $(".konto_speichern_btn").hide();
     }
 };

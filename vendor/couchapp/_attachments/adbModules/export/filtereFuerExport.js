@@ -27,14 +27,14 @@ module.exports = function (direkt, fuerAlt) {
         anzDsGewaehlt             = 0,
         htmlFilterkriterien,
         formular                  = 'export',
-        _alt                      = '',
+        alt                      = '',
         $exportierenExportierenHinweisText;
 
     if (fuerAlt) {
         formular = 'exportAlt';
-        _alt     = '_alt';
+        alt     = 'Alt';
     }
-    $exportierenExportierenHinweisText = $("#exportieren" + _alt + "ExportierenHinweisText");
+    $exportierenExportierenHinweisText = $("#exportieren" + alt + "ExportierenHinweisText");
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {
@@ -140,9 +140,9 @@ module.exports = function (direkt, fuerAlt) {
         $exportierenExportierenHinweisText
             .alert()
             .hide();
-        $("#exportieren" + _alt + "ExportierenErrorTextText")
+        $("#exportieren" + alt + "ExportierenErrorTextText")
             .html("Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen");
-        $("#exportieren" + _alt + "ExportierenErrorText")
+        $("#exportieren" + alt + "ExportierenErrorText")
             .alert()
             .show();
         return;
@@ -181,7 +181,7 @@ module.exports = function (direkt, fuerAlt) {
             htmlFilterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";
         }
     }
-    $("#exportieren" + _alt + "ExportierenFilterkriterien")
+    $("#exportieren" + alt + "ExportierenFilterkriterien")
         .html(htmlFilterkriterien)
         .show();
 

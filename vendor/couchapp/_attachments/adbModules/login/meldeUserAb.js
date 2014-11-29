@@ -18,7 +18,7 @@ module.exports = function () {
     $(".anmelden_btn").show();
     $(".abmelden_btn").hide();
     // ausschalten, soll später bei Organisation möglich werden
-    // $(".konto_erstellen_btn").show();
+    // $(".kontoErstellenBtn").show();
     $(".konto_speichern_btn").hide();
     $("#art_anmelden").hide();
     schuetzeLrTaxonomie();

@@ -3,25 +3,25 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                  = require('jquery'),
+    erstelleBaum                       = require('../jstree/erstelleBaum'),
+    oeffneBaumZuId                     = require('../jstree/oeffneBaumZuId'),
+    aktualisiereHierarchieEinesNeuenLr = require('./aktualisiereHierarchieEinesNeuenLr');
 
-var returnFunction = function (that) {
+module.exports = function (that) {
     // prüfen, ob oberster Node gewählt wurde
-    var parentName                         = $(that).val(),
-        parentId                           = that.id,
-        parent                             = {},
-        object                             = {},
-        $db                                = $.couch.db('artendb'),
-        erstelleBaum                       = require('../jstree/erstelleBaum'),
-        oeffneBaumZuId                     = require('../jstree/oeffneBaumZuId'),
-        aktualisiereHierarchieEinesNeuenLr = require('./aktualisiereHierarchieEinesNeuenLr');
+    var parentName = $(that).val(),
+        parentId   = that.id,
+        parent     = {},
+        object     = {},
+        $db        = $.couch.db('artendb');
 
     // zuerst eine id holen
-    object._id = $.couch.newUUID(1);
-    object.Gruppe = "Lebensräume";
-    object.Typ = "Objekt";
+    object._id       = $.couch.newUUID(1);
+    object.Gruppe    = "Lebensräume";
+    object.Typ       = "Objekt";
     object.Taxonomie = {};
-    object.Taxonomie.Name = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
+    object.Taxonomie.Name          = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
     object.Taxonomie.Eigenschaften = {};
     object.Taxonomie.Eigenschaften.Taxonomie = "neue Taxonomie";    // wenn nicht Wurzel, setzen. Passiert in aktualisiereHierarchieEinesNeuenLr
     // wenn keine Wurzel: Label anzeigen
@@ -40,7 +40,7 @@ var returnFunction = function (that) {
     }*/
     object.Taxonomie.Eigenschaften.Beschreibung = "";
     object.Eigenschaftensammlungen = [];
-    object.Beziehungssammlungen = [];
+    object.Beziehungssammlungen    = [];
     // jetzt den parent erstellen
     // geht nicht vorher, weil die id bekannt sein muss
     if (parentId === "0") {
@@ -66,7 +66,7 @@ var returnFunction = function (that) {
             } else {
                 $.when(erstelleBaum()).then(function () {
                     oeffneBaumZuId(object._id);
-                    $('#lr_parent_waehlen').modal('hide');
+                    $('#lrParentWaehlen').modal('hide');
                 });
             }
         },
@@ -75,5 +75,3 @@ var returnFunction = function (that) {
         }
     });
 };
-
-module.exports = returnFunction;

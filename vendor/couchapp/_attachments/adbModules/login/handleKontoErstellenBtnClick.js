@@ -1,4 +1,4 @@
-// wenn .konto_erstellen_btn geklickt wird
+// wenn .kontoErstellenBtn geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -15,7 +15,7 @@ module.exports = function (that) {
     $(".signup").show();
     $(".anmelden_btn").hide();
     $(".abmelden_btn").hide();
-    $(".konto_erstellen_btn").hide();
+    $(".kontoErstellenBtn").hide();
     $(".konto_speichern_btn").show();
     $(".importieren_anmelden_fehler").hide();
     setTimeout(function () {

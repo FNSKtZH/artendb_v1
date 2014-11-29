@@ -4,31 +4,31 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var Uri = require('jsuri'),
-    $   = require('jquery');
+var Uri                               = require('jsuri'),
+    $                                 = require('jquery'),
+    initiiereArt                      = require('./initiiereArt'),
+    ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
+    convertToCorrectType              = require('./convertToCorrectType'),
+    erstelleLrLabelName               = require('./lr/erstelleLrLabelName'),
+    aktualisiereHierarchieEinesLrInklusiveSeinerChildren = require('./lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren');
 
 module.exports = function (feldwert, feldname) {
     // zuerst die id des Objekts holen
-    var uri = new Uri($(location).attr('href')),
-        id = uri.getQueryParamValue('id'),
+    var uri  = new Uri($(location).attr('href')),
+        id   = uri.getQueryParamValue('id'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
         // dann muss die id durch die id in der hash ersetzt werden
         hash = uri.anchor(),
         uri2,
         neuerNodetext,
-        $db                               = $.couch.db('artendb'),
-        initiiereArt                      = require('./initiiereArt'),
-        ersetzeUngueltigeZeichenInIdNamen = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        convertToCorrectType              = require('./convertToCorrectType'),
-        erstelleLrLabelName               = require('./lr/erstelleLrLabelName'),
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren = require('./lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren');
+        $db  = $.couch.db('artendb');
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {
-        $("#meldung_individuell_label").html("Fehler");
-        $("#meldung_individuell_text").html("Die letzte Änderung im Feld " + feldname + " wurde nicht gespeichert");
-        $("#meldung_individuell_schliessen").html("schliessen");
-        $('#meldung_individuell').modal();
+        $("#meldungIndividuellLabel").html("Fehler");
+        $("#meldungIndividuellText").html("Die letzte Änderung im Feld " + feldname + " wurde nicht gespeichert");
+        $("#meldungIndividuellSchliessen").html("schliessen");
+        $('#meldungIndividuell').modal();
     }
 
     if (hash) {
