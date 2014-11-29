@@ -7,9 +7,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-module.exports = function (woher) {
-    var zurueckZurAnmeldung = require('./zurueckZurAnmeldung');
+var zurueckZurAnmeldung = require('./zurueckZurAnmeldung');
 
+module.exports = function (woher) {
     if (!localStorage.Email) {
         setTimeout(function () {
             zurueckZurAnmeldung(woher);

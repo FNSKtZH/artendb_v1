@@ -3,16 +3,16 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $           = require('jquery'),
+    meldeUserAn = require('./meldeUserAn');
 
 module.exports = function (that) {
-    var meldeUserAn = require('./meldeUserAn'),
-        bsDs;
+    var bsDs;
 
     // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
     bsDs = that.id.substring(that.id.length - 2);
-    if (bsDs === "rt") {
-        bsDs = "art";
+    if (bsDs === 'rt') {
+        bsDs = 'art';
     }
     meldeUserAn(bsDs);
 };

@@ -1,46 +1,47 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $            = require('jquery'),
+    erstelleTree = require('./erstelleTree');
 
-var returnFunction = function () {
+module.exports = function () {
     var gruppe,
         gruppenbezeichnung,
         baumErstellt = $.Deferred(),
-        $db          = $.couch.db('artendb'),
-        erstelleTree = require('./erstelleTree');
+        $db          = $.couch.db('artendb');
+
     // alle Bäume ausblenden
-    $(".baum").hide();
+    $('.baum').hide();
     // alle Beschriftungen ausblenden
-    $(".treeBeschriftung").hide();
+    $('.treeBeschriftung').hide();
     // gewollte beschriften und sichtbar schalten
     switch (window.adb.gruppe) {
-    case "Fauna":
-        gruppe = "fauna";
-        gruppenbezeichnung = "Tiere";
+    case 'Fauna':
+        gruppe             = 'fauna';
+        gruppenbezeichnung = 'Tiere';
         break;
-    case "Flora":
-        gruppe = "flora";
-        gruppenbezeichnung = "Pflanzen";
+    case 'Flora':
+        gruppe             = 'flora';
+        gruppenbezeichnung = 'Pflanzen';
         break;
-    case "Moose":
-        gruppe = "moose";
-        gruppenbezeichnung = "Moose";
+    case 'Moose':
+        gruppe             = 'moose';
+        gruppenbezeichnung = 'Moose';
         break;
-    case "Macromycetes":
-        gruppe = "macromycetes";
-        gruppenbezeichnung = "Pilze";
+    case 'Macromycetes':
+        gruppe             = 'macromycetes';
+        gruppenbezeichnung = 'Pilze';
         break;
-    case "Lebensräume":
-        gruppe = "lr";
-        gruppenbezeichnung = "Lebensräume";
+    case 'Lebensräume':
+        gruppe             = 'lr';
+        gruppenbezeichnung = 'Lebensräume';
         break;
     }
 
     $db.view('artendb/' + gruppe + '_gruppiert', {
         success: function (data) {
             var anzahl_objekte = data.rows[0].value;
-            $("#tree" + window.adb.gruppe + "Beschriftung").html(anzahl_objekte + " " + gruppenbezeichnung);
+            $('#tree' + window.adb.gruppe + 'Beschriftung').html(anzahl_objekte + ' ' + gruppenbezeichnung);
             // eingeblendet wird die Beschriftung, wenn der Baum fertig ist im callback von function erstelleTree
         },
         error: function () {
@@ -54,5 +55,3 @@ var returnFunction = function () {
 
     return baumErstellt.promise();
 };
-
-module.exports = returnFunction;

@@ -19,7 +19,7 @@ module.exports = function (level, filter, gruppe, id) {
     }
 
     switch (gruppe) {
-    case "fauna":
+    case 'fauna':
         if (level > 4) {
             return null;
         }
@@ -36,7 +36,7 @@ module.exports = function (level, filter, gruppe, id) {
             level++;
         }
         break;
-    case "flora":
+    case 'flora':
         if (level > 3) {
             return null;
         }
@@ -49,7 +49,7 @@ module.exports = function (level, filter, gruppe, id) {
             level++;
         }
         break;
-    case "moose":
+    case 'moose':
         if (level > 4) {
             return null;
         }
@@ -62,7 +62,7 @@ module.exports = function (level, filter, gruppe, id) {
             level++;
         }
         break;
-    case "macromycetes":
+    case 'macromycetes':
         if (level > 2) {
             return null;
         }
@@ -76,14 +76,14 @@ module.exports = function (level, filter, gruppe, id) {
         }
         break;
     }
-    if (gruppe === "lr") {
-        url = $(location).attr("protocol") + '//' + $(location).attr("host") + '/artendb/_design/artendb/_list/baumLr/baumLr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
+    if (gruppe === 'lr') {
+        url = $(location).attr('protocol') + '//' + $(location).attr('host') + '/artendb/_design/artendb/_list/baumLr/baumLr?startkey=[' + level + ', "' + id + '"]&endkey=[' + level + ', "' + id + '",{},{},{},{}]&group_level=6';
     } else {
         gruppe = capitaliseFirstLetter(gruppe);
-        url = $(location).attr("protocol") + '//' + $(location).attr("host") + "/artendb/_design/artendb/_list/baum" + gruppe + "/baum" + gruppe + "?startkey=" + JSON.stringify(startkey) + "&endkey=" + JSON.stringify(endkey) + "&group_level=" + level;
+        url = $(location).attr('protocol') + '//' + $(location).attr('host') + '/artendb/_design/artendb/_list/baum' + gruppe + '/baum' + gruppe + '?startkey=' + JSON.stringify(startkey) + '&endkey=' + JSON.stringify(endkey) + '&group_level=' + level;
     }
     if (id2) {
-        url = url + "&id=true";
+        url = url + '&id=true';
     }
     return url;
 };

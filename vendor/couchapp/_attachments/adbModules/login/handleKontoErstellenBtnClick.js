@@ -9,16 +9,16 @@ var $                     = require('jquery'),
 module.exports = function (that) {
     var bsDs = that.id.substring(that.id.length - 2);
 
-    if (bsDs === "rt") {
-        bsDs = "art";
+    if (bsDs === 'rt') {
+        bsDs = 'art';
     }
-    $(".signup").show();
-    $(".anmeldenBtn").hide();
-    $(".abmeldenBtn").hide();
-    $(".kontoErstellenBtn").hide();
-    $(".kontoSpeichernBtn").show();
-    $(".importieren_anmelden_fehler").hide();
+    $('.signup').show();
+    $('.anmeldenBtn').hide();
+    $('.abmeldenBtn').hide();
+    $('.kontoErstellenBtn').hide();
+    $('.kontoSpeichernBtn').show();
+    $('.importierenAnmeldenFehler').hide();
     setTimeout(function () {
-        $("#email" + capitaliseFirstLetter(bsDs)).focus();
+        $('#email' + capitaliseFirstLetter(bsDs)).focus();
     }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
 };
