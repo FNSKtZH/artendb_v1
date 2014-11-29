@@ -54,7 +54,7 @@ module.exports = function (formularname) {
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?exportieren=true");
             break;
-        case 'export_alt':
+        case 'exportAlt':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?exportieren_fuer_artenlistentool=true");
             // ganze Breite nutzen (menu bleibt ausgeblendet)
@@ -64,7 +64,7 @@ module.exports = function (formularname) {
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?importieren_datensammlung=true");
             break;
-        case 'importieren_bs':
+        case 'importierenBs':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
             history.pushState(null, null, "index.html?importieren_beziehungssammlung=true");
             break;

@@ -10,7 +10,7 @@ module.exports = function (_alt) {
 
     if (window.adb.exportierenObjekte.length > 0) {
         if (_alt) {
-            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_alt_exportieren_tabelle", 'export_alt');
+            erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_alt_exportieren_tabelle", 'exportAlt');
         } else {
             erstelleTabelle(window.adb.exportierenObjekte, "", "exportieren_exportieren_tabelle", null);
             $(".exportieren_btn").show();

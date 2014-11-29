@@ -39,7 +39,7 @@ module.exports = function (that) {
     // eindeutige Liste der dsTypen erstellen
     bez_ds_filtered = _.union(bez_ds_filtered);
     if (bez_ds_filtered && bez_ds_filtered.length > 1) {
-        $('#meldung_zuviele_bs').modal();
+        $('#meldungZuvieleBs').modal();
         $(that).val("");
     } else {
         exportZuruecksetzen();

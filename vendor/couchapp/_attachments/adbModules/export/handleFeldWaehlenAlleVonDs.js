@@ -15,7 +15,7 @@ module.exports = function (that) {
         pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind'),
         exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
-    if (formular === 'export_alt') {
+    if (formular === 'exportAlt') {
         _alt = '_alt';
     }
 

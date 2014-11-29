@@ -1,7 +1,7 @@
 // baut im Formular "export" die Liste aller Eigenschaften auf
 // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
 // bekommt die Namen der Gruppen
-// formular ist im Standard export, wenn anders (z.B. export_alt), übergeben
+// formular ist im Standard export, wenn anders (z.B. exportAlt), übergeben
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -16,7 +16,7 @@ module.exports = function (exportGruppen, formular) {
         $db = $.couch.db('artendb'),
         $exportieren_objekte_waehlen_gruppen_hinweis_text   = $("#exportieren_objekte_waehlen_gruppen_hinweis_text"),
         $exportieren_nur_objekte_mit_eigenschaften_checkbox = $("#exportieren_nur_objekte_mit_eigenschaften_checkbox"),
-        $exportieren_nur_objekte_mit_eigenschaften          = $("#exportieren_nur_objekte_mit_eigenschaften"),
+        $exportierenNurObjekteMitEigenschaften          = $("#exportierenNurObjekteMitEigenschaften"),
         $exportieren_exportieren_collapse                   = $("#exportieren_exportieren_collapse"),
         $exportieren_felder_waehlen_collapse                = $("#exportieren_felder_waehlen_collapse"),
         $exportieren_objekte_waehlen_ds_collapse            = $("#exportieren_objekte_waehlen_ds_collapse"),
@@ -60,15 +60,15 @@ module.exports = function (exportGruppen, formular) {
     exportFelderArrays = [];
     /*if (exportGruppen.length > 1) {
         // wenn mehrere Gruppen gewählt werden
-        // Option exportieren_nur_objekte_mit_eigenschaften ausblenden
+        // Option exportierenNurObjekteMitEigenschaften ausblenden
         // und false setzen
         // sonst kommen nur die DS einer Gruppe
         $exportieren_nur_objekte_mit_eigenschaften_checkbox.addClass("adb-hidden");
-        $exportieren_nur_objekte_mit_eigenschaften.prop('checked', false);
+        $exportierenNurObjekteMitEigenschaften.prop('checked', false);
     } else {
         if ($exportieren_nur_objekte_mit_eigenschaften_checkbox.hasClass("adb-hidden")) {
             $exportieren_nur_objekte_mit_eigenschaften_checkbox.removeClass("adb-hidden")
-            $exportieren_nur_objekte_mit_eigenschaften.prop('checked', true);
+            $exportierenNurObjekteMitEigenschaften.prop('checked', true);
         }
     }*/
     if (exportGruppen.length > 0) {
@@ -98,7 +98,7 @@ module.exports = function (exportGruppen, formular) {
             .removeClass("alert-success")
             .addClass("alert-danger");
         // Felder entfernen
-        $("#export").find(".exportieren_felder_waehlen_felderliste")
+        $("#export").find(".exportierenFelderWaehlenFelderliste")
             .html("");
         $("#exportieren_objekte_waehlen_ds_felderliste")
             .html("");

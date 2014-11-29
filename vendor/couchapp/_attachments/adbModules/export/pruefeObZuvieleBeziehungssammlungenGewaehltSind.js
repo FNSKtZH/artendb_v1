@@ -6,22 +6,22 @@ var $ = require('jquery'),
 
 module.exports = function (that, _alt) {
     if ($("#export" + _alt + "_bez_in_zeilen").prop('checked')) {
-        var bez_ds_checked = [];
+        var bezDsChecked = [];
         $("#export" + _alt)
-            .find(" .exportieren_felder_waehlen_felderliste")
-            .find(".feld_waehlen")
+            .find(" .exportierenFelderWaehlenFelderliste")
+            .find(".feldWaehlen")
             .each(function () {
                 if ($(this).prop('checked')) {
                     if ($(this).attr('dstyp') === "Beziehung") {
-                        bez_ds_checked.push($(this).attr('datensammlung'));
+                        bezDsChecked.push($(this).attr('datensammlung'));
                     }
                 }
             });
 
         // eindeutige Liste der dsTypen erstellen
-        bez_ds_checked = _.union(bez_ds_checked);
-        if (bez_ds_checked && bez_ds_checked.length > 1) {
-            $('#meldung_zuviele_bs').modal();
+        bezDsChecked = _.union(bezDsChecked);
+        if (bezDsChecked && bezDsChecked.length > 1) {
+            $('#meldungZuvieleBs').modal();
             $(that).prop('checked', false);
             return true;
         }

@@ -10,7 +10,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         viewName,
         listName,
         gruppenliste = gruppen.split(","),
-        format       = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
+        format       = $('input[name="exportierenExportierenFormat"]:checked').val() || 'xlsx';
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
@@ -25,7 +25,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
             viewName = (gruppenliste[0] === "Lebensräume" ? "lr_mit_synonymen" : gruppenliste[0].toLowerCase() + "_mit_synonymen");
         }
     } else {
-        listName = "export_direkt";
+        listName = "exportDirekt";
         if (gruppenliste.length > 1) {
             viewName = "all_docs";
         } else {
@@ -36,14 +36,14 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
 
     queryParam = listName + "/" + viewName + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen + "&format=" + format;
 
-    if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anzDsGewaehlt > 0) {
+    if ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0) {
         // prüfen, ob mindestens ein Feld aus ds gewählt ist
         // wenn ja: true, sonst false
         queryParam += "&nurObjekteMitEigenschaften=true";
     } else {
         queryParam += "&nurObjekteMitEigenschaften=false";
     }
-    if ($("#export_bez_in_zeilen").prop('checked')) {
+    if ($("#exportBezInZeilen").prop('checked')) {
         queryParam += "&bezInZeilen=true";
     } else {
         queryParam += "&bezInZeilen=false";

@@ -24,8 +24,8 @@ module.exports = function (gewaehlteFelderObjekt) {
         view = 'alt_arten_mit_synonymen';
     } else {
         // list
-        queryParam = "export_alt";
-        list = 'artendb/export_alt';
+        queryParam = "exportAlt";
+        list = 'artendb/exportAlt';
         // view
         queryParam += "/alt_arten";
         view = 'alt_arten';
@@ -36,7 +36,7 @@ module.exports = function (gewaehlteFelderObjekt) {
     view += '?include_docs=true';
 
     // Beziehungen in Zeilen oder in Spalte
-    if ($("#export_bez_in_zeilen").prop('checked')) {
+    if ($("#exportBezInZeilen").prop('checked')) {
         queryParam += "&bezInZeilen=true";
         view += "&bezInZeilen=true";
     } else {

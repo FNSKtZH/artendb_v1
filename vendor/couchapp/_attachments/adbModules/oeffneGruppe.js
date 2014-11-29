@@ -1,16 +1,16 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $            = require('jquery'),
+    erstelleBaum = require('./jstree/erstelleBaum');
 
 module.exports = function (gruppe) {
-    var treeMitteilung,
-        erstelleBaum = require('./jstree/erstelleBaum');
+    var treeMitteilung;
 
     // gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
     window.adb.gruppe = gruppe;
     $(".suchfeld").val("");
-    $("#Gruppe_label").html("Gruppe:");
+    $("#gruppeLabel").html("Gruppe:");
     $(".suchen")
         .hide()
         .val("");

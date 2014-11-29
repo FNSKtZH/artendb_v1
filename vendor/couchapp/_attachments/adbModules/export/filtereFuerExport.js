@@ -28,13 +28,13 @@ module.exports = function (direkt, fuerAlt) {
         htmlFilterkriterien,
         formular                  = 'export',
         _alt                      = '',
-        $exportieren_exportieren_hinweis_text;
+        $exportierenExportierenHinweisText;
 
     if (fuerAlt) {
-        formular = 'export_alt';
+        formular = 'exportAlt';
         _alt     = '_alt';
     }
-    $exportieren_exportieren_hinweis_text = $("#exportieren" + _alt + "_exportieren_hinweis_text");
+    $exportierenExportierenHinweisText = $("#exportieren" + _alt + "_exportieren_hinweis_text");
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {
@@ -44,19 +44,19 @@ module.exports = function (direkt, fuerAlt) {
     // Beschäftigung melden
     // nicht nötig für ALT, da sehr schnell
     if (!direkt) {
-        $exportieren_exportieren_hinweis_text
+        $exportierenExportierenHinweisText
             .alert()
             .show()
             .html('Die Daten werden vorbereitet...');
         // zum Hinweistext scrollen
         $('html, body').animate({
-            scrollTop: $exportieren_exportieren_hinweis_text.offset().top
+            scrollTop: $exportierenExportierenHinweisText.offset().top
         }, 2000);
     }
 
     // gewählte Gruppen ermitteln
     if (!fuerAlt) {
-        $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
+        $(".exportierenDsObjekteWaehlenGruppe").each(function () {
             if ($(this).prop('checked')) {
                 gruppenArray.push($(this).attr('view'));
                 if (gruppen) {
@@ -106,7 +106,7 @@ module.exports = function (direkt, fuerAlt) {
     filterkriterienObjekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
-    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feld_waehlen").each(function () {
+    $("#" + formular).find(".exportieren_felder_waehlen_objekt_feld.feldWaehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
@@ -115,7 +115,7 @@ module.exports = function (direkt, fuerAlt) {
             gewaehlteFelder.push(feldObjekt);
         }
     });
-    $("#" + formular).find(".exportieren_felder_waehlen_felderliste").find(".feld_waehlen").each(function () {
+    $("#" + formular).find(".exportierenFelderWaehlenFelderliste").find(".feldWaehlen").each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
@@ -136,7 +136,7 @@ module.exports = function (direkt, fuerAlt) {
     // Wenn keine Felder gewählt sind: Melden und aufhören
     if (gewaehlteFelderObjekt.felder.length === 0) {
         // Beschäftigungsmeldung verstecken
-        $exportieren_exportieren_hinweis_text
+        $exportierenExportierenHinweisText
             .alert()
             .hide();
         $("#exportieren" + _alt + "_exportieren_error_text_text")
@@ -174,7 +174,7 @@ module.exports = function (direkt, fuerAlt) {
         // wenn Filterkriterien erfasst wurde, werden sowieso nur Datensätze angezeigt, in denen Daten vorkommen
         // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
         // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden
-        if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked')) {
+        if ($("#exportierenNurObjekteMitEigenschaften").prop('checked')) {
             htmlFilterkriterien += "<li>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</li>";
         } else {
             htmlFilterkriterien += "<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>";

@@ -2,7 +2,7 @@
 // und den div, in dem die Tabelle eingefügt werden soll
 // plus einen div, in dem die Liste der Felder angzeigt wird (falls dieser div mitgeliefert wird)
 // baut damit eine Tabelle auf und fügt sie in den übergebenen div ein
-// formular: wenn Aufruf von export_alt kommt, werden nur die ersten 10 Datensätze angezeigt
+// formular: wenn Aufruf von exportAlt kommt, werden nur die ersten 10 Datensätze angezeigt
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -17,7 +17,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
         erste10Ds,
         $tabellenDiv = $("#" + tabellenDiv);
 
-    if (!formular || formular !== 'export_alt') {
+    if (!formular || formular !== 'exportAlt') {
         if (datensaetze.length > 10) {
             html += "Vorschau der ersten 10 von " + datensaetze.length + " Datensätzen:";
         } else if (datensaetze.length > 1) {
@@ -25,7 +25,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
         } else {
             html += "Vorschau des einzigen Datensatzes:";
         }
-    } else if (formular && formular === 'export_alt') {
+    } else if (formular && formular === 'exportAlt') {
         html += "Vorschau der ersten 10 Datensätze:";
     }
 
@@ -49,7 +49,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // nur die ersten 10 Datensätze anzeigen
     erste10Ds = _.first(datensaetze, 10);
 
-    if (formular === 'export_alt') {
+    if (formular === 'exportAlt') {
         // die obligatorischen Felder müssen immer enthalten sein
         // sonst fehlen in der Tabelle oder Titelzeile Zellen
         _.each(erste10Ds, function (ds) {

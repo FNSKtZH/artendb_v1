@@ -1,4 +1,4 @@
-// wenn exportieren_ds_objekte_waehlen_gruppe geändert wird
+// wenn exportierenDsObjekteWaehlenGruppe geändert wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

@@ -3,8 +3,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $   = require('jquery'),
-    Uri = require('Uri');
+var $                         = require('jquery'),
+    Uri                       = require('Uri'),
+    zeigeFormular             = require('./zeigeFormular'),
+    erstelleListeFuerFeldwahl = require('./export/erstelleListeFuerFeldwahl'),
+    oeffneBaumZuId            = require('./jstree/oeffneBaumZuId'),
+    erstelleBaum              = require('./jstree/erstelleBaum'),
+    blendeMenus               = require('./login/blendeMenus');
 
 module.exports = function () {
     // parameter der uri holen
@@ -18,12 +23,7 @@ module.exports = function () {
         // dann muss die id durch die id in der hash ersetzt werden
         hash                          = uri.anchor(),
         uri2,
-        $db                           = $.couch.db('artendb'),
-        zeigeFormular                 = require('./zeigeFormular'),
-        erstelleListeFuerFeldwahl     = require('./export/erstelleListeFuerFeldwahl'),
-        oeffneBaumZuId                = require('./jstree/oeffneBaumZuId'),
-        erstelleBaum                  = require('./jstree/erstelleBaum'),
-        blendeMenus                   = require('./login/blendeMenus');
+        $db                           = $.couch.db('artendb');
 
     if (hash) {
         uri2 = new Uri(hash);
@@ -47,7 +47,7 @@ module.exports = function () {
                 $(".baum.jstree").jstree("deselect_all");
                 // den richtigen Button aktivieren
                 $('[gruppe="' + objekt.Gruppe + '"]').button('toggle');
-                $("#Gruppe_label").html("Gruppe:");
+                $("#gruppeLabel").html("Gruppe:");
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum()).then(function () {
                     oeffneBaumZuId(id);
@@ -62,17 +62,17 @@ module.exports = function () {
     }
     if (exportierenFuerAlt) {
         // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
-        if (!$('#export_alt').is(':visible')) {
-            zeigeFormular('export_alt');
+        if (!$('#exportAlt').is(':visible')) {
+            zeigeFormular('exportAlt');
             window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
-            erstelleListeFuerFeldwahl(['Fauna', 'Flora'], 'export_alt');
+            erstelleListeFuerFeldwahl(['Fauna', 'Flora'], 'exportAlt');
         }
     }
     if (importierenDatensammlung) {
         zeigeFormular('importierenDs');
     }
     if (importierenBeziehungssammlung) {
-        zeigeFormular('importieren_bs');
+        zeigeFormular('importierenBs');
     }
 
     // dafür sorgen, dass die passenden Menus angezeigt werden

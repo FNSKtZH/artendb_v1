@@ -32,7 +32,6 @@ module.exports = function (id) {
             // aber Beziehungssammlungen aufteilen
             if (art.Beziehungssammlungen.length > 0) {
                 _.each(art.Beziehungssammlungen, function (beziehungssammlung) {
-                    console.log('beziehungssammlung.Typ: ', beziehungssammlung.Typ);
                     if (beziehungssammlung.Typ === undefined) {
                         artBeziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
@@ -86,7 +85,7 @@ module.exports = function (id) {
             }
             // Beziehungssammlungen von synonymen Arten
             if (guidsVonSynonymen.length > 0) {
-                $db.view('artendb/all_docs?keys=' + JSON.stringify(guidsVonSynonymen) + 'include_docs=true', {
+                $db.view('artendb/all_docs?keys=' + JSON.stringify(guidsVonSynonymen) + '&include_docs=true', {
                     success: function (data) {
                         var synonymeArt;
                         _.each(data.rows, function (dataRow) {

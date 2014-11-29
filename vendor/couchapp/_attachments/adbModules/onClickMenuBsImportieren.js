@@ -5,15 +5,14 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                  = require('jquery'),
+    zeigeFormular      = require('./zeigeFormular'),
+    pruefeAnmeldung    = require('./login/pruefeAnmeldung'),
+    isFileAPIAvailable = require('./isFileAPIAvailable');
 
 module.exports = function () {
-    var zeigeFormular      = require('./zeigeFormular'),
-        pruefeAnmeldung    = require('./login/pruefeAnmeldung'),
-        isFileAPIAvailable = require('./isFileAPIAvailable');
-
     if (isFileAPIAvailable()) {
-        zeigeFormular("importieren_bs");
+        zeigeFormular("importierenBs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("bs")) {
             $("#importieren_bs_ds_beschreiben_collapse").collapse('show');

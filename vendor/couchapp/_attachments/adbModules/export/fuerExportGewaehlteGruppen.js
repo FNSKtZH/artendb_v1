@@ -6,7 +6,7 @@ var $ = require('jquery');
 module.exports = function () {
     var gruppen = [];
 
-    $(".exportieren_ds_objekte_waehlen_gruppe").each(function () {
+    $(".exportierenDsObjekteWaehlenGruppe").each(function () {
         if ($(this).prop('checked')) {
             gruppen.push($(this).val());
         }

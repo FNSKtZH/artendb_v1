@@ -364,7 +364,7 @@
                 </div>        
             </form>
 
-            <form id="importieren_bs" class="form_importieren_bs form form-horizontal import" action="#" method="get" autocomplete="off">
+            <form id="importierenBs" class="form_importieren_bs form form-horizontal import" action="#" method="get" autocomplete="off">
                 <div id="importieren_bs_panel" class="panel-group">
                     <h4>Beziehungen importieren:</h4>
                     <div id="importieren_bs_anmelden" class="panel panel-default">
@@ -604,35 +604,35 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                        <input class="exportierenDsObjekteWaehlenGruppe" type="checkbox"
                                                view="fauna" value="Fauna">
                                         Fauna
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                        <input class="exportierenDsObjekteWaehlenGruppe" type="checkbox"
                                                view="flora" value="Flora">
                                         Flora
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                        <input class="exportierenDsObjekteWaehlenGruppe" type="checkbox"
                                                view="moose" value="Moose">
                                         Moose
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox"
+                                        <input class="exportierenDsObjekteWaehlenGruppe" type="checkbox"
                                                view="macromycetes" value="Macromycetes">
                                         Pilze
                                     </label>
                                 </div>
                                 <div class="checkbox" style="margin-bottom:5px;">
                                     <label>
-                                        <input class="exportieren_ds_objekte_waehlen_gruppe" type="checkbox" view="lr"
+                                        <input class="exportierenDsObjekteWaehlenGruppe" type="checkbox" view="lr"
                                                value="Lebensräume">
                                         Lebensräume
                                     </label>
@@ -712,7 +712,7 @@
                                 </div-->
                                 <div id="exportieren_nur_objekte_mit_eigenschaften_checkbox" class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="exportieren_nur_objekte_mit_eigenschaften" checked>
+                                        <input type="checkbox" id="exportierenNurObjekteMitEigenschaften" checked>
                                         <b>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</b><br>Entfernen Sie diese Option, um auch Datensätze zu exportieren, die nur Informationen zur Taxonomie enthalten
                                     </label>
                                 </div>
@@ -727,16 +727,16 @@
                                 <div class="felderspalte">
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                            <input id="exportieren_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                            <input id="exportieren_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
                                         </label>
                                     </div>
                                 </div>
-                                <div id="exportieren_felder_waehlen_felderliste" class="exportieren_felder_waehlen_felderliste"></div>
+                                <div id="exportierenFelderWaehlenFelderliste" class="exportierenFelderWaehlenFelderliste"></div>
                             </div>
                         </div>
                     </div>
@@ -759,16 +759,16 @@
                                 </div>
                                 <button id="exportieren_exportieren_exportieren" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip"  title="Empfohlen, da schnell. Funktioniert auf modernen Browsern">direkt herunterladen</button>
                                 <button id="exportieren_exportieren_exportieren_direkt" class="btn btn-primary exportieren_btn" style="display:none;" data-toggle="tooltip" title="Langsam. Funktioniert auch auf alten Browsern. Sorry: nur csv. Kein xlsx verfügbar">vom Server herunterladen</button>
-                                <div id="exportieren_exportieren_format">
+                                <div id="exportierenExportierenFormat">
                                     <p style="margin-bottom:0; margin-top:5px;"><b>Format:</b></p>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportieren_exportieren_format" value="xlsx">xlsx (Excel)
+                                            <input type="radio" id="exportieren_exportieren_exportieren_xlsx" checked="checked" name="exportierenExportierenFormat" value="xlsx">xlsx (Excel)
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportieren_exportieren_format" value="csv">csv (kommagetrennte Textdatei)
+                                            <input type="radio" id="exportieren_exportieren_exportieren_csv" name="exportierenExportierenFormat" value="csv">csv (kommagetrennte Textdatei)
                                         </label>
                                     </div>
                                 </div>
@@ -797,7 +797,7 @@
                                 </div>
                                 <div id="exportieren_exportieren_filterkriterien" class="adb-hidden" style="margin-top: 10px"></div>
                                 <div id="exportieren_exportieren_tabelle" class="tabelle exportieren_exportieren_tabelle" style="padding-top:7px;margin-bottom:7px;"></div>
-                                <div id="exportieren_exportieren_hinweis_text" class="alert alert-info"></div>
+                                <div id="exportierenExportierenHinweisText" class="alert alert-info"></div>
                                 <div id="exportieren_exportieren_error_text" class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     <span id="exportieren_exportieren_error_text_text"></span>
@@ -808,7 +808,7 @@
                 </div><!--panel-group-->
             </form>
 
-            <form id="export_alt" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
+            <form id="exportAlt" class="form_export form form-horizontal" action="#" method="get" autocomplete="off">
                 <div id="exportieren_alt_panel" class="panel-group">
                     <h4>Eigenschaften für das Artenlistentool wählen:</h4>
                     <div class="panel panel-default" id="exportieren_alt_felder_waehlen">
@@ -837,16 +837,16 @@
                                 <div class="felderspalte">
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_alt_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
+                                            <input id="exportieren_alt_felder_waehlen_objekt_id" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="GUID" value="GUID" checked>GUID
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="exportieren_alt_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feld_waehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
+                                            <input id="exportieren_alt_felder_waehlen_objekt_gruppe" class="exportieren_felder_waehlen_objekt_feld feldWaehlen" type="checkbox" feldname="Gruppe" value="Gruppe">Gruppe
                                         </label>
                                     </div>
                                 </div>
-                                <div id="exportieren_alt_felder_waehlen_felderliste" class="exportieren_felder_waehlen_felderliste"></div>
+                                <div id="exportieren_alt_felder_waehlen_felderliste" class="exportierenFelderWaehlenFelderliste"></div>
                                 <div id="exportieren_alt_felder_waehlen_hinweis_text" class="alert alert-info">Eigenschaften werden ermittelt...</div>
                             </div>
                         </div>
@@ -986,7 +986,7 @@
         </div>
     </div>
 
-    <div id="meldung_zuviele_exportfelder" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="meldungZuvieleExportfelder" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1004,7 +1004,7 @@
         </div>
     </div>
 
-    <div id="meldung_zuviele_bs" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="meldungZuvieleBs" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

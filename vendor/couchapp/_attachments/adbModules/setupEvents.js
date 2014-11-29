@@ -46,7 +46,8 @@ var $                                             = require('jquery'),
     onClickBsImportieren                          = require('./import/onClickBsImportieren'),
     onClickBsLoeschen                             = require('./import/onClickBsLoeschen'),
     onClickBsEntfernen                            = require('./import/onClickBsEntfernen'),
-    onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe');
+    onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe'),
+    onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen');
 
 module.exports = function () {
     var $body = $('body');
@@ -118,17 +119,17 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportieren_ds_objekte_waehlen_gruppe',          onChangeExportierenDsObjekteWaehlenGruppe)
-        .on('change', '.feld_waehlen',                          window.adb.handleFeldWaehlenChange)
+        .on('change', '.exportierenDsObjekteWaehlenGruppe',          onChangeExportierenDsObjekteWaehlenGruppe)
+        .on('change', '.feldWaehlen',                                   onChangeFeldWaehlen)
         .on('change', '.feld_waehlen_alle_von_ds',              window.adb.handleFeldWaehlenAlleVonDs)
         .on('change', '.export_feld_filtern',                   window.adb.handleExportFeldFilternChange)
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
         })
-        .on('click', '[name="exportieren_exportieren_format"]', window.adb.blendeFormatCsvTipps)
+        .on('click', '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
         .on('change', '.feld_waehlen_alle_von_ds', window.adb.exportZuruecksetzen);
-    $('#export_bez_in_zeilen,#export_bez_in_feldern,#exportierenSynonymInfos,#exportieren_nur_objekte_mit_eigenschaften').on('change', window.adb.exportZuruecksetzen);
+    $('#exportBezInZeilen,#export_bez_in_feldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
     $('#exportieren_objekte_Taxonomien_zusammenfassen').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
         // den event hier stoppen, nicht erst in der Funktion
@@ -162,8 +163,8 @@ module.exports = function () {
     /*
      * exportieren für alt
      */
-    $('#export_alt')
-        .on('change', '.feld_waehlen', window.adb.handleFeldWaehlenChange)
+    $('#exportAlt')
+        .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds_alt', window.adb.handleFeldWaehlenAlleVonDs)
         .on('change', '#export_alt_bez_in_zeilen,#export_alt_bez_in_feldern,#exportieren_alt_synonym_infos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
             window.adb.exportZuruecksetzen(null, '_alt');

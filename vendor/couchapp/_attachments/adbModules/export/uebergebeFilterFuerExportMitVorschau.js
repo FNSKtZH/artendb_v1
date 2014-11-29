@@ -13,7 +13,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         listName,
         queryParam,
         $db                 = $.couch.db('artendb'),
-        format              = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
+        format              = $('input[name="exportierenExportierenFormat"]:checked').val() || 'xlsx';
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
@@ -31,14 +31,14 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
             listName = "artendb/export";
             queryParam = gruppe + "?include_docs=true&filter=" + encodeURIComponent(JSON.stringify(filterkriterienObjekt)) + "&felder=" + encodeURIComponent(JSON.stringify(gewaehlteFelderObjekt)) + "&fasseTaxonomienZusammen=" + fTz + "&gruppen=" + gruppen;
         }
-        if ($("#exportieren_nur_objekte_mit_eigenschaften").prop('checked') && anzDsGewaehlt > 0) {
+        if ($("#exportierenNurObjekteMitEigenschaften").prop('checked') && anzDsGewaehlt > 0) {
             // prüfen, ob mindestens ein Feld aus ds gewählt ist
             // wenn ja: true, sonst false
             queryParam += "&nurObjekteMitEigenschaften=true";
         } else {
             queryParam += "&nurObjekteMitEigenschaften=false";
         }
-        if ($("#export_bez_in_zeilen").prop('checked')) {
+        if ($("#exportBezInZeilen").prop('checked')) {
             queryParam += "&bezInZeilen=true";
         } else {
             queryParam += "&bezInZeilen=false";
@@ -56,7 +56,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
                 if (anzGruppenAbgefragt === gruppenArray.length) {
                     // alle Gruppen wurden abgefragt, jetzt kann es weitergehen
                     // Ergebnis rückmelden
-                    $("#exportieren_exportieren_hinweis_text")
+                    $("#exportierenExportierenHinweisText")
                         .alert()
                         .show()
                         .html(window.adb.exportierenObjekte.length + " Objekte sind gewählt");

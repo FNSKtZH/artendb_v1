@@ -17,7 +17,7 @@ module.exports = function () {
         month,
         day,
         dateString,
-        format = $('input[name="exportieren_exportieren_format"]:checked').val() || 'xlsx';
+        format = $('input[name="exportierenExportierenFormat"]:checked').val() || 'xlsx';
 
     if (isFileAPIAvailable()) {
         d            = new Date();

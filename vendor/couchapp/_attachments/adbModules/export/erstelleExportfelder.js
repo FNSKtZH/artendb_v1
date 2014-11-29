@@ -1,6 +1,6 @@
 // übernimmt anfangs drei arrays: taxonomien, datensammlungen und beziehungssammlungen
 // verarbeitet immer den ersten array und ruft sich mit den übrigen selber wieder auf
-// formular: hier kommt 'export_alt', wenn die Felder für das ALT gewählt werden (sonst nichts)
+// formular: hier kommt 'exportAlt', wenn die Felder für das ALT gewählt werden (sonst nichts)
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -20,7 +20,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         _alt = '',
         ersetzeUngueltigeZeichenInIdNamen = require('../ersetzeUngueltigeZeichenInIdNamen');
 
-    if (formular === 'export_alt') {
+    if (formular === 'exportAlt') {
         _alt = '_alt';
         // fürs alt muss die GUID nicht mitgeliefert werden
         $('#exportieren_alt_felder_waehlen_objekt_id').prop('checked', false);
@@ -109,7 +109,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
         for (x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
             // felder wählen
             htmlFelderWaehlen += '<div class="checkbox"><label>';
-            htmlFelderWaehlen += '<input class="feld_waehlen" type="checkbox" DsTyp="' + dsTyp + '" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
+            htmlFelderWaehlen += '<input class="feldWaehlen" type="checkbox" DsTyp="' + dsTyp + '" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x;
             htmlFelderWaehlen += '</div></label>';
             // filtern
             htmlFiltern += '<div class="form-group">';
@@ -141,19 +141,19 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
     // html anfügen
     if (!formular || formular === 'export') {
         if (beziehungssammlungen) {
-            $("#exportieren_felder_waehlen_felderliste")
+            $("#exportierenFelderWaehlenFelderliste")
                 .html(htmlFelderWaehlen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .html(htmlFiltern);
             erstelleExportfelder(datensammlungen, beziehungssammlungen);
         } else if (datensammlungen) {
-            $("#exportieren_felder_waehlen_felderliste")
+            $("#exportierenFelderWaehlenFelderliste")
                 .append(htmlFelderWaehlen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .append(htmlFiltern);
             erstelleExportfelder(datensammlungen);
         } else {
-            $("#exportieren_felder_waehlen_felderliste")
+            $("#exportierenFelderWaehlenFelderliste")
                 .append(htmlFelderWaehlen);
             $("#exportieren_objekte_waehlen_ds_felderliste")
                 .append(htmlFiltern)
@@ -162,15 +162,15 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
                 });
         }
     }
-    if (formular === 'export_alt') {
+    if (formular === 'exportAlt') {
         if (beziehungssammlungen) {
             $("#exportieren_alt_felder_waehlen_felderliste")
                 .html(htmlFelderWaehlen);
-            erstelleExportfelder(datensammlungen, beziehungssammlungen, null, 'export_alt');
+            erstelleExportfelder(datensammlungen, beziehungssammlungen, null, 'exportAlt');
         } else if (datensammlungen) {
             $("#exportieren_alt_felder_waehlen_felderliste")
                 .append(htmlFelderWaehlen);
-            erstelleExportfelder(datensammlungen, null, null, 'export_alt');
+            erstelleExportfelder(datensammlungen, null, null, 'exportAlt');
         } else {
             $("#exportieren_alt_felder_waehlen_felderliste")
                 .append(htmlFelderWaehlen);
