@@ -1,4 +1,4 @@
-// wenn #exportierenExportierenExportieren geklickt wird
+// wenn #exportExportiereBtn geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -17,7 +17,7 @@ module.exports = function () {
         month,
         day,
         dateString,
-        format = $('input[name="exportierenExportierenFormat"]:checked').val() || 'xlsx';
+        format = $('input[name="exportExportFormat"]:checked').val() || 'xlsx';
 
     // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
     event.preventDefault ? event.preventDefault() : event.returnValue = false;

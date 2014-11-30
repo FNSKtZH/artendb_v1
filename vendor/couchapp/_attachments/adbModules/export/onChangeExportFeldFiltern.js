@@ -30,7 +30,7 @@ module.exports = function () {
         }
     }
 
-    $('#exportierenObjekteWaehlenDsCollapse')
+    $('#exportObjekteWaehlenDsCollapse')
         .find('.exportFeldFiltern')
         .each(function () {
             if ((this.value || this.value === 0) && $(this).attr('dstyp') === 'Beziehung') {

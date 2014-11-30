@@ -64,13 +64,13 @@ module.exports = function (exportFelderArrays, formular) {
 
     if (!formular || formular === 'export') {
         // kontrollieren, ob Taxonomien zusammengefasst werden
-        if ($('#exportierenObjekteTaxonomienZusammenfassen').hasClass('active')) {
+        if ($('#exportObjekteTaxonomienZusammenfassen').hasClass('active')) {
             hinweisTaxonomien = 'Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien sind zusammengefasst';
         } else {
             hinweisTaxonomien = 'Die Eigenschaften wurden aufgebaut<br>Alle Taxonomien werden einzeln dargestellt';
         }
         // Ergebnis rückmelden
-        $('#exportierenObjekteWaehlenGruppenHinweisText')
+        $('#exportObjekteWaehlenGruppenHinweisText')
             .alert()
             .removeClass('alert-info')
             .removeClass('alert-danger')

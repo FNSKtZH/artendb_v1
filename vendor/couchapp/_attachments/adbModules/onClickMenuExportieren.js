@@ -3,7 +3,7 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var zeigeFormular = require('../zeigeFormular');
+var zeigeFormular = require('./zeigeFormular');
 
 module.exports = function () {
     zeigeFormular('export');

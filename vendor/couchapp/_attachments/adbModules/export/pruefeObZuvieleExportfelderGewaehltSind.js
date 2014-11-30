@@ -7,7 +7,7 @@ module.exports = function (that, alt) {
     var count = 0;
 
     $('#export' + alt)
-        .find('.exportierenFelderWaehlenFelderliste')
+        .find('.exportFelderWaehlenFelderliste')
         .find('.feldWaehlen')
         .each(function () {
             if ($(this).prop('checked')) {

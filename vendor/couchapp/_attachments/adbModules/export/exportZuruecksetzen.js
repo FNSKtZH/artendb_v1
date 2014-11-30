@@ -7,20 +7,20 @@
 var $ = require('jquery');
 
 module.exports = function (event, alt) {
-    var $exportierenExportierenCollapse;
+    var $exportExportCollapse;
 
     alt = alt || '';
-    $exportierenExportierenCollapse = $('#exportieren' + alt + 'ExportierenCollapse');
+    $exportExportCollapse = $('#export' + alt + 'ExportCollapse');
 
 
     // Export ausblenden, falls sie eingeblendet war
-    if ($exportierenExportierenCollapse.is(':visible')) {
-        $exportierenExportierenCollapse.collapse('hide');
+    if ($exportExportCollapse.is(':visible')) {
+        $exportExportCollapse.collapse('hide');
     }
-    $('#exportieren' + alt + 'ExportierenTabelle').hide();
-    $('.exportieren' + alt + 'ExportierenExportieren').hide();
-    $('#exportieren' + alt + 'ExportierenErrorText')
+    $('#export' + alt + 'ExportTabelle').hide();
+    $('.export' + alt + 'ExportBtn').hide();
+    $('#export' + alt + 'ExportErrorText')
         .alert()
         .hide();
-    $('#exportierenAltExportierenUrl').val('');
+    $('#exportAltExportUrl').val('');
 };

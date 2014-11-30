@@ -28,13 +28,13 @@ module.exports = function (direkt, fuerAlt) {
         htmlFilterkriterien,
         formular                  = 'export',
         alt                       = '',
-        $exportierenExportierenHinweisText;
+        $exportExportHinweisText;
 
     if (fuerAlt) {
         formular = 'exportAlt';
         alt      = 'Alt';
     }
-    $exportierenExportierenHinweisText = $('#exportieren' + alt + 'ExportierenHinweisText');
+    $exportExportHinweisText = $('#export' + alt + 'ExportHinweisText');
 
     // kontrollieren, ob eine Gruppe gewählt wurde
     if (!fuerAlt && fuerExportGewaehlteGruppen().length === 0) {
@@ -44,19 +44,19 @@ module.exports = function (direkt, fuerAlt) {
     // Beschäftigung melden
     // nicht nötig für ALT, da sehr schnell
     if (!direkt) {
-        $exportierenExportierenHinweisText
+        $exportExportHinweisText
             .alert()
             .show()
             .html('Die Daten werden vorbereitet...');
         // zum Hinweistext scrollen
         $('html, body').animate({
-            scrollTop: $exportierenExportierenHinweisText.offset().top
+            scrollTop: $exportExportHinweisText.offset().top
         }, 2000);
     }
 
     // gewählte Gruppen ermitteln
     if (!fuerAlt) {
-        $('.exportierenDsObjekteWaehlenGruppe').each(function () {
+        $('.exportDsObjekteWaehlenGruppe').each(function () {
             if ($(this).prop('checked')) {
                 gruppenArray.push($(this).attr('view'));
                 if (gruppen) {
@@ -74,7 +74,7 @@ module.exports = function (direkt, fuerAlt) {
         // durch alle Filterfelder loopen
         // aber nur, wenn nicht für ALT exportiert wird
         // wenn ein Feld einen Wert enthält, danach filtern
-        $('#exportierenObjekteWaehlenDsCollapse').find('.exportFeldFiltern').each(function () {
+        $('#exportObjekteWaehlenDsCollapse').find('.exportFeldFiltern').each(function () {
             var that  = this,
                 $this = $(this);
 
@@ -107,7 +107,7 @@ module.exports = function (direkt, fuerAlt) {
     filterkriterienObjekt.filterkriterien = filterkriterien;
 
     // gewählte Felder ermitteln
-    $('#' + formular).find('.exportierenFelderWaehlenObjektFeld.feldWaehlen').each(function () {
+    $('#' + formular).find('.exportFelderWaehlenObjektFeld.feldWaehlen').each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
@@ -116,7 +116,7 @@ module.exports = function (direkt, fuerAlt) {
             gewaehlteFelder.push(feldObjekt);
         }
     });
-    $('#' + formular).find('.exportierenFelderWaehlenFelderliste').find('.feldWaehlen').each(function () {
+    $('#' + formular).find('.exportFelderWaehlenFelderliste').find('.feldWaehlen').each(function () {
         if ($(this).prop('checked')) {
             // feldObjekt erstellen
             var feldObjekt      = {};
@@ -137,12 +137,12 @@ module.exports = function (direkt, fuerAlt) {
     // Wenn keine Felder gewählt sind: Melden und aufhören
     if (gewaehlteFelderObjekt.felder.length === 0) {
         // Beschäftigungsmeldung verstecken
-        $exportierenExportierenHinweisText
+        $exportExportHinweisText
             .alert()
             .hide();
-        $('#exportieren' + alt + 'ExportierenErrorTextText')
+        $('#export' + alt + 'ExportErrorTextText')
             .html('Keine Eigenschaften gewählt<br>Bitte wählen Sie Eigenschaften, die exportiert werden sollen');
-        $('#exportieren' + alt + 'ExportierenErrorText')
+        $('#export' + alt + 'ExportErrorText')
             .alert()
             .show();
         return;
@@ -153,7 +153,7 @@ module.exports = function (direkt, fuerAlt) {
     if (fuerAlt) {
         htmlFilterkriterien  = 'Gewählte Option:<ul>';
     }
-    if ($('#exportierenSynonymInfos').prop('checked')) {
+    if ($('#exportSynonymInfos').prop('checked')) {
         htmlFilterkriterien += '<li>inklusive Informationen von Synonymen</li>';
     } else {
         htmlFilterkriterien += '<li>Informationen von Synonymen ignorieren</li>';
@@ -175,13 +175,13 @@ module.exports = function (direkt, fuerAlt) {
         // wenn Filterkriterien erfasst wurde, werden sowieso nur Datensätze angezeigt, in denen Daten vorkommen
         // daher ist die folgende Info nur interesssant, wenn kein Filter gesetzt wurde
         // und natürlich auch nur, wenn Felder aus DS/BS gewählt wurden
-        if ($('#exportierenNurObjekteMitEigenschaften').prop('checked')) {
+        if ($('#exportNurObjekteMitEigenschaften').prop('checked')) {
             htmlFilterkriterien += '<li>Nur Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen Informationen enthalten</li>';
         } else {
             htmlFilterkriterien += '<li>Auch Datensätze exportieren, die in den gewählten Eigenschaften- und Beziehungssammlungen keine Informationen enthalten</li>';
         }
     }
-    $('#exportieren' + alt + 'ExportierenFilterkriterien')
+    $('#export' + alt + 'ExportFilterkriterien')
         .html(htmlFilterkriterien)
         .show();
 

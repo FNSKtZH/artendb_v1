@@ -12,30 +12,30 @@ var _                          = require('underscore'),
 
 module.exports = function (exportGruppen, formular) {
 
-    var gruppen                                        = [],
+    var gruppen                                   = [],
         exportFelderArrays,
-        $db                                            = $.couch.db('artendb'),
-        $exportierenObjekteWaehlenGruppenHinweisText   = $('#exportierenObjekteWaehlenGruppenHinweisText'),
-        $exportierenNurObjekteMitEigenschaftenCheckbox = $('#exportierenNurObjekteMitEigenschaftenCheckbox'),
-        $exportierenNurObjekteMitEigenschaften         = $('#exportierenNurObjekteMitEigenschaften'),
-        $exportierenExportierenCollapse                = $('#exportierenExportierenCollapse'),
-        $exportierenFelderWaehlenCollapse              = $('#exportierenFelderWaehlenCollapse'),
-        $exportierenObjekteWaehlenDsCollapse           = $('#exportierenObjekteWaehlenDsCollapse');
+        $db                                       = $.couch.db('artendb'),
+        $exportObjekteWaehlenGruppenHinweisText   = $('#exportObjekteWaehlenGruppenHinweisText'),
+        $exportNurObjekteMitEigenschaftenCheckbox = $('#exportNurObjekteMitEigenschaftenCheckbox'),
+        $exportNurObjekteMitEigenschaften         = $('#exportNurObjekteMitEigenschaften'),
+        $exportExportCollapse                     = $('#exportExportCollapse'),
+        $exportFelderWaehlenCollapse              = $('#exportFelderWaehlenCollapse'),
+        $exportObjekteWaehlenDsCollapse           = $('#exportObjekteWaehlenDsCollapse');
 
     // falls noch offen: folgende Bereiche schliessen
-    if ($exportierenExportierenCollapse.is(':visible')) {
-        $exportierenExportierenCollapse.collapse('hide');
+    if ($exportExportCollapse.is(':visible')) {
+        $exportExportCollapse.collapse('hide');
     }
-    if ($exportierenFelderWaehlenCollapse.is(':visible')) {
-        $exportierenFelderWaehlenCollapse.collapse('hide');
+    if ($exportFelderWaehlenCollapse.is(':visible')) {
+        $exportFelderWaehlenCollapse.collapse('hide');
     }
-    if ($exportierenObjekteWaehlenDsCollapse.is(':visible')) {
-        $exportierenObjekteWaehlenDsCollapse.collapse('hide');
+    if ($exportObjekteWaehlenDsCollapse.is(':visible')) {
+        $exportObjekteWaehlenDsCollapse.collapse('hide');
     }
 
     if (!formular || formular === 'export') {
         // Beschäftigung melden
-        $exportierenObjekteWaehlenGruppenHinweisText
+        $exportObjekteWaehlenGruppenHinweisText
             .alert()
             .removeClass('alert-success')
             .removeClass('alert-danger')
@@ -44,12 +44,12 @@ module.exports = function (exportGruppen, formular) {
             .html('Eigenschaften werden ermittelt...');
         // scrollen, damit Hinweis sicher ganz sichtbar ist
         $('html, body').animate({
-            scrollTop: $exportierenObjekteWaehlenGruppenHinweisText.offset().top
+            scrollTop: $exportObjekteWaehlenGruppenHinweisText.offset().top
         }, 2000);
     } else {
         // für alt
         // Beschäftigung melden
-        $('#exportierenaltFelderWaehlenHinweisText')
+        $('#exportAltFelderWaehlenHinweisText')
             .alert()
             .show();
     }
@@ -60,15 +60,15 @@ module.exports = function (exportGruppen, formular) {
     exportFelderArrays = [];
     /*if (exportGruppen.length > 1) {
         // wenn mehrere Gruppen gewählt werden
-        // Option exportierenNurObjekteMitEigenschaften ausblenden
+        // Option exportNurObjekteMitEigenschaften ausblenden
         // und false setzen
         // sonst kommen nur die DS einer Gruppe
-        $exportierenNurObjekteMitEigenschaftenCheckbox.addClass('adb-hidden');
-        $exportierenNurObjekteMitEigenschaften.prop('checked', false);
+        $exportNurObjekteMitEigenschaftenCheckbox.addClass('adb-hidden');
+        $exportNurObjekteMitEigenschaften.prop('checked', false);
     } else {
-        if ($exportierenNurObjekteMitEigenschaftenCheckbox.hasClass('adb-hidden')) {
-            $exportierenNurObjekteMitEigenschaftenCheckbox.removeClass('adb-hidden')
-            $exportierenNurObjekteMitEigenschaften.prop('checked', true);
+        if ($exportNurObjekteMitEigenschaftenCheckbox.hasClass('adb-hidden')) {
+            $exportNurObjekteMitEigenschaftenCheckbox.removeClass('adb-hidden')
+            $exportNurObjekteMitEigenschaften.prop('checked', true);
         }
     }*/
     if (exportGruppen.length > 0) {
@@ -93,17 +93,17 @@ module.exports = function (exportGruppen, formular) {
         });
     } else {
         // letzte Rückmeldung anpassen
-        $exportierenObjekteWaehlenGruppenHinweisText.html('bitte eine Gruppe wählen')
+        $exportObjekteWaehlenGruppenHinweisText.html('bitte eine Gruppe wählen')
             .removeClass('alert-info')
             .removeClass('alert-success')
             .addClass('alert-danger');
         // Felder entfernen
-        $('#export').find('.exportierenFelderWaehlenFelderliste')
+        $('#export').find('.exportFelderWaehlenFelderliste')
             .html('');
-        $('#exportierenObjekteWaehlenDsFelderliste')
+        $('#exportObjekteWaehlenDsFelderliste')
             .html('');
     }
     // Tabelle ausblenden, falls sie eingeblendet war
-    $('.exportierenExportierenTabelle')
+    $('.exportExportTabelle')
         .hide();
 };

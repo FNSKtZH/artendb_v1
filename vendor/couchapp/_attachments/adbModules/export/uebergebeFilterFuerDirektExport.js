@@ -10,13 +10,13 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
         viewName,
         listName,
         gruppenliste = gruppen.split(','),
-        format       = $('input[name="exportierenExportierenFormat"]:checked').val() || 'xlsx';
+        format       = $('input[name="exportExportFormat"]:checked').val() || 'xlsx';
 
     // window.adb.fasseTaxonomienZusammen steuert, ob Taxonomien alle einzeln oder unter dem Titel Taxonomien zusammengefasst werden
     if (window.adb.fasseTaxonomienZusammen) {
         fTz = 'true';
     }
-    if ($('#exportierenSynonymInfos').prop('checked')) {
+    if ($('#exportSynonymInfos').prop('checked')) {
         listName = 'exportMitSynonymenDirekt';
         if (gruppenliste.length > 1) {
             viewName = 'all_docs_mit_synonymen';
@@ -38,7 +38,7 @@ module.exports = function (gruppen, gruppenArray, anzDsGewaehlt, filterkriterien
 
     // prüfen, ob mindestens ein Feld aus ds gewählt ist
     // wenn ja: true, sonst false
-    queryParam += ($('#exportierenNurObjekteMitEigenschaften').prop('checked') && anzDsGewaehlt > 0 ? '&nurObjekteMitEigenschaften=true' : '&nurObjekteMitEigenschaften=false');
+    queryParam += ($('#exportNurObjekteMitEigenschaften').prop('checked') && anzDsGewaehlt > 0 ? '&nurObjekteMitEigenschaften=true' : '&nurObjekteMitEigenschaften=false');
     queryParam += ($('#exportBezInZeilen').prop('checked') ? '&bezInZeilen=true' : '&bezInZeilen=false');
     window.open('_list/' + queryParam);
 };

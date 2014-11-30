@@ -9,7 +9,7 @@ module.exports = function (that, alt) {
         var bezDsChecked = [];
 
         $('#export' + alt)
-            .find(' .exportierenFelderWaehlenFelderliste')
+            .find(' .exportFelderWaehlenFelderliste')
             .find('.feldWaehlen')
             .each(function () {
                 if ($(this).prop('checked')) {

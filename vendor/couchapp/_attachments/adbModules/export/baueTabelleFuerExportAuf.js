@@ -9,27 +9,27 @@ module.exports = function (alt) {
 
     if (window.adb.exportierenObjekte.length > 0) {
         if (alt) {
-            erstelleTabelle(window.adb.exportierenObjekte, '', 'exportierenAltExportierenTabelle', 'exportAlt');
+            erstelleTabelle(window.adb.exportierenObjekte, '', 'exportAltExportTabelle', 'exportAlt');
         } else {
-            erstelleTabelle(window.adb.exportierenObjekte, '', 'exportierenExportierenTabelle', null);
-            $('.exportierenBtn').show();
+            erstelleTabelle(window.adb.exportierenObjekte, '', 'exportExportTabelle', null);
+            $('.exportBtn').show();
         }
     } else if (window.adb.exportierenObjekte && window.adb.exportierenObjekte.length === 0) {
-        $('#exportieren' + alt + 'ExportierenErrorTextText')
+        $('#export' + alt + 'ExportErrorTextText')
             .html('Keine Daten gefunden<br>Bitte passen Sie die Filterkriterien an');
-        $('#exportieren' + alt + 'ExportierenErrorText')
+        $('#export' + alt + 'ExportErrorText')
             .alert()
             .show();
     }
     if (!alt) {
         // Panel-Titel an oberen Rand scrollen (bei alt schon ausgelöst)
         $('html, body').animate({
-            scrollTop: $('#exportierenExportieren').offset().top - 6
+            scrollTop: $('#exportExport').offset().top - 6
         }, 2000);
     }
 
     // Beschäftigungsmeldung verstecken
-    $('#exportieren' + alt + 'ExportierenHinweisText')
+    $('#export' + alt + 'ExportHinweisText')
         .alert()
         .hide();
 };

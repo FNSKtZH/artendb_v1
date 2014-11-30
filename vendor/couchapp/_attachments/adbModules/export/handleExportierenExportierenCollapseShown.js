@@ -1,4 +1,4 @@
-// wenn #exportierenExportierenCollapse geöffnet wird
+// wenn #exportExportCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -10,28 +10,28 @@ var $                                            = require('jquery'),
 module.exports = function (that) {
     var fuerAlt = false;
 
-    if (that.id === 'exportieren_altExportierenCollapse') {
+    if (that.id === 'exportAltExportCollapse') {
         fuerAlt = true;
     }
 
-    // nur ausführen, wenn exportierenExportierenCollapse offen ist
+    // nur ausführen, wenn exportExportCollapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
-    if ($('#exportierenExportierenCollapse').is(':visible')) {
+    if ($('#exportExportCollapse').is(':visible')) {
         if (handleExportierenObjekteWaehlenCollapseShown(that)) {
             // Gruppe ist gewählt, weitermachen
 
             // Tabelle und Herunterladen-Schaltfläche ausblenden
-            $('.exportierenExportierenTabelle').hide();
-            $('.exportierenBtn').hide();
+            $('.exportExportTabelle').hide();
+            $('.exportBtn').hide();
 
             // filtert und baut danach die Vorschautabelle auf
             filtereFuerExport(null, fuerAlt);
         }
     }
-    if ($('#exportieren_altExportierenCollapse').is(':visible')) {
+    if ($('#exportAltExportCollapse').is(':visible')) {
         // Tabelle und Herunterladen-Schaltfläche ausblenden
-        $('.exportierenExportierenTabelle').hide();
-        $('.exportierenBtn').hide();
+        $('.exportExportTabelle').hide();
+        $('.exportBtn').hide();
         // filtert und baut danach die Vorschautabelle auf
         filtereFuerExport(null, fuerAlt);
     }

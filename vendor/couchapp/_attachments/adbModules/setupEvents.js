@@ -10,8 +10,7 @@ var $                                             = require('jquery'),
     onClickMenuAdmin                              = require('./onClickMenuAdmin'),
     onClickMenuDsImportieren                      = require('./onClickMenuDsImportieren'),
     onClickMenuBsImportieren                      = require('./onClickMenuBsImportieren'),
-    onClickExportieren                            = require('./export/onClickExportieren'),
-    onClickExportierenAlt                         = require('./export/onClickExportierenAlt'),
+    onClickMenuExportieren                        = require('./onClickMenuExportieren'),
     onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
     onClickAdminKorrigiereArtwertnameInFlora      = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
     onClickAdminKorrigiereDsNameChRoteListe1991   = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
@@ -77,8 +76,7 @@ module.exports = function () {
     $('#menuDsImportieren')                      .on('click',             onClickMenuDsImportieren);
     $('#bsImportieren')                          .on('click',             onClickMenuBsImportieren);
     $('#menuAdmin')                              .on('click',             onClickMenuAdmin);
-    $('#exportieren')                            .on('click',             onClickExportieren);
-    $('#exportierenAlt')                         .on('click',             onClickExportierenAlt);
+    $('#menuExportieren')                        .on('click',             onClickMenuExportieren);
 
     /*
      * admin
@@ -126,40 +124,43 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportierenDsObjekteWaehlenGruppe',               onChangeExportierenDsObjekteWaehlenGruppe)
+        .on('change', '.exportDsObjekteWaehlenGruppe',                    onChangeExportierenDsObjekteWaehlenGruppe)
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
-        .on('click',  '[name="exportierenExportierenFormat"]',            onClickExportierenFormat)
+        .on('click',  '[name="exportExportFormat"]',                      onClickExportierenFormat)
         .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
-    $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', exportZuruecksetzen);
-    $('#exportierenObjekteTaxonomienZusammenfassen').on('click',          onClickTaxonomienZusammenfassen);
-    $('#exportierenExportierenExportieren')     .on('click',              onClickExportierenExportierenExportieren);
-    $('#exportierenExportierenExportieren_direkt').on('click', function (event) {
+    $('#exportBezInZeilen,#exportBezInFeldern')
+        .on('change',                                                     exportZuruecksetzen);
+    $('#exportSynonymInfos,#exportNurObjekteMitEigenschaften')
+        .on('change',                                                     exportZuruecksetzen);
+    $('#exportObjekteTaxonomienZusammenfassen').on('click',               onClickTaxonomienZusammenfassen);
+    $('#exportExportiereBtn')                  .on('click',               onClickExportierenExportierenExportieren);
+    $('#exportExportiereDirekt').on('click', function (event) {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.filtereFuerExport('direkt');
     });
-    $('#exportierenExportierenCollapse').on('shown.bs.collapse', function () {
+    $('#exportExportCollapse').on('shown.bs.collapse', function () {
         window.adb.handleExportierenExportierenCollapseShown(this);
     });
-    $('#exportierenObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportierenFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportierenExportieren').on('show', window.adb.handleExportierenExportierenShow);
+    $('#exportObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+    $('#exportFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
+    $('#exportExport').on('show', window.adb.handleExportierenExportierenShow);
 
     /*
      * exportieren für alt
      */
     $('#exportAlt')
-        .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
-        .on('change', '.feld_waehlen_alle_von_ds_alt', onChangeFeldWaehlenAlleVonDs)
-        .on('change', '#export_altBezInZeilen,#export_altBezInFeldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
+        .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
+        .on('change', '.feldWaehlenAlleVonDsAlt',                         onChangeFeldWaehlenAlleVonDs)
+        .on('change', '#exportAltBezInZeilen,#exportAltBezInFeldern,#exportAltSynonymInfos,#exportAltNurObjekteMitEigenschaften,.feldWaehlenAlleVonDsAlt', function () {
             exportZuruecksetzen(null, 'Alt');
         })
-        .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function () {
+        .on('schown.bs.collapse', '#exportAltFelderWaehlenCollapse', function () {
             window.adb.scrollThisToTop(this, 6);
         })
-        .on('shown.bs.collapse', '#exportieren_altExportierenCollapse', function () {
+        .on('shown.bs.collapse', '#exportAltExportCollapse', function () {
             // mitteilen, dass für alt exportiert wird
             window.adb.handleExportierenExportierenCollapseShown(this);
             window.adb.scrollThisToTop(this, 6);
