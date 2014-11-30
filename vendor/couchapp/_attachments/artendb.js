@@ -160,11 +160,6 @@ window.adb.oeffneUri = function () {
 };
 
 // wird in index.html benutzt
-window.adb.filtereFuerExport = function (direkt) {
-    require('./adbModules/export/filtereFuerExport')(direkt);
-};
-
-// wird in index.html benutzt
 window.adb.initiiereApp = function () {
     require('./adbModules/initiiereApp')();
 };

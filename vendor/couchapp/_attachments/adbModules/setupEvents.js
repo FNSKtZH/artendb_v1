@@ -53,7 +53,8 @@ var $                                             = require('jquery'),
     exportZuruecksetzen                           = require('./export/exportZuruecksetzen'),
     onClickExportierenFormat                      = require('./export/onClickExportierenFormat'),
     onClickTaxonomienZusammenfassen               = require('./export/onClickTaxonomienZusammenfassen'),
-    onClickExportierenExportierenExportieren      = require('./export/onClickExportierenExportierenExportieren');
+    onClickExportierenExportierenExportieren      = require('./export/onClickExportierenExportierenExportieren'),
+    onClickExportiereDirekt                       = require('./export/onClickExportiereDirekt');
 
 module.exports = function () {
     var $body = $('body');
@@ -131,16 +132,12 @@ module.exports = function () {
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
         .on('click',  '[name="exportExportFormat"]',                      onClickExportierenFormat)
         .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
-    $('#exportBezInZeilen,#exportBezInFeldern')
-        .on('change',                                                     exportZuruecksetzen);
+    $('#exportBezInZeilen,#exportBezInFeldern') .on('change',             exportZuruecksetzen);
     $('#exportSynonymInfos,#exportNurObjekteMitEigenschaften')
         .on('change',                                                     exportZuruecksetzen);
-    $('#exportObjekteTaxonomienZusammenfassen').on('click',               onClickTaxonomienZusammenfassen);
-    $('#exportExportiereBtn')                  .on('click',               onClickExportierenExportierenExportieren);
-    $('#exportExportiereDirekt').on('click', function (event) {
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.filtereFuerExport('direkt');
-    });
+    $('#exportObjekteTaxonomienZusammenfassen') .on('click',              onClickTaxonomienZusammenfassen);
+    $('#exportExportiereBtn')                   .on('click',              onClickExportierenExportierenExportieren);
+    $('#exportExportiereDirekt')                .on('click',              onClickExportiereDirekt);
     $('#exportExportCollapse').on('shown.bs.collapse', function () {
         window.adb.handleExportierenExportierenCollapseShown(this);
     });
