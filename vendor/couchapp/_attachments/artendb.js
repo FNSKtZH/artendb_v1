@@ -20,11 +20,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportFeldFilternChange = function () {
-    require('./adbModules/export/handleExportFeldFilternChange')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleExportierenExportierenShow = function () {
     require('./adbModules/export/handleExportierenExportierenShow')();
 };

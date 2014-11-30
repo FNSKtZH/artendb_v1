@@ -9,8 +9,9 @@ var $                   = require('jquery'),
     _                   = require('underscore'),
     exportZuruecksetzen = require('./exportZuruecksetzen');
 
-module.exports = function (that) {
-    var $that         = $(that),
+module.exports = function () {
+    var that          = this,
+        $that         = $(this),
         bezDsFiltered = [];
 
     // die Checkboxen sollen drei Werte annehmen können:

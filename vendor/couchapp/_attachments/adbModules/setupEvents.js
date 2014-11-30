@@ -48,7 +48,8 @@ var $                                             = require('jquery'),
     onClickBsEntfernen                            = require('./import/onClickBsEntfernen'),
     onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe'),
     onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen'),
-    onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs');
+    onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs'),
+    onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern');
 
 module.exports = function () {
     var $body = $('body');
@@ -123,7 +124,7 @@ module.exports = function () {
         .on('change', '.exportierenDsObjekteWaehlenGruppe',               onChangeExportierenDsObjekteWaehlenGruppe)
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
-        .on('change', '.exportFeldFiltern',                   window.adb.handleExportFeldFilternChange)
+        .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
