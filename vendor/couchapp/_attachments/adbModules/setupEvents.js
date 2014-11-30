@@ -51,7 +51,8 @@ var $                                             = require('jquery'),
     onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs'),
     onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern'),
     onClickPanelHeadingA                          = require('./export/onClickPanelHeadingA'),
-    exportZuruecksetzen                           = require('./export/exportZuruecksetzen');
+    exportZuruecksetzen                           = require('./export/exportZuruecksetzen'),
+    onClickExportierenFormat                      = require('./export/onClickExportierenFormat');
 
 module.exports = function () {
     var $body = $('body');
@@ -128,7 +129,7 @@ module.exports = function () {
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
-        .on('click',  '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
+        .on('click',  '[name="exportierenExportierenFormat"]',            onClickExportierenFormat)
         .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
     $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
     $('#exportierenObjekteTaxonomienZusammenfassen').on('click', function (event) {
