@@ -49,7 +49,9 @@ var $                                             = require('jquery'),
     onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe'),
     onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen'),
     onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs'),
-    onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern');
+    onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern'),
+    onClickPanelHeadingA                          = require('./export/onClickPanelHeadingA'),
+    exportZuruecksetzen                           = require('./export/exportZuruecksetzen');
 
 module.exports = function () {
     var $body = $('body');
@@ -125,12 +127,9 @@ module.exports = function () {
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
-        // verhindern, dass bootstrap ganz nach oben scrollt
-        .on('click', '.panel-heading a', function (event) {
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        })
-        .on('click', '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
-        .on('change', '.feldWaehlenAlleVonDs', window.adb.exportZuruecksetzen);
+        .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
+        .on('click',  '[name="exportierenExportierenFormat"]', window.adb.blendeFormatCsvTipps)
+        .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
     $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
     $('#exportierenObjekteTaxonomienZusammenfassen').on('click', function (event) {
         // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
