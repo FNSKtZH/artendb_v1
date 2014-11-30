@@ -9,8 +9,9 @@ var $                                               = require('jquery'),
     pruefeObZuvieleBeziehungssammlungenGewaehltSind = require('./pruefeObZuvieleBeziehungssammlungenGewaehltSind'),
     exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
-module.exports = function (that) {
-    var ds       = $(that).attr('datensammlung'),
+module.exports = function () {
+    var that     = this,
+        ds       = $(that).attr('datensammlung'),
         formular = $(that).closest('form').attr('id'),
         alt      = '',
         status   = $(that).prop('checked');

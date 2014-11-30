@@ -20,11 +20,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleFeldWaehlenAlleVonDs = function () {
-    require('./adbModules/export/handleFeldWaehlenAlleVonDs')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleExportFeldFilternChange = function () {
     require('./adbModules/export/handleExportFeldFilternChange')(this);
 };

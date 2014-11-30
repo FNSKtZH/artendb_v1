@@ -47,7 +47,8 @@ var $                                             = require('jquery'),
     onClickBsLoeschen                             = require('./import/onClickBsLoeschen'),
     onClickBsEntfernen                            = require('./import/onClickBsEntfernen'),
     onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe'),
-    onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen');
+    onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen'),
+    onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs');
 
 module.exports = function () {
     var $body = $('body');
@@ -85,8 +86,8 @@ module.exports = function () {
     /*
      * importieren
      */
-    $('#importierenDsDsBeschreibenCollapse') .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
-    $('#importierenBsDsBeschreibenCollapse') .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
+    $('#importierenDsDsBeschreibenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
+    $('#importierenBsDsBeschreibenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
     $('#importierenDsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
     $('#importierenBsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
     $('#importierenDsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
@@ -121,7 +122,7 @@ module.exports = function () {
     $('#export')
         .on('change', '.exportierenDsObjekteWaehlenGruppe',               onChangeExportierenDsObjekteWaehlenGruppe)
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
-        .on('change', '.feldWaehlenAlleVonDs',              window.adb.handleFeldWaehlenAlleVonDs)
+        .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                   window.adb.handleExportFeldFilternChange)
         // verhindern, dass bootstrap ganz nach oben scrollt
         .on('click', '.panel-heading a', function (event) {
@@ -165,7 +166,7 @@ module.exports = function () {
      */
     $('#exportAlt')
         .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
-        .on('change', '.feld_waehlen_alle_von_ds_alt', window.adb.handleFeldWaehlenAlleVonDs)
+        .on('change', '.feld_waehlen_alle_von_ds_alt', onChangeFeldWaehlenAlleVonDs)
         .on('change', '#export_altBezInZeilen,#export_altBezInFeldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
             window.adb.exportZuruecksetzen(null, 'Alt');
         })
