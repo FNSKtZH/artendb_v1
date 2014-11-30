@@ -52,7 +52,9 @@ var $                                             = require('jquery'),
     onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern'),
     onClickPanelHeadingA                          = require('./export/onClickPanelHeadingA'),
     exportZuruecksetzen                           = require('./export/exportZuruecksetzen'),
-    onClickExportierenFormat                      = require('./export/onClickExportierenFormat');
+    onClickExportierenFormat                      = require('./export/onClickExportierenFormat'),
+    onClickTaxonomienZusammenfassen               = require('./export/onClickTaxonomienZusammenfassen'),
+    onClickExportierenExportierenExportieren      = require('./export/onClickExportierenExportierenExportieren');
 
 module.exports = function () {
     var $body = $('body');
@@ -131,26 +133,9 @@ module.exports = function () {
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
         .on('click',  '[name="exportierenExportierenFormat"]',            onClickExportierenFormat)
         .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
-    $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', window.adb.exportZuruecksetzen);
-    $('#exportierenObjekteTaxonomienZusammenfassen').on('click', function (event) {
-        // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        // this übergeben!
-        window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
-        window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
-        window.adb.exportZuruecksetzen();
-    });
-    $('#exportierenExportierenExportieren').on('click', function (event) {
-        // event stoppen, um zu verhindern, dass bootstrap ganz nach oben scrollt
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.handleExportierenExportierenExportierenClick();
-    });
+    $('#exportBezInZeilen,#exportBezInFeldern,#exportierenSynonymInfos,#exportierenNurObjekteMitEigenschaften').on('change', exportZuruecksetzen);
+    $('#exportierenObjekteTaxonomienZusammenfassen').on('click',          onClickTaxonomienZusammenfassen);
+    $('#exportierenExportierenExportieren')     .on('click',              onClickExportierenExportierenExportieren);
     $('#exportierenExportierenExportieren_direkt').on('click', function (event) {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
         window.adb.filtereFuerExport('direkt');
@@ -169,7 +154,7 @@ module.exports = function () {
         .on('change', '.feldWaehlen', window.adb.handleFeldWaehlenChange)
         .on('change', '.feld_waehlen_alle_von_ds_alt', onChangeFeldWaehlenAlleVonDs)
         .on('change', '#export_altBezInZeilen,#export_altBezInFeldern,#exportierenAltSynonymInfos,#exportieren_alt_nur_objekte_mit_eigenschaften,.feld_waehlen_alle_von_ds_alt', function () {
-            window.adb.exportZuruecksetzen(null, 'Alt');
+            exportZuruecksetzen(null, 'Alt');
         })
         .on('schown.bs.collapse', '#exportieren_alt_felder_waehlen_collapse', function () {
             window.adb.scrollThisToTop(this, 6);

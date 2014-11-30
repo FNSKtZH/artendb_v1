@@ -82,11 +82,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenExportierenExportierenClick = function () {
-    require('./adbModules/export/handleExportierenExportierenExportierenClick')();
-};
-
-// wird in index.html benutzt
 window.adb.handlePanelShown = function () {
     require('./adbModules/handlePanelShown')(this);
 };
@@ -167,11 +162,6 @@ window.adb.oeffneUri = function () {
 // wird in index.html benutzt
 window.adb.filtereFuerExport = function (direkt) {
     require('./adbModules/export/filtereFuerExport')(direkt);
-};
-
-// wird in index.html benutzt
-window.adb.exportZuruecksetzen = function (event, alt) {
-    require('./adbModules/export/exportZuruecksetzen')(event, alt);
 };
 
 // wird in index.html benutzt
