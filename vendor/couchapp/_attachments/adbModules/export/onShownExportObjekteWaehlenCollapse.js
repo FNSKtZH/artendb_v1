@@ -5,12 +5,11 @@ var $                          = require('jquery'),
     erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
     fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
 
-module.exports = function (thatUebergeben) {
-    console.log('this: ', this);
-    console.log('thatUebergeben: ', thatUebergeben);
+module.exports = function (that) {
+    var gruppenGewaehlt = fuerExportGewaehlteGruppen();
 
-    var that            = thatUebergeben || this,
-        gruppenGewaehlt = fuerExportGewaehlteGruppen();
+    // wenn onShownExportObjekteWaehlenCollapse als event aufgerufen wurde ist das Element in event.currentTarget enthalten
+    that = that.currentTarget || that;
 
     if (gruppenGewaehlt.length === 0) {
         // keine Gruppe gewählt

@@ -12,12 +12,10 @@ module.exports = function (that) {
     if ($('#' + formularName + 'BezInZeilen').prop('checked')) {
         $formular
             .find(' .exportFelderWaehlenFelderliste')
-            .find('.feldWaehlen')
+            .find('.feldWaehlen[dstyp="Beziehung"]')
             .each(function () {
                 if ($(this).prop('checked')) {
-                    if ($(this).attr('dstyp') === 'Beziehung') {
-                        bezDsChecked.push($(this).attr('datensammlung'));
-                    }
+                    bezDsChecked.push($(this).attr('datensammlung'));
                 }
             });
 

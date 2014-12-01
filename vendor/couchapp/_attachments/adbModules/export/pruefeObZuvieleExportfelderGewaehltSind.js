@@ -12,7 +12,7 @@ module.exports = function (that) {
 
     $formular
         .find('.exportFelderWaehlenFelderliste')
-        .find('.feldWaehlen')
+        .find('.feldWaehlen[dstyp="Datensammlung"]')
         .each(function () {
             if ($(this).prop('checked')) {
                 // gewähltes Feld > zählen
