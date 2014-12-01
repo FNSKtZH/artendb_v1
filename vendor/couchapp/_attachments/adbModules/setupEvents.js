@@ -2,6 +2,7 @@
 'use strict';
 
 var $                                             = require('jquery'),
+    onResize                                      = require('./onResize'),
     fitTextareaToContent                          = require('./fitTextareaToContent'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
@@ -73,19 +74,53 @@ var $                                             = require('jquery'),
 module.exports = function () {
     var $body = $('body');
 
-    $(window).resize(window.adb.handleResize);
+    $(window).resize(onResize);
 
     /*
      * body
      */
     $body
         .on('click',             '.showNextHidden',                       onClickShowNextHidden)
-        .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport);
-    $('#menuBtn')                                .on('click',             onClickMenuBtn);
+        .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport)
+        .on('click', '.anmeldenBtn', function (event) {
+            // den event hier stoppen, nicht erst in der Funktion
+            // hier übernimmt jQuery das stoppen, in der Funktion nicht
+            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            // this übergeben, kommt sonst nicht mit!
+            window.adb.handleAnmeldenBtnClick(this);
+        })
+        .on('click', '.abmeldenBtn', function (event) {
+            // den event hier stoppen, nicht erst in der Funktion
+            // hier übernimmt jQuery das stoppen, in der Funktion nicht
+            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            // auf eigene Funktion verzichten, da nur ein Aufruf
+            window.adb.meldeUserAb();
+        })
+        .on('keyup', '.Email', window.adb.handleEmailKeyup)
+        .on('keyup', '.Passwort', window.adb.handlePasswortKeyup)
+        .on('keyup', '.passwort2', window.adb.handlePasswort2Keyup)
+        .on('click', '.kontoErstellenBtn', function (event) {
+            // den event hier stoppen, nicht erst in der Funktion
+            // hier übernimmt jQuery das stoppen, in der Funktion nicht
+            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            // this übergeben
+            window.adb.handleKontoErstellenBtnClick(this);
+        })
+        .on('click', '.kontoSpeichernBtn', function (event) {
+            // den event hier stoppen, nicht erst in der Funktion
+            // hier übernimmt jQuery das stoppen, in der Funktion nicht
+            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            window.adb.handleKontoSpeichernBtnClick(this);
+        });
 
     /*
      * menu
      */
+    $('#menuBtn')                                .on('click',             onClickMenuBtn);
     $('#menu').on('click',       '.gruppe',                               onClickOeffneGruppe);
     $('#btnResize')                              .on('click',             onClickBtnResize);
     $('#menuDsImportieren')                      .on('click',             onClickMenuDsImportieren);
@@ -185,39 +220,4 @@ module.exports = function () {
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie',                 onShownLrTaxonomie);
     $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]',  onChangeParentOptionen);
     $('#rueckfrageLrLoeschenJa')               .on('click',                onClickRueckfrageLrLoeschenJa);
-    $body
-        .on('click', '.anmeldenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // this übergeben, kommt sonst nicht mit!
-            window.adb.handleAnmeldenBtnClick(this);
-        })
-        .on('click', '.abmeldenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // auf eigene Funktion verzichten, da nur ein Aufruf
-            window.adb.meldeUserAb();
-        })
-        .on('keyup', '.Email', window.adb.handleEmailKeyup)
-        .on('keyup', '.Passwort', window.adb.handlePasswortKeyup)
-        .on('keyup', '.passwort2', window.adb.handlePasswort2Keyup)
-        .on('click', '.kontoErstellenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // this übergeben
-            window.adb.handleKontoErstellenBtnClick(this);
-        })
-        .on('click', '.kontoSpeichernBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            window.adb.handleKontoSpeichernBtnClick(this);
-        });
 };

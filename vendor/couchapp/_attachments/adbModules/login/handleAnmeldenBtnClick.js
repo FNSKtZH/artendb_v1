@@ -3,14 +3,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $           = require('jquery'),
-    meldeUserAn = require('./meldeUserAn');
+var meldeUserAn = require('./meldeUserAn');
 
-module.exports = function (that) {
-    var bsDs;
-
+module.exports = function () {
     // es muss mitgegeben werden, woher die Anmeldung kam, damit die email aus dem richtigen Feld geholt werden kann
-    bsDs = that.id.substring(that.id.length - 2);
+    var bsDs = this.id.substring(this.id.length - 2);
     if (bsDs === 'rt') {
         bsDs = 'art';
     }

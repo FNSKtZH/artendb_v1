@@ -35,11 +35,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 };
 
 // wird in index.html benutzt
-window.adb.handleResize = function () {
-    require('./adbModules/handleResize')();
-};
-
-// wird in index.html benutzt
 window.adb.handleAnmeldenBtnClick = function (that) {
     require('./adbModules/login/handleAnmeldenBtnClick')(that);
 };
