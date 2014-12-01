@@ -3,12 +3,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                   = require('jquery'),
+    schuetzeLrTaxonomie = require('./schuetzeLrTaxonomie');
 
-module.exports = function (that) {
-    var schuetzeLrTaxonomie = require('./schuetzeLrTaxonomie');
-
-    if (!$(that).hasClass('disabled')) {
+module.exports = function () {
+    if (!$(this).hasClass('disabled')) {
         schuetzeLrTaxonomie();
         // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
         delete localStorage.lrBearb;

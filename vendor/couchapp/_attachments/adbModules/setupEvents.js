@@ -62,7 +62,8 @@ var $                                             = require('jquery'),
     onShownExportObjekteWaehlenCollapse           = require('./export/onShownExportObjekteWaehlenCollapse'),
     onShowExportExport                            = require('./export/onShowExportExport'),
     onClickLrBearb                                = require('./lr/onClickLrBearb'),
-    onClickLrBearbBtn                             = require('./lr/onClickLrBearbBtn');
+    onClickLrBearbBtn                             = require('./lr/onClickLrBearbBtn'),
+    onClickLrBearbSchuetzenBtn                    = require('./lr/onClickLrBearbSchuetzenBtn');
 
 module.exports = function () {
     var $body = $('body');
@@ -173,7 +174,7 @@ module.exports = function () {
     $('#art')
         .on('click', '.btn.lrBearb',                                      onClickLrBearb)
         .on('click', '.btn.lrBearbBtn',                                   onClickLrBearbBtn)
-        .on('click', '.btn.lrBearbSchuetzen', window.adb.handleBtnLrBearbSchuetzenClick)
+        .on('click', '.btn.lrBearbSchuetzen',                             onClickLrBearbSchuetzenBtn)
         .on('click', '.btn.lrBearbNeu', window.adb.handleBtnLrBearbNeuClick)
         .on('change', '.Lebensräume.Taxonomie .controls', window.adb.handleLrTaxonomieControlsChange)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
