@@ -4,11 +4,13 @@
 var $ = require('jquery'),
     _ = require('underscore');
 
-module.exports = function (that, alt) {
-    if ($('#export' + alt + 'BezInZeilen').prop('checked')) {
-        var bezDsChecked = [];
+module.exports = function (that) {
+    var $formular = $(that).closest('form'),   // ermitteln, aus welchem Formular aufgerufen wurde
+        formularName = $formular.attr('id'),
+        bezDsChecked = [];
 
-        $('#export' + alt)
+    if ($('#' + formularName + 'BezInZeilen').prop('checked')) {
+        $formular
             .find(' .exportFelderWaehlenFelderliste')
             .find('.feldWaehlen')
             .each(function () {

@@ -6,22 +6,25 @@
 
 var $ = require('jquery');
 
-module.exports = function (event, alt) {
-    var $exportExportCollapse;
+module.exports = function (element) {
+    var $exportExportCollapse,
+        formularName;
 
-    console.log('event: ', event);
+    // wenn exportZuruecksetzen als event aufgerufen wurde ist das Element in event.currentTarget enthalten
+    element = element.currentTarget || element;
 
-    alt = alt || '';
-    $exportExportCollapse = $('#export' + alt + 'ExportCollapse');
+    // ermitteln, aus welchem Formular aufgerufen wurde
+    formularName = $(element).closest('form').attr('id');
 
+    $exportExportCollapse = $('#' + formularName + 'ExportCollapse');
 
     // Export ausblenden, falls sie eingeblendet war
     if ($exportExportCollapse.is(':visible')) {
         $exportExportCollapse.collapse('hide');
     }
-    $('#export' + alt + 'ExportTabelle').hide();
-    $('.export' + alt + 'ExportBtn').hide();
-    $('#export' + alt + 'ExportErrorText')
+    $('#' + formularName + 'ExportTabelle').hide();
+    $('.' + formularName + 'ExportBtn').hide();
+    $('#' + formularName + 'ExportErrorText')
         .alert()
         .hide();
     $('#exportAltExportUrl').val('');

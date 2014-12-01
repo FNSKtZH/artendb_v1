@@ -9,5 +9,5 @@ module.exports = function () {
     // this übergeben!
     window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick(this);
     window.adb.handleExportierenDsObjekteWaehlenGruppeChange();
-    exportZuruecksetzen();
+    exportZuruecksetzen(this);
 };

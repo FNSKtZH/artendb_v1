@@ -6,6 +6,9 @@ var $                          = require('jquery'),
     fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
 
 module.exports = function (thatUebergeben) {
+    console.log('this: ', this);
+    console.log('thatUebergeben: ', thatUebergeben);
+
     var that            = thatUebergeben || this,
         gruppenGewaehlt = fuerExportGewaehlteGruppen();
 

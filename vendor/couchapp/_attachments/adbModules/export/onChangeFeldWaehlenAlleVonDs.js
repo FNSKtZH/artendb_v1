@@ -10,21 +10,16 @@ var $                                               = require('jquery'),
     exportZuruecksetzen                             = require('./exportZuruecksetzen');
 
 module.exports = function () {
-    var that     = this,
-        ds       = $(that).attr('datensammlung'),
-        formular = $(that).closest('form').attr('id'),
-        alt      = '',
-        status   = $(that).prop('checked');
+    var that      = this,
+        ds        = $(that).attr('datensammlung'),
+        $formular = $(that).closest('form'),
+        status    = $(that).prop('checked');
 
-    if (formular === 'exportAlt') {
-        alt = 'Alt';
-    }
-
-    $('#' + formular + ' [datensammlung="' + ds + '"]').each(function () {
+    $formular.find('[datensammlung="' + ds + '"]').each(function () {
         if (status) {
             // Wenn ein Feld dazugefügt wurde...
             // ...kontrollieren, ob zuviele Beziehungen gewählt sind
-            if (pruefeObZuvieleExportfelderGewaehltSind(this, alt) || pruefeObZuvieleBeziehungssammlungenGewaehltSind(this, alt)) {
+            if (pruefeObZuvieleExportfelderGewaehltSind(that) || pruefeObZuvieleBeziehungssammlungenGewaehltSind(that)) {
                 // oops, zu viele Felder gewählt oder zu viele Beziehungen > aufhören
                 return;
             }
@@ -34,5 +29,5 @@ module.exports = function () {
 
     // alles i.o.
     // da ein Feld verändert wurde, allfälligen Export zurücksetzen
-    exportZuruecksetzen(null, alt);
+    exportZuruecksetzen(that);
 };

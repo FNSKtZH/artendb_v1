@@ -43,6 +43,6 @@ module.exports = function () {
         $('#meldungZuvieleBs').modal();
         $(that).val('');
     } else {
-        exportZuruecksetzen();
+        exportZuruecksetzen(that);
     }
 };

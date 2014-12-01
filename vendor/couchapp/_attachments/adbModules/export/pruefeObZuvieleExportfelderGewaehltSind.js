@@ -3,10 +3,14 @@
 
 var $ = require('jquery');
 
-module.exports = function (that, alt) {
-    var count = 0;
+module.exports = function (that) {
+    var count = 0,
+        $formular;
 
-    $('#export' + alt)
+    // ermitteln, aus welchem Formular aufgerufen wurde
+    $formular = $(that).closest('form');
+
+    $formular
         .find('.exportFelderWaehlenFelderliste')
         .find('.feldWaehlen')
         .each(function () {

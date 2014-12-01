@@ -133,8 +133,7 @@ module.exports = function () {
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
-        .on('click',  '[name="exportExportFormat"]',                      onClickExportFormat)
-        .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
+        .on('click',  '[name="exportExportFormat"]',                      onClickExportFormat);
     $('#exportBezInZeilen,#exportBezInFeldern') .on('change',             exportZuruecksetzen);
     $('#exportSynonymInfos')                    .on('change',             exportZuruecksetzen);
     $('#exportNurObjekteMitEigenschaften')      .on('change',             exportZuruecksetzen);
@@ -152,14 +151,14 @@ module.exports = function () {
     $('#exportAlt')
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDsAlt',                         onChangeFeldWaehlenAlleVonDs)
-        .on('change', '#exportAltBezInZeilen,#exportAltBezInFeldern,#exportAltSynonymInfos,#exportAltNurObjekteMitEigenschaften,.feldWaehlenAlleVonDsAlt', function () {
-            exportZuruecksetzen(null, 'Alt');
-        })
         .on('schown.bs.collapse', '#exportAltFelderWaehlenCollapse', function () {
             window.adb.scrollThisToTop(this, 6);
         })
         .on('shown.bs.collapse', '#exportAltExportCollapse',              onShownExportExportCollapse)
         .on('click', '.panel-heading a',                                  onClickPanelHeadingA);
+    $('#exportAltBezInZeilen')                  .on('change',             exportZuruecksetzen);
+    $('#exportAltBezInFeldern')                 .on('change',             exportZuruecksetzen);
+    $('#exportAltSynonymInfos')                 .on('change',             exportZuruecksetzen);
 
     /*
      * art / lr
