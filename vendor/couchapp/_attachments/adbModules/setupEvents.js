@@ -4,6 +4,7 @@
 var $                                             = require('jquery'),
     onResize                                      = require('./onResize'),
     fitTextareaToContent                          = require('./fitTextareaToContent'),
+    onClickAnmeldenBtn                            = require('./login/onClickAnmeldenBtn'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
@@ -82,14 +83,7 @@ module.exports = function () {
     $body
         .on('click',             '.showNextHidden',                       onClickShowNextHidden)
         .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport)
-        .on('click', '.anmeldenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // this übergeben, kommt sonst nicht mit!
-            window.adb.handleAnmeldenBtnClick(this);
-        })
+        .on('click',             '.anmeldenBtn',                          onClickAnmeldenBtn)
         .on('click', '.abmeldenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht

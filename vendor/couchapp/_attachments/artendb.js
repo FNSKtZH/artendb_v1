@@ -34,11 +34,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
     require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
 };
 
-// wird in index.html benutzt
-window.adb.handleAnmeldenBtnClick = function (that) {
-    require('./adbModules/login/handleAnmeldenBtnClick')(that);
-};
-
 // wenn .Email keyup
 window.adb.handleEmailKeyup = function () {
     //allfällig noch vorhandenen Hinweis ausblenden
