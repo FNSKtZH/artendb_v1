@@ -3,23 +3,20 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $                                            = require('jquery'),
-    filtereFuerExport                            = require('./filtereFuerExport'),
-    handleExportierenObjekteWaehlenCollapseShown = require('./handleExportierenObjekteWaehlenCollapseShown'),
-    scrollThisToTop                              = require('../scrollThisToTop');
+var $                                   = require('jquery'),
+    filtereFuerExport                   = require('./filtereFuerExport'),
+    onShownExportObjekteWaehlenCollapse = require('./onShownExportObjekteWaehlenCollapse'),
+    scrollThisToTop                     = require('../scrollThisToTop');
 
 module.exports = function () {
-    var that    = this,
-        fuerAlt = false;
-
-    if (that.id === 'exportAltExportCollapse') {
-        fuerAlt = true;
-    }
+    var that = this,
+        fuerAlt;
 
     // nur ausführen, wenn exportExportCollapse offen ist
     // komischerweise wurde dieser Code immer ausgelöst, wenn bei Lebensräumen F5 gedrückt wurde!
-    if ($('#exportExportCollapse').is(':visible')) {
-        if (handleExportierenObjekteWaehlenCollapseShown(that)) {
+    //if ($('#exportExportCollapse').is(':visible')) {
+    if (that.id === 'exportExportCollapse') {
+        if (onShownExportObjekteWaehlenCollapse(that)) {
             // Gruppe ist gewählt, weitermachen
 
             // Tabelle und Herunterladen-Schaltfläche ausblenden
@@ -27,14 +24,16 @@ module.exports = function () {
             $('.exportBtn').hide();
 
             // filtert und baut danach die Vorschautabelle auf
+            fuerAlt = false;
             filtereFuerExport(null, fuerAlt);
         }
     }
-    if ($('#exportAltExportCollapse').is(':visible')) {
+    if (that.id === 'exportAltExportCollapse') {
         // Tabelle und Herunterladen-Schaltfläche ausblenden
         $('.exportExportTabelle').hide();
         $('.exportBtn').hide();
         // filtert und baut danach die Vorschautabelle auf
+        fuerAlt = true;
         filtereFuerExport(null, fuerAlt);
         scrollThisToTop(that, 6);
     }

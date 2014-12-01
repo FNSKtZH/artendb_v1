@@ -45,17 +45,19 @@ var $                                             = require('jquery'),
     onClickBsImportieren                          = require('./import/onClickBsImportieren'),
     onClickBsLoeschen                             = require('./import/onClickBsLoeschen'),
     onClickBsEntfernen                            = require('./import/onClickBsEntfernen'),
-    onChangeExportierenDsObjekteWaehlenGruppe     = require('./export/onChangeExportierenDsObjekteWaehlenGruppe'),
+    onChangeExportDsObjekteWaehlenGruppe          = require('./export/onChangeExportDsObjekteWaehlenGruppe'),
     onChangeFeldWaehlen                           = require('./export/onChangeFeldWaehlen'),
     onChangeFeldWaehlenAlleVonDs                  = require('./export/onChangeFeldWaehlenAlleVonDs'),
     onChangeExportFeldFiltern                     = require('./export/onChangeExportFeldFiltern'),
     onClickPanelHeadingA                          = require('./export/onClickPanelHeadingA'),
     exportZuruecksetzen                           = require('./export/exportZuruecksetzen'),
-    onClickExportierenFormat                      = require('./export/onClickExportierenFormat'),
+    onClickExportFormat                           = require('./export/onClickExportFormat'),
     onClickTaxonomienZusammenfassen               = require('./export/onClickTaxonomienZusammenfassen'),
-    onClickExportExportiereBtn      = require('./export/onClickExportExportiereBtn'),
+    onClickExportExportiereBtn                    = require('./export/onClickExportExportiereBtn'),
     onClickExportiereDirekt                       = require('./export/onClickExportiereDirekt'),
-    onShownExportExportCollapse         = require('./export/onShownExportExportCollapse');
+    onShownExportExportCollapse                   = require('./export/onShownExportExportCollapse'),
+    onShownExportObjekteWaehlenCollapse           = require('./export/onShownExportObjekteWaehlenCollapse'),
+    onShowExportExport                            = require('./export/onShowExportExport');
 
 module.exports = function () {
     var $body = $('body');
@@ -126,23 +128,23 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportDsObjekteWaehlenGruppe',                    onChangeExportierenDsObjekteWaehlenGruppe)
+        .on('change', '.exportDsObjekteWaehlenGruppe',                    onChangeExportDsObjekteWaehlenGruppe)
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
         .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
         .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
-        .on('click',  '[name="exportExportFormat"]',                      onClickExportierenFormat)
+        .on('click',  '[name="exportExportFormat"]',                      onClickExportFormat)
         .on('change', '.feldWaehlenAlleVonDs',                            exportZuruecksetzen);
     $('#exportBezInZeilen,#exportBezInFeldern') .on('change',             exportZuruecksetzen);
-    $('#exportSynonymInfos,#exportNurObjekteMitEigenschaften')
-        .on('change',                                                     exportZuruecksetzen);
+    $('#exportSynonymInfos')                    .on('change',             exportZuruecksetzen);
+    $('#exportNurObjekteMitEigenschaften')      .on('change',             exportZuruecksetzen);
     $('#exportObjekteTaxonomienZusammenfassen') .on('click',              onClickTaxonomienZusammenfassen);
     $('#exportExportiereBtn')                   .on('click',              onClickExportExportiereBtn);
     $('#exportExportiereDirekt')                .on('click',              onClickExportiereDirekt);
     $('#exportExportCollapse')                  .on('shown.bs.collapse',  onShownExportExportCollapse);
-    $('#exportObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
-    $('#exportExport').on('show', window.adb.handleExportierenExportierenShow);
+    $('#exportObjekteWaehlenDsCollapse')        .on('shown.bs.collapse',  onShownExportObjekteWaehlenCollapse);
+    $('#exportFelderWaehlenCollapse')           .on('shown.bs.collapse',  onShownExportObjekteWaehlenCollapse);
+    $('#exportExport')                          .on('show',               onShowExportExport);
 
     /*
      * exportieren für alt

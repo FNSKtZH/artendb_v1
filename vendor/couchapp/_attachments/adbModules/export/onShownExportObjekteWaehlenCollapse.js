@@ -5,8 +5,9 @@ var $                          = require('jquery'),
     erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl'),
     fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen');
 
-module.exports = function (that) {
-    var gruppenGewaehlt = fuerExportGewaehlteGruppen();
+module.exports = function (thatUebergeben) {
+    var that            = thatUebergeben || this,
+        gruppenGewaehlt = fuerExportGewaehlteGruppen();
 
     if (gruppenGewaehlt.length === 0) {
         // keine Gruppe gewählt

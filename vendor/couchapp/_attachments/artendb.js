@@ -20,11 +20,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenExportierenShow = function () {
-    require('./adbModules/export/handleExportierenExportierenShow')();
-};
-
-// wird in index.html benutzt
 window.adb.handleBtnLrBearbBearbKlick = function () {
     require('./adbModules/lr/handleBtnLrBearbBearbKlick')(this);
 };
@@ -67,8 +62,8 @@ window.adb.scrollThisToTop = function (that, minus) {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenObjekteWaehlenCollapseShown = function () {
-    require('./adbModules/export/handleExportierenObjekteWaehlenCollapseShown')(this);
+window.adb.onShownExportObjekteWaehlenCollapse = function () {
+    require('./adbModules/export/onShownExportObjekteWaehlenCollapse')(this);
 };
 
 // wird in index.html benutzt
