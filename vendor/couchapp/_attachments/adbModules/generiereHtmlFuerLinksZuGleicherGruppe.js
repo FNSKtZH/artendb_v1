@@ -15,7 +15,7 @@ module.exports = function (feldname, objektListe) {
         if (index > 0) {
             html += ', ';
         }
-        html += '<p class="form-control-static controls"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
+        html += '<p class="form-control-static controls"><a href="#" class="linkZuArtGleicherGruppe" ArtId="';
         html += objekt.GUID;
         html += '">';
         html += objekt.Name;

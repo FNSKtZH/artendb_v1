@@ -8,7 +8,7 @@ module.exports = function (feldName, id, artname) {
 
     html = '<div class="form-group"><label class="control-label">';
     html += feldName;
-    html += ':</label><p class="form-control-static controls feldtext"><a href="#" class="LinkZuArtGleicherGruppe" ArtId="';
+    html += ':</label><p class="form-control-static controls feldtext"><a href="#" class="linkZuArtGleicherGruppe" ArtId="';
     html += id;
     html += '">';
     html += artname;

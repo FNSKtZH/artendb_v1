@@ -13,6 +13,7 @@ var $                                             = require('jquery'),
     onClickMenuBsImportieren                      = require('./onClickMenuBsImportieren'),
     onClickMenuExportieren                        = require('./onClickMenuExportieren'),
     onShownPanel                                  = require('./onShownPanel'),
+    onClickLinkZuArtGleicherGruppe                = require('./onClickLinkZuArtGleicherGruppe'),
     onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
     onClickAdminKorrigiereArtwertnameInFlora      = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
     onClickAdminKorrigiereDsNameChRoteListe1991   = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
@@ -88,14 +89,7 @@ module.exports = function () {
     $('.form')
         .on('keyup focus', 'textarea',                                    fitTextareaToContent)
         .on('shown.bs.collapse', '.panel',                                onShownPanel)
-        // Klick auf Link zu Art steuern
-        .on('click', '.LinkZuArtGleicherGruppe', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            window.adb.handleLinkZuArtGleicherGruppeClick($(this).attr('artid'));
-        });
+        .on('click', '.linkZuArtGleicherGruppe',                          onClickLinkZuArtGleicherGruppe);
 
     /*
      * admin

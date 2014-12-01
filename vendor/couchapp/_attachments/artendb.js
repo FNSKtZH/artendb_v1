@@ -72,11 +72,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
 };
 
 // wird in index.html benutzt
-window.adb.handleLinkZuArtGleicherGruppeClick = function (id) {
-    require('./adbModules/handleLinkZuArtGleicherGruppeClick')(id);
-};
-
-// wird in index.html benutzt
 window.adb.handleResize = function () {
     require('./adbModules/handleResize')();
 };
