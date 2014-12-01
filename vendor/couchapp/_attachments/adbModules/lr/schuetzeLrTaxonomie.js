@@ -24,6 +24,6 @@ module.exports = function () {
         }
     });
     $('.lrBearb').addClass('disabled');
-    $(".lrBearbBearb").removeClass('disabled');
+    $(".lrBearbBtn").removeClass('disabled');
     $("#artAnmelden").hide();
 };

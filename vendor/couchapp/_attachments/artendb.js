@@ -20,11 +20,6 @@ window.adb.nenneDsUm = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleBtnLrBearbBearbKlick = function () {
-    require('./adbModules/lr/handleBtnLrBearbBearbKlick')(this);
-};
-
-// wird in index.html benutzt
 window.adb.handleBtnLrBearbSchuetzenClick = function () {
     require('./adbModules/lr/handleBtnLrBearbSchuetzenClick')(this);
 };

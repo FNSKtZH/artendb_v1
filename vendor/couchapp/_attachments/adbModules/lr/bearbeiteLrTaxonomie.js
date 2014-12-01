@@ -36,5 +36,5 @@ module.exports = function () {
 
     // Schreibbarkeit in den Symbolen anzeigen
     $('.lrBearb').removeClass('disabled');
-    $(".lrBearbBearb").addClass('disabled');
+    $(".lrBearbBtn").addClass('disabled');
 };
