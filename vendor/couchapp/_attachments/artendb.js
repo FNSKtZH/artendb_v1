@@ -10,26 +10,6 @@ window.adb.setupEvents = function () {
 };
 
 // wird in index.html benutzt
-window.adb.importiereBeziehungssammlung = function () {
-    require('./adbModules/import/importiereBeziehungssammlung')();
-};
-
-// wird in index.html benutzt
-window.adb.entferneDatensammlung = function () {
-    require('./adbModules/import/entferneDatensammlung')();
-};
-
-// wird in index.html benutzt
-window.adb.entferneBeziehungssammlung = function () {
-    require('./adbModules/import/entferneBeziehungssammlung')();
-};
-
-// wird in index.html benutzt
-window.adb.oeffneUri = function () {
-    require('./adbModules/oeffneUri')();
-};
-
-// wird in index.html benutzt
 window.adb.initiiereApp = function () {
     require('./adbModules/initiiereApp')();
 };
