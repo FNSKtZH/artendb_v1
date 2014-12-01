@@ -29,12 +29,6 @@ window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (tha
     require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
 };
 
-// wenn .passwort2 keyup
-window.adb.handlePasswort2Keyup = function () {
-    //allfällig noch vorhandenen Hinweis ausblenden
-    $(".Passworthinweis2").hide();
-};
-
 // wird in index.html benutzt
 window.adb.handleKontoErstellenBtnClick = function (that) {
     require('./adbModules/login/handleKontoErstellenBtnClick')(that);

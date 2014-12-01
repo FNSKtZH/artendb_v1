@@ -8,6 +8,7 @@ var $                                             = require('jquery'),
     meldeUserAb                                   = require('./login/meldeUserAb'),
     onKeyupEmail                                  = require('./login/onKeyupEmail'),
     onKeyupPasswort                               = require('./login/onKeyupPasswort'),
+    onKeyupPasswort2                              = require('./login/onKeyupPasswort2'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
@@ -90,7 +91,7 @@ module.exports = function () {
         .on('click',             '.abmeldenBtn',                          meldeUserAb)
         .on('keyup',             '.Email',                                onKeyupEmail)
         .on('keyup',             '.Passwort',                             onKeyupPasswort)
-        .on('keyup', '.passwort2', window.adb.handlePasswort2Keyup)
+        .on('keyup',             '.passwort2',                            onKeyupPasswort2)
         .on('click', '.kontoErstellenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion
             // hier übernimmt jQuery das stoppen, in der Funktion nicht
