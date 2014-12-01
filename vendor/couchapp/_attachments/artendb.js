@@ -10,41 +10,6 @@ window.adb.setupEvents = function () {
 };
 
 // wird in index.html benutzt
-window.adb.nenneDsUm = function () {
-    require('./adbModules/admin/nenneDsUm')();
-};
-
-// wird in index.html benutzt
-window.adb.scrollThisToTop = function (that, minus) {
-    require('./adbModules/scrollThisToTop')(that, minus);
-};
-
-// wird in index.html benutzt
-window.adb.onShownExportObjekteWaehlenCollapse = function () {
-    require('./adbModules/export/onShownExportObjekteWaehlenCollapse')(this);
-};
-
-// wird in index.html benutzt
-window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {
-    require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
-};
-
-// wird in index.html benutzt
-window.adb.handleKontoErstellenBtnClick = function (that) {
-    require('./adbModules/login/handleKontoErstellenBtnClick')(that);
-};
-
-// wird in index.html benutzt
-window.adb.handleKontoSpeichernBtnClick = function (that) {
-    require('./adbModules/login/handleKontoSpeichernBtnClick')(that);
-};
-
-// wird in index.html benutzt
-window.adb.importiereDatensammlung = function () {
-    require('./adbModules/import/importiereDatensammlung')();
-};
-
-// wird in index.html benutzt
 window.adb.importiereBeziehungssammlung = function () {
     require('./adbModules/import/importiereBeziehungssammlung')();
 };

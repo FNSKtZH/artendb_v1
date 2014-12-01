@@ -9,6 +9,8 @@ var $                                             = require('jquery'),
     onKeyupEmail                                  = require('./login/onKeyupEmail'),
     onKeyupPasswort                               = require('./login/onKeyupPasswort'),
     onKeyupPasswort2                              = require('./login/onKeyupPasswort2'),
+    onClickKontoErstellenBtn                      = require('./login/onClickKontoErstellenBtn'),
+    onClickKontoSpeichernBtn                      = require('./login/onClickKontoSpeichernBtn'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
@@ -92,21 +94,8 @@ module.exports = function () {
         .on('keyup',             '.Email',                                onKeyupEmail)
         .on('keyup',             '.Passwort',                             onKeyupPasswort)
         .on('keyup',             '.passwort2',                            onKeyupPasswort2)
-        .on('click', '.kontoErstellenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // this übergeben
-            window.adb.handleKontoErstellenBtnClick(this);
-        })
-        .on('click', '.kontoSpeichernBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            window.adb.handleKontoSpeichernBtnClick(this);
-        });
+        .on('click',             '.kontoErstellenBtn',                    onClickKontoErstellenBtn)
+        .on('click',             '.kontoSpeichernBtn',                    onClickKontoSpeichernBtn);
 
     /*
      * menu

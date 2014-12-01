@@ -6,8 +6,11 @@
 var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
-module.exports = function (that) {
-    var bsDs = that.id.substring(that.id.length - 2);
+module.exports = function () {
+    var that = this,
+        bsDs = that.id.substring(that.id.length - 2);
+
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     if (bsDs === 'rt') {
         bsDs = 'art';
