@@ -19,11 +19,6 @@ window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
 };
 
-// wird in index.html benutzt
-window.adb.handleBtnLrBearbNeuClick = function () {
-    require('./adbModules/lr/handleBtnLrBearbNeuClick')(this);
-};
-
 // wenn #lrParentWaehlenOptionen [name="parentOptionen"] geändert wird
 // wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {

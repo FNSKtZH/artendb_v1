@@ -63,7 +63,8 @@ var $                                             = require('jquery'),
     onShowExportExport                            = require('./export/onShowExportExport'),
     onClickLrBearb                                = require('./lr/onClickLrBearb'),
     onClickLrBearbBtn                             = require('./lr/onClickLrBearbBtn'),
-    onClickLrBearbSchuetzenBtn                    = require('./lr/onClickLrBearbSchuetzenBtn');
+    onClickLrBearbSchuetzenBtn                    = require('./lr/onClickLrBearbSchuetzenBtn'),
+    onClickLrBearbNeu                             = require('./lr/onClickLrBearbNeu');
 
 module.exports = function () {
     var $body = $('body');
@@ -175,7 +176,7 @@ module.exports = function () {
         .on('click', '.btn.lrBearb',                                      onClickLrBearb)
         .on('click', '.btn.lrBearbBtn',                                   onClickLrBearbBtn)
         .on('click', '.btn.lrBearbSchuetzen',                             onClickLrBearbSchuetzenBtn)
-        .on('click', '.btn.lrBearbNeu', window.adb.handleBtnLrBearbNeuClick)
+        .on('click', '.btn.lrBearbNeu',                                   onClickLrBearbNeu)
         .on('change', '.Lebensräume.Taxonomie .controls', window.adb.handleLrTaxonomieControlsChange)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
     $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]', window.adb.handleLrParentOptionenChange);
