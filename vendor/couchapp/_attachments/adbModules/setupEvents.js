@@ -151,9 +151,6 @@ module.exports = function () {
     $('#exportAlt')
         .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
         .on('change', '.feldWaehlenAlleVonDsAlt',                         onChangeFeldWaehlenAlleVonDs)
-        .on('schown.bs.collapse', '#exportAltFelderWaehlenCollapse', function () {
-            window.adb.scrollThisToTop(this, 6);
-        })
         .on('shown.bs.collapse', '#exportAltExportCollapse',              onShownExportExportCollapse)
         .on('click', '.panel-heading a',                                  onClickPanelHeadingA);
     $('#exportAltBezInZeilen')                  .on('change',             exportZuruecksetzen);
