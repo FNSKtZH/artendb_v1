@@ -53,8 +53,9 @@ var $                                             = require('jquery'),
     exportZuruecksetzen                           = require('./export/exportZuruecksetzen'),
     onClickExportierenFormat                      = require('./export/onClickExportierenFormat'),
     onClickTaxonomienZusammenfassen               = require('./export/onClickTaxonomienZusammenfassen'),
-    onClickExportierenExportierenExportieren      = require('./export/onClickExportierenExportierenExportieren'),
-    onClickExportiereDirekt                       = require('./export/onClickExportiereDirekt');
+    onClickExportExportiereBtn      = require('./export/onClickExportExportiereBtn'),
+    onClickExportiereDirekt                       = require('./export/onClickExportiereDirekt'),
+    onShownExportExportCollapse         = require('./export/onShownExportExportCollapse');
 
 module.exports = function () {
     var $body = $('body');
@@ -136,11 +137,9 @@ module.exports = function () {
     $('#exportSynonymInfos,#exportNurObjekteMitEigenschaften')
         .on('change',                                                     exportZuruecksetzen);
     $('#exportObjekteTaxonomienZusammenfassen') .on('click',              onClickTaxonomienZusammenfassen);
-    $('#exportExportiereBtn')                   .on('click',              onClickExportierenExportierenExportieren);
+    $('#exportExportiereBtn')                   .on('click',              onClickExportExportiereBtn);
     $('#exportExportiereDirekt')                .on('click',              onClickExportiereDirekt);
-    $('#exportExportCollapse').on('shown.bs.collapse', function () {
-        window.adb.handleExportierenExportierenCollapseShown(this);
-    });
+    $('#exportExportCollapse')                  .on('shown.bs.collapse',  onShownExportExportCollapse);
     $('#exportObjekteWaehlenDsCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportFelderWaehlenCollapse').on('shown.bs.collapse', window.adb.handleExportierenObjekteWaehlenCollapseShown);
     $('#exportExport').on('show', window.adb.handleExportierenExportierenShow);
@@ -157,15 +156,8 @@ module.exports = function () {
         .on('schown.bs.collapse', '#exportAltFelderWaehlenCollapse', function () {
             window.adb.scrollThisToTop(this, 6);
         })
-        .on('shown.bs.collapse', '#exportAltExportCollapse', function () {
-            // mitteilen, dass für alt exportiert wird
-            window.adb.handleExportierenExportierenCollapseShown(this);
-            window.adb.scrollThisToTop(this, 6);
-        })
-        // verhindern, dass bootstrap ganz nach oben scrollt
-        .on('click', '.panel-heading a', function (event) {
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        });
+        .on('shown.bs.collapse', '#exportAltExportCollapse',              onShownExportExportCollapse)
+        .on('click', '.panel-heading a',                                  onClickPanelHeadingA);
 
     /*
      * art / lr

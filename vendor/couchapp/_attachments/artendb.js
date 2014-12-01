@@ -62,11 +62,6 @@ window.adb.handlePanelbodyLrTaxonomieShown = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handleExportierenExportierenCollapseShown = function (that) {
-    require('./adbModules/export/handleExportierenExportierenCollapseShown')(that);
-};
-
-// wird in index.html benutzt
 window.adb.scrollThisToTop = function (that, minus) {
     require('./adbModules/scrollThisToTop')(that, minus);
 };

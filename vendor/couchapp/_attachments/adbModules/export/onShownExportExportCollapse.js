@@ -5,10 +5,12 @@
 
 var $                                            = require('jquery'),
     filtereFuerExport                            = require('./filtereFuerExport'),
-    handleExportierenObjekteWaehlenCollapseShown = require('./handleExportierenObjekteWaehlenCollapseShown');
+    handleExportierenObjekteWaehlenCollapseShown = require('./handleExportierenObjekteWaehlenCollapseShown'),
+    scrollThisToTop                              = require('../scrollThisToTop');
 
-module.exports = function (that) {
-    var fuerAlt = false;
+module.exports = function () {
+    var that    = this,
+        fuerAlt = false;
 
     if (that.id === 'exportAltExportCollapse') {
         fuerAlt = true;
@@ -34,5 +36,6 @@ module.exports = function (that) {
         $('.exportBtn').hide();
         // filtert und baut danach die Vorschautabelle auf
         filtereFuerExport(null, fuerAlt);
+        scrollThisToTop(that, 6);
     }
 };
