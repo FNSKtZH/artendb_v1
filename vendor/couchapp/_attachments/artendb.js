@@ -34,7 +34,7 @@ window.adb.handleBtnLrBearbNeuClick = function () {
     require('./adbModules/lr/handleBtnLrBearbNeuClick')(this);
 };
 
-// wenn #lrParentWaehlenOptionen [name="parent_optionen"] geändert wird
+// wenn #lrParentWaehlenOptionen [name="parentOptionen"] geändert wird
 // wird in index.html benutzt
 window.adb.handleLrParentOptionenChange = function () {
     require('./adbModules/lr/handleLrParentOptionenChange')(this);
@@ -69,11 +69,6 @@ window.adb.onShownExportObjekteWaehlenCollapse = function () {
 // wird in index.html benutzt
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {
     require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
-};
-
-// wird in index.html benutzt
-window.adb.handlePanelShown = function () {
-    require('./adbModules/handlePanelShown')(this);
 };
 
 // wird in index.html benutzt
@@ -117,11 +112,6 @@ window.adb.handleKontoErstellenBtnClick = function (that) {
 // wird in index.html benutzt
 window.adb.handleKontoSpeichernBtnClick = function (that) {
     require('./adbModules/login/handleKontoSpeichernBtnClick')(that);
-};
-
-// wenn in textarea keyup oder focus
-window.adb.handleTextareaKeyupFocus = function () {
-    require('./adbModules/fitTextareaToContent')(this.id);
 };
 
 // wird in index.html benutzt

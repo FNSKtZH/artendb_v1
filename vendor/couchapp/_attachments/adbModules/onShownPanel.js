@@ -4,12 +4,13 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                    = require('jquery'),
+    fitTextareaToContent = require('./fitTextareaToContent');
 
-module.exports = function (that) {
-    var fitTextareaToContent = require('./fitTextareaToContent');
+module.exports = function () {
+    var that = this;
 
     $(that).find('textarea').each(function () {
-        fitTextareaToContent(this.id);
+        fitTextareaToContent(this);
     });
 };

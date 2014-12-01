@@ -3,11 +3,20 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
-
 module.exports = function (id, maxHeight) {
-    var text = id && id.style ? id : document.getElementById(id),
+    var text,
         adjustedHeight;
+
+    if (id.currentTarget) {
+        // id kam über event-Handler als dessen event rein
+        text = id.currentTarget;
+    } else if (id && id.style) {
+        // es wurde das element des textareas übergeben
+        text = id;
+    } else {
+        // es wurde die id eines textareas übergeben
+        text = document.getElementById(id);
+    }
 
     if (!text) {
         return;

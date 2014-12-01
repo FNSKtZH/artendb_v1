@@ -1,4 +1,4 @@
-// wenn #lrParentWaehlenOptionen [name="parent_optionen"] geändert wird
+// wenn #lrParentWaehlenOptionen [name="parentOptionen"] geändert wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

@@ -1,4 +1,4 @@
-// wenn .btn.lr_bearb_bearb geklickt wird
+// wenn .btn.lrBearbBearb geklickt wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

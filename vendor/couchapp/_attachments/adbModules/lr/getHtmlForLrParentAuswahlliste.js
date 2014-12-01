@@ -63,7 +63,7 @@ module.exports = function (taxonomieName, callback) {
                     objectHtml += '<p>...oder den hierarchisch übergeordneten Lebensraum wählen:</p>';
                 }
                 objectHtml += '<div class="radio"><label>';
-                objectHtml += '<input type="radio" name="parent_optionen" id="';
+                objectHtml += '<input type="radio" name="parentOptionen" id="';
                 objectHtml += taxonomieObjekte[i].id;
                 objectHtml += '" value="';
                 objectHtml += taxonomieObjekte[i].Name;

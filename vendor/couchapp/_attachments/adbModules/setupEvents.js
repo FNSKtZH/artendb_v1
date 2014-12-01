@@ -2,6 +2,7 @@
 'use strict';
 
 var $                                             = require('jquery'),
+    fitTextareaToContent                          = require('./fitTextareaToContent'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
@@ -11,6 +12,7 @@ var $                                             = require('jquery'),
     onClickMenuDsImportieren                      = require('./onClickMenuDsImportieren'),
     onClickMenuBsImportieren                      = require('./onClickMenuBsImportieren'),
     onClickMenuExportieren                        = require('./onClickMenuExportieren'),
+    onShownPanel                                  = require('./onShownPanel'),
     onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
     onClickAdminKorrigiereArtwertnameInFlora      = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
     onClickAdminKorrigiereDsNameChRoteListe1991   = require('./admin/onClickAdminKorrigiereDsNameChRoteListe1991'),
@@ -57,7 +59,8 @@ var $                                             = require('jquery'),
     onClickExportiereDirekt                       = require('./export/onClickExportiereDirekt'),
     onShownExportExportCollapse                   = require('./export/onShownExportExportCollapse'),
     onShownExportObjekteWaehlenCollapse           = require('./export/onShownExportObjekteWaehlenCollapse'),
-    onShowExportExport                            = require('./export/onShowExportExport');
+    onShowExportExport                            = require('./export/onShowExportExport'),
+    onClickLrBearb                                = require('./lr/onClickLrBearb');
 
 module.exports = function () {
     var $body = $('body');
@@ -81,6 +84,18 @@ module.exports = function () {
     $('#bsImportieren')                          .on('click',             onClickMenuBsImportieren);
     $('#menuAdmin')                              .on('click',             onClickMenuAdmin);
     $('#menuExportieren')                        .on('click',             onClickMenuExportieren);
+
+    $('.form')
+        .on('keyup focus', 'textarea',                                    fitTextareaToContent)
+        .on('shown.bs.collapse', '.panel',                                onShownPanel)
+        // Klick auf Link zu Art steuern
+        .on('click', '.LinkZuArtGleicherGruppe', function (event) {
+            // den event hier stoppen, nicht erst in der Funktion
+            // hier übernimmt jQuery das stoppen, in der Funktion nicht
+            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            window.adb.handleLinkZuArtGleicherGruppeClick($(this).attr('artid'));
+        });
 
     /*
      * admin
@@ -161,16 +176,14 @@ module.exports = function () {
      * art / lr
      */
     $('#art')
-        .on('click', '.btn.lrBearb', function (event) {
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        })
-        .on('click', '.btn.lr_bearb_bearb', window.adb.handleBtnLrBearbBearbKlick)
-        .on('click', '.btn.lr_bearb_schuetzen', window.adb.handleBtnLrBearbSchuetzenClick)
+        .on('click', '.btn.lrBearb',                                      onClickLrBearb)
+        .on('click', '.btn.lrBearbBearb', window.adb.handleBtnLrBearbBearbKlick)
+        .on('click', '.btn.lrBearbSchuetzen', window.adb.handleBtnLrBearbSchuetzenClick)
         .on('click', '.btn.lrBearbNeu', window.adb.handleBtnLrBearbNeuClick)
         .on('change', '.Lebensräume.Taxonomie .controls', window.adb.handleLrTaxonomieControlsChange)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
-    $('#lrParentWaehlenOptionen').on('change', '[name="parent_optionen"]', window.adb.handleLrParentOptionenChange);
-    $('#rueckfrage_lr_loeschen_ja').on('click', function (event) {
+    $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]', window.adb.handleLrParentOptionenChange);
+    $('#rueckfrageLrLoeschenJa').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion
         // hier übernimmt jQuery das stoppen, in der Funktion nicht
         // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
@@ -211,16 +224,5 @@ module.exports = function () {
             // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
             window.adb.handleKontoSpeichernBtnClick(this);
-        });
-    $('.form')
-        .on('keyup focus', 'textarea', window.adb.handleTextareaKeyupFocus) // Wenn panel geöffnet wird: Höhe der textareas an Textgrösse anpassen
-        .on('shown.bs.collapse', '.panel', window.adb.handlePanelShown)
-        // Klick auf Link zu Art steuern
-        .on('click', '.LinkZuArtGleicherGruppe', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            window.adb.handleLinkZuArtGleicherGruppeClick($(this).attr('artid'));
         });
 };
