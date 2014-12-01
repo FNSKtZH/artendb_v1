@@ -65,7 +65,8 @@ var $                                             = require('jquery'),
     onClickLrBearb                                = require('./lr/onClickLrBearb'),
     onClickLrBearbBtn                             = require('./lr/onClickLrBearbBtn'),
     onClickLrBearbSchuetzenBtn                    = require('./lr/onClickLrBearbSchuetzenBtn'),
-    onClickLrBearbNeu                             = require('./lr/onClickLrBearbNeu');
+    onClickLrBearbNeu                             = require('./lr/onClickLrBearbNeu'),
+    onShownLrTaxonomie                            = require('./lr/onShownLrTaxonomie');
 
 module.exports = function () {
     var $body = $('body');
@@ -162,10 +163,10 @@ module.exports = function () {
      * exportieren für alt
      */
     $('#exportAlt')
-        .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
-        .on('change', '.feldWaehlenAlleVonDsAlt',                         onChangeFeldWaehlenAlleVonDs)
+        .on('change',            '.feldWaehlen',                          onChangeFeldWaehlen)
+        .on('change',            '.feldWaehlenAlleVonDsAlt',              onChangeFeldWaehlenAlleVonDs)
         .on('shown.bs.collapse', '#exportAltExportCollapse',              onShownExportExportCollapse)
-        .on('click', '.panel-heading a',                                  onClickPanelHeadingA);
+        .on('click', '           .panel-heading a',                       onClickPanelHeadingA);
     $('#exportAltBezInZeilen')                  .on('change',             exportZuruecksetzen);
     $('#exportAltBezInFeldern')                 .on('change',             exportZuruecksetzen);
     $('#exportAltSynonymInfos')                 .on('change',             exportZuruecksetzen);
@@ -174,12 +175,12 @@ module.exports = function () {
      * art / lr
      */
     $('#art')
-        .on('click', '.btn.lrBearb',                                      onClickLrBearb)
-        .on('click', '.btn.lrBearbBtn',                                   onClickLrBearbBtn)
-        .on('click', '.btn.lrBearbSchuetzen',                             onClickLrBearbSchuetzenBtn)
-        .on('click', '.btn.lrBearbNeu',                                   onClickLrBearbNeu)
-        .on('change', '.Lebensräume.Taxonomie .controls',                 speichern)
-        .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
+        .on('click',             '.btn.lrBearb',                           onClickLrBearb)
+        .on('click',             '.btn.lrBearbBtn',                        onClickLrBearbBtn)
+        .on('click',             '.btn.lrBearbSchuetzen',                  onClickLrBearbSchuetzenBtn)
+        .on('click',             '.btn.lrBearbNeu',                        onClickLrBearbNeu)
+        .on('change',            '.Lebensräume.Taxonomie .controls',       speichern)
+        .on('shown.bs.collapse', '.Lebensräume.Taxonomie',                 onShownLrTaxonomie);
     $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]', window.adb.handleLrParentOptionenChange);
     $('#rueckfrageLrLoeschenJa').on('click', function (event) {
         // den event hier stoppen, nicht erst in der Funktion

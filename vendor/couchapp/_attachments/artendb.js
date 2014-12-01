@@ -31,11 +31,6 @@ window.adb.handleRueckfrageLrLoeschenJaClick = function () {
 };
 
 // wird in index.html benutzt
-window.adb.handlePanelbodyLrTaxonomieShown = function () {
-    require('./adbModules/lr/handlePanelbodyLrTaxonomieShown')();
-};
-
-// wird in index.html benutzt
 window.adb.scrollThisToTop = function (that, minus) {
     require('./adbModules/scrollThisToTop')(that, minus);
 };

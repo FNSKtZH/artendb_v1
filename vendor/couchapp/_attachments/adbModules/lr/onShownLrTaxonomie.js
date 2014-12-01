@@ -3,11 +3,9 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie');
 
 module.exports = function () {
-    var bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie');
-
     if (localStorage.lrBearb === "true") {
         bearbeiteLrTaxonomie();
     }
