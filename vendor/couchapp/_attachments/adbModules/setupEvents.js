@@ -66,7 +66,9 @@ var $                                             = require('jquery'),
     onClickLrBearbBtn                             = require('./lr/onClickLrBearbBtn'),
     onClickLrBearbSchuetzenBtn                    = require('./lr/onClickLrBearbSchuetzenBtn'),
     onClickLrBearbNeu                             = require('./lr/onClickLrBearbNeu'),
-    onShownLrTaxonomie                            = require('./lr/onShownLrTaxonomie');
+    onShownLrTaxonomie                            = require('./lr/onShownLrTaxonomie'),
+    onChangeParentOptionen                        = require('./lr/onChangeParentOptionen'),
+    onClickRueckfrageLrLoeschenJa                 = require('./lr/onClickRueckfrageLrLoeschenJa');
 
 module.exports = function () {
     var $body = $('body');
@@ -181,14 +183,8 @@ module.exports = function () {
         .on('click',             '.btn.lrBearbNeu',                        onClickLrBearbNeu)
         .on('change',            '.Lebensräume.Taxonomie .controls',       speichern)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie',                 onShownLrTaxonomie);
-    $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]', window.adb.handleLrParentOptionenChange);
-    $('#rueckfrageLrLoeschenJa').on('click', function (event) {
-        // den event hier stoppen, nicht erst in der Funktion
-        // hier übernimmt jQuery das stoppen, in der Funktion nicht
-        // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-        window.adb.handleRueckfrageLrLoeschenJaClick();
-    });
+    $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]',  onChangeParentOptionen);
+    $('#rueckfrageLrLoeschenJa')               .on('click',                onClickRueckfrageLrLoeschenJa);
     $body
         .on('click', '.anmeldenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion

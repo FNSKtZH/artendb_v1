@@ -8,9 +8,10 @@ var $                                  = require('jquery'),
     oeffneBaumZuId                     = require('../jstree/oeffneBaumZuId'),
     aktualisiereHierarchieEinesNeuenLr = require('./aktualisiereHierarchieEinesNeuenLr');
 
-module.exports = function (that) {
+module.exports = function () {
     // prüfen, ob oberster Node gewählt wurde
-    var parentName = $(that).val(),
+    var that       = this,
+        parentName = $(that).val(),
         parentId   = that.id,
         parent     = {},
         object     = {},
@@ -71,7 +72,7 @@ module.exports = function (that) {
             }
         },
         error: function () {
-            console.log('handleLrParentOptionenChange: Datensatz nicht gespeichert');
+            console.log('onChangeParentOptionen: Datensatz nicht gespeichert');
         }
     });
 };

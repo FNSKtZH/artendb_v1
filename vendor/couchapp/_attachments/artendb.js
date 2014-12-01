@@ -19,17 +19,6 @@ window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
 };
 
-// wenn #lrParentWaehlenOptionen [name="parentOptionen"] geändert wird
-// wird in index.html benutzt
-window.adb.handleLrParentOptionenChange = function () {
-    require('./adbModules/lr/handleLrParentOptionenChange')(this);
-};
-
-// wird in index.html benutzt
-window.adb.handleRueckfrageLrLoeschenJaClick = function () {
-    require('./adbModules/lr/handleRueckfrageLrLoeschenJaClick')();
-};
-
 // wird in index.html benutzt
 window.adb.scrollThisToTop = function (that, minus) {
     require('./adbModules/scrollThisToTop')(that, minus);

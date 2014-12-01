@@ -1,19 +1,21 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $   = require('jquery'),
-    _   = require('underscore'),
-    Uri = require('Uri');
+var $                           = require('jquery'),
+    _                           = require('underscore'),
+    Uri                         = require('Uri'),
+    oeffneGruppe                = require('../oeffneGruppe'),
+    loescheMassenMitObjektArray = require('../loescheMassenMitObjektArray');
 
 module.exports = function () {
     // zuerst die id des Objekts holen
-    var uri   = new Uri($(location).attr('href')),
+    var uri  = new Uri($(location).attr('href')),
         uri2,
-        id    = uri.getQueryParamValue('id'),
-        hash  = uri.anchor(),
-        $db   = $.couch.db('artendb'),
-        oeffneGruppe                = require('../oeffneGruppe'),
-        loescheMassenMitObjektArray = require('../loescheMassenMitObjektArray');
+        id   = uri.getQueryParamValue('id'),
+        hash = uri.anchor(),
+        $db  = $.couch.db('artendb');
+
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     // wenn browser history nicht unterstützt, erstellt history.js eine hash
     // dann muss die id durch die id in der hash ersetzt werden
