@@ -9,6 +9,8 @@ var $ = require('jquery');
 module.exports = function (event, alt) {
     var $exportExportCollapse;
 
+    console.log('event: ', event);
+
     alt = alt || '';
     $exportExportCollapse = $('#export' + alt + 'ExportCollapse');
 
