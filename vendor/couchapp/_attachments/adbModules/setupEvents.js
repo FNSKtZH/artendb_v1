@@ -77,14 +77,14 @@ module.exports = function () {
      * body
      */
     $body
-        .on('click', '.showNextHidden',                                   onClickShowNextHidden)
-        .on('click', '.showNextHiddenExport',                             onClickShowNextHiddenExport);
+        .on('click',             '.showNextHidden',                       onClickShowNextHidden)
+        .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport);
     $('#menuBtn')                                .on('click',             onClickMenuBtn);
 
     /*
      * menu
      */
-    $('#menu').on('click',  '.gruppe',                                    onClickOeffneGruppe);
+    $('#menu').on('click',       '.gruppe',                               onClickOeffneGruppe);
     $('#btnResize')                              .on('click',             onClickBtnResize);
     $('#menuDsImportieren')                      .on('click',             onClickMenuDsImportieren);
     $('#bsImportieren')                          .on('click',             onClickMenuBsImportieren);
@@ -92,9 +92,9 @@ module.exports = function () {
     $('#menuExportieren')                        .on('click',             onClickMenuExportieren);
 
     $('.form')
-        .on('keyup focus', 'textarea',                                    fitTextareaToContent)
+        .on('keyup focus',       'textarea',                              fitTextareaToContent)
         .on('shown.bs.collapse', '.panel',                                onShownPanel)
-        .on('click', '.linkZuArtGleicherGruppe',                          onClickLinkZuArtGleicherGruppe);
+        .on('click',             '.linkZuArtGleicherGruppe',              onClickLinkZuArtGleicherGruppe);
 
     /*
      * admin
@@ -142,12 +142,12 @@ module.exports = function () {
      * exportieren
      */
     $('#export')
-        .on('change', '.exportDsObjekteWaehlenGruppe',                    onChangeExportDsObjekteWaehlenGruppe)
-        .on('change', '.feldWaehlen',                                     onChangeFeldWaehlen)
-        .on('change', '.feldWaehlenAlleVonDs',                            onChangeFeldWaehlenAlleVonDs)
-        .on('change', '.exportFeldFiltern',                               onChangeExportFeldFiltern)
-        .on('click',  '.panel-heading a',                                 onClickPanelHeadingA)
-        .on('click',  '[name="exportExportFormat"]',                      onClickExportFormat);
+        .on('change',            '.exportDsObjekteWaehlenGruppe',         onChangeExportDsObjekteWaehlenGruppe)
+        .on('change',            '.feldWaehlen',                          onChangeFeldWaehlen)
+        .on('change',            '.feldWaehlenAlleVonDs',                 onChangeFeldWaehlenAlleVonDs)
+        .on('change',            '.exportFeldFiltern',                    onChangeExportFeldFiltern)
+        .on('click',             '.panel-heading a',                      onClickPanelHeadingA)
+        .on('click',             '[name="exportExportFormat"]',           onClickExportFormat);
     $('#exportBezInZeilen,#exportBezInFeldern') .on('change',             exportZuruecksetzen);
     $('#exportSynonymInfos')                    .on('change',             exportZuruecksetzen);
     $('#exportNurObjekteMitEigenschaften')      .on('change',             exportZuruecksetzen);
