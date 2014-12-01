@@ -5,6 +5,9 @@ var $                                             = require('jquery'),
     onResize                                      = require('./onResize'),
     fitTextareaToContent                          = require('./fitTextareaToContent'),
     onClickAnmeldenBtn                            = require('./login/onClickAnmeldenBtn'),
+    meldeUserAb                                   = require('./login/meldeUserAb'),
+    onKeyupEmail                                  = require('./login/onKeyupEmail'),
+    onKeyupPasswort                               = require('./login/onKeyupPasswort'),
     onClickOeffneGruppe                           = require('./onClickOeffneGruppe'),
     onClickBtnResize                              = require('./onClickBtnResize'),
     onClickMenuBtn                                = require('./onClickMenuBtn'),
@@ -84,16 +87,9 @@ module.exports = function () {
         .on('click',             '.showNextHidden',                       onClickShowNextHidden)
         .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport)
         .on('click',             '.anmeldenBtn',                          onClickAnmeldenBtn)
-        .on('click', '.abmeldenBtn', function (event) {
-            // den event hier stoppen, nicht erst in der Funktion
-            // hier übernimmt jQuery das stoppen, in der Funktion nicht
-            // dort gibt es folgendes Problem: IE9 kennt preventDefault nicht
-            event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            // auf eigene Funktion verzichten, da nur ein Aufruf
-            window.adb.meldeUserAb();
-        })
-        .on('keyup', '.Email', window.adb.handleEmailKeyup)
-        .on('keyup', '.Passwort', window.adb.handlePasswortKeyup)
+        .on('click',             '.abmeldenBtn',                          meldeUserAb)
+        .on('keyup',             '.Email',                                onKeyupEmail)
+        .on('keyup',             '.Passwort',                             onKeyupPasswort)
         .on('keyup', '.passwort2', window.adb.handlePasswort2Keyup)
         .on('click', '.kontoErstellenBtn', function (event) {
             // den event hier stoppen, nicht erst in der Funktion

@@ -6,6 +6,7 @@ var $                   = require('jquery'),
     schuetzeLrTaxonomie = require('../lr/schuetzeLrTaxonomie');
 
 module.exports = function () {
+    event.preventDefault ? event.preventDefault() : event.returnValue = false;
     delete localStorage.Email;
     $('.artAnmeldenTitel').text('Anmelden');
     $('.importierenAnmeldenTitel').text('1. Anmelden');

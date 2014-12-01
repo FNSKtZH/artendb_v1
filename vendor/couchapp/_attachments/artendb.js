@@ -10,11 +10,6 @@ window.adb.setupEvents = function () {
 };
 
 // wird in index.html benutzt
-window.adb.meldeUserAb = function () {
-    require('./adbModules/login/meldeUserAb')();
-};
-
-// wird in index.html benutzt
 window.adb.nenneDsUm = function () {
     require('./adbModules/admin/nenneDsUm')();
 };
@@ -32,18 +27,6 @@ window.adb.onShownExportObjekteWaehlenCollapse = function () {
 // wird in index.html benutzt
 window.adb.handleExportierenObjekteTaxonomienZusammenfassenClick = function (that) {
     require('./adbModules/export/handleExportierenObjekteTaxonomienZusammenfassenClick')(that);
-};
-
-// wenn .Email keyup
-window.adb.handleEmailKeyup = function () {
-    //allfällig noch vorhandenen Hinweis ausblenden
-    $(".emailHinweis").hide();
-};
-
-// wenn .Passwort keyup
-window.adb.handlePasswortKeyup = function () {
-    //allfällig noch vorhandenen Hinweis ausblenden
-    $(".passwortHinweis").hide();
 };
 
 // wenn .passwort2 keyup
