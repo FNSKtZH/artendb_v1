@@ -12,16 +12,23 @@ var Uri                               = require('jsuri'),
     erstelleLrLabelName               = require('./lr/erstelleLrLabelName'),
     aktualisiereHierarchieEinesLrInklusiveSeinerChildren = require('./lr/aktualisiereHierarchieEinesLrInklusiveSeinerChildren');
 
-module.exports = function (feldwert, feldname) {
+module.exports = function () {
     // zuerst die id des Objekts holen
-    var uri  = new Uri($(location).attr('href')),
+    var that = this,
+        uri  = new Uri($(location).attr('href')),
         id   = uri.getQueryParamValue('id'),
         // wenn browser history nicht unterstützt, erstellt history.js eine hash
         // dann muss die id durch die id in der hash ersetzt werden
         hash = uri.anchor(),
         uri2,
         neuerNodetext,
-        $db  = $.couch.db('artendb');
+        $db  = $.couch.db('artendb'),
+        feldwert,
+        feldname;
+
+    // TODO: später für alle Feldtypen verallgemeinern
+    feldwert = $(that).val();
+    feldname = that.id;
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {

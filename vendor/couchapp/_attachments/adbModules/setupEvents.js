@@ -13,6 +13,7 @@ var $                                             = require('jquery'),
     onClickMenuBsImportieren                      = require('./onClickMenuBsImportieren'),
     onClickMenuExportieren                        = require('./onClickMenuExportieren'),
     onShownPanel                                  = require('./onShownPanel'),
+    speichern                                     = require('./speichern'),
     onClickLinkZuArtGleicherGruppe                = require('./onClickLinkZuArtGleicherGruppe'),
     onClickAdminPilzeZhgisErgaenzen               = require('./admin/onClickAdminPilzeZhgisErgaenzen'),
     onClickAdminKorrigiereArtwertnameInFlora      = require('./admin/onClickAdminKorrigiereArtwertnameInFlora'),
@@ -177,7 +178,7 @@ module.exports = function () {
         .on('click', '.btn.lrBearbBtn',                                   onClickLrBearbBtn)
         .on('click', '.btn.lrBearbSchuetzen',                             onClickLrBearbSchuetzenBtn)
         .on('click', '.btn.lrBearbNeu',                                   onClickLrBearbNeu)
-        .on('change', '.Lebensräume.Taxonomie .controls', window.adb.handleLrTaxonomieControlsChange)
+        .on('change', '.Lebensräume.Taxonomie .controls',                 speichern)
         .on('shown.bs.collapse', '.Lebensräume.Taxonomie', window.adb.handlePanelbodyLrTaxonomieShown);
     $('#lrParentWaehlenOptionen').on('change', '[name="parentOptionen"]', window.adb.handleLrParentOptionenChange);
     $('#rueckfrageLrLoeschenJa').on('click', function (event) {

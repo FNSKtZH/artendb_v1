@@ -30,12 +30,6 @@ window.adb.handleRueckfrageLrLoeschenJaClick = function () {
     require('./adbModules/lr/handleRueckfrageLrLoeschenJaClick')();
 };
 
-// Wenn #art .Lebensräume.Taxonomie .controls geändert wird
-// wird in index.html benutzt
-window.adb.handleLrTaxonomieControlsChange = function () {
-    require('./adbModules/speichern')($(this).val(), this.id);
-};
-
 // wird in index.html benutzt
 window.adb.handlePanelbodyLrTaxonomieShown = function () {
     require('./adbModules/lr/handlePanelbodyLrTaxonomieShown')();
