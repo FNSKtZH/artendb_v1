@@ -7,25 +7,27 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                         = require('underscore'),
+    $                                         = require('jquery'),
+    erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
+    erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
+    generiereHtmlFuerObjektlink               = require('./generiereHtmlFuerObjektlink'),
+    ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
+    sortiereBeziehungenNachName               = require('./sortiereBeziehungenNachName');
 
-var returnFunction = function (beziehungssammlung, altName) {
+module.exports = function (beziehungssammlung, altName) {
     var html,
         name,
-        erstelleHtmlFuerDatensammlungBeschreibung = require('./erstelleHtmlFuerDatensammlungBeschreibung'),
-        erstelleHtmlFuerFeld                      = require('./erstelleHtmlFuerFeld'),
-        generiereHtmlFuerObjektlink               = require('./generiereHtmlFuerObjektlink'),
-        ersetzeUngueltigeZeichenInIdNamen         = require('./ersetzeUngueltigeZeichenInIdNamen'),
-        sortiereBeziehungenNachName               = require('./sortiereBeziehungenNachName'),
-        bsName                                    = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + altName;
+        bsName;
+
+    bsName = ersetzeUngueltigeZeichenInIdNamen(beziehungssammlung.Name) + altName;
 
     // Accordion-Gruppe und -heading anfügen
     html = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient"><h4 class="panel-title">';
     // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
     html += '<a class="Datensammlung accordion-toggle" data-toggle="collapse" data-parent="#panelArt" href="#collapse' + bsName + '">';
     // Titel für die Datensammlung einfügen
-    html += beziehungssammlung.Name + " (" + beziehungssammlung.Beziehungen.length + ")";
+    html += beziehungssammlung.Name + ' (' + beziehungssammlung.Beziehungen.length + ')';
     // header abschliessen
     html += '</a></h4></div>';
     // body beginnen
@@ -42,33 +44,31 @@ var returnFunction = function (beziehungssammlung, altName) {
         if (beziehung.Beziehungspartner && beziehung.Beziehungspartner.length > 0) {
             _.each(beziehung.Beziehungspartner, function (beziehungspartner) {
                 if (beziehungspartner.Taxonomie) {
-                    name = beziehungspartner.Gruppe + ": " + beziehungspartner.Taxonomie + " > " + beziehungspartner.Name;
+                    name = beziehungspartner.Gruppe + ': ' + beziehungspartner.Taxonomie + ' > ' + beziehungspartner.Name;
                 } else {
-                    name = beziehungspartner.Gruppe + ": " + beziehungspartner.Name;
+                    name = beziehungspartner.Gruppe + ': ' + beziehungspartner.Name;
                 }
                 // Partner darstellen
                 if (beziehungspartner.Rolle) {
                     // Feld soll mit der Rolle beschriftet werden
-                    html += generiereHtmlFuerObjektlink(beziehungspartner.Rolle, name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += generiereHtmlFuerObjektlink(beziehungspartner.Rolle, name, $(location).attr('protocol') + '//' + $(location).attr('host') + $(location).attr('pathname') + '?id=' + beziehungspartner.GUID);
                 } else {
-                    html += generiereHtmlFuerObjektlink("Beziehungspartner", name, $(location).attr("protocol") + '//' + $(location).attr("host") + $(location).attr("pathname") + '?id=' + beziehungspartner.GUID);
+                    html += generiereHtmlFuerObjektlink('Beziehungspartner', name, $(location).attr('protocol') + '//' + $(location).attr('host') + $(location).attr('pathname') + '?id=' + beziehungspartner.GUID);
                 }
             });
         }
         // Die Felder anzeigen
         _.each(beziehung, function (feldwert, feldname) {
-            if (feldname !== "Beziehungspartner") {
-                html += erstelleHtmlFuerFeld(feldname, feldwert, "Beziehungssammlung", beziehungssammlung.Name.replace(/"/g, "'"));
+            if (feldname !== 'Beziehungspartner') {
+                html += erstelleHtmlFuerFeld(feldname, feldwert, 'Beziehungssammlung', beziehungssammlung.Name.replace(/"/g, "'"));
             }
         });
         // Am Schluss eine Linie, nicht aber bei der letzten Beziehung
         if (index < (beziehungssammlung.Beziehungen.length - 1)) {
-            html += "<hr>";
+            html += '<hr>';
         }
     });
     // body und Accordion-Gruppe abschliessen
     html += '</div></div></div>';
     return html;
 };
-
-module.exports = returnFunction;

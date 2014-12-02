@@ -13,7 +13,7 @@ module.exports = function (beziehungen) {
             bName;
 
         _.each(a.Beziehungspartner, function (beziehungspartner) {
-            if (beziehungspartner.Gruppe === "Lebensräume") {
+            if (beziehungspartner.Gruppe === 'Lebensräume') {
                 // sortiert werden soll bei Lebensräumen zuerst nach Taxonomie, dann nach Name
                 aName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
             } else {
@@ -21,7 +21,7 @@ module.exports = function (beziehungen) {
             }
         });
         _.each(b.Beziehungspartner, function (beziehungspartner) {
-            if (beziehungspartner.Gruppe === "Lebensräume") {
+            if (beziehungspartner.Gruppe === 'Lebensräume') {
                 bName = beziehungspartner.Gruppe + beziehungspartner.Taxonomie + beziehungspartner.Name;
             } else {
                 bName = beziehungspartner.Gruppe + beziehungspartner.Name;

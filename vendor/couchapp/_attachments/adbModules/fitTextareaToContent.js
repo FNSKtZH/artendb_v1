@@ -25,8 +25,8 @@ module.exports = function (id, maxHeight) {
     maxHeight = maxHeight || document.documentElement.clientHeight;
 
     /* Accounts for rows being deleted, pixel value may need adjusting */
-    if (text.clientHeight == text.scrollHeight) {
-        text.style.height = "30px";
+    if (text.clientHeight === text.scrollHeight) {
+        text.style.height = '30px';
     }
 
     adjustedHeight = text.clientHeight;
@@ -37,6 +37,6 @@ module.exports = function (id, maxHeight) {
         adjustedHeight = Math.min(maxHeight, adjustedHeight);
     }
     if (adjustedHeight > text.clientHeight) {
-        text.style.height = adjustedHeight + "px";
+        text.style.height = adjustedHeight + 'px';
     }
 };

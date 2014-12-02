@@ -27,7 +27,7 @@ module.exports = function (id) {
             htmlArt = '<h4>Taxonomie:</h4>';
             // zuerst alle Datensammlungen auflisten, damit danach sortiert werden kann
             // gleichzeitig die Taxonomie suchen und gleich erstellen lassen
-            htmlArt += erstelleHtmlFuerDatensammlung("Taxonomie", art, art.Taxonomie);
+            htmlArt += erstelleHtmlFuerDatensammlung('Taxonomie', art, art.Taxonomie);
             // Datensammlungen muss nicht gepusht werden
             // aber Beziehungssammlungen aufteilen
             if (art.Beziehungssammlungen.length > 0) {
@@ -36,7 +36,7 @@ module.exports = function (id) {
                         artBeziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
                         bezNamen.push(beziehungssammlung.Name);
-                    } else if (beziehungssammlung.Typ === "taxonomisch") {
+                    } else if (beziehungssammlung.Typ === 'taxonomisch') {
                         taxonomischeBeziehungssammlungen.push(beziehungssammlung);
                         // bezNamen auflisten, um später zu vergleichen, ob diese DS schon dargestellt wird
                         bezNamen.push(beziehungssammlung.Name);
@@ -46,11 +46,11 @@ module.exports = function (id) {
             // taxonomische Beziehungen in gewollter Reihenfolge hinzufügen
             if (taxonomischeBeziehungssammlungen.length > 0) {
                 // Titel hinzufügen, falls Datensammlungen existieren
-                htmlArt += "<h4>Taxonomische Beziehungen:</h4>";
+                htmlArt += '<h4>Taxonomische Beziehungen:</h4>';
                 _.each(taxonomischeBeziehungssammlungen, function (beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "");
-                    if (beziehungssammlung["Art der Beziehungen"] && beziehungssammlung["Art der Beziehungen"] === "synonym" && beziehungssammlung.Beziehungen) {
+                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, '');
+                    if (beziehungssammlung['Art der Beziehungen'] && beziehungssammlung['Art der Beziehungen'] === 'synonym' && beziehungssammlung.Beziehungen) {
                         _.each(beziehungssammlung.Beziehungen, function (beziehung) {
                             if (beziehung.Beziehungspartner) {
                                 _.each(beziehung.Beziehungspartner, function (beziehungspartner) {
@@ -66,10 +66,10 @@ module.exports = function (id) {
             // Datensammlungen in gewollter Reihenfolge hinzufügen
             if (artEigenschaftensammlungen.length > 0) {
                 // Titel hinzufügen
-                htmlArt += "<h4>Eigenschaften:</h4>";
+                htmlArt += '<h4>Eigenschaften:</h4>';
                 _.each(artEigenschaftensammlungen, function (datensammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, datensammlung);
+                    htmlArt += erstelleHtmlFuerDatensammlung('Datensammlung', art, datensammlung);
                     // dsNamen auflisten, um später zu vergleichen, ob sie schon dargestellt wird
                     dsNamen.push(datensammlung.Name);
                 });
@@ -77,10 +77,10 @@ module.exports = function (id) {
             // Beziehungen hinzufügen
             if (artBeziehungssammlungen.length > 0) {
                 // Titel hinzufügen
-                htmlArt += "<h4>Beziehungen:</h4>";
+                htmlArt += '<h4>Beziehungen:</h4>';
                 _.each(artBeziehungssammlungen, function (beziehungssammlung) {
                     // HTML für Datensammlung erstellen lassen und hinzufügen
-                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "");
+                    htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, '');
                 });
             }
             // Beziehungssammlungen von synonymen Arten
@@ -104,7 +104,7 @@ module.exports = function (id) {
                             }
                             if (synonymeArt.Beziehungssammlungen && synonymeArt.Beziehungssammlungen.length > 0) {
                                 _.each(synonymeArt.Beziehungssammlungen, function (beziehungssammlung) {
-                                    if (bezNamen.indexOf(beziehungssammlung.Name) === -1 && beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
+                                    if (bezNamen.indexOf(beziehungssammlung.Name) === -1 && beziehungssammlung['Art der Beziehungen'] !== 'synonym' && beziehungssammlung.Typ !== 'taxonomisch') {
                                         // diese Beziehungssammlung wird noch nicht dargestellt
                                         // und sie ist nicht taxonomisch
                                         beziehungssammlungenVonSynonymen.push(beziehungssammlung);
@@ -112,7 +112,7 @@ module.exports = function (id) {
                                         bezNamen.push(beziehungssammlung.Name);
                                         // auch in Beziehungssammlungen ergänzen, weil die Darstellung davon abhängt, ob eine DS existiert
                                         artBeziehungssammlungen.push(beziehungssammlung);
-                                    } else if (beziehungssammlung["Art der Beziehungen"] !== "synonym" && beziehungssammlung.Typ !== "taxonomisch") {
+                                    } else if (beziehungssammlung['Art der Beziehungen'] !== 'synonym' && beziehungssammlung.Typ !== 'taxonomisch') {
                                         // diese Beziehungssammlung wird schon dargestellt
                                         // kann aber sein, dass beim Synonym Beziehungen existieren, welche noch nicht dargestellt werden
                                         var bsDerSynonymenArt = beziehungssammlung,
@@ -148,10 +148,10 @@ module.exports = function (id) {
                             // DatensammlungenVonSynonymen nach Name sortieren
                             eigenschaftensammlungenVonSynonymen = sortiereObjektarrayNachName(eigenschaftensammlungenVonSynonymen);
                             // Titel hinzufügen
-                            htmlArt += "<h4>Eigenschaften von Synonymen:</h4>";
+                            htmlArt += '<h4>Eigenschaften von Synonymen:</h4>';
                             _.each(eigenschaftensammlungenVonSynonymen, function (datensammlung) {
                                 // HTML für Datensammlung erstellen lassen und hinzufügen
-                                htmlArt += erstelleHtmlFuerDatensammlung("Datensammlung", art, datensammlung);
+                                htmlArt += erstelleHtmlFuerDatensammlung('Datensammlung', art, datensammlung);
                             });
                         }
                         // bez von Synonymen darstellen
@@ -159,10 +159,10 @@ module.exports = function (id) {
                             // BeziehungssammlungenVonSynonymen sortieren
                             beziehungssammlungenVonSynonymen = sortiereObjektarrayNachName(beziehungssammlungenVonSynonymen);
                             // Titel hinzufügen
-                            htmlArt += "<h4>Beziehungen von Synonymen:</h4>";
+                            htmlArt += '<h4>Beziehungen von Synonymen:</h4>';
                             _.each(beziehungssammlungenVonSynonymen, function (beziehungssammlung) {
                                 // HTML für Beziehung erstellen lassen und hinzufügen. Dritten Parameter mitgeben, damit die DS in der UI nicht gleich heisst
-                                htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, "2");
+                                htmlArt += erstelleHtmlFuerBeziehungssammlung(beziehungssammlung, '2');
                             });
                         }
                         initiiereArt2(htmlArt, art);

@@ -24,7 +24,7 @@ module.exports = function (dsTyp, art, datensammlung) {
     // Accordion-Gruppe und -heading anfügen
     htmlDatensammlung = '<div class="panel panel-default"><div class="panel-heading panel-heading-gradient">';
     // bei LR: Symbolleiste einfügen
-    if (art.Gruppe === "Lebensräume" && dsTyp === "Taxonomie") {
+    if (art.Gruppe === 'Lebensräume' && dsTyp === 'Taxonomie') {
         htmlDatensammlung += '<div class="btn-toolbar bearbToolbar"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-default lrBearb lrBearbBtn" data-toggle="tooltip" title="bearbeiten"><i class="glyphicon glyphicon-pencil"></i></button><button type="button" class="btn btn-default lrBearb lrBearbSchuetzen disabled" title="schützen"><i class="glyphicon glyphicon-ban-circle"></i></button><button type="button" class="btn btn-default lrBearb lrBearbNeu disabled" title="neuer Lebensraum"><i class="glyphicon glyphicon-plus"></i></button><button type="button" data-toggle="modal" data-target="#rueckfrage_lr_loeschen" class="btn btn-default lrBearb lr_bearb_loeschen disabled" title="Lebensraum löschen"><i class="glyphicon glyphicon-trash"></i></button></div></div>';
     }
     // die id der Gruppe wird mit dem Namen der Datensammlung gebildet. Hier müssen aber leerzeichen entfernt werden
@@ -39,22 +39,22 @@ module.exports = function (dsTyp, art, datensammlung) {
     htmlDatensammlung += erstelleHtmlFuerDatensammlungBeschreibung(datensammlung);
     // Felder anzeigen
     // zuerst die GUID, aber nur bei der Taxonomie
-    if (dsTyp === "Taxonomie") {
-        htmlDatensammlung += erstelleHtmlFuerFeld("GUID", art._id, dsTyp, "Taxonomie");
+    if (dsTyp === 'Taxonomie') {
+        htmlDatensammlung += erstelleHtmlFuerFeld('GUID', art._id, dsTyp, 'Taxonomie');
     }
     _.each(datensammlung.Eigenschaften, function (feldwert, feldname) {
-        if (feldname === "GUID") {
+        if (feldname === 'GUID') {
             // dieses Feld nicht anzeigen. Es wird _id verwendet
             // dieses Feld wird künftig nicht mehr importiert
-        } else if (((feldname === "Offizielle Art" || feldname === "Eingeschlossen in" || feldname === "Synonym von") && art.Gruppe === "Flora") || (feldname === "Akzeptierte Referenz" && art.Gruppe === "Moose")) {
+        } else if (((feldname === 'Offizielle Art' || feldname === 'Eingeschlossen in' || feldname === 'Synonym von') && art.Gruppe === 'Flora') || (feldname === 'Akzeptierte Referenz' && art.Gruppe === 'Moose')) {
             // dann den Link aufbauen lassen
             htmlDatensammlung += generiereHtmlFuerLinkZuGleicherGruppe(feldname, art._id, feldwert.Name);
-        } else if ((feldname === "Gültige Namen" || feldname === "Eingeschlossene Arten" || feldname === "Synonyme") && art.Gruppe === "Flora") {
+        } else if ((feldname === 'Gültige Namen' || feldname === 'Eingeschlossene Arten' || feldname === 'Synonyme') && art.Gruppe === 'Flora') {
             // das ist ein Array von Objekten
             htmlDatensammlung += generiereHtmlFuerLinksZuGleicherGruppe(feldname, feldwert);
-        } else if ((feldname === "Artname" && art.Gruppe === "Flora") || (feldname === "Parent" && art.Gruppe === "Lebensräume")) {
+        } else if ((feldname === 'Artname' && art.Gruppe === 'Flora') || (feldname === 'Parent' && art.Gruppe === 'Lebensräume')) {
             // dieses Feld nicht anzeigen
-        } else if (feldname === "Hierarchie" && art.Gruppe === "Lebensräume" && _.isArray(feldwert)) {
+        } else if (feldname === 'Hierarchie' && art.Gruppe === 'Lebensräume' && _.isArray(feldwert)) {
             // Namen kommagetrennt anzeigen
             hierarchieString   = erstelleHierarchieFuerFeldAusHierarchieobjekteArray(feldwert);
             htmlDatensammlung += generiereHtmlFuerTextarea(feldname, hierarchieString, dsTyp, datensammlung.Name.replace(/"/g, "'"));

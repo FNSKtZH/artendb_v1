@@ -1,4 +1,6 @@
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
+
 module.exports = function (idname) {
-    'use strict';
-    return idname.replace(/\s+/g, " ").replace(/ /g, '').replace(/,/g, '').replace(/\./g, '').replace(/:/g, '').replace(/-/g, '').replace(/\//g, '').replace(/\(/g, '').replace(/\)/g, '').replace(/\&/g, '');
+    return idname.replace(/\s+/g, ' ').replace(/ /g, '').replace(/,/g, '').replace(/\./g, '').replace(/:/g, '').replace(/-/g, '').replace(/\//g, '').replace(/\(/g, '').replace(/\)/g, '').replace(/\&/g, '');
 };

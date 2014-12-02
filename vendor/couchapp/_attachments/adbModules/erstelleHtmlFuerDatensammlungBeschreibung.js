@@ -5,6 +5,7 @@ var Autolinker = require('autolinker');
 
 module.exports = function (esOderBs) {
     var html = '<div class="Datensammlung beschreibungDatensammlung">';
+
     if (esOderBs.Beschreibung) {
         html += esOderBs.Beschreibung;
     }
@@ -30,10 +31,10 @@ module.exports = function (esOderBs) {
             html += '<div>' + Autolinker.link(esOderBs.Link) + '</div>';
             html += '</div>';
         }
-        if (esOderBs["importiert von"]) {
+        if (esOderBs['importiert von']) {
             html += '<div class="dsBeschreibungZeile">';
             html += '<div>Importiert von: </div>';
-            html += '<div>' + Autolinker.link(esOderBs["importiert von"]) + '</div>';
+            html += '<div>' + Autolinker.link(esOderBs['importiert von']) + '</div>';
             html += '</div>';
         }
         if (esOderBs.zusammenfassend && esOderBs.Ursprungsdatensammlung) {

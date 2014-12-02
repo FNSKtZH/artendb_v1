@@ -1,12 +1,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                            = require('jquery'),
+    pruefeBrowserKompatibilitaet = require('./pruefeBrowserKompatibilitaet'),
+    oeffneUri                    = require('./oeffneUri');
 
 module.exports = function () {
-    var pruefeBrowserKompatibilitaet = require('./pruefeBrowserKompatibilitaet'),
-        oeffneUri                    = require('./oeffneUri');
-
     pruefeBrowserKompatibilitaet();
 
     // falls URL übergeben wurde, das entsprechende Dokument öffnen
@@ -23,12 +22,12 @@ module.exports = function () {
 
     // wenn User noch angemeldet ist, UI anpassen
     if (localStorage.Email) {
-        $("#artAnmeldenTitel").text(localStorage.Email + " ist angemeldet");
-        $(".importierenAnmeldenTitel").text("1. " + localStorage.Email + " ist angemeldet");
-        $(".anmeldenBtn").hide();
-        $(".abmeldenBtn").show();
-        $(".kontoErstellenBtn").hide();
-        $(".kontoSpeichernBtn").hide();
+        $('#artAnmeldenTitel').text(localStorage.Email + ' ist angemeldet');
+        $('.importierenAnmeldenTitel').text('1. ' + localStorage.Email + ' ist angemeldet');
+        $('.anmeldenBtn').hide();
+        $('.abmeldenBtn').show();
+        $('.kontoErstellenBtn').hide();
+        $('.kontoSpeichernBtn').hide();
     }
 
     /*

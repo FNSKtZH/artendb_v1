@@ -44,10 +44,10 @@ module.exports = function () {
             success: function (objekt) {
                 // window.adb.gruppe setzen. Nötig, um im Menu die richtigen Felder einzublenden
                 window.adb.gruppe = objekt.Gruppe;
-                $(".baum.jstree").jstree("deselect_all");
+                $('.baum.jstree').jstree('deselect_all');
                 // den richtigen Button aktivieren
                 $('[gruppe="' + objekt.Gruppe + '"]').button('toggle');
-                $("#gruppeLabel").html("Gruppe:");
+                $('#gruppeLabel').html('Gruppe:');
                 // tree aufbauen, danach Datensatz initiieren
                 $.when(erstelleBaum()).then(function () {
                     oeffneBaumZuId(id);

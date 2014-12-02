@@ -1,17 +1,17 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                               = require('jquery'),
+    setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia'),
+    zeigeFormular                   = require('./zeigeFormular');
 
 module.exports = function (htmlArt, art) {
-    var setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia'),
-        zeigeFormular                   = require('./zeigeFormular');
     // panel beenden
-    $("#artInhalt").html(htmlArt);
+    $('#artInhalt').html(htmlArt);
     // richtiges Formular anzeigen
-    zeigeFormular("art");
+    zeigeFormular('art');
     // Anmeldung soll nur kurzfristig sichtbar sein, wenn eine Anmeldung erfolgen soll
-    $("#artAnmelden").hide();
+    $('#artAnmelden').hide();
     // Wenn nur eine Datensammlung (die Taxonomie) existiert, diese öffnen
     if (art.Eigenschaftensammlungen.length === 0 && art.Beziehungssammlungen.length === 0) {
         $('.panel-collapse.Taxonomie').each(function () {
@@ -24,5 +24,5 @@ module.exports = function (htmlArt, art) {
     // hier wird die url angefügt
     setzteLinksZuBilderUndWikipedia(art);
     // und die URL anpassen
-    history.pushState(null, null, "index.html?id=" + art._id);
+    history.pushState(null, null, 'index.html?id=' + art._id);
 };

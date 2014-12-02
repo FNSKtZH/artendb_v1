@@ -5,13 +5,13 @@ var _ = require('underscore');
 
 module.exports = function (hierarchieArray) {
     if (!_.isArray(hierarchieArray)) {
-        return "";
+        return '';
     }
     // Namen kommagetrennt anzeigen
-    var hierarchieString = "";
+    var hierarchieString = '';
     _.each(hierarchieArray, function (hierarchieObjekt, index) {
         if (index > 0) {
-            hierarchieString += "\n";
+            hierarchieString += '\n';
         }
         hierarchieString += hierarchieObjekt.Name;
     });

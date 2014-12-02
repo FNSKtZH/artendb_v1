@@ -11,22 +11,22 @@ var _ = require('underscore'),
     $ = require('jquery');
 
 module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
-    var html            = "",
-        Feldname        = "",
-        htmlDsFelderDiv = "",
+    var html            = '',
+        Feldname        = '',
+        htmlDsFelderDiv = '',
         erste10Ds,
-        $tabellenDiv    = $("#" + tabellenDiv);
+        $tabellenDiv    = $('#' + tabellenDiv);
 
     if (!formular || formular !== 'exportAlt') {
         if (datensaetze.length > 10) {
-            html += "Vorschau der ersten 10 von " + datensaetze.length + " Datensätzen:";
+            html += 'Vorschau der ersten 10 von ' + datensaetze.length + ' Datensätzen:';
         } else if (datensaetze.length > 1) {
-            html += "Vorschau der " + datensaetze.length + " Datensätze:";
+            html += 'Vorschau der ' + datensaetze.length + ' Datensätze:';
         } else {
-            html += "Vorschau des einzigen Datensatzes:";
+            html += 'Vorschau des einzigen Datensatzes:';
         }
     } else if (formular && formular === 'exportAlt') {
-        html += "Vorschau der ersten 10 Datensätze:";
+        html += 'Vorschau der ersten 10 Datensätze:';
     }
 
     // Tabelle initiieren
@@ -35,15 +35,15 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // Zeile anlegen
     // gleichzeitig Feldliste für Formular anlegen
     if (felderDiv) {
-        if (felderDiv === "dsFelderDiv") {
-            Feldname = "dsFelder";
-        } else if (felderDiv === "bsFelderDiv") {
-            Feldname = "bsFelder";
+        if (felderDiv === 'dsFelderDiv') {
+            Feldname = 'dsFelder';
+        } else if (felderDiv === 'bsFelderDiv') {
+            Feldname = 'bsFelder';
         }
     }
     htmlDsFelderDiv += '<label class="control-label" for="' + Feldname + '">Feld mit eindeutiger ID<br>in den Importdaten</label>';
     htmlDsFelderDiv += '<select multiple class="controls form-control input-sm" id="' + Feldname + '" style="height:' + ((Object.keys(datensaetze[0]).length * 19) + 9)  + 'px">';
-    html            += "<thead><tr>";
+    html            += '<thead><tr>';
 
     // Tabellenzeilen aufbauen
     // nur die ersten 10 Datensätze anzeigen
@@ -66,31 +66,31 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // durch die Felder des ersten Datensatzes zirkeln
     _.each(erste10Ds[0], function (feldwert, feldname) {
         // Spalte anlegen
-        html            += "<th>" + feldname + "</th>";
+        html            += '<th>' + feldname + '</th>';
         // Option für Feldliste anfügen
         htmlDsFelderDiv += '<option value="' + feldname + '">' + feldname + '</option>';
     });
     // Titelzeile abschliessen
-    html            += "</tr></thead><tbody>";
+    html            += '</tr></thead><tbody>';
     // Feldliste abschliessen
     htmlDsFelderDiv += '</select>';
     if (felderDiv) {
         // nur, wenn ein felderDiv übergeben wurde
-        $("#" + felderDiv).html(htmlDsFelderDiv);
+        $('#' + felderDiv).html(htmlDsFelderDiv);
     }
 
     // Tabellenzeilen aufbauen
     _.each(erste10Ds, function (datensatz) {
         // Zeile anlegen
-        html += "<tr>";
+        html += '<tr>';
         // durch die Felder zirkeln
         _.each(datensatz, function (feldwert, feldname) {
             // Spalte anlegen
-            html += "<td>";
+            html += '<td>';
             if (feldwert === null) {
                 // Null-Werte als leer anzeigen
-                html += "";
-            } else if (typeof feldwert === "object") {
+                html += '';
+            } else if (typeof feldwert === 'object') {
                 html += JSON.stringify(feldwert);
             } else if (feldwert || feldwert === 0) {
                 html += feldwert;
@@ -100,13 +100,13 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
                 html += feldwert;
             } else {
                 // nullwerte als leerwerte (nicht) anzeigen
-                html += "";
+                html += '';
             }
             // Spalte abschliessen
-            html += "</td>";
+            html += '</td>';
         });
         // Zeile abschliessen
-        html += "</tr>";
+        html += '</tr>';
     });
 
     // Tabelle abschliessen
@@ -114,7 +114,7 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // html in div einfügen
     $tabellenDiv
         .html(html)
-        .css("margin-top", "20px")
+        .css('margin-top', '20px')
         // sichtbar stellen
         .show();
 

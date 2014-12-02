@@ -9,17 +9,17 @@ module.exports = function (gruppe) {
 
     // gruppe als globale Variable speichern, weil sie an vielen Orten benutzt wird
     window.adb.gruppe = gruppe;
-    $(".suchfeld").val("");
-    $("#gruppeLabel").html("Gruppe:");
-    $(".suchen")
+    $('.suchfeld').val('');
+    $('#gruppeLabel').html('Gruppe:');
+    $('.suchen')
         .hide()
-        .val("");
-    $("#forms").hide();
-    treeMitteilung = "hole Daten...";
-    if (window.adb.gruppe === "Macromycetes") {
-        treeMitteilung = "hole Daten (das dauert bei Pilzen länger...)";
+        .val('');
+    $('#forms').hide();
+    treeMitteilung = 'hole Daten...';
+    if (window.adb.gruppe === 'Macromycetes') {
+        treeMitteilung = 'hole Daten (das dauert bei Pilzen länger...)';
     }
-    $("#treeMitteilung")
+    $('#treeMitteilung')
         .html(treeMitteilung)
         .show();
     erstelleBaum();

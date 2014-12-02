@@ -7,21 +7,21 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                               = require('jquery'),
+    setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia');
 
 module.exports = function (formularname) {
     var formularAngezeigt = $.Deferred(),
-        $form = $('form'),
-        setzteLinksZuBilderUndWikipedia = require('./setzteLinksZuBilderUndWikipedia');
+        $form = $('form');
 
     // zuerst alle Formulare ausblenden
-    $("#forms").hide();
+    $('#forms').hide();
     $form.each(function () {
         $(this).hide();
     });
 
     if (formularname) {
-        if (formularname !== "art") {
+        if (formularname !== 'art') {
             // Spuren des letzten Objekts entfernen
             // IE8 kann nicht deleten
             try {
@@ -31,18 +31,18 @@ module.exports = function (formularname) {
             }
             // URL anpassen, damit kein Objekt angezeigt wird
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-            history.pushState(null, null, "index.html");
+            history.pushState(null, null, 'index.html');
             // alle Bäume ausblenden, suchfeld, Baumtitel
-            $(".suchen").hide();
-            $(".baum").hide();
-            $(".treeBeschriftung").hide();
+            $('.suchen').hide();
+            $('.baum').hide();
+            $('.treeBeschriftung').hide();
             // Gruppe Schaltfläche deaktivieren
             $('#gruppe').find('.active').removeClass('active');
         }
         $form.each(function () {
             var that = $(this);
-            if (that.attr("id") === formularname) {
-                $("#forms").show();
+            if (that.attr('id') === formularname) {
+                $('#forms').show();
                 that.show();
             }
         });
@@ -52,21 +52,21 @@ module.exports = function (formularname) {
         switch (formularname) {
         case 'export':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-            history.pushState(null, null, "index.html?exportieren=true");
+            history.pushState(null, null, 'index.html?exportieren=true');
             break;
         case 'exportAlt':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-            history.pushState(null, null, "index.html?exportieren_fuer_artenlistentool=true");
+            history.pushState(null, null, 'index.html?exportieren_fuer_artenlistentool=true');
             // ganze Breite nutzen (menu bleibt ausgeblendet)
-            $("body").toggleClass("force-mobile");
+            $('body').toggleClass('force-mobile');
             break;
         case 'importDs':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-            history.pushState(null, null, "index.html?importieren_datensammlung=true");
+            history.pushState(null, null, 'index.html?importieren_datensammlung=true');
             break;
         case 'importBs':
             // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-            history.pushState(null, null, "index.html?importieren_beziehungssammlung=true");
+            history.pushState(null, null, 'index.html?importieren_beziehungssammlung=true');
             break;
         }
 

@@ -32,9 +32,9 @@ module.exports = function () {
 
     // in dieser Funktion lassen, sonst ist $ nicht definiert
     function meldeFehler(feldname) {
-        $("#meldungIndividuellLabel").html("Fehler");
-        $("#meldungIndividuellText").html("Die letzte Änderung im Feld " + feldname + " wurde nicht gespeichert");
-        $("#meldungIndividuellSchliessen").html("schliessen");
+        $('#meldungIndividuellLabel').html('Fehler');
+        $('#meldungIndividuellText').html('Die letzte Änderung im Feld ' + feldname + ' wurde nicht gespeichert');
+        $('#meldungIndividuellSchliessen').html('schliessen');
         $('#meldungIndividuell').modal();
     }
 
@@ -48,7 +48,7 @@ module.exports = function () {
     $db.openDoc(id, {
         success: function (object) {
             // prüfen, ob Einheit eines LR verändert wurde. Wenn ja: Name der Taxonomie anpassen
-            if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
+            if (feldname === 'Einheit' && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
                 // das ist die Wurzel der Taxonomie
                 // somit ändert auch der Taxonomiename
                 // diesen mitgeben
@@ -65,8 +65,8 @@ module.exports = function () {
                 success: function (data) {
                     object._rev = data.rev;
                     // prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
-                    if (feldname === "Label" || feldname === "Einheit") {
-                        if (feldname === "Einheit" && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
+                    if (feldname === 'Label' || feldname === 'Einheit') {
+                        if (feldname === 'Einheit' && object.Taxonomie.Eigenschaften.Einheit === object.Taxonomie.Eigenschaften.Taxonomie) {
                             // das ist die Wurzel der Taxonomie
                             // somit ändert auch der Taxonomiename
                             // diesen mitgeben
@@ -81,14 +81,14 @@ module.exports = function () {
                             aktualisiereHierarchieEinesLrInklusiveSeinerChildren(null, object, true, false);
                         }
                         // node umbenennen
-                        if (feldname === "Label") {
+                        if (feldname === 'Label') {
                             // object hat noch den alten Wert für Label, neuen verwenden
                             neuerNodetext = erstelleLrLabelName(feldwert, object.Taxonomie.Eigenschaften.Einheit);
                         } else {
                             // object hat noch den alten Wert für Einheit, neuen verwenden
                             neuerNodetext = erstelleLrLabelName(object.Taxonomie.Eigenschaften.Label, feldwert);
                         }
-                        $("#tree" + window.adb.gruppe).jstree("rename_node", "#" + object._id, neuerNodetext);
+                        $('#tree' + window.adb.gruppe).jstree('rename_node', '#' + object._id, neuerNodetext);
                     }
                 },
                 error: function () {

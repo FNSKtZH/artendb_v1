@@ -10,10 +10,10 @@ module.exports = function () {
 
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
-    $(".suchen").val("");
-    $("#tree" + window.adb.gruppe)
-        .jstree("clear_search")
-        .jstree("deselect_all")
-        .jstree("close_all", -1)
-        .jstree("select_node", "#" + id);
+    $('.suchen').val('');
+    $('#tree' + window.adb.gruppe)
+        .jstree('clear_search')
+        .jstree('deselect_all')
+        .jstree('close_all', -1)
+        .jstree('select_node', '#' + id);
 };

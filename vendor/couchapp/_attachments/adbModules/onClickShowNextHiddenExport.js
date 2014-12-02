@@ -12,9 +12,9 @@ module.exports = function () {
 
     if ($elementToShow.is(':visible')) {
         $elementToShow.hide(400);
-        $(this).text("...mehr");
+        $(this).text('...mehr');
     } else {
         $elementToShow.show(400);
-        $(this).text("...weniger");
+        $(this).text('...weniger');
     }
 };

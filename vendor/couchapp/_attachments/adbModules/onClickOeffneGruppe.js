@@ -5,5 +5,5 @@ var $            = require('jquery'),
     oeffneGruppe = require('./oeffneGruppe');
 
 module.exports = function () {
-    oeffneGruppe($(this).attr("Gruppe"));
+    oeffneGruppe($(this).attr('Gruppe'));
 };

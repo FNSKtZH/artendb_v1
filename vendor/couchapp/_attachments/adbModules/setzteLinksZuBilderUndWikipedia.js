@@ -9,10 +9,11 @@ var $ = require('jquery');
 module.exports = function (art) {
     // jetzt die Links im Menu setzen
     if (art) {
-        var googleBilderLink = "",
-            wikipediaLink = "";
+        var googleBilderLink = '',
+            wikipediaLink    = '';
+
         switch (art.Gruppe) {
-        case "Flora":
+        case 'Flora':
             googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Artname + '"';
             if (art.Taxonomie.Eigenschaften['Name Deutsch']) {
                 googleBilderLink += '+OR+"' + art.Taxonomie.Eigenschaften['Name Deutsch'] + '"';
@@ -29,9 +30,9 @@ module.exports = function (art) {
                 wikipediaLink = '//de.wikipedia.org/wiki/' + art.Taxonomie.Eigenschaften.Artname;
             }
             break;
-        case "Fauna":
+        case 'Fauna':
             googleBilderLink = 'https://www.google.ch/search?num=10&hl=de&site=imghp&tbm=isch&source=hp&bih=824&q="' + art.Taxonomie.Eigenschaften.Artname + '"';
-            if (art.Taxonomie.Eigenschaften["Name Deutsch"]) {
+            if (art.Taxonomie.Eigenschaften['Name Deutsch']) {
                 googleBilderLink += '+OR+"' + art.Taxonomie.Eigenschaften['Name Deutsch'] + '"';
             }
             if (art.Taxonomie.Eigenschaften['Name Französisch']) {
@@ -59,14 +60,14 @@ module.exports = function (art) {
             break;
         }
         // mit replace Hochkommata ' ersetzen, sonst klappt url nicht
-        $("#GoogleBilderLink").attr("href", encodeURI(googleBilderLink).replace("&#39;", "%20"));
-        $("#GoogleBilderLink_li").removeClass("disabled");
-        $("#WikipediaLink").attr("href", wikipediaLink);
-        $("#WikipediaLink_li").removeClass("disabled");
+        $('#GoogleBilderLink').attr('href', encodeURI(googleBilderLink).replace('&#39;', '%20'));
+        $('#GoogleBilderLink_li').removeClass('disabled');
+        $('#WikipediaLink').attr('href', wikipediaLink);
+        $('#WikipediaLink_li').removeClass('disabled');
     } else {
-        $("#WikipediaLink").attr("href", "#");
-        $("#WikipediaLink_li").addClass("disabled");
-        $("#GoogleBilderLink").attr("href", "#");
-        $("#GoogleBilderLink_li").addClass("disabled");
+        $('#WikipediaLink').attr('href', '#');
+        $('#WikipediaLink_li').addClass('disabled');
+        $('#GoogleBilderLink').attr('href', '#');
+        $('#GoogleBilderLink_li').addClass('disabled');
     }
 };

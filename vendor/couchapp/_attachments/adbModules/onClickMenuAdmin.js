@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = function () {
-    require('./zeigeFormular')("admin");
+    require('./zeigeFormular')('admin');
 };

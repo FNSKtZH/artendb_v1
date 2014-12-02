@@ -8,10 +8,10 @@ var $ = require('jquery');
 
 module.exports = function () {
     if (localStorage.art_id) {
-        $("#GoogleBilderLink_li").removeClass("disabled");
-        $("#WikipediaLink_li").removeClass("disabled");
+        $('#GoogleBilderLink_li').removeClass('disabled');
+        $('#WikipediaLink_li').removeClass('disabled');
     } else {
-        $("#GoogleBilderLink_li").addClass("disabled");
-        $("#WikipediaLink_li").addClass("disabled");
+        $('#GoogleBilderLink_li').addClass('disabled');
+        $('#WikipediaLink_li').addClass('disabled');
     }
 };
