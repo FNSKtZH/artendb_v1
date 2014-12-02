@@ -41,9 +41,9 @@ module.exports = function (LR, object) {
             });
         },
         error: function () {
-            $("#meldungIndividuellLabel").html("Fehler");
-            $("#meldungIndividuellText").html("Die Hierarchie des Lebensraums konnte nicht erstellt werden");
-            $("#meldungIndividuellSchliessen").html("schliessen");
+            $('#meldungIndividuellLabel').html('Fehler');
+            $('#meldungIndividuellText').html('Die Hierarchie des Lebensraums konnte nicht erstellt werden');
+            $('#meldungIndividuellSchliessen').html('schliessen');
             $('#meldungIndividuell').modal();
             initiiereArt(object._id);
         }

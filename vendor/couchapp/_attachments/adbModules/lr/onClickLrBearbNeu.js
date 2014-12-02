@@ -8,8 +8,8 @@ var $                              = require('jquery'),
 
 module.exports = function (that) {
     if (!$(that).hasClass('disabled')) {
-        getHtmlForLrParentAuswahlliste($("#Taxonomie").val(), function (html) {
-            $("#lrParentWaehlenOptionen").html(html);
+        getHtmlForLrParentAuswahlliste($('#Taxonomie').val(), function (html) {
+            $('#lrParentWaehlenOptionen').html(html);
             // jetzt das modal aufrufen
             // höhe Anpassen funktioniert leider nicht über css mit calc
             $('#lrParentWaehlen').modal();

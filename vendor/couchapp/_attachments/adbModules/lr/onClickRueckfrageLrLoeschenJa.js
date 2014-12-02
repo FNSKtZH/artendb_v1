@@ -36,14 +36,14 @@ module.exports = function () {
             // und diese Dokumente nun löschen
             loescheMassenMitObjektArray(docArray);
             // vorigen node ermitteln
-            vorigerNode = $.jstree._reference("#" + id)._get_prev("#" + id);
+            vorigerNode = $.jstree._reference('#' + id)._get_prev('#' + id);
             // node des gelöschten LR entfernen
-            $.jstree._reference("#" + id).delete_node("#" + id);
+            $.jstree._reference('#' + id).delete_node('#' + id);
             // vorigen node öffnen
             if (vorigerNode) {
                 $.jstree._reference(vorigerNode).select_node(vorigerNode);
             } else {
-                oeffneGruppe("Lebensräume");
+                oeffneGruppe('Lebensräume');
             }
         },
         error: function () {

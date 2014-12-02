@@ -1,5 +1,5 @@
 // Baut den Hierarchiepfad für einen Lebensraum auf
-// das erste Element - der Lebensraum selbst - wird mit der Variable "Hierarchie" übergeben
+// das erste Element - der Lebensraum selbst - wird mit der Variable 'Hierarchie' übergeben
 // ruft sich selbst rekursiv auf, bis das oberste Hierarchieelement erreicht ist
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/

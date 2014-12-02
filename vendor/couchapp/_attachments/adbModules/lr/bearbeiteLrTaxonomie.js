@@ -6,7 +6,7 @@ var $               = require('jquery'),
 
 module.exports = function () {
     // Benutzer muss anmelden
-    if (!pruefeAnmeldung("art")) {
+    if (!pruefeAnmeldung('art')) {
         return false;
     }
 
@@ -14,13 +14,13 @@ module.exports = function () {
     localStorage.lrBearb = true;
 
     // Anmeldung: zeigen, aber geschlossen
-    $("#artAnmeldenCollapse").collapse('hide');
-    $("#artAnmelden").show();
+    $('#artAnmeldenCollapse').collapse('hide');
+    $('#artAnmelden').show();
 
     // alle Felder schreibbar setzen
-    $(".Lebensräume.Taxonomie").find(".controls").each(function () {
+    $('.Lebensräume.Taxonomie').find('.controls').each(function () {
         // einige Felder nicht bearbeiten
-        if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
+        if ($(this).attr('id') !== 'GUID' && $(this).attr('id') !== 'Parent' && $(this).attr('id') !== 'Taxonomie' && $(this).attr('id') !== 'Hierarchie') {
             var parent = $(this).parent();
 
             $(this).attr('readonly', false);
@@ -36,5 +36,5 @@ module.exports = function () {
 
     // Schreibbarkeit in den Symbolen anzeigen
     $('.lrBearb').removeClass('disabled');
-    $(".lrBearbBtn").addClass('disabled');
+    $('.lrBearbBtn').addClass('disabled');
 };

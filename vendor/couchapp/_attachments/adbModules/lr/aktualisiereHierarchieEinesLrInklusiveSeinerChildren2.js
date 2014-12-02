@@ -30,7 +30,7 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         objekt.Taxonomie.Eigenschaften.Hierarchie = hierarchie;
     }
     if (aktualisiereHierarchiefeld) {
-        $("#Hierarchie").val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
+        $('#Hierarchie').val(erstelleHierarchieFuerFeldAusHierarchieobjekteArray(objekt.Taxonomie.Eigenschaften.Hierarchie));
     }
     // jetzt den parent aktualisieren
     if (objekt.Taxonomie.Eigenschaften.Hierarchie && objekt.Taxonomie.Eigenschaften.Hierarchie.length > 1) {

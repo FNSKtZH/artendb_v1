@@ -18,7 +18,7 @@ module.exports = function (taxonomieName, callback) {
                 object,
                 neueTaxonomie,
                 objectHtml,
-                html = "",
+                html = '',
                 i;
 
             // reduzieren auf die LR der Taxonomie
@@ -31,14 +31,14 @@ module.exports = function (taxonomieName, callback) {
                 object.id = row.doc._id;
                 if (row.doc.Taxonomie.Eigenschaften && row.doc.Taxonomie.Eigenschaften.Einheit) {
                     if (row.doc.Taxonomie.Eigenschaften.Label) {
-                        object.Name = row.doc.Taxonomie.Eigenschaften.Label + ": " + row.doc.Taxonomie.Eigenschaften.Einheit;
+                        object.Name = row.doc.Taxonomie.Eigenschaften.Label + ': ' + row.doc.Taxonomie.Eigenschaften.Einheit;
                     } else {
                         object.Name = row.doc.Taxonomie.Eigenschaften.Einheit;
                     }
                     if (row.doc.Taxonomie.Eigenschaften.Hierarchie && row.doc.Taxonomie.Eigenschaften.Hierarchie.length === 1) {
                         // das ist das oberste Objekt, soll auch zuoberst einsortiert werden
                         // oft hat es als einziges keinen label und würde daher zuunterst sortiert!
-                        object.Sortier = "0";
+                        object.Sortier = '0';
                     } else {
                         // mittels Array sortieren
                         object.Sortier = object.Name;
@@ -52,11 +52,11 @@ module.exports = function (taxonomieName, callback) {
             });
             neueTaxonomie      = {};
             neueTaxonomie.id   = 0;
-            neueTaxonomie.Name = "Neue Taxonomie beginnen";
+            neueTaxonomie.Name = 'Neue Taxonomie beginnen';
             // neueTaxonomie als erstes Objekt in den Array einfügen
             taxonomieObjekte.unshift(neueTaxonomie);
 
-            // jetzt die Optionenliste für $("#lrParentWaehlenOptionen") aufbauen
+            // jetzt die Optionenliste für $('#lrParentWaehlenOptionen') aufbauen
             for (i = 0; i < taxonomieObjekte.length; i++) {
                 objectHtml = '';
                 if (i === 1) {
