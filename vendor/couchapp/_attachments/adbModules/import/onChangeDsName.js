@@ -15,7 +15,7 @@ module.exports = function () {
         $importDsDsBeschreibenHinweis2 = $('#importDsDsBeschreibenHinweis2');
 
     dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
-        return key[0] === that.value && key[2] !== localStorage.Email && !key[1];
+        return key[0] === that.value && key[2] !== localStorage.email && !key[1];
     });
 
     if (dsKey) {

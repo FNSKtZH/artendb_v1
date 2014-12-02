@@ -7,7 +7,7 @@ var $                   = require('jquery'),
 
 module.exports = function () {
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
-    delete localStorage.Email;
+    delete localStorage.email;
     $('.artAnmeldenTitel').text('Anmelden');
     $('.importierenAnmeldenTitel').text('1. Anmelden');
     $('.alert').hide();

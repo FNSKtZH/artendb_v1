@@ -9,7 +9,7 @@ var $ = require('jquery');
 module.exports = function () {
     var $importDsDsBeschreibenHinweis2 = $('#importDsDsBeschreibenHinweis2');
 
-    $('#dsImportiertVon').val(localStorage.Email);
+    $('#dsImportiertVon').val(localStorage.email);
     $importDsDsBeschreibenHinweis2
         .alert()
         .show()

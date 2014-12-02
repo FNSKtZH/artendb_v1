@@ -10,7 +10,7 @@
 var zurueckZurAnmeldung = require('./zurueckZurAnmeldung');
 
 module.exports = function (woher) {
-    if (!localStorage.Email) {
+    if (!localStorage.email) {
         setTimeout(function () {
             zurueckZurAnmeldung(woher);
         }, 600);

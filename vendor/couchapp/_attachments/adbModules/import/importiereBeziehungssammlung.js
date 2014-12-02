@@ -121,7 +121,7 @@ module.exports = function () {
             if ($bsUrsprungsBs.val()) {
                 bsVorlage.Ursprungsdatensammlung = $bsUrsprungsBs.val();
             }
-            bsVorlage['importiert von'] = localStorage.Email;
+            bsVorlage['importiert von'] = localStorage.email;
             bsVorlage.Beziehungen = [];
             // zunächst den Array von Objekten in ein Objekt mit Eigenschaften = ObjektGuid und darin Array mit allen übrigen Daten verwandeln
             bsDatensaetzeObjekt = _.groupBy(window.adb.bsDatensaetze, function (objekt) {

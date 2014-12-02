@@ -10,11 +10,13 @@ module.exports = function () {
         return false;
     }
 
+    //console.log('bearbeiteLrTaxonomie');
+
     // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
     localStorage.lrBearb = true;
 
     // Anmeldung: zeigen, aber geschlossen
-    $('#artAnmeldenCollapse').collapse('hide');
+    $('#artAnmelden .in').collapse('hide');
     $('#artAnmelden').show();
 
     // alle Felder schreibbar setzen

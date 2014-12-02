@@ -704,6 +704,11 @@ option {
     /*margin-left: 4px;*/
 }
 
+#artAnmelden {
+    display: none;
+    margin-bottom: 7px;
+}
+
 .bearbToolbar {
     position: absolute;
     margin-top: -3px;

@@ -21,9 +21,9 @@ module.exports = function () {
     };
 
     // wenn User noch angemeldet ist, UI anpassen
-    if (localStorage.Email) {
-        $('#artAnmeldenTitel').text(localStorage.Email + ' ist angemeldet');
-        $('.importierenAnmeldenTitel').text('1. ' + localStorage.Email + ' ist angemeldet');
+    if (localStorage.email) {
+        $('#artAnmeldenTitel').text(localStorage.email + ' ist angemeldet');
+        $('.importierenAnmeldenTitel').text('1. ' + localStorage.email + ' ist angemeldet');
         $('.anmeldenBtn').hide();
         $('.abmeldenBtn').show();
         $('.kontoErstellenBtn').hide();

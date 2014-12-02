@@ -5,11 +5,14 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    $('#artAnmeldenTitel').text(localStorage.Email + ' ist angemeldet');
-    $('.importierenAnmeldenTitel').text('1. ' + localStorage.Email + ' ist angemeldet');
+    console.log('passeUiFuerAngemeldetenUserAn');
+    
+    $('#artAnmeldenTitel').text(localStorage.email + ' ist angemeldet');
+    $('.importierenAnmeldenTitel').text('1. ' + localStorage.email + ' ist angemeldet');
 
     if (woher === 'art') {
-        $('#artAnmeldenCollapse').collapse('hide');
+        //$('#artAnmeldenCollapse').collapse('hide');
+        $('#artAnmelden .in').collapse('hide');
     } else {
         $('#import' + capitaliseFirstLetter(woher) + 'AnmeldenCollapse').collapse('hide');
         $('#import' + capitaliseFirstLetter(woher) + 'DsBeschreibenCollapse').collapse('show');

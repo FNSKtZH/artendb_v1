@@ -38,7 +38,7 @@ module.exports = function () {
     // Namen der Datensammlungen als Optionen anfügen
     _.each(window.adb.dsNamenEindeutig, function (dsNameEindeutig) {
         // veränderbar sind nur selbst importierte und zusammenfassende
-        if (dsNameEindeutig[2] === localStorage.Email || dsNameEindeutig[1] || Boolean(localStorage.admin)) {
+        if (dsNameEindeutig[2] === localStorage.email || dsNameEindeutig[1] || Boolean(localStorage.admin)) {
             // veränderbare sind normal = schwarz
             html += "<option value='" + dsNameEindeutig[0] + "' class='adbGruenFett' waehlbar=true>" + dsNameEindeutig[0] + "</option>";
         } else {

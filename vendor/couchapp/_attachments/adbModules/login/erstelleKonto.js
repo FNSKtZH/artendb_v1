@@ -12,7 +12,7 @@ module.exports = function (woher) {
         name: $('#email' + capitaliseFirstLetter(woher)).val()
     }, $('#passwort' + capitaliseFirstLetter(woher)).val(), {
         success: function () {
-            localStorage.Email = $('#email' + capitaliseFirstLetter(woher)).val();
+            localStorage.email = $('#email' + capitaliseFirstLetter(woher)).val();
             if (woher === 'art') {
                 bearbeiteLrTaxonomie();
             }

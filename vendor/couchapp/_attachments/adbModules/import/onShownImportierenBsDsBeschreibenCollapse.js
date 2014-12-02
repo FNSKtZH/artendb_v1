@@ -9,5 +9,5 @@ var $                                  = require('jquery'),
 module.exports = function () {
     // mitgeben, woher die Anfrage kommt, weil ev. angemeldet werden muss
     bereiteImportierenBsBeschreibenVor('bs');
-    $('#bsImportiertVon').val(localStorage.Email);
+    $('#bsImportiertVon').val(localStorage.email);
 };
