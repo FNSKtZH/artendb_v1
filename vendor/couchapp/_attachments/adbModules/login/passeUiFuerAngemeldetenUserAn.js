@@ -5,8 +5,6 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    console.log('passeUiFuerAngemeldetenUserAn');
-    
     $('#artAnmeldenTitel').text(localStorage.email + ' ist angemeldet');
     $('.importierenAnmeldenTitel').text('1. ' + localStorage.email + ' ist angemeldet');
 

@@ -10,8 +10,6 @@ module.exports = function () {
         return false;
     }
 
-    //console.log('bearbeiteLrTaxonomie');
-
     // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
     localStorage.lrBearb = true;
 

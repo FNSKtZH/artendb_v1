@@ -43,6 +43,10 @@ module.exports = function (taxonomieName, callback) {
                         // mittels Array sortieren
                         object.Sortier = object.Name;
                     }
+                    object.Hierarchie = [];
+                    if (row.doc.Taxonomie.Eigenschaften.Hierarchie) {
+                        object.Hierarchie = row.doc.Taxonomie.Eigenschaften.Hierarchie;
+                    }
                 }
                 return object;
             });
@@ -67,7 +71,7 @@ module.exports = function (taxonomieName, callback) {
                 objectHtml += taxonomieObjekte[i].id;
                 objectHtml += '" value="';
                 objectHtml += taxonomieObjekte[i].Name;
-                objectHtml += '">';
+                objectHtml += '" data-hierarchie=\'' + JSON.stringify(taxonomieObjekte[i].Hierarchie) + '\'>';
                 objectHtml += taxonomieObjekte[i].Name;
                 objectHtml += '</label></div>';
                 html += objectHtml;

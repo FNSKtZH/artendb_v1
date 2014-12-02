@@ -63,6 +63,8 @@ module.exports = function () {
 
             $db.saveDoc(object, {
                 success: function (data) {
+                    console.log('data: ', data);
+                    console.log('object: ', object);
                     object._rev = data.rev;
                     // prüfen, ob Label oder Name eines LR verändert wurde. Wenn ja: Hierarchie aktualisieren
                     if (feldname === 'Label' || feldname === 'Einheit') {
