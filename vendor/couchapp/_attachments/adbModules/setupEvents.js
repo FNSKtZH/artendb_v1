@@ -83,9 +83,7 @@ module.exports = function () {
 
     $(window).resize(onResize);
 
-    /*
-     * body
-     */
+    // body
     $body
         .on('click',             '.showNextHidden',                       onClickShowNextHidden)
         .on('click',             '.showNextHiddenExport',                 onClickShowNextHiddenExport)
@@ -97,9 +95,7 @@ module.exports = function () {
         .on('click',             '.kontoErstellenBtn',                    onClickKontoErstellenBtn)
         .on('click',             '.kontoSpeichernBtn',                    onClickKontoSpeichernBtn);
 
-    /*
-     * menu
-     */
+    // menu
     $('#menuBtn')                                .on('click',             onClickMenuBtn);
     $('#menu').on('click',       '.gruppe',                               onClickOeffneGruppe);
     $('#btnResize')                              .on('click',             onClickBtnResize);
@@ -113,18 +109,14 @@ module.exports = function () {
         .on('shown.bs.collapse', '.panel',                                onShownPanel)
         .on('click',             '.linkZuArtGleicherGruppe',              onClickLinkZuArtGleicherGruppe);
 
-    /*
-     * admin
-     */
+    // admin
     $('#adminPilzeZhgisErgaenzen')               .on('click',             onClickAdminPilzeZhgisErgaenzen);
     $('#adminKorrigiereArtwertnameInFlora')      .on('click',             onClickAdminKorrigiereArtwertnameInFlora);
     $('#adminKorrigiereDsNameChRoteListe1991')   .on('click',             onClickAdminKorrigiereDsNameChRoteListe1991);
     $('#adminKorrigiereDsName')                  .on('click',             onClickAdminKorrigiereDsName);
     $('#adminBaueDsZuEigenschaftenUm')           .on('click',             onClickAdminBaueDsZuEigenschaftenUm);
 
-    /*
-     * importieren
-     */
+    // importieren
     $('#importDsDsBeschreibenCollapse')          .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
     $('#importBsDsBeschreibenCollapse')          .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
     $('#importDsDatenUploadenCollapse')          .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
@@ -155,9 +147,7 @@ module.exports = function () {
     $('#bsLoeschen')                             .on('click',             onClickBsLoeschen);
     $('#bsEntfernen')                            .on('click',             onClickBsEntfernen);
 
-    /*
-     * exportieren
-     */
+    // exportieren
     $('#export')
         .on('change',            '.exportDsObjekteWaehlenGruppe',         onChangeExportDsObjekteWaehlenGruppe)
         .on('change',            '.feldWaehlen',                          onChangeFeldWaehlen)
@@ -176,9 +166,7 @@ module.exports = function () {
     $('#exportFelderWaehlenCollapse')           .on('shown.bs.collapse',  onShownExportObjekteWaehlenCollapse);
     $('#exportExport')                          .on('show',               onShowExportExport);
 
-    /*
-     * exportieren für alt
-     */
+    // exportieren für alt
     $('#exportAlt')
         .on('change',            '.feldWaehlen',                          onChangeFeldWaehlen)
         .on('change',            '.feldWaehlenAlleVonDsAlt',              onChangeFeldWaehlenAlleVonDs)
@@ -188,9 +176,7 @@ module.exports = function () {
     $('#exportAltBezInFeldern')                 .on('change',             exportZuruecksetzen);
     $('#exportAltSynonymInfos')                 .on('change',             exportZuruecksetzen);
 
-    /*
-     * art / lr
-     */
+    //* art / lr
     $('#art')
         .on('click',             '.btn.lrBearb',                           onClickLrBearb)
         .on('click',             '.btn.lrBearbBtn',                        onClickLrBearbBtn)
