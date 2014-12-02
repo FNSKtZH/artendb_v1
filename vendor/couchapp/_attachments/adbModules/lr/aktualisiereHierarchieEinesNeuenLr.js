@@ -8,18 +8,18 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                    = require('jquery'),
+    aktualisiereHierarchieEinesNeuenLr_2 = require('./aktualisiereHierarchieEinesNeuenLr_2');
 
-module.exports = function (lr, object, aktualisiere_hierarchiefeld) {
-    var $db = $.couch.db('artendb'),
-        aktualisiereHierarchieEinesNeuenLr_2 = require('./aktualisiereHierarchieEinesNeuenLr_2');
+module.exports = function (lr, object, aktualisiereHierarchiefeld) {
+    var $db = $.couch.db('artendb');
 
     if (lr) {
-        aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiere_hierarchiefeld);
+        aktualisiereHierarchieEinesNeuenLr_2(lr, object, aktualisiereHierarchiefeld);
     } else {
         $db.view('artendb/lr?include_docs=true', {
             success: function (data) {
-                aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiere_hierarchiefeld);
+                aktualisiereHierarchieEinesNeuenLr_2(data, object, aktualisiereHierarchiefeld);
             }
         });
     }

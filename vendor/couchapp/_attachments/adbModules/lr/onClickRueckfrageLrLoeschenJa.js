@@ -28,6 +28,7 @@ module.exports = function () {
         success: function (data) {
             var docArray,
                 vorigerNode;
+
             // daraus einen Array von docs machen
             docArray = _.map(data.rows, function (row) {
                 return row.doc;

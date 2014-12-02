@@ -50,8 +50,8 @@ module.exports = function (taxonomieName, callback) {
             taxonomieObjekte = _.sortBy(taxonomieObjekte, function (objekt) {
                 return objekt.Sortier;
             });
-            neueTaxonomie = {};
-            neueTaxonomie.id = 0;
+            neueTaxonomie      = {};
+            neueTaxonomie.id   = 0;
             neueTaxonomie.Name = "Neue Taxonomie beginnen";
             // neueTaxonomie als erstes Objekt in den Array einfügen
             taxonomieObjekte.unshift(neueTaxonomie);

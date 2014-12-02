@@ -9,11 +9,11 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $                                                     = require('jquery'),
+    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
 
 module.exports = function (lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename) {
-    var $db = $.couch.db('artendb'),
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+    var $db = $.couch.db('artendb');
 
     if (lr) {
         aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename);

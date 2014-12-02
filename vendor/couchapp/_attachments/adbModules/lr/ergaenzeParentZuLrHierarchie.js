@@ -5,12 +5,12 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore');
+var _                                 = require('underscore'),
+    erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
 
 var ergaenzeParentZuLrHierarchie = function (objektArray, parentGUID, hierarchie) {
     var parentObjekt,
-        hierarchieErgaenzt,
-        erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
+        hierarchieErgaenzt;
 
     _.each(objektArray, function (object) {
         if (object._id === parentGUID) {

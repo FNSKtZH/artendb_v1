@@ -7,19 +7,19 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery'),
-    _ = require('underscore');
+var $                                 = require('jquery'),
+    _                                 = require('underscore'),
+    ergaenzeParentZuLrHierarchie      = require('./ergaenzeParentZuLrHierarchie'),
+    erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
 
 module.exports = function (objectArray) {
     var hierarchie,
         parent,
-        $db = $.couch.db('artendb'),
-        ergaenzeParentZuLrHierarchie      = require('./ergaenzeParentZuLrHierarchie'),
-        erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
+        $db = $.couch.db('artendb');
 
     _.each(objectArray, function (object) {
         hierarchie = [];
-        parent = object.Taxonomie.Eigenschaften.Parent;
+        parent     = object.Taxonomie.Eigenschaften.Parent;
         // als Start sich selben zur Hierarchie hinzufügen
         hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
         if (parent) {

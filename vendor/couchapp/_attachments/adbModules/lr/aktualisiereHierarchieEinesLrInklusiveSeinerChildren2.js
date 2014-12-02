@@ -1,28 +1,28 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery');
+var _                                                   = require('underscore'),
+    $                                                   = require('jquery'),
+    erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
+    ergaenzeParentZuLrHierarchie                        = require('./ergaenzeParentZuLrHierarchie'),
+    erstelleHierarchieobjektAusObjekt                   = require('../erstelleHierarchieobjektAusObjekt');
 
-var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt, aktualisiereHierarchiefeld, einheit_ist_taxonomiename) {
+var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt, aktualisiereHierarchiefeld, einheitIstTaxonomiename) {
     var hierarchie = [],
         parent = objekt.Taxonomie.Eigenschaften.Parent,
-        objectArray = _.map(lr.rows, function (row) {
-            return row.doc;
-        }),
-        $db = $.couch.db('artendb'),
-        erstelleHierarchieFuerFeldAusHierarchieobjekteArray = require('../erstelleHierarchieFuerFeldAusHierarchieobjekteArray'),
-        ergaenzeParentZuLrHierarchie                        = require('./ergaenzeParentZuLrHierarchie'),
-        erstelleHierarchieobjektAusObjekt                   = require('../erstelleHierarchieobjektAusObjekt');
+        objectArray,
+        $db = $.couch.db('artendb');
 
-    if (!objekt.Taxonomie) {
-        objekt.Taxonomie = {};
-    }
-    if (!objekt.Taxonomie.Eigenschaften) {
-        objekt.Taxonomie.Eigenschaften = {};
-    }
+    objectArray = _.map(lr.rows, function (row) {
+        return row.doc;
+    });
+
+    objekt.Taxonomie = objekt.Taxonomie || {};
+    objekt.Taxonomie.Eigenschaften = objekt.Taxonomie.Eigenschaften || {};
+
     // als Start sich selber zur Hierarchie hinzufügen
     hierarchie.push(erstelleHierarchieobjektAusObjekt(objekt));
+
     if (parent.GUID !== objekt._id) {
         objekt.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, objekt.Taxonomie.Eigenschaften.Parent.GUID, hierarchie);
     } else {
@@ -41,23 +41,23 @@ var aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = function (lr, objekt
         // das ist die oberste Ebene
         objekt.Taxonomie.Eigenschaften.Parent = objekt.Taxonomie.Eigenschaften.Hierarchie[0];
     }
-    if (einheit_ist_taxonomiename) {
+    if (einheitIstTaxonomiename) {
         // Einheit ändert und Taxonomiename muss auch angepasst werden
-        objekt.Taxonomie.Name = einheit_ist_taxonomiename;
-        objekt.Taxonomie.Eigenschaften.Taxonomie = einheit_ist_taxonomiename;
+        objekt.Taxonomie.Name = einheitIstTaxonomiename;
+        objekt.Taxonomie.Eigenschaften.Taxonomie = einheitIstTaxonomiename;
     }
     // db aktualisieren
     $db.saveDoc(objekt, {
         success: function () {
             var doc;
             // kontrollieren, ob das Objekt children hat. Wenn ja, diese aktualisieren
-            _.each(lr.rows, function (lr_row) {
-                doc = lr_row.doc;
+            _.each(lr.rows, function (lrRow) {
+                doc = lrRow.doc;
                 if (doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften.Parent && doc.Taxonomie.Eigenschaften.Parent.GUID && doc.Taxonomie.Eigenschaften.Parent.GUID === objekt._id && doc._id !== objekt._id) {
                     // das ist ein child
                     // auch aktualisieren
                     // lr mitgeben, damit die Abfrage nicht wiederholt werden muss
-                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, doc, false, einheit_ist_taxonomiename);
+                    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, doc, false, einheitIstTaxonomiename);
                 }
             });
         },

@@ -1,11 +1,10 @@
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
 
-var $ = require('jquery');
+var $               = require('jquery'),
+    pruefeAnmeldung = require('../login/pruefeAnmeldung');
 
 module.exports = function () {
-    var pruefeAnmeldung = require('../login/pruefeAnmeldung');
-
     // Benutzer muss anmelden
     if (!pruefeAnmeldung("art")) {
         return false;
@@ -23,6 +22,7 @@ module.exports = function () {
         // einige Felder nicht bearbeiten
         if ($(this).attr('id') !== "GUID" && $(this).attr('id') !== "Parent" && $(this).attr('id') !== "Taxonomie" && $(this).attr('id') !== "Hierarchie") {
             var parent = $(this).parent();
+
             $(this).attr('readonly', false);
             if (parent.attr('href')) {
                 parent.attr('href', '#');
