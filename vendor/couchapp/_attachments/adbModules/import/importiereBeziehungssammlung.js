@@ -131,11 +131,11 @@ module.exports = function () {
 
                 if (window.adb.bsId === 'guid') {
                     // die in der Tabelle mitgelieferte id ist die guid
-                    guid = objekt[window.adb.BsFelderId];
+                    guid = objekt[window.adb.bsFelderId];
                 } else {
                     for (q = 0; q < window.adb.zuordbareDatensaetze.length; q++) {
                         // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-                        if (window.adb.zuordbareDatensaetze[q].Id == objekt[window.adb.BsFelderId]) {
+                        if (window.adb.zuordbareDatensaetze[q].Id == objekt[window.adb.bsFelderId]) {
                             // und die guid auslesen
                             guid = window.adb.zuordbareDatensaetze[q].Guid;
                             break;

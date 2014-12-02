@@ -78,7 +78,7 @@ module.exports = function () {
             // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
             // und die guid auslesen
             guid = _.find(window.adb.zuordbareDatensaetze, function (datensatz) {
-                return datensatz.Id == datensatz[window.adb.DsFelderId];
+                return datensatz.Id == datensatz[window.adb.dsFelderId];
             }).Guid;
         }
         // Einen Array der id's erstellen

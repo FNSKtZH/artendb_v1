@@ -30,7 +30,7 @@ module.exports = function (guid, datensammlung) {
             // in artendb speichern
             $db.saveDoc(doc);
             // mitteilen, dass ein ds importiert wurde
-            $(document).trigger('adb.ds_hinzugefügt');
+            $(document).trigger('adb.dsHinzugefuegt');
             // TODO: Scheitern des Speicherns abfangen (trigger adb.ds_nicht_hinzugefügt)
         }
     });

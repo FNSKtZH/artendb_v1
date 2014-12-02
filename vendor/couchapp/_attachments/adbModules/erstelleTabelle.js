@@ -36,9 +36,9 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // gleichzeitig Feldliste für Formular anlegen
     if (felderDiv) {
         if (felderDiv === "dsFelderDiv") {
-            Feldname = "DsFelder";
+            Feldname = "dsFelder";
         } else if (felderDiv === "bsFelderDiv") {
-            Feldname = "BsFelder";
+            Feldname = "bsFelder";
         }
     }
     htmlDsFelderDiv += '<label class="control-label" for="' + Feldname + '">Feld mit eindeutiger ID<br>in den Importdaten</label>';

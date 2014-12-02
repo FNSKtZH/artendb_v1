@@ -84,7 +84,7 @@ module.exports = function () {
         } else {
             for (q = 0; q < window.adb.zuordbareDatensaetze.length; q++) {
                 // in den zuordbaren Datensätzen nach dem Objekt mit der richtigen id suchen
-                if (window.adb.zuordbareDatensaetze[q].Id == bsDatensatz[window.adb.BsFelderId]) {
+                if (window.adb.zuordbareDatensaetze[q].Id == bsDatensatz[window.adb.bsFelderId]) {
                     // und die guid auslesen
                     guid = window.adb.zuordbareDatensaetze[q].Guid;
                     break;

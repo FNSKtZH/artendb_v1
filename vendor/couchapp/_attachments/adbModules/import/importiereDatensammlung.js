@@ -59,7 +59,7 @@ module.exports = function () {
     });*/
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
-    $(document).bind('adb.ds_hinzugefügt', function () {
+    $(document).bind('adb.dsHinzugefuegt', function () {
         anzDsImportiert++;
         var prozent = Math.round(anzDsImportiert / anzDs * 100),
             $db     = $.couch.db('artendb');
@@ -96,6 +96,7 @@ module.exports = function () {
             });
         }
     });
+
     _.each(window.adb.dsDatensaetze, function (dsDatensatz) {
         // Datensammlung als Objekt gründen
         datensammlung = {};
@@ -124,8 +125,8 @@ module.exports = function () {
         _.each(dsDatensatz, function (feldwert, feldname) {
             // nicht importiert wird die ID und leere Felder
             // und keine Taxonomie ID, wenn sie nur wegen der Identifikation mitgeliefert wurde
-            //if (feldname !== window.adb.DsFelderId && feldwert !== '' && feldwert !== null && (window.adb.dsId !== 'guid' && feldname !== 'Taxonomie ID')) {
-            if (feldname !== window.adb.DsFelderId && feldwert !== '' && feldwert !== null) {
+            //if (feldname !== window.adb.dsFelderId && feldwert !== '' && feldwert !== null && (window.adb.dsId !== 'guid' && feldname !== 'Taxonomie ID')) {
+            if (feldname !== window.adb.dsFelderId && feldwert !== '' && feldwert !== null) {
                 if (feldwert === -1) {
                     // Access macht in Abfragen mit Wenn-Klausel aus true -1 > korrigieren
                     datensammlung.Eigenschaften[feldname] = true;
@@ -155,10 +156,10 @@ module.exports = function () {
             var guid;
             if (window.adb.dsId === 'guid') {
                 // die in der Tabelle mitgelieferte id ist die guid
-                guid = dsDatensatz[window.adb.DsFelderId];
+                guid = dsDatensatz[window.adb.dsFelderId];
             } else {
                 dsDatensatzMitRichtigerId = _.find(window.adb.zuordbareDatensaetze, function (datensatz) {
-                    return datensatz.Id == dsDatensatz[window.adb.DsFelderId];
+                    return datensatz.Id == dsDatensatz[window.adb.dsFelderId];
                 });
                 guid = dsDatensatzMitRichtigerId.Guid;
             }

@@ -130,9 +130,9 @@ module.exports = function () {
     $('#importDsDatenUploadenCollapse')          .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
     $('#importBsDatenUploadenCollapse')          .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
     $('#importDsIdsIdentifizierenCollapse')      .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
-    $('#importBsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
-    $('#importDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
-    $('#importBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
+    $('#importBsIdsIdentifizierenCollapse')      .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
+    $('#importDsImportAusfuehrenCollapse')       .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
+    $('#importBsImportAusfuehrenCollapse')       .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
     $('#dsWaehlen')                              .on('change',            onChangeDsWaehlen);
     $('#dsName')                                 .on('change',            onChangeDsName);
     $('#dsImportiertVon')                        .on('change',            onChangeDsImportiertVon);

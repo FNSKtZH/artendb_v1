@@ -10,12 +10,12 @@ module.exports = function () {
 
     // in diesem Array werden alle keys gesammelt
     // diesen Array als globale Variable gestalten: Wir benutzt, wenn DsName verändert wird
-    window.adb.BsKeys = _.map(window.adb.bsVonObjekten.rows, function (row) {
+    window.adb.bsKeys = _.map(window.adb.bsVonObjekten.rows, function (row) {
         return row.key;
     });
 
     // brauche nur drei keys
-    window.adb.dsNamenEindeutig = _.map(window.adb.BsKeys, function (bsKey) {
+    window.adb.dsNamenEindeutig = _.map(window.adb.bsKeys, function (bsKey) {
         return [bsKey[1], bsKey[2], bsKey[3]];
     });
     // Objektarray reduzieren auf eindeutige Namen
