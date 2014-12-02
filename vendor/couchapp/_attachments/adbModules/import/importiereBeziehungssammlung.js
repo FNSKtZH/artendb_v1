@@ -24,8 +24,8 @@ module.exports = function () {
         $bsDatenstand                             = $('#bsDatenstand'),
         $bsLink                                   = $('#bsLink'),
         $bsUrsprungsBs                            = $('#bsUrsprungsBs'),
-        $importierenBsImportAusfuehrenHinweis     = $('#importierenBsImportAusfuehrenHinweis'),
-        $importierenBsImportAusfuehrenHinweisText = $('#importierenBsImportAusfuehrenHinweisText');
+        $importBsImportAusfuehrenHinweis     = $('#importBsImportAusfuehrenHinweis'),
+        $importBsImportAusfuehrenHinweisText = $('#importBsImportAusfuehrenHinweisText');
 
     // prüfen, ob ein BsName erfasst wurde. Wenn nicht: melden
     if (!$bsName.val()) {
@@ -39,14 +39,14 @@ module.exports = function () {
 
     // Rückmeldung in Feld anzeigen:
     rueckmeldung = 'Die Daten werden importiert...';
-    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
-    $importierenBsImportAusfuehrenHinweis
+    $importBsImportAusfuehrenHinweisText.html(rueckmeldung);
+    $importBsImportAusfuehrenHinweis
         .removeClass('alert-success')
         .removeClass('alert-danger')
         .addClass('alert-info');
-    $importierenBsImportAusfuehrenHinweis.alert().show();
+    $importBsImportAusfuehrenHinweis.alert().show();
     $('html, body').animate({
-        scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
+        scrollTop: $importBsImportAusfuehrenHinweis.offset().top
     }, 2000);
 
     // listener einrichten, der meldet, wenn ein Datensatz aktualisiert wurde
@@ -55,26 +55,26 @@ module.exports = function () {
         var prozent = Math.round(anzBsImportiert / anzahlBeziehungssammlungen * 100),
             $db     = $.couch.db('artendb');
 
-        $('#bsImportierenProgressbar')
+        $('#bsImportProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $('#bsImportierenProgressbarText').html(prozent + '%');
-        $importierenBsImportAusfuehrenHinweis
+        $('#bsImportProgressbarText').html(prozent + '%');
+        $importBsImportAusfuehrenHinweis
             .removeClass('alert-success')
             .removeClass('alert-danger')
             .addClass('alert-info')
             .show();
         rueckmeldung = 'Die Daten werden importiert...<br>Die Indexe werden aktualisiert...';
-        $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
+        $importBsImportAusfuehrenHinweisText.html(rueckmeldung);
         $('html, body').animate({
-            scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
+            scrollTop: $importBsImportAusfuehrenHinweis.offset().top
         }, 2000);
         if (anzBsImportiert === anzahlBeziehungssammlungen) {
             // Indices aktualisieren
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
-                    $importierenBsImportAusfuehrenHinweis
+                    $importBsImportAusfuehrenHinweis
                         .removeClass('alert-info')
                         .removeClass('alert-danger')
                         .addClass('alert-success')
@@ -82,11 +82,11 @@ module.exports = function () {
                     rueckmeldung  = 'Die Daten wurden importiert.<br>';
                     rueckmeldung += 'Die Indexe wurden neu aufgebaut.<br><br>';
                     rueckmeldung += 'Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>';
-                    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
+                    $importBsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
                     // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
                     window.adb.rueckmeldungLinks = rueckmeldungLinks;
                     $('html, body').animate({
-                        scrollTop: $importierenBsImportAusfuehrenHinweis.offset().top
+                        scrollTop: $importBsImportAusfuehrenHinweis.offset().top
                     }, 2000);
                 },
                 error: function () {

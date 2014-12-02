@@ -5,7 +5,7 @@ var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
 module.exports = function (woher) {
-    var praefix = 'importieren';
+    var praefix = 'import';
 
     // Bei LR muss der Anmeldungsabschnitt eingeblendet werden
     if (woher === 'art') {

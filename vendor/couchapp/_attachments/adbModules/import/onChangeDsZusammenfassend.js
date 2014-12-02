@@ -1,5 +1,5 @@
 // wenn dsZusammenfassend geändert wird
-// DsUrsprungsDs zeigen oder verstecken
+// dsUrsprungsDs zeigen oder verstecken
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';

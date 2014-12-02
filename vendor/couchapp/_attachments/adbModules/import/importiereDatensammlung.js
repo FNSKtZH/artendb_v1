@@ -24,8 +24,8 @@ module.exports = function () {
         $dsDatenstand     = $('#dsDatenstand'),
         $dsLink           = $('#dsLink'),
         $dsUrsprungsDs    = $('#dsUrsprungsDs'),
-        $importierenDsImportAusfuehrenHinweis     = $('#importierenDsImportAusfuehrenHinweis'),
-        $importierenDsImportAusfuehrenHinweisText = $('#importierenDsImportAusfuehrenHinweisText'),
+        $importDsImportAusfuehrenHinweis     = $('#importDsImportAusfuehrenHinweis'),
+        $importDsImportAusfuehrenHinweisText = $('#importDsImportAusfuehrenHinweisText'),
         erste10Ids,
         dsDatensatzMitRichtigerId;
 
@@ -51,10 +51,10 @@ module.exports = function () {
     $(document).bind('longpoll-data', function (event, data) {
         anzDsImportiert = anzDsImportiert + data.results.length;
         var prozent = Math.round(anzDsImportiert/anzDs*100);
-        $('#dsImportierenProgressbar').css('width', prozent +'%').attr('aria-valuenow', prozent);
+        $('#dsImportProgressbar').css('width', prozent +'%').attr('aria-valuenow', prozent);
         if (anzDsImportiert >= anzDs-1 && anzDsImportiert <= anzDs) {
             // Rückmeldung in Feld anzeigen:
-            $importierenDsImportAusfuehrenHinweis.css('display', 'block');
+            $importDsImportAusfuehrenHinweis.css('display', 'block');
         }
     });*/
 
@@ -64,30 +64,30 @@ module.exports = function () {
         var prozent = Math.round(anzDsImportiert / anzDs * 100),
             $db     = $.couch.db('artendb');
 
-        $('#dsImportierenProgressbar')
+        $('#dsImportProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $('#dsImportierenProgressbarText').html(prozent + '%');
-        $importierenDsImportAusfuehrenHinweis.removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
+        $('#dsImportProgressbarText').html(prozent + '%');
+        $importDsImportAusfuehrenHinweis.removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
         rueckmeldung = 'Die Daten wurden importiert.<br>Die Indexe werden aktualisiert...';
-        $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung);
+        $importDsImportAusfuehrenHinweisText.html(rueckmeldung);
         $('html, body').animate({
-            scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
+            scrollTop: $importDsImportAusfuehrenHinweis.offset().top
         }, 2000);
         if (anzDsImportiert === anzDs) {
             // die Indexe aktualisieren
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass views aktualisiert wurden
-                    $importierenDsImportAusfuehrenHinweis.removeClass('alert-info').removeClass('alert-danger').addClass('alert-success');
+                    $importDsImportAusfuehrenHinweis.removeClass('alert-info').removeClass('alert-danger').addClass('alert-success');
                     rueckmeldung  = 'Die Daten wurden importiert.<br>';
                     rueckmeldung += 'Die Indexe wurden aktualisiert.<br><br>';
                     rueckmeldung += 'Nachfolgend Links zu Objekten mit importierten Daten, damit Sie das Resultat überprüfen können:<br>';
-                    $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
+                    $importDsImportAusfuehrenHinweisText.html(rueckmeldung + rueckmeldungLinks);
                     // Rückmeldungs-links behalten, falls der Benutzer direkt anschliessend entfernt
                     window.adb.rueckmeldungLinks = rueckmeldungLinks;
                     $('html, body').animate({
-                        scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
+                        scrollTop: $importDsImportAusfuehrenHinweis.offset().top
                     }, 2000);
                 },
                 error: function () {
@@ -181,12 +181,12 @@ module.exports = function () {
     });
 
     // Rückmeldung in Feld anzeigen
-    $importierenDsImportAusfuehrenHinweis.removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
+    $importDsImportAusfuehrenHinweis.removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
     rueckmeldung = 'Die Daten werden importiert...';
-    $importierenDsImportAusfuehrenHinweisText.html(rueckmeldung);
-    $importierenDsImportAusfuehrenHinweis.css('display', 'block');
+    $importDsImportAusfuehrenHinweisText.html(rueckmeldung);
+    $importDsImportAusfuehrenHinweis.css('display', 'block');
     $('html, body').animate({
-        scrollTop: $importierenDsImportAusfuehrenHinweis.offset().top
+        scrollTop: $importDsImportAusfuehrenHinweis.offset().top
     }, 2000);
     dsImportiert.resolve();
 };

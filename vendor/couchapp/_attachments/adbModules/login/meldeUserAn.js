@@ -37,7 +37,7 @@ module.exports = function (woher) {
                 blendeMenus();
             },
             error: function () {
-                var praefix = 'importieren';
+                var praefix = 'import';
                 if (woher === 'art') {
                     praefix = '';
                 }

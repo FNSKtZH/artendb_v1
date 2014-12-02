@@ -14,10 +14,10 @@ module.exports = function () {
         $bsAnzDs      = $('#bsAnzDs'),
         $bsAnzDsLabel = $('#bsAnzDsLabel'),
         $bsName       = $('#bsName'),
-        $importierenBsDsBeschreibenHinweis2 = $('#importierenBsDsBeschreibenHinweis2');
+        $importBsDsBeschreibenHinweis2 = $('#importBsDsBeschreibenHinweis2');
 
     // allfälligen Alert schliessen
-    $importierenBsDsBeschreibenHinweis2
+    $importBsDsBeschreibenHinweis2
         .alert()
         .hide();
     // waehlbar setzen
@@ -25,7 +25,7 @@ module.exports = function () {
     waehlbar = $('#' + that.id + ' option:selected').attr('waehlbar') === 'true' ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
-        $('#importierenBsDsBeschreibenCollapse textarea, #importierenBsDsBeschreibenCollapse input').each(function () {
+        $('#importBsDsBeschreibenCollapse textarea, #importBsDsBeschreibenCollapse input').each(function () {
             $(this).val('');
         });
         $bsAnzDs.html('');
@@ -59,7 +59,7 @@ module.exports = function () {
                     $bsAnzDsLabel.html('Anzahl Arten/Lebensräume');
                     $bsAnzDs.html(bsRow.value);
                     // dafür sorgen, dass textareas genug gross sind
-                    $('#importierenBs').find('textarea').each(function () {
+                    $('#importBs').find('textarea').each(function () {
                         fitTextareaToContent(this, document.documentElement.clientHeight);
                     });
                     $bsName.focus();
@@ -73,9 +73,9 @@ module.exports = function () {
         }
     } else {
         // melden, dass diese BS nicht bearbeitet werden kann
-        $('#importierenBsDsBeschreibenHinweis2Text')
+        $('#importBsDsBeschreibenHinweis2Text')
             .html('Sie können nur Beziehungssammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Beziehungssammlungen.');
-        $importierenBsDsBeschreibenHinweis2
+        $importBsDsBeschreibenHinweis2
             .alert()
             .removeClass('alert-success')
             .removeClass('alert-info')

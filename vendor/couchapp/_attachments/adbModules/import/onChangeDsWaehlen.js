@@ -11,10 +11,10 @@ module.exports = function () {
         $dsAnzDs       = $('#dsAnzDs'),
         $dsAnzDsLabel  = $('#dsAnzDsLabel'),
         $dsName        = $('#dsName'),
-        $importierenDsDsBeschreibenError = $('#importierenDsDsBeschreibenError');
+        $importDsDsBeschreibenError = $('#importDsDsBeschreibenError');
 
     // allfälligen Alert schliessen
-    $importierenDsDsBeschreibenError
+    $importDsDsBeschreibenError
         .alert()
         .hide();
     // waehlbar setzen
@@ -22,10 +22,10 @@ module.exports = function () {
     waehlbar = $('#' + this.id + ' option:selected').attr('waehlbar') === 'true' ? true : Boolean(localStorage.admin);
     if (waehlbar) {
         // zuerst alle Felder leeren
-        $('#importierenDsDsBeschreibenCollapse').find('textarea').each(function () {
+        $('#importDsDsBeschreibenCollapse').find('textarea').each(function () {
             $(this).val('');
         });
-        $('#importierenDsDsBeschreibenCollapse').find('input').each(function () {
+        $('#importDsDsBeschreibenCollapse').find('input').each(function () {
             $(this).val('');
         });
         $dsAnzDs.html('');
@@ -61,7 +61,7 @@ module.exports = function () {
                     $dsAnzDsLabel.html('Anzahl Arten/Lebensräume');
                     $dsAnzDs.html(dsVonObjektenRow.value);
                     // dafür sorgen, dass textareas genug gross sind
-                    $('#importierenDs')
+                    $('#importDs')
                         .find('textarea')
                         .each(function () {
                             fitTextareaToContent(this, document.documentElement.clientHeight);
@@ -77,9 +77,9 @@ module.exports = function () {
         }
     } else {
         // melden, dass diese BS nicht bearbeitet werden kann
-        $('#importierenDsDsBeschreibenErrorText')
+        $('#importDsDsBeschreibenErrorText')
             .html('Sie können nur Datensammlungen verändern, die Sie selber importiert haben.<br>Ausnahme: Zusammenfassende Datensammlungen.');
-        $importierenDsDsBeschreibenError
+        $importDsDsBeschreibenError
             .alert()
             .show();
         $('html, body').animate({

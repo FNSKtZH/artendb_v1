@@ -8,12 +8,9 @@ var $                    = require('jquery'),
     fitTextareaToContent = require('./fitTextareaToContent');
 
 module.exports = function () {
-    console.log('onResize');
-
-    
     setzeTreehoehe();
 
-    // Höhe der Textareas korrigieren
+    // Höhe der sichtbaren Textareas korrigieren
     $('#forms').find('textarea').each(function () {
         if ($(this).is(':visible')) {
             fitTextareaToContent(this.id);

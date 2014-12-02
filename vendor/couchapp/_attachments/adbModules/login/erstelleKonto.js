@@ -23,7 +23,7 @@ module.exports = function (woher) {
             $('#passwort2' + capitaliseFirstLetter(woher)).val('');
         },
         error: function () {
-            var praefix = 'importieren';
+            var praefix = 'import';
             if (woher === 'art') {
                 praefix = '';
             }

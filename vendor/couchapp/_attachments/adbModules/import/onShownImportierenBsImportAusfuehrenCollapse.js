@@ -1,4 +1,4 @@
-// wenn importierenBsImportAusfuehrenCollapse geöffnet wird
+// wenn importBsImportAusfuehrenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -11,6 +11,6 @@ module.exports = function (that) {
         $(that).collapse('hide');
     }
     $('html, body').animate({
-        scrollTop: $('#importierenBsImportAusfuehrenCollapse').offset().top
+        scrollTop: $('#importBsImportAusfuehrenCollapse').offset().top
     }, 2000);
 };

@@ -18,15 +18,15 @@ module.exports = function () {
     });
 
     if (bsKey) {
-        $('#importierenBsDsBeschreibenHinweis2')
+        $('#importBsDsBeschreibenHinweis2')
             .alert()
             .removeClass('alert-success')
             .removeClass('alert-danger')
             .addClass('alert-info')
             .show();
-        $('#importierenBsDsBeschreibenHinweis2Text').html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
+        $('#importBsDsBeschreibenHinweis2Text').html('Es existiert schon eine gleich heissende und nicht zusammenfassende Beziehungssammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
         setTimeout(function () {
-            $('#importierenBsDsBeschreibenHinweis2')
+            $('#importBsDsBeschreibenHinweis2')
                 .alert()
                 .hide();
         }, 30000);
@@ -34,7 +34,7 @@ module.exports = function () {
             .val('')
             .focus();
     } else {
-        $('#importierenBsDsBeschreibenHinweis2')
+        $('#importBsDsBeschreibenHinweis2')
             .alert()
             .hide();
     }

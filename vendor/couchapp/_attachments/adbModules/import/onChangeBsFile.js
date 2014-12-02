@@ -1,4 +1,4 @@
-// wenn BsFile geändert wird
+// wenn bsFile geändert wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -18,7 +18,7 @@ module.exports = function () {
     if (event.target.files[0] === undefined) {
         // vorhandene Datei wurde entfernt
         $('#bsTabelleEigenschaften').hide();
-        $('#importierenBsIdsIdentifizierenHinweisText').hide();
+        $('#importBsIdsIdentifizierenHinweisText').hide();
         $('#bsImportieren').hide();
         $('#bsEntfernen').hide();
     } else {
@@ -32,7 +32,7 @@ module.exports = function () {
                 var data = event.target.result;
 
                 window.adb.bsDatensaetze = $.csv.toObjects(data);
-                erstelleTabelle(window.adb.bsDatensaetze, 'bsFelderDiv', 'BsTabelleEigenschaften');
+                erstelleTabelle(window.adb.bsDatensaetze, 'bsFelderDiv', 'bsTabelleEigenschaften');
             };
             reader.readAsText(file);
         }
@@ -44,7 +44,7 @@ module.exports = function () {
                     worksheet = workbook.Sheets[sheetName];
 
                 window.adb.bsDatensaetze = XLSX.utils.sheet_to_json(worksheet);
-                erstelleTabelle(window.adb.bsDatensaetze, 'bsFelderDiv', 'BsTabelleEigenschaften');
+                erstelleTabelle(window.adb.bsDatensaetze, 'bsFelderDiv', 'bsTabelleEigenschaften');
             };
             reader.readAsBinaryString(file);
         }

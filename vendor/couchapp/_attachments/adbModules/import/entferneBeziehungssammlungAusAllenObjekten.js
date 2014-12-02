@@ -12,8 +12,8 @@ module.exports = function (bsName) {
     var bsEntfernt                             = $.Deferred(),
         anzVorkommenVonBsEntfernt              = 0,
         anzVorkommenVonBs,
-        $importierenBsDsBeschreibenHinweis     = $('#importierenBsDsBeschreibenHinweis'),
-        $importierenBsDsBeschreibenHinweisText = $('#importierenBsDsBeschreibenHinweisText'),
+        $importBsDsBeschreibenHinweis     = $('#importBsDsBeschreibenHinweis'),
+        $importBsDsBeschreibenHinweisText = $('#importBsDsBeschreibenHinweisText'),
         $db                                    = $.couch.db('artendb'),
         rueckmeldung;
 
@@ -23,29 +23,29 @@ module.exports = function (bsName) {
             // listener einrichten, der meldet, wenn ein Datensatz entfernt wurde
             $(document).bind('adb.bsEntfernt', function () {
                 anzVorkommenVonBsEntfernt++;
-                $importierenBsDsBeschreibenHinweis
+                $importBsDsBeschreibenHinweis
                     .removeClass('alert-success')
                     .removeClass('alert-danger')
                     .addClass('alert-info');
                 rueckmeldung = 'Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...';
-                $importierenBsDsBeschreibenHinweisText.html(rueckmeldung);
+                $importBsDsBeschreibenHinweisText.html(rueckmeldung);
                 $('html, body').animate({
-                    scrollTop: $importierenBsDsBeschreibenHinweisText.offset().top
+                    scrollTop: $importBsDsBeschreibenHinweisText.offset().top
                 }, 2000);
                 if (anzVorkommenVonBsEntfernt === anzVorkommenVonBs) {
                     // die Indexe aktualisieren
                     $db.view('artendb/lr', {
                         success: function () {
                             // melden, dass Indexe aktualisiert wurden
-                            $importierenBsDsBeschreibenHinweis
+                            $importBsDsBeschreibenHinweis
                                 .removeClass('alert-info')
                                 .removeClass('alert-danger')
                                 .addClass('alert-success');
                             rueckmeldung  = 'Die Beziehungssammlungen wurden entfernt.<br>';
                             rueckmeldung += 'Die Indexe wurden aktualisiert.';
-                            $importierenBsDsBeschreibenHinweisText.html(rueckmeldung);
+                            $importBsDsBeschreibenHinweisText.html(rueckmeldung);
                             $('html, body').animate({
-                                scrollTop: $importierenBsDsBeschreibenHinweisText.offset().top
+                                scrollTop: $importBsDsBeschreibenHinweisText.offset().top
                             }, 2000);
                         }
                     });

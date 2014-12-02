@@ -8,15 +8,15 @@ var $ = require('jquery');
 
 module.exports = function () {
     $('#bsImportiertVon').val(localStorage.Email);
-    $('#importierenBsDsBeschreibenHinweis2')
+    $('#importBsDsBeschreibenHinweis2')
         .alert()
         .removeClass('alert-success')
         .removeClass('alert-danger')
         .addClass('alert-info')
         .show();
-    $('#importierenBsDsBeschreibenHinweis2Text').html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
+    $('#importBsDsBeschreibenHinweis2Text').html('"importiert von" ist immer die email-Adresse der angemeldeten Person');
     setTimeout(function () {
-        $('#importierenBsDsBeschreibenHinweis2')
+        $('#importBsDsBeschreibenHinweis2')
             .alert()
             .hide();
     }, 10000);

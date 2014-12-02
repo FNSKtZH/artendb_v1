@@ -22,18 +22,18 @@ module.exports = function () {
         anzVorkommenVonBs                         = window.adb.zuordbareDatensaetze.length,
         rueckmeldung,
         $db                                       = $.couch.db('artendb'),
-        $importierenBsImportAusfuehrenHinweis     = $('#importierenBsImportAusfuehrenHinweis'),
-        $importierenBsImportAusfuehrenHinweisText = $('#importierenBsImportAusfuehrenHinweisText');
+        $importBsImportAusfuehrenHinweis     = $('#importBsImportAusfuehrenHinweis'),
+        $importBsImportAusfuehrenHinweisText = $('#importBsImportAusfuehrenHinweisText');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.bsEntfernt', function () {
         anzVorkommenVonBsEntfernt++;
         var prozent = Math.round((anzVorkommenVonBs - anzVorkommenVonBsEntfernt) / anzVorkommenVonBs * 100);
 
-        $('#bsImportierenProgressbar')
+        $('#bsImportProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $('#bsImportierenProgressbarText')
+        $('#bsImportProgressbarText')
             .html(prozent + '%');
 
         if (anzVorkommenVonBsEntfernt === anzVorkommenVonBs) {
@@ -41,7 +41,7 @@ module.exports = function () {
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
-                    $importierenBsImportAusfuehrenHinweis
+                    $importBsImportAusfuehrenHinweis
                         .removeClass('alert-info')
                         .removeClass('alert-danger')
                         .addClass('alert-success');
@@ -52,9 +52,9 @@ module.exports = function () {
                         rueckmeldung += window.adb.rueckmeldungLinks;
                         delete window.adb.rueckmeldungLinks;
                     }
-                    $importierenBsImportAusfuehrenHinweisText.html(rueckmeldung);
+                    $importBsImportAusfuehrenHinweisText.html(rueckmeldung);
                     $('html, body').animate({
-                        scrollTop: $importierenBsImportAusfuehrenHinweisText.offset().top
+                        scrollTop: $importBsImportAusfuehrenHinweisText.offset().top
                     }, 2000);
                 },
                 error: function () {
@@ -65,15 +65,15 @@ module.exports = function () {
     });
 
     // rückmelden, dass es passiert
-    $importierenBsImportAusfuehrenHinweis
+    $importBsImportAusfuehrenHinweis
         .removeClass('alert-success')
         .removeClass('alert-danger')
         .addClass('alert-info');
     rueckmeldung = 'Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...';
-    $importierenBsImportAusfuehrenHinweisText
+    $importBsImportAusfuehrenHinweisText
         .html(rueckmeldung);
     $('html, body').animate({
-        scrollTop: $importierenBsImportAusfuehrenHinweisText.offset().top
+        scrollTop: $importBsImportAusfuehrenHinweisText.offset().top
     }, 2000);
 
     _.each(window.adb.bsDatensaetze, function (bsDatensatz) {
@@ -114,12 +114,12 @@ module.exports = function () {
             break;
         }
         // RückmeldungsLinks in Feld anzeigen:
-        $importierenBsImportAusfuehrenHinweis
+        $importBsImportAusfuehrenHinweis
             .removeClass('alert-success')
             .removeClass('alert-danger')
             .addClass('alert-info')
             .css('display', 'block');
-        $importierenBsImportAusfuehrenHinweisText
+        $importBsImportAusfuehrenHinweisText
             .html('Die Beziehungssammlungen werden entfernt...<br>Die Indexe werden aktualisiert...');
     }
     return bsEntfernt.promise();

@@ -11,7 +11,7 @@ module.exports = function (woher) {
     var $db = $.couch.db('artendb');
 
     if (!pruefeAnmeldung(woher)) {
-        $('#importierenDsDsBeschreibenCollapse').collapse('hide');
+        $('#importDsDsBeschreibenCollapse').collapse('hide');
     } else {
         $('#dsName').focus();
         // Daten holen, wenn nötig

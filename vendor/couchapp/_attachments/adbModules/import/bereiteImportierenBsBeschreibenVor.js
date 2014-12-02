@@ -11,7 +11,7 @@ module.exports = function (woher) {
     var $db = $.couch.db('artendb');
 
     if (!pruefeAnmeldung('woher')) {
-        $('#importierenBsDsBeschreibenCollapse').collapse('hide');
+        $('#importBsDsBeschreibenCollapse').collapse('hide');
     } else {
         $('#bsName').focus();
         // anzeigen, dass Daten geladen werden. Nein: Blitzt bloss kurz auf

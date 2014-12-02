@@ -4,7 +4,7 @@
 var $ = require('jquery');
 
 module.exports = function (mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNichtImportierbarenDatensaetzen, dbs) {
-    var $importierenDbsIdsIdentifizierenHinweisText = $('#importieren' + dbs + 'IdsIdentifizierenHinweisText');
+    var $importierenDbsIdsIdentifizierenHinweisText = $('#import' + dbs + 'IdsIdentifizierenHinweisText');
 
     $importierenDbsIdsIdentifizierenHinweisText.alert();
     // rückmelden: Falls mehrfache ID's, nur das rückmelden und abbrechen
@@ -52,6 +52,6 @@ module.exports = function (mehrfachVorkommendeIds, idsVonDatensaetzen, idsVonNic
     }
     $importierenDbsIdsIdentifizierenHinweisText.show();
     $('html, body').animate({
-        scrollTop: $('#importieren' + dbs + 'IdsIdentifizierenCollapse').offset().top
+        scrollTop: $('#import' + dbs + 'IdsIdentifizierenCollapse').offset().top
     }, 2000);
 };

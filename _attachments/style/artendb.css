@@ -393,8 +393,8 @@ input[readonly="readonly"], textarea[readonly="readonly"] {
 }
 
 #art label,
-#importierenDs label,
-#importierenBs label,
+#importDs label,
+#importBs label,
 #export .form-group label {
     width: 200px;
     color: #555555;
@@ -504,7 +504,7 @@ h5 a {
             column-break-inside: avoid;
 }
 
-#art legend, #importierenDs legend, #importierenBs legend, #export legend {
+#art legend, #importDs legend, #importBs legend, #export legend {
     color: #6F6F66;
     font-weight: bold;
     margin: 0 0 7px 0;
@@ -606,7 +606,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 /* vertikalen Abstand zwischen Feldern verkleinern */
-#art .form-group, #importierenDs .form-group, #importierenBs .form-group, #export .form-group {
+#art .form-group, #importDs .form-group, #importBs .form-group, #export .form-group {
     margin-bottom: 5px;
     -webkit-column-break-inside: avoid;
        -moz-column-break-inside: avoid;
@@ -835,8 +835,8 @@ option {
 \*--------------------------------*/
 
 /*die Schaltflächen um Importe auszuführen, sollten untereinander liegen, das ist übersichtlicher als nebeneinander*/
-#importierenDsImportAusfuehrenCollapse button,
-#importierenBsImportAusfuehrenCollapse button {
+#importDsImportAusfuehrenCollapse button,
+#importBsImportAusfuehrenCollapse button {
     display: block;
 }
 
@@ -858,7 +858,7 @@ option {
     margin-top: 18px;
 }
 
-#importierenDsIdsIdentifizieren .alert {
+#importDsIdsIdentifizieren .alert {
     margin-left: 192px;
     margin-right:  7px;
     margin-top:    6px;

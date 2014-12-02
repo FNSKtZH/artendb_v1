@@ -125,14 +125,14 @@ module.exports = function () {
     /*
      * importieren
      */
-    $('#importierenDsDsBeschreibenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
-    $('#importierenBsDsBeschreibenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
-    $('#importierenDsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
-    $('#importierenBsDatenUploadenCollapse')     .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
-    $('#importierenDsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
-    $('#importierenBsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
-    $('#importierenDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
-    $('#importierenBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
+    $('#importDsDsBeschreibenCollapse')          .on('shown.bs.collapse', onShownImportierenDsDsBeschreibenCollapse);
+    $('#importBsDsBeschreibenCollapse')          .on('shown.bs.collapse', onShownImportierenBsDsBeschreibenCollapse);
+    $('#importDsDatenUploadenCollapse')          .on('shown.bs.collapse', onShownImportierenDsDatenUploadenCollapse);
+    $('#importBsDatenUploadenCollapse')          .on('shown.bs.collapse', onShownImportierenBsDatenUploadenCollapse);
+    $('#importDsIdsIdentifizierenCollapse')      .on('shown.bs.collapse', onShownImportierenDsIdsIdentifizierenCollapse);
+    $('#importBsIdsIdentifizierenCollapse') .on('shown.bs.collapse', onShownImportierenBsIdsIdentifizierenCollapse);
+    $('#importDsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenDsImportAusfuehrenCollapse);
+    $('#importBsImportAusfuehrenCollapse')  .on('shown.bs.collapse', onShownImportierenBsImportAusfuehrenCollapse);
     $('#dsWaehlen')                              .on('change',            onChangeDsWaehlen);
     $('#dsName')                                 .on('change',            onChangeDsName);
     $('#dsImportiertVon')                        .on('change',            onChangeDsImportiertVon);
@@ -143,7 +143,7 @@ module.exports = function () {
     $('#dsLoeschen')                             .on('click',             onClickDsLoeschen);
     $('#dsImportieren')                          .on('click',             onClickDsImportieren);
     $('#dsEntfernen')                            .on('click',             onClickDsEntfernen);
-    $('#importierenDs').on('click', '.panel-heading a',                   onClickPanelHeadingA);
+    $('#importDs').on('click', '.panel-heading a',                        onClickPanelHeadingA);
     $('#bsWaehlen')                              .on('change',            onChangeBsWaehlen);
     $('#bsName')                                 .on('change',            onChangeBsName);
     $('#bsImportiertVon')                        .on('change',            onChangeBsImportiertVon);

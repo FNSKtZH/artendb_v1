@@ -11,8 +11,8 @@ module.exports = function (woher) {
     if (woher === 'art') {
         $('#artAnmeldenCollapse').collapse('hide');
     } else {
-        $('#importieren' + capitaliseFirstLetter(woher) + 'AnmeldenCollapse').collapse('hide');
-        $('#importieren' + capitaliseFirstLetter(woher) + 'DsBeschreibenCollapse').collapse('show');
+        $('#import' + capitaliseFirstLetter(woher) + 'AnmeldenCollapse').collapse('hide');
+        $('#import' + capitaliseFirstLetter(woher) + 'DsBeschreibenCollapse').collapse('show');
     }
     $('.alert').hide();
     $('.hinweis').hide();

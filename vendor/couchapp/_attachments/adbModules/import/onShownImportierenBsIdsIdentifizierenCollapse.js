@@ -1,4 +1,4 @@
-// wenn importierenBsIdsIdentifizierenCollapse geöffnet wird
+// wenn importBsIdsIdentifizierenCollapse geöffnet wird
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict';
@@ -11,6 +11,6 @@ module.exports = function (that) {
         $(that).collapse('hide');
     }
     $('html, body').animate({
-        scrollTop: $('#importierenBsIdsIdentifizierenCollapse').offset().top
+        scrollTop: $('#importBsIdsIdentifizierenCollapse').offset().top
     }, 2000);
 };

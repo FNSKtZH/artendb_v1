@@ -19,8 +19,8 @@ module.exports = function () {
         anzVorkommenVonDs                         = window.adb.zuordbareDatensaetze.length,
         anzVorkommenVonDsEntfernt                 = 0,
         rueckmeldung,
-        $importierenDsImportAusfuehrenHinweisText = $('#importierenDsImportAusfuehrenHinweisText'),
-        $importierenDsImportAusfuehrenHinweis     = $('#importierenDsImportAusfuehrenHinweis');
+        $importDsImportAusfuehrenHinweisText = $('#importDsImportAusfuehrenHinweisText'),
+        $importDsImportAusfuehrenHinweis     = $('#importDsImportAusfuehrenHinweis');
 
     // listener einrichten, der meldet, wenn ei Datensatz entfernt wurde
     $(document).bind('adb.dsEntfernt', function () {
@@ -28,27 +28,27 @@ module.exports = function () {
         var prozent = Math.round((anzVorkommenVonDs - anzVorkommenVonDsEntfernt) / anzVorkommenVonDs * 100),
             $db     = $.couch.db('artendb');
 
-        $('#dsImportierenProgressbar')
+        $('#dsImportProgressbar')
             .css('width', prozent + '%')
             .attr('aria-valuenow', prozent);
-        $('#dsImportierenProgressbarText')
+        $('#dsImportProgressbarText')
             .html(prozent + '%');
-        $importierenDsImportAusfuehrenHinweis
+        $importDsImportAusfuehrenHinweis
             .removeClass('alert-success')
             .removeClass('alert-danger')
             .addClass('alert-info');
         rueckmeldung = 'Eigenschaftensammlungen werden entfernt...<br>Die Indexe werden neu aufgebaut...';
-        $importierenDsImportAusfuehrenHinweisText
+        $importDsImportAusfuehrenHinweisText
             .html(rueckmeldung);
         $('html, body').animate({
-            scrollTop: $importierenDsImportAusfuehrenHinweisText.offset().top
+            scrollTop: $importDsImportAusfuehrenHinweisText.offset().top
         }, 2000);
         if (anzVorkommenVonDsEntfernt === anzVorkommenVonDs) {
             // die Indexe aktualisieren
             $db.view('artendb/lr', {
                 success: function () {
                     // melden, dass Indexe aktualisiert wurden
-                    $importierenDsImportAusfuehrenHinweis
+                    $importDsImportAusfuehrenHinweis
                         .removeClass('alert-info')
                         .removeClass('alert-danger')
                         .addClass('alert-success');
@@ -59,10 +59,10 @@ module.exports = function () {
                         rueckmeldung += window.adb.rueckmeldungLinks;
                         delete window.adb.rueckmeldungLinks;
                     }
-                    $importierenDsImportAusfuehrenHinweisText
+                    $importDsImportAusfuehrenHinweisText
                         .html(rueckmeldung);
                     $('html, body').animate({
-                        scrollTop: $importierenDsImportAusfuehrenHinweisText.offset().top
+                        scrollTop: $importDsImportAusfuehrenHinweisText.offset().top
                     }, 2000);
                 }
             });

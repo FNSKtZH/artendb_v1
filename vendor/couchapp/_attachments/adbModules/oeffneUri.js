@@ -69,10 +69,10 @@ module.exports = function () {
         }
     }
     if (importierenDatensammlung) {
-        zeigeFormular('importierenDs');
+        zeigeFormular('importDs');
     }
     if (importierenBeziehungssammlung) {
-        zeigeFormular('importierenBs');
+        zeigeFormular('importBs');
     }
 
     // dafür sorgen, dass die passenden Menus angezeigt werden

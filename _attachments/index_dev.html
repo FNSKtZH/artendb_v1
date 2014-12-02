@@ -135,8 +135,8 @@
                                     <button id="kontoErstellenBtnArt" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="kontoSpeichernBtnArt" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="artAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
-                                <div id="artAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
+                                <div id="artAnmeldenFehlerText" class="importAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="artAnmeldenHinweisText" class="importAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
@@ -144,16 +144,16 @@
                 </div>
             </form>
             
-            <form id="importierenDs" class="formImportierenDs form form-horizontal import" action="#" method="get" autocomplete="off">
-                <div class="panel-group" id="importierenDsPanel">
+            <form id="importDs" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div class="panel-group" id="importDsPanel">
                     <h4>Eigenschaften importieren:</h4>
-                    <div id="importierenDsAnmelden" class="panel panel-default importieren_anmelden">
+                    <div id="importDsAnmelden" class="panel panel-default importAnmelden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="importierenDsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsAnmeldenCollapse">1. Anmelden</a>
+                                <a id="importDsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importDsPanel" href="#importDsAnmeldenCollapse">1. Anmelden</a>
                             </h4>
                         </div>
-                        <div id="importierenDsAnmeldenCollapse" class="collapse importierenAnmeldenCollapse anmelden">
+                        <div id="importDsAnmeldenCollapse" class="collapse importAnmeldenCollapse anmelden">
                             <div class="panel-body">
                                 <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
                                 <div class="form-group Email">
@@ -181,19 +181,19 @@
                                     <button id="kontoErstellenBtnDs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="kontoSpeichernBtnDs" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="importierenDsAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
-                                <div id="importierenDsAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
+                                <div id="importDsAnmeldenFehlerText" class="importAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="importDsAnmeldenHinweisText" class="importAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importierenDsDsBeschreiben">
+                    <div class="panel panel-default" id="importDsDsBeschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsDsBeschreibenCollapse">2. Eigenschaftensammlung beschreiben</a>
+                                <a class="accordion-toggle accordion-toggle" data-toggle="collapse" data-parent="importDsPanel" href="#importDsDsBeschreibenCollapse">2. Eigenschaftensammlung beschreiben</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenDsDsBeschreibenCollapse">
+                        <div class="panel-collapse collapse" id="importDsDsBeschreibenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><a href="//youtu.be/nqd-v6YxkOY" target="_blank"><b>Screencast sehen</b></a></div>
                                 <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
@@ -254,29 +254,29 @@
                                     <input type="checkbox" id="dsZusammenfassend">
                                 </div>
                                 <div class="form-group" id="dsUrsprungsDsDiv" style="display:none;">
-                                    <label class="control-label DsUrsprungsDs" for="DsUrsprungsDs" id="DsUrsprungsDs_label">Ursprungs-Eigenschaftensammlung</label>
-                                    <select class="form-control controls DsUrsprungsDs input-sm" id="DsUrsprungsDs"></select>
+                                    <label class="control-label dsUrsprungsDs" for="dsUrsprungsDs" id="dsUrsprungsDsLabel">Ursprungs-Eigenschaftensammlung</label>
+                                    <select class="form-control controls dsUrsprungsDs input-sm" id="dsUrsprungsDs"></select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="dsAnzDs" id="DsAnzDsLabel"></label>
+                                    <label class="control-label" for="dsAnzDs" id="dsAnzDsLabel"></label>
                                     <div id="dsAnzDs" class="feldtext controls"></div>
                                 </div>
-                                <div id="importierenDsDsBeschreibenHinweis2" class="alert alert-info"></div>
-                                <div id="importierenDsDsBeschreibenError" class="alert alert-danger">
+                                <div id="importDsDsBeschreibenHinweis2" class="alert alert-info"></div>
+                                <div id="importDsDsBeschreibenError" class="alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importierenDsDsBeschreibenErrorText"></div>
+                                    <div id="importDsDsBeschreibenErrorText"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importierenDsDatenUploaden">
+                    <div class="panel panel-default" id="importDsDatenUploaden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsDatenUploadenCollapse">3. Eigenschaften laden</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importDsPanel" href="#importDsDatenUploadenCollapse">3. Eigenschaften laden</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenDsDatenUploadenCollapse">
+                        <div class="panel-collapse collapse" id="importDsDatenUploadenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -305,26 +305,26 @@
                                         <li>ArtenDb setzt beim Export von Daten den Namen der Eigenschaftensammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Eigenschaftensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
                                     </ul>
                                 </div>
-                                <label class="sr-only" for="DsFile">Datei wählen</label>
-                                <input type="file" class="form-control" id="DsFile">
-                                <div id="DsTabelleEigenschaften" class="tabelle">
+                                <label class="sr-only" for="dsFile">Datei wählen</label>
+                                <input type="file" class="form-control" id="dsFile">
+                                <div id="dsTabelleEigenschaften" class="tabelle">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importierenDsIdsIdentifizieren">
+                    <div class="panel panel-default" id="importDsIdsIdentifizieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importDsPanel" href="#importDsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenDsIdsIdentifizierenCollapse">
+                        <div class="panel-collapse collapse" id="importDsIdsIdentifizierenCollapse">
                             <div class="panel-body">
                                 <div id="dsFelderDiv" class="form-group"></div>
                                 <div class="form-group">
-                                    <label class="control-label" for="DsId">zugehörige ID<br>in ArtenDb</label>
-                                    <select multiple class="form-control controls input-sm" id="DsId" style="height:101px;">
+                                    <label class="control-label" for="dsId">zugehörige ID<br>in ArtenDb</label>
+                                    <select multiple class="form-control controls input-sm" id="dsId" style="height:101px;">
                                         <option value="guid">GUID der ArtenDb</option>
                                         <option value="Fauna">ID der Info Fauna (NUESP)</option>
                                         <option value="Flora">ID der Info Flora (SISF-NR)</option>
@@ -332,28 +332,28 @@
                                         <option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
                                     </select>
                                 </div>
-                                <div id="importierenDsIdsIdentifizierenHinweisText" class="alert alert-info feld"></div>
+                                <div id="importDsIdsIdentifizierenHinweisText" class="alert alert-info feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importierenDsImportAusfuehren">
+                    <div class="panel panel-default" id="importDsImportAusfuehren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenDsPanel" href="#importierenDsImportAusfuehrenCollapse">5. Import ausführen</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importDsPanel" href="#importDsImportAusfuehrenCollapse">5. Import ausführen</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenDsImportAusfuehrenCollapse">
+                        <div class="panel-collapse collapse" id="importDsImportAusfuehrenCollapse">
                             <div class="panel-body">
-                                <button type="button" class="btn btn-primary" id="DsImportieren" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften importieren</button>
-                                <button type="button" class="btn btn-primary" id="DsEntfernen" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+                                <button type="button" class="btn btn-primary" id="dsImportieren" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften importieren</button>
+                                <button type="button" class="btn btn-primary" id="dsEntfernen" style="margin-bottom:6px; display:none;">Eigenschaftensammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
                                 <div class="progress">
-                                    <div id="DsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id="DsImportierenProgressbarText"></span>
+                                    <div id="dsImportProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id="dsImportProgressbarText"></span>
                                     </div>
                                 </div>
-                                <div id="importierenDsImportAusfuehrenHinweis" class="alert alert-info">
+                                <div id="importDsImportAusfuehrenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importierenDsImportAusfuehrenHinweisText"></div>
+                                    <div id="importDsImportAusfuehrenHinweisText"></div>
                                 </div>
                             </div>
                         </div>
@@ -361,16 +361,16 @@
                 </div>        
             </form>
 
-            <form id="importierenBs" class="formImportierenBs form form-horizontal import" action="#" method="get" autocomplete="off">
-                <div id="importierenBsPanel" class="panel-group">
+            <form id="importBs" class="form form-horizontal import" action="#" method="get" autocomplete="off">
+                <div id="importBsPanel" class="panel-group">
                     <h4>Beziehungen importieren:</h4>
-                    <div id="importierenBsAnmelden" class="panel panel-default">
+                    <div id="importBsAnmelden" class="panel panel-default">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a id="importierenBsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsAnmeldenCollapse">1. Anmelden</a>
+                                <a id="importBsAnmeldenTitel" class="importierenAnmeldenTitel accordion-toggle" data-toggle="collapse" data-parent="importBsPanel" href="#importBsAnmeldenCollapse">1. Anmelden</a>
                             </h4>
                         </div>
-                        <div id="importierenBsAnmeldenCollapse" class="collapse anmelden">
+                        <div id="importBsAnmeldenCollapse" class="collapse anmelden">
                             <div class="panel-body">
                                 <div class="well well-sm anmelden">Um Daten zu bearbeiten, müssen Sie angemeldet sein. <a href="mailto:alex@gabriel-software.ch">Mailen Sie mir</a>, um ein Login zu erhalten.</div>
                                 <div class="form-group">
@@ -398,19 +398,19 @@
                                     <button id="kontoErstellenBtnBs" class="btn btn-primary kontoErstellenBtn">neues Konto erstellen</button>
                                     <button id="kontoSpeichernBtnBs" class="btn btn-primary kontoSpeichernBtn" style="display:none;">neues Konto speichern</button>
                                 </div>
-                                <div id="importierenBsAnmeldenFehlerText" class="importierenAnmeldenFehlerText alert alert-danger feld"></div>
-                                <div id="importierenBsAnmeldenHinweisText" class="importierenAnmeldenHinweisText alert alert-warning feld"></div>
+                                <div id="importBsAnmeldenFehlerText" class="importAnmeldenFehlerText alert alert-danger feld"></div>
+                                <div id="importBsAnmeldenHinweisText" class="importAnmeldenHinweisText alert alert-warning feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importierenBsDsBeschreiben">
+                    <div class="panel panel-default" id="importBsDsBeschreiben">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsDsBeschreibenCollapse">2. Beziehungssammlung beschreiben</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importBsPanel" href="#importBsDsBeschreibenCollapse">2. Beziehungssammlung beschreiben</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenBsDsBeschreibenCollapse">
+                        <div class="panel-collapse collapse" id="importBsDsBeschreibenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><b>Erleichtern Sie den Benutzern, Ihre Daten zu verstehen</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -442,9 +442,9 @@
                                 </div>
                                 <div class="controls feld">
                                     <button type="button" class="btn btn-primary" id="bsLoeschen" style="display:none; margin-bottom:6px;">Gewählte Beziehungssammlung und alle ihre Eigenschaften aus allen Arten und/oder Lebensräumen entfernen</button>
-                                    <div id="importierenBsDsBeschreibenHinweis" class="alert alert-info">
+                                    <div id="importBsDsBeschreibenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importierenBsDsBeschreibenHinweisText"></div>
+                                    <div id="importBsDsBeschreibenHinweisText"></div>
                                 </div>
                                 </div>
                                 <hr>
@@ -453,8 +453,8 @@
                                     <input type="text" class="form-control controls input-sm" id="bsName">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsBeschreibung">Beschreibung</label>
-                                    <textarea class="form-control controls" id="BsBeschreibung"></textarea>
+                                    <label class="control-label" for="bsBeschreibung">Beschreibung</label>
+                                    <textarea class="form-control controls" id="bsBeschreibung"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="bsDatenstand">Datenstand</label>
@@ -473,28 +473,28 @@
                                     <input type="checkbox" id="bsZusammenfassend">
                                 </div>
                                 <div class="form-group" id="bsUrsprungsBsDiv" style="display:none;">
-                                    <label class="control-label bsUrsprungsBs" for="bsUrsprungsBs" id="BsUrsprungsBs_label">Ursprungs-Datensammlung</label>
+                                    <label class="control-label bsUrsprungsBs" for="bsUrsprungsBs" id="bsUrsprungsBsLabel">Ursprungs-Datensammlung</label>
                                     <select class="form-control controls bsUrsprungsBs" id="bsUrsprungsBs"></select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="bsAnzDs" id="BsAnzDsLabel"></label>
+                                    <label class="control-label" for="bsAnzDs" id="bsAnzDsLabel"></label>
                                     <div id="bsAnzDs" class="feldtext controls"></div>
                                 </div>
-                                <div id="importierenBsDsBeschreibenHinweis2" class="alert alert-info">
+                                <div id="importBsDsBeschreibenHinweis2" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importierenBsDsBeschreibenHinweis2Text"></div>
+                                    <div id="importBsDsBeschreibenHinweis2Text"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_bs_daten_uploaden">
+                    <div class="panel panel-default" id="importBsDatenUploaden">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsDatenUploadenCollapse">3. Beziehungen laden</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importBsPanel" href="#importBsDatenUploadenCollapse">3. Beziehungen laden</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenBsDatenUploadenCollapse">
+                        <div class="panel-collapse collapse" id="importBsDatenUploadenCollapse">
                             <div class="panel-body">
                                 <div class="well well-sm"><b>Technische Anforderungen an die Datei</b> <a href="#" class="showNextHidden">...mehr</a>
                                     <ul class="adb-hidden">
@@ -523,26 +523,26 @@
                                         <li>ArtenDb setzt beim Export von Daten den Namen der Beziehungssammlung vor den Feldnamen, z.B.: "ZH FNS (aktuell): Artwert". Das erleichtert das Verständnis der Daten in der "flachen" Tabelle. Beim Import hingegen ist es NICHT sinnvoll, die Felder so zu nennen. Denn den Namen der Datensammlung haben Sie im letzten Arbeitsschritt schon erfasst und er wird den Daten beim Import in hierarchischer Form mitgegeben</li>
                                     </ul>
                                 </div>
-                                <label class="sr-only" for="BsFile">Datei wählen</label>
-                                <input type="file" class="form-control" id="BsFile">
-                                <div id="BsTabelleEigenschaften" class="tabelle">
+                                <label class="sr-only" for="bsFile">Datei wählen</label>
+                                <input type="file" class="form-control" id="bsFile">
+                                <div id="bsTabelleEigenschaften" class="tabelle">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_bs_ids_identifizieren">
+                    <div class="panel panel-default" id="importBsIdsIdentifizieren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importBsPanel" href="#importBsIdsIdentifizierenCollapse">4. ID's identifizieren</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenBsIdsIdentifizierenCollapse">
+                        <div class="panel-collapse collapse" id="importBsIdsIdentifizierenCollapse">
                             <div class="panel-body">
                                 <div id="bsFelderDiv" class="form-group"></div>
                                 <div class="form-group">
-                                    <label class="control-label" for="BsId">zugehörige ID in ArtenDb</label>
-                                    <select multiple class="form-control controls" id="BsId" style="height:101px;">
+                                    <label class="control-label" for="bsId">zugehörige ID in ArtenDb</label>
+                                    <select multiple class="form-control controls" id="bsId" style="height:101px;">
                                         <option value="guid">GUID der ArtenDb</option>
                                         <option value="Fauna">ID der Info Fauna (NUESP)</option>
                                         <option value="Flora">ID der Info Flora (SISF-NR)</option>
@@ -550,29 +550,29 @@
                                         <option value="Macromycetes">ID von Swissfungi (TaxonId)</option>
                                     </select>
                                 </div>
-                                <div id="importierenBsIdsIdentifizierenHinweisText" class="alert alert-info feld"></div>
+                                <div id="importBsIdsIdentifizierenHinweisText" class="alert alert-info feld"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel panel-default" id="importieren_bs_import_ausfuehren">
+                    <div class="panel panel-default" id="importBsImportAusfuehren">
                         <div class="panel-heading panel-heading-gradient">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importierenBsPanel" href="#importierenBsImportAusfuehrenCollapse">5. Import ausführen</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="importBsPanel" href="#importBsImportAusfuehrenCollapse">5. Import ausführen</a>
                             </h4>
                         </div>
-                        <div class="panel-collapse collapse" id="importierenBsImportAusfuehrenCollapse">
+                        <div class="panel-collapse collapse" id="importBsImportAusfuehrenCollapse">
                             <div class="panel-body">
-                                <button type="button" class="btn btn-primary" id="BsImportieren" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften importieren</button>
-                                <button type="button" class="btn btn-primary" id="BsEntfernen" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
+                                <button type="button" class="btn btn-primary" id="bsImportieren" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften importieren</button>
+                                <button type="button" class="btn btn-primary" id="bsEntfernen" style="margin-bottom:6px;">Beziehungssammlung mit allen Eigenschaften aus den in der geladenen Datei enthaltenen Arten/Lebensräumen entfernen</button>
                                 <div class="progress">
-                                    <div id="BsImportierenProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                        <span id="BsImportierenProgressbarText"></span>
+                                    <div id="bsImportProgressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <span id="bsImportProgressbarText"></span>
                                     </div>
                                 </div>
-                                <div id="importierenBsImportAusfuehrenHinweis" class="alert alert-info">
+                                <div id="importBsImportAusfuehrenHinweis" class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <div id="importierenBsImportAusfuehrenHinweisText"></div>
+                                    <div id="importBsImportAusfuehrenHinweisText"></div>
                                 </div>
                             </div>
                         </div>

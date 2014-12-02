@@ -12,10 +12,10 @@ var $                  = require('jquery'),
 
 module.exports = function () {
     if (isFileAPIAvailable()) {
-        zeigeFormular("importierenDs");
+        zeigeFormular("importDs");
         // Ist der User noch angemeldet? Wenn ja: Anmeldung überspringen
         if (pruefeAnmeldung("ds")) {
-            $("#importierenDsDsBeschreibenCollapse").collapse('show');
+            $("#importDsDsBeschreibenCollapse").collapse('show');
         }
     }
 };
