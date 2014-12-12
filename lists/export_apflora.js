@@ -1,15 +1,19 @@
+/**
+ * Benutzt view flora
+ * produziert die API für apflora Artenliste
+ */
+
 function (head, req) {
     'use strict';
 
     start({
         'headers': {
-            'Content-Type':        'text/csv',
-            'Content-disposition': 'attachment;filename=eigenschaften_fuer_apflora.csv',
-            'Accept-Charset':      'utf-8'
+            'Accept-Charset':  'utf-8',
+            'Content-Type':    'json; charset=utf-8;'
         }
     });
 
-    var erstelleExportString = require('lists/lib/erstelleExportString'),
+    var _ = require('lists/lib/underscore'),
         row,
         objekt,
         exportObjekte = [],
@@ -92,9 +96,9 @@ function (head, req) {
         exportObjekte.push(exportObjekt);
     }
     // leere Objekte entfernen
-    var exportObjekteOhneLeere = _.reject(exportObjekte, function (object) {
+    /*var exportObjekteOhneLeere = _.reject(exportObjekte, function (object) {
         return _.isEmpty(object);
-    });
+    });*/
 
-    send(erstelleExportString(exportObjekteOhneLeere));
+    send(JSON.stringify(exportObjekte));
 }
