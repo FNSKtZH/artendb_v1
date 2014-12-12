@@ -31,6 +31,7 @@ function (head, req) {
 
         // zunächst leere Felder anfügen, damit jeder Datensatz jedes Feld hat
         exportObjekt.TaxonomieId      = null;
+        exportObjekt.Familie          = null;
         exportObjekt.Artname          = null;
         exportObjekt.NameDeutsch      = null;
         exportObjekt.Status           = null;
@@ -43,6 +44,9 @@ function (head, req) {
         if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften) {
             dsTaxonomie = objekt.Taxonomie.Eigenschaften;
             exportObjekt.TaxonomieId = dsTaxonomie['Taxonomie ID'];
+            if (dsTaxonomie.Familie) {
+                exportObjekt.Familie = dsTaxonomie.Familie;
+            }
             if (dsTaxonomie['Artname vollständig']) {
                 exportObjekt.Artname = dsTaxonomie['Artname vollständig'];
             }
