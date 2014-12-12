@@ -708,7 +708,7 @@ Bisher realisierte Schnittstellen:
 
 - Artenlisten und Artgruppen für [artbeobachtungen.ch](http://artbeobachtungen.ch/index.html)
 - Arteigenschaften für das [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content)
-  Zusätzlich kann der Nutzer sich vom Artenlistentool auf [diese URL in](http://arteigenschaften.ch/index.html?exportieren_fuer_artenlistentool=true) arteigenschaften.ch leiten lassen, um selber Eigenschaften zu wählen, welche anschliessend im Artenlistentool mit der Beboachtungsliste exportiert werden
+  - Zusätzlich kann der Nutzer sich vom Artenlistentool auf [diese URL in](http://arteigenschaften.ch/index.html?exportieren_fuer_artenlistentool=true) arteigenschaften.ch leiten lassen, um selber Eigenschaften zu wählen, welche anschliessend im Artenlistentool mit der Beboachtungsliste exportiert werden
 - Taxonomien für [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content)
 - Arteigenschaften für [apflora.ch](https://github.com/FNSKtZH/apflora)
 
