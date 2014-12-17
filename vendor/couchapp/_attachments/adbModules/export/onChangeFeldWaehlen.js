@@ -2,7 +2,7 @@
 // 1.: kontrollieren, ob mehr als eine Beziehungssammlung angezeigt wird
 //     und pro Beziehung eine Zeile ausgegeben wird. 
 //     Wenn ja: reklamieren und rückgängig machen
-// 2.: kontrollieren, ob mehr als 50 Felder gewählt wurden
+// 2.: kontrollieren, ob mehr als 30 Felder gewählt wurden
 //     wenn ja: reklamieren und rückgängig machen
 
 /*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/

@@ -20,8 +20,18 @@ module.exports = function (that) {
             }
         });
 
+    $formular
+        .find('.exportFelderWaehlenFelderliste')
+        .find('.feldWaehlen[dstyp="Taxonomie"]')
+        .each(function () {
+            if ($(this).prop('checked')) {
+                // gewähltes Feld > zählen
+                count++;
+            }
+        });
+
     // Anzahl Felder kontrollieren
-    if (count > 50) {
+    if (count > 35) {
         // zuviele gewählt
         $('#meldungZuvieleExportfelder').modal();
         $(that).prop('checked', false);
