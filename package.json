@@ -58,7 +58,7 @@
   "dependencies": {
     "autolinker":  "0.15.2",
     "jquery":      "2.1.3",
-    "jsuri":       "1.3.0-beta.1",
+    "jsuri":       "1.3.0",
     "require-dir": "0.1.0",
     "underscore":  "1.7.0",
     "xlsx":        "0.7.12"
