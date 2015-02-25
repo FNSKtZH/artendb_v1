@@ -1,4 +1,7 @@
-var gulp = require('gulp'),
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
+
+var gulp   = require('gulp'),
     concat = require('gulp-concat-sourcemap'),
     notify = require('gulp-notify');
 

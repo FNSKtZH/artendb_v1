@@ -1,3 +1,6 @@
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
+
 var gulp = require('gulp');
 
 return gulp.task('watch', function () {

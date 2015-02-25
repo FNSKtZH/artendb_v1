@@ -6,17 +6,25 @@
  of browserify for faster bundling using caching.
  */
 
-var browserify   = require('browserify');
-var watchify     = require('watchify');
-var bundleLogger = require('../vendor/couchapp/_attachments/adb_lib/bundleLogger');
-var gulp         = require('gulp');
-var handleErrors = require('../vendor/couchapp/_attachments/adb_lib/handleErrors');
-var source       = require('vinyl-source-stream');
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
+
+var browserify   = require('browserify'),
+    watchify     = require('watchify'),
+    bundleLogger = require('../vendor/couchapp/_attachments/adb_lib/bundleLogger'),
+    gulp         = require('gulp'),
+    handleErrors = require('../vendor/couchapp/_attachments/adb_lib/handleErrors'),
+    source       = require('vinyl-source-stream');
 
 gulp.task('browserify', function () {
-    var bundler = browserify({
+    var bundler,
+        bundle;
+
+    bundler = browserify({
         // Required watchify args
-        cache: {}, packageCache: {}, fullPaths: true,
+        cache: {},
+        packageCache: {},
+        fullPaths: true,
         // Specify the entry point of your app
         entries: ['./vendor/couchapp/_attachments/artendb.js'],
         // Add file extentions to make optional in your requires
@@ -25,7 +33,7 @@ gulp.task('browserify', function () {
         debug: true
     });
 
-    var bundle = function () {
+    bundle = function () {
         // Log when bundling starts
         bundleLogger.start();
 

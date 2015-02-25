@@ -1,5 +1,8 @@
-var gulp = require('gulp');
-var requireDir = require('require-dir');
+/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
+'use strict';
+
+var gulp       = require('gulp'),
+    requireDir = require('require-dir');
 
 requireDir('../gulp-tasks', {recurse: true});
 
