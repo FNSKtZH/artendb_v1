@@ -12,18 +12,19 @@ var _                          = require('underscore'),
 module.exports = function () {
     var datensammlung,
         anzahlFelder,
-        anzDs             = window.adb.dsDatensaetze.length,
+        anzDs                  = window.adb.dsDatensaetze.length,
         // Der Verlauf soll angezeigt werden, daher braucht es einen zähler
-        anzDsImportiert   = 0,
-        dsImportiert      = $.Deferred(),
-        $dsName           = $('#dsName'),
-        $dsBeschreibung   = $('#dsBeschreibung'),
+        anzDsImportiert        = 0,
+        dsImportiert           = $.Deferred(),
+        $dsName                = $('#dsName'),
+        $dsBeschreibung        = $('#dsBeschreibung'),
         nr,
-        rueckmeldungLinks = '',
+        rueckmeldungLinks      = '',
         rueckmeldung,
-        $dsDatenstand     = $('#dsDatenstand'),
-        $dsLink           = $('#dsLink'),
-        $dsUrsprungsDs    = $('#dsUrsprungsDs'),
+        $dsDatenstand          = $('#dsDatenstand'),
+        $dsNutzungsbedingungen = $('#dsNutzungsbedingungen'),
+        $dsLink                = $('#dsLink'),
+        $dsUrsprungsDs         = $('#dsUrsprungsDs'),
         $importDsImportAusfuehrenHinweis     = $('#importDsImportAusfuehrenHinweis'),
         $importDsImportAusfuehrenHinweisText = $('#importDsImportAusfuehrenHinweisText'),
         erste10Ids,
@@ -106,6 +107,9 @@ module.exports = function () {
         }
         if ($dsDatenstand.val()) {
             datensammlung.Datenstand = $dsDatenstand.val();
+        }
+        if ($dsNutzungsbedingungen.val()) {
+            datensammlung.Nutzungsbedingungen = $dsNutzungsbedingungen.val();
         }
         if ($dsLink.val()) {
             datensammlung.Link = $dsLink.val();

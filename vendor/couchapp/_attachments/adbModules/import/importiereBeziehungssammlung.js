@@ -12,18 +12,19 @@ var _                                     = require('underscore'),
 // $ wird benötigt wegen .alert
 module.exports = function () {
     var anzahlFelder,
-        anzahlBeziehungssammlungen                = window.adb.bsDatensaetze.length,
-        anzBsImportiert                           = 0,
+        anzahlBeziehungssammlungen,
+        anzBsImportiert                      = 0,
         erste10Ids,
         nr,
         rueckmeldung,
-        rueckmeldungLinks                         = '',
-        bsImportiert                              = $.Deferred(),
-        $bsName                                   = $('#bsName'),
-        $bsBeschreibung                           = $('#bsBeschreibung'),
-        $bsDatenstand                             = $('#bsDatenstand'),
-        $bsLink                                   = $('#bsLink'),
-        $bsUrsprungsBs                            = $('#bsUrsprungsBs'),
+        rueckmeldungLinks                    = '',
+        bsImportiert                         = $.Deferred(),
+        $bsName                              = $('#bsName'),
+        $bsBeschreibung                      = $('#bsBeschreibung'),
+        $bsDatenstand                        = $('#bsDatenstand'),
+        $bsNutzungsbedingungen               = $('#bsNutzungsbedingungen'),
+        $bsLink                              = $('#bsLink'),
+        $bsUrsprungsBs                       = $('#bsUrsprungsBs'),
         $importBsImportAusfuehrenHinweis     = $('#importBsImportAusfuehrenHinweis'),
         $importBsImportAusfuehrenHinweisText = $('#importBsImportAusfuehrenHinweisText');
 
@@ -36,6 +37,8 @@ module.exports = function () {
         $bsName.focus();
         return false;
     }
+
+    anzahlBeziehungssammlungen = window.adb.bsDatensaetze ? window.adb.bsDatensaetze.length : 0;
 
     // Rückmeldung in Feld anzeigen:
     rueckmeldung = 'Die Daten werden importiert...';
@@ -110,6 +113,9 @@ module.exports = function () {
             }
             if ($bsDatenstand.val()) {
                 bsVorlage.Datenstand = $bsDatenstand.val();
+            }
+            if ($bsNutzungsbedingungen.val()) {
+                bsVorlage.Nutzungsbedingungen = $bsNutzungsbedingungen.val();
             }
             if ($bsLink.val()) {
                 bsVorlage.Link = $bsLink.val();

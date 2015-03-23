@@ -10,7 +10,7 @@ module.exports = function (esOderBs) {
         html += esOderBs.Beschreibung;
     }
     // wenn weitere Infos kommen: diese können wahlweise eingeblendet werden
-    if (esOderBs.Datenstand || esOderBs.Link || (esOderBs.zusammenfassend && esOderBs.Ursprungsdatensammlung)) {
+    if (esOderBs.Datenstand || esOderBs.Nutzungsbedingungen ||  esOderBs.Link || (esOderBs.zusammenfassend && esOderBs.Ursprungsdatensammlung)) {
         // wenn keine Beschreibung existiert, andere Option einblenden
         if (esOderBs.Beschreibung) {
             html += ' <a href="#" class="showNextHidden">...mehr</a>';
@@ -23,6 +23,12 @@ module.exports = function (esOderBs) {
             html += '<div class="dsBeschreibungZeile">';
             html += '<div>Stand: </div>';
             html += '<div>' + esOderBs.Datenstand + '</div>';
+            html += '</div>';
+        }
+        if (esOderBs.Nutzungsbedingungen) {
+            html += '<div class="dsBeschreibungZeile">';
+            html += '<div>Nutzungs-<br>bedingungen: </div>';
+            html += '<div>' + esOderBs.Nutzungsbedingungen + '</div>';
             html += '</div>';
         }
         if (esOderBs.Link) {
