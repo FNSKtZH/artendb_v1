@@ -7,7 +7,7 @@ var $                           = require('jquery'),
     oeffneGruppe                = require('../oeffneGruppe'),
     loescheMassenMitObjektArray = require('../loescheMassenMitObjektArray');
 
-module.exports = function () {
+module.exports = function (event) {
     // zuerst die id des Objekts holen
     var uri  = new Uri($(location).attr('href')),
         uri2,

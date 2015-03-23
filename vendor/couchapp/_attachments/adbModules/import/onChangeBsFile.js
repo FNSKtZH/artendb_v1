@@ -7,7 +7,7 @@ var $               = require('jquery'),
     XLSX            = require('XLSX'),
     erstelleTabelle = require('../erstelleTabelle');
 
-module.exports = function () {
+module.exports = function (event) {
     var file,
         filename,
         filetype,

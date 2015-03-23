@@ -6,7 +6,7 @@
 var $                                          = require('jquery'),
     entferneBeziehungssammlungAusAllenObjekten = require('./entferneBeziehungssammlungAusAllenObjekten');
 
-module.exports = function () {
+module.exports = function (event) {
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
     // Rückmeldung anzeigen

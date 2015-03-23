@@ -5,7 +5,7 @@
 
 var $ = require('jquery');
 
-module.exports = function () {
+module.exports = function (event) {
     var id = $(this).attr('artid');
 
     event.preventDefault ? event.preventDefault() : event.returnValue = false;

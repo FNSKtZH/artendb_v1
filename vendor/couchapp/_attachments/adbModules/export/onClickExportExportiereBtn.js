@@ -9,7 +9,7 @@ var $                    = require('jquery'),
     createBlobDataXlsx   = require('./createBlobDataXlsx'),
     isFileAPIAvailable   = require('../isFileAPIAvailable');
 
-module.exports = function () {
+module.exports = function (event) {
     var exportstring,
         blobData,
         blob,

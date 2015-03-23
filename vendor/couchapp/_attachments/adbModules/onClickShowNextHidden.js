@@ -3,7 +3,7 @@
 
 var $ = require('jquery');
 
-module.exports = function () {
+module.exports = function (event) {
     var $elementToShow = $(this)
         .parent()
         .find('.adb-hidden')

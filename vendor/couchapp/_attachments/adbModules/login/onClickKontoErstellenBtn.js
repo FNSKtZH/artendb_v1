@@ -6,7 +6,7 @@
 var $                     = require('jquery'),
     capitaliseFirstLetter = require('../capitaliseFirstLetter');
 
-module.exports = function () {
+module.exports = function (event) {
     var that = this,
         bsDs = that.id.substring(that.id.length - 2);
 

@@ -5,7 +5,7 @@ var $                   = require('jquery'),
     blendeMenus         = require('./blendeMenus'),
     schuetzeLrTaxonomie = require('../lr/schuetzeLrTaxonomie');
 
-module.exports = function () {
+module.exports = function (event) {
     event.preventDefault ? event.preventDefault() : event.returnValue = false;
     delete localStorage.email;
     $('.artAnmeldenTitel').text('Anmelden');

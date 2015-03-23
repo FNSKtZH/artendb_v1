@@ -4,7 +4,7 @@
 var $         = require('jquery'),
     nenneDsUm = require('./nenneDsUm');
 
-module.exports = function () {
+module.exports = function (event) {
     // dieser Event wurde bei jedem Laden der Seite ausgelöst!
     if ($('#adminExportierenCollapse').is(':visible')) {
         nenneDsUm();
