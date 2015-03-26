@@ -20,8 +20,7 @@ function (head, req) {
         exportObjekt,
         dsTaxonomie,
         dsArtwert,
-        dsKef,
-        dsJahresarten;
+        dsKef;
 
     // list wird mit view flora abgerufen
     while (row = getRow()) {
@@ -42,7 +41,6 @@ function (head, req) {
         exportObjekt.Artwert          = null;
         exportObjekt.KefArt           = null;
         exportObjekt.KefKontrolljahr  = null;
-        exportObjekt.FnsJahresartJahr = null;
 
         // Felder aktualisieren, wo Daten vorhanden
         if (objekt.Taxonomie && objekt.Taxonomie.Eigenschaften) {
@@ -83,22 +81,11 @@ function (head, req) {
                 // MySQL erwartet für true eine 1
                 exportObjekt.KefKontrolljahr = dsKef.Eigenschaften['Erstes Kontrolljahr'];
             }
-
-            dsJahresarten = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-                return ds.Name === 'ZH Jahresarten';
-            });
-            if (dsJahresarten && dsJahresarten.Eigenschaften && dsJahresarten.Eigenschaften.Jahr) {
-                exportObjekt.FnsJahresartJahr = dsJahresarten.Eigenschaften.Jahr;
-            }
         }
         
         // objekt zu Exportobjekten hinzufügen
         exportObjekte.push(exportObjekt);
     }
-    // leere Objekte entfernen
-    /*var exportObjekteOhneLeere = _.reject(exportObjekte, function (object) {
-        return _.isEmpty(object);
-    });*/
 
     send(JSON.stringify(exportObjekte));
 }
