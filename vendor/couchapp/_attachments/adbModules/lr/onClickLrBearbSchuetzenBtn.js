@@ -9,6 +9,6 @@ module.exports = function () {
   if (!$(this).hasClass('disabled')) {
     schuetzeLrTaxonomie()
     // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-    delete localStorage.lrBearb
+    delete window.localStorage.lrBearb
   }
 }

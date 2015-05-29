@@ -21,7 +21,7 @@ module.exports = function () {
     .hide()
   // waehlbar setzen
   // wählen kann man nur, was man selber importiert hat - oder admin ist
-  waehlbar = $('#' + that.id + ' option:selected').attr('waehlbar') === 'true' ? true : Boolean(localStorage.admin)
+  waehlbar = $('#' + that.id + ' option:selected').attr('waehlbar') === 'true' ? true : Boolean(window.localStorage.admin)
   if (waehlbar) {
     // zuerst alle Felder leeren
     $('#importBsDsBeschreibenCollapse textarea, #importBsDsBeschreibenCollapse input').each(function () {

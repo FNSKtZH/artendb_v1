@@ -6,7 +6,7 @@
 var $ = require('jquery')
 
 module.exports = function () {
-  $('#bsImportiertVon').val(localStorage.email)
+  $('#bsImportiertVon').val(window.localStorage.email)
   $('#importBsDsBeschreibenHinweis2')
     .alert()
     .removeClass('alert-success')

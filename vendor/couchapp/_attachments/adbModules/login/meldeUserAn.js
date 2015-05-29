@@ -16,7 +16,7 @@ module.exports = function (woher) {
       name: email,
       password: passwort,
       success: function (r) {
-        localStorage.email = $('#email' + capitaliseFirstLetter(woher)).val()
+        window.localStorage.email = $('#email' + capitaliseFirstLetter(woher)).val()
         if (woher === 'art') {
           bearbeiteLrTaxonomie()
         }
@@ -29,9 +29,9 @@ module.exports = function (woher) {
         if (r.roles.indexOf('_admin') !== -1) {
           // das ist ein admin
           console.log('hallo admin')
-          localStorage.admin = true
+          window.localStorage.admin = true
         } else {
-          delete localStorage.admin
+          delete window.localStorage.admin
         }
         blendeMenus()
       },

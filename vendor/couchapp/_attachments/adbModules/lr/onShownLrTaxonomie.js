@@ -5,7 +5,7 @@
 var bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie')
 
 module.exports = function () {
-  if (localStorage.lrBearb === 'true') {
+  if (window.localStorage.lrBearb === 'true') {
     bearbeiteLrTaxonomie()
   }
 }

@@ -65,8 +65,8 @@ module.exports = function () {
     $.jstree._reference(node).open_node(node)
     if (node.attr('id')) {
       // verhindern, dass bereits offene Seiten nochmals geöffnet werden
-      if (!$('#art').is(':visible') || localStorage.art_id !== node.attr('id')) {
-        localStorage.art_id = node.attr('id')
+      if (!$('#art').is(':visible') || window.localStorage.art_id !== node.attr('id')) {
+        window.localStorage.art_id = node.attr('id')
         // Anzeige im Formular initiieren. ID und Datensammlung übergeben
         initiiereArt(node.attr('id'))
       }

@@ -53,12 +53,12 @@ module.exports = function (datensaetze, felderDiv, tabellenDiv, formular) {
     // sonst fehlen in der Tabelle oder Titelzeile Zellen
     _.each(erste10Ds, function (ds) {
       /*jslint white: true */
-      if (!ds.ref) { ds.ref = ''; }
-      if (!ds.gisLayer) { ds.gisLayer = ''; }
-      if (!ds.distance) { ds.distance = ''; }
-      if (!ds.nameLat) { ds.nameLat = ''; }
-      if (!ds.nameDeu) { ds.nameDeu = ''; }
-      if (!ds.artwert) { ds.artwert = ''; }
+      if (!ds.ref) { ds.ref = '' }
+      if (!ds.gisLayer) { ds.gisLayer = '' }
+      if (!ds.distance) { ds.distance = '' }
+      if (!ds.nameLat) { ds.nameLat = '' }
+      if (!ds.nameDeu) { ds.nameDeu = '' }
+      if (!ds.artwert) { ds.artwert = '' }
     })
   }
 

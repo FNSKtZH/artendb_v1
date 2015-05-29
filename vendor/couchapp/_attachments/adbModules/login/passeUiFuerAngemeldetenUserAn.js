@@ -4,8 +4,8 @@ var $ = require('jquery'),
   capitaliseFirstLetter = require('../capitaliseFirstLetter')
 
 module.exports = function (woher) {
-  $('#artAnmeldenTitel').text(localStorage.email + ' ist angemeldet')
-  $('.importierenAnmeldenTitel').text('1. ' + localStorage.email + ' ist angemeldet')
+  $('#artAnmeldenTitel').text(window.localStorage.email + ' ist angemeldet')
+  $('.importierenAnmeldenTitel').text('1. ' + window.localStorage.email + ' ist angemeldet')
 
   if (woher === 'art') {
     // $('#artAnmeldenCollapse').collapse('hide')

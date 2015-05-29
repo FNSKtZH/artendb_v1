@@ -24,9 +24,9 @@ module.exports = function (formularname) {
       // Spuren des letzten Objekts entfernen
       // IE8 kann nicht deleten
       try {
-        delete localStorage.art_id
+        delete window.localStorage.art_id
       } catch (e) {
-        localStorage.art_id = undefined
+        window.localStorage.art_id = undefined
       }
       // URL anpassen, damit kein Objekt angezeigt wird
       // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!

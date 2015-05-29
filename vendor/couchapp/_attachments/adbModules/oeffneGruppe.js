@@ -23,5 +23,5 @@ module.exports = function (gruppe) {
     .show()
   erstelleBaum()
   // keine Art mehr aktiv
-  delete localStorage.art_id
+  delete window.localStorage.art_id
 }

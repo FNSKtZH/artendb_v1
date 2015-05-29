@@ -8,7 +8,7 @@ var $ = require('jquery')
 module.exports = function () {
   var $importDsDsBeschreibenHinweis2 = $('#importDsDsBeschreibenHinweis2')
 
-  $('#dsImportiertVon').val(localStorage.email)
+  $('#dsImportiertVon').val(window.localStorage.email)
   $importDsDsBeschreibenHinweis2
     .alert()
     .show()

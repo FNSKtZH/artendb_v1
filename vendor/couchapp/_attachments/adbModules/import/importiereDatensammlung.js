@@ -120,7 +120,7 @@ module.exports = function () {
     if ($dsUrsprungsDs.val()) {
       datensammlung.Ursprungsdatensammlung = $dsUrsprungsDs.val()
     }
-    datensammlung['importiert von'] = localStorage.email
+    datensammlung['importiert von'] = window.localStorage.email
     // Felder der Datensammlung als Objekt gründen
     datensammlung.Eigenschaften = {}
     // Felder anfügen, wenn sie Werte enthalten

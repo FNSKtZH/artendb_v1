@@ -6,7 +6,7 @@ var $ = require('jquery'),
 
 module.exports = function (event) {
   event.preventDefault ? event.preventDefault() : event.returnValue = false
-  delete localStorage.email
+  delete window.localStorage.email
   $('.artAnmeldenTitel').text('Anmelden')
   $('.importierenAnmeldenTitel').text('1. Anmelden')
   $('.alert').hide()
@@ -22,7 +22,7 @@ module.exports = function (event) {
   $('#artAnmelden').hide()
   schuetzeLrTaxonomie()
   // falls dieser User admin war: vergessen
-  delete localStorage.admin
+  delete window.localStorage.admin
   // für diesen Nutzer passende Menus anzeigen
   blendeMenus()
 }

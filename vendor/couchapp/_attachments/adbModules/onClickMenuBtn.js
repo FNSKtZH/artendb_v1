@@ -6,7 +6,7 @@
 var $ = require('jquery')
 
 module.exports = function () {
-  if (localStorage.art_id) {
+  if (window.localStorage.art_id) {
     $('#GoogleBilderLink_li').removeClass('disabled')
     $('#WikipediaLink_li').removeClass('disabled')
   } else {

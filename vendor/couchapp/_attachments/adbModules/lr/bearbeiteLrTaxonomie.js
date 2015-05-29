@@ -10,7 +10,7 @@ module.exports = function () {
   }
 
   // Einstellung merken, damit auch nach Datensatzwechsel die Bearbeitbarkeit bleibt
-  localStorage.lrBearb = true
+  window.localStorage.lrBearb = true
 
   // Anmeldung: zeigen, aber geschlossen
   $('#artAnmelden .in').collapse('hide')

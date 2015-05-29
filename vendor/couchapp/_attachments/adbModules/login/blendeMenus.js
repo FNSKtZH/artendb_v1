@@ -3,7 +3,7 @@
 var $ = require('jquery')
 
 module.exports = function () {
-  if (localStorage.admin) {
+  if (window.localStorage.admin) {
     $('#menuBtn')
       .find('.admin')
       .show()
