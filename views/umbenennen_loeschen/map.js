@@ -1,7 +1,9 @@
-﻿function (doc) {
-    'use strict';
-    var do_emit = false;
-    if (doc.Taxonomie && doc.Taxonomie.Daten) do_emit = true;
-    if (doc.Datensammlungen) do_emit = true;
-    if (do_emit) emit(doc._id);
+﻿'use strict'
+
+function (doc) {
+  var doEmit = false
+
+  if (doc.Taxonomie && doc.Taxonomie.Daten) { doEmit = true }
+  if (doc.Datensammlungen) { doEmit = true }
+  if (doEmit) { emit(doc._id) }
 }

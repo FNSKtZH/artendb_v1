@@ -29,11 +29,11 @@ module.exports = function (event) {
 
     if (format === 'csv') {
       exportstring = erstelleExportString(window.adb.exportierenObjekte)
-      blob = new Blob([exportstring], {type: 'text/csv;charset=utf-8;'})
+      blob = new window.Blob([exportstring], {type: 'text/csv;charset=utf-8;'})
       saveAs(blob, dateString + '_export.csv')
     } else {
       blobData = createBlobDataXlsx(window.adb.exportierenObjekte)
-      blob = new Blob([blobData], {type: 'application/octet-stream;charset=utf-8;'})
+      blob = new window.Blob([blobData], {type: 'application/octet-stream;charset=utf-8;'})
       saveAs(blob, dateString + '_export.xlsx')
     }
   }

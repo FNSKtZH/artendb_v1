@@ -24,28 +24,28 @@ module.exports = function (woher) {
     $('#emailHinweis' + woher).show()
     setTimeout(function () {
       $('#email' + woher).focus()
-    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    }, 50)  // need to use a timer so that .blur() can finish before you do .focus()
     return false
   }
   if (!passwort) {
     $('#passwortHinweis' + woher).show()
     setTimeout(function () {
       $('#passwort' + woher).focus()
-    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    }, 50)  // need to use a timer so that .blur() can finish before you do .focus()
     return false
   }
   if (!passwort2) {
     $('#passwort2Hinweis' + woher).show()
     setTimeout(function () {
       $('#passwort2' + woher).focus()
-    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    }, 50)  // need to use a timer so that .blur() can finish before you do .focus()
     return false
   }
   if (passwort !== passwort2) {
     $('#passwort2HinweisFalsch' + woher).show()
     setTimeout(function () {
       $('#passwort2' + woher).focus()
-    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    }, 50)  // need to use a timer so that .blur() can finish before you do .focus()
     return false
   }
   return true

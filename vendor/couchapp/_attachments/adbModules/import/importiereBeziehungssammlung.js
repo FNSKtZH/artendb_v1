@@ -200,7 +200,7 @@ module.exports = function () {
         // entsprechenden Index öffnen
         // sicherstellen, dass Daten vorkommen. Gibt sonst einen Fehler
         if (beziehungen.length > 0) {
-          // Datenbankabfrage ist langsam. Extern aufrufen, 
+          // Datenbankabfrage ist langsam. Extern aufrufen,
           // sonst überholt die for-Schlaufe und Beziehungssammlung ist bis zur saveDoc-Ausführung eine andere!
           fuegeBeziehungenZuObjekt(importdatenObjektId, beziehungssammlung, beziehungen)
         }

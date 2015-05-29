@@ -63,7 +63,7 @@ module.exports = function () {
     // wurde auch später ausgelöst, daher nur, wenn noch nicht sichtbar
     if (!$('#exportAlt').is(':visible')) {
       zeigeFormular('exportAlt')
-      window.adb.fasseTaxonomienZusammen = true;  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
+      window.adb.fasseTaxonomienZusammen = true  // bewirkt, dass alle Taxonomiefelder gemeinsam angeboten werden
       erstelleListeFuerFeldwahl(['Fauna', 'Flora'], 'exportAlt')
     }
   }

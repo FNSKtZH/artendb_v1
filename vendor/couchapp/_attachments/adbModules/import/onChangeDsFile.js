@@ -24,7 +24,7 @@ module.exports = function (event) {
     file = event.target.files[0]
     filename = file.name
     filetype = filename.split('.').pop()
-    reader = new FileReader()
+    reader = new window.FileReader()
 
     if (filetype === 'csv') {
       reader.onload = function (event) {
