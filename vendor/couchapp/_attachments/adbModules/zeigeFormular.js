@@ -30,7 +30,7 @@ module.exports = function (formularname) {
       }
       // URL anpassen, damit kein Objekt angezeigt wird
       // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-      history.pushState(null, null, 'index.html')
+      window.history.pushState(null, null, 'index.html')
       // alle Bäume ausblenden, suchfeld, Baumtitel
       $('.suchen').hide()
       $('.baum').hide()
@@ -51,21 +51,21 @@ module.exports = function (formularname) {
     switch (formularname) {
       case 'export':
         // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-        history.pushState(null, null, 'index.html?exportieren=true')
+        window.history.pushState(null, null, 'index.html?exportieren=true')
         break
       case 'exportAlt':
         // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-        history.pushState(null, null, 'index.html?exportieren_fuer_artenlistentool=true')
+        window.history.pushState(null, null, 'index.html?exportieren_fuer_artenlistentool=true')
         // ganze Breite nutzen (menu bleibt ausgeblendet)
         $('body').toggleClass('force-mobile')
         break
       case 'importDs':
         // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-        history.pushState(null, null, 'index.html?importieren_datensammlung=true')
+        window.history.pushState(null, null, 'index.html?importieren_datensammlung=true')
         break
       case 'importBs':
         // TODO: DIESER BEFEHL LÖST IN IE11 EINFÜGEN VON :/// AUS!!!!
-        history.pushState(null, null, 'index.html?importieren_beziehungssammlung=true')
+        window.history.pushState(null, null, 'index.html?importieren_beziehungssammlung=true')
         break
     }
 

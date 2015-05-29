@@ -27,5 +27,5 @@ module.exports = function (htmlArt, art) {
   // hier wird die url angefügt
   setzteLinksZuBilderUndWikipedia(art)
   // und die URL anpassen
-  history.pushState(null, null, 'index.html?id=' + art._id)
+  window.history.pushState(null, null, 'index.html?id=' + art._id)
 }

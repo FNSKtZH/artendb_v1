@@ -53,7 +53,7 @@ module.exports = function () {
       nope: 'vendor/couchapp/history.js'
   })
 
-  if (!window.history || !history.pushState) {
+  if (!window.history || !window.history.pushState) {
       $.getScript('vendor/couchapp/history.js')
   }*/
 
