@@ -1,8 +1,8 @@
-﻿'use strict'
+﻿function (doc) {
+  'use strict'
 
-var _ = require('views/lib/underscore')
+  var _ = require('views/lib/underscore')
 
-function (doc) {
   if (doc.Gruppe && doc.Gruppe === 'Moose') {
     // erst mal das eigene Dokument senden
     // der zweite key markiert, dass dies das Original ist

@@ -12,10 +12,10 @@ module.exports = function (objekt, exportObjekt) {
     dsZhGis
 
   // übergebene Variabeln prüfen
-  if (!objekt) { return {}; }
-  if (!objekt.Taxonomie) { return {}; }
-  if (!objekt.Taxonomie.Eigenschaften) { return {}; }
-  if (!exportObjekt) { exportObjekt = {}; }
+  if (!objekt) { return {} }
+  if (!objekt.Taxonomie) { return {} }
+  if (!objekt.Taxonomie.Eigenschaften) { return {} }
+  if (!exportObjekt) { exportObjekt = {} }
 
   // Felder ergänzen
   // immer sicherstellen, dass das Feld existiert

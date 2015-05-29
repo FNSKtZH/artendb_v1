@@ -1,6 +1,6 @@
-﻿'use strict'
+﻿function (doc) {
+  'use strict'
 
-function (doc) {
   var doEmit = false
 
   if (doc.Taxonomie && doc.Taxonomie.Daten) { doEmit = true }
