@@ -1,12 +1,11 @@
 // wenn .Lebensräume.Taxonomie geöffnet wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie');
+var bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie')
 
 module.exports = function () {
-    if (localStorage.lrBearb === 'true') {
-        bearbeiteLrTaxonomie();
-    }
-};
+  if (localStorage.lrBearb === 'true') {
+    bearbeiteLrTaxonomie()
+  }
+}

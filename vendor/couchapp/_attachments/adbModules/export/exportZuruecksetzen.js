@@ -1,31 +1,30 @@
 // event-handler liefern ungefragt den event mit
 // daher alt als zweiter Variable
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
 module.exports = function (element) {
-    var $exportExportCollapse,
-        formularName;
+  var $exportExportCollapse,
+    formularName
 
-    // wenn exportZuruecksetzen als event aufgerufen wurde ist das Element in event.currentTarget enthalten
-    element = element.currentTarget || element;
+  // wenn exportZuruecksetzen als event aufgerufen wurde ist das Element in event.currentTarget enthalten
+  element = element.currentTarget || element
 
-    // ermitteln, aus welchem Formular aufgerufen wurde
-    formularName = $(element).closest('form').attr('id');
+  // ermitteln, aus welchem Formular aufgerufen wurde
+  formularName = $(element).closest('form').attr('id')
 
-    $exportExportCollapse = $('#' + formularName + 'ExportCollapse');
+  $exportExportCollapse = $('#' + formularName + 'ExportCollapse')
 
-    // Export ausblenden, falls sie eingeblendet war
-    if ($exportExportCollapse.is(':visible')) {
-        $exportExportCollapse.collapse('hide');
-    }
-    $('#' + formularName + 'ExportTabelle').hide();
-    $('.' + formularName + 'ExportBtn').hide();
-    $('#' + formularName + 'ExportErrorText')
-        .alert()
-        .hide();
-    $('#exportAltExportUrl').val('');
-};
+  // Export ausblenden, falls sie eingeblendet war
+  if ($exportExportCollapse.is(':visible')) {
+    $exportExportCollapse.collapse('hide')
+  }
+  $('#' + formularName + 'ExportTabelle').hide()
+  $('.' + formularName + 'ExportBtn').hide()
+  $('#' + formularName + 'ExportErrorText')
+    .alert()
+    .hide()
+  $('#exportAltExportUrl').val('')
+}

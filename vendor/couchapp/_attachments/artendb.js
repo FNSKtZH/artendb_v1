@@ -1,4 +1,3 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
 'use strict'
 
 window.adb = window.adb || {}

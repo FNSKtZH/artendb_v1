@@ -1,16 +1,15 @@
 // wenn .panel geöffnet wird
 // Höhe der textareas an Textgrösse anpassen
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                    = require('jquery'),
-    fitTextareaToContent = require('./fitTextareaToContent');
+var $ = require('jquery'),
+  fitTextareaToContent = require('./fitTextareaToContent')
 
 module.exports = function () {
-    var that = this;
+  var that = this
 
-    $(that).find('textarea').each(function () {
-        fitTextareaToContent(this);
-    });
-};
+  $(that).find('textarea').each(function () {
+    fitTextareaToContent(this)
+  })
+}

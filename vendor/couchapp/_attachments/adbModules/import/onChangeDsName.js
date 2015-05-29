@@ -3,37 +3,36 @@
 // und sie von jemand anderem importiert wurde
 // und sie nicht zusammenfassend ist
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
 var $ = require('jquery'),
-    _ = require('underscore');
+  _ = require('underscore')
 
 module.exports = function () {
-    var that = this,
-        dsKey,
-        $importDsDsBeschreibenHinweis2 = $('#importDsDsBeschreibenHinweis2');
+  var that = this,
+    dsKey,
+    $importDsDsBeschreibenHinweis2 = $('#importDsDsBeschreibenHinweis2')
 
-    dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
-        return key[0] === that.value && key[2] !== localStorage.email && !key[1];
-    });
+  dsKey = _.find(window.adb.dsNamenEindeutig, function (key) {
+    return key[0] === that.value && key[2] !== localStorage.email && !key[1]
+  })
 
-    if (dsKey) {
-        $importDsDsBeschreibenHinweis2
-            .alert()
-            .show()
-            .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.');
-        setTimeout(function () {
-            $importDsDsBeschreibenHinweis2
-                .alert()
-                .hide();
-        }, 30000);
-        $('#dsName')
-            .val('')
-            .focus();
-    } else {
-        $importDsDsBeschreibenHinweis2
-            .alert()
-            .hide();
-    }
-};
+  if (dsKey) {
+    $importDsDsBeschreibenHinweis2
+      .alert()
+      .show()
+      .html('Es existiert schon eine gleich heissende und nicht zusammenfassende Datensammlung.<br>Sie wurde von jemand anderem importiert. Daher müssen Sie einen anderen Namen verwenden.')
+    setTimeout(function () {
+      $importDsDsBeschreibenHinweis2
+        .alert()
+        .hide()
+    }, 30000)
+    $('#dsName')
+      .val('')
+      .focus()
+  } else {
+    $importDsDsBeschreibenHinweis2
+      .alert()
+      .hide()
+  }
+}

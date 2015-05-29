@@ -1,15 +1,14 @@
 // wenn dsZusammenfassend geändert wird
 // dsUrsprungsDs zeigen oder verstecken
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
 module.exports = function () {
-    if ($(this).prop('checked')) {
-        $('#dsUrsprungsDsDiv').show();
-    } else {
-        $('#dsUrsprungsDsDiv').hide();
-    }
-};
+  if ($(this).prop('checked')) {
+    $('#dsUrsprungsDsDiv').show()
+  } else {
+    $('#dsUrsprungsDsDiv').hide()
+  }
+}

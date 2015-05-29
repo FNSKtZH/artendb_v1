@@ -1,9 +1,8 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $            = require('jquery'),
-    oeffneGruppe = require('./oeffneGruppe');
+var $ = require('jquery'),
+  oeffneGruppe = require('./oeffneGruppe')
 
 module.exports = function () {
-    oeffneGruppe($(this).attr('Gruppe'));
-};
+  oeffneGruppe($(this).attr('Gruppe'))
+}

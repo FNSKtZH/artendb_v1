@@ -3,9 +3,8 @@
  * der erste Buchstabe wird mit einem Grossbuchstaben ersetzt
  */
 
-/*jslint node: true, browser: true, nomen: true, todo: true */
-'use strict';
+'use strict'
 
 module.exports = function (string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}

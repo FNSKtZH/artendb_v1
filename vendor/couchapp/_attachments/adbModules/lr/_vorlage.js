@@ -1,8 +1,5 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
-module.exports = function () {
-
-};
+module.exports = function () {}

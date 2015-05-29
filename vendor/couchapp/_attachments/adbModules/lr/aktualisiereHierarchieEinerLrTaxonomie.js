@@ -4,27 +4,26 @@
 // diese Funktion wird benötigt, wenn eine neue Taxonomie importiert wird
 // Momentan nicht verwendet
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                                 = require('jquery'),
-    _                                 = require('underscore'),
-    ergaenzeParentZuLrHierarchie      = require('./ergaenzeParentZuLrHierarchie'),
-    erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt');
+var $ = require('jquery'),
+  _ = require('underscore'),
+  ergaenzeParentZuLrHierarchie = require('./ergaenzeParentZuLrHierarchie'),
+  erstelleHierarchieobjektAusObjekt = require('../erstelleHierarchieobjektAusObjekt')
 
 module.exports = function (objectArray) {
-    var hierarchie,
-        parent,
-        $db = $.couch.db('artendb');
+  var hierarchie,
+    parent,
+    $db = $.couch.db('artendb')
 
-    _.each(objectArray, function (object) {
-        hierarchie = [];
-        parent     = object.Taxonomie.Eigenschaften.Parent;
-        // als Start sich selben zur Hierarchie hinzufügen
-        hierarchie.push(erstelleHierarchieobjektAusObjekt(object));
-        if (parent) {
-            object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object._id, hierarchie);
-            $db.saveDoc(object);
-        }
-    });
-};
+  _.each(objectArray, function (object) {
+    hierarchie = []
+    parent = object.Taxonomie.Eigenschaften.Parent
+    // als Start sich selben zur Hierarchie hinzufügen
+    hierarchie.push(erstelleHierarchieobjektAusObjekt(object))
+    if (parent) {
+      object.Taxonomie.Eigenschaften.Hierarchie = ergaenzeParentZuLrHierarchie(objectArray, object._id, hierarchie)
+      $db.saveDoc(object)
+    }
+  })
+}

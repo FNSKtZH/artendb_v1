@@ -2,20 +2,19 @@
 // ruft sich selber wieder auf, wenn ein tieferer level existiert
 // erwartet idArray: einen Array der GUID's aus der Hierarchie des Objekts
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
 var oeffneNodeNachIdArray = function (idArray) {
-    if (idArray.length > 1) {
-        $.jstree._reference('#tree' + window.adb.gruppe).open_node($('#' + idArray[0]), function () {
-            idArray.splice(0, 1);
-            oeffneNodeNachIdArray(idArray);
-        }, false);
-    } else if (idArray.length === 1) {
-        $.jstree._reference('#tree' + window.adb.gruppe).select_node($('#' + idArray[0]), null, true);
-    }
-};
+  if (idArray.length > 1) {
+    $.jstree._reference('#tree' + window.adb.gruppe).open_node($('#' + idArray[0]), function () {
+      idArray.splice(0, 1)
+      oeffneNodeNachIdArray(idArray)
+    }, false)
+  } else if (idArray.length === 1) {
+    $.jstree._reference('#tree' + window.adb.gruppe).select_node($('#' + idArray[0]), null, true)
+  }
+}
 
-module.exports = oeffneNodeNachIdArray;
+module.exports = oeffneNodeNachIdArray

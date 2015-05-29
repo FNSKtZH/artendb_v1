@@ -1,16 +1,15 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
 module.exports = function () {
-    if (localStorage.admin) {
-        $('#menuBtn')
-            .find('.admin')
-            .show();
-    } else {
-        $('#menuBtn')
-            .find('.admin')
-            .hide();
-    }
-};
+  if (localStorage.admin) {
+    $('#menuBtn')
+      .find('.admin')
+      .show()
+  } else {
+    $('#menuBtn')
+      .find('.admin')
+      .hide()
+  }
+}

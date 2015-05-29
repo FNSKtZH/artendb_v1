@@ -1,9 +1,8 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var entferneDatensammlung = require('./entferneDatensammlung');
+var entferneDatensammlung = require('./entferneDatensammlung')
 
 module.exports = function (event) {
-    event.preventDefault ? event.preventDefault() : event.returnValue = false;
-    entferneDatensammlung();
-};
+  event.preventDefault ? event.preventDefault() : event.returnValue = false
+  entferneDatensammlung()
+}

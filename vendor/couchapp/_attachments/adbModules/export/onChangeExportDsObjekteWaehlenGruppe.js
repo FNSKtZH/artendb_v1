@@ -1,13 +1,12 @@
 // wenn exportDsObjekteWaehlenGruppe geändert wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
 var fuerExportGewaehlteGruppen = require('./fuerExportGewaehlteGruppen'),
-    erstelleListeFuerFeldwahl  = require('./erstelleListeFuerFeldwahl');
+  erstelleListeFuerFeldwahl = require('./erstelleListeFuerFeldwahl')
 
 module.exports = function () {
-    var gruppenGewaehlt = fuerExportGewaehlteGruppen();
+  var gruppenGewaehlt = fuerExportGewaehlteGruppen()
 
-    erstelleListeFuerFeldwahl(gruppenGewaehlt);
-};
+  erstelleListeFuerFeldwahl(gruppenGewaehlt)
+}

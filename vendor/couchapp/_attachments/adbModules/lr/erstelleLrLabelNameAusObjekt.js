@@ -1,11 +1,10 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var erstelleLrLabelName = require('./erstelleLrLabelName');
+var erstelleLrLabelName = require('./erstelleLrLabelName')
 
 module.exports = function (objekt) {
-    var label   = objekt.Taxonomie.Eigenschaften.Label   || '',
-        einheit = objekt.Taxonomie.Eigenschaften.Einheit || '';
+  var label = objekt.Taxonomie.Eigenschaften.Label || '',
+    einheit = objekt.Taxonomie.Eigenschaften.Einheit || ''
 
-    return erstelleLrLabelName(label, einheit);
-};
+  return erstelleLrLabelName(label, einheit)
+}

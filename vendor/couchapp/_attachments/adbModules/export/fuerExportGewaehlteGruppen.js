@@ -1,15 +1,14 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $ = require('jquery');
+var $ = require('jquery')
 
 module.exports = function () {
-    var gruppen = [];
+  var gruppen = []
 
-    $('.exportDsObjekteWaehlenGruppe').each(function () {
-        if ($(this).prop('checked')) {
-            gruppen.push($(this).val());
-        }
-    });
-    return gruppen;
-};
+  $('.exportDsObjekteWaehlenGruppe').each(function () {
+    if ($(this).prop('checked')) {
+      gruppen.push($(this).val())
+    }
+  })
+  return gruppen
+}

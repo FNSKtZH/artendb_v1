@@ -1,19 +1,18 @@
 // wenn Fenstergrösse verändert wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                    = require('jquery'),
-    setzeTreehoehe       = require('./jstree/setzeTreehoehe'),
-    fitTextareaToContent = require('./fitTextareaToContent');
+var $ = require('jquery'),
+  setzeTreehoehe = require('./jstree/setzeTreehoehe'),
+  fitTextareaToContent = require('./fitTextareaToContent')
 
 module.exports = function () {
-    setzeTreehoehe();
+  setzeTreehoehe()
 
-    // Höhe der sichtbaren Textareas korrigieren
-    $('#forms').find('textarea').each(function () {
-        if ($(this).is(':visible')) {
-            fitTextareaToContent(this.id);
-        }
-    });
-};
+  // Höhe der sichtbaren Textareas korrigieren
+  $('#forms').find('textarea').each(function () {
+    if ($(this).is(':visible')) {
+      fitTextareaToContent(this.id)
+    }
+  })
+}

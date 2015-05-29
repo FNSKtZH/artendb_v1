@@ -1,22 +1,21 @@
 // generiert den html-Inhalt für Textarea
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
 module.exports = function (feldname, feldwert, dsTyp, dsName) {
-    var html;
+  var html
 
-    html = '<div class="form-group"><label class="control-label" for="';
-    html += feldname;
-    html += '">';
-    html += feldname;
-    html += ':</label><textarea class="controls form-control" id="';
-    html += feldname;
-    html += '" name="';
-    html += feldname;
-    html += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">';
-    html += feldwert;
-    html += '</textarea></div>';
+  html = '<div class="form-group"><label class="control-label" for="'
+  html += feldname
+  html += '">'
+  html += feldname
+  html += ':</label><textarea class="controls form-control" id="'
+  html += feldname
+  html += '" name="'
+  html += feldname
+  html += '" readonly="readonly" dsTyp="' + dsTyp + '" dsName="' + dsName + '">'
+  html += feldwert
+  html += '</textarea></div>'
 
-    return html;
-};
+  return html
+}

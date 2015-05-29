@@ -1,27 +1,26 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                     = require('jquery'),
-    capitaliseFirstLetter = require('../capitaliseFirstLetter');
+var $ = require('jquery'),
+  capitaliseFirstLetter = require('../capitaliseFirstLetter')
 
 module.exports = function (woher) {
-    woher = capitaliseFirstLetter(woher);
-    var email    = $('#email'    + woher).val(),
-        passwort = $('#passwort' + woher).val();
+  woher = capitaliseFirstLetter(woher)
+  var email = $('#email' + woher).val(),
+    passwort = $('#passwort' + woher).val()
 
-    if (!email) {
-        setTimeout(function () {
-            $('#email' + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $('#emailHinweis' + woher).show();
-        return false;
-    }
-    if (!passwort) {
-        setTimeout(function () {
-            $('#passwort' + woher).focus();
-        }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
-        $('#passwortHinweis' + woher).show();
-        return false;
-    }
-    return true;
-};
+  if (!email) {
+    setTimeout(function () {
+      $('#email' + woher).focus()
+    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    $('#emailHinweis' + woher).show()
+    return false
+  }
+  if (!passwort) {
+    setTimeout(function () {
+      $('#passwort' + woher).focus()
+    }, 50);  // need to use a timer so that .blur() can finish before you do .focus()
+    $('#passwortHinweis' + woher).show()
+    return false
+  }
+  return true
+}

@@ -1,9 +1,8 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var importiereBeziehungssammlung = require('./importiereBeziehungssammlung');
+var importiereBeziehungssammlung = require('./importiereBeziehungssammlung')
 
 module.exports = function (event) {
-    event.preventDefault ? event.preventDefault() : event.returnValue = false;
-    importiereBeziehungssammlung();
-};
+  event.preventDefault ? event.preventDefault() : event.returnValue = false
+  importiereBeziehungssammlung()
+}

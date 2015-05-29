@@ -1,9 +1,8 @@
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var importiereDatensammlung = require('./importiereDatensammlung');
+var importiereDatensammlung = require('./importiereDatensammlung')
 
 module.exports = function (event) {
-    event.preventDefault ? event.preventDefault() : event.returnValue = false;
-    importiereDatensammlung();
-};
+  event.preventDefault ? event.preventDefault() : event.returnValue = false
+  importiereDatensammlung()
+}

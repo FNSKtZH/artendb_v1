@@ -4,17 +4,16 @@
 // welche anmeldung hängt ab, woher die Prüfung angefordert wurde
 // darum erwartet die Funktion den parameter woher
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var zurueckZurAnmeldung = require('./zurueckZurAnmeldung');
+var zurueckZurAnmeldung = require('./zurueckZurAnmeldung')
 
 module.exports = function (woher) {
-    if (!localStorage.email) {
-        setTimeout(function () {
-            zurueckZurAnmeldung(woher);
-        }, 600);
-        return false;
-    }
-    return true;
-};
+  if (!localStorage.email) {
+    setTimeout(function () {
+      zurueckZurAnmeldung(woher)
+    }, 600)
+    return false
+  }
+  return true
+}

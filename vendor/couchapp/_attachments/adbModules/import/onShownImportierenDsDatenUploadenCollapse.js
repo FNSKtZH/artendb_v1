@@ -1,18 +1,17 @@
 // wenn importDsDatenUploadenCollapse geöffnet wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $               = require('jquery'),
-    pruefeAnmeldung = require('../login/pruefeAnmeldung');
+var $ = require('jquery'),
+  pruefeAnmeldung = require('../login/pruefeAnmeldung')
 
 module.exports = function (that) {
-    if (!pruefeAnmeldung('ds')) {
-        $(that).collapse('hide');
-    } else {
-        $('#dsFile').fileupload();
-    }
-    $('html, body').animate({
-        scrollTop: $('#importDsDatenUploadenCollapse').offset().top
-    }, 2000);
-};
+  if (!pruefeAnmeldung('ds')) {
+    $(that).collapse('hide')
+  } else {
+    $('#dsFile').fileupload()
+  }
+  $('html, body').animate({
+    scrollTop: $('#importDsDatenUploadenCollapse').offset().top
+  }, 2000)
+}

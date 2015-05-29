@@ -1,13 +1,12 @@
 // wenn .btn.lrBearbBtn geklickt wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                    = require('jquery'),
-    bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie');
+var $ = require('jquery'),
+  bearbeiteLrTaxonomie = require('./bearbeiteLrTaxonomie')
 
 module.exports = function () {
-    if (!$(this).hasClass('disabled')) {
-        bearbeiteLrTaxonomie();
-    }
-};
+  if (!$(this).hasClass('disabled')) {
+    bearbeiteLrTaxonomie()
+  }
+}

@@ -6,25 +6,24 @@
 // wird das Ergebnis der DB-Abfrage mitgegeben, wird die Abfrage nicht wiederholt
 // diese Funktion wird benötigt, wenn Namen oder Label eines bestehenden LR verändert wird
 
-/*jslint node: true, browser: true, nomen: true, todo: true, plusplus: true*/
-'use strict';
+'use strict'
 
-var $                                                     = require('jquery'),
-    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2');
+var $ = require('jquery'),
+  aktualisiereHierarchieEinesLrInklusiveSeinerChildren2 = require('./aktualisiereHierarchieEinesLrInklusiveSeinerChildren2')
 
 module.exports = function (lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename) {
-    var $db = $.couch.db('artendb');
+  var $db = $.couch.db('artendb')
 
-    if (lr) {
-        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename);
-    } else {
-        $db.view('artendb/lr?include_docs=true', {
-            success: function (lr) {
-                aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename);
-            },
-            error: function () {
-                console.log('aktualisiereHierarchieEinesLrInklusiveSeinerChildren: keine Daten erhalten');
-            }
-        });
-    }
-};
+  if (lr) {
+    aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename)
+  } else {
+    $db.view('artendb/lr?include_docs=true', {
+      success: function (lr) {
+        aktualisiereHierarchieEinesLrInklusiveSeinerChildren2(lr, object, aktualisiereHierarchiefeld, einheitIstTaxonomiename)
+      },
+      error: function () {
+        console.log('aktualisiereHierarchieEinesLrInklusiveSeinerChildren: keine Daten erhalten')
+      }
+    })
+  }
+}
