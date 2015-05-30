@@ -1,3 +1,7 @@
+#arteigenschaften.ch
+
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (arteigneschaften.ch, auch bekannt als "ArtenDb") enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren und Exportieren der Informationen sowie den direkten Zugriff aus Drittapplikationen.
 
