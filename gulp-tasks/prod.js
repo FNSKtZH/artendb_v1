@@ -2,17 +2,17 @@
  * Baut das Projekt für die Entwicklung
  */
 
-'use strict';
+'use strict'
 
-var gulp        = require('gulp'),
-    requireDir  = require('require-dir'),
-    runSequence = require('run-sequence');
+var gulp = require('gulp'),
+  requireDir = require('require-dir'),
+  runSequence = require('run-sequence')
 
-requireDir('../gulp-tasks', {recurse: true});
+requireDir('../gulp-tasks', {recurse: true})
 
-return gulp.task('prod', function () {
-    runSequence(
-        'browserify',
-        ['prod_build_style', 'prod_build_src', 'prod_build_html']
-    );
-});
+gulp.task('prod', function () {
+  runSequence(
+    'browserify',
+    ['prod_build_style', 'prod_build_src', 'prod_build_html']
+  )
+})

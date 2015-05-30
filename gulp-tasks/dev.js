@@ -2,19 +2,19 @@
  * Baut das Projekt für die Entwicklung
  */
 
-'use strict';
+'use strict'
 
-var gulp        = require('gulp'),
-    requireDir  = require('require-dir'),
-    runSequence = require('run-sequence');
+var gulp = require('gulp'),
+  requireDir = require('require-dir'),
+  runSequence = require('run-sequence')
 
-requireDir('../gulp-tasks', {recurse: true});
+requireDir('../gulp-tasks', {recurse: true})
 
 // zuerst mal Module einbinden
-return gulp.task('dev', function () {
-    runSequence(
-        'browserify',
-        ['dev_build_style', 'dev_build_src', 'dev_build_html'],
-        'build_couchapp'
-    );
-});
+gulp.task('dev', function () {
+  runSequence(
+    'browserify',
+    ['dev_build_style', 'dev_build_src', 'dev_build_html'],
+    'build_couchapp'
+  )
+})
