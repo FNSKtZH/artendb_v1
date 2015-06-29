@@ -17,5 +17,6 @@
   "index_lib$",
   "index_dev.html",
   "arteigenschaften_fuer_evab.mdb",
-  "arteigenschaften_fuer_alt.mdb"
+  "arteigenschaften_fuer_alt.mdb",
+  "package.json"
 ]
