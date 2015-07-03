@@ -6,7 +6,7 @@ function (doc) {
     artnameVollständig,
     artnameVollständigWorte
 
-  if (doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften['Artname vollständig']) {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe && doc.Taxonomie && doc.Taxonomie.Eigenschaften && doc.Taxonomie.Eigenschaften['Artname vollständig']) {
 
     artnameVollständig = doc.Taxonomie.Eigenschaften['Artname vollständig']
 

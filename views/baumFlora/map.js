@@ -5,7 +5,7 @@
     gattung,
     artnameVollständig
 
-  if (doc.Gruppe && doc.Gruppe === 'Flora' && doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe && doc.Gruppe === 'Flora' && doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
     familie = doc.Taxonomie.Eigenschaften.Familie || '(unbekannte Familie)'
     gattung = doc.Taxonomie.Eigenschaften.Gattung || '(unbekannte Gattung)'
     artnameVollständig = doc.Taxonomie.Eigenschaften['Artname vollständig'] || '(unbekannter Artname vollständig)'

@@ -3,7 +3,7 @@
 
   var _ = require('views/lib/underscore')
 
-  if (doc.Gruppe && doc.Gruppe === 'Lebensräume') {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe && doc.Gruppe === 'Lebensräume') {
     // erst mal das eigene Dokument senden
     // der zweite key markiert, dass dies das Original ist
     emit([doc._id, 1])

@@ -1,7 +1,7 @@
 function (doc) {
   'use strict'
 
-  if (doc.Gruppe && doc.Gruppe === 'Fauna') {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe && doc.Gruppe === 'Fauna') {
     emit([doc._id, doc._rev])
   }
 }

@@ -6,7 +6,7 @@
     gattung,
     artnameVollständig
 
-  if (doc.Gruppe && doc.Gruppe === 'Moose' && doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe && doc.Gruppe === 'Moose' && doc.Taxonomie && doc.Taxonomie.Eigenschaften) {
     klasse = doc.Taxonomie.Eigenschaften.Klasse || '(unbekannte Klasse)'
     familie = doc.Taxonomie.Eigenschaften.Familie || '(unbekannte Familie)'
     gattung = doc.Taxonomie.Eigenschaften.Gattung || '(unbekannte Gattung)'

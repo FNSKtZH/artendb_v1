@@ -10,7 +10,7 @@ function (doc) {
   var idIsGuid5 = validator.isUUID(doc._id, 5)
   var isCorrect = idIsGuid3 && idIsGuid4 && idIsGuid5
 
-  if (doc.Gruppe) {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Gruppe) {
     emit(isCorrect, {v3: idIsGuid3, v4: idIsGuid4, v5: idIsGuid5})
   }
 }

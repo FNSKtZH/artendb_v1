@@ -5,7 +5,7 @@ function (doc) {
 
   var _ = require('views/lib/underscore')
 
-  if (doc.Beziehungssammlungen) {
+  if (doc.Typ && doc.Typ === 'Objekt' && doc.Beziehungssammlungen) {
     _.each(doc.Beziehungssammlungen, function (beziehungssammlung) {
       if (beziehungssammlung.Beziehungen && beziehungssammlung.Beziehungen.length > 0) {
         _.each(beziehungssammlung.Beziehungen, function (beziehung) {
