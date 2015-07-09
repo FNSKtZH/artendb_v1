@@ -8,7 +8,7 @@
 var _ = require('lists/lib/underscore')
 
 module.exports = function (objekt, exportObjekt) {
-  var dsZhArtwert1995,
+  var dsZhArtwert,
     dsZhGis
 
   // übergebene Variabeln prüfen
@@ -42,12 +42,12 @@ module.exports = function (objekt, exportObjekt) {
     exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften['Name Deutsch'].substring(0, 255)
   }
 
-  dsZhArtwert1995 = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-      return ds.Name === 'ZH Artwert (1995)'
+  dsZhArtwert = _.find(objekt.Eigenschaftensammlungen, function (ds) {
+      return ds.Name === 'ZH Artwert (aktuell)'
     }) || {}
 
-  if (dsZhArtwert1995 && dsZhArtwert1995.Eigenschaften && (dsZhArtwert1995.Eigenschaften.Artwert || dsZhArtwert1995.Eigenschaften.Artwert === 0)) {
-    exportObjekt.artwert = dsZhArtwert1995.Eigenschaften.Artwert
+  if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0)) {
+    exportObjekt.artwert = dsZhArtwert.Eigenschaften.Artwert
   }
 
   return exportObjekt

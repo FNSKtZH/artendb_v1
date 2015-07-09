@@ -64,7 +64,7 @@ function (head, req) {
     if (objekt.Eigenschaftensammlungen.length > 0) {
 
       dsArtwert = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-        return ds.Name === 'ZH Artwert (1995)'
+        return ds.Name === 'ZH Artwert (aktuell)'
       })
       if (dsArtwert && dsArtwert.Eigenschaften && dsArtwert.Eigenschaften.Artwert) {
         exportObjekt.Artwert = dsArtwert.Eigenschaften.Artwert
