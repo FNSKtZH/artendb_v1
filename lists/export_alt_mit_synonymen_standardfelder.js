@@ -58,7 +58,8 @@ function (head, req) {
       exportObjekt = fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt)
 
       // Objekt zu Exportobjekten hinzufügen
-      exportObjekte.push(exportObjekt)
+      // wenn etwas versagte ist exportObjekt = {}
+      if (_.keys(exportObjekt).length > 0) exportObjekte.push(exportObjekt)
 
       // arrays für sammlungen aus synonymen zurücksetzen
       beziehungssammlungenAusSynonymen = []

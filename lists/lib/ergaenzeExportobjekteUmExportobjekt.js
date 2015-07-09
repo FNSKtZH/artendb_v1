@@ -24,6 +24,8 @@ module.exports = function (objekt, felder, bezInZeilen, fasseTaxonomienZusammen,
   if (exportFuer && exportFuer === 'alt') {
     // Für das ALT obligatorische Felder hinzufügen
     exportObjekt = fuegeObligatorischeFelderFuerAltEin(objekt, exportObjekt)
+    // wenn etwas wesentliches versagt, kommt leeres Objekt zurück
+    if (_.keys(exportObjekt).length === 0) return {}
 
     // Für das ALT obligatorische Felder aus felder entfernen, sonst gibt es Probleme und es wäre unschön
     felder = _.reject(felder, function (feld) {

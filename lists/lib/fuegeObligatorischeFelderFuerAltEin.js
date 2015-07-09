@@ -7,15 +7,25 @@
 
 var _ = require('lists/lib/underscore')
 
+function isInt (value) {
+  return !isNaN(value) && parseInt(Number(value), 10) == value && !isNaN(parseInt(value, 10))
+}
+
 module.exports = function (objekt, exportObjekt) {
   var dsZhArtwert,
     dsZhGis
 
   // übergebene Variabeln prüfen
-  if (!objekt) { return {} }
-  if (!objekt.Taxonomie) { return {} }
-  if (!objekt.Taxonomie.Eigenschaften) { return {} }
-  if (!exportObjekt) { exportObjekt = {} }
+  if (!objekt) return {}
+  if (!objekt.Taxonomie) return {}
+  if (!objekt.Taxonomie.Eigenschaften) return {}
+  if (!exportObjekt) exportObjekt = {}
+
+  // sicherstellen, dass GUID korrekt formattiert ist
+  var isGuidFormatCorrect = new RegExp('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$').test(objekt._id)
+  if (!isGuidFormatCorrect) return {}
+  // sicherstellen, dass Taxonomie ID ein integer ist
+  if (!isInt(objekt.Taxonomie.Eigenschaften['Taxonomie ID'])) return {}
 
   // Felder ergänzen
   // immer sicherstellen, dass das Feld existiert
@@ -28,26 +38,36 @@ module.exports = function (objekt, exportObjekt) {
 
   if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['GIS-Layer']) {
     exportObjekt.gisLayer = dsZhGis.Eigenschaften['GIS-Layer'].substring(0, 50)
+  } else {
+    exportObjekt.gisLayer = null
   }
 
-  if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['Betrachtungsdistanz (m)']) {
+  if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'] && isInt(dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'])) {
     exportObjekt.distance = dsZhGis.Eigenschaften['Betrachtungsdistanz (m)']
+  } else {
+    exportObjekt.distance = null
   }
 
   if (objekt.Taxonomie.Eigenschaften.Artname) {
     exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255)
+  } else {
+    exportObjekt.nameLat = null
   }
 
   if (objekt.Taxonomie.Eigenschaften['Name Deutsch']) {
     exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften['Name Deutsch'].substring(0, 255)
+  } else {
+    exportObjekt.nameDeu = null
   }
 
   dsZhArtwert = _.find(objekt.Eigenschaftensammlungen, function (ds) {
       return ds.Name === 'ZH Artwert (aktuell)'
     }) || {}
 
-  if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0)) {
+  if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0) && isInt(dsZhArtwert.Eigenschaften.Artwert)) {
     exportObjekt.artwert = dsZhArtwert.Eigenschaften.Artwert
+  } else {
+    exportObjekt.artwert = null
   }
 
   return exportObjekt

@@ -73,6 +73,5 @@
       datensammlungenAusSynonymen = []
     }
   }
-
   send(JSON.stringify(exportObjekte))
 }
