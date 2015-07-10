@@ -17,6 +17,7 @@ function (head, req) {
   var ergaenzeObjektUmInformationenVonSynonymen = require('lists/lib/ergaenzeObjektUmInformationenVonSynonymen'),
     ergaenzeDsBsVonSynonym = require('lists/lib/ergaenzeDsBsVonSynonym'),
     fuegeObligatorischeFelderFuerAltEin = require('lists/lib/fuegeObligatorischeFelderFuerAltEin'),
+    _ = require('lists/lib/underscore'),
     row,
     objekt,
     exportObjekte = [],

@@ -39,35 +39,35 @@ module.exports = function (objekt, exportObjekt) {
   if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['GIS-Layer']) {
     exportObjekt.gisLayer = dsZhGis.Eigenschaften['GIS-Layer'].substring(0, 50)
   } else {
-    exportObjekt.gisLayer = null
+    exportObjekt.gisLayer = ''
   }
 
   if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'] && isInt(dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'])) {
     exportObjekt.distance = dsZhGis.Eigenschaften['Betrachtungsdistanz (m)']
   } else {
-    exportObjekt.distance = null
+    exportObjekt.distance = ''
   }
 
   if (objekt.Taxonomie.Eigenschaften.Artname) {
     exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255)
   } else {
-    exportObjekt.nameLat = null
+    exportObjekt.nameLat = ''
   }
 
   if (objekt.Taxonomie.Eigenschaften['Name Deutsch']) {
     exportObjekt.nameDeu = objekt.Taxonomie.Eigenschaften['Name Deutsch'].substring(0, 255)
   } else {
-    exportObjekt.nameDeu = null
+    exportObjekt.nameDeu = ''
   }
 
   dsZhArtwert = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-      return ds.Name === 'ZH Artwert (aktuell)'
+      return ds.Name === 'ZH Artwert (1995)'
     }) || {}
 
   if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0) && isInt(dsZhArtwert.Eigenschaften.Artwert)) {
     exportObjekt.artwert = dsZhArtwert.Eigenschaften.Artwert
   } else {
-    exportObjekt.artwert = null
+    exportObjekt.artwert = ''
   }
 
   return exportObjekt
