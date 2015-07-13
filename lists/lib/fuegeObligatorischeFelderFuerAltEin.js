@@ -39,19 +39,21 @@ module.exports = function (objekt, exportObjekt) {
   if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['GIS-Layer']) {
     exportObjekt.gisLayer = dsZhGis.Eigenschaften['GIS-Layer'].substring(0, 50)
   } else {
+    // sollte nicht vorkommen, da der view nur objekte mit werten wählt
     exportObjekt.gisLayer = ''
   }
 
   if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'] && isInt(dsZhGis.Eigenschaften['Betrachtungsdistanz (m)'])) {
     exportObjekt.distance = dsZhGis.Eigenschaften['Betrachtungsdistanz (m)']
   } else {
-    exportObjekt.distance = ''
+    // sollte nicht vorkommen, da der view nur objekte mit werten wählt
+    exportObjekt.distance = 500
   }
 
   if (objekt.Taxonomie.Eigenschaften.Artname) {
     exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255)
   } else {
-    exportObjekt.nameLat = ''
+    exportObjekt.nameLat = '(kein Artname)'
   }
 
   if (objekt.Taxonomie.Eigenschaften['Name Deutsch']) {
@@ -67,7 +69,7 @@ module.exports = function (objekt, exportObjekt) {
   if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0) && isInt(dsZhArtwert.Eigenschaften.Artwert)) {
     exportObjekt.artwert = dsZhArtwert.Eigenschaften.Artwert
   } else {
-    exportObjekt.artwert = ''
+    exportObjekt.artwert = 0
   }
 
   return exportObjekt
