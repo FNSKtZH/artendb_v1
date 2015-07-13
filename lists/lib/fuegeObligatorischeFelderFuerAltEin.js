@@ -63,7 +63,7 @@ module.exports = function (objekt, exportObjekt) {
   }
 
   dsZhArtwert = _.find(objekt.Eigenschaftensammlungen, function (ds) {
-      return ds.Name === 'ZH Artwert (1995)'
+      return ds.Name === 'ZH Artwert (aktuell)'
     }) || {}
 
   if (dsZhArtwert && dsZhArtwert.Eigenschaften && (dsZhArtwert.Eigenschaften.Artwert || dsZhArtwert.Eigenschaften.Artwert === 0) && isInt(dsZhArtwert.Eigenschaften.Artwert)) {

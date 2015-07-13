@@ -20,7 +20,7 @@ module.exports = function () {
 
         if (art.Eigenschaftensammlungen) {
           dsArtwert = _.find(art.Eigenschaftensammlungen, function (ds) {
-            return ds.Name === 'ZH Artwert (1995)'
+            return ds.Name === 'ZH Artwert (aktuell)'
           })
           // if (dsArtwert && dsArtwert.Eigenschaften && dsArtwert.Eigenschaften['Artwert KT ZH']) {
           if (dsArtwert && dsArtwert.Eigenschaften) {

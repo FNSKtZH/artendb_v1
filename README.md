@@ -167,7 +167,7 @@ Wie soll eine bestehende Eigenschaftensammlung aktualisiert werden? Zu bedenken 
 - Wird eine Eigenschaftensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
 
 Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgendermassen vorgegangen werden:
-- Neue Daten als neue Eigenschaftensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (1995)" gibt und ev. weitere
+- Neue Daten als neue Eigenschaftensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (aktuell)" gibt und ev. weitere
 - Für die Auswertung unter Einbezug aller Artwerte eine zusammenfassende Eigenschaftensammlung schaffen, z.B. "ZH Artwert (aktuell)"
 
 <a href="#top">&#8593; top</a>
@@ -560,7 +560,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Eigenschaftensammlu
             }
         },
         {
-            "Name":"ZH Artwert (1995)",
+            "Name":"ZH Artwert (aktuell)",
             "Beschreibung":"Artwerte für den Kanton Zürich. Eigenschaften von 1530 Tierarten, 2763 Pflanzenarten und 34 Moosarten",
             "Datenstand":"ca. 1995",
             "Link":"http://www.naturschutz.zh.ch",
