@@ -17,6 +17,10 @@
         },
         {
             "follow_symlinks": true,
+            "path": "filters"
+        },
+        {
+            "follow_symlinks": true,
             "path": "lists"
         },
         {
