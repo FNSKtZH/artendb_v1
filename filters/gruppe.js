@@ -4,6 +4,7 @@ function (doc, req) {
     var gruppe = req.query.gruppe
     // need to pass Lebensräume as lr, otherwise curl on windows errors
     if (gruppe === 'lr') gruppe = 'Lebensräume'
+    if (gruppe === 'Pilze') gruppe = 'Macromycetes'
     if (doc.Gruppe && gruppe && doc.Gruppe === gruppe) return true
     return false
 }
