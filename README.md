@@ -67,9 +67,9 @@ arteigenschaften.ch ist <a href="#OpenSource">open source</a>. Es steht allen fr
 - die Datenflut überschaubar,
 - möglichst selbsterklärend,
 - gut verfügbar:
- - von jedem Gerät im Internet
- - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
- - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
+  - von jedem Gerät im Internet
+  - als Export im <a href="http://de.wikipedia.org/wiki/CSV_(Dateiformat)">csv-Format</a> (ev. weitere)
+  - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
 - und kann über alle Artengruppen hinweg exportiert werden
 
 ###Ziele für Datenpfleger und Systemverantwortliche
@@ -142,6 +142,7 @@ Das geht so:
 - Die zusammenfassende Eigenschaftensammlung kann genau gleich wie alle anderen Eigenschaftensammlungen in der Anwendung angezeigt, exportiert oder über eine Schnittstelle angezapft werden
 
 Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
+
 - Es wird eine neue Eigenschaftensammlung geschaffen, z.B. "BAFU (2012): Rote Liste der Heuschrecken", und die Eigenschaften importiert
 - Die alte Eigenschaftensammlung bleibt bestehen, z.B. "BUWAL (1985): Rote Liste der Heuschrecken"
 - Die Eigenschaften werden nochmals in die zusammenfassende Eigenschaftensammlung "Rote Listen (aktuell)" importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
@@ -163,10 +164,12 @@ Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Dat
 
 ###Eigenschaftensammlungen aktualisieren
 Wie soll eine bestehende Eigenschaftensammlung aktualisiert werden? Zu bedenken sind u.a.:
+
 - Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Eigenschaftensammlungen) unverändert erhalten bleiben
 - Wird eine Eigenschaftensammlung periodisch teilweise aktualisiert (im Gegensatz zu vollständig)? Und soll ersichtlich sein, welche Eigenschaften welchen Datenstand haben?
 
 Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgendermassen vorgegangen werden:
+
 - Neue Daten als neue Eigenschaftensammlung erfassen. Z.B. "ZH Artwert (2013)", wobei es schon "ZH Artwert (aktuell)" gibt und ev. weitere
 - Für die Auswertung unter Einbezug aller Artwerte eine zusammenfassende Eigenschaftensammlung schaffen, z.B. "ZH Artwert (aktuell)"
 
@@ -217,6 +220,7 @@ arteigenschaften.ch ist nicht für schwache Prozessoren und kleine Bildschirme o
  
 ###Neue Eigenschaftensammlungen hinzufügen
 Importiert werden können:
+
 * Taxonomien (noch nicht umgesetzt)
 * Eigenschaften
 * Beziehungen
@@ -260,6 +264,7 @@ Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz
 #Technische Umsetzung
 ###Verwendete Technologien
 Eingesetzt werden:
+
 - Die Datenbank [CouchDb](http://couchdb.apache.org/)...
 - ...in Form einer [CouchApp](http://couchapp.org). So kann die Anwendung:
  - lokal installiert...
@@ -724,17 +729,9 @@ Wollen Sie mit Ihrer Anwendung auf die Daten von arteigenschaften.ch greifen? <a
 <a name="Zeitplan"></a>
 #Realisierung
 ###Zeitplan
-Aktueller Stand:
-
-- Der Datenexport aus der heutigen ArtenDB ist in einem [eigenen Projekt](https://github.com/FNSKtZH/artendb_import) umgesetzt. Da die Datenstruktur der Kern dieses Projekts ist, war das auch ein grosser Teil der Arbeit
-- arteigenschaften.ch ist entworfen und in der Testphase: [http://arteigenschaften.ch](http://arteigenschaften.ch)
- - Es sind alle Funktionen implementiert, die benötigt werden, um die bisherige ArtenDb abzulösen
- - Die Anwendung ist aber noch kaum getestet
-- arteigenschaften.ch wird noch im Jahr 2014 in der [Fachstelle Naturschutz des Kantons Zürich](http://naturschutz.zh.ch) die bisherige Access-Anwendung ablösen
+Aktueller Stand: [http://arteigenschaften.ch](http://arteigenschaften.ch) hat die frühere Access-Anwendung 2015 abgelöst.
 
 ###Was kann man mit der aktuellen Version machen?
-
-Achtung: Die Anwendung befindet sich noch im Entwicklungsstadium. Mit Fehlern ist zu rechnen und teilweise ist sie für rund 30 Minuten nicht erreichbar (wenn die Indexe neu aufgebaut werden).
 
 Arten suchen:
 
@@ -765,8 +762,8 @@ Daten exportieren:
 - Informationen von synonymen Arten können mit exportiert werden
 - Wenn gewünscht, werden nur Datensätze geliefert, für die Informationen in den gewählten Eigenschaftensammlungen existieren
 - Bei Beziehungssammlungen kann man wahlweise:
- - pro Beziehung eine Zeile erstellen
- - pro Objekt eine Zeile erstellen und die Informationen aller Beziehungen kommagetrennt hintereinander ins entsprechende Feld schreiben
+  - pro Beziehung eine Zeile erstellen
+  - pro Objekt eine Zeile erstellen und die Informationen aller Beziehungen kommagetrennt hintereinander ins entsprechende Feld schreiben
 - Vor dem Herunterladen kann man die getroffene Wahl in einer Vorschau-Tabelle überprüfen
 
 Lebensräume in der Anwendung bearbeiten:
@@ -784,11 +781,11 @@ Lebensräume in der Anwendung bearbeiten:
 - Eigenschaften- und Beziehungssammlungen: Beschreiben, mit Bezug auf welche Taxonomie die Eigenschaften- oder Beziehungssammlung ursprünglich erstellt wurde  
 - Nach beliebigem Text suchen können
 - Listen von Beobachtungen/Lebensräumen mit Eigenschaften verknüpfen:
-    - Benutzerin lädt eine Tabelle mit ihren Beobachtungen oder Lebensräumen (wie bei Importen)
-    - Sie wählt, mit welcher ID diese Daten mit Eigenschaften verknüpft werden sollen (wie bei Importen)
-    - Anwendung meldet, wie erfolgreich die Verknüpfung ist (wie bei Importen)
-    - Benutzer wählt Eigenschaften (wie bei Exporten)
-    - Benutzer lädt Ergebnis herunter (wie bei Exporten)
+  - Benutzerin lädt eine Tabelle mit ihren Beobachtungen oder Lebensräumen (wie bei Importen)
+  - Sie wählt, mit welcher ID diese Daten mit Eigenschaften verknüpft werden sollen (wie bei Importen)
+  - Anwendung meldet, wie erfolgreich die Verknüpfung ist (wie bei Importen)
+  - Benutzer wählt Eigenschaften (wie bei Exporten)
+  - Benutzer lädt Ergebnis herunter (wie bei Exporten)
 
 <a href="#top">&#8593; top</a>
 
