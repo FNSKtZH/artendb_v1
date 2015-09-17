@@ -50,8 +50,12 @@ module.exports = function (objekt, exportObjekt) {
     exportObjekt.distance = 500
   }
 
-  if (objekt.Taxonomie.Eigenschaften.Artname) {
+  var artname = objekt.Taxonomie.Eigenschaften.Artname
+  if (artname && artname !== '(kein Artname)') {
     exportObjekt.nameLat = objekt.Taxonomie.Eigenschaften.Artname.substring(0, 255)
+  } else if (objekt.Taxonomie.Eigenschaften.Gattung) {
+    var art = objekt.Taxonomie.Eigenschaften.Gattung + ' ' + objekt.Taxonomie.Eigenschaften.Art
+    exportObjekt.nameLat = art.substring(0, 255)
   } else {
     exportObjekt.nameLat = '(kein Artname)'
   }

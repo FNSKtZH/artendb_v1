@@ -39,8 +39,13 @@ function (head, req) {
     if (dsTaxonomie['Taxonomie ID']) {
       exportObjekt.nummer = dsTaxonomie['Taxonomie ID']
     }
+
     if (dsTaxonomie.Artname) {
       exportObjekt.wissenschArtname = dsTaxonomie.Artname.substring(0, 255)    // klasse darf max. 255 Zeichen lang sein
+    } else {
+      // Feld Artname ist nicht obligatorisch
+      var art = dsTaxonomie.Gattung + ' ' + dsTaxonomie.Art
+      exportObjekt.wissenschArtname = art.substring(0, 255)
     }
     // Name Deutsch existiert bei Moosen nicht, das macht aber nichts
     if (dsTaxonomie['Name Deutsch']) {
