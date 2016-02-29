@@ -51,6 +51,9 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
     htmlFelderWaehlen += '<h3>Beziehungssammlungen</h3><div class="exportZumTitelGehoerig"><div class="well well-sm" style="margin-top:9px;"><b>Sie können aus zwei Varianten wählen</b> <a href="#" class="showNextHidden">...mehr</a><ol class="adb-hidden"><li>Pro Beziehung eine Zeile (Standardeinstellung):<ul><li>Für jede Art oder Lebensraum wird pro Beziehung eine neue Zeile erzeugt</li><li>Anschliessende Auswertungen sind so meist einfacher auszuführen</li><li>Dafür können Sie aus maximal einer Beziehungssammlung Felder wählen (aber wie gewohnt mit beliebig vielen Feldern aus Taxonomie(n) und Eigenschaftensammlungen ergänzen)</li></ul></li><li>Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld:<ul><li>Von allen Beziehungen der Art oder des Lebensraums wird der Inhalt des Feldes kommagetrennt in das Feld der einzigen Zeile geschrieben</li><li>Sie können Felder aus beliebigen Beziehungssammlungen gleichzeitig exportieren</li></ul></li></ol></div><div class="radio"><label><input type="radio" id="export' + alt + 'BezInZeilen" checked="checked" name="exportBezWie">Pro Beziehung eine Zeile</label></div><div class="radio"><label><input type="radio" id="export' + alt + 'BezInFeldern" name="exportBezWie">Pro Art/Lebensraum eine Zeile und alle Beziehungen kommagetrennt in einem Feld</label></div></div><hr>'
     htmlFiltern += '<h3>Beziehungssammlungen</h3>'
   }
+  taxonomien = _.filter(taxonomien, function (taxonomie) {
+    return taxonomie.Name !== 'Aktuelle Taxonomie'
+  })
   _.each(taxonomien, function (taxonomie, index) {
     var x
 
@@ -105,7 +108,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
     htmlFelderWaehlen += '<div class="felderspalte">'
 
     htmlFiltern += '<div class="felderspalte">'
-    for (x in ( taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
+    for (x in (taxonomie.Eigenschaften || taxonomie.Beziehungen)) {
       // felder wählen
       htmlFelderWaehlen += '<div class="checkbox"><label>'
       htmlFelderWaehlen += '<input class="feldWaehlen" type="checkbox" DsTyp="' + dsTyp + '" Datensammlung="' + taxonomie.Name + '" Feld="' + x + '">' + x
