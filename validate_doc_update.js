@@ -14,7 +14,7 @@ function(newDoc, oldDoc, userCtx, secObj) {
   // they need it to be analysed in ALT
   var betrachtungsdistanzMessage = 'Jede Art der Gruppen "Fauna" und "Flora" braucht ein GIS-Layer und eine Betrachtungsdistanz, d.h.:\n- eine Eigenschaft "Eigenschaftensammlungen" (ein Array)\n- darin eine Eigenschaftensammlung (= Objekt) mit den nötigen Attributen\n\nSiehe diesen Link:\nhttps://gist.github.com/barbalex/d98aad9a96978b137dde\nbzw. dieses vollständige Beispiel:\nhttps://gist.github.com/barbalex/9836162'
 
-  if (newDoc.Gruppe && (newDoc.Gruppe === 'Fauna' || newDoc.Gruppe === 'Flora')) {
+  if (newDoc.Typ && newDoc.Typ === 'Objekt' && newDoc.Gruppe && (newDoc.Gruppe === 'Fauna' || newDoc.Gruppe === 'Flora')) {
     // these docs are analysed in ALT
     if (!newDoc.Eigenschaftensammlungen) throw({forbidden: betrachtungsdistanzMessage})
     if (!newDoc.Eigenschaftensammlungen) throw({forbidden: betrachtungsdistanzMessage})
