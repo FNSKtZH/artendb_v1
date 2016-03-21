@@ -1,38 +1,8 @@
 {
-    "folders":
-    [
-        {
-            "follow_symlinks": true,
-            "path": "/",
-            "folder_exclude_patterns": ["*"]
-        },
-        {
-            "follow_symlinks": true,
-            "path": "_attachments",
-            "file_exclude_patterns": ["index.html", "main.css", "main.css.map"]
-        },
-        {
-            "follow_symlinks": true,
-            "path": "gulp-tasks"
-        },
-        {
-            "follow_symlinks": true,
-            "path": "filters"
-        },
-        {
-            "follow_symlinks": true,
-            "path": "lists"
-        },
-        {
-            "follow_symlinks": true,
-            "name": "vendor/couchapp/_attachments",
-            "path": "vendor/couchapp/_attachments",
-            "file_exclude_patterns": ["artendb_browserified.js", "artendb_built.js", "artendb_built.js.map"],
-            "folder_exclude_patterns": ["index_lib"]
-        },
-        {
-            "follow_symlinks": true,
-            "path": "views"
-        }
-    ]
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
 }
