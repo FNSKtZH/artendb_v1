@@ -85,7 +85,9 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
           htmlFelderWaehlen += html
           htmlFiltern += html
         } else if (feldname !== 'Ursprungsdatensammlung') {
+          // TODO: Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
           html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>'
+          // html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + feldwert + '</div></div>'
           htmlFelderWaehlen += html
           htmlFiltern += html
         }
