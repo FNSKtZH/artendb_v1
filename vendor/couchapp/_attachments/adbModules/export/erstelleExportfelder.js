@@ -4,11 +4,13 @@
 
 'use strict'
 
-var _ = require('underscore'),
-  Autolinker = require('autolinker'),
-  $ = require('jquery'),
-  ersetzeUngueltigeZeichenInIdNamen = require('../ersetzeUngueltigeZeichenInIdNamen'),
-  capitaliseFirstLetter = require('../capitaliseFirstLetter')
+var _ = require('underscore')
+// Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
+// make sure not to update above v0.22
+var Autolinker = require('autolinker')
+var $ = require('jquery')
+var ersetzeUngueltigeZeichenInIdNamen = require('../ersetzeUngueltigeZeichenInIdNamen')
+var capitaliseFirstLetter = require('../capitaliseFirstLetter')
 
 var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssammlungen, formular) {
   var htmlFelderWaehlen = '',
@@ -85,9 +87,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
           htmlFelderWaehlen += html
           htmlFiltern += html
         } else if (feldname !== 'Ursprungsdatensammlung') {
-          // TODO: Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
           html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>'
-          // html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + feldwert + '</div></div>'
           htmlFelderWaehlen += html
           htmlFiltern += html
         }

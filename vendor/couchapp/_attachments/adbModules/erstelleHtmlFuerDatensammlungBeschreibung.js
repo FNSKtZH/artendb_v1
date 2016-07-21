@@ -1,5 +1,7 @@
 'use strict'
 
+// Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
+// make sure not to update above v0.22
 var Autolinker = require('autolinker')
 
 module.exports = function (esOderBs) {
@@ -33,9 +35,7 @@ module.exports = function (esOderBs) {
     if (esOderBs.Link) {
       html += '<div class="dsBeschreibungZeile">'
       html += '<div>Link: </div>'
-      // TODO: Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
       html += '<div>' + Autolinker.link(esOderBs.Link) + '</div>'
-      // html += '<div>' + esOderBs.Link + '</div>'
       html += '</div>'
     }
     if (esOderBs['importiert von']) {
