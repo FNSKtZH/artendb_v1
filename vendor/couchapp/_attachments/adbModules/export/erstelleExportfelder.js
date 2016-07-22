@@ -87,7 +87,7 @@ var erstelleExportfelder = function (taxonomien, datensammlungen, beziehungssamm
           htmlFelderWaehlen += html
           htmlFiltern += html
         } else if (feldname !== 'Ursprungsdatensammlung') {
-          html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert) + '</div></div>'
+          html = '<div class="dsBeschreibungZeile"><div>' + feldname + ':</div><div>' + Autolinker.link(feldwert ? '' + feldwert : '') + '</div></div>'
           htmlFelderWaehlen += html
           htmlFiltern += html
         }

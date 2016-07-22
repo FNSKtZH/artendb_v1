@@ -35,15 +35,13 @@ module.exports = function (esOderBs) {
     if (esOderBs.Link) {
       html += '<div class="dsBeschreibungZeile">'
       html += '<div>Link: </div>'
-      html += '<div>' + Autolinker.link(esOderBs.Link) + '</div>'
+      html += '<div>' + Autolinker.link(esOderBs.Link ? '' + esOderBs.Link : '') + '</div>'
       html += '</div>'
     }
     if (esOderBs['importiert von']) {
       html += '<div class="dsBeschreibungZeile">'
       html += '<div>Importiert von: </div>'
-      // TODO: Autolinker caused error: Uncaught TypeError: textOrHtml.substring is not a function
-      html += '<div>' + Autolinker.link(esOderBs['importiert von']) + '</div>'
-      // html += '<div>' + esOderBs['importiert von'] + '</div>'
+      html += '<div>' + Autolinker.link(esOderBs['importiert von'] ? '' + esOderBs['importiert von'] : '') + '</div>'
       html += '</div>'
     }
     if (esOderBs.zusammenfassend && esOderBs.Ursprungsdatensammlung) {
