@@ -5,7 +5,7 @@
 
 function (head, req) {
   'use strict'
-
+  
   start({
     'headers': {
       'Accept-Charset': 'utf-8',
@@ -47,20 +47,9 @@ function (head, req) {
       var art = dsTaxonomie.Gattung + ' ' + dsTaxonomie.Art
       exportObjekt.wissenschArtname = art.substring(0, 255)
     }
-
     // Name Deutsch existiert bei Moosen nicht, das macht aber nichts
-    /*if (dsTaxonomie['Name Deutsch']) {
-      exportObjekt.deutscherArtname = dsTaxonomie['Name Deutsch'].substring(0, 255)    // darf max. 255 Zeichen lang sein
-    }*/
-    // add id because EvAB checks uniquity of names
-    var pureIdString = dsTaxonomie['Taxonomie ID'] ? dsTaxonomie['Taxonomie ID'].toString() : Objekt._id
-    var idString = Objekt.Gruppe + '-ID: ' + pureIdString
     if (dsTaxonomie['Name Deutsch']) {
-      var l = 255 - idString.length // darf max. 255 Zeichen lang sein
-      var dartNam = dsTaxonomie['Name Deutsch'].substring(0, l)
-      exportObjekt.deutscherArtname = dartNam + ', ' + idString
-    } else {
-      exportObjekt.deutscherArtname = idString
+      exportObjekt.deutscherArtname = dsTaxonomie['Name Deutsch'].substring(0, 255)    // klasse darf max. 255 Zeichen lang sein
     }
 
     // gruppen-abhängige Eigenschaften setzen
@@ -74,7 +63,7 @@ function (head, req) {
       var dsZhGis = _.find(Objekt.Eigenschaftensammlungen, function (ds) {
         return ds.Name === 'ZH GIS'
       }) || {}
-
+      
       if (dsZhGis && dsZhGis.Eigenschaften && dsZhGis.Eigenschaften['GIS-Layer']) {
         exportObjekt.klasse = dsZhGis.Eigenschaften['GIS-Layer'].substring(0, 50)    // klasse darf max. 50 Zeichen lang sein
       }
@@ -102,7 +91,7 @@ function (head, req) {
       // zum nächsten row
       continue
     }
-
+    
     // Objekt zu Exportobjekten hinzufügen
     exportObjekte.push(exportObjekt)
   }
