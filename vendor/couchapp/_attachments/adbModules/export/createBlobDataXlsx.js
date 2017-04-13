@@ -86,7 +86,14 @@ function buildDataFromObject (data) {
   var dataArray = []
 
   // die Feldnamen zuerst:
-  dataArray.push(_.keys(data[0]))
+  var feldNamen = _.keys(data[0])
+  feldNamen = feldNamen.map(function(n) {
+    return n.replace(': ', '_')
+      .replace(/ /g, '-')
+      .replace(/\(/g, '')
+      .replace(/\)/g, '')
+  })
+  dataArray.push(feldNamen)
   // dann die Daten
   _.each(data, function (object) {
     dataArray.push(_.map(object, function (val) {

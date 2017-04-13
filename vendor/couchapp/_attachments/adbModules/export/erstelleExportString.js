@@ -18,7 +18,11 @@ module.exports = function (exportobjekte) {
           if (stringTitelzeile !== '') {
             stringTitelzeile += ','
           }
-          stringTitelzeile += '"' + feldname + '"'
+          stringTitelzeile += '"' + feldname
+            .replace(': ', '_')
+            .replace(/ /g, '-')
+            .replace(/\(/g, '')
+            .replace(/\)/g, '') + '"'
         })
       }
 
