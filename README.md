@@ -1,4 +1,4 @@
-#arteigenschaften.ch
+# arteigenschaften.ch
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 [![js-standard-style](https://img.shields.io/badge/license-ISC-brightgreen.svg)](https://github.com/FNSKtZH/artendb/blob/master/License.md)
@@ -17,8 +17,8 @@ Ihre Stärke ist der einfache Import und Export von Daten. Die Absicht dahinter:
 * <a href="#OpenSource">Open source</a>
 
 <a name="Ziele"></a>
-#Ziele
-###Ausgangspunkt
+# Ziele
+### Ausgangspunkt
 ...sind Erfahrungen, welche in der Fachstelle Naturschutz mit früheren Datenbanken gemacht wurden:
 
 - Bezieht man Daten aus anderen Quellen, ist es schwierig, sie vollständig, fehlerfrei und aktuell zu (er-)halten
@@ -26,7 +26,7 @@ Ihre Stärke ist der einfache Import und Export von Daten. Die Absicht dahinter:
 - Art- und Lebensraumeigenschaften interessieren nicht nur die Fachstelle Naturschutz des Kantons Zürich. Ideal wäre eine von allen in diesem Bereich tätigen Stellen gemeinsam nachgeführte Datenbank. Oder realistischer: Ein Ort, an dem frei zugängliche Daten mit wenig Aufwand vereint werden können
 - Die aktuelle Datenbank basiert auf Microsoft Access. Eine sinnvolle Weiterentwicklung im Sinne der nachfolgend dargelegten Ideen ist damit nicht möglich
 
-###Was zeichnet arteigenschaften.ch aus?
+### Was zeichnet arteigenschaften.ch aus?
 Die wichtigsten Merkmale dürften sein:
 
 - Die verwendeten Begriffe und Datenstrukturen sind auf Eigenschaften von Arten und Lebensräumen zugeschnitten
@@ -34,11 +34,11 @@ Die wichtigsten Merkmale dürften sein:
 - ...weshalb prinzipiell alle beteiligten Stellen ihre Daten an einem Ort und in einem gemeinsamen Format anbieten könnten. Das mag etwas naiv und utopisch sein. Zumindest aber kann man innert Minuten anderswo verfügbare Daten in arteigenschaften.ch vereinen und in Auswertungen mit anderen Daten kombinieren
 - Daten können einfach und rasch kombiniert und exportiert werden, um anschliessend mit ihrer Hilfe Auswertungen durchzuführen
 
-###Wozu wird arteigenschaften.ch benutzt?
-#####Nachschlagen
+### Wozu wird arteigenschaften.ch benutzt?
+##### Nachschlagen
 Man kann arteigenschaften.ch benutzen, um Informationen nachzuschlagen. Das dürfte sogar der häufigste Anwendungszweck sein. Da die Benutzeroberfläche dynamisch aus flexiblen Datenstrukturen generiert wird und arteigenschaften.ch (bisher) keine Bilder enthält, ist die Darstellung aber eingeschränkt. Anwendungen mit statischer Datenstruktur können Informationen benutzerfreundlicher darstellen. Hilfreich könnte allerdings sein, wenn der einfache Import (wie erhofft) dazu führen sollte, dass arteigenschaften.ch besonders umfassende und aktuelle Informationen enthält.
 
-#####Auswerten
+##### Auswerten
 arteigenschaften.ch wurde entwickelt, um mit Hilfe der darin enthaltenen Daten Auswertungen durchzuführen. Meist in Kombination mit Artbeobachtungen oder Lebensraumkartierungen. Beispiele:
 
 - In einer Liste von Artbeobachtungen die wertvollsten Arten identifizieren, z.B. mithilfe des Artwerts, der nationalen Priorität oder des Rote-Liste-Status
@@ -50,18 +50,18 @@ arteigenschaften.ch wurde entwickelt, um mit Hilfe der darin enthaltenen Daten A
 
 Besonders geeignet ist arteigenschaften.ch, wenn in einem Projekt eigene Art- oder Lebensraumeigenschaften erhoben und mit anderen für die Auswertung kombiniert werden sollen.
 
-#####Daten für andere Anwendung abholen
+##### Daten für andere Anwendung abholen
 Andere Anwendungen können Daten aus arteigenschaften.ch direkt abholen und nutzen. Mehr Infos [hier](#Schnittstellen).
 
-#####Nutzungsbedingungen
+##### Nutzungsbedingungen
 arteigenschaften.ch ist ein Werkzeug der Fachstelle Naturschutz des Kantons Zürich (FNS). arteigenschaften.ch steht frei zur Verfügung, inklusive der Importmöglichkeiten (Logins erhalten Sie von [Alex](alex@gabriel-software.ch)). Die FNS behält sich vor, mit DatenimporteurInnen die optimale Integration ihrer Daten in arteigenschaften.ch zu besprechen und allenfalls Einfluss darauf zu nehmen. Es können nur Daten akzeptiert werden, deren Eigner mit der Veröffentlichung einverstanden sind.
 
 arteigenschaften.ch ist <a href="#OpenSource">open source</a>. Es steht allen frei, die Anwendung zu kopieren und selber zu betreiben, ohne allfälligen Einfluss der FNS oder mit Daten, die man nicht veröffentlichen will.
 
-###Das Zielpublikum
+### Das Zielpublikum
 ...befasst sich mit Arten und Lebensräumen. Es arbeitet primär in den Sachbereichen Naturschutz, Jagd und Fischerei, Gewässer, Wald, Landwirtschaft und Problemarten. Angesprochen sein dürften Fachstellen bei Bund, Kantonen, Gemeinden, Forschungseinrichtungen und freischaffende Fachleute bzw. Ökobüros.
 
-###Ziele für die Benutzerin
+### Ziele für die Benutzerin
 
 - Die Anwendung ist einfach zu bedienen,
 - die Datenflut überschaubar,
@@ -72,7 +72,7 @@ arteigenschaften.ch ist <a href="#OpenSource">open source</a>. Es steht allen fr
   - über [Schnittstellen](#Schnittstellen) für GIS, [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content), [EvAB](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/evab.html#a-content), [EvAB mobile](https://github.com/barbalex/EvabMobile), beliebige Apps
 - und kann über alle Artengruppen hinweg exportiert werden
 
-###Ziele für Datenpfleger und Systemverantwortliche
+### Ziele für Datenpfleger und Systemverantwortliche
 
 - Daten können in wenigen Minuten importiert werden.<br>Es werden keine besonderen technischen Fähigkeiten vorausgesetzt
 - Die Datenstruktur ist bereits in den Rohdaten sichtbar und verständlich
@@ -81,32 +81,32 @@ arteigenschaften.ch ist <a href="#OpenSource">open source</a>. Es steht allen fr
 <a href="#top">&#8593; top</a>
 
 <a name="Konzept"></a>
-#Fachliches Konzept
-###Der Grundgedanke
+# Fachliches Konzept
+### Der Grundgedanke
 Die bisherige Access-Datenbank ist über zehn Jahre gewachsen. Nach und nach entstand ein komplexes Instrument. Es ist schwer zu verstehen und zu unterhalten und stösst an diverse technische Grenzen.
 
 Ist etwas schwer verständlich, passieren Fehler. Wird es nicht verstanden, nützt es (früher oder später) nichts.
 
 Der Grundgedanke hinter arteigenschaften.ch ist daher: Komplexität minimieren. Es gibt ein paar (nachfolgend erklärte) Grundbegriffe. Daraus leiten sich lediglich drei Grundstrukturen ab: Objekte, ihre Eigenschaften- und Beziehungssammlungen.
 
-###Taxonomien
+### Taxonomien
 [Taxonomien](http://de.wikipedia.org/wiki/Taxonomie) klassifizieren <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> (in arteigenschaften.ch: Arten und Lebensräume) mit einer [Hierarchie](http://de.wikipedia.org/wiki/Hierarchie). Darauf bauen alle Eigenschaftensammlungen, Beziehungssammlungen und deren [Eigenschaften](http://de.wikipedia.org/wiki/Eigenschaft) auf. Die Entwicklung von Taxonomien und der Umgang mit unterschiedlichen und sich laufend verändernden Taxonomien sind höchst anspruchsvoll.
 
-Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebensraumschlüssel. 
+Andere geläufige Begriffe: Nomenklatur, Index, Flora, Kartierschlüssel, Lebensraumschlüssel.
 
 Beispiele: Indizes der nationalen Artdatenzentren, "Flora der Schweiz (Ausgabe 2012)", "Lebensraumkartierung Neeracher Riet 2009", "Flora Europaea (Ellenberg, 1991)".
 
-Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können (noch nicht realisiert). Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt. 
+Die Benutzerin soll die Arten wahlweise nach allen in den Daten enthaltenen Taxonomien darstellen können (noch nicht realisiert). Im Standard wird bei Arten die Hierarchie der vom zuständigen nationalen Zentrum verwendeten Taxonomie angezeigt.
 
 Im Idealfall enthielte die aktuell vom nationalen Zentrum verwendete Taxonomie nur "offizielle" Arten und z.B. keine Synonyme. Stattdessen würden Beziehungen zwischen offiziellen Arten und Arten anderer Taxonomien beschrieben. Da die Daten von den nationalen Zentren unseres Wissens (noch?) nicht so erhältlich sind, ist das in arteigenschaften.ch nicht realisiert aber im Design vorgesehen und bei Vorliegen entsprechender Daten direkt umsetzbar.
 
-###Objekte
+### Objekte
 <a href="http://de.wikipedia.org/wiki/Objekt_(Programmierung)">Objekte</a> bilden die Grundeinheit der Taxonomie. In arteigenschaften.ch sind das Arten oder Lebensräume. Letztere Begriffe werden in der Benutzeroberfläche verwendet. "Objekte" ist eher von technischer und konzeptioneller Bedeutung.
 
-###Gruppen
+### Gruppen
 Arten werden in Gruppen eingeteilt: Fauna, Flora, Moose und Pilze. Die nationalen Artdatenzentren sind so organisiert. Es hat sich eingebürgert und bewährt. Lebensräume bilden eine eigene Gruppe.
 
-###Eigenschaftensammlungen
+### Eigenschaftensammlungen
 Systematische Informationen über Arten kommen in ganzen Eigenschaftensammlungen, z.B. „Flora Indicativa 2010“. Solche Eigenschaftensammlungen haben gemeinsame Eigenschaften wie z.B.:
 
 - Dieselbe Herkunft (Autoren, Publikation, Publikationsdatum)
@@ -130,7 +130,7 @@ arteigenschaften.ch kann auch Eigenschaftensammlungen von synonymen Objekten anz
 In fast allen Fällen ist es sinnvoll, Eigenschaften und Beziehungen pro Eigenschaftensammlung darzustellen. Z.B. bei der Anzeige in der Anwendung oder wenn Daten für Exporte ausgewählt werden.
 
 <a name="zusammenfassende_datensammlungen"></a>
-###Zusammenfassende Eigenschaftensammlungen
+### Zusammenfassende Eigenschaftensammlungen
 Für bestimmte Zwecke ist zusätzlich das Gegenteil interessant: Daten aus verschiedenen Eigenschaftensammlungen zusammenfassen. Z.B. wenn man über alle Artengruppen den aktuellsten Rote-Liste-Status darstellen will. Er steckt in diversen Eigenschaftensammlungen, da er häufig pro Artengruppe separat publiziert wird.
 
 Das geht so:
@@ -148,21 +148,21 @@ Beispiel: Für Heuschrecken wird eine neue Rote Liste publiziert:
 - Die Eigenschaften werden nochmals in die zusammenfassende Eigenschaftensammlung "Rote Listen (aktuell)" importiert. Dabei werden bisherige Rote-Listen-Angaben der entsprechenden Heuschrecken überschrieben
 - Falls einige 1985 beschriebene Arten 2012 nicht mehr beschrieben wurden, bleibt der Rote-Liste-Status von 1985 erhalten. Um dies kenntlich zu machen, soll in der zusammenfassenden Eigenschaftensammlung in einem zusätzlichen Feld immer der Name der Ursprungs-Eigenschaftensammlung mitgeliefert werden
 
-###Art- und Lebensraumeigenschaften
+### Art- und Lebensraumeigenschaften
 ...beschreiben einzelne Objekte. Beispiele: Artwert, Rote-Liste-Status, nationale Priorität.
 
-###Beziehungssammlungen
+### Beziehungssammlungen
 Beziehungen beschreiben das Verhältnis zwischen zwei oder mehr Objekten. Beispiele: Bindung von Arten an Biotope, Frasspflanzen von Insekten, Wirte von Parasiten, Beutespektrum von Räubern. Aber auch taxonomische Beziehungen wie "synonym". Die eine Beziehung beschreibenden Attribute sind spezielle Art- und Lebensraumeigenschaften und wie diese (oft gemeinsam mit ihnen) Teil von Eigenschaftensammlungen. Sammlungen von Beziehungen werden in Analogie zu Eigenschaftensammlungen "Beziehungssammlungen" genannt. Sie sind Spezialfälle von Eigenschaftensammlungen und werden separat behandelt, weil sie eine leicht abweichende Datenstruktur erfordern.
 
-###Gruppen vereinen
-In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden. 
+### Gruppen vereinen
+In der bisherigen, relationalen Datenbank werden die Gruppen (Flora, Fauna, Moose, Pilze, Lebensräume) in unterschiedlichen Tabellen verwaltet. Das erhöht die Komplexität der Anwendung und erschwert jede Auswertung enorm. Beispielweise müssen alle Beziehungen zu anderen Arten oder Lebensräumen für jede Gruppe separat verwaltet werden, d.h. bis zu 10-fach. Und in Auswertungen mittels Union-Abfragen wieder zusammengeführt werden.
 
 Zumindest in Access kann das aber nicht mehr geändert werden, weil z.B. in der Floratabelle die maximale Anzahl möglicher Indizes (32) erreicht ist und jede Beziehung einen Index voraussetzt. Die (schlechte) Variante, alle Informationen in einer einzigen Riesentabelle zu vereinigen, scheitert wiederum an der maximalen Anzahl Felder (255) und an der maximalen Datenmenge pro Datensatz (2KB).
 
-###Daten decodieren
+### Daten decodieren
 Traditionell werden Daten häufig codiert erfasst. Bis 2012 waren auch viele Daten in der bisherigen arteigenschaften.ch codiert. Die entsprechenden Felder enthielten für Menschen unverständliche Codes. Sie wurden in einer Codierungstabelle aufgelöst. Damit die Daten verständlich dargestellt werden konnten, mussten sie für Darstellung und Export decodiert werden. Dieses System ist sehr kompliziert und leistungshungrig. Die Rohdaten sind für Menschen nicht mehr lesbar. Deshalb sind codierte Informationen zu vermeiden.
 
-###Eigenschaftensammlungen aktualisieren
+###E igenschaftensammlungen aktualisieren
 Wie soll eine bestehende Eigenschaftensammlung aktualisiert werden? Zu bedenken sind u.a.:
 
 - Müssen frühere Auswertungen nachvollzogen bzw. wiederholt werden können? Wenn ja, sollten frühere Datenstände (=Eigenschaftensammlungen) unverändert erhalten bleiben
@@ -176,8 +176,8 @@ Wenn eine von beiden obigen Fragen mit ja beantwortet wurde, kann z.B. folgender
 <a href="#top">&#8593; top</a>
 
 <a name="ui"></a>
-#Benutzeroberfläche
-###Erscheinungsbild
+# Benutzeroberfläche
+### Erscheinungsbild
 
 <img src="http://barbalex.ch/artendb/objekt.png" alt="Beispiel Aconitum napellus auct." width="100%">
 
@@ -217,8 +217,8 @@ Das Menu ermöglicht:
 **Mobilfähigkeit**
 
 arteigenschaften.ch ist nicht für schwache Prozessoren und kleine Bildschirme optimiert. Immerhin wechselt die Darstellung unter 1000px Bildschirmbreite von zweispaltig auf einspaltig, womit arteigenschaften.ch auf meinem iPad ganz brauchbar ist. Da für iOS und Android auch Versionen von CouchDb existieren, kann prinzipiell für Mobilgeräte eine netzunabhängige App erstellt werden. Das ist momentan nicht geplant. Vermutlich wird aber künftig die Ressourcennutzung reduziert, die Fingerbedienbarkeit und die Darstellung verbessert, damit arteigenschaften.ch auch auf Smartphones brauchbar ist (wenn man unbedingt will, klappt es schon heute).
- 
-###Neue Eigenschaftensammlungen hinzufügen
+
+### Neue Eigenschaftensammlungen hinzufügen
 Importiert werden können:
 
 * Taxonomien (noch nicht umgesetzt)
@@ -239,7 +239,7 @@ Die Datenfelder in der Benutzeroberfläche, Exporten und Schnittstellen werden d
 
 Neue Eigenschaftensammlungen sind in der aktuellen Access-Datenbank viel umständlicher hinzuzufügen. Das liegt u.a. an der komplizierten relationalen Datenstruktur, den vielfach erreichten Leistungsgrenzen von Access, der Tatsache, dass in Access die Steuerung nicht in ein paar gut kommentierten Codezeilen erfolgt sondern über Code, Benutzeroberfläche und Abfragen verteilt ist, und weil immer auch die Benutzeroberfläche angepasst werden muss. Das kann ich kaum jemand anderem zumuten. Nicht gut!
 
-###Daten exportieren
+### Daten exportieren
 
 1. Die Benutzerin wählt die gewünschten Objekte. Sie kann dabei nach jedem in den gewählten Gruppen existierenden Feld filtern und dazu Vergleichsoperatoren verwenden.<br>Standardmässig werden auch Informationen von synonymen Objekten exportiert. Diese Option kann ausgeschaltet werden
 2. Sie wählt die gewünschten Eigenschaften.<br>Standardmässig werden nur Datensätze exportiert, die Informationen zu den gewählten Eigenschaften enthalten. Diese Option kann ausgeschaltet werden
@@ -249,11 +249,11 @@ Bei Beziehungssammlungen kann die Benutzerin pro Beziehung eine neue Zeile expor
 
 Der Export wird auch in [diesem screencast](http://youtu.be/J13wS88pYC8) demonstriert.
 
-###Felder für die Auswertung mit dem Artenlistentool auswählen
+### Felder für die Auswertung mit dem Artenlistentool auswählen
 
 Mit dem [Artenlistentool](http://www.aln.zh.ch/internet/baudirektion/aln/de/naturschutz/naturschutzdaten/tools/artenlistentool.html#a-content) der Fachstelle Naturschutz Kt. ZH kann man Artbeobachtungen räumlich auswerten. Die Resultate können in ein Excel-File exportiert werden. Der Benutzer kann sich ab ca. Ende 2014 auf eine für diesen Zweck angepasste Version der Export-Seite von arteigenschaften.ch leiten lassen. Hier kann er Felder auswählen. Er erhält eine URL, die er dem Artenlistentool übergibt. Anschliessend werden die gewählten Felder gemeinsam mit den Daten der Beobachtungen vom Artenlistentool exportiert und stehen für die weitere Auswertung zur Verfügung.
 
-###Daten bearbeiten
+### Daten bearbeiten
 Grundsätzlich müssen keine Daten in arteigenschaften.ch bearbeitet werden können. Alle Arteigenschaften werden von den Autoren in eigener Software entwickelt (meist einfache Excel-Listen) und in die arteigenschaften.ch importiert.
 
 Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz des Kantons Zürich müssen Lebensraumschlüssel in arteigenschaften.ch erfassen. Damit wird eine hierarchisch schlüssige Struktur gewährleistet. Zu oft ist die Hierarchie von Lebensraumschlüsseln älterer Kartierungen lückig und nicht (vollständig) nachvollziehbar.
@@ -261,8 +261,8 @@ Ausnahme sind die Lebensräume: Externe Auftragnehmer der Fachstelle Naturschutz
 <a href="#top">&#8593; top</a>
 
 <a name="Umsetzung"></a>
-#Technische Umsetzung
-###Verwendete Technologien
+# Technische Umsetzung
+### Verwendete Technologien
 Eingesetzt werden:
 
 - Die Datenbank [CouchDb](http://couchdb.apache.org/)...
@@ -276,7 +276,7 @@ Eingesetzt werden:
 
 arteigenschaften.ch wird primär auf Google Chrome entwickelt und getestet, sollte aber auf jedem modernen Browser funktionieren. Ausnahmen: Importe und Exporte benutzen sehr neue Funktionen aus HTML5. Sie funktionieren z.T. in anderen Browsern noch nicht. Für die Exporte wurde zusätzlich eine zuverlässige aber langsame Variante implementiert. Auf dem Internet Explorer funktioniert arteigenschaften.ch erst ab Version 9 leidlich.
 
-###Dokumenten-Datenbank
+### Dokumenten-Datenbank
 In der relationalen Datenbank sieht die ideale Datenstruktur von Arteigenschaften so aus: Für jede Eigenschaftensammlung existiert eine eigene Tabelle. Sie wird 1:1 mit der Taxonomie verbunden. Fasst man in einer Abfrage verschiedene Eigenschaftensammlungen zusammen, enthalten nur noch wenige Felder Informationen. Diese Struktur ist für eine traditionelle, tabellenbasierte Datenbank wenig geeignet. Für eine Dokumenten-Datenbank hingegen ist sie ideal.
 
 Eine Dokumenten-Datenbank speichert jeden Datensatz in einem eigenen Dokument. Daten werden statt in starren Tabellen mit einer definierten Schreibweise (<a href="http://de.wikipedia.org/wiki/JavaScript_Object_Notation">JSON</a>) frei erfasst. Man kann sich das wie eine Karteikarte vorstellen, auf der die Informationen notiert werden. Dieses System eignet sich hervorragend, um ohne Einbezug des Systemadministrators zuvor nicht geplante neue Felder zu ergänzen. Und das ist genau, was beim Import von Eigenschaftensammlungen geschieht.
@@ -285,8 +285,8 @@ Eine Dokumenten-Datenbank ist auch ideal, um alle Arten gleich zu verwalten und 
 
 Mit CouchDb können einem Objekt beliebige Dateien ähnlich wie in einem email angefügt werden, z.B. Bilder, Tonaufnahmen, Videos, Berichte (noch nicht umgesetzt).
 
-###Datenstruktur
-####Objekte
+### Datenstruktur
+#### Objekte
 
 Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) werden als Dokumente im [JSON-Format](http://de.wikipedia.org/wiki/JavaScript_Object_Notation) gespeichert. Sie enthalten eine id ([GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)). Nachfolgend der noch beinahe leere Rohbau eines Objekts ohne Eigenschaftensammlungen. Alle Beispiele stammen von der Europäischen Sumpfschildkröte.
 ```javascript
@@ -298,7 +298,7 @@ Die durch die taxonomische Einheit definierten Objekte (Arten und Lebensräume) 
 - _id ist die id, eine [GUID](http://de.wikipedia.org/wiki/Globally_Unique_Identifier)
 - Gruppe ist "Fauna", "Flora", "Moose", "Macromycetes" oder "Lebensräume"
 
-####Taxonomie
+#### Taxonomie
 Die Taxonomie enthält sich selbst beschreibende Felder, z.B.:
 
 - Name: obligatorisch, muss eineindeutig sein, Schreibweise angelehnt an Literaturzitate aber möglichst kurz
@@ -334,8 +334,8 @@ Ihre Eigenschaften sind unter "Eigenschaften" aufgelistet:
 ```
 Lebensraumschlüssel werden auch als Taxonomien behandelt und bezeichnet. Bloss werden im Hierarchiebaum alle gleichzeitig angezeigt. Das ist hier nützlicher, weil es bei Lebensräumen sehr viele Taxonomien gibt und man meistens nicht mit einer Standard-Taxonomie arbeitet.
 
-####Eigenschaftensammlungen
-Die JSON-Eigenschaft "Eigenschaftensammlungen" enthält alle Eigenschaftensammlungen des Objekts. Eigenschaftensammlungen sind genau gleich aufgebaut wie die Taxonomie. 
+#### Eigenschaftensammlungen
+Die JSON-Eigenschaft "Eigenschaftensammlungen" enthält alle Eigenschaftensammlungen des Objekts. Eigenschaftensammlungen sind genau gleich aufgebaut wie die Taxonomie.
 
 Hier ein Auszug mit nur einer Eigenschaftensammlung:
 ```javascript
@@ -370,7 +370,7 @@ Hier ein Auszug mit nur einer Eigenschaftensammlung:
 ]
 ```
 
-####Beziehungssammlungen
+#### Beziehungssammlungen
 Beziehungssammlungen werden ähnlich aufgebaut wie Eigenschaftensammlungen. Hier ein Auszug mit nur einer Beziehung:
 ```javascript
 "Beziehungssammlungen": [
@@ -404,7 +404,7 @@ Unterschiede zwischen Beziehungssammlung und (gewöhnlicher) Eigenschaftensammlu
 - Enthält eine Eigenschaftensammlung mehrere Arten von Beziehungen, werden ihre Beziehungen in mehrere Beziehungssammlungen gepackt. Der Name der Beziehungssammlung weist auf die Art der enthaltenen Beziehungen hin. So wird die Übersichtlichkeit der Daten verbessert. Beispielsweise könnte es neben der Beziehungssammlung "CH Delarze (2008): Art charakterisiert Lebensraum" eine weitere Beziehungssammlung "CH Delarze (2008): Art ist Zielart im Lebensraum" geben
 - Beziehungssammlungen taxonomischer Art wie z.B. "synonym" erhalten einen Typ "taxonomisch". So können sie separat angesprochen werden, z.B. für den Aufbau eines Beziehungsbaums oder die Darstellung auf dem Bildschirm
 
-####Beispiel des vollständigen Objekts
+#### Beispiel des vollständigen Objekts
 <a name="JsonBeispiel"></a>
 ```javascript
 {
@@ -667,7 +667,7 @@ Verglichen mit der Datenstruktur in der relationalen Datenbank wird Komplexität
 - Eigenschaftensammlungen werden in jedem Objekt beschrieben, für welches sie Informationen haben
 - Beziehungen werden in allen beteiligten Objekten beschrieben
 
-###Hierarchien
+### Hierarchien
 Die Hierarchien werden momentan folgendermassen aufgebaut:
 
 - Flora: über Familie und Gattung
@@ -703,7 +703,7 @@ Die Hierarchien werden momentan folgendermassen aufgebaut:
 Langfristig sollen in allen Gruppen die Objekte ihre Position in der Hierarchie speichern, siehe [diese Idee](https://github.com/FNSKtZH/artendb/wiki/Objekte-von-Taxonomien-entkoppeln). So ist es möglich, beliebig hierarchisch organisierte Taxonomien zu importieren und anzuzeigen. Vorläufig ist das aber nur bei Lebensräumen nötig.
 
 <a name="Schnittstellen"></a>
-###Schnittstellen
+### Schnittstellen
 Einzelne Datensätze können direkt über die URL mit ihrer GUID angesprochen werden, [hier zum Beispiel die Daten der Erdkröte](http://arteigenschaften.ch/artendb/979233B6-9013-4820-9F7D-8ED9D826C2D3).
 
 CouchDb liefert seine im JSON-Format vorliegenden Daten mittels "views". Diese werden über die URL aufgerufen. [Hier als Beispiel die ganze Floraliste](http://arteigenschaften.ch/artendb/_design/artendb/_view/filtere_art?startkey=[%22Flora%22]&endkey=[%22Flora%22,{}]).
@@ -727,11 +727,11 @@ Wollen Sie mit Ihrer Anwendung auf die Daten von arteigenschaften.ch greifen? <a
 <a href="#top">&#8593; top</a>
 
 <a name="Zeitplan"></a>
-#Realisierung
-###Zeitplan
+# Realisierung
+### Zeitplan
 Aktueller Stand: [http://arteigenschaften.ch](http://arteigenschaften.ch) hat die frühere Access-Anwendung 2015 abgelöst.
 
-###Was kann man mit der aktuellen Version machen?
+### Was kann man mit der aktuellen Version machen?
 
 Arten suchen:
 
@@ -790,7 +790,7 @@ Lebensräume in der Anwendung bearbeiten:
 <a href="#top">&#8593; top</a>
 
 <a name="OpenSource"></a>
-#Open source
+# Open source
 Die für die Anwendung verwendete [Lizenz](https://github.com/FNSKtZH/artendb/blob/master/License.md) ist sehr freizügig. Eine Weiterverbreitung der in der Anwendung enthaltenen Daten ist aber nur mit Einverständnis der Autoren zulässig.
 
 <a href="#top">&#8593; top</a>
