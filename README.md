@@ -5,6 +5,8 @@
 <a name="top"></a>
 Die Arten- und Lebensraumdatenbank (auch bekannt als "ArtenDb") enthält naturschutzrelevante Informationen über Arten aus den Gruppen Fauna, Flora, Moose, Pilze und von Lebensräumen. Sie ermöglicht das Nachschlagen, Importieren und Exportieren der Informationen sowie den direkten Zugriff aus Drittapplikationen.
 
+Ihre Stärke ist der einfache Import und Export von Daten. Die Absicht dahinter: Alle benötigten Daten können, sofern nicht schon enthalten, rasch ergänzt und für Auswertungen kombiniert werden.
+
 # Dieses Projekt wurde abgelöst
 
 Dies hier ist die Version, die von 2012 bis Juni 2018 aktiv war. Sie wurde abgelöst durch: [https://github.com/FNSKtZH/ae2](https://github.com/FNSKtZH/ae2)
